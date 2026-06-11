@@ -1,0 +1,168 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2305.11612",
+    "title": "Sapaki: Galactic O3If* star possibly born in isolation",
+    "month": "2023-05",
+    "source_note_json": "notes/2023/2023-05/2023-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2305.11612",
+      "pdf": "https://arxiv.org/pdf/2305.11612"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2305.11612",
+    "audit_path": "literature/2305.11612/audit.json",
+    "source_dir": "literature/2305.11612/arxiv_source",
+    "tex_root": "literature/2305.11612/arxiv_source/WR67a_Draft.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:35:00",
+    "reviewer": "agent",
+    "summary": "Single-object spectroscopic study of O3If* star Sapaki (WR67a). Not a catalog paper. Contains 2 LaTeX tables: (1) literature astrometric/photometric data for a single target, (2) radial velocity line-center measurements. No machine-readable tables, no data-availability resources, no external data files. Paper uses data from existing public catalogs (Gaia DR3, 2MASS, WISE, TIC, GLIMPSE) - these are generic acknowledgements, not unique resources."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-Sapaki_astrophot",
+      "kind": "latex_table",
+      "asset_type": "object_table",
+      "role_in_paper": "Literature astrometric and photometric data compiled for the single target star Sapaki from public catalogs (Gaia DR3, TIC, 2MASS, WISE, GLIMPSE). Used as input for extinction and distance calculations.",
+      "source_refs": [
+        {
+          "path": "literature/2305.11612/arxiv_source/WR67a_Draft.tex",
+          "start_line": 110,
+          "end_line": 135,
+          "caption": "Literature data for Sapaki. Coordinates, parallaxes, proper motions, and G-band photometry were retrieved from Gaia Data Release 3 (Gaia Collaboration \\citeyear{Gaia2022}). The $B-$ and $V$-band photometry values were taken from the TESS Input Catalog V8.2 (Paegert et al. \\citeyear{Petal2021}). $J$-, $H$- and $K_{s}$-band photometry was taken from the 2MASS Point Source Catalog (Skrutskie et al. \\citeyear{Setal2006}). W1-band and W2-band photometry values were taken from the WISE All-Sky Data Release (Cutri et al. \\citeyear{Cetal2012}), while the [8.0] $\\mu$m photometry was taken from the GLIMPSE Source Catalog (Benjamin et al. \\citeyear{Betal2003})",
+          "label": "tab:Sapaki_astrophot"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Object identifier / parameter name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Sapaki",
+          "meaning": "Measured value for the target star Sapaki",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        }
+      ],
+      "evidence": "Two-column table listing parameter names (ID column) and corresponding values (Sapaki column). Parameters include: equatorial coordinates (alpha, delta), Galactic coordinates (l, b), Gaia DR3 parallax and proper motions, and multi-band photometry (B, V, G, J, H, Ks, W1, W2, [8.0]).",
+      "comments": "Single-row table for one target. Data compiled from Gaia DR3, TIC v8.2, 2MASS PSC, WISE All-Sky, and GLIMPSE Source Catalog."
+    },
+    {
+      "id": "table-tab-Sapaki_vr",
+      "kind": "latex_table",
+      "asset_type": "measurement_table",
+      "role_in_paper": "Radial velocity measurements from 10 spectral lines observed with MagE. Used to compute the heliocentric radial velocity of Sapaki (Vr = -34.2 +/- 15.6 km/s).",
+      "source_refs": [
+        {
+          "path": "literature/2305.11612/arxiv_source/WR67a_Draft.tex",
+          "start_line": 201,
+          "end_line": 221,
+          "caption": "Line-center measurements of several absorption/emission present in the atmosphere of Sapaki. $\\lambda_{0}$ is the air wavelength, $\\lambda_{\\text{obs}}$ is the measured wavelength with \\texttt{splot} routine in IRAF, $\\Delta\\lambda = \\lambda_{\\text{obs}} - \\lambda_{0}$, and $V_{r} = c \\Delta\\lambda/\\lambda_{\\lambda_{0}}$, where $c = 2.99 \\times 10^{5}$ km/s.",
+          "label": "tab:Sapaki_vr"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Feature",
+          "meaning": "Spectral line identification (atomic/ionic species)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "lambda_0",
+          "meaning": "Rest (air) wavelength of the spectral line",
+          "unit_text": "Angstrom",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "lambda_obs",
+          "meaning": "Observed wavelength measured with IRAF splot routine",
+          "unit_text": "Angstrom",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Delta_lambda",
+          "meaning": "Wavelength shift: lambda_obs - lambda_0",
+          "unit_text": "Angstrom",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "V_r",
+          "meaning": "Radial velocity derived from the wavelength shift",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        }
+      ],
+      "evidence": "Table contains 10 spectral line measurements (N IV, Si IV, Hdelta, He II, Hgamma, He II, N V, N V, Hbeta, He II) with their rest wavelengths, observed wavelengths, wavelength shifts, and derived radial velocities. Typical measurement uncertainty is +/- 0.1 Angstrom in lambda_obs, translating to +/- 5 km/s systematics per line.",
+      "comments": "Lines measured using both Gaussian and Voigt profile fitting via IRAF splot. Each line measured at least 10 times."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-carpy-mage-pipeline",
+      "kind": "external_url",
+      "url": "https://code.obs.carnegiescience.edu/mage-pipeline",
+      "local_path": "",
+      "description": "CarPy (Carnegie Python) MagE pipeline used for raw spectral data reduction",
+      "source_refs": [
+        {
+          "path": "literature/2305.11612/arxiv_source/WR67a_Draft.tex",
+          "start_line": 142,
+          "end_line": 142,
+          "context": "The raw frames were reduced by using the MagE pipeline, which is part of the Carnegie Python distribution (CarPy\\footnote{\\href{https://code.obs.carnegiescience.edu/mage-pipeline}{https://code.obs.carnegiescience.edu/mage-pipeline}})."
+        }
+      ],
+      "evidence": "Mentioned in Section 2 (Observations and data reduction) as the data reduction pipeline for MagE spectra.",
+      "comments": "Software/data-reduction resource, not a data product."
+    },
+    {
+      "id": "resource-iraf-noao",
+      "kind": "external_url",
+      "url": "http://iraf.noao.edu/",
+      "local_path": "",
+      "description": "IRAF (Image Reduction and Analysis Facility) data reduction software",
+      "source_refs": [
+        {
+          "path": "literature/2305.11612/arxiv_source/WR67a_Draft.tex",
+          "start_line": 142,
+          "end_line": 142,
+          "context": "In addition, the data were later retouched with standard IRAF\\footnote{\\href{http://iraf.noao.edu/}{http://iraf.net/}} routines."
+        }
+      ],
+      "evidence": "Mentioned in Section 2 as software used for spectral data processing. Also acknowledged at end of paper.",
+      "comments": "Software resource. IRAF is distributed by NOAO."
+    },
+    {
+      "id": "resource-iraf-net",
+      "kind": "external_url",
+      "url": "http://iraf.net/",
+      "local_path": "",
+      "description": "IRAF community website (alternate URL)",
+      "source_refs": [
+        {
+          "path": "literature/2305.11612/arxiv_source/WR67a_Draft.tex",
+          "start_line": 142,
+          "end_line": 142,
+          "context": "IRAF\\footnote{\\href{http://iraf.noao.edu/}{http://iraf.net/}}"
+        }
+      ],
+      "evidence": "Alternate URL for IRAF mentioned in footnote.",
+      "comments": "Software resource. Same resource as resource-iraf-noao but different URL."
+    }
+  ]
+}

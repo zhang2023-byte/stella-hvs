@@ -1,0 +1,57 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:36:00",
+  "paper": {
+    "arxiv_id": "2301.04031",
+    "bibcode": "2023MNRAS.519.6239P",
+    "title": "Catching a Milky Way open cluster in its last breath",
+    "month": "2023-01",
+    "source_note_json": "notes/2023/2023-01/2023-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2301.04031",
+      "pdf": "https://arxiv.org/pdf/2301.04031"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2301.04031",
+    "audit_path": "literature/2301.04031/audit.json",
+    "catalog_review_path": "literature/2301.04031/catalog_review.json",
+    "catalog_extraction_path": "literature/2301.04031/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2301.04031/catalog_tables/table-tab1.ecsv",
+      "literature/2301.04031/catalog_tables/table-tab2.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:36:00",
+    "extractor": "agent",
+    "summary": "This paper studies the Galactic open cluster ASCC-92 (also known as Alessi 31), using Gaia DR3 data to provide the first observational confirmation of the kinematic signatures predicted by Kuepper+2010 N-body simulations for open clusters on the verge of dissolution (potential escapers). The term 'unbound' in this paper refers to stars escaping from the cluster's gravitational binding (cluster-unbound), not escape from the Milky Way's gravitational binding (Galactic-unbound). The paper never discusses Galactic escape velocity, hypervelocity stars (HVS), Galactic unbinding, or intergalactic escape. All studied stars (bound stars, potential escapers, and stars that have already escaped the cluster) are Galactic disk stars still gravitationally bound to the Milky Way. No HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2301.04031:group-01",
+      "description": "ASCC-92 open cluster member star sample. The authors used the HDBSCAN algorithm to select 171 cluster member stars from Gaia DR3 data (including 31 new members not previously cataloged by Cantat-Gaudin+2018), analyzed their 3D velocity dispersion profile and anisotropy parameters, and studied the cluster's internal dynamical evolution stage. They identified bound stars (R<5 pc), potential escapers (5<R<9.3 pc, with sufficient energy to escape the cluster but still within the Jacobi radius), and stars that have already escaped the cluster (unbound stars, R>r_J).",
+      "decision": "rejected",
+      "reason": "All instances of 'unbound' in this paper refer to the cluster level (cluster-unbound), i.e., stars escaping from the gravitational binding of the open cluster ASCC-92. These stars are still located in the Galactic disk, follow the Milky Way's rotation, and are fully gravitationally bound to the Galaxy. The paper does not discuss Galactic escape velocity (~500 km/s), hypervelocity stars (HVS), or intergalactic escape. The stellar velocities studied are on the order of cluster escape velocity, far below the Galactic escape velocity. No HVS candidates are included.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2301.04031/arxiv_source/paper.tex",
+          "start_line": 113,
+          "end_line": 126,
+          "context": "Abstract: 'besides bound stars that still belong to the star cluster, and unbound ones already stripped off, there is an intermediate population of stars that having acquired the enough energy to escape the cluster are still within the cluster Jacobi radius.' — 这里的 unbound 指星团层次逃逸。"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2301.04031/arxiv_source/paper.tex",
+          "start_line": 515,
+          "end_line": 525,
+          "context": "Conclusions: 'ASCC~92 does not show any signature of internal expansion, rotation, or both combined... innermost cluster members move following the expected kinematics of bound stars, while those in the cluster outskirts show an isotropic kinematic behaviour, like unbound stars.' — 仅讨论星团内部动力学，未涉及银河逃逸。"
+        }
+      ]
+    }
+  ]
+}

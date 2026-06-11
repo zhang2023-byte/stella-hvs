@@ -1,0 +1,1314 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:34:44",
+  "paper": {
+    "arxiv_id": "1907.06375",
+    "title": "PG 1610$+$062: a runaway B star challenging classical ejection mechanisms",
+    "month": "2019-07"
+  },
+  "review": {
+    "path": "literature/1907.06375/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083444",
+    "started_at": "2026-06-07T08:34:44",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1907.06375",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 6,
+      "work_count": 6,
+      "table_count": 6,
+      "success_count": 6,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 6,
+      "file_success_count": 6,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-atmospheric_parameters",
+      "internal_table_id": "table-atmospheric_parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1907.06375/arxiv_source/paper.tex",
+        "start_line": 86,
+        "end_line": 102,
+        "caption": "Atmospheric parameters and abundances of the two program stars.",
+        "label": "table:atmospheric_parameters"
+      },
+      "source_path": "literature/1907.06375/arxiv_source/paper.tex",
+      "excerpt_path": "literature/1907.06375/catalog_sources/table-atmospheric_parameters/excerpt.tex",
+      "sha256": "e9d2f28971b232ebfd2278d1c44f4a344d4ab10da121a3f635f3a84e0332455a",
+      "line_count": 17,
+      "error": ""
+    },
+    {
+      "id": "table-stellar_parameters",
+      "internal_table_id": "table-stellar_parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1907.06375/arxiv_source/paper.tex",
+        "start_line": 104,
+        "end_line": 120,
+        "caption": "Stellar parameters, spectrophotometric distances, color excesses, and photospheric mass fractions of the two program stars.",
+        "label": "table:stellar_parameters"
+      },
+      "source_path": "literature/1907.06375/arxiv_source/paper.tex",
+      "excerpt_path": "literature/1907.06375/catalog_sources/table-stellar_parameters/excerpt.tex",
+      "sha256": "8d8219182d9493663f68b4b07082b5e2461d74dce6720c9f97417a1fae6e7ae6",
+      "line_count": 17,
+      "error": ""
+    },
+    {
+      "id": "table-photometry",
+      "internal_table_id": "table-photometry",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1907.06375/arxiv_source/paper.tex",
+        "start_line": 141,
+        "end_line": 165,
+        "caption": "Stellar parameters derived from photometry.",
+        "label": "table:photometry"
+      },
+      "source_path": "literature/1907.06375/arxiv_source/paper.tex",
+      "excerpt_path": "literature/1907.06375/catalog_sources/table-photometry/excerpt.tex",
+      "sha256": "db2417495b5905b0f679b94214ccc89e63b5c1eb6636707b450478392d061d2d",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-kinematic_parameters",
+      "internal_table_id": "table-kinematic_parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1907.06375/arxiv_source/paper.tex",
+        "start_line": 182,
+        "end_line": 200,
+        "caption": "Kinematic parameters of PG 1610$+$062 for the three different Galactic mass models of Irrgang et al. (2013).",
+        "label": "table:kinematic_parameters"
+      },
+      "source_path": "literature/1907.06375/arxiv_source/paper.tex",
+      "excerpt_path": "literature/1907.06375/catalog_sources/table-kinematic_parameters/excerpt.tex",
+      "sha256": "2a52e65ceb1f70eef7d50194a6ae2a78f3f0bfe3a6dce0ac212d5e8504c1c8ab",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-ejection_velocities",
+      "internal_table_id": "table-ejection_velocities",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1907.06375/arxiv_source/paper.tex",
+        "start_line": 208,
+        "end_line": 247,
+        "caption": "Ejection velocities (relative to the rotating Galactic disk) and heliocentric distances of candidate MS stars that were possibly ejected from the Galactic disk beyond the velocity limit of classical mechanisms.",
+        "label": "table:ejection_velocities"
+      },
+      "source_path": "literature/1907.06375/arxiv_source/paper.tex",
+      "excerpt_path": "literature/1907.06375/catalog_sources/table-ejection_velocities/excerpt.tex",
+      "sha256": "c532c59560825d79bf2893be1e84d7416be08b8861d967bd38544c7f1d6933a1",
+      "line_count": 40,
+      "error": ""
+    },
+    {
+      "id": "table-oscillation_params",
+      "internal_table_id": "table-oscillation_params",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1907.06375/arxiv_source/paper.tex",
+        "start_line": 610,
+        "end_line": 633,
+        "caption": "Observed oscillation parameters of PG 1610$+$062 derived from the two ATLAS light curves.",
+        "label": "table:oscillation_params"
+      },
+      "source_path": "literature/1907.06375/arxiv_source/paper.tex",
+      "excerpt_path": "literature/1907.06375/catalog_sources/table-oscillation_params/excerpt.tex",
+      "sha256": "50fc8a0d8f1f792105ce61899d9d7f01a46ae1bbf8af62ef934209afcb6a9b60",
+      "line_count": 24,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-atmospheric_parameters",
+      "internal_table_id": "table-atmospheric_parameters",
+      "status": "success",
+      "ecsv_path": "literature/1907.06375/catalog_tables/table-atmospheric_parameters.ecsv",
+      "caption": "Atmospheric parameters and abundances of the two program stars.",
+      "label": "table:atmospheric_parameters",
+      "row_count": 6,
+      "column_count": 19,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "T_\\textnormaleff",
+          "\\log(g)",
+          "\\varv_\\textnormalrad",
+          "\\varv\\sin(i)",
+          "\\zeta",
+          "\\xi",
+          "",
+          "\\log(n(x))",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "(K)",
+          "(cgs)",
+          "(km s -1 )",
+          "",
+          "",
+          "",
+          "",
+          "He",
+          "C",
+          "N",
+          "O",
+          "Ne",
+          "Mg",
+          "Al",
+          "Si",
+          "S",
+          "Ar",
+          "Fe"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "T_\\textnormaleff | (K)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\log(g) | (cgs)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\varv_\\textnormalrad | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\varv\\sin(i)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\zeta",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\xi",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\log(n(x)) | He",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "C",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "N",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "O",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "Ne",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "Mg",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "Al",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "Si",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "S",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "Ar",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "Fe",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_o_kv4o9/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1907.06375/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_o_kv4o9/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1907.06375/catalog_sources/table-atmospheric_parameters/wrapped.tex",
+            "html": "literature/1907.06375/catalog_sources/table-atmospheric_parameters/latexml.html",
+            "stdout": "literature/1907.06375/catalog_sources/table-atmospheric_parameters/latexml.stdout.txt",
+            "stderr": "literature/1907.06375/catalog_sources/table-atmospheric_parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e9d2f28971b232ebfd2278d1c44f4a344d4ab10da121a3f635f3a84e0332455a"
+    },
+    {
+      "id": "table-stellar_parameters",
+      "internal_table_id": "table-stellar_parameters",
+      "status": "success",
+      "ecsv_path": "literature/1907.06375/catalog_tables/table-stellar_parameters.ecsv",
+      "caption": "Stellar parameters, spectrophotometric distances, color excesses, and photospheric mass fractions of the two program stars.",
+      "label": "table:stellar_parameters",
+      "row_count": 2,
+      "column_count": 28,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "",
+          "M",
+          "",
+          "",
+          "\\tau",
+          "",
+          "",
+          "\\log(L/L_\\sun)",
+          "",
+          "",
+          "R_\\star",
+          "",
+          "",
+          "d",
+          "",
+          "",
+          "E(B-V)",
+          "",
+          "",
+          "X",
+          "",
+          "",
+          "Y",
+          "",
+          "",
+          "Z",
+          ""
+        ],
+        [
+          "",
+          "",
+          "(M_\\sun)",
+          "",
+          "",
+          "(Myr)",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "(R_\\sun)",
+          "",
+          "",
+          "(pc)",
+          "",
+          "",
+          "(mag)",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "M | (M_\\sun)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\tau | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\log(L/L_\\sun)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "R_\\star | (R_\\sun)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "d | (pc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "E(B-V) | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_020",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_021",
+          "original_header": "X",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_022",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_023",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_024",
+          "original_header": "Y",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_025",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_026",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_027",
+          "original_header": "Z",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_028",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpk1k0wh70/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1907.06375/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpk1k0wh70/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1907.06375/catalog_sources/table-stellar_parameters/wrapped.tex",
+            "html": "literature/1907.06375/catalog_sources/table-stellar_parameters/latexml.html",
+            "stdout": "literature/1907.06375/catalog_sources/table-stellar_parameters/latexml.stdout.txt",
+            "stderr": "literature/1907.06375/catalog_sources/table-stellar_parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8d8219182d9493663f68b4b07082b5e2461d74dce6720c9f97417a1fae6e7ae6"
+    },
+    {
+      "id": "table-photometry",
+      "internal_table_id": "table-photometry",
+      "status": "success",
+      "ecsv_path": "literature/1907.06375/catalog_tables/table-photometry.ecsv",
+      "caption": "Stellar parameters derived from photometry.",
+      "label": "table:photometry",
+      "row_count": 9,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value"
+        ],
+        [
+          "PG 1610 + 062:",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter | PG 1610 + 062:",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqbpyk5ry/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1907.06375/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqbpyk5ry/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1907.06375/catalog_sources/table-photometry/wrapped.tex",
+            "html": "literature/1907.06375/catalog_sources/table-photometry/latexml.html",
+            "stdout": "literature/1907.06375/catalog_sources/table-photometry/latexml.stdout.txt",
+            "stderr": "literature/1907.06375/catalog_sources/table-photometry/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "db2417495b5905b0f679b94214ccc89e63b5c1eb6636707b450478392d061d2d"
+    },
+    {
+      "id": "table-kinematic_parameters",
+      "internal_table_id": "table-kinematic_parameters",
+      "status": "success",
+      "ecsv_path": "literature/1907.06375/catalog_tables/table-kinematic_parameters.ecsv",
+      "caption": "Kinematic parameters of PG 1610$+$062 for the three different Galactic mass models of Irrgang et al. (2013).",
+      "label": "table:kinematic_parameters",
+      "row_count": 3,
+      "column_count": 23,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "x",
+          "y",
+          "z",
+          "r",
+          "",
+          "\\varv_x",
+          "\\varv_y",
+          "\\varv_z",
+          "\\varv_\\textnormalGrf",
+          "\\varv_\\textnormalGrf-\\varv_\\textnormalesc",
+          "P_\\textnormalb",
+          "x_\\textnormald",
+          "y_\\textnormald",
+          "z_\\textnormald",
+          "r_\\textnormald",
+          "",
+          "\\varv_x\\textnormal,d",
+          "\\varv_y\\textnormal,d",
+          "\\varv_z\\textnormal,d",
+          "\\varv_\\textnormalGrf,d",
+          "\\varv_\\textnormalej",
+          "\\tau_\\textnormalflight"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "x",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "y",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "z",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "r",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\varv_x",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\varv_y",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\varv_z",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\varv_\\textnormalGrf",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\varv_\\textnormalGrf-\\varv_\\textnormalesc",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "P_\\textnormalb",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "x_\\textnormald",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "y_\\textnormald",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "z_\\textnormald",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "r_\\textnormald",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "\\varv_x\\textnormal,d",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "\\varv_y\\textnormal,d",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_020",
+          "original_header": "\\varv_z\\textnormal,d",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_021",
+          "original_header": "\\varv_\\textnormalGrf,d",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_022",
+          "original_header": "\\varv_\\textnormalej",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_023",
+          "original_header": "\\tau_\\textnormalflight",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1l3iqqrk/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1907.06375/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1l3iqqrk/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1907.06375/catalog_sources/table-kinematic_parameters/wrapped.tex",
+            "html": "literature/1907.06375/catalog_sources/table-kinematic_parameters/latexml.html",
+            "stdout": "literature/1907.06375/catalog_sources/table-kinematic_parameters/latexml.stdout.txt",
+            "stderr": "literature/1907.06375/catalog_sources/table-kinematic_parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2a52e65ceb1f70eef7d50194a6ae2a78f3f0bfe3a6dce0ac212d5e8504c1c8ab"
+    },
+    {
+      "id": "table-ejection_velocities",
+      "internal_table_id": "table-ejection_velocities",
+      "status": "success",
+      "ecsv_path": "literature/1907.06375/catalog_tables/table-ejection_velocities.ecsv",
+      "caption": "Ejection velocities (relative to the rotating Galactic disk) and heliocentric distances of candidate MS stars that were possibly ejected from the Galactic disk beyond the velocity limit of classical mechanisms.",
+      "label": "table:ejection_velocities",
+      "row_count": 23,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "\\varv_\\textnormalej (km s -1 )",
+          "Distance (kpc)",
+          "Reference"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\varv_\\textnormalej (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Distance (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Reference",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzyhcxcm6/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1907.06375/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzyhcxcm6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1907.06375/catalog_sources/table-ejection_velocities/wrapped.tex",
+            "html": "literature/1907.06375/catalog_sources/table-ejection_velocities/latexml.html",
+            "stdout": "literature/1907.06375/catalog_sources/table-ejection_velocities/latexml.stdout.txt",
+            "stderr": "literature/1907.06375/catalog_sources/table-ejection_velocities/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c532c59560825d79bf2893be1e84d7416be08b8861d967bd38544c7f1d6933a1"
+    },
+    {
+      "id": "table-oscillation_params",
+      "internal_table_id": "table-oscillation_params",
+      "status": "success",
+      "ecsv_path": "literature/1907.06375/catalog_tables/table-oscillation_params.ecsv",
+      "caption": "Observed oscillation parameters of PG 1610$+$062 derived from the two ATLAS light curves.",
+      "label": "table:oscillation_params",
+      "row_count": 8,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcampepgo/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1907.06375/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcampepgo/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1907.06375/catalog_sources/table-oscillation_params/wrapped.tex",
+            "html": "literature/1907.06375/catalog_sources/table-oscillation_params/latexml.html",
+            "stdout": "literature/1907.06375/catalog_sources/table-oscillation_params/latexml.stdout.txt",
+            "stderr": "literature/1907.06375/catalog_sources/table-oscillation_params/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "50fc8a0d8f1f792105ce61899d9d7f01a46ae1bbf8af62ef934209afcb6a9b60"
+    }
+  ]
+}

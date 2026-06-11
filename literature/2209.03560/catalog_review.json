@@ -1,0 +1,490 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2209.03560",
+    "title": "High Velocity Stars in SDSS/APOGEE DR17",
+    "month": "2022-09",
+    "source_note_json": "notes/2022/2022-09/2022-09.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2209.03560",
+      "pdf": "https://arxiv.org/pdf/2209.03560"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2209.03560",
+    "audit_path": "literature/2209.03560/audit.json",
+    "source_dir": "literature/2209.03560/arxiv_source",
+    "tex_root": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-23T03:04:52",
+    "reviewer": "agent",
+    "summary": "This paper identifies 23 high-velocity stars (v_GC > 450 km/s) from APOGEE DR17 complemented with Gaia eDR3 astrometry and Bailer-Jones 2021 distances. The data assets include four main data tables: (1) astrometric parameters (coordinates, parallaxes, distances); (2) kinematic parameters (proper motions, radial velocities, Galactocentric velocities); (3) orbital parameters in the Irrgang Model I potential; (4) stellar parameters (magnitudes, T_eff, [Fe/H], [alpha/Fe]). An additional table compares isochrone-derived and StarHorse2 masses/radii. A comparison table contrasts Aoki et al. (2007) and APOGEE DR17 measurements for the peculiar CEMP star 2M22242563-0438021. A parameter table defines the Irrgang Model I gravitational potential. External software resources with explicit URLs include the Doppler RV pipeline, the FERRE code, and the gaiadr3_zeropoint parallax correction package. No paper-specific data repository URL is provided."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-hvs_astrometric_parameter1",
+      "kind": "latex_table",
+      "asset_type": "observational_data_table",
+      "role_in_paper": "Presents equatorial coordinates, Gaia eDR3 parallaxes, and Bailer-Jones 2021 photogeometric distances for the 23 high-velocity star candidates. The last three rows list the three stars exceeding the escape velocity in the MWPotential2014 model (unbound candidates).",
+      "source_refs": [
+        {
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 154,
+          "end_line": 193,
+          "caption": "Equatorial coordinates, paralaxes from Gaia eDR3, and distances from \\citet{BailerJones2021} for the HiVel stars. The last three rows list the stars that exceed the escape velocity in the MWPotential2014 model (unbound candidates; Sect. \\ref{subsec:unb_cand}).",
+          "label": "tab:hvs_astrometric_parameter1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "APOGEE ID",
+          "meaning": "APOGEE identifier for the star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\alpha | (deg +/- mas)",
+          "meaning": "Right ascension from Gaia eDR3 with uncertainty",
+          "unit_text": "deg ± mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\delta | (deg +/- mas)",
+          "meaning": "Declination from Gaia eDR3 with uncertainty",
+          "unit_text": "deg ± mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\varpi | (mas)",
+          "meaning": "Parallax from Gaia eDR3",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_\\mathrmBJ | (kpc)",
+          "meaning": "Photogeometric distance from Bailer-Jones et al. (2021)",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Equatorial coordinates, paralaxes from Gaia eDR3, and distances from \\citet{BailerJones2021} for the HiVel stars. The last three rows list the stars that exceed the escape velocity in the MWPotential2014 model (unbound candidates; Sect. \\ref{subsec:unb_cand}).",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-hvs_astrometric_parameter2",
+      "kind": "latex_table",
+      "asset_type": "observational_data_table",
+      "role_in_paper": "Presents proper motions from Gaia eDR3, radial velocities from APOGEE DR17 (and Gaia eDR3 when available), and derived Galactocentric velocities for the 23 high-velocity stars. The last three rows correspond to the unbound candidates.",
+      "source_refs": [
+        {
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 195,
+          "end_line": 240,
+          "caption": "Proper motions from Gaia eDR3, radial velocities from APOGEE DR17, radial velocity from Gaia eDR3 (when available), and estimated Galactocentric velocity for the HiVel stars. The last three rows correspond to the unbound candidates.",
+          "label": "tab:hvs_astrometric_parameter2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "APOGEE ID",
+          "meaning": "APOGEE identifier for the star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha\\cos\\delta | (\\mathrmmas yr^-1)",
+          "meaning": "Proper motion in right ascension direction from Gaia eDR3",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta | (\\mathrmmas yr^-1)",
+          "meaning": "Proper motion in declination direction from Gaia eDR3",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_rad_APOGEE | (\\mathrmkm s^-1)",
+          "meaning": "Radial velocity from APOGEE DR17",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_rad_Gaia | (\\mathrmkm s^-1)",
+          "meaning": "Radial velocity from Gaia eDR3 (when available)",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_GC | (\\mathrmkm s^-1)",
+          "meaning": "Total Galactocentric velocity",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Proper motions from Gaia eDR3, radial velocities from APOGEE DR17, radial velocity from Gaia eDR3 (when available), and estimated Galactocentric velocity for the HiVel stars. The last three rows correspond to the unbound candidates.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-Orbital-parameters",
+      "kind": "latex_table",
+      "asset_type": "derived_quantity_table",
+      "role_in_paper": "Presents orbital parameters derived for the 23 high-velocity stars using the Irrgang Model I gravitational potential. The last three rows correspond to the unbound candidates.",
+      "source_refs": [
+        {
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 300,
+          "end_line": 336,
+          "caption": "Orbital parameters derived for the HiVel stars in the Irrgang Model I potential: perigalacticon and apogalacticon, orbital eccentricity, maximum height over the Galactic plane, and orbital energy. The last three rows correspond to the unbound candidates.",
+          "label": "tab:Orbital parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "APOGEE ID",
+          "meaning": "APOGEE identifier for the star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R_\\mathrmperi | (kpc)",
+          "meaning": "Perigalacticon distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R_\\mathrmapo | (kpc)",
+          "meaning": "Apogalacticon distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "e",
+          "meaning": "Orbital eccentricity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Z_\\mathrmmax | (kpc)",
+          "meaning": "Maximum height above the Galactic plane",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "E | (\\mathrmkm^2 s^-2)",
+          "meaning": "Orbital energy in the Irrgang Model I potential",
+          "unit_text": "km² s⁻²",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Orbital parameters derived for the HiVel stars in the Irrgang Model I potential: perigalacticon and apogalacticon, orbital eccentricity, maximum height over the Galactic plane, and orbital energy. The last three rows correspond to the unbound candidates.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-Stellar_parameters",
+      "kind": "latex_table",
+      "asset_type": "observational_data_table",
+      "role_in_paper": "Presents observed stellar properties for the 23 high-velocity stars: absolute magnitudes from Gaia eDR3, and spectroscopic parameters (effective temperature, metallicity, alpha-element abundance) from APOGEE DR17. The last three rows correspond to the unbound candidates.",
+      "source_refs": [
+        {
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 374,
+          "end_line": 411,
+          "caption": "Observed properties of the HiVel stars: absolute magnitudes from Gaia eDR3, effective temperature, metalicity and $\\alpha$-elements abundance from APOGEE DR17. The last three rows correspond to the unbound candidates.",
+          "label": "tab:Stellar_parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "APOGEE ID",
+          "meaning": "APOGEE identifier for the star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G | (mag)",
+          "meaning": "Absolute magnitude in Gaia G band from Gaia eDR3",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "BP | (mag)",
+          "meaning": "Absolute magnitude in Gaia BP band from Gaia eDR3",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RP | (mag)",
+          "meaning": "Absolute magnitude in Gaia RP band from Gaia eDR3",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_eff | (K)",
+          "meaning": "Effective temperature from APOGEE DR17",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H] | (dex)",
+          "meaning": "Metallicity [Fe/H] from APOGEE DR17",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[\\alpha/Fe] | (dex)",
+          "meaning": "Alpha-element abundance ratio [alpha/Fe] from APOGEE DR17",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Observed properties of the HiVel stars: absolute magnitudes from Gaia eDR3, effective temperature, metalicity and $\\alpha$-elements abundance from APOGEE DR17. The last three rows correspond to the unbound candidates.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-stellar_masses",
+      "kind": "latex_table",
+      "asset_type": "derived_quantity_table",
+      "role_in_paper": "Compares surface gravity, mass, and radius estimates derived from APOGEE DR17 stellar parameters combined with MIST isochrones against independent determinations from the StarHorse2 catalog and Gaia eDR3 for the 23 high-velocity stars. The last three rows correspond to the unbound candidates.",
+      "source_refs": [
+        {
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 413,
+          "end_line": 451,
+          "caption": "Comparison of the $\\log g$ values from APOGEE DR17 and the corresponding isochrone-derived masses and radii, with the values provided by the StarHorse2 catalog \\citep{Anders2022}. The StarHorse2 radius has been derived from the corresponding $\\log g$ and $M$ values. The two stars that do not have entries in the StarHorse2 catalog, have mass estimates in \\citet{Anders2019} -- see text for details. The last three rows correspond to the unbound candidates.",
+          "label": "tab:stellar_masses"
+        }
+      ],
+      "columns": [
+        {
+          "name": "APOGEE ID",
+          "meaning": "APOGEE identifier for the star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log g",
+          "meaning": "Surface gravity from APOGEE DR17",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M",
+          "meaning": "Stellar mass derived from APOGEE DR17 parameters and MIST isochrones",
+          "unit_text": "M⊙",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R",
+          "meaning": "Stellar radius derived from APOGEE DR17 parameters and MIST isochrones",
+          "unit_text": "R⊙",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_005",
+          "meaning": "Empty separator column between the two data groups",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log g",
+          "meaning": "Surface gravity from the StarHorse2 catalog",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M",
+          "meaning": "Stellar mass from the StarHorse2 catalog",
+          "unit_text": "M⊙",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R",
+          "meaning": "Stellar radius from the StarHorse2 catalog",
+          "unit_text": "R⊙",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Comparison of the $\\log g$ values from APOGEE DR17 and the corresponding isochrone-derived masses and radii, with the values provided by the StarHorse2 catalog \\citep{Anders2022}. The StarHorse2 radius has been derived from the corresponding $\\log g$ and $M$ values. The two stars that do not have entries in the StarHorse2 catalog, have mass estimates in \\citet{Anders2019} -- see text for details. The last three rows correspond to the unbound candidates.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-cemp_properties",
+      "kind": "latex_table",
+      "asset_type": "comparison_table",
+      "role_in_paper": "Compares stellar parameters, chemical abundances [X/Fe], and radial velocity for the CEMP star 2M22242563-0438021 (HE 2221-0453) between literature values from Aoki et al. (2007) and APOGEE DR17 automatic pipeline measurements. All abundances are in dex.",
+      "source_refs": [
+        {
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 541,
+          "end_line": 560,
+          "caption": "Comparison of stellar parameters, chemical abundances [X/Fe], and radial velocities of the star 2M22242563-0438021 (HE 2221-0453), as given by \\citet{Aoki2007} and by APOGEE DR17. All abundances are in dex.",
+          "label": "tab:cemp_properties"
+        }
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "meaning": "Stellar parameter, chemical element, or observable quantity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Aoki et al. (2007)",
+          "meaning": "Value from Aoki et al. (2007) high-resolution spectroscopy",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "APOGEE DR17",
+          "meaning": "Value from APOGEE DR17 automatic pipeline",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Comparison of stellar parameters, chemical abundances [X/Fe], and radial velocities of the star 2M22242563-0438021 (HE 2221-0453), as given by \\citet{Aoki2007} and by APOGEE DR17. All abundances are in dex.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-model-I-parameters",
+      "kind": "latex_table",
+      "asset_type": "model_parameter_table",
+      "role_in_paper": "Lists the best-fit parameters of the Irrgang Model I gravitational potential used for orbital integration of the high-velocity stars.",
+      "source_refs": [
+        {
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 651,
+          "end_line": 668,
+          "caption": "Irrgang Model I parameters",
+          "label": "tab:model I parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name of the gravitational potential parameter (bulge, disk, or halo component)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Best-fit value with uncertainty for the parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Irrgang Model I parameters",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://astrothesaurus.org",
+      "local_path": "",
+      "description": "Unified Astronomy Thesaurus website, referenced for astronomy keyword classification.",
+      "source_refs": [
+        {
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 75,
+          "end_line": 75,
+          "context": "%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n\\keywords{Milky Way dynamics(1051) --- Stellar kinematics(1608) --- Stellar abundances(1577)}"
+        }
+      ],
+      "evidence": "Explicitly mentioned in the keywords section as the source of Unified Astronomy Thesaurus concepts used by the AAS Journals.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://github.com/dnidever/doppler",
+      "local_path": "",
+      "description": "GitHub repository for the Doppler radial velocity determination algorithm, used in the updated APOGEE DR17 data reduction pipeline.",
+      "source_refs": [
+        {
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 135,
+          "end_line": 135,
+          "context": "Data products from spectra taken in both APOGEE surveys are included in SDSS DR17 \\citep{Abdurrouf2022}, after being automatically recalculated \\citep{Nidever2015,Holtzman2015} using the latest APOGEE data reduction pipeline,\n%FVR: sorry but I was unable to find this reference \\citep{Holtzman2022}\nwhich uses an updated algorithm in DR17, {\\texttt{Doppler}}\\footnote{\\url{https://github.com/dnidever/doppler}}, for radial velocity determination; this algorithm has improved the derivation of radial velocities for fainter sources.  \nThe APOGEE Stellar Parameters and Chemical Abundances Pipeline \\citep[\\texttt{ASPCAP};][]{GarciaPerez2016}, which is rooted in the {\\texttt{FERRE}}\\footnote{\\url{https://github.com/callendeprieto/ferre}} code of \\citet{AllendePrieto2006}, provides atmospheric parameters ($T_\\mathrm{eff}$, $\\log g$, [Fe/H]) and chemical abundances measurements for up to 20 chemical species for 733\\,901 sources.\n\\texttt{ASPCAP} estimates the stellar atmospheric parameters by comparing observed spectra against a"
+        }
+      ],
+      "evidence": "Referenced in a footnote as the software implementing the updated radial velocity algorithm for fainter sources in APOGEE DR17.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://github.com/callendeprieto/ferre",
+      "local_path": "",
+      "description": "GitHub repository for the FERRE code, the spectral synthesis engine underlying the APOGEE ASPCAP pipeline for stellar parameter and abundance estimation.",
+      "source_refs": [
+        {
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 136,
+          "end_line": 136,
+          "context": "%FVR: sorry but I was unable to find this reference \\citep{Holtzman2022}\nwhich uses an updated algorithm in DR17, {\\texttt{Doppler}}\\footnote{\\url{https://github.com/dnidever/doppler}}, for radial velocity determination; this algorithm has improved the derivation of radial velocities for fainter sources.  \nThe APOGEE Stellar Parameters and Chemical Abundances Pipeline \\citep[\\texttt{ASPCAP};][]{GarciaPerez2016}, which is rooted in the {\\texttt{FERRE}}\\footnote{\\url{https://github.com/callendeprieto/ferre}} code of \\citet{AllendePrieto2006}, provides atmospheric parameters ($T_\\mathrm{eff}$, $\\log g$, [Fe/H]) and chemical abundances measurements for up to 20 chemical species for 733\\,901 sources.\n\\texttt{ASPCAP} estimates the stellar atmospheric parameters by comparing observed spectra against a \nlibrary of MARCS stellar atmospheres \\citep{Meszaros2012,Jonsson2020},"
+        }
+      ],
+      "evidence": "Referenced in a footnote as the code base for ASPCAP, which derives atmospheric parameters and chemical abundances for APOGEE sources.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://gitlab.com/icc-ub/public/gaiadr3_zeropoint",
+      "local_path": "",
+      "description": "GitLab repository for the gaiadr3_zeropoint Python package used to correct Gaia eDR3 parallaxes for zero-point bias before stellar property inference.",
+      "source_refs": [
+        {
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 459,
+          "end_line": 459,
+          "context": "\\subsection{Masses and radii}\n\nUsing the stellar parameters $T_\\mathrm{eff}$, $\\log g$, and [Fe/H] from APOGEE DR17, the Gaia eDR3 parallaxes corrected by zero point bias\\footnote{The correction is done using the \\texttt{gaiadr3\\_zeropoint Python} package, hosted at \\url{https://gitlab.com/icc-ub/public/gaiadr3_zeropoint}.}, the $G$, $BP$ and $RP$ magnitudes corrected by extinction, and the 2MASS magnitudes in the $H$, $J$, $K$ bands, we infer the mass and radius of each star using the package \\texttt{isochrones}. Among other features, this package uses the Mesa Isochrones \\& Stellar Tracks models \\citep[MIST,][]{Dotter2016, Choi2016, Paxton2011, Paxton2013, Paxton2015} to determine stellar properties based on arbitrary observables \\citep{Morton2015}. The results are reported in Table \\ref{tab:stellar_masses}.\n\nWe note that there are five stars for which the isochrone-inferred masses are larger than 2~$M_\\odot$, that would not be typical of halo stars. To check the reliability of these masses, we search for an independent mass determination provided by the StarHorse2 catalog \\citep{Anders2022}. The corresponding values are also reported in Table \\ref{tab:stellar_masses}. We found that the StarHorse2 masses for three of these five stars is $\\approx 1~M_\\odot$, consistent with halo stars. For the other two stars (2M15191912+0202334 and 2M15180013+0209292), there is no mass determination in the StarHorse2 catalog, but they have a mass estimate in the original StarHorse catalog \\citep{Anders2019} of $0.97^{+0.39}_{-0.16}~M_\\odot$ ($27,40~R_\\odot$) and $1.02^{+0.27}_{-0.18}~M_\\odot$ ($63.62~R_\\odot$), respectively. In view of this, we conclude that our isochrone-based mass determination for these five stars is most probably wrong."
+        }
+      ],
+      "evidence": "Referenced in a footnote as the Python package used to apply zero-point bias corrections to Gaia eDR3 parallaxes for the mass and radius analysis.",
+      "comments": ""
+    }
+  ]
+}

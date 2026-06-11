@@ -1,0 +1,305 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:45:02",
+  "paper": {
+    "arxiv_id": "2012.09879",
+    "title": "Double trouble: Gaia reveals (proto)-planetary systems that may experience more than one dense star-forming environment",
+    "month": "2020-12"
+  },
+  "review": {
+    "path": "literature/2012.09879/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084502",
+    "started_at": "2026-06-07T08:45:02",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2012.09879",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-Cand_disc",
+      "internal_table_id": "table-tab-Cand_disc",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2012.09879/arxiv_source/Main_document.tex",
+        "start_line": 157,
+        "end_line": 176,
+        "caption": "Stars around the ONC possibly with a circumstellar disc. Column 2+3: velocity in ONC rest frame [rf] from Schoettler+2020; Column 4: status identifier -- ONC ejected, future or past visitor; Column 5--7: from literature sources; Column 8: Disc information from literature sources.",
+        "label": "tab:Cand_disc"
+      },
+      "source_path": "literature/2012.09879/arxiv_source/Main_document.tex",
+      "excerpt_path": "literature/2012.09879/catalog_sources/table-tab-Cand_disc/excerpt.tex",
+      "sha256": "d019b8a9cbd8db0146a502c7eb724d4f0a98cee1aa1d6ccf413c414c51c788d3",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-cand_nondisc",
+      "internal_table_id": "table-tab-cand_nondisc",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2012.09879/arxiv_source/Main_document.tex",
+        "start_line": 276,
+        "end_line": 299,
+        "caption": "Stars ejected from the ONC without a circumstellar disc. Column 2+3: velocity in ONC rest frame [rf] from Schoettler+2020; Column 4: status identifier -- ONC ejected, future or past visitor; Column 5--6: from literature sources; Column 7: Disc information from literature sources.",
+        "label": "tab:cand_nondisc"
+      },
+      "source_path": "literature/2012.09879/arxiv_source/Main_document.tex",
+      "excerpt_path": "literature/2012.09879/catalog_sources/table-tab-cand_nondisc/excerpt.tex",
+      "sha256": "46a947208ba72f9ffa5f9d6fa57366ef06c38d32244816ed2f0ff590490a7129",
+      "line_count": 24,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-Cand_disc",
+      "internal_table_id": "table-tab-Cand_disc",
+      "status": "success",
+      "ecsv_path": "literature/2012.09879/catalog_tables/table-tab-Cand_disc.ecsv",
+      "caption": "Stars around the ONC possibly with a circumstellar disc. Column 2+3: velocity in ONC rest frame [rf] from Schoettler+2020; Column 4: status identifier -- ONC ejected, future or past visitor; Column 5--7: from literature sources; Column 8: Disc information from literature sources.",
+      "label": "tab:Cand_disc",
+      "row_count": 7,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8xf7_1h7/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2012.09879/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8xf7_1h7/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2012.09879/catalog_sources/table-tab-Cand_disc/wrapped.tex",
+            "html": "literature/2012.09879/catalog_sources/table-tab-Cand_disc/latexml.html",
+            "stdout": "literature/2012.09879/catalog_sources/table-tab-Cand_disc/latexml.stdout.txt",
+            "stderr": "literature/2012.09879/catalog_sources/table-tab-Cand_disc/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d019b8a9cbd8db0146a502c7eb724d4f0a98cee1aa1d6ccf413c414c51c788d3"
+    },
+    {
+      "id": "table-tab-cand_nondisc",
+      "internal_table_id": "table-tab-cand_nondisc",
+      "status": "success",
+      "ecsv_path": "literature/2012.09879/catalog_tables/table-tab-cand_nondisc.ecsv",
+      "caption": "Stars ejected from the ONC without a circumstellar disc. Column 2+3: velocity in ONC rest frame [rf] from Schoettler+2020; Column 4: status identifier -- ONC ejected, future or past visitor; Column 5--6: from literature sources; Column 7: Disc information from literature sources.",
+      "label": "tab:cand_nondisc",
+      "row_count": 12,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_9019y63/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2012.09879/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_9019y63/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2012.09879/catalog_sources/table-tab-cand_nondisc/wrapped.tex",
+            "html": "literature/2012.09879/catalog_sources/table-tab-cand_nondisc/latexml.html",
+            "stdout": "literature/2012.09879/catalog_sources/table-tab-cand_nondisc/latexml.stdout.txt",
+            "stderr": "literature/2012.09879/catalog_sources/table-tab-cand_nondisc/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "46a947208ba72f9ffa5f9d6fa57366ef06c38d32244816ed2f0ff590490a7129"
+    }
+  ]
+}

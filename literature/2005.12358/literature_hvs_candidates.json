@@ -1,0 +1,77 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:30:00",
+  "paper": {
+    "arxiv_id": "2005.12358",
+    "bibcode": "2020A&A...639A...8K",
+    "title": "Understanding the rotational variability of K2 targets. HgMn star KIC 250152017 and blue horizontal branch star KIC 249660366",
+    "month": "2020-05",
+    "source_note_json": "notes/2020/2020-05/2020-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2005.12358",
+      "pdf": "https://arxiv.org/pdf/2005.12358"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2005.12358",
+    "audit_path": "literature/2005.12358/audit.json",
+    "catalog_review_path": "literature/2005.12358/catalog_review.json",
+    "catalog_extraction_path": "literature/2005.12358/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:30:00",
+    "extractor": "agent",
+    "summary": "本文利用ESO XSHOOTER中分辨率光谱对两颗K2卫星探测到旋转调制的目标星——KIC 250152017（HgMn化学丰度特殊星）和KIC 249660366（贫氦蓝水平分支星/BHB星）——进行了相位分辨光谱分析，测定大气参数和化学丰度以解释其旋转光变。其中KIC 249660366具有较高的空间速度((U,V,W)=(22,-205,92) km/s, Vr=107 km/s)，被论文称为'high-velocity star'，但这是BHB星作为银晕天体的自然特征，其总空间速度约226 km/s远低于银河系逃逸速度（~550 km/s at Sun），论文未声称该星为银河系非束缚超高速星（HVS）。论文核心关注恒星旋转调制机制（化学斑点/温度不均 vs. 双星效应）和化学丰度分析，不涉及银河系非束缚状态判定或HVS搜寻。因此无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文研究两颗K2变星的旋转调制机制和化学丰度，其中KIC 249660366虽被称为'high-velocity star'（Vt≈226 km/s），但这是BHB星典型特征，非Galactic unbound。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (esobtpromhv.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Title/Abstract: rotational variability of K2 targets; HgMn star and blue horizontal branch star; phase-resolved spectroscopy"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+          "start_line": 472,
+          "end_line": 500,
+          "context": "Section: He-poor high-velocity star KIC 249660366; astrometric parameters and space velocity"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "kic-249660366-bhb",
+      "description": "KIC 249660366：一颗贫氦蓝水平分支（BHB）星，具有XSHOOTER光谱测定的径向速度Vr=107±3 km/s，空间速度(U,V,W)=(22,-205,92) km/s，总空间速度约226 km/s。论文称其为'high-velocity star'。该星因K2测光显示旋转调制光变而被纳入本研究，旨在通过相位分辨光谱确定其光变机制（化学斑点 vs. 温度分布不均）。",
+      "decision": "excluded",
+      "reason": "论文中的'high-velocity star'（高速星）是指KIC 249660366具有相对较高的空间速度，但这是蓝水平分支星作为银晕成员的典型特征（BHB星通常具有较大的空间速度弥散度）。其总空间速度约226 km/s远低于太阳位置处的银河系逃逸速度（~550 km/s），该星仍受银河系引力束缚。论文将其选为研究目标的唯一原因是其K2光变曲线显示旋转调制特征，研究目标是理解旋转光变的物理机制（化学丰度不均匀斑块或温度分布不均匀），并测定其大气参数（Teff=9050 K, log g=3.2）和元素丰度。论文未涉及银河系非束缚状态判定或HVS搜寻，未声称KIC 249660366为银河系非束缚HVS。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+          "start_line": 472,
+          "end_line": 485,
+          "context": "Section header and intro: He-poor high-velocity star KIC 249660366 classified as BHB; space velocities"
+        }
+      ]
+    }
+  ]
+}

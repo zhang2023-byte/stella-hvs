@@ -1,0 +1,786 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:46",
+  "paper": {
+    "arxiv_id": "2504.14836",
+    "title": "Systematic search for blue hyper-velocity stars from LAMOST survey",
+    "month": "2025-04"
+  },
+  "review": {
+    "path": "literature/2504.14836/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123946",
+    "started_at": "2026-05-17T12:39:46",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2504.14836",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-selection",
+      "internal_table_id": "table-tab-selection",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+        "start_line": 389,
+        "end_line": 410,
+        "caption": "Selection result of 124 high-velocity star candidates",
+        "label": "tab:selection"
+      },
+      "source_path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+      "excerpt_path": "literature/2504.14836/catalog_sources/table-tab-selection/excerpt.tex",
+      "sha256": "95634671721f0558ceae73ec15ff1e2d00016ad18141cea12c01e2bcc3e3f140",
+      "line_count": 22,
+      "error": ""
+    },
+    {
+      "id": "table-tab-hivel",
+      "internal_table_id": "table-tab-hivel",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+        "start_line": 505,
+        "end_line": 542,
+        "caption": "125 high-velocity candidates from LAMOST DR10\\label{tab:hivel}",
+        "label": "tab:hivel"
+      },
+      "source_path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+      "excerpt_path": "literature/2504.14836/catalog_sources/table-tab-hivel/excerpt.tex",
+      "sha256": "1e1751d85862251357c6b7f04d5f681e1c980bf4bf339361f397b5a1847df671",
+      "line_count": 38,
+      "error": ""
+    },
+    {
+      "id": "table-tab-hvs",
+      "internal_table_id": "table-tab-hvs",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+        "start_line": 629,
+        "end_line": 723,
+        "caption": "Properties of the new unbound HVS candidates LAMOST-HVS5-8",
+        "label": "tab:hvs"
+      },
+      "source_path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+      "excerpt_path": "literature/2504.14836/catalog_sources/table-tab-hvs/excerpt.tex",
+      "sha256": "420bb914c5bd622b55b799fd0c8a8ac89041d6d9bc5c8778937a2fdeef6c2f02",
+      "line_count": 95,
+      "error": ""
+    },
+    {
+      "id": "table-tab-hvs9",
+      "internal_table_id": "table-tab-hvs9",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+        "start_line": 725,
+        "end_line": 820,
+        "caption": "Properties of the new unbound HVS candidates LAMOST-HVS9-12",
+        "label": "tab:hvs9"
+      },
+      "source_path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+      "excerpt_path": "literature/2504.14836/catalog_sources/table-tab-hvs9/excerpt.tex",
+      "sha256": "19adeeb512c938f6647fc3d4c4fe4e5f37b2059303d887a7f8c8891988140250",
+      "line_count": 96,
+      "error": ""
+    },
+    {
+      "id": "table-tab-hvs13",
+      "internal_table_id": "table-tab-hvs13",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+        "start_line": 822,
+        "end_line": 891,
+        "caption": "Properties of the new unbound HVS candidates LAMOST-HVS13 and LAMOST-HVS14",
+        "label": "tab:hvs13"
+      },
+      "source_path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+      "excerpt_path": "literature/2504.14836/catalog_sources/table-tab-hvs13/excerpt.tex",
+      "sha256": "9a44ca9f5720f411a449a609cdfd290bb6b096948ccd14bf10746637dcbf7484",
+      "line_count": 70,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-selection",
+      "internal_table_id": "table-tab-selection",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2504.14836/catalog_tables/table-tab-selection.ecsv",
+      "caption": "Selection result of 124 high-velocity star candidates",
+      "label": "tab:selection",
+      "row_count": 5,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "with reliable rgeo",
+          "without reliable rgeo",
+          "Total number"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "with reliable rgeo",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "without reliable rgeo",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Total number",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphexjhkcx/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2504.14836/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphexjhkcx/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2504.14836/catalog_sources/table-tab-selection/wrapped.tex",
+            "html": "literature/2504.14836/catalog_sources/table-tab-selection/latexml.html",
+            "stdout": "literature/2504.14836/catalog_sources/table-tab-selection/latexml.stdout.txt",
+            "stderr": "literature/2504.14836/catalog_sources/table-tab-selection/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "95634671721f0558ceae73ec15ff1e2d00016ad18141cea12c01e2bcc3e3f140"
+    },
+    {
+      "id": "table-tab-hivel",
+      "internal_table_id": "table-tab-hivel",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2504.14836/catalog_tables/table-tab-hivel.ecsv",
+      "caption": "125 high-velocity candidates from LAMOST DR10\\label{tab:hivel}",
+      "label": "tab:hivel",
+      "row_count": 6,
+      "column_count": 12,
+      "environment": "",
+      "header_rows": [
+        [
+          "Designation",
+          "Name",
+          "MKCLASS",
+          "RA",
+          "DEC",
+          "Gmag",
+          "Vrf",
+          "Vtot",
+          "r",
+          "dist_source",
+          "RV_questionable",
+          "Var"
+        ],
+        [
+          "",
+          "",
+          "",
+          "(deg)",
+          "(deg)",
+          "(mag)",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(kpc)",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Designation",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "MKCLASS",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RA | (deg)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "DEC | (deg)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Gmag | (mag)",
+          "unit_text": "Gmag",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Vrf | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Vtot | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "r | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "dist_source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "RV_questionable",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "Var",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_dxmuawh/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2504.14836/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_dxmuawh/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2504.14836/catalog_sources/table-tab-hivel/wrapped.tex",
+            "html": "literature/2504.14836/catalog_sources/table-tab-hivel/latexml.html",
+            "stdout": "literature/2504.14836/catalog_sources/table-tab-hivel/latexml.stdout.txt",
+            "stderr": "literature/2504.14836/catalog_sources/table-tab-hivel/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "1e1751d85862251357c6b7f04d5f681e1c980bf4bf339361f397b5a1847df671"
+    },
+    {
+      "id": "table-tab-hvs",
+      "internal_table_id": "table-tab-hvs",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+      "caption": "Properties of the new unbound HVS candidates LAMOST-HVS5-8",
+      "label": "tab:hvs",
+      "row_count": 22,
+      "column_count": 5,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "",
+          "LAMOST-HVS5",
+          "LAMOST-HVS6",
+          "LAMOST-HVS7",
+          "LAMOST-HVS8"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "LAMOST-HVS5",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "LAMOST-HVS6",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "LAMOST-HVS7",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "LAMOST-HVS8",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\alpha",
+        "unresolved LaTeX macro preserved: \\circ",
+        "unresolved LaTeX macro preserved: \\delta",
+        "unresolved LaTeX macro preserved: \\mu",
+        "unresolved LaTeX macro preserved: \\rmcos",
+        "unresolved LaTeX macro preserved: \\rmlos",
+        "unresolved LaTeX macro preserved: \\rmmas",
+        "unresolved LaTeX macro preserved: \\rmrf",
+        "unresolved LaTeX macro preserved: \\tnotea",
+        "unresolved LaTeX macro preserved: \\tnoteb",
+        "unresolved LaTeX macro preserved: \\tnotec",
+        "unresolved LaTeX macro preserved: \\tnoted"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa094djrv/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2504.14836/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa094djrv/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2504.14836/catalog_sources/table-tab-hvs/wrapped.tex",
+            "html": "literature/2504.14836/catalog_sources/table-tab-hvs/latexml.html",
+            "stdout": "literature/2504.14836/catalog_sources/table-tab-hvs/latexml.stdout.txt",
+            "stderr": "literature/2504.14836/catalog_sources/table-tab-hvs/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzory6fux/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzory6fux/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2504.14836/catalog_sources/table-tab-hvs/wrapped.tex",
+            "html": "literature/2504.14836/catalog_sources/table-tab-hvs/pandoc.html",
+            "stdout": "literature/2504.14836/catalog_sources/table-tab-hvs/pandoc.stdout.txt",
+            "stderr": "literature/2504.14836/catalog_sources/table-tab-hvs/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "420bb914c5bd622b55b799fd0c8a8ac89041d6d9bc5c8778937a2fdeef6c2f02"
+    },
+    {
+      "id": "table-tab-hvs9",
+      "internal_table_id": "table-tab-hvs9",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+      "caption": "Properties of the new unbound HVS candidates LAMOST-HVS9-12",
+      "label": "tab:hvs9",
+      "row_count": 22,
+      "column_count": 5,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "",
+          "LAMOST-HVS9",
+          "LAMOST-HVS10",
+          "LAMOST-HVS11",
+          "LAMOST-HVS12"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "LAMOST-HVS9",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "LAMOST-HVS10",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "LAMOST-HVS11",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "LAMOST-HVS12",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\alpha",
+        "unresolved LaTeX macro preserved: \\circ",
+        "unresolved LaTeX macro preserved: \\delta",
+        "unresolved LaTeX macro preserved: \\mu",
+        "unresolved LaTeX macro preserved: \\rmcos",
+        "unresolved LaTeX macro preserved: \\rmlos",
+        "unresolved LaTeX macro preserved: \\rmmas",
+        "unresolved LaTeX macro preserved: \\rmrf",
+        "unresolved LaTeX macro preserved: \\tnotea",
+        "unresolved LaTeX macro preserved: \\tnoteb",
+        "unresolved LaTeX macro preserved: \\tnotec",
+        "unresolved LaTeX macro preserved: \\tnoted"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptwmlb8hj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2504.14836/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptwmlb8hj/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2504.14836/catalog_sources/table-tab-hvs9/wrapped.tex",
+            "html": "literature/2504.14836/catalog_sources/table-tab-hvs9/latexml.html",
+            "stdout": "literature/2504.14836/catalog_sources/table-tab-hvs9/latexml.stdout.txt",
+            "stderr": "literature/2504.14836/catalog_sources/table-tab-hvs9/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm7ou_o10/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm7ou_o10/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2504.14836/catalog_sources/table-tab-hvs9/wrapped.tex",
+            "html": "literature/2504.14836/catalog_sources/table-tab-hvs9/pandoc.html",
+            "stdout": "literature/2504.14836/catalog_sources/table-tab-hvs9/pandoc.stdout.txt",
+            "stderr": "literature/2504.14836/catalog_sources/table-tab-hvs9/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "19adeeb512c938f6647fc3d4c4fe4e5f37b2059303d887a7f8c8891988140250"
+    },
+    {
+      "id": "table-tab-hvs13",
+      "internal_table_id": "table-tab-hvs13",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+      "caption": "Properties of the new unbound HVS candidates LAMOST-HVS13 and LAMOST-HVS14",
+      "label": "tab:hvs13",
+      "row_count": 22,
+      "column_count": 3,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "",
+          "LAMOST-HVS13",
+          "LAMOST-HVS14"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "LAMOST-HVS13",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "LAMOST-HVS14",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\alpha",
+        "unresolved LaTeX macro preserved: \\circ",
+        "unresolved LaTeX macro preserved: \\delta",
+        "unresolved LaTeX macro preserved: \\mu",
+        "unresolved LaTeX macro preserved: \\rmcos",
+        "unresolved LaTeX macro preserved: \\rmlos",
+        "unresolved LaTeX macro preserved: \\rmmas",
+        "unresolved LaTeX macro preserved: \\rmrf",
+        "unresolved LaTeX macro preserved: \\tnotea",
+        "unresolved LaTeX macro preserved: \\tnoteb"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpygspys8q/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2504.14836/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpygspys8q/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2504.14836/catalog_sources/table-tab-hvs13/wrapped.tex",
+            "html": "literature/2504.14836/catalog_sources/table-tab-hvs13/latexml.html",
+            "stdout": "literature/2504.14836/catalog_sources/table-tab-hvs13/latexml.stdout.txt",
+            "stderr": "literature/2504.14836/catalog_sources/table-tab-hvs13/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpt3_qx6ac/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpt3_qx6ac/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2504.14836/catalog_sources/table-tab-hvs13/wrapped.tex",
+            "html": "literature/2504.14836/catalog_sources/table-tab-hvs13/pandoc.html",
+            "stdout": "literature/2504.14836/catalog_sources/table-tab-hvs13/pandoc.stdout.txt",
+            "stderr": "literature/2504.14836/catalog_sources/table-tab-hvs13/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "9a44ca9f5720f411a449a609cdfd290bb6b096948ccd14bf10746637dcbf7484"
+    }
+  ]
+}

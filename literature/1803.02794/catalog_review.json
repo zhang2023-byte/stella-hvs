@@ -1,0 +1,372 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1803.02794",
+    "title": "Demonstration of a novel method for measuring mass-loss rates for massive stars",
+    "month": "2018-03",
+    "source_note_json": "notes/2018/2018-03/2018-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1803.02794",
+      "pdf": "https://arxiv.org/pdf/1803.02794"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1803.02794",
+    "audit_path": "literature/1803.02794/audit.json",
+    "source_dir": "literature/1803.02794/arxiv_source",
+    "tex_root": "literature/1803.02794/arxiv_source/ms.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T08:25:00",
+    "reviewer": "agent",
+    "summary": "Paper demonstrates a novel observational method for measuring mass-loss rates of massive stars using the principle of momentum balance (pressure equilibrium) between stellar winds and the ambient interstellar medium. The technique is applied to 20 bowshock-generating high-velocity stars drawn from the Kobulnicky et al. (2016, 2017) catalogs of 709 infrared bowshock candidates. The paper presents two internal data tables: Table 1 (tab:basic) lists measured and adopted stellar and nebular parameters for the 20 stars (15 columns; ID, name, Galactic coordinates name, spectral type, references, Teff, R*, mass, V∞, distance, distance reference, angular standoff distance R0, linear standoff distance, peak 70 μm surface brightness, angular nebular diameter ℓ). Table 2 (tab:derived) presents the derived quantities (9 columns; ID, name, alt name, spectral type, luminosity, radiation density parameter U, dust emission coefficient jν, ambient ISM number density na, mass-loss rate Ṁ). Mass-loss rates range from 2×10⁻⁹ to 1.3×10⁻⁶ M⊙ yr⁻¹. The results are compared against theoretical predictions (Vink 2001, Lucy 2010b, Krtička 2014) and prior observational measurements (Hα, UV P⁴⁺, radio). Key finding: bowshock-derived Ṁ are ~0.4 dex below theoretical predictions but significantly closer than other observational methods, partially resolving the 'weak-wind problem' for late-O stars. Contains 2 internal tables (20 data rows each). External resources include the Kobulnicky 2016 bowshock catalog (709 candidates), Kobulnicky 2017 refined catalog, SST/WISE/HSO/HIPPARCOS infrared imaging and astrometry, Draine & Li (2007) dust emission models, SIMBAD (30 linked objects per ADS), and 11 spectral-type references."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-basic",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Primary input data table listing the 20 bowshock-generating high-velocity stars and their measured/adopted stellar and nebular parameters. This table provides the fundamental observational data required for the mass-loss rate calculations: stellar spectral types, effective temperatures, radii, masses, terminal wind velocities, distances, angular standoff distances (R0), peak 70 μm surface brightness, and nebular angular diameters (ℓ). The 20 stars are drawn from the 709-object bowshock catalog of Kobulnicky et al. (2016) and selected as having secure distances, spectral types, and multi-band infrared photometry (WISE 22 μm or SST 24 μm plus HSO 70 μm). Stars span spectral types O4If to B1V, with the majority being late-O dwarfs where the weak-wind problem is most pronounced. Three objects are known or suspected binaries (HD 54662, HD 305536, HD 93683). One star (HD 93027) is a known eclipsing binary. Distances come from Hipparcos parallaxes, cluster/molecular cloud associations, and maser VLBI parallaxes. The table directly feeds into Equations 5 and 7 for calculating ambient ISM density and mass-loss rates.",
+      "source_refs": [
+        {
+          "path": "literature/1803.02794/arxiv_source/ms.tex",
+          "start_line": 957,
+          "end_line": 1005,
+          "caption": "Measured & adopted parameters for stars and their bowshock nebulae",
+          "label": "tab:basic"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Identifier number from the Kobulnicky et al. (2016) catalog of 709 bowshock candidates. Values range from 13 to 413.",
+          "unit_text": "",
+          "source_of_definition": "table header / Kobulnicky et al. 2016 catalog numbering",
+          "confidence": 1.0
+        },
+        {
+          "name": "Name",
+          "meaning": "Common stellar name resolvable by SIMBAD. Includes bright star designations (ζ Oph, KM Cas, FN CMa), HD numbers, LS/BD/CPR/KGK identifiers, and NGC designations.",
+          "unit_text": "",
+          "source_of_definition": "table header / SIMBAD",
+          "confidence": 1.0
+        },
+        {
+          "name": "Alt. name",
+          "meaning": "Generic identifier in Galactic coordinates (GLLL.llll±BB.bbbb format). Alternative name following the convention of Kobulnicky et al. (2016).",
+          "unit_text": "",
+          "source_of_definition": "table header / Kobulnicky et al. 2016 Galactic coordinates naming",
+          "confidence": 1.0
+        },
+        {
+          "name": "Sp.T.",
+          "meaning": "Adopted spectral type and luminosity class from literature. Ranges from O4If to B1V. Includes notes on duplicity (e.g., +?, +O:, +B0V) and spectral peculiarities (e.g., ((f)), Vz, n, var). Three early-B stars are included (B0IVe, B0III, B1V:). The spectral type with colon (:) indicates uncertain classification.",
+          "unit_text": "",
+          "source_of_definition": "table header / multiple spectral type references (S1-S11)",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ref.",
+          "meaning": "Reference code for the spectral classification. S1-S11 correspond to: S1=Sota et al. 2014, S2=Evans et al. 2005, S3=Chick et al. 2018, S4=Vijapurkar & Drilling 1993, S5=Hanson 2003, S6=Comerón & Pasquali 2007, S7=Massey et al. 1995, S8=Hillwig et al. 2006, S9=Tjin A Djie et al. 2001, S10=Sota et al. 2011, S11=Alexander et al. 2016.",
+          "unit_text": "",
+          "source_of_definition": "table footnotes",
+          "confidence": 1.0
+        },
+        {
+          "name": "Teff (K)",
+          "meaning": "Adopted effective temperature in Kelvin, based on spectral classification using the theoretical O-star temperature scale of Martins et al. (2005a) Tables 1-3. For the few B stars, temperatures from Pecaut & Mamajek (2013) are used.",
+          "unit_text": "K",
+          "source_of_definition": "table header / Martins et al. 2005a; Pecaut & Mamajek 2013",
+          "confidence": 1.0
+        },
+        {
+          "name": "R* (R⊙)",
+          "meaning": "Adopted stellar radius in solar units, based on spectral classification using the theoretical O-star scale of Martins et al. (2005a). Values range from 6 R⊙ (B1V) to 19 R⊙ (O4If).",
+          "unit_text": "R⊙",
+          "source_of_definition": "table header / Martins et al. 2005a; Pecaut & Mamajek 2013",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mass (M⊙)",
+          "meaning": "Adopted stellar mass in solar masses. Values range from 10 M⊙ (B1V) to 58 M⊙ (O4If). Inferred from spectral type using standard mass calibrations.",
+          "unit_text": "M⊙",
+          "source_of_definition": "table header / inferred from spectral type",
+          "confidence": 1.0
+        },
+        {
+          "name": "V∞ (km s⁻¹)",
+          "meaning": "Adopted terminal stellar wind velocity in km/s, calculated by averaging Galactic O and B stars of the same spectral type from Table A.1 of Mokiem et al. (2007) and Table 3 of Marcolino et al. (2009). Values range from 800 km/s (B1V) to 3000 km/s (O4If). Uncertain at the ~50% level based on dispersion among multiple measurements at a given spectral type. Early-B dwarfs are particularly uncertain.",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header / Mokiem et al. 2007; Marcolino et al. 2009",
+          "confidence": 1.0
+        },
+        {
+          "name": "D (kpc)",
+          "meaning": "Adopted heliocentric distance in kpc. Values range from 0.11 kpc (ζ Oph, from Hipparcos) to 4.1 kpc (KGK 2010 10, scaled distance assuming Cygnus OB2 association). Most distances come from cluster/molecular cloud associations. References listed in column 11.",
+          "unit_text": "kpc",
+          "source_of_definition": "table header / various distance references (D1-D5)",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ref. (Distance)",
+          "meaning": "Reference code for adopted distance. D1=van Leeuwen 2007 (Hipparcos), D2=Hillenbrand et al. 1993, D3=Kiminki et al. 2015 (Cygnus OB2), D4=Xu et al. 2006 (maser parallax, Cas OB6/Perseus arm), D5=Smith 2006 (Carina Nebula).",
+          "unit_text": "",
+          "source_of_definition": "table footnotes",
+          "confidence": 1.0
+        },
+        {
+          "name": "R0 (arcsec)",
+          "meaning": "Angular standoff distance in arcseconds — the angular separation between the central star and the apex of the bowshock nebula. Measured from infrared images. Values range from 3.7 arcsec to 299 arcsec. Corrected by a statistical factor of 1/sin(65°)=1.10 for geometrical projection effects when computing linear R0 in column 13.",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header / measured from HSO/SST infrared images; Kobulnicky et al. 2017",
+          "confidence": 1.0
+        },
+        {
+          "name": "R0 (pc)",
+          "meaning": "Linear standoff distance in parsecs, computed from the angular standoff distance and adopted distance, corrected by a factor of 1.10 for projection effects. Values range from 0.021 pc (HD 53367) to 1.359 pc (BD+43 3654).",
+          "unit_text": "pc",
+          "source_of_definition": "table header / computed from column 12 × D, corrected for projection",
+          "confidence": 1.0
+        },
+        {
+          "name": "Peak70 (10⁷ Jy sr⁻¹)",
+          "meaning": "Peak HSO 70 μm surface brightness above adjacent background levels, in units of 10⁷ Jy sr⁻¹. Measured at a location near the apex of the nebula. The 70 μm band is used because the majority of bowshock candidates are detected here and stochastic heating effects are unlikely to affect dust at this wavelength. Values range from 4.6 to 91.4 (×10⁷ Jy sr⁻¹).",
+          "unit_text": "10⁷ Jy sr⁻¹",
+          "source_of_definition": "table header / measured from HSO/PACS 70 μm images",
+          "confidence": 1.0
+        },
+        {
+          "name": "ℓ (arcsec)",
+          "meaning": "Angular diameter of the nebula in arcseconds, defined along a chord intersecting the location of peak surface brightness. Assumes rotational symmetry such that line-of-sight depth equals projected diameter. Values range from 14 to 277 arcsec (ζ Oph has the largest).",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header / measured from infrared images",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table~1 lists the 20 stars from Table~5 of Kobulnicky et al. (2017) selected from among the 709 bowshock candidates of Kobulnicky et al. (2016) as having secure distances, spectral types, and infrared photometric measurements at multiple bandpasses covering the adjoining nebula.",
+      "comments": "20 data rows × 15 columns. Table uses deluxetable environment with \\rotate command and complex \\tablehead spanning two rows. Uses \\tablenotemark for footnotes on individual data rows. The table is the fundamental input for the mass-loss calculation pipeline. Significant data provenance: stellar parameters adopted from literature temperature scales (Martins 2005a for O stars, Pecaut & Mamajek 2013 for B stars), wind velocities from Mokiem et al. 2007 and Marcolino et al. 2009, distances from multiple sources. KGK 2010 10 has an uncertain distance (scaled by factor 3.1 from Cygnus OB2 distance based on magnitude/reddening comparison). ζ Oph standoff distance incorrectly listed in earlier catalogs as 29 arcsec instead of 299 arcsec — corrected here."
+    },
+    {
+      "id": "table-tab-derived",
+      "kind": "latex_table",
+      "asset_type": "derived_quantities",
+      "role_in_paper": "Primary results table listing derived quantities for the 20 bowshock-generating stars. This table presents the key scientific output of the paper: mass-loss rates (Ṁ) computed from the momentum-balance technique (Equation 7). It also provides intermediate derived quantities: stellar luminosity (L), radiation density parameter (U), dust emission coefficient (jν interpolated from Draine & Li 2007 models), and ambient ISM number density (na derived from Equation 5 using the 70 μm surface brightness). Mass-loss rates range from 2×10⁻⁹ to 1.3×10⁻⁶ M⊙ yr⁻¹ with a median of 6×10⁻⁸ M⊙ yr⁻¹. Ambient densities range from 1.2 to 160 cm⁻³ with a median of 16 cm⁻³. These results are plotted in Figure 3 (Ṁ vs Teff) and compared with theoretical predictions (Vink 2001, Lucy 2010b, Krtička 2014) and prior observational measurements (Hα, UV P⁴⁺). The authors estimate 0.3 dex uncertainties on Ṁ, dominated by lack of individual space velocity measurements (assumed Va=30 km/s for all stars except ζ Oph at 26.5 km/s).",
+      "source_refs": [
+        {
+          "path": "literature/1803.02794/arxiv_source/ms.tex",
+          "start_line": 1009,
+          "end_line": 1045,
+          "caption": "Derived parameters for stars and their bowshock nebulae",
+          "label": "tab:derived"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Identifier number from Kobulnicky et al. (2016) — same as Table 1 Column 1. Values range from 13 to 413.",
+          "unit_text": "",
+          "source_of_definition": "table header / Kobulnicky et al. 2016",
+          "confidence": 1.0
+        },
+        {
+          "name": "Name",
+          "meaning": "Common stellar name — same as Table 1 Column 2.",
+          "unit_text": "",
+          "source_of_definition": "table header / SIMBAD",
+          "confidence": 1.0
+        },
+        {
+          "name": "Alt. name",
+          "meaning": "Generic identifier in Galactic coordinates — same as Table 1 Column 3.",
+          "unit_text": "",
+          "source_of_definition": "table header / Kobulnicky et al. 2016",
+          "confidence": 1.0
+        },
+        {
+          "name": "Sp.T.",
+          "meaning": "Adopted spectral type and luminosity class — same as Table 1 Column 4.",
+          "unit_text": "",
+          "source_of_definition": "table header / various spectral type references",
+          "confidence": 1.0
+        },
+        {
+          "name": "Lum. (10⁴ L⊙)",
+          "meaning": "Stellar bolometric luminosity in units of 10⁴ L⊙, computed from effective temperature and radius given in Table 1. Values range from 1.4×10⁴ L⊙ (B1V) to 87×10⁴ L⊙ (O4If).",
+          "unit_text": "10⁴ L⊙",
+          "source_of_definition": "table header / computed from Teff and R* (Table 1)",
+          "confidence": 1.0
+        },
+        {
+          "name": "U",
+          "meaning": "Dimensionless ratio of the radiant energy density (in erg cm⁻³) from the star to the mean interstellar radiant energy density estimated by Mathis, Mezger & Panagia (1983; MMP83). Tabulated by Kobulnicky et al. (2017). Values range from 2.7×10² to 9.9×10⁴. The radiation density is proportional to L/R₀², indicating the central star dominates the energetics of each nebula. U determines which Draine & Li (2007) dust model applies.",
+          "unit_text": "",
+          "source_of_definition": "table header / Kobulnicky et al. 2017; Draine & Li 2007 models",
+          "confidence": 1.0
+        },
+        {
+          "name": "jν (Jy sr⁻¹ cm² nuc⁻¹)",
+          "meaning": "Dust emission coefficient at the HSO/PACS 70 μm band, expressing energy emitted per second per steradian per Hertz per nucleon. Interpolated from Draine & Li (2007, DL07) single-U dust models appropriate to each object's radiation density parameter U. Values range from 7.8×10⁻¹² to 3.0×10⁻¹¹ Jy sr⁻¹ cm² nuc⁻¹. jν is approximately proportional to √U over the range covered by this sample, making it relatively insensitive to the adopted U. Contributes ~30% uncertainty to the mass-loss rate error budget.",
+          "unit_text": "Jy sr⁻¹ cm² nucleon⁻¹",
+          "source_of_definition": "table header / Draine & Li 2007 Milky Way dust models, interpolated",
+          "confidence": 1.0
+        },
+        {
+          "name": "na (cm⁻³)",
+          "meaning": "Ambient interstellar number density (preceding the bowshock) in cm⁻³, computed from Equation 5: na = 0.25 × Iν / (ℓ × jν), where Iν is the 70 μm specific intensity, ℓ is the nebular chord length, jν is the dust emission coefficient, and the factor 0.25 accounts for the density jump of 4 across a strong shock. Values range from 1.2 cm⁻³ (HD 54662) to 160 cm⁻³ (KGK 2010 2). Median value is 16 cm⁻³. The highest density object (KGK 2010 2 at 160 cm⁻³) may be running into a molecular cloud.",
+          "unit_text": "cm⁻³",
+          "source_of_definition": "table header / Equation 5; derived from 70 μm surface brightness",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ṁ (M⊙ yr⁻¹)",
+          "meaning": "Computed mass-loss rate in solar masses per year, calculated from Equation 7 (or equivalently Equation 8 in astrophysical units). This is the key scientific result of the paper. Values range from 2.2×10⁻⁹ M⊙ yr⁻¹ (HD 53367, B0IVe) to 1.3×10⁻⁶ M⊙ yr⁻¹ (BD+43 3654, O4If). Median value is 6×10⁻⁸ M⊙ yr⁻¹. Uncertainties are estimated at 0.3 dex (~factor of 2), dominated by lack of individual space velocity measurements (assumed Va=30 km/s) and the 50% uncertainty on adopted terminal wind velocities. The scaling is Ṁ ∝ Va², so systematic errors in stellar velocity translate quadratically into Ṁ errors. For ζ Oph, Ṁ=5.4×10⁻⁸ M⊙ yr⁻¹, in excellent agreement with the Lucy (2010b) prediction of 5.0×10⁻⁸ M⊙ yr⁻¹. On average, bowshock-derived Ṁ are ~0.4 dex below Vink (2001) and Lucy (2010b) theoretical predictions, but follow the same trend with effective temperature.",
+          "unit_text": "M⊙ yr⁻¹",
+          "source_of_definition": "table header / Equation 7 (momentum balance); Equation 8 (astrophysical units)",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 2 lists quantities derived from the basic data in Table 1. ... Column 9 contains the mass-loss rate calculated from Equation 7. Values range from 2×10⁻⁹ M⊙ yr⁻¹ to 1.3×10⁻⁶ M⊙ yr⁻¹, with a median of 6×10⁻⁸ M⊙ yr⁻¹.",
+      "comments": "20 data rows × 9 columns (4 identity/reference columns + 5 derived quantity columns). Table uses deluxetable environment without rotation. The derived quantities follow a clear computational pipeline: L ∝ Teff⁴ × R*², U ∝ L/R₀², jν interpolated from DL07 models at U, na from Equation 5, Ṁ from Equation 7/8. The mass-loss rate has a D² dependence (through both R₀ and jν). KGK 2010 2 (B1V:) has anomalously high ambient density (160 cm⁻³) and the authors suggest the DL07 dust models may be inadequate in this case — it may be running into a molecular cloud. CPR2002 A10 (O8V:) has unusually high Ṁ for its spectral type (3.3×10⁻⁷) and the authors suggest it may be a windblown bubble rather than a bowshock. The O4If star BD+43 3654 lies two orders of magnitude below model predictions, possibly because its luminosity class (If = supergiant) implies very different wind physics than dwarfs."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Kobulnicky et al. (2016) catalog of 709 infrared bowshock candidates identified from Spitzer Space Telescope (SST) and Wide-field Infrared Survey Explorer (WISE) mid-infrared imaging. Published in ApJS, 227, 18. This is the parent sample from which the 20 well-characterized stars in Table 1 are drawn. The catalog provides positions, identifications, and infrared photometry for bowshock candidates across the Galactic plane. Each star in the paper is referenced by its catalog ID number (Column 1 in both tables).",
+      "source_refs": [
+        {
+          "path": "literature/1803.02794/arxiv_source/ms.tex",
+          "start_line": 334,
+          "end_line": 337,
+          "context": "Table~1 lists the 20 stars from Table~5 of \\citet{Kobulnicky2017} selected from among the 709 bowshock candidates of \\citet{Kobulnicky2016} as having secure distances, spectral types, and infrared photometric measurements"
+        }
+      ],
+      "evidence": "The 709 bowshock candidates catalog of Kobulnicky et al. (2016) is the parent sample for this work. The 20 stars are explicitly identified by their catalog ID numbers.",
+      "comments": "This catalog is the foundational data source. Without it, the sample selection would not exist. The catalog was published in ApJS and is available through the journal. ADS links: 2016ApJS..227...18K."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Kobulnicky et al. (2017) refined catalog of bowshock-producing stars with well-characterized stellar parameters. Published in AJ, 154, 201. Table 5 of this paper provides the detailed stellar parameters, infrared SED fitting results, and Draine & Li (2007) dust model fits for the 20 stars used in this analysis. The radiation density parameter U (Column 6 of Table 2) is tabulated from this work.",
+      "source_refs": [
+        {
+          "path": "literature/1803.02794/arxiv_source/ms.tex",
+          "start_line": 304,
+          "end_line": 305,
+          "context": "we apply the principle of momentum balance to derive mass-loss rates for the 20 bowshock-producing stars having well-characterized stellar parameters from Table~5 of \\citet{Kobulnicky2017}"
+        }
+      ],
+      "evidence": "The 20 bowshock-producing stars have well-characterized stellar parameters from Table 5 of Kobulnicky et al. (2017). The radiation density parameter U is tabulated from this work.",
+      "comments": "Essential intermediate data source providing dust model fits (DL07) and U values for each object. ADS links: 2017AJ....154..201K."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Spitzer Space Telescope (SST) 24 μm, Wide-field Infrared Explorer (WISE) 22 μm, and Herschel Space Observatory (HSO) 70 μm and 160 μm imaging data. These infrared imaging surveys provide the photometric measurements at multiple bandpasses covering the bowshock nebulae. The peak 70 μm surface brightness (Column 14 of Table 1) is measured from HSO/PACS 70 μm images. The angular standoff distance R0 and nebular diameter ℓ are measured from these infrared images. SST 3.6-24 μm and HSO 70-160 μm data were used by Kobulnicky et al. (2017) to fit Draine & Li (2007) dust models to each nebula's infrared SED.",
+      "source_refs": [
+        {
+          "path": "literature/1803.02794/arxiv_source/ms.tex",
+          "start_line": 338,
+          "end_line": 343,
+          "context": "Photometric data include a measurement at the Wide-Field Infrared Explorer (WISE) 22 μm band or Spitzer Space Telescope (SST) 24 μm band and the Herschel Space Observatory (HSO) 70 μm band at multiple bandpasses covering the adjoining nebula."
+        }
+      ],
+      "evidence": "Infrared photometric data from WISE 22 μm, SST 24 μm, and HSO 70 μm are used at multiple bandpasses covering the adjoining nebula. The HSO 70 μm measurement is used because the majority of bowshock candidates are detected and stochastic heating effects are unlikely to affect dust at this wavelength.",
+      "comments": "ADS metadata confirms Herschel:1 and IRSA:1 data links. These are key observational datasets from major space observatories. The 70 μm HSO/PACS data is the primary bandpass for the mass-loss calculation because dust optical depth is low for essentially all Galactic sightlines. Facilities listed in acknowledgments: SST, WISE, HSO, HIPPARCOS."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Draine & Li (2007; DL07) Milky Way dust models providing emission coefficients jν as a function of wavelength and incident radiant energy density U. Published in ApJ, 657, 810. The models are parameterized by Umin (minimum radiant energy density), Umax, and PAH mass fraction qPAH. The authors adopt single-U models (Umin=Umax) with minimum PAH fraction qPAH=0.47% based on SED fitting from Kobulnicky et al. (2017). Linear interpolation is used between the discrete model grid points (U=10², 10³, 10⁴, 10⁵) to obtain jν appropriate to each object's U value.",
+      "source_refs": [
+        {
+          "path": "literature/1803.02794/arxiv_source/ms.tex",
+          "start_line": 527,
+          "end_line": 561,
+          "context": "\\cite{DL07} provide a grid of models for interstellar dust, yielding jν as a function of wavelength and as a function of incident radiant energy density, U. ... we adopt for each object the emission coefficient, jν, given for the bandpass-averaged HSO PACS 70 μm band from the single-U DL07 model appropriate to the U for each object."
+        }
+      ],
+      "evidence": "Draine & Li (2007) provide a grid of models for interstellar dust, yielding jν as a function of wavelength and as a function of incident radiant energy density U. The models are parameterized in terms of Umin, Umax, and qPAH.",
+      "comments": "The DL07 models are essential to the mass-loss calculation pipeline. The emission coefficient jν implicitly introduces a √(R*² Teff⁴ / R₀² D²) dependence into the mass-loss rate, making Ṁ effectively proportional to D². The model-dependent choice of jν contributes ~30% to the overall error budget. Three of the four DL07 parameters (Umax, qPAH) are fixed based on Kobulnicky et al. (2017) SED fitting. KGK 2010 2 is noted as one of the few objects better fit by a model with large PAH fraction (qPAH=4.58%). ADS: 2007ApJ...657..810D."
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "SIMBAD astronomical database (operated at CDS, Strasbourg) providing cross-identifications, spectral types, and bibliographic references for the 20 sample stars. All stellar names in Table 1 Column 2 are resolvable by SIMBAD. ADS metadata indicates 30 SIMBAD objects are linked to this paper.",
+      "source_refs": [
+        {
+          "path": "literature/1803.02794/arxiv_source/ms.tex",
+          "start_line": 987,
+          "end_line": 987,
+          "context": "All of the names are resolvable by Simbad."
+        }
+      ],
+      "evidence": "ADS metadata lists 'SIMBAD:30' in data links for this paper, confirming 30 SIMBAD objects are associated.",
+      "comments": "Standard astronomical database used extensively for object identification, cross-matching, and reference retrieval throughout the paper."
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Hipparcos astrometry (Perryman et al. 1997; van Leeuwen 2007 revised reduction) providing geometric parallax distances for nearby stars in the sample. Used for distance references D1 in Table 1. ζ Oph (0.11 kpc), HD 53367 (0.26 kpc), HD 54662 (0.63 kpc), and FN CMa (0.94 kpc) have Hipparcos-based distances.",
+      "source_refs": [
+        {
+          "path": "literature/1803.02794/arxiv_source/ms.tex",
+          "start_line": 273,
+          "end_line": 274,
+          "context": "Distances, D, may be obtained by spectroscopic parallax, or by geometric parallax measurements \\citep{Perryman1997,Gaia2016a,Gaia2016b}"
+        }
+      ],
+      "evidence": "van Leeuwen (2007) Hipparcos distances are used for four stars (D1 references).",
+      "comments": "Pre-Gaia parallax distances. The authors note that Gaia distances will greatly improve the mass-loss rate precision in future work since Ṁ ∝ D². Facilities section lists HIPPARCOS."
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Stellar atmosphere and wind models from the literature used for comparison: Vink et al. (2001) theoretical mass-loss rate prescription for O stars; Lucy (2010b) moving reversing layer theory predictions; Krtička (2014) theoretical predictions for B main-sequence stars; Martins et al. (2005a) theoretical O-star temperature scale; Pecaut & Mamajek (2013) B-star temperature/radius scale; Mokiem et al. (2007) and Marcolino et al. (2009) compilations of terminal wind velocities. These provide the theoretical framework and stellar parameter calibrations that the observational results are compared against.",
+      "source_refs": [
+        {
+          "path": "literature/1803.02794/arxiv_source/ms.tex",
+          "start_line": 678,
+          "end_line": 687,
+          "context": "Blue crosses depict model predictions for each object using the formulation of Vink et al. (2001) ... Red squares connected by lines depict the model predictions from Lucy (2010b) ... Red triangles and dotted lines show the predictions for B main-sequence stars from Krtička (2014)"
+        }
+      ],
+      "evidence": "Theoretical predictions from Vink (2001), Lucy (2010b), and Krtička (2014) are used as comparison benchmarks for the bowshock-derived mass-loss rates in Figures 3 and 4.",
+      "comments": "Multiple theoretical and calibration references collectively provide the stellar parameter framework (Teff, R*, mass scales), wind velocity calibrations, and mass-loss rate predictions against which results are compared. The Martins (2005a) temperature scale and Lucy (2010b) models are particularly important — the latter shows excellent agreement with the bowshock result for ζ Oph (5.0×10⁻⁸ vs 5.4×10⁻⁸ M⊙ yr⁻¹)."
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Prior observational mass-loss rate measurements from the literature used for comparison in Figure 4: Martins et al. (2005b) UV-based Ṁ for Galactic O3-O9.5 dwarfs; Howarth & Prinja (1989) UV-based Ṁ survey; Fullerton et al. (2006) P⁴⁺ UV absorption line measurements for late-O dwarfs and giants; Repolust et al. (2004) and Markova et al. (2004) Hα-based Ṁ measurements. These provide the observational context showing that bowshock-derived Ṁ lie between the UV and Hα measurements and closer to theoretical predictions.",
+      "source_refs": [
+        {
+          "path": "literature/1803.02794/arxiv_source/ms.tex",
+          "start_line": 800,
+          "end_line": 834,
+          "context": "Figure 4 replicates Figure 3 with the addition mass loss rates measured for the set of galactic O3--O9.5 dwarf stars studied separately by Martins et al. (2005b) (blue open circles) and Howarth et al. (1989) (blue open squares)"
+        }
+      ],
+      "evidence": "Figure 4 shows comparison with prior observational mass-loss rates from Martins et al. (2005b), Howarth & Prinja (1989), Fullerton et al. (2006), Repolust et al. (2004), and Markova et al. (2004).",
+      "comments": "These compilations demonstrate the historical 'weak-wind problem' dispersion: Hα-based Ṁ (uncorrected for clumping) are ~10× higher than bowshock values, while UV P⁴⁺ measurements are ~10× lower. The bowshock technique occupies a middle ground closer to theoretical expectations."
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2506.23588",
+    "title": "Evolutionary Map of the Universe: Detection and Analysis of the Shell Surrounding the Runaway Wolf-Rayet Star WR16",
+    "month": "2025-06",
+    "source_note_json": "notes/2025/2025-06/2025-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2506.23588",
+      "pdf": "https://arxiv.org/pdf/2506.23588"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2506.23588",
+    "audit_path": "literature/2506.23588/audit.json",
+    "source_dir": "literature/2506.23588/arxiv_source",
+    "tex_root": "literature/2506.23588/arxiv_source/WR16.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T12:43:46",
+    "reviewer": "agent",
+    "summary": "This paper reports the detection and analysis of a radio shell surrounding the runaway Wolf-Rayet star WR16 using ASKAP/EMU data. It contains one internal table with measured radio flux densities of WR16 and its nebulous shell at multiple frequencies, including new ASKAP measurements and archival ATCA data, plus the derived radio spectral index. External resources include data portals for EMU/CASDA, Gaia DR3 Archive, WISE/IRSA, and SuperCOSMOS H-alpha (WFAU); generic Gaia/DPAC acknowledgements and software documentation URLs were removed."
+  },
+  "internal_tables": [
+    {
+      "id": "table-Table-Data_Fluxes",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Lists measured radio flux densities for WR16 and its nebulous shell, combining new ASKAP/EMU data with archival ATCA observations, and the derived spectral index.",
+      "source_refs": [
+        {
+          "path": "literature/2506.23588/arxiv_source/WR16.tex",
+          "start_line": 364,
+          "end_line": 379,
+          "caption": "Measured flux densities of the Wolf-Rayet star WR16 and its nebulous shell. $^a$Measurements made as part of this paper. $^b$Measurements using \\ac{ATCA} observations from \\citet{1999ApJ...518..890C}. $^c$Measurements using \\ac{ATCA} observations from \\citet{1995ApJ...450..289L}.",
+          "label": "Table:Data_Fluxes"
+        }
+      ],
+      "columns": [
+        {
+          "name": "WR16",
+          "meaning": "Component or region (WR16 star or its shell)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_944^a | (mJy)",
+          "meaning": "Flux density at 943.5 MHz (new ASKAP measurement)",
+          "unit_text": "mJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_2.40^b | (mJy)",
+          "meaning": "Flux density at 2.40 GHz (archival ATCA)",
+          "unit_text": "mJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_4.80^c | (mJy)",
+          "meaning": "Flux density at 4.80 GHz (archival ATCA)",
+          "unit_text": "mJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_8.64^c | (mJy)",
+          "meaning": "Flux density at 8.64 GHz (archival ATCA)",
+          "unit_text": "mJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\alpha | \\alpha+/-\\Delta\\alpha",
+          "meaning": "Radio spectral index (S ~ nu^alpha) and its uncertainty",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Measured flux densities of the Wolf-Rayet star WR16 and its nebulous shell. $^a$Measurements made as part of this paper. $^b$Measurements using \\ac{ATCA} observations from \\citet{1999ApJ...518..890C}. $^c$Measurements using \\ac{ATCA} observations from \\citet{1995ApJ...450..289L}.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://ror.org/05qajvd42",
+      "local_path": "",
+      "description": "Research Organization Registry (ROR) identifier for the Australia Telescope National Facility (ATNF), of which ASKAP is a part.",
+      "source_refs": [
+        {
+          "path": "literature/2506.23588/arxiv_source/WR16.tex",
+          "start_line": 529,
+          "end_line": 529,
+          "context": "\\paragraph{Acknowledgements}\n\nThis scientific work uses data obtained from Inyarrimanha Ilgari Bundara, the CSIRO Murchison Radio-astronomy Observatory. We acknowledge the Wajarri Yamaji People as the Traditional Owners and native title holders of the Observatory site. CSIRO’s ASKAP radio telescope is part of the Australia Telescope National Facility (\\url{https://ror.org/05qajvd42}). Operation of ASKAP is funded by the Australian Government with support from the National Collaborative Research Infrastructure Strategy. ASKAP uses the resources of the Pawsey Supercomputing Research Centre. Establishment of ASKAP, Inyarrimanha Ilgari Bundara, the CSIRO Murchison Radio-astronomy Observatory and the Pawsey Supercomputing Research Centre are initiatives of the Australian Government, with support from the Government of Western Australia and the Science and Industry Endowment Fund. \n\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement."
+        }
+      ],
+      "evidence": "\\paragraph{Acknowledgements}\n\nThis scientific work uses data obtained from Inyarrimanha Ilgari Bundara, the CSIRO Murchison Radio-astronomy Observatory. We acknowledge the Wajarri Yamaji People as the Traditional Owners and native title holders of the Observatory site. CSIRO’s ASKAP radio telescope is part of the Australia Telescope National Facility (\\url{https://ror.org/05qajvd42}). Operation of ASKAP is funded by the Australian Government with support from the National Collaborative Research Infrastructure Strategy. ASKAP uses the resources of the Pawsey Supercomputing Research Centre. Establishment of ASKAP, Inyarrimanha Ilgari Bundara, the CSIRO Murchison Radio-astronomy Observatory and the Pawsey Supercomputing Research Centre are initiatives of the Australian Government, with support from the Government of Western Australia and the Science and Industry Endowment Fund. \n\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://gea.esac.esa.int/archive/",
+      "local_path": "",
+      "description": "Gaia DR3 Archive at ESAC, the source of astrometric and photometric data used in the work.",
+      "source_refs": [
+        {
+          "path": "literature/2506.23588/arxiv_source/WR16.tex",
+          "start_line": 541,
+          "end_line": 541,
+          "context": "\\paragraph{Data Availability Statement}\n\n\\ac{EMU} data can be accessed through the \\ac{CASDA} portal: \\url{https://research.csiro.au/casda}. All \\textit{Gaia} \\ac{DR3} data are obtained from the \\textit{Gaia} Archive website: \\url{https://gea.esac.esa.int/archive/}. \\ac{WISE} data are available from the NASA/IPAC Infrared Science Archive (IRSA): \\url{https://irsa.ipac.caltech.edu/Missions/wise.html}.\nThe SuperCOSMOS H$\\alpha$ data are available from The Wide Field Astronomy Unit (WFAU) archive: \\url{http://www-wfau.roe.ac.uk/sss/halpha/hapixel.html}"
+        }
+      ],
+      "evidence": "\\paragraph{Data Availability Statement}\n\n\\ac{EMU} data can be accessed through the \\ac{CASDA} portal: \\url{https://research.csiro.au/casda}. All \\textit{Gaia} \\ac{DR3} data are obtained from the \\textit{Gaia} Archive website: \\url{https://gea.esac.esa.int/archive/}. \\ac{WISE} data are available from the NASA/IPAC Infrared Science Archive (IRSA): \\url{https://irsa.ipac.caltech.edu/Missions/wise.html}.\nThe SuperCOSMOS H$\\alpha$ data are available from The Wide Field Astronomy Unit (WFAU) archive: \\url{http://www-wfau.roe.ac.uk/sss/halpha/hapixel.html}",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://irsa.ipac.caltech.edu/Missions/wise.html",
+      "local_path": "",
+      "description": "NASA/IPAC Infrared Science Archive (IRSA) portal for WISE data, used for mid-infrared comparison imaging of the shell.",
+      "source_refs": [
+        {
+          "path": "literature/2506.23588/arxiv_source/WR16.tex",
+          "start_line": 541,
+          "end_line": 541,
+          "context": "\\paragraph{Data Availability Statement}\n\n\\ac{EMU} data can be accessed through the \\ac{CASDA} portal: \\url{https://research.csiro.au/casda}. All \\textit{Gaia} \\ac{DR3} data are obtained from the \\textit{Gaia} Archive website: \\url{https://gea.esac.esa.int/archive/}. \\ac{WISE} data are available from the NASA/IPAC Infrared Science Archive (IRSA): \\url{https://irsa.ipac.caltech.edu/Missions/wise.html}.\nThe SuperCOSMOS H$\\alpha$ data are available from The Wide Field Astronomy Unit (WFAU) archive: \\url{http://www-wfau.roe.ac.uk/sss/halpha/hapixel.html}"
+        }
+      ],
+      "evidence": "\\paragraph{Data Availability Statement}\n\n\\ac{EMU} data can be accessed through the \\ac{CASDA} portal: \\url{https://research.csiro.au/casda}. All \\textit{Gaia} \\ac{DR3} data are obtained from the \\textit{Gaia} Archive website: \\url{https://gea.esac.esa.int/archive/}. \\ac{WISE} data are available from the NASA/IPAC Infrared Science Archive (IRSA): \\url{https://irsa.ipac.caltech.edu/Missions/wise.html}.\nThe SuperCOSMOS H$\\alpha$ data are available from The Wide Field Astronomy Unit (WFAU) archive: \\url{http://www-wfau.roe.ac.uk/sss/halpha/hapixel.html}",
+      "comments": ""
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "https://research.csiro.au/casda",
+      "local_path": "",
+      "description": "CSIRO ASKAP Science Data Archive (CASDA) portal, used to access EMU survey data.",
+      "source_refs": [
+        {
+          "path": "literature/2506.23588/arxiv_source/WR16.tex",
+          "start_line": 541,
+          "end_line": 541,
+          "context": "\\paragraph{Data Availability Statement}\n\n\\ac{EMU} data can be accessed through the \\ac{CASDA} portal: \\url{https://research.csiro.au/casda}. All \\textit{Gaia} \\ac{DR3} data are obtained from the \\textit{Gaia} Archive website: \\url{https://gea.esac.esa.int/archive/}. \\ac{WISE} data are available from the NASA/IPAC Infrared Science Archive (IRSA): \\url{https://irsa.ipac.caltech.edu/Missions/wise.html}.\nThe SuperCOSMOS H$\\alpha$ data are available from The Wide Field Astronomy Unit (WFAU) archive: \\url{http://www-wfau.roe.ac.uk/sss/halpha/hapixel.html}"
+        }
+      ],
+      "evidence": "\\paragraph{Data Availability Statement}\n\n\\ac{EMU} data can be accessed through the \\ac{CASDA} portal: \\url{https://research.csiro.au/casda}. All \\textit{Gaia} \\ac{DR3} data are obtained from the \\textit{Gaia} Archive website: \\url{https://gea.esac.esa.int/archive/}. \\ac{WISE} data are available from the NASA/IPAC Infrared Science Archive (IRSA): \\url{https://irsa.ipac.caltech.edu/Missions/wise.html}.\nThe SuperCOSMOS H$\\alpha$ data are available from The Wide Field Astronomy Unit (WFAU) archive: \\url{http://www-wfau.roe.ac.uk/sss/halpha/hapixel.html}",
+      "comments": ""
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "http://www-wfau.roe.ac.uk/sss/halpha/hapixel.html",
+      "local_path": "",
+      "description": "Wide Field Astronomy Unit (WFAU) SuperCOSMOS H-alpha archive, used for H-alpha comparison imaging.",
+      "source_refs": [
+        {
+          "path": "literature/2506.23588/arxiv_source/WR16.tex",
+          "start_line": 542,
+          "end_line": 542,
+          "context": "\\ac{EMU} data can be accessed through the \\ac{CASDA} portal: \\url{https://research.csiro.au/casda}. All \\textit{Gaia} \\ac{DR3} data are obtained from the \\textit{Gaia} Archive website: \\url{https://gea.esac.esa.int/archive/}. \\ac{WISE} data are available from the NASA/IPAC Infrared Science Archive (IRSA): \\url{https://irsa.ipac.caltech.edu/Missions/wise.html}.\nThe SuperCOSMOS H$\\alpha$ data are available from The Wide Field Astronomy Unit (WFAU) archive: \\url{http://www-wfau.roe.ac.uk/sss/halpha/hapixel.html}\n\n\\printendnotes"
+        }
+      ],
+      "evidence": "\\ac{EMU} data can be accessed through the \\ac{CASDA} portal: \\url{https://research.csiro.au/casda}. All \\textit{Gaia} \\ac{DR3} data are obtained from the \\textit{Gaia} Archive website: \\url{https://gea.esac.esa.int/archive/}. \\ac{WISE} data are available from the NASA/IPAC Infrared Science Archive (IRSA): \\url{https://irsa.ipac.caltech.edu/Missions/wise.html}.\nThe SuperCOSMOS H$\\alpha$ data are available from The Wide Field Astronomy Unit (WFAU) archive: \\url{http://www-wfau.roe.ac.uk/sss/halpha/hapixel.html}\n\n\\printendnotes",
+      "comments": ""
+    }
+  ]
+}

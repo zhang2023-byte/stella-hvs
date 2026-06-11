@@ -1,0 +1,63 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:23:00",
+  "paper": {
+    "arxiv_id": "2304.14759",
+    "bibcode": "2023A&A...673A..55M",
+    "title": "A runaway T-Tauri star leaving an extended trail",
+    "month": "2023-04",
+    "source_note_json": "notes/2023/2023-04/2023-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2304.14759",
+      "pdf": "https://arxiv.org/pdf/2304.14759"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2304.14759",
+    "audit_path": "literature/2304.14759/audit.json",
+    "catalog_review_path": "literature/2304.14759/catalog_review.json",
+    "catalog_extraction_path": "literature/2304.14759/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2304.14759/catalog_tables/table-table-1.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:23:00",
+    "extractor": "agent",
+    "summary": "This paper reports a runaway T-Tauri star UJT-1 (runaway T-Tauri star, RATTS), which is traveling supersonically through the interstellar medium and leaving a ~50 pc long bow shock trail. Multi-epoch astrometry yields proper motions μα cos δ = -1±1 mas/yr, μδ = -6±1 mas/yr, radial velocity -33±4 km/s, distance ~4.5 kpc (range 2-4.5 kpc). After subtracting Galactic rotation and solar motion, the peculiar velocity is 15-80 km/s at 90% confidence, with a median of ~45 km/s. The paper explicitly classifies it as a runaway star (runaway threshold ~30 km/s), but never discusses Galactic escape velocity (~500 km/s), hypervelocity stars (HVS), Galactic gravitational unbinding (Galactic-unbound), or positive total energy orbits. UJT-1's velocity is only on the order of tens of km/s, far below the Galactic escape velocity; it is merely an ordinary runaway star moving supersonically in the ISM, still gravitationally bound to the Galaxy. No HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2304.14759:group-01",
+      "description": "UJT-1 — the only star studied in this paper. A classical TTS (Class II YSO), spectral type ~G5 III, mass ~2 M⊙, radius ~2 R⊙. Its kinematic parameters were determined from 8 epochs (1953-2021) of astrometric and optical spectroscopic observations. Peculiar velocity 15-80 km/s (90% confidence interval), median ~45 km/s; the paper classifies it as a runaway T-Tauri star (RATTS).",
+      "decision": "rejected",
+      "reason": "UJT-1 is an ordinary runaway T-Tauri star with a peculiar velocity of only 15-80 km/s, far below the Galactic escape velocity (~500 km/s). The paper never discusses Galactic gravitational unbinding, hypervelocity stars (HVS), or positive total energy orbits. The paper merely characterizes it as a runaway star moving supersonically in the ISM (threshold ~30 km/s), which is an ordinary runaway star within the Galaxy, still gravitationally bound to the Galaxy. No HVS candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2304.14759/arxiv_source/paper.tex",
+          "start_line": 308,
+          "end_line": 328,
+          "context": "Section 4: Stellar run-away velocity. Peculiar velocity in the range 15 to 80 km/s at 90% confidence. ~75% of this interval is above the usual threshold (~30 km/s) for runaway stars. UJT-1 is classified as a runaway candidate, not HVS."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2304.14759/arxiv_source/paper.tex",
+          "start_line": 496,
+          "end_line": 506,
+          "context": "Section 8.1: Bona fide RATTS. UJT-1 proposed as prototype of RATTS systems. Wake extends ~50 pc, crossing lifetime ~1 Myr, consistent with typical TTS age. All discussion within Galactic context."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2304.14759/arxiv_source/paper.tex",
+          "start_line": 99,
+          "end_line": 119,
+          "context": "Introduction: explicitly frames the work as runaway T-Tauri stars (RATTS) — stars escaping their natal clouds, not the Galaxy. References other runaway star studies using Gaia data focused on early-type stars."
+        }
+      ]
+    }
+  ]
+}

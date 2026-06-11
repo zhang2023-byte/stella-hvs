@@ -1,0 +1,362 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-23T11:39:35",
+  "paper": {
+    "arxiv_id": "2206.13002",
+    "title": "60 candidate high-velocity stars originating from the Sagittarius dwarf spheroidal galaxy in Gaia EDR3",
+    "month": "2022-06"
+  },
+  "review": {
+    "path": "literature/2206.13002/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260523T113935",
+    "started_at": "2026-05-23T11:39:35",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2206.13002",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": true
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-correction",
+      "internal_table_id": "table-tab-correction",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2206.13002/arxiv_source/Library.tex",
+        "start_line": 78,
+        "end_line": 98,
+        "caption": "Correction parameters for radial velocity and its error.",
+        "label": "tab:correction"
+      },
+      "source_path": "literature/2206.13002/arxiv_source/Library.tex",
+      "excerpt_path": "literature/2206.13002/catalog_sources/table-tab-correction/excerpt.tex",
+      "sha256": "5dabb3f0b7a4cc7e62c5fe968e1e7f02ee501af2fd473796a4e6161e97fac8a1",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-tab-results",
+      "internal_table_id": "table-tab-results",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2206.13002/arxiv_source/Library.tex",
+        "start_line": 235,
+        "end_line": 252,
+        "caption": "Properties of stars that originate from Sgr.",
+        "label": "tab:results"
+      },
+      "source_path": "literature/2206.13002/arxiv_source/Library.tex",
+      "excerpt_path": "literature/2206.13002/catalog_sources/table-tab-results/excerpt.tex",
+      "sha256": "05c5be7bcf049c4cce19d5e0b1228e2e54e2087cdadea82f69b369a9afbc2093",
+      "line_count": 18,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-correction",
+      "internal_table_id": "table-tab-correction",
+      "status": "success",
+      "ecsv_path": "literature/2206.13002/catalog_tables/table-tab-correction.ecsv",
+      "caption": "Correction parameters for radial velocity and its error.",
+      "label": "tab:correction",
+      "row_count": 9,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Survey",
+          "offset",
+          "k",
+          "\\sigma_v,floor",
+          "Method"
+        ],
+        [
+          "",
+          "km s -1",
+          "",
+          "km s -1",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Survey",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "offset | km s -1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "k",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\sigma_v,floor | km s -1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Method",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpkcpd9peb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2206.13002/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpkcpd9peb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2206.13002/catalog_sources/table-tab-correction/wrapped.tex",
+            "html": "literature/2206.13002/catalog_sources/table-tab-correction/latexml.html",
+            "stdout": "literature/2206.13002/catalog_sources/table-tab-correction/latexml.stdout.txt",
+            "stderr": "literature/2206.13002/catalog_sources/table-tab-correction/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5dabb3f0b7a4cc7e62c5fe968e1e7f02ee501af2fd473796a4e6161e97fac8a1"
+    },
+    {
+      "id": "table-tab-results",
+      "internal_table_id": "table-tab-results",
+      "status": "success",
+      "ecsv_path": "literature/2206.13002/catalog_tables/table-tab-results.ecsv",
+      "caption": "Properties of stars that originate from Sgr.",
+      "label": "tab:results",
+      "row_count": 1,
+      "column_count": 9,
+      "environment": "deluxetable*",
+      "header_rows": [
+        [
+          "ID",
+          "source-id",
+          "r_GC",
+          "v_GC",
+          "t_trace",
+          "\\Delta r_min^*",
+          "\\Delta v_GC",
+          "P_Sgr",
+          "P_ub"
+        ],
+        [
+          "",
+          "",
+          "(kpc)",
+          "\\colhead(km s^-1)",
+          "(Myr)",
+          "",
+          "\\colhead(km s^-1)",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "source-id",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "r_GC | (kpc)",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "v_GC | \\colhead(km s^-1)",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "t_trace | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\Delta r_min^*",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\Delta v_GC | \\colhead(km s^-1)",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "P_Sgr",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "P_ub",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\Delta",
+        "unresolved LaTeX macro preserved: \\colhead",
+        "unresolved LaTeX macro preserved: \\inputtab"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpkard2bum/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2206.13002/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpkard2bum/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2206.13002/catalog_sources/table-tab-results/wrapped.tex",
+            "html": "literature/2206.13002/catalog_sources/table-tab-results/latexml.html",
+            "stdout": "literature/2206.13002/catalog_sources/table-tab-results/latexml.stdout.txt",
+            "stderr": "literature/2206.13002/catalog_sources/table-tab-results/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpo5_31uao/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpo5_31uao/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2206.13002/catalog_sources/table-tab-results/wrapped.tex",
+            "html": "literature/2206.13002/catalog_sources/table-tab-results/pandoc.html",
+            "stdout": "literature/2206.13002/catalog_sources/table-tab-results/pandoc.stdout.txt",
+            "stderr": "literature/2206.13002/catalog_sources/table-tab-results/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "05c5be7bcf049c4cce19d5e0b1228e2e54e2087cdadea82f69b369a9afbc2093"
+    }
+  ]
+}

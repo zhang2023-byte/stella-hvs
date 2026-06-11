@@ -1,0 +1,260 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1810.04083",
+    "title": "A Runaway Giant in the Galactic Halo",
+    "month": "2018-10",
+    "source_note_json": "notes/2018/2018-10/2018-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1810.04083",
+      "pdf": "https://arxiv.org/pdf/1810.04083"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1810.04083",
+    "audit_path": "literature/1810.04083/audit.json",
+    "source_dir": "literature/1810.04083/arxiv_source",
+    "tex_root": "literature/1810.04083/arxiv_source/GiantV2.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T07:46:46",
+    "reviewer": "agent",
+    "summary": "Paper presents a reanalysis of the star J01020100-7122208 (UCAC2 1342515), previously thought to be a runaway yellow supergiant in the Small Magellanic Cloud, now shown by Gaia DR2 parallax (0.0728±0.0190 mas) to be a G5-8 bright giant in the Milky Way halo at ~8.9 kpc. New analysis yields Teff=4800±100 K, log L/L⊙=2.70±0.20, M=3.5±0.5 M⊙, age~180 Myr, [Fe/H]=-0.5. Total Galactocentric space velocity ~296 km/s, located 6.4 kpc below the Galactic plane. Orbit integration shows the star passed through the disk ~25 Myr ago; the highly radial orbit and analysis of parallax uncertainty suggests ejection by the Milky Way's central black hole is the most likely origin scenario. The paper includes 3 internal tables: (1) Table 1 (tab:red) presents observed photometry and extinction analysis from ATLAS9 models for three effective temperatures (4700, 4800, 4900 K) with R_V=3.1; (2) Table 2 (tab:physical) presents the final derived physical properties of the star; (3) Table 3 (tab:kinematics) presents location and kinematic parameters including coordinates, proper motions, radial velocity, and Galactocentric velocities. Four external resources are identified: ESA Gaia astrometry inference tutorials, ATLAS9 model colors database, Gaia mission, and Gaia DPAC. No machine-readable data files are included in the arXiv source; all data are presented as LaTeX tables only. The paper focuses on a single object (J01020100-7122208) and does not present a large survey catalog."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-red",
+      "kind": "latex_table",
+      "asset_type": "intermediate_results",
+      "role_in_paper": "Presents the observed broad-band photometry (U-B, B-V, V-K, J-K) for J01020100-7122208 and the derived intrinsic colors, color excesses, and visual extinction A_V from ATLAS9 [Fe/H]=-0.5 models for three effective temperatures (4700, 4800, 4900 K), assuming R_V=3.1. This table is part of the iterative analysis to determine the star's effective temperature and extinction.",
+      "source_refs": [
+        {
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 314,
+          "end_line": 344,
+          "caption": "Intrinsic Colors and Extinction from ATLAS9 [Fe/H]=-0.5 Models for R_V=3.1",
+          "label": "tab:red"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Color",
+          "meaning": "Broad-band color index (U-B, B-V, V-K, J-K)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Obs. Color",
+          "meaning": "Observed color from UBV (DennisSMC) and JHK (2MASS) photometry, with uncertainties",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Int. Color (4700 K)",
+          "meaning": "Intrinsic (unreddened) color from ATLAS9 model at Teff=4700 K, [Fe/H]=-0.5, log g=2.0",
+          "unit_text": "mag",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Color Excess (4700 K)",
+          "meaning": "Color excess E(color) = Observed - Intrinsic at Teff=4700 K",
+          "unit_text": "mag",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_V (4700 K)",
+          "meaning": "Visual extinction A_V derived from color excess at Teff=4700 K, with propagated uncertainty",
+          "unit_text": "mag",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Int. Color (4800 K)",
+          "meaning": "Intrinsic (unreddened) color from ATLAS9 model at Teff=4800 K, [Fe/H]=-0.5, log g=2.0",
+          "unit_text": "mag",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Color Excess (4800 K)",
+          "meaning": "Color excess E(color) = Observed - Intrinsic at Teff=4800 K",
+          "unit_text": "mag",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_V (4800 K)",
+          "meaning": "Visual extinction A_V derived from color excess at Teff=4800 K, with propagated uncertainty",
+          "unit_text": "mag",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Int. Color (4900 K)",
+          "meaning": "Intrinsic (unreddened) color from ATLAS9 model at Teff=4900 K, [Fe/H]=-0.5, log g=2.0",
+          "unit_text": "mag",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Color Excess (4900 K)",
+          "meaning": "Color excess E(color) = Observed - Intrinsic at Teff=4900 K",
+          "unit_text": "mag",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_V (4900 K)",
+          "meaning": "Visual extinction A_V derived from color excess at Teff=4900 K, with propagated uncertainty",
+          "unit_text": "mag",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "In Table 1 we list the observed photometry and derived extinction A_V, using the relationships E(U-B)=0.72E(B-V), E(V-K)=2.95E(B-V), and E(J-K)=0.54E(B-V). We have adopted a value for the total-to-selective extinction R_V=3.1.",
+      "comments": "Five rows of data: U-B, B-V, V-K, J-K, and weighted average. Key result: the weighted average A_V is 0.49±0.02 (4700 K), 0.62±0.02 (4800 K), 0.74±0.02 (4900 K). The authors later explore R_V=3.5 (see text) and adopt Teff=4800±100 K with A_V=0.65±0.15 mag. The optical UBV photometry from DennisSMC; near-IR JHK from 2MASS. The table shows that the A_V values from different color indices are inconsistent at R_V=3.1, motivating the exploration of higher R_V values and leading to the adoption of R_V=3.5."
+    },
+    {
+      "id": "table-tab-physical",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Primary results table presenting the final derived physical properties of J01020100-7122208, including absolute visual magnitude, effective temperature, bolometric luminosity, stellar radius, mass, surface gravity, and age.",
+      "source_refs": [
+        {
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 369,
+          "end_line": 387,
+          "caption": "Physical Properties",
+          "label": "tab:physical"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Physical parameter name (M_V, Teff, log L/L⊙, Radius, Mass, log g, Age)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Derived value of the physical parameter with uncertainty",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The physical parameters we have arrived at are listed in Table 2.",
+      "comments": "Seven rows. Key values: M_V=-1.7±0.5 (or -1.7±0.9 including full Gaia parallax zero-point error), Teff=4800±100 K, log(L/L⊙)=2.70±0.20 (or 2.70±0.56 with full zero-point error), Radius=32±8 R⊙, Mass=3.5±0.5 M⊙, log g=2.0±0.2, Age=180 Myr (range 130-300 Myr). The star is on the red giant branch or early AGB stage."
+    },
+    {
+      "id": "table-tab-kinematics",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Presents the complete astrometric and kinematic data for J01020100-7122208, including celestial and Galactic coordinates, Gaia DR2 proper motions, heliocentric radial velocity, distance, Galactocentric Cartesian position and velocity components, and total space motion.",
+      "source_refs": [
+        {
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 389,
+          "end_line": 411,
+          "caption": "Location and Kinematics",
+          "label": "tab:kinematics"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameters",
+          "meaning": "Kinematic/astrometric parameter name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Values",
+          "meaning": "Measured or derived value with uncertainty",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "We summarize the kinematics in Table 3.",
+      "comments": "Eleven rows. Key values: Celestial coords α=01:02:01.00, δ=-71:22:20.8 (J2000); Galactic coords l=301.722°, b=-45.731°; Gaia DR2 proper motions μαcosδ=+8.647±0.036 mas/yr, μδ=-0.906±0.027 mas/yr; heliocentric radial velocity=+301±2.4 km/s (from NeugentSMC/YSGRunaway); distance=8.9(+2.8/-1.8) kpc; Galactocentric Cartesian (X,Y,Z)=(-165.0±1.6, -180.1±1.8, -166.7±1.9) km/s; radial distance from GC=9.8±1.2 kpc; radial velocity w.r.t. GC=293.8±1.8 km/s; total space motion w.r.t. GC=295.7±3.1 km/s. The star is currently 6.4 kpc below the Galactic plane with a highly radial orbit."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://repos.cosmos.esa.int/socci/projects/GAIA/repos/astrometry-inference-tutorials/browse",
+      "local_path": "",
+      "description": "ESA Gaia astrometry inference tutorials (Python software repository). Used to derive the distance to J01020100-7122208 from the Gaia DR2 parallax, finding a median distance modulus of 14.75 mag (8.9 kpc) with an exponentially decreasing space density prior.",
+      "source_refs": [
+        {
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 57,
+          "end_line": 57,
+          "context": "using the Gaia Python software\\footnote{https://repos.cosmos.esa.int/socci/projects/GAIA/repos/astrometry-inference-tutorials/browse}, we find a median distance modulus of 14.75 mag (8.9 kpc)"
+        }
+      ],
+      "evidence": "Applying this offset, and using the Gaia Python software, we find a median distance modulus of 14.75 mag (8.9 kpc) adopting an exponentially decreasing space density, the least biased estimator found by Gaiaparallaxes.",
+      "comments": "ESA SOC CI repository containing Gaia astrometry inference tutorials. Used for the Bayesian distance estimation from the Gaia DR2 parallax."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://wwwuser.oats.inaf.it/castelli/colors/bcp.html",
+      "local_path": "",
+      "description": "ATLAS9 model broad-band colors database (Castelli/Kurucz). Provides intrinsic (unreddened) broad-band colors for ATLAS9 stellar atmosphere models as a function of Teff, log g, and [Fe/H]. Used iteratively with the observed photometry to determine the effective temperature, reddening, and extinction of J01020100-7122208.",
+      "source_refs": [
+        {
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 77,
+          "end_line": 77,
+          "context": "We use the ATLAS models (Kurucz04) as these have broad-band colors readily available on-line\\footnote{http://wwwuser.oats.inaf.it/castelli/colors/bcp.html}."
+        }
+      ],
+      "evidence": "We use the ATLAS models as these have broad-band colors readily available on-line. This is an iterative process, as we must adopt a surface gravity, which depends upon the adopted mass, which depends upon the luminosity.",
+      "comments": "Hosted by OATS/INAF Trieste. The ATLAS9 model colors are the foundation of the extinction analysis presented in Table 1."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission. Primary source of the DR2 parallax (0.0728±0.0190 mas), proper motions (μαcosδ=+8.647±0.036 mas/yr, μδ=-0.906±0.027 mas/yr), and Gaia-derived effective temperature (4867 K) for J01020100-7122208. The Gaia parallax revealed the star is in the Milky Way halo, not the SMC.",
+      "source_refs": [
+        {
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 226,
+          "end_line": 226,
+          "context": "This work has made use of data from the ESA mission Gaia (\\url{https://www.cosmos.esa.int/gaia})"
+        }
+      ],
+      "evidence": "This work has made use of data from the ESA mission Gaia, processed by the Gaia Data Processing and Analysis Consortium (DPAC).",
+      "comments": "Gaia DR2 is the fundamental data source enabling the reclassification of the star from SMC member to Milky Way halo object. The paper also uses the Gaia-derived stellar temperature (4867 K) as a cross-check."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "Gaia Data Processing and Analysis Consortium (DPAC). Responsible for processing the Gaia data used in the paper, including the astrometric solutions (parallaxes, proper motions) and photometric calibrations.",
+      "source_refs": [
+        {
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 228,
+          "end_line": 228,
+          "context": "processed by the Gaia Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium})"
+        }
+      ],
+      "evidence": "processed by the Gaia Data Processing and Analysis Consortium (DPAC). Funding for the DPAC has been provided by national institutions.",
+      "comments": "Standard acknowledgment for Gaia data usage. No direct data access through this URL for the specific star."
+    }
+  ]
+}

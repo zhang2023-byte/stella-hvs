@@ -1,0 +1,80 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:03:00",
+  "paper": {
+    "arxiv_id": "1908.07550",
+    "bibcode": "2019ApJ...884....6M",
+    "title": "Runaway Young Stars near the Orion Nebula",
+    "month": "2019-08",
+    "source_note_json": "notes/2019/2019-08/2019-08.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1908.07550",
+      "pdf": "https://arxiv.org/pdf/1908.07550"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1908.07550",
+    "audit_path": "literature/1908.07550/audit.json",
+    "catalog_review_path": "literature/1908.07550/catalog_review.json",
+    "catalog_extraction_path": "literature/1908.07550/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1908.07550/catalog_tables/table-tab_sources.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:03:00",
+    "extractor": "agent",
+    "summary": "本文利用Gaia DR2天体测量数据，在猎户座星云区(ONC)搜寻具有异常高自行的前主序恒星，以识别因不稳定三体系统或近距离三体交会而被动力学弹射的逃逸年轻恒星。从22篇文献汇编的5988颗Orion A年轻成员星中，筛选出26颗具有异常高自行的候选逃逸星（分类为：9颗源自Trapezium核心区、5颗与其他OB星相互作用、7颗来自邻近星群、5颗起源不明）。这些恒星为T Tauri/前主序星，弹射速度仅为km/s量级（脱离ONC引力束缚所需速度仅~10 km/s），属于星团/恒星形成区尺度的年轻逃逸星。无超高速星(HVS)候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "Quick scan of paper abstract and content for HVS relevance assessment. 26 young pre-main-sequence runaway stars from ONC. Ejection velocities at km/s level from a small stellar cluster, typical of young stellar dynamics, not Galactic-scale HVS.",
+      "inputs": [
+        "arXiv abstract",
+        "Paper full text",
+        "Catalog review"
+      ],
+      "outputs": [
+        "HVS relevance classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1908.07550/arxiv_source/OrionPMLetter.tex",
+          "start_line": 30,
+          "end_line": 31,
+          "context": "Paper abstract: 'identify twenty-six candidate stars that are likely to have had such an encounter [dynamical ejection from unstable young triple systems]'"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "quick-scan-review",
+      "description": "本文从22篇文献汇编的Orion A分子云已知成员星表(5988颗)出发，经Gaia DR2测光和自行筛选后，在ONC周围2°范围内识别出26颗具有异常高自行的候选动力学弹射星。这些恒星为年轻前主序星（T Tauri星），被三体动力学相互作用从ONC（一个质量约2000 M☉、半径~2 pc的年轻星团）中弹射。论文通过自行回溯分析确定了各星的起源区域：9颗指向Trapezium核心区，5颗与其他OB星相关，7颗与其他邻近年轻星群关联，5颗起源不明确。典型的弹射速度约为数km/s至数十km/s（ONC逃逸速度仅~10 km/s）。",
+      "decision": "excluded",
+      "reason": "这些恒星是在星团尺度（~2 pc）上被动力学弹射的年轻逃逸星，弹射速度仅km/s量级，完全不同于银河系尺度的超高速星（HVS，速度>300-500 km/s）。论文标题明确使用'Runaway Young Stars'而非'Hypervelocity Stars'，摘要称之为'dynamical ejection from unstable young triple systems'。这些恒星依然深陷银河系引力势阱中（距离太阳仅~400 pc的ONC区域），完全不涉及银河系逃逸或超高速运动。属于恒星形成区年轻星动力学/逃逸星研究的常规范畴，与HVS研究无关。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1908.07550/arxiv_source/OrionPMLetter.tex",
+          "start_line": 30,
+          "end_line": 31,
+          "context": "Paper abstract: 'dynamical ejection from unstable young triple systems or other close three-body encounters' — cluster-scale ejection, not Galactic HVS"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1908.07550/arxiv_source/OrionPMLetter.tex",
+          "start_line": 46,
+          "end_line": 46,
+          "context": "'stars that have been ejected through a 3-body interaction' — ejection mechanism is three-body dynamics in young cluster, not Hills mechanism at GC"
+        }
+      ]
+    }
+  ]
+}

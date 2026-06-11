@@ -1,0 +1,279 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1912.02129",
+    "title": "Candidate Hypervelocity Red Clump Stars in the Galactic Bulge Found Using the VVV and Gaia Surveys",
+    "month": "2019-12",
+    "source_note_json": "literature/1912.02129/ads_metadata.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1912.02129",
+      "pdf": "https://arxiv.org/pdf/1912.02129"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1912.02129",
+    "audit_path": "literature/1912.02129/audit.json",
+    "source_dir": "literature/1912.02129/arxiv_source",
+    "tex_root": "literature/1912.02129/arxiv_source/aastex62.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:20:00",
+    "reviewer": "agent",
+    "summary": "本文利用Gaia DR2光学数据和VISTA Variables in the Via Lactea (VVV)巡天近红外数据，通过红团簇（Red Clump, RC）巨星作为距离指示器，在银河系核球区域（|l|<10°, |b|<5°）筛选出34颗体积限制样本的RC星，并搜寻超高速星（HVS）候选体。论文包含3个内部表格：Table 1为34颗RC星的Gaia/VVV测光数据表，Table 'dist'为Wesenheit消光无关星等和距离估算表，Table 2为从VVV自行数据导出的7颗候选超高速RC星表（含切向速度和抛射时间）。论文在致谢中提及ESO公共巡天、CASU等数据处理机构，但这些都是方法论/基础设施引用，并非本文独特的数据产品。Gaia DR2为公开数据集，VVV数据通过ESO程序179.B-2002和198.B-2004获取。论文未提供显式的机器可读星表URL。外部资源仅一处：Table 2脚注中的VVV天体测量性质参考页面URL。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-table1",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "列出本文最终样本34颗核球RC巨星的天体测量和测光数据：内部编号、Gaia DR2 Source ID、赤道坐标（RA/DEC）、银道坐标（l/b）、VVV近红外J和Ks星等、Gaia DR1 G星等。该表是后续距离估算和HVS候选体筛选的基础星表。",
+      "source_refs": [
+        {
+          "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+          "start_line": 262,
+          "end_line": 321,
+          "caption": "Gaia and VVV Photometry of Bulge RC Stars. \\label{tab:table1}",
+          "label": "tab:table1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\colhead\\multirow2*ID",
+          "meaning": "恒星在本文样本中的内部编号（1-34）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colhead\\multirow2*Source ID^a",
+          "meaning": "Gaia DR2 源标识号（19位数字）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadRA | (\\degree)",
+          "meaning": "赤经（J2000历元，度）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadDEC | (\\degree)",
+          "meaning": "赤纬（J2000历元，度）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Long | (\\degree)",
+          "meaning": "银经（度）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Lat | (\\degree)",
+          "meaning": "银纬（度）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J | (mag)",
+          "meaning": "VVV巡天J波段近红外星等",
+          "unit_text": "(mag)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ks | (mag)",
+          "meaning": "VVV巡天Ks波段近红外星等",
+          "unit_text": "(mag)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadG_DR1 | (mag)",
+          "meaning": "Gaia DR1 G波段光学星等（经DR2至DR1转换）",
+          "unit_text": "(mag)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1标题为'Gaia and VVV Photometry of Bulge RC Stars'，列出全部34颗RC星的ID（1-34）、Gaia DR2 Source ID以及坐标和星等数据。脚注a注明Source ID来自Gaia DR2。",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-dist",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "给出34颗RC星的Wesenheit消光无关视星等、绝对星等校准值和距离估算。距离通过Ruiz-Dern et al. (2018)的RC星校准关系计算，为后续切向速度计算提供必要的距离值。",
+      "source_refs": [
+        {
+          "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+          "start_line": 326,
+          "end_line": 383,
+          "caption": "Wessenheit magnitudes and distance estimations for the Bulge RC stars. \\label{tab:dist}",
+          "label": "tab:dist"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\colhead\\multirow2*ID",
+          "meaning": "恒星内部编号（与Table 1一致，1-34）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colhead\\multirow2*Source ID^a",
+          "meaning": "Gaia DR2 源标识号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadW_K_S | (mag)",
+          "meaning": "Ks波段Wesenheit消光无关视星等：W_K_S = K_S − 0.45×(J−K_S)",
+          "unit_text": "(mag)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadW_G_DR1 | (mag)",
+          "meaning": "Gaia DR1 G波段Wesenheit消光无关视星等：W_G = G − 1.90×(G_BP−G_RP)",
+          "unit_text": "(mag)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadM_G_DR1 | (mag)",
+          "meaning": "Gaia DR1 G波段绝对星等，由Ruiz-Dern et al.(2018)校准关系M_G=(0.495±0.009)+(1.121±0.128)(G−K_S−2.1)计算",
+          "unit_text": "(mag)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadM_W_K_S | (mag)",
+          "meaning": "Ks波段Wesenheit绝对星等，由Ruiz-Dern et al.(2018)校准关系M_K_S=(−1.606±0.009)+(0.121±0.125)(G−K_S−2.1)计算",
+          "unit_text": "(mag)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadd_K_S | (pc)",
+          "meaning": "由Ks波段Wesenheit星等估算的距离（pc），d=10^((W_K_S−M_W_K_S+5)/5)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadd_G_DR1 | (pc)",
+          "meaning": "由Gaia DR1 G波段Wesenheit星等估算的距离（pc），d=10^((W_G_DR1−M_G_DR1+5)/5)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_009",
+          "meaning": "（LaTeX宏残留列；数据行中无对应内容）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table标题为'Wessenheit magnitudes and distance estimations for the Bulge RC stars'，列出34颗星的W_K_S（VVV Ks波段Wesenheit星等）、W_G_DR1（Gaia DR1 G波段Wesenheit星等）、绝对星等M_G_DR1和M_W_K_S、以及由Ks和G波段分别估算的距离d_K_S和d_G_DR1。脚注a注明Source ID来自Gaia DR2。",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-table2",
+      "kind": "latex_table",
+      "asset_type": "candidate_table",
+      "role_in_paper": "列出从VVV自行数据筛选出的7颗候选超高速RC星。这些星的PM矢量方向指向远离银河系中心（银心2°范围以内），但Gaia DR2自行数据不可靠（存在显著天体测量超噪）。该表给出每颗候选体的距离、VVV导出自行、切向速度和抛射时间，是本文的核心发现表。",
+      "source_refs": [
+        {
+          "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+          "start_line": 458,
+          "end_line": 493,
+          "caption": "Candidate Hypervelocity Bulge RC Stars. Tangential velocities and ejection times computed from VVV PMs. \\label{tab:table2}",
+          "label": "tab:table2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\colhead\\multirow2*ID",
+          "meaning": "恒星内部编号（与Table 1一致）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colhead\\multirow2*Source ID^a",
+          "meaning": "Gaia DR2 源标识号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Distance | (pc)",
+          "meaning": "由Ks波段Wesenheit星等估算的距离（pc）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PM^b | \\colhead(mas~yr^-1)",
+          "meaning": "由VVV 2010和2015两期观测位置差导出的总自行（mas/yr），脚注b说明误差基于近红外位置不确定性0.08 arcsec",
+          "unit_text": "\\colhead(mas~yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_T | \\colhead(km s^-1)",
+          "meaning": "切向速度（km/s）：V_T = 4.74 × D(pc) × PM(arcsec/yr)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadT_eject | (yr)",
+          "meaning": "抛射时间（年）：由PM矢量逆向投影至银心方向估算的恒星自银心被抛射以来的时间",
+          "unit_text": "(yr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_007",
+          "meaning": "（LaTeX宏残留列；数据行中无对应内容）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 2标题为'Candidate Hypervelocity Bulge RC Stars. Tangential velocities and ejection times computed from VVV PMs'，包含7颗候选HVS（ID: 10, 15, 17, 19, 20, 22, 23）。PM是本文从VVV 2010和2015两期位置差导出的自行。脚注b说明PM误差基于VVV近红外位置不确定性0.08 arcsec。",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://apm49.ast.cam.ac.uk/surveys-projects/vista/technical/astrometric-properties",
+      "local_path": "",
+      "description": "VVV巡天VISTA望远镜天体测量性质参考页面：提供VISTA/VIRCAM近红外位置不确定性（0.08 arcsec）等天体测量性能信息，作为Table 2中VVV导出自行误差估算的参考来源。",
+      "source_refs": [
+        {
+          "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+          "start_line": 492,
+          "end_line": 492,
+          "context": "\\enddata\n\\tablenotetext{a}{Gaia DR2 ID}\n\\tablenotetext{b}{PM errors given that the NIR positional uncertainty for VVV amounts to 0.08$\\arcsec$. Further information can be found at~\\url{http://apm49.ast.cam.ac.uk/surveys-projects/vista/technical/astrometric-properties}.}\n\\end{deluxetable}"
+        }
+      ],
+      "evidence": "Table 2脚注b明确引用该URL：'PM errors given that the NIR positional uncertainty for VVV amounts to 0.08arcsec. Further information can be found at http://apm49.ast.cam.ac.uk/surveys-projects/vista/technical/astrometric-properties'",
+      "comments": "CASU VISTA天体测量技术文档页面；属于VVV巡天仪器性能参考，非本文数据产品"
+    }
+  ]
+}

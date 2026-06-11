@@ -1,0 +1,1138 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:24:10",
+  "paper": {
+    "arxiv_id": "2602.23900",
+    "bibcode": "2026A&A...708A.177B",
+    "title": "Discovery of a runaway star likely ejected by a Type Iax Supernova",
+    "month": "2026-02",
+    "source_note_json": "notes/2026/2026-02/2026-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2602.23900",
+      "pdf": "https://arxiv.org/pdf/2602.23900"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2602.23900",
+    "audit_path": "literature/2602.23900/audit.json",
+    "catalog_review_path": "literature/2602.23900/catalog_review.json",
+    "catalog_extraction_path": "literature/2602.23900/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2602.23900/catalog_tables/table-tab-kinematics.ecsv",
+      "literature/2602.23900/catalog_tables/table-tab-abundances.ecsv",
+      "literature/2602.23900/catalog_tables/table-tab-stats.ecsv",
+      "literature/2602.23900/catalog_tables/table-tab-kinematicparams.ecsv",
+      "literature/2602.23900/catalog_tables/table-tab-stats2.ecsv",
+      "literature/2602.23900/catalog_tables/table-tab-stats3.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-22T20:24:10",
+    "extractor": "agent",
+    "summary": "One candidate extracted: J1022-3414 (Gaia DR3 5446737753669901568), a newly discovered LP 40-365 type runaway star with a high probability of being unbound from the Galaxy (bound in 0.005% of 10^5 trajectories)."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Query Gaia DR3 catalogue for astrometric parameters.",
+      "inputs": ["Gaia DR3"],
+      "outputs": ["astrometry"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 140,
+          "end_line": 140,
+          "context": "Gaia DR3 catalogue query for target selection"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": ["step-01"],
+      "step_type": "sample_selection",
+      "summary": "Modified query from kareemfast with proper motion 20-50 mas/yr and colour cuts to select hypervelocity star candidates.",
+      "inputs": ["Gaia DR3 catalog"],
+      "outputs": ["target list"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 140,
+          "end_line": 140,
+          "context": "Modified query with pm 20-50 mas/yr for candidate selection"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": ["step-02"],
+      "step_type": "quality_filter",
+      "summary": "Astrometric quality filtering using RUWE and parallax consistency checks.",
+      "inputs": ["Gaia astrometric parameters"],
+      "outputs": ["J1022-3414 candidate"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 158,
+          "end_line": 159,
+          "context": "RUWE quality criterion for single-star astrometric fit"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": ["step-03"],
+      "step_type": "radial_velocity_measurement",
+      "summary": "FORS2 spectroscopic follow-up at ESO VLT to measure radial velocity and verify binarity.",
+      "inputs": ["FORS2 1200B+97 grism spectra"],
+      "outputs": ["radial velocity", "co-added spectrum"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 164,
+          "end_line": 164,
+          "context": "FORS2 observation and RV variability check"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 175,
+          "end_line": 179,
+          "context": "Measured barycentric radial velocity from FORS2 spectrum"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": ["step-03"],
+      "step_type": "photometric_or_sed_modeling",
+      "summary": "Spectral energy distribution fit to determine angular diameter, interstellar reddening, and absolute magnitude.",
+      "inputs": ["Gaia photometry", "DELVE DR2", "SPLUS DR4", "SkyMapper", "GALEX"],
+      "outputs": ["angular diameter", "reddening E(44-55)", "M_G"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 290,
+          "end_line": 296,
+          "context": "SED fitting for angular diameter and reddening"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": ["step-04", "step-05"],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Koester white dwarf model atmosphere fit to FORS2 spectrum for Teff, log g, and abundances; combined with SED constraints for mass and radius.",
+      "inputs": ["FORS2 spectrum", "model atmospheres", "angular diameter", "log g"],
+      "outputs": ["Teff", "log g", "mass", "radius", "abundances"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 181,
+          "end_line": 215,
+          "context": "Spectral analysis with Koester code for atmospheric parameters"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": ["step-03", "step-05", "step-06"],
+      "step_type": "distance_estimation",
+      "summary": "MCMC posterior sampling with emcee using flat absolute-magnitude prior, astrometric covariance, and spectro-photometric constraints.",
+      "inputs": ["Gaia astrometry", "photometry", "angular diameter", "log g"],
+      "outputs": ["distance"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 320,
+          "end_line": 344,
+          "context": "MCMC sampling with emcee for distance and stellar parameters"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": ["step-03", "step-04", "step-07"],
+      "step_type": "velocity_calculation",
+      "summary": "Galactocentric position and velocity calculation from astrometry, distance, and radial velocity.",
+      "inputs": ["distance", "proper motions", "radial velocity"],
+      "outputs": ["Galactocentric position", "Galactocentric velocity", "v_grf"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 380,
+          "end_line": 380,
+          "context": "Calculation of precise trajectories from sampled distances and measured radial velocity"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "Revised Allen 1991 mass model (Model 1 from Andreas) for the Galactic potential.",
+      "inputs": ["Galactic mass model"],
+      "outputs": ["Galactic potential"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 380,
+          "end_line": 380,
+          "context": "Revised Allen 1991 mass model for Galactic potential"
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "depends_on": ["step-08", "step-09"],
+      "step_type": "orbit_integration",
+      "summary": "4th-order Runge-Kutta numerical integration of orbital trajectories.",
+      "inputs": ["Galactocentric position/velocity", "Galactic potential"],
+      "outputs": ["orbital trajectories", "flight time", "disk crossing parameters"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 380,
+          "end_line": 382,
+          "context": "Numerical orbit integration with Runge-Kutta solver"
+        }
+      ]
+    },
+    {
+      "id": "step-11",
+      "depends_on": ["step-08", "step-09", "step-10"],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Boundness assessment from 10^5 computed trajectories; star is bound in 0.005% of simulations.",
+      "inputs": ["orbital trajectories", "escape velocity"],
+      "outputs": ["boundness", "escape margin"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 382,
+          "end_line": 382,
+          "context": "Boundness result from 10^5 trajectory simulations"
+        }
+      ]
+    },
+    {
+      "id": "step-12",
+      "depends_on": ["step-10", "step-11"],
+      "step_type": "origin_assessment",
+      "summary": "Classification as LP 40-365 type star ejected from Galactic disk by Type Iax supernova, with ejection velocity and kinematic age.",
+      "inputs": ["orbital parameters", "kinematic age", "spectroscopic abundances"],
+      "outputs": ["ejection velocity", "origin classification"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 498,
+          "end_line": 510,
+          "context": "Discussion of LP 40-365 type origin and ejection from Galactic disk"
+        }
+      ]
+    },
+    {
+      "id": "step-13",
+      "depends_on": ["step-04", "step-06"],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Spectral classification from FORS2 spectrum confirming LP 40-365 type with neon- and oxygen-dominated atmosphere.",
+      "inputs": ["FORS2 spectrum", "model atmospheres"],
+      "outputs": ["spectral classification"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 175,
+          "end_line": 179,
+          "context": "Spectrum shows absorption lines of Mg, O, and Ne resembling LP 40-365 type stars"
+        }
+      ]
+    },
+    {
+      "id": "step-14",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR3 photometry for the target star.",
+      "inputs": ["Gaia DR3"],
+      "outputs": ["Gaia G-band magnitude"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 158,
+          "end_line": 159,
+          "context": "Astrometric parameters from Gaia DR3 including G magnitude"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2602.23900:cand-001",
+        "paper_candidate_id": "J1022-3414",
+        "gaia_source_id": "Gaia DR3 5446737753669901568",
+        "all": [
+          {
+            "value": "J1022-3414",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2602.23900/arxiv_source/aanda.tex",
+                "start_line": 140,
+                "end_line": 140,
+                "context": "Paper shorthand identifier for the target star"
+              }
+            ]
+          },
+          {
+            "value": "J102230.26-341420.5",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2602.23900/arxiv_source/aanda.tex",
+                "start_line": 140,
+                "end_line": 140,
+                "context": "Full coordinate-based identifier for the target star"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 5446737753669901568",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2602.23900/arxiv_source/aanda.tex",
+                "start_line": 44,
+                "end_line": 44,
+                "context": "Gaia DR3 source identifier defined in LaTeX macro"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "The paper presents J1022-3414 as a newly discovered LP 40-365 type runaway star and explicitly states that kinematic analysis indicates a high probability of being unbound from the Galaxy. Out of 10^5 computed trajectories, the star is bound in only 0.005% of simulations, and the orbital parameters table lists boundness as 0%.",
+        "paper_labels": ["runaway_candidate", "escaping_star"],
+        "galactic_bound_claim": "likely_unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The paper explicitly discusses the star as having a high probability of being unbound, provides quantitative boundness assessment (0.005% bound), and presents it as a hypervelocity star candidate in the target selection.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2602.23900/arxiv_source/aanda.tex",
+            "start_line": 111,
+            "end_line": 115,
+            "context": "Abstract states high probability of being unbound from the Galaxy"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2602.23900/arxiv_source/aanda.tex",
+            "start_line": 140,
+            "end_line": 140,
+            "context": "Identified in a search for hypervelocity stars"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2602.23900/arxiv_source/aanda.tex",
+            "start_line": 382,
+            "end_line": 382,
+            "context": "Bound in only 0.005% of 10^5 computed trajectories"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2602.23900/arxiv_source/aanda.tex",
+            "start_line": 111,
+            "end_line": 115,
+            "context": "Paper reports the discovery of this new LP 40-365 type runaway star"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "155.62617",
+            "value": "155.62617",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2602.23900/arxiv_source/aanda.tex",
+                  "start_line": 158,
+                  "end_line": 159,
+                  "context": "Astrometric parameters from Gaia DR3"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2602.23900/arxiv_source/aanda.tex",
+                  "start_line": 158,
+                  "end_line": 159,
+                  "context": "Astrometric parameters from Gaia DR3"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2602.23900/catalog_tables/table-tab-kinematics.ecsv",
+                "line": 9,
+                "column": "col_003",
+                "column_header": "Value",
+                "raw_value": "155.62617"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "dec": {
+            "raw_value": "-34.23891",
+            "value": "-34.23891",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2602.23900/arxiv_source/aanda.tex",
+                  "start_line": 158,
+                  "end_line": 159,
+                  "context": "Astrometric parameters from Gaia DR3"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2602.23900/arxiv_source/aanda.tex",
+                  "start_line": 158,
+                  "end_line": 159,
+                  "context": "Astrometric parameters from Gaia DR3"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2602.23900/catalog_tables/table-tab-kinematics.ecsv",
+                "line": 10,
+                "column": "col_003",
+                "column_header": "Value",
+                "raw_value": "-34.23891"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "distance": {
+            "raw_value": "4.17",
+            "value": "4.17",
+            "lower_error": "1.38",
+            "upper_error": "2.24",
+            "unit": "kpc",
+            "description": "Median of posterior distribution from MCMC with flat absolute-magnitude prior; 68% CI (2.79, 6.41). Mode is 3.49 kpc.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2602.23900/catalog_tables/table-tab-stats.ecsv",
+                "line": 11,
+                "column": "col_003",
+                "column_header": "Median",
+                "raw_value": "4.17"
+              }
+            ],
+            "method_refs": ["step-07"]
+          },
+          "parallax": {
+            "raw_value": "0.099 +/- 0.230",
+            "value": "0.099",
+            "error": "0.230",
+            "unit": "mas",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2602.23900/catalog_tables/table-tab-kinematics.ecsv",
+                "line": 12,
+                "column": "col_003",
+                "column_header": "Value",
+                "raw_value": "0.099 +/- 0.230"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "proper_motion_ra": {
+            "raw_value": "17.56+/- 0.18",
+            "value": "17.56",
+            "error": "0.18",
+            "unit": "mas yr-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2602.23900/catalog_tables/table-tab-kinematics.ecsv",
+                "line": 13,
+                "column": "col_003",
+                "column_header": "Value",
+                "raw_value": "17.56+/- 0.18"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "proper_motion_dec": {
+            "raw_value": "23.75+/- 0.19",
+            "value": "23.75",
+            "error": "0.19",
+            "unit": "mas yr-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2602.23900/catalog_tables/table-tab-kinematics.ecsv",
+                "line": 14,
+                "column": "col_003",
+                "column_header": "Value",
+                "raw_value": "23.75+/- 0.19"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "radial_velocity": {
+            "raw_value": "-390+/- 20",
+            "value": "-390",
+            "error": "20",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2602.23900/catalog_tables/table-tab-abundances.ecsv",
+                "line": 11,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "-390+/- 20"
+              }
+            ],
+            "method_refs": ["step-04"]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": {
+            "raw_value": "-8.31^+0.07_-0.06",
+            "value": "-8.31",
+            "lower_error": "0.06",
+            "upper_error": "0.07",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2602.23900/catalog_tables/table-tab-kinematicparams.ecsv",
+                "line": 10,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "-8.31^+0.07_-0.06"
+              }
+            ],
+            "method_refs": ["step-08"]
+          },
+          "galactocentric_y": {
+            "raw_value": "-3.52^+0.77_-3.58",
+            "value": "-3.52",
+            "lower_error": "3.58",
+            "upper_error": "0.77",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2602.23900/catalog_tables/table-tab-kinematicparams.ecsv",
+                "line": 11,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "-3.52^+0.77_-3.58"
+              }
+            ],
+            "method_refs": ["step-08"]
+          },
+          "galactocentric_z": {
+            "raw_value": "1.32^+1.16_-0.36",
+            "value": "1.32",
+            "lower_error": "0.36",
+            "upper_error": "1.16",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2602.23900/catalog_tables/table-tab-kinematicparams.ecsv",
+                "line": 12,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "1.32^+1.16_-0.36"
+              }
+            ],
+            "method_refs": ["step-08"]
+          },
+          "galactocentric_vx": {
+            "raw_value": "20.0^+11.2_-6.7",
+            "value": "20.0",
+            "lower_error": "6.7",
+            "upper_error": "11.2",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2602.23900/catalog_tables/table-tab-kinematicparams.ecsv",
+                "line": 14,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "20.0^+11.2_-6.7"
+              }
+            ],
+            "method_refs": ["step-08"]
+          },
+          "galactocentric_vy": {
+            "raw_value": "814^+160_-58",
+            "value": "814",
+            "lower_error": "58",
+            "upper_error": "160",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2602.23900/catalog_tables/table-tab-kinematicparams.ecsv",
+                "line": 15,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "814^+160_-58"
+              }
+            ],
+            "method_refs": ["step-08"]
+          },
+          "galactocentric_vz": {
+            "raw_value": "406^+468_-140",
+            "value": "406",
+            "lower_error": "140",
+            "upper_error": "468",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2602.23900/catalog_tables/table-tab-kinematicparams.ecsv",
+                "line": 16,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "406^+468_-140"
+              }
+            ],
+            "method_refs": ["step-08"]
+          },
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": {
+            "raw_value": "872^+410_-87",
+            "value": "872",
+            "lower_error": "87",
+            "upper_error": "410",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2602.23900/catalog_tables/table-tab-kinematicparams.ecsv",
+                "line": 17,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "872^+410_-87"
+              }
+            ],
+            "method_refs": ["step-08"]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": {
+            "raw_value": "271^+423_-99",
+            "value": "271",
+            "lower_error": "99",
+            "upper_error": "423",
+            "unit": "km s-1",
+            "description": "v_grf - v_esc: excess above local escape velocity",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2602.23900/catalog_tables/table-tab-kinematicparams.ecsv",
+                "line": 18,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "271^+423_-99"
+              }
+            ],
+            "method_refs": ["step-11"]
+          },
+          "bound_probability": {
+            "raw_value": "0.005",
+            "value": "0.00005",
+            "unit": "",
+            "description": "Fraction of 10^5 trajectories in which the star is bound; 0.005%.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2602.23900/arxiv_source/aanda.tex",
+                "start_line": 382,
+                "end_line": 382,
+                "context": "Bound in 0.005% of 10^5 computed trajectories"
+              }
+            ],
+            "method_refs": ["step-11"]
+          },
+          "unbound_probability": {
+            "raw_value": "99.995",
+            "value": "0.99995",
+            "unit": "",
+            "description": "Unbound probability: 99.995% of trajectories.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2602.23900/arxiv_source/aanda.tex",
+                "start_line": 382,
+                "end_line": 382,
+                "context": "Bound in 0.005% of 10^5 computed trajectories"
+              }
+            ],
+            "method_refs": ["step-11"]
+          },
+          "bound_status_metric": {
+            "raw_value": "0",
+            "value": "0",
+            "unit": "%",
+            "description": "Boundness percentage from orbital parameters table.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2602.23900/catalog_tables/table-tab-kinematicparams.ecsv",
+                "line": 19,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "0"
+              }
+            ],
+            "method_refs": ["step-11"]
+          }
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "18.99",
+          "value": "18.99",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2602.23900/catalog_tables/table-tab-kinematics.ecsv",
+              "line": 11,
+              "column": "col_003",
+              "column_header": "Value",
+              "raw_value": "18.99"
+            }
+          ],
+          "method_refs": ["step-14"]
+        },
+        {
+          "raw_value": "5.58",
+          "value": "5.58",
+          "lower_error": "0.93",
+          "upper_error": "0.87",
+          "unit": "mag",
+          "measurement_type": "absolute_magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "description": "Gaia G-band absolute magnitude, median of flat-prior MCMC; 68% CI (4.65, 6.45).",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2602.23900/catalog_tables/table-tab-stats.ecsv",
+              "line": 12,
+              "column": "col_003",
+              "column_header": "Median",
+              "raw_value": "5.58"
+            }
+          ],
+          "method_refs": ["step-05"]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "raw_value": "LP 40-365 type star with Ne- and O-dominated atmosphere",
+          "value": "LP 40-365 type star with Ne- and O-dominated atmosphere",
+          "unit": "",
+          "measurement_type": "classification",
+          "instrument": "FORS2",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2602.23900/arxiv_source/aanda.tex",
+              "start_line": 175,
+              "end_line": 179,
+              "context": "Spectrum shows absorption lines of Mg, O, and Ne resembling LP 40-365 type stars"
+            }
+          ],
+          "method_refs": ["step-13"]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "19600+/- 700",
+          "value": "19600",
+          "error": "700",
+          "unit": "K",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2602.23900/catalog_tables/table-tab-abundances.ecsv",
+              "line": 9,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "19600+/- 700"
+            }
+          ],
+          "method_refs": ["step-06"]
+        },
+        "log_g": {
+          "raw_value": "5.1+/- 0.4",
+          "value": "5.1",
+          "error": "0.4",
+          "unit": "cgs",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2602.23900/catalog_tables/table-tab-abundances.ecsv",
+              "line": 10,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "5.1+/- 0.4"
+            }
+          ],
+          "method_refs": ["step-06"]
+        },
+        "mass": {
+          "raw_value": "0.83",
+          "value": "0.83",
+          "lower_error": "0.39",
+          "upper_error": "0.33",
+          "unit": "M_sun",
+          "description": "Median of posterior from flat-magnitude-prior MCMC; 68% CI (0.44, 1.16). Mode is 1.28 M_sun.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2602.23900/catalog_tables/table-tab-stats.ecsv",
+              "line": 13,
+              "column": "col_003",
+              "column_header": "Median",
+              "raw_value": "0.83"
+            }
+          ],
+          "method_refs": ["step-06"]
+        },
+        "radius": {
+          "raw_value": "0.48",
+          "value": "0.48",
+          "lower_error": "0.16",
+          "upper_error": "0.26",
+          "unit": "R_sun",
+          "description": "Median of posterior from flat-magnitude-prior MCMC; 68% CI (0.32, 0.74). Mode is 0.40 R_sun.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2602.23900/catalog_tables/table-tab-stats.ecsv",
+              "line": 14,
+              "column": "col_003",
+              "column_header": "Median",
+              "raw_value": "0.48"
+            }
+          ],
+          "method_refs": ["step-06"]
+        },
+        "metallicity": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [
+        {
+          "raw_value": "0.30+/- 0.15",
+          "value": "0.30",
+          "error": "0.15",
+          "unit": "",
+          "element": "Ne",
+          "reference_element": "O",
+          "abundance_scale": "log(Ne/O)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2602.23900/catalog_tables/table-tab-abundances.ecsv",
+              "line": 15,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "0.30+/- 0.15"
+            }
+          ],
+          "method_refs": ["step-06"]
+        },
+        {
+          "raw_value": "-0.98+/- 0.10",
+          "value": "-0.98",
+          "error": "0.10",
+          "unit": "",
+          "element": "Mg",
+          "reference_element": "O",
+          "abundance_scale": "log(Mg/O)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2602.23900/catalog_tables/table-tab-abundances.ecsv",
+              "line": 16,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "-0.98+/- 0.10"
+            }
+          ],
+          "method_refs": ["step-06"]
+        },
+        {
+          "raw_value": "-2.2+/- 0.3",
+          "value": "-2.2",
+          "error": "0.3",
+          "unit": "",
+          "element": "C",
+          "reference_element": "O",
+          "abundance_scale": "log(C/O)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2602.23900/catalog_tables/table-tab-abundances.ecsv",
+              "line": 14,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "-2.2+/- 0.3"
+            }
+          ],
+          "method_refs": ["step-06"]
+        }
+      ],
+      "quality_flags": [
+        {
+          "raw_value": "0.979",
+          "value": "0.979",
+          "unit": "",
+          "name": "RUWE",
+          "description": "Renormalized unit weight error from Gaia DR3 astrometric solution.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2602.23900/catalog_tables/table-tab-kinematics.ecsv",
+              "line": 15,
+              "column": "col_003",
+              "column_header": "Value",
+              "raw_value": "0.979"
+            }
+          ],
+          "method_refs": ["step-03"]
+        }
+      ],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": {
+          "raw_value": "2.74^+0.35_-0.16",
+          "value": "2.74",
+          "lower_error": "0.16",
+          "upper_error": "0.35",
+          "unit": "Myr",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2602.23900/catalog_tables/table-tab-kinematicparams.ecsv",
+              "line": 19,
+              "column": "col_004",
+              "column_header": "Value",
+              "raw_value": "2.74^+0.35_-0.16"
+            }
+          ],
+          "method_refs": ["step-10"]
+        },
+        "disk_crossing_radius": {
+          "raw_value": "10.32^+2.36_-0.47",
+          "value": "10.32",
+          "lower_error": "0.47",
+          "upper_error": "2.36",
+          "unit": "kpc",
+          "description": "Galactocentric radius at disk crossing (r_f).",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2602.23900/catalog_tables/table-tab-kinematicparams.ecsv",
+              "line": 13,
+              "column": "col_004",
+              "column_header": "Value",
+              "raw_value": "10.32^+2.36_-0.47"
+            }
+          ],
+          "method_refs": ["step-10"]
+        },
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "LP 40-365 type star, likely ejected by Type Iax supernova from Galactic disk",
+          "value": "LP 40-365 type star, likely ejected by Type Iax supernova from Galactic disk",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2602.23900/arxiv_source/aanda.tex",
+              "start_line": 498,
+              "end_line": 500,
+              "context": "Discussion of LP 40-365 type origin and Type Iax supernova ejection"
+            }
+          ],
+          "method_refs": ["step-12"]
+        },
+        "origin_classification": null,
+        "ejection_velocity": {
+          "raw_value": "771",
+          "value": "771",
+          "lower_error": "156",
+          "upper_error": "288",
+          "unit": "km s-1",
+          "description": "Median ejection velocity from flat-magnitude-prior MCMC; 68% CI (615, 1059). Mode is 650 km/s.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2602.23900/catalog_tables/table-tab-stats.ecsv",
+              "line": 15,
+              "column": "col_003",
+              "column_header": "Median",
+              "raw_value": "771"
+            }
+          ],
+          "method_refs": ["step-12"]
+        },
+        "travel_time": {
+          "raw_value": "2.74^+0.35_-0.16",
+          "value": "2.74",
+          "lower_error": "0.16",
+          "upper_error": "0.35",
+          "unit": "Myr",
+          "description": "Flight time since ejection from Galactic disk.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2602.23900/catalog_tables/table-tab-kinematicparams.ecsv",
+              "line": 19,
+              "column": "col_004",
+              "column_header": "Value",
+              "raw_value": "2.74^+0.35_-0.16"
+            }
+          ],
+          "method_refs": ["step-12"]
+        },
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "raw_value": "0.11+/- 0.02",
+          "value": "0.11",
+          "error": "0.02",
+          "unit": "mag",
+          "name": "E(B-V)",
+          "description": "Interstellar reddening derived from SED fit, corresponding to E(44-55)=0.126.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2602.23900/arxiv_source/aanda.tex",
+              "start_line": 294,
+              "end_line": 294,
+              "context": "E(B-V) = 0.11 ± 0.02 mag derived from SED fit corresponding to E(44-55)=0.126"
+            }
+          ],
+          "method_refs": ["step-05"]
+        }
+      ]
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "j1022-3414-main",
+      "description": "The single target star J1022-3414, analysed as a new LP 40-365 type runaway star with full kinematic, spectroscopic, and photometric characterization.",
+      "decision": "included",
+      "reason": "The paper explicitly presents this object as having a high probability of being unbound from the Galaxy (bound in only 0.005% of 10^5 trajectories) and as a hypervelocity star candidate.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 111,
+          "end_line": 115,
+          "context": "Abstract: high probability of being unbound from the Galaxy"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 140,
+          "end_line": 140,
+          "context": "Identified in a search for hypervelocity stars"
+        }
+      ]
+    }
+  ]
+}

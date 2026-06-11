@@ -1,0 +1,358 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:02",
+  "paper": {
+    "arxiv_id": "2406.00923",
+    "title": "A high-velocity star recently ejected by an intermediate-mass black hole in M15",
+    "month": "2024-06"
+  },
+  "review": {
+    "path": "literature/2406.00923/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123902",
+    "started_at": "2026-05-17T12:39:02",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2406.00923",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table-Table1",
+      "internal_table_id": "table-table-Table1",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2406.00923/arxiv_source/main.tex",
+        "start_line": 85,
+        "end_line": 121,
+        "caption": "The measured parameters of J0731+3717 and M15",
+        "label": "table:Table1"
+      },
+      "source_path": "literature/2406.00923/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.00923/catalog_sources/table-table-Table1/excerpt.tex",
+      "sha256": "21f3faa5ad4d658a292ea7f0d3b7fec2c09034edf17e70892080e1c0b4ea3de8",
+      "line_count": 37,
+      "error": ""
+    },
+    {
+      "id": "table-002",
+      "internal_table_id": "table-002",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2406.00923/arxiv_source/supplementary.tex",
+        "start_line": 319,
+        "end_line": 335,
+        "caption": "",
+        "label": ""
+      },
+      "source_path": "literature/2406.00923/arxiv_source/supplementary.tex",
+      "excerpt_path": "literature/2406.00923/catalog_sources/table-002/excerpt.tex",
+      "sha256": "31d1e44284995f4b8833df1bd2f4fe1b3fdaf9292d0882816c4e68afd6c27c68",
+      "line_count": 17,
+      "error": ""
+    },
+    {
+      "id": "table-003",
+      "internal_table_id": "table-003",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2406.00923/arxiv_source/supplementary.tex",
+        "start_line": 337,
+        "end_line": 354,
+        "caption": "",
+        "label": ""
+      },
+      "source_path": "literature/2406.00923/arxiv_source/supplementary.tex",
+      "excerpt_path": "literature/2406.00923/catalog_sources/table-003/excerpt.tex",
+      "sha256": "a7d11be797ee376b88737866e7d2bd0cf9fb5fed105dc782105113ae61603ee8",
+      "line_count": 18,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table-Table1",
+      "internal_table_id": "table-table-Table1",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2406.00923/catalog_tables/table-table-Table1.ecsv",
+      "caption": "The measured parameters of J0731+3717 and M15",
+      "label": "table:Table1",
+      "row_count": 24,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0vgetvsx/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.00923/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0vgetvsx/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.00923/catalog_sources/table-table-Table1/wrapped.tex",
+            "html": "literature/2406.00923/catalog_sources/table-table-Table1/latexml.html",
+            "stdout": "literature/2406.00923/catalog_sources/table-table-Table1/latexml.stdout.txt",
+            "stderr": "literature/2406.00923/catalog_sources/table-table-Table1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "21f3faa5ad4d658a292ea7f0d3b7fec2c09034edf17e70892080e1c0b4ea3de8"
+    },
+    {
+      "id": "table-002",
+      "internal_table_id": "table-002",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2406.00923/catalog_tables/table-002.ecsv",
+      "caption": "",
+      "label": "",
+      "row_count": 5,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster name",
+          "Closest distance ( d_\\rm min )",
+          "Backward time",
+          "Tidal radius ( r_t )",
+          "d_\\rmmin/r_\\rm t"
+        ],
+        [
+          "",
+          "(kpc)",
+          "(Myr)",
+          "(kpc)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Closest distance ( d_\\rm min ) | (kpc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Backward time | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Tidal radius ( r_t ) | (kpc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "d_\\rmmin/r_\\rm t",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpiv9lc0i3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.00923/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpiv9lc0i3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.00923/catalog_sources/table-002/wrapped.tex",
+            "html": "literature/2406.00923/catalog_sources/table-002/latexml.html",
+            "stdout": "literature/2406.00923/catalog_sources/table-002/latexml.stdout.txt",
+            "stderr": "literature/2406.00923/catalog_sources/table-002/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "31d1e44284995f4b8833df1bd2f4fe1b3fdaf9292d0882816c4e68afd6c27c68"
+    },
+    {
+      "id": "table-003",
+      "internal_table_id": "table-003",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2406.00923/catalog_tables/table-003.ecsv",
+      "caption": "",
+      "label": "",
+      "row_count": 6,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Changed assumptions",
+          "Closest orbital distance",
+          "Backward time"
+        ],
+        [
+          "",
+          "(pc)",
+          "(Myr)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Changed assumptions",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Closest orbital distance | (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Backward time | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpij348ccw/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.00923/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpij348ccw/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.00923/catalog_sources/table-003/wrapped.tex",
+            "html": "literature/2406.00923/catalog_sources/table-003/latexml.html",
+            "stdout": "literature/2406.00923/catalog_sources/table-003/latexml.stdout.txt",
+            "stderr": "literature/2406.00923/catalog_sources/table-003/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a7d11be797ee376b88737866e7d2bd0cf9fb5fed105dc782105113ae61603ee8"
+    }
+  ]
+}

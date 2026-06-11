@@ -1,0 +1,62 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:13:54",
+  "paper": {
+    "arxiv_id": "2310.02441",
+    "bibcode": "2023A&A...679A.105V",
+    "title": "Finding the dispersing siblings of young open clusters. Dynamical traceback simulations using Gaia DR3",
+    "month": "2023-10",
+    "source_note_json": "notes/2023/2023-10/2023-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2310.02441",
+      "pdf": "https://arxiv.org/pdf/2310.02441"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2310.02441",
+    "audit_path": "literature/2310.02441/audit.json",
+    "catalog_review_path": "literature/2310.02441/catalog_review.json",
+    "catalog_extraction_path": "literature/2310.02441/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2310.02441/catalog_tables/table-tab-solar_parameters.ecsv",
+      "literature/2310.02441/catalog_tables/table-tab-galactocentric_selection.ecsv",
+      "literature/2310.02441/catalog_tables/table-tab-cluster_parameters.ecsv",
+      "literature/2310.02441/catalog_tables/table-tab-probabilities.ecsv",
+      "literature/2310.02441/catalog_tables/table-tab-cluster_results.ecsv",
+      "literature/2310.02441/catalog_tables/table-tab-alternative_solar_parameters.ecsv",
+      "literature/2310.02441/catalog_tables/table-tab-rough_cluster_coordinates.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:13:54",
+    "extractor": "agent",
+    "summary": "This paper proposes a kinematical traceback method based on Gaia DR3 radial velocity samples to identify stars that have escaped from nearby young open clusters (called 'fugitives'). It studies 10 young clusters (Platais 9, Messier 39, \u03b1 Per, NGC 2451 A, IC 2602, NGC 2547, Blanco 1, IC 2391, NGC 2516, Pleiades) with ages of 27-310 Myr and a maximum traceback time of 100 Myr. The paper never discusses Galactic escape velocity, hypervelocity stars (HVS), Galactic-unbound status, or Galactic escape. All identified fugitives are cluster runaways/escapers that dispersed into the Galactic disk field but remain gravitationally bound to the Galaxy. No HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2310.02441:group-01",
+      "description": "Gaia DR3 fugitive candidates (Tables tab:probabilities and tab:cluster_results). Monte Carlo traceback computations using Gala/MWPotential2014 Galactic potential on 4,238,086 Gaia DR3 radial velocity sources to identify escaped stars from 10 nearby young open clusters. Stars with fugitive probability p_f > 0.1 and membership probability p_m <= 0.1 are classified as 'fugitives' (cluster escapers).",
+      "decision": "rejected",
+      "reason": "All stars identified in this paper are cluster runaways/fugitives that escaped from their birth clusters and dispersed into the Galactic disk field, but remain gravitationally bound to the Galaxy. The paper does not discuss Galactic escape velocity, hypervelocity stars (HVS), or Galactic-unbound status. The maximum traceback time is only 100 Myr, and all stellar velocities involved are ordinary cluster escape velocities (far below the Galactic escape velocity of ~500 km/s). No HVS candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2310.02441/arxiv_source/traceback.tex",
+          "start_line": 74,
+          "end_line": 83,
+          "context": "Introduction: discusses stars escaping clusters into the Galactic field — these are cluster escapees, not Galactic-unbound. 'Most clusters dissipate within 10-100 Myr, leaving many stars dispersed in the Galactic field.'"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2310.02441/arxiv_source/traceback.tex",
+          "start_line": 1053,
+          "end_line": 1063,
+          "context": "Summary: method identifies stars that escaped from nearby open clusters in the last few ten million years. Assumes fugitives were close to the cluster in phase space in the past. No mention of Galactic escape."
+        }
+      ]
+    }
+  ]
+}

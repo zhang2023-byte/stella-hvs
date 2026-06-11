@@ -1,0 +1,404 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:46:34",
+  "paper": {
+    "arxiv_id": "2105.12600",
+    "title": "Analysis of Selected Runaway Stars in the Orion Nebula Based on Data from the Gaia EDR3 Catalogue",
+    "month": "2021-05"
+  },
+  "review": {
+    "path": "literature/2105.12600/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084634",
+    "started_at": "2026-06-07T08:46:34",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2105.12600",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-dat-1",
+      "internal_table_id": "table-tab-dat-1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2105.12600/arxiv_source/ArXiv-Enc-Orion=2021.tex",
+        "start_line": 90,
+        "end_line": 131,
+        "caption": "Initial kinematic characteristics of the stars taken from various catalogues, μ_α^*=μ_αcosδ",
+        "label": "tab-dat-1"
+      },
+      "source_path": "literature/2105.12600/arxiv_source/ArXiv-Enc-Orion=2021.tex",
+      "excerpt_path": "literature/2105.12600/catalog_sources/table-tab-dat-1/excerpt.tex",
+      "sha256": "e914c14f2927f7b7778d39889b501b92e443013e73c3c791b392496fb06483bb",
+      "line_count": 42,
+      "error": ""
+    },
+    {
+      "id": "table-tab-dat-2",
+      "internal_table_id": "table-tab-dat-2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2105.12600/arxiv_source/ArXiv-Enc-Orion=2021.tex",
+        "start_line": 134,
+        "end_line": 155,
+        "caption": "Initial kinematic characteristics taken from the Gaia EDR3 catalogue for runaway stars from the lists by Schoettler et al. (2020) and Farias et al. (2020)",
+        "label": "tab-dat-2"
+      },
+      "source_path": "literature/2105.12600/arxiv_source/ArXiv-Enc-Orion=2021.tex",
+      "excerpt_path": "literature/2105.12600/catalog_sources/table-tab-dat-2/excerpt.tex",
+      "sha256": "3b58f80edbb4d0535966fe30e8f1ec100b158921c6da15adc4b9771a36534673",
+      "line_count": 22,
+      "error": ""
+    },
+    {
+      "id": "table-tab-Col69",
+      "internal_table_id": "table-tab-Col69",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2105.12600/arxiv_source/ArXiv-Enc-Orion=2021.tex",
+        "start_line": 158,
+        "end_line": 177,
+        "caption": "Initial kinematic characteristics of the stars associated with the cluster Col 69 taken from the Gaia EDR3 catalogue",
+        "label": "tab-Col69"
+      },
+      "source_path": "literature/2105.12600/arxiv_source/ArXiv-Enc-Orion=2021.tex",
+      "excerpt_path": "literature/2105.12600/catalog_sources/table-tab-Col69/excerpt.tex",
+      "sha256": "d31e09c9e0ee985b40ac5934e53c167b982348b253d3f4efeed626a183215b7b",
+      "line_count": 20,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-dat-1",
+      "internal_table_id": "table-tab-dat-1",
+      "status": "success",
+      "ecsv_path": "literature/2105.12600/catalog_tables/table-tab-dat-1.ecsv",
+      "caption": "Initial kinematic characteristics of the stars taken from various catalogues, μ_α^*=μ_αcosδ",
+      "label": "tab-dat-1",
+      "row_count": 26,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpiwlab9l4/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2105.12600/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpiwlab9l4/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2105.12600/catalog_sources/table-tab-dat-1/wrapped.tex",
+            "html": "literature/2105.12600/catalog_sources/table-tab-dat-1/latexml.html",
+            "stdout": "literature/2105.12600/catalog_sources/table-tab-dat-1/latexml.stdout.txt",
+            "stderr": "literature/2105.12600/catalog_sources/table-tab-dat-1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e914c14f2927f7b7778d39889b501b92e443013e73c3c791b392496fb06483bb"
+    },
+    {
+      "id": "table-tab-dat-2",
+      "internal_table_id": "table-tab-dat-2",
+      "status": "success",
+      "ecsv_path": "literature/2105.12600/catalog_tables/table-tab-dat-2.ecsv",
+      "caption": "Initial kinematic characteristics taken from the Gaia EDR3 catalogue for runaway stars from the lists by Schoettler et al. (2020) and Farias et al. (2020)",
+      "label": "tab-dat-2",
+      "row_count": 7,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia EDR3",
+          "\\pi",
+          "\\mu_\\alpha\\cos\\delta",
+          "\\mu_\\delta",
+          "V_r"
+        ],
+        [
+          "",
+          "mas",
+          "mas/yr",
+          "mas/yr",
+          "km/s"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia EDR3",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\pi | mas",
+          "unit_text": "mas",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mu_\\alpha\\cos\\delta | mas/yr",
+          "unit_text": "mas/yr",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\delta | mas/yr",
+          "unit_text": "mas/yr",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V_r | km/s",
+          "unit_text": "km/s",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_9vzaaue/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2105.12600/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_9vzaaue/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2105.12600/catalog_sources/table-tab-dat-2/wrapped.tex",
+            "html": "literature/2105.12600/catalog_sources/table-tab-dat-2/latexml.html",
+            "stdout": "literature/2105.12600/catalog_sources/table-tab-dat-2/latexml.stdout.txt",
+            "stderr": "literature/2105.12600/catalog_sources/table-tab-dat-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3b58f80edbb4d0535966fe30e8f1ec100b158921c6da15adc4b9771a36534673"
+    },
+    {
+      "id": "table-tab-Col69",
+      "internal_table_id": "table-tab-Col69",
+      "status": "success",
+      "ecsv_path": "literature/2105.12600/catalog_tables/table-tab-Col69.ecsv",
+      "caption": "Initial kinematic characteristics of the stars associated with the cluster Col 69 taken from the Gaia EDR3 catalogue",
+      "label": "tab-Col69",
+      "row_count": 3,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "\\pi",
+          "\\mu_\\alpha\\cos\\delta",
+          "\\mu_\\delta",
+          "V_r",
+          "Ref V_r"
+        ],
+        [
+          "",
+          "mas",
+          "mas/yr",
+          "mas/yr",
+          "km/s",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\pi | mas",
+          "unit_text": "mas",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mu_\\alpha\\cos\\delta | mas/yr",
+          "unit_text": "mas/yr",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\delta | mas/yr",
+          "unit_text": "mas/yr",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V_r | km/s",
+          "unit_text": "km/s",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Ref V_r",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6jubl18k/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2105.12600/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6jubl18k/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2105.12600/catalog_sources/table-tab-Col69/wrapped.tex",
+            "html": "literature/2105.12600/catalog_sources/table-tab-Col69/latexml.html",
+            "stdout": "literature/2105.12600/catalog_sources/table-tab-Col69/latexml.stdout.txt",
+            "stderr": "literature/2105.12600/catalog_sources/table-tab-Col69/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d31e09c9e0ee985b40ac5934e53c167b982348b253d3f4efeed626a183215b7b"
+    }
+  ]
+}

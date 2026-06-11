@@ -1,0 +1,123 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:24:00",
+  "paper": {
+    "arxiv_id": "1805.08277",
+
+    "title": "Gaia DR2 reveals a very massive runaway star ejected from R136",
+    "month": "2018-05",
+    "source_note_json": "",
+    "links": {
+      "abs": "https://arxiv.org/abs/1805.08277",
+      "pdf": "https://arxiv.org/pdf/1805.08277"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1805.08277",
+    "audit_path": "",
+    "catalog_review_path": "literature/1805.08277/catalog_review.json",
+    "catalog_extraction_path": "literature/1805.08277/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:24:00",
+    "extractor": "agent",
+    "summary": "No Galactic-unbound HVS candidates. Paper studies two very massive O2 stars (VFTS 16 and VFTS 72, each ~100 Msun) in the Tarantula Nebula of the Large Magellanic Cloud (LMC). Both are found to be fast runaway stars with space velocities ~100 km/s relative to R136 and the local massive star population. VFTS 16 is consistent with dynamical ejection from R136 ~1.5 Myr ago. These are LMC-internal cluster runaway stars, not Galactic-unbound objects. The paper never claims Galactic unbound status or hypervelocity classification."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR2 catalog sources within 0.2 deg of R136, screened to G<17, cross-matched with VFTS O-type stars.",
+      "inputs": ["Gaia DR2", "VFTS catalog"],
+      "outputs": ["827 sources in 30 Dor region"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1805.08277/arxiv_source/vfts16_submitted_revised.tex",
+          "start_line": 217,
+          "end_line": 225,
+          "context": "Gaia DR2 extraction within 0.2 deg of R136, G<17, cross-match with VFTS."
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": ["step-01"],
+      "step_type": "quality_filter",
+      "summary": "Filter out foreground stars via parallax and radial velocity. Exclude sources with proper motion errors > 0.1 mas/yr. Further restrict to 79 O-stars with errors < 0.07 mas/yr.",
+      "inputs": ["Gaia DR2 astrometry", "VFTS radial velocities"],
+      "outputs": ["79 high-quality O-star proper motions"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1805.08277/arxiv_source/vfts16_submitted_revised.tex",
+          "start_line": 251,
+          "end_line": 298,
+          "context": "Proper motion filtering: pm_error < 0.07 mas/yr, resulting in 79 O-stars."
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": ["step-02"],
+      "step_type": "velocity_calculation",
+      "summary": "Convert relative proper motions to tangential velocities assuming LMC distance 50.1±2.5 kpc. Compute proper motion relative to R136 central stars. Derive flight times to R136.",
+      "inputs": ["Relative proper motions", "LMC distance"],
+      "outputs": ["VFTS 16: 80±11 km/s; VFTS 72: 93±15 km/s tangential. 3D: 112, 93 km/s."],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1805.08277/arxiv_source/vfts16_submitted_revised.tex",
+          "start_line": 424,
+          "end_line": 476,
+          "context": "Table 1: properties including tangential and 3D speeds."
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": ["step-03"],
+      "step_type": "origin_assessment",
+      "summary": "Assess dynamical ejection from R136. VFTS 16 position angle consistent with R136 origin; flight time ~1.5 Myr. VFTS 72 ~2σ discrepant in position angle. Both classified as runaway stars from R136 region.",
+      "inputs": ["Proper motion vectors", "stellar ages", "cluster age"],
+      "outputs": ["VFTS 16: consistent with R136 ejection. VFTS 72: less clear origin. Both are runaways."],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1805.08277/arxiv_source/vfts16_submitted_revised.tex",
+          "start_line": 504,
+          "end_line": 756,
+          "context": "Discussion and Conclusions: runaway classification, ejection from R136."
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "vfts_runaways",
+      "description": "Two very massive O2 stars in 30 Doradus/LMC: VFTS 16 (O2 III, ~100 Msun) and VFTS 72 (BI 253, O2 III-V(n)((f*)), ~100 Msun). Both have proper motions exceeding 0.3 mas/yr relative to R136.",
+      "decision": "excluded",
+      "reason": "These stars are LMC-internal cluster runaway stars from R136, not Galactic-unbound HVS candidates. Their space velocities are ~100 km/s relative to R136 — typical of cluster escapers, far below Galactic escape velocity (~500+ km/s). Paper uses 'runaway star' terminology, never claims unbound from Galaxy or hypervelocity status. The paper focuses on cluster ejection dynamics (DES), not Galactic escape.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1805.08277/arxiv_source/vfts16_submitted_revised.tex",
+          "start_line": 113,
+          "end_line": 148,
+          "context": "Abstract: Both stars are 'fast runaway stars, with space velocities of around 100 km/s relative to R136 and the local massive star population'."
+        },
+        {
+          "kind": "text",
+          "path": "literature/1805.08277/arxiv_source/vfts16_submitted_revised.tex",
+          "start_line": 731,
+          "end_line": 756,
+          "context": "Conclusions: VFTS 16 ejected from R136 by dynamical interaction. VFTS 72 also a proper motion runaway."
+        }
+      ]
+    }
+  ]
+}

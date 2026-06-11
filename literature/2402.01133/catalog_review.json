@@ -1,0 +1,357 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2402.01133",
+    "title": "Where do they come from? Identification of globular cluster escaped stars",
+    "month": "2024-02",
+    "source_note_json": "notes/2024/2024-02/2024-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2402.01133",
+      "pdf": "https://arxiv.org/pdf/2402.01133"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2402.01133",
+    "audit_path": "literature/2402.01133/audit.json",
+    "source_dir": "literature/2402.01133/arxiv_source",
+    "tex_root": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T12:43:57",
+    "reviewer": "agent",
+    "summary": "This paper identifies stars escaped from six Gaia-Enceladus-related globular clusters using two methods: action-space plus metallicity matching (Method I) and proper-motion / CMD selection in the cluster vicinity (Method II). Internal assets comprise two GC parameter tables (kinematics and isochrone inputs), a catalog of N-rich field-star associations, and a catalog of extra-tidal candidates with spectroscopic cross-matches. External resources include the Gaia EDR3 documentation and the Baumgardt GC database."
+  },
+  "internal_tables": [
+    {
+      "id": "table-Tabel-GC-parameters",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Kinematic and structural parameters of the six globular clusters studied (NGC 1851, 1904, 6205, 6341, 6779, 7089), used as inputs for membership and escapee identification.",
+      "source_refs": [
+        {
+          "path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+          "start_line": 158,
+          "end_line": 183,
+          "caption": "Kinematic parameters of six GCs studied in this work.",
+          "label": "Tabel:GC parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Globular cluster name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA | [deg]",
+          "meaning": "Right Ascension (J2000)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DEC | [deg]",
+          "meaning": "Declination (J2000)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_t^a | [']",
+          "meaning": "Tidal radius",
+          "unit_text": "arcmin",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_J^b | [']",
+          "meaning": "Jacobi radius",
+          "unit_text": "arcmin",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha cos\\delta | [mas yr^-1]",
+          "meaning": "Mean proper motion in right ascension (cos-dec corrected)",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta | [mas yr^-1]",
+          "meaning": "Mean proper motion in declination",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_\\mu_\\alpha | [mas yr^-1]",
+          "meaning": "Proper motion dispersion in right ascension",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_\\mu_\\delta | [mas yr^-1]",
+          "meaning": "Proper motion dispersion in declination",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\rho",
+          "meaning": "Correlation coefficient between the two proper motion components",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Kinematic parameters of six GCs studied in this work.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tabel-GC-iso",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Ages, metallicities, distances, alpha-enhancements, reddening, and initial horizontal-branch masses for the six GCs, used to generate PARSEC isochrones and ZAHBs for CMD selection of extra-tidal candidates.",
+      "source_refs": [
+        {
+          "path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+          "start_line": 188,
+          "end_line": 213,
+          "caption": "Parameters of the GC used to generate the isochrones and ZAHBs.",
+          "label": "Tabel:GC iso"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Globular cluster name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Age^1 | [Gyr]",
+          "meaning": "Age of the globular cluster",
+          "unit_text": "Gyr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]^2 | [dex]",
+          "meaning": "Iron-to-hydrogen abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Distance^3 | [Kpc]",
+          "meaning": "Heliocentric distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[\\alpha/Fe]",
+          "meaning": "Alpha-element enhancement ratio",
+          "unit_text": "[\\alpha/Fe]",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "E(B-V)^2 | [mag]",
+          "meaning": "Colour excess E(B-V)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Initial Mass on HB (IMHB) | [M_\\odot]",
+          "meaning": "Initial mass on the horizontal branch",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Parameters of the GC used to generate the isochrones and ZAHBs.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tabel-GC-star-pair",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Catalog of N-rich field stars with the most probable globular-cluster progenitor identified via action-space and metallicity matching (Method I).",
+      "source_refs": [
+        {
+          "path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+          "start_line": 344,
+          "end_line": 406,
+          "caption": "N-rich stars and potential GC origin from Method \\uppercase\\expandafter{\\romannumeral1}. The columns list the Gaia EDR3 star ID and cluster name, the confidence measured from full action distribution combining the metallicity, and the merger events. Entries in bold are the five most probable associations",
+          "label": "Tabel: GC-star pair"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia EDR3 ID",
+          "meaning": "Gaia EDR3 source identifier of the field star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "GC",
+          "meaning": "Name of the most probable host globular cluster",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Confidence (p)",
+          "meaning": "Statistical confidence (p-value) of the GC-star association from the combined action and metallicity distribution",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "m.e.^1",
+          "meaning": "Associated merger event (GE = Gaia-Enceladus, Seq = Sequoia, etc.)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "N-rich stars and potential GC origin from Method \\uppercase\\expandafter{\\romannumeral1}. The columns list the Gaia EDR3 star ID and cluster name, the confidence measured from full action distribution combining the metallicity, and the merger events. Entries in bold are the five most probable associations",
+      "comments": ""
+    },
+    {
+      "id": "table-Table-extra-tidal-stars",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Catalog of extra-tidal candidate stars identified around the six GCs via PM and CMD matching (Method II), cross-matched with APOGEE DR17 and SEGUE DR12 for RV and metallicity confirmation.",
+      "source_refs": [
+        {
+          "path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+          "start_line": 431,
+          "end_line": 476,
+          "caption": "Identified extra-tidal stars from Method \\uppercase \\expandafter{\\romannumeral2}.",
+          "label": "Table: extra-tidal stars"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia EDR3 ID",
+          "meaning": "Gaia EDR3 source identifier of the extra-tidal candidate",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "GC",
+          "meaning": "Host globular cluster name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]",
+          "meaning": "Iron-to-hydrogen abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral source",
+          "meaning": "Spectroscopic survey source (APOGEE DR17 or SEGUE DR12)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia EDR3 ID",
+          "meaning": "Gaia EDR3 source identifier of the extra-tidal candidate",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "GC",
+          "meaning": "Host globular cluster name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]",
+          "meaning": "Iron-to-hydrogen abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral source",
+          "meaning": "Spectroscopic survey source (APOGEE DR17 or SEGUE DR12)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Identified extra-tidal stars from Method \\uppercase \\expandafter{\\romannumeral2}.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://gea.esac.esa.int/archive/documentation/GEDR3/",
+      "local_path": "",
+      "description": "Gaia EDR3 documentation page on visibility periods and astrometric quality indicators, referenced when defining source selection criteria.",
+      "source_refs": [
+        {
+          "path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+          "start_line": 249,
+          "end_line": 249,
+          "context": "\\item $\\texttt{VISIBILITY\\_PERIODS\\_USED \\textgreater \\ 10}$\n\nThis parameter represents the number of visibility periods used in the astrometric solution. A high number of visibility periods is a better indicator of an astrometrically well-observed source.\\footnote{https://gea.esac.esa.int/archive/documentation/GEDR3/}\n\n\\item $\\texttt{0.001+0.039(BP-RP) \\textless \\ log10 excess\\_flux\\ \\textless \\ }$ $\\texttt{0.12+0.039(BP-RP)}$"
+        }
+      ],
+      "evidence": "\\item $\\texttt{VISIBILITY\\_PERIODS\\_USED \\textgreater \\ 10}$\n\nThis parameter represents the number of visibility periods used in the astrometric solution. A high number of visibility periods is a better indicator of an astrometrically well-observed source.\\footnote{https://gea.esac.esa.int/archive/documentation/GEDR3/}\n\n\\item $\\texttt{0.001+0.039(BP-RP) \\textless \\ log10 excess\\_flux\\ \\textless \\ }$ $\\texttt{0.12+0.039(BP-RP)}$",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://people.smp.uq.edu.au/HolgerBaumgardt/globular/",
+      "local_path": "",
+      "description": "Holger Baumgardt globular cluster database, providing cluster mean RVs and dispersions used for spectroscopic membership confirmation.",
+      "source_refs": [
+        {
+          "path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+          "start_line": 419,
+          "end_line": 419,
+          "context": "To further confirm if these extra-tidal candidates share similar RVs and metallicities with their host GCs, we cross-matched the candidates with large spectroscopic surveys. Only a small number of stars were observed by APOGEE DR17 \\citep{2022ApJS..259...35A} and SEGUE DR12 \\citep{2009AJ....137.4377Y,2011AJ....142...72E}, and they are located in the vicinity of four GCs (NGC 1851, NGC 6205, NGC 6341, and NGC 7089). We define an RV match if there is an overlap between the uncertainty range of the extra-tidal candidate and the cluster mean RV$\\pm$dispersion. A metallicity match is defined similarly. In this section the cluster's RV and dispersion are provided by \\citet{2018MNRAS.478.1520B};\\footnote{https://people.smp.uq.edu.au/HolgerBaumgardt/globular/} the cluster's mean metallicity is listed in Table \\ref{Tabel:GC iso}, with an uncertainty of 0.3 dex. %We investigate individual cluster separately, and summarize the extra-tidal candidates in the online table ()."
+        }
+      ],
+      "evidence": "To further confirm if these extra-tidal candidates share similar RVs and metallicities with their host GCs, we cross-matched the candidates with large spectroscopic surveys. Only a small number of stars were observed by APOGEE DR17 \\citep{2022ApJS..259...35A} and SEGUE DR12 \\citep{2009AJ....137.4377Y,2011AJ....142...72E}, and they are located in the vicinity of four GCs (NGC 1851, NGC 6205, NGC 6341, and NGC 7089). We define an RV match if there is an overlap between the uncertainty range of the extra-tidal candidate and the cluster mean RV$\\pm$dispersion. A metallicity match is defined similarly. In this section the cluster's RV and dispersion are provided by \\citet{2018MNRAS.478.1520B};\\footnote{https://people.smp.uq.edu.au/HolgerBaumgardt/globular/} the cluster's mean metallicity is listed in Table \\ref{Tabel:GC iso}, with an uncertainty of 0.3 dex. %We investigate individual cluster separately, and summarize the extra-tidal candidates in the online table ().",
+      "comments": ""
+    }
+  ]
+}

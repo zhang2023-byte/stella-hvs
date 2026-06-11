@@ -1,0 +1,808 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:58:33",
+  "paper": {
+    "arxiv_id": "2311.04174",
+    "title": "The early evolution of young massive clusters. II. The kinematic history of NGC 6618 / M 17",
+    "month": "2023-11"
+  },
+  "review": {
+    "path": "literature/2311.04174/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225833",
+    "started_at": "2026-05-22T22:58:33",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2311.04174",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 6,
+      "work_count": 6,
+      "table_count": 6,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 1,
+      "file_count": 6,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-members_all",
+      "internal_table_id": "table-tab-members_all",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.04174/arxiv_source/Published.tex",
+        "start_line": 166,
+        "end_line": 225,
+        "caption": "\\textit{Gaia} DR3 members of NGC\\,6618 with and without spectral classification, sorted by their $K_{\\rm{s}}$ magnitude.",
+        "label": "tab:members_all"
+      },
+      "source_path": "literature/2311.04174/arxiv_source/Published.tex",
+      "excerpt_path": "literature/2311.04174/catalog_sources/table-tab-members_all/excerpt.tex",
+      "sha256": "1ba8614c54a95c6f692a6b160b7b9d9e1330fc6b82ecc261cf245ab3c1416f12",
+      "line_count": 60,
+      "error": ""
+    },
+    {
+      "id": "table-tab-member_Ostars",
+      "internal_table_id": "table-tab-member_Ostars",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.04174/arxiv_source/Published.tex",
+        "start_line": 227,
+        "end_line": 284,
+        "caption": "O(B) stars in and around NGC\\,6618, with and without spectral classification, sorted by their K$_{\\rm{s}}$ magnitude. Membership is indicated by `Y'; non-members by `N', and candidate members by `C'.",
+        "label": "tab:member_Ostars"
+      },
+      "source_path": "literature/2311.04174/arxiv_source/Published.tex",
+      "excerpt_path": "literature/2311.04174/catalog_sources/table-tab-member_Ostars/excerpt.tex",
+      "sha256": "b372708e1266582e28776c4f5de890ceb6191ae23e19ce98e60acd2440583e22",
+      "line_count": 58,
+      "error": ""
+    },
+    {
+      "id": "table-tab-NGC6618params",
+      "internal_table_id": "table-tab-NGC6618params",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.04174/arxiv_source/Published.tex",
+        "start_line": 349,
+        "end_line": 397,
+        "caption": "Astrometric, kinematic, and physical parameters of NGC\\,6618.",
+        "label": "tab:NGC6618params"
+      },
+      "source_path": "literature/2311.04174/arxiv_source/Published.tex",
+      "excerpt_path": "literature/2311.04174/catalog_sources/table-tab-NGC6618params/excerpt.tex",
+      "sha256": "f957910563af58dfb1fa57802f6afa21c23429c7417f1abb6a7abe6d48de3c0b",
+      "line_count": 49,
+      "error": ""
+    },
+    {
+      "id": "table-tab-runaways",
+      "internal_table_id": "table-tab-runaways",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.04174/arxiv_source/Published.tex",
+        "start_line": 500,
+        "end_line": 545,
+        "caption": "Properties of runaways coming from NGC\\,6618, sorted by increasing kinematic age $t_{\\rm{kin}}$.",
+        "label": "tab:runaways"
+      },
+      "source_path": "literature/2311.04174/arxiv_source/Published.tex",
+      "excerpt_path": "literature/2311.04174/catalog_sources/table-tab-runaways/excerpt.tex",
+      "sha256": "8d29610605105cc357a28ea7c7964d596d450df872cde50d2d4fe487fe7fe10a",
+      "line_count": 46,
+      "error": ""
+    },
+    {
+      "id": "table-tab-NGC6618PG",
+      "internal_table_id": "table-tab-NGC6618PG",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.04174/arxiv_source/Published.tex",
+        "start_line": 571,
+        "end_line": 608,
+        "caption": "Known and candidate OB stars in NGC\\,6618\\,PG and M\\,17\\,EB.",
+        "label": "tab:NGC6618PG"
+      },
+      "source_path": "literature/2311.04174/arxiv_source/Published.tex",
+      "excerpt_path": "literature/2311.04174/catalog_sources/table-tab-NGC6618PG/excerpt.tex",
+      "sha256": "31066da79676895d76ae00632256fe532f9e2107d24510d4c63efa8cf67b7ebe",
+      "line_count": 38,
+      "error": ""
+    },
+    {
+      "id": "table-tab-appendix_members",
+      "internal_table_id": "table-tab-appendix_members",
+      "kind": "supertabular",
+      "status": "deferred",
+      "source_ref": {},
+      "source_path": "",
+      "excerpt_path": "",
+      "sha256": "",
+      "line_count": 0,
+      "error": "only latex_table internal_tables are extracted"
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-members_all",
+      "internal_table_id": "table-tab-members_all",
+      "status": "success",
+      "ecsv_path": "literature/2311.04174/catalog_tables/table-tab-members_all.ecsv",
+      "caption": "\\textit{Gaia} DR3 members of NGC\\,6618 with and without spectral classification, sorted by their $K_{\\rm{s}}$ magnitude.",
+      "label": "tab:members_all",
+      "row_count": 42,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Identifier",
+          "source_id",
+          "Right ascension",
+          "Declination",
+          "K_\\rms",
+          "Spectral type",
+          "Ref."
+        ],
+        [
+          "-",
+          "-",
+          "deg",
+          "deg",
+          "mag",
+          "-",
+          "-"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Identifier | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "source_id | -",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Right ascension | deg",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Declination | deg",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "K_\\rms | mag",
+          "unit_text": "mag",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Spectral type | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Ref. | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9y4pjjvf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.04174/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9y4pjjvf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.04174/catalog_sources/table-tab-members_all/wrapped.tex",
+            "html": "literature/2311.04174/catalog_sources/table-tab-members_all/latexml.html",
+            "stdout": "literature/2311.04174/catalog_sources/table-tab-members_all/latexml.stdout.txt",
+            "stderr": "literature/2311.04174/catalog_sources/table-tab-members_all/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "1ba8614c54a95c6f692a6b160b7b9d9e1330fc6b82ecc261cf245ab3c1416f12"
+    },
+    {
+      "id": "table-tab-member_Ostars",
+      "internal_table_id": "table-tab-member_Ostars",
+      "status": "success",
+      "ecsv_path": "literature/2311.04174/catalog_tables/table-tab-member_Ostars.ecsv",
+      "caption": "O(B) stars in and around NGC\\,6618, with and without spectral classification, sorted by their K$_{\\rm{s}}$ magnitude. Membership is indicated by `Y'; non-members by `N', and candidate members by `C'.",
+      "label": "tab:member_Ostars",
+      "row_count": 34,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Identifier",
+          "\\alpha",
+          "\\delta",
+          "K s",
+          "Spectral type",
+          "Projected distance",
+          "Distance",
+          "Ruwe",
+          "Member",
+          "Ref."
+        ],
+        [
+          "Identifier",
+          "\\alpha",
+          "\\delta",
+          "K s",
+          "Spectral type",
+          "from centre",
+          "Distance",
+          "Ruwe",
+          "Member",
+          "Ref."
+        ],
+        [
+          "-",
+          "deg",
+          "deg",
+          "mag",
+          "-",
+          "arcmin (pc)",
+          "pc",
+          "-",
+          "-",
+          "-"
+        ],
+        [
+          "Confirmed O stars on basis of spectroscopy, this work",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Identifier | Identifier | - | Confirmed O stars on basis of spectroscopy, this work",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha | \\alpha | deg",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta | \\delta | deg",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "K s | K s | mag",
+          "unit_text": "K s",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Spectral type | Spectral type | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Projected distance | from centre | arcmin (pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Distance | Distance | pc",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Ruwe | Ruwe | -",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Member | Member | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Ref. | Ref. | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzsnbpgaf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.04174/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzsnbpgaf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.04174/catalog_sources/table-tab-member_Ostars/wrapped.tex",
+            "html": "literature/2311.04174/catalog_sources/table-tab-member_Ostars/latexml.html",
+            "stdout": "literature/2311.04174/catalog_sources/table-tab-member_Ostars/latexml.stdout.txt",
+            "stderr": "literature/2311.04174/catalog_sources/table-tab-member_Ostars/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b372708e1266582e28776c4f5de890ceb6191ae23e19ce98e60acd2440583e22"
+    },
+    {
+      "id": "table-tab-NGC6618params",
+      "internal_table_id": "table-tab-NGC6618params",
+      "status": "success",
+      "ecsv_path": "literature/2311.04174/catalog_tables/table-tab-NGC6618params.ecsv",
+      "caption": "Astrometric, kinematic, and physical parameters of NGC\\,6618.",
+      "label": "tab:NGC6618params",
+      "row_count": 25,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Equatorial",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Equatorial",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpe6q4ds26/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.04174/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpe6q4ds26/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.04174/catalog_sources/table-tab-NGC6618params/wrapped.tex",
+            "html": "literature/2311.04174/catalog_sources/table-tab-NGC6618params/latexml.html",
+            "stdout": "literature/2311.04174/catalog_sources/table-tab-NGC6618params/latexml.stdout.txt",
+            "stderr": "literature/2311.04174/catalog_sources/table-tab-NGC6618params/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f957910563af58dfb1fa57802f6afa21c23429c7417f1abb6a7abe6d48de3c0b"
+    },
+    {
+      "id": "table-tab-runaways",
+      "internal_table_id": "table-tab-runaways",
+      "status": "success",
+      "ecsv_path": "literature/2311.04174/catalog_tables/table-tab-runaways.ecsv",
+      "caption": "Properties of runaways coming from NGC\\,6618, sorted by increasing kinematic age $t_{\\rm{kin}}$.",
+      "label": "tab:runaways",
+      "row_count": 13,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Identifier",
+          "K s",
+          "Spectral type",
+          "— \\Delta v_\\rmT —",
+          "v_\\rmR",
+          "t_\\rmkin",
+          "r_\\rmimp,2D",
+          "A V",
+          "Ref."
+        ],
+        [
+          "-",
+          "mag",
+          "-",
+          "km s -1",
+          "km s -1",
+          "kyr",
+          "arcmin",
+          "mag",
+          "-"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Identifier | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "K s | mag",
+          "unit_text": "K s",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Spectral type | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "— \\Delta v_\\rmT — | km s -1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "v_\\rmR | km s -1",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "t_\\rmkin | kyr",
+          "unit_text": "kyr",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "r_\\rmimp,2D | arcmin",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "A V | mag",
+          "unit_text": "mag",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Ref. | -",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2z5ngbyd/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.04174/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2z5ngbyd/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.04174/catalog_sources/table-tab-runaways/wrapped.tex",
+            "html": "literature/2311.04174/catalog_sources/table-tab-runaways/latexml.html",
+            "stdout": "literature/2311.04174/catalog_sources/table-tab-runaways/latexml.stdout.txt",
+            "stderr": "literature/2311.04174/catalog_sources/table-tab-runaways/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8d29610605105cc357a28ea7c7964d596d450df872cde50d2d4fe487fe7fe10a"
+    },
+    {
+      "id": "table-tab-NGC6618PG",
+      "internal_table_id": "table-tab-NGC6618PG",
+      "status": "success",
+      "ecsv_path": "literature/2311.04174/catalog_tables/table-tab-NGC6618PG.ecsv",
+      "caption": "Known and candidate OB stars in NGC\\,6618\\,PG and M\\,17\\,EB.",
+      "label": "tab:NGC6618PG",
+      "row_count": 18,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Identifier",
+          "Sp. type",
+          "K s",
+          "Distance",
+          "Runaway"
+        ],
+        [
+          "-",
+          "-",
+          "mag",
+          "pc",
+          "-"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Identifier | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Sp. type | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "K s | mag",
+          "unit_text": "K s",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Distance | pc",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Runaway | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptxft4pgy/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.04174/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptxft4pgy/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.04174/catalog_sources/table-tab-NGC6618PG/wrapped.tex",
+            "html": "literature/2311.04174/catalog_sources/table-tab-NGC6618PG/latexml.html",
+            "stdout": "literature/2311.04174/catalog_sources/table-tab-NGC6618PG/latexml.stdout.txt",
+            "stderr": "literature/2311.04174/catalog_sources/table-tab-NGC6618PG/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "31066da79676895d76ae00632256fe532f9e2107d24510d4c63efa8cf67b7ebe"
+    },
+    {
+      "id": "table-tab-appendix_members",
+      "internal_table_id": "table-tab-appendix_members",
+      "status": "deferred",
+      "ecsv_path": "",
+      "caption": "",
+      "label": "",
+      "row_count": 0,
+      "column_count": 0,
+      "environment": "",
+      "header_rows": [],
+      "error": "only latex_table internal_tables are extracted",
+      "columns": [],
+      "warnings": [],
+      "extraction_method": "",
+      "conversion_attempts": [],
+      "source_sha256": ""
+    }
+  ]
+}

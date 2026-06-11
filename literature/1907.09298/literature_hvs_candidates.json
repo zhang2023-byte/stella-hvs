@@ -1,0 +1,91 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:03:00",
+  "paper": {
+    "arxiv_id": "1907.09298",
+    "bibcode": "2019MNRAS.490.5647M",
+    "title": "Searching for correlations in GAIA DR2 unbound star trajectories",
+    "month": "2019-07",
+    "source_note_json": "notes/2019/2019-07/2019-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1907.09298",
+      "pdf": "https://arxiv.org/pdf/1907.09298"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1907.09298",
+    "audit_path": "literature/1907.09298/audit.json",
+    "catalog_review_path": "literature/1907.09298/catalog_review.json",
+    "catalog_extraction_path": "literature/1907.09298/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1907.09298/catalog_tables/table-tab-hvs.ecsv",
+      "literature/1907.09298/catalog_tables/table-tab-sag.ecsv",
+      "literature/1907.09298/catalog_tables/table-tab-gal_id.ecsv",
+      "literature/1907.09298/catalog_tables/table-tab-gc_id.ecsv",
+      "literature/1907.09298/catalog_tables/table-tab-mwpot.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:03:00",
+    "extractor": "agent",
+    "summary": "本文基于Gaia DR2数据，对Marchetti+2018 (1804.10607) 星表中1649颗已分类为非束缚高速星(Pub>0.5)的样本进行轨道积分，利用贝叶斯方法搜索其轨迹与球状星团和矮星系之间的散射关联（基于PBH冷暗物质场景）。论文的核心贡献在于相关性分析方法学和Sagittarius dSph散射证据的发现，而非引入新的HVS候选体。Table tab:hvs列出的5颗星与Sagittarius dSph存在散射兼容性，但它们全部来自Marchetti+2018已发表的HVS候选体星表（已在文献1804.10607中提取）。论文未声称发现任何新的超高速星候选体，所有分析均基于已有HVS样本。无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "Quick scan of paper abstract and content for HVS relevance assessment. Paper samples 1649 HVS from Marchetti+2018 (Pub>0.5) — all previously known HVS candidates. The paper searches for trajectory correlations with GCs/galaxies, not discovering new candidates.",
+      "inputs": [
+        "arXiv abstract",
+        "Paper full text",
+        "Catalog review"
+      ],
+      "outputs": [
+        "HVS relevance classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+          "start_line": 52,
+          "end_line": 54,
+          "context": "Paper abstract: develop Bayesian framework to search for correlations among HVS trajectories and those of GCs and dwarf galaxies"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+          "start_line": 72,
+          "end_line": 76,
+          "context": "We apply the method to a selection of hypervelocity stars (HVS) and globular clusters from Gaia DR2"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "quick-scan-review",
+      "description": "本文从Marchetti+2018 (1804.10607)星表中选取1649颗已具有银河系脱绑概率Pub>0.5的Gaia DR2高速星，对其轨道与52个球状星团和35个邻近(矮)星系进行贝叶斯散射关联分析。Table tab:hvs列出5颗与Sagittarius dSph存在正贝叶斯因子(K>1)散射证据的HVS候选体(Gaia DR2 source IDs: 6198594250104473728, 6242065813132837376, 52292628..., 62557247..., 62779130...)，其中前2颗在正文第4节论述，后3颗在附录A讨论。然而，这5颗星全部来自Marchetti+2018已发表的HVS候选体星表，该星表已在文献1804.10607中完成HVS候选体提取（125颗候选体）。1907.09298未引入任何新的HVS候选体，仅对已有候选体进行相关性再分析。",
+      "decision": "excluded",
+      "reason": "所有5颗星均为Marchetti+2018 (1804.10607)已发表的HVS候选体（该文献已提取125颗候选体）。1907.09298是对这些已知候选体进行轨道相关性分析（检验PBH散射假说），并非发现或引入新的超高速星候选体。论文标题本身也强调'searching for correlations'而非'discovering'新天体。Table tab:hvs中的恒星脱绑概率Pub来自Marchetti+2018的原始计算，论文未重新评估其非束缚状态。根据HVS候选体提取规则，已被先前文献提取的候选体不在此论文中重复计数。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+          "start_line": 52,
+          "end_line": 54,
+          "context": "Paper abstract: 'We apply the method to a selection of hypervelocity stars (HVS) and globular clusters from Gaia DR2' — uses existing HVS sample"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+          "start_line": 97,
+          "end_line": 102,
+          "context": "Section 2.1: sample based on Marchetti+2018 selection — all stars already classified as HVS by prior work"
+        }
+      ]
+    }
+  ]
+}

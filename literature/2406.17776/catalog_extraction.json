@@ -1,0 +1,1302 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:18",
+  "paper": {
+    "arxiv_id": "2406.17776",
+    "title": "Spectroscopic and Dynamic Orbital Analyses of Metal-Poor and High Proper Motion Stars: I. HD\\,8724 and HD\\,195633",
+    "month": "2024-06"
+  },
+  "review": {
+    "path": "literature/2406.17776/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123918",
+    "started_at": "2026-05-17T12:39:18",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2406.17776",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 8,
+      "work_count": 8,
+      "table_count": 8,
+      "success_count": 8,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 8,
+      "file_success_count": 8,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table-1",
+      "internal_table_id": "table-table-1",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+        "start_line": 78,
+        "end_line": 96,
+        "caption": "Equatorial coordinates, spectral types, and {\\sc ELODIE} spectral data were provided for HD\\,8724 and HD\\,195633, respectively. The corrected {\\sc ELODIE} spectra accounted for the reported heliocentric radial velocities, which were cross-checked by the Solar spectrum.",
+        "label": "table:1"
+      },
+      "source_path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+      "excerpt_path": "literature/2406.17776/catalog_sources/table-table-1/excerpt.tex",
+      "sha256": "32860e402c8364d232f28c0b14c38f150060ab813bbc7fca94fd97936616aaa0",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-modelparametreler",
+      "internal_table_id": "table-modelparametreler",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+        "start_line": 120,
+        "end_line": 135,
+        "caption": "Model atmosphere parameters calculated for HD\\,8724, HD\\,195633, and the Sun.",
+        "label": "modelparametreler"
+      },
+      "source_path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+      "excerpt_path": "literature/2406.17776/catalog_sources/table-modelparametreler/excerpt.tex",
+      "sha256": "02ab26e9e4f1becf60dcc2172df3ca9d066ec48796eb2cc520862427ffab0407",
+      "line_count": 16,
+      "error": ""
+    },
+    {
+      "id": "table-table-lit",
+      "internal_table_id": "table-table-lit",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+        "start_line": 146,
+        "end_line": 181,
+        "caption": "The model atmosphere parameters for HD\\,8724 and HD\\,195633 were compiled from the 2020 version of the PASTEL catalog \\citep{soubiran2016}. The results of the afresh determination of the model parameters in this study are also included.",
+        "label": "table:lit"
+      },
+      "source_path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+      "excerpt_path": "literature/2406.17776/catalog_sources/table-table-lit/excerpt.tex",
+      "sha256": "4514d391b5ef9e64b4e96a7ba0ea8ecafce555075d8bd1dac088ed8dfac7b1f0",
+      "line_count": 36,
+      "error": ""
+    },
+    {
+      "id": "table-table-abund",
+      "internal_table_id": "table-table-abund",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+        "start_line": 184,
+        "end_line": 228,
+        "caption": "The element abundances [$X$/Fe] calculated for stars HD\\,8724 and HD\\,195633 are shown. Simultaneously, the Solar abundances obtained in this study (TS) and those reported by \\citet{asplund2009}[ASP] are provided. Abundances in bold are those calculated via spectrum synthesis method.",
+        "label": "table:abund"
+      },
+      "source_path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+      "excerpt_path": "literature/2406.17776/catalog_sources/table-table-abund/excerpt.tex",
+      "sha256": "19408dc7704e685b75eb17eab11995114cbc8f45d8f3d1b4b939f255563c1553",
+      "line_count": 45,
+      "error": ""
+    },
+    {
+      "id": "table-table-abund_err",
+      "internal_table_id": "table-table-abund_err",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+        "start_line": 239,
+        "end_line": 277,
+        "caption": "Sensitivity of the derived abundances to the uncertainties of $\\Delta T_{\\rm eff} = +$115 K, $\\Delta \\log g = +$0.32 cgs, and $\\Delta \\xi = \\pm$0.5 km s$^{\\rm -1}$ in the model atmosphere parameters of HD\\,8724 for $T_{\\rm eff} =$ 4700 K, $\\log g$ = 1.65 cgs, and $\\xi$ = 1.58 km s$^{\\rm -1}$. The derived uncertainties of $\\Delta T_{\\rm eff} = +$205 K, $\\Delta \\log g = +$0.35 cgs, and $\\Delta \\xi = \\pm$0.5 km s$^{\\rm -1}$ in the model parameters of HD\\,195633 for $T_{\\rm eff} =$ 6100 K, $\\log g$ = 3.95 cgs, and $\\xi$ = 1.26 km s$^{\\rm -1}$ were also reported. The uncertainties in bold are those calculated via spectrum synthesis method.",
+        "label": "table:abund_err"
+      },
+      "source_path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+      "excerpt_path": "literature/2406.17776/catalog_sources/table-table-abund_err/excerpt.tex",
+      "sha256": "34cecb598b3fa059301b7c1104a7e6286c30f09095f72c622a72e2f0ec7f1e28",
+      "line_count": 39,
+      "error": ""
+    },
+    {
+      "id": "table-table-6",
+      "internal_table_id": "table-table-6",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+        "start_line": 328,
+        "end_line": 343,
+        "caption": "Equatorial coordinates, proper-motion components, trigonometric parallaxes, distances, and radial velocities for two metal-poor stars with HPM. The astrometric and spectroscopic data were taken from \\cite{gaiadr32023} catalogue.",
+        "label": "table:6"
+      },
+      "source_path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+      "excerpt_path": "literature/2406.17776/catalog_sources/table-table-6/excerpt.tex",
+      "sha256": "8f975f54feeca0200d3911a4145508e53dacafe2d1a801973344069c85ff85d5",
+      "line_count": 16,
+      "error": ""
+    },
+    {
+      "id": "table-table-7",
+      "internal_table_id": "table-table-7",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+        "start_line": 345,
+        "end_line": 360,
+        "caption": "The calculated space velocity components, total space velocities and obtained Galactic orbital parameters for HD\\,8724 and HD\\,195633.",
+        "label": "table:7"
+      },
+      "source_path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+      "excerpt_path": "literature/2406.17776/catalog_sources/table-table-7/excerpt.tex",
+      "sha256": "d9142ac482c78aa0e135728a78355722fc52171ca90018fa9d22aeca45ffb26d",
+      "line_count": 16,
+      "error": ""
+    },
+    {
+      "id": "table-tab-final",
+      "internal_table_id": "table-tab-final",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+        "start_line": 399,
+        "end_line": 430,
+        "caption": "Data for the five most likely GCs that support the GC escape scenario for HD\\,8724 and HD\\,195633.",
+        "label": "tab:final"
+      },
+      "source_path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+      "excerpt_path": "literature/2406.17776/catalog_sources/table-tab-final/excerpt.tex",
+      "sha256": "ddccd25454b0a32089c8a90d2d31e437256478032048271af18a6dadacd38bf9",
+      "line_count": 32,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table-1",
+      "internal_table_id": "table-table-1",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2406.17776/catalog_tables/table-table-1.ecsv",
+      "caption": "Equatorial coordinates, spectral types, and {\\sc ELODIE} spectral data were provided for HD\\,8724 and HD\\,195633, respectively. The corrected {\\sc ELODIE} spectra accounted for the reported heliocentric radial velocities, which were cross-checked by the Solar spectrum.",
+      "label": "table:1",
+      "row_count": 3,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "\\alpha",
+          "\\delta",
+          "Spectral Type",
+          "Exposure",
+          "S/N^*",
+          "V_\\rm Rad",
+          "MJD"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Spectral Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Exposure",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "S/N^*",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "V_\\rm Rad",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "MJD",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpr1ey08o1/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.17776/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpr1ey08o1/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.17776/catalog_sources/table-table-1/wrapped.tex",
+            "html": "literature/2406.17776/catalog_sources/table-table-1/latexml.html",
+            "stdout": "literature/2406.17776/catalog_sources/table-table-1/latexml.stdout.txt",
+            "stderr": "literature/2406.17776/catalog_sources/table-table-1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "32860e402c8364d232f28c0b14c38f150060ab813bbc7fca94fd97936616aaa0"
+    },
+    {
+      "id": "table-modelparametreler",
+      "internal_table_id": "table-modelparametreler",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2406.17776/catalog_tables/table-modelparametreler.ecsv",
+      "caption": "Model atmosphere parameters calculated for HD\\,8724, HD\\,195633, and the Sun.",
+      "label": "modelparametreler",
+      "row_count": 3,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "T_\\rm eff",
+          "\\log g",
+          "[Fe/H]",
+          "\\xi"
+        ],
+        [
+          "",
+          "(K)",
+          "(cgs)",
+          "(dex)",
+          "(km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "T_\\rm eff | (K)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\log g | (cgs)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "[Fe/H] | (dex)",
+          "unit_text": "[Fe/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\xi | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwqz7tel8/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.17776/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwqz7tel8/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.17776/catalog_sources/table-modelparametreler/wrapped.tex",
+            "html": "literature/2406.17776/catalog_sources/table-modelparametreler/latexml.html",
+            "stdout": "literature/2406.17776/catalog_sources/table-modelparametreler/latexml.stdout.txt",
+            "stderr": "literature/2406.17776/catalog_sources/table-modelparametreler/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "02ab26e9e4f1becf60dcc2172df3ca9d066ec48796eb2cc520862427ffab0407"
+    },
+    {
+      "id": "table-table-lit",
+      "internal_table_id": "table-table-lit",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2406.17776/catalog_tables/table-table-lit.ecsv",
+      "caption": "The model atmosphere parameters for HD\\,8724 and HD\\,195633 were compiled from the 2020 version of the PASTEL catalog \\citep{soubiran2016}. The results of the afresh determination of the model parameters in this study are also included.",
+      "label": "table:lit",
+      "row_count": 18,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpekaheihb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.17776/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpekaheihb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.17776/catalog_sources/table-table-lit/wrapped.tex",
+            "html": "literature/2406.17776/catalog_sources/table-table-lit/latexml.html",
+            "stdout": "literature/2406.17776/catalog_sources/table-table-lit/latexml.stdout.txt",
+            "stderr": "literature/2406.17776/catalog_sources/table-table-lit/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4514d391b5ef9e64b4e96a7ba0ea8ecafce555075d8bd1dac088ed8dfac7b1f0"
+    },
+    {
+      "id": "table-table-abund",
+      "internal_table_id": "table-table-abund",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2406.17776/catalog_tables/table-table-abund.ecsv",
+      "caption": "The element abundances [$X$/Fe] calculated for stars HD\\,8724 and HD\\,195633 are shown. Simultaneously, the Solar abundances obtained in this study (TS) and those reported by \\citet{asplund2009}[ASP] are provided. Abundances in bold are those calculated via spectrum synthesis method.",
+      "label": "table:abund",
+      "row_count": 24,
+      "column_count": 14,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9xvd_4gt/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.17776/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9xvd_4gt/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.17776/catalog_sources/table-table-abund/wrapped.tex",
+            "html": "literature/2406.17776/catalog_sources/table-table-abund/latexml.html",
+            "stdout": "literature/2406.17776/catalog_sources/table-table-abund/latexml.stdout.txt",
+            "stderr": "literature/2406.17776/catalog_sources/table-table-abund/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "19408dc7704e685b75eb17eab11995114cbc8f45d8f3d1b4b939f255563c1553"
+    },
+    {
+      "id": "table-table-abund_err",
+      "internal_table_id": "table-table-abund_err",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2406.17776/catalog_tables/table-table-abund_err.ecsv",
+      "caption": "Sensitivity of the derived abundances to the uncertainties of $\\Delta T_{\\rm eff} = +$115 K, $\\Delta \\log g = +$0.32 cgs, and $\\Delta \\xi = \\pm$0.5 km s$^{\\rm -1}$ in the model atmosphere parameters of HD\\,8724 for $T_{\\rm eff} =$ 4700 K, $\\log g$ = 1.65 cgs, and $\\xi$ = 1.58 km s$^{\\rm -1}$. The derived uncertainties of $\\Delta T_{\\rm eff} = +$205 K, $\\Delta \\log g = +$0.35 cgs, and $\\Delta \\xi = \\pm$0.5 km s$^{\\rm -1}$ in the model parameters of HD\\,195633 for $T_{\\rm eff} =$ 6100 K, $\\log g$ = 3.95 cgs, and $\\xi$ = 1.26 km s$^{\\rm -1}$ were also reported. The uncertainties in bold are those calculated via spectrum synthesis method.",
+      "label": "table:abund_err",
+      "row_count": 24,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwg5ae8xs/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.17776/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwg5ae8xs/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.17776/catalog_sources/table-table-abund_err/wrapped.tex",
+            "html": "literature/2406.17776/catalog_sources/table-table-abund_err/latexml.html",
+            "stdout": "literature/2406.17776/catalog_sources/table-table-abund_err/latexml.stdout.txt",
+            "stderr": "literature/2406.17776/catalog_sources/table-table-abund_err/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "34cecb598b3fa059301b7c1104a7e6286c30f09095f72c622a72e2f0ec7f1e28"
+    },
+    {
+      "id": "table-table-6",
+      "internal_table_id": "table-table-6",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2406.17776/catalog_tables/table-table-6.ecsv",
+      "caption": "Equatorial coordinates, proper-motion components, trigonometric parallaxes, distances, and radial velocities for two metal-poor stars with HPM. The astrometric and spectroscopic data were taken from \\cite{gaiadr32023} catalogue.",
+      "label": "table:6",
+      "row_count": 2,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "\\alpha",
+          "\\delta",
+          "\\mu_\\rm\\alpha\\cos\\delta",
+          "\\mu_\\rm\\delta",
+          "\\varpi",
+          "d",
+          "V_\\rm Rad"
+        ],
+        [
+          "",
+          "(hh:mm:ss)",
+          "(dd:mm:ss)",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(mas)",
+          "(pc)",
+          "(km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha | (hh:mm:ss)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta | (dd:mm:ss)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\rm\\alpha\\cos\\delta | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\rm\\delta | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\varpi | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "d | (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "V_\\rm Rad | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpd5y_8hxd/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.17776/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpd5y_8hxd/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.17776/catalog_sources/table-table-6/wrapped.tex",
+            "html": "literature/2406.17776/catalog_sources/table-table-6/latexml.html",
+            "stdout": "literature/2406.17776/catalog_sources/table-table-6/latexml.stdout.txt",
+            "stderr": "literature/2406.17776/catalog_sources/table-table-6/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8f975f54feeca0200d3911a4145508e53dacafe2d1a801973344069c85ff85d5"
+    },
+    {
+      "id": "table-table-7",
+      "internal_table_id": "table-table-7",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2406.17776/catalog_tables/table-table-7.ecsv",
+      "caption": "The calculated space velocity components, total space velocities and obtained Galactic orbital parameters for HD\\,8724 and HD\\,195633.",
+      "label": "table:7",
+      "row_count": 2,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "U_\\rm LSR",
+          "V_\\rm LSR",
+          "W_\\rm LSR",
+          "S_\\rm LSR",
+          "Z_\\rm max",
+          "R_\\rm a",
+          "R_\\rm p",
+          "e"
+        ],
+        [
+          "Star",
+          "(km s -1 )",
+          "",
+          "",
+          "",
+          "(kpc)",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star | Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "U_\\rm LSR | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "V_\\rm LSR",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "W_\\rm LSR",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "S_\\rm LSR",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Z_\\rm max | (kpc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "R_\\rm a",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "R_\\rm p",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "e",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9b42dfw4/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.17776/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9b42dfw4/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.17776/catalog_sources/table-table-7/wrapped.tex",
+            "html": "literature/2406.17776/catalog_sources/table-table-7/latexml.html",
+            "stdout": "literature/2406.17776/catalog_sources/table-table-7/latexml.stdout.txt",
+            "stderr": "literature/2406.17776/catalog_sources/table-table-7/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d9142ac482c78aa0e135728a78355722fc52171ca90018fa9d22aeca45ffb26d"
+    },
+    {
+      "id": "table-tab-final",
+      "internal_table_id": "table-tab-final",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2406.17776/catalog_tables/table-tab-final.ecsv",
+      "caption": "Data for the five most likely GCs that support the GC escape scenario for HD\\,8724 and HD\\,195633.",
+      "label": "tab:final",
+      "row_count": 12,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster",
+          "l",
+          "b",
+          "P(\\rm\\theta)",
+          "P(\\rm\\nu)",
+          "P(\\rm origin|\\theta,\\nu)",
+          "[Fe/H]",
+          "\\tau",
+          "[Mg/Fe]",
+          "References"
+        ],
+        [
+          "",
+          "( o )",
+          "( o )",
+          "(%)",
+          "(%)",
+          "(%)",
+          "(dex)",
+          "(Gyr)",
+          "(dex)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "l | ( o )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "b | ( o )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "P(\\rm\\theta) | (%)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "P(\\rm\\nu) | (%)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "P(\\rm origin|\\theta,\\nu) | (%)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "[Fe/H] | (dex)",
+          "unit_text": "[Fe/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\tau | (Gyr)",
+          "unit_text": "(Gyr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "[Mg/Fe] | (dex)",
+          "unit_text": "[Mg/Fe]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "References",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpoqqkuybk/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.17776/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpoqqkuybk/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.17776/catalog_sources/table-tab-final/wrapped.tex",
+            "html": "literature/2406.17776/catalog_sources/table-tab-final/latexml.html",
+            "stdout": "literature/2406.17776/catalog_sources/table-tab-final/latexml.stdout.txt",
+            "stderr": "literature/2406.17776/catalog_sources/table-tab-final/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ddccd25454b0a32089c8a90d2d31e437256478032048271af18a6dadacd38bf9"
+    }
+  ]
+}

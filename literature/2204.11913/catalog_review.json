@@ -1,0 +1,365 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2204.11913",
+    "title": "And then they were two: detection of non-thermal radio emission from the bow shocks of two runaway stars",
+    "month": "2022-04",
+    "source_note_json": "notes/2022/2022-04/2022-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2204.11913",
+      "pdf": "https://arxiv.org/pdf/2204.11913"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2204.11913",
+    "audit_path": "literature/2204.11913/audit.json",
+    "source_dir": "literature/2204.11913/arxiv_source",
+    "tex_root": "literature/2204.11913/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-23T02:58:53.402414+00:00",
+    "reviewer": "agent",
+    "summary": "This paper presents radio observations (VLA and Effelsberg) of two runaway-star bow shocks: BD+43°3654 (BSBD43) and BD+60°2522 / NGC 7635 (BSBD60). The data assets include: (1) a literature-compilation table of stellar and bow-shock parameters; (2) an observational flux table at multiple frequencies from interferometric, single-dish, and feathered data; (3) a broadband SED table combining radio fluxes from this work and the literature with X-ray and γ-ray upper limits; (4) a model-parameter table from naima synchrotron/IC fitting. External resources cited include Gaia EDR3 data (via ESA URLs), a HubbleSite image of NGC 7635, and CASA/VLA documentation URLs. No proprietary survey data archives with direct download URLs are described."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-lit_info",
+      "kind": "latex_table",
+      "asset_type": "literature_compilation",
+      "role_in_paper": "Summary of stellar and bow-shock parameters for the two target stars (BD+43°3654 and BD+60°2522) compiled from the literature, used to characterise the targets and as input for bow-shock modelling.",
+      "source_refs": [
+        {
+          "path": "literature/2204.11913/arxiv_source/main.tex",
+          "start_line": 227,
+          "end_line": 323,
+          "caption": "Parameters of the massive stars driving the two bow shocks.",
+          "label": "tab:lit_info"
+        }
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "meaning": "Parameter name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\bdforty",
+          "meaning": "Parameter value for BD+43°3654 (BSBD43)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\bdsixty",
+          "meaning": "Parameter value for BD+60°2522 (BSBD60)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Refs.",
+          "meaning": "Literature reference(s) for the parameter values",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Parameters of the massive stars driving the two bow shocks.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-five_sig",
+      "kind": "latex_table",
+      "asset_type": "observational_data",
+      "role_in_paper": "Radio flux densities measured within the 5σ contour for both bow shocks, from VLA interferometric data (C&X-band and C-smooth), Effelsberg single-dish data, and feathered combined data, used for spectral energy distribution fitting and spectral index calculation.",
+      "source_refs": [
+        {
+          "path": "literature/2204.11913/arxiv_source/main.tex",
+          "start_line": 527,
+          "end_line": 723,
+          "caption": "Fluxes within a 5$\\sigma$ contour of Fig. \\ref{fig:all_int}, for the wide-band VLA data, the smoothed C-band, Effelsberg and feathered data.",
+          "label": "tab:five_sig"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\nu | (GHz)",
+          "meaning": "Observing frequency",
+          "unit_text": "GHz",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\multicolumn4cF_\\nu, _BSBD43 (mJy) | C\\&X-band",
+          "meaning": "Flux density of BSBD43 from VLA C&X-band interferometric data",
+          "unit_text": "mJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\multicolumn4cF_\\nu, _BSBD60 (mJy) | C-smooth",
+          "meaning": "Flux density of BSBD43 from smoothed C-band VLA data",
+          "unit_text": "mJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Effelsberg",
+          "meaning": "Flux density of BSBD43 from Effelsberg single-dish data",
+          "unit_text": "mJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "feathered",
+          "meaning": "Flux density of BSBD43 from feathered VLA+Effelsberg combined data",
+          "unit_text": "mJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "C\\&X-band",
+          "meaning": "Flux density of BSBD60 from VLA C&X-band interferometric data",
+          "unit_text": "mJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "C-smooth",
+          "meaning": "Flux density of BSBD60 from smoothed C-band VLA data",
+          "unit_text": "mJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Effelsberg",
+          "meaning": "Flux density of BSBD60 from Effelsberg single-dish data",
+          "unit_text": "mJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "feathered",
+          "meaning": "Flux density of BSBD60 from feathered VLA+Effelsberg combined data",
+          "unit_text": "mJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Fluxes within a 5$\\sigma$ contour of Fig. \\ref{fig:all_int}, for the wide-band VLA data, the smoothed C-band, Effelsberg and feathered data.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-flux_comb",
+      "kind": "latex_table",
+      "asset_type": "broadband_sed",
+      "role_in_paper": "Broadband spectral energy distribution compilation for BSBD43 and BSBD60, combining radio fluxes from this work and the literature with X-ray and γ-ray upper limits, used for multi-wavelength modelling and comparison with theoretical predictions.",
+      "source_refs": [
+        {
+          "path": "literature/2204.11913/arxiv_source/main.tex",
+          "start_line": 779,
+          "end_line": 910,
+          "caption": "Flux as a function of photon energy/frequency for BSBD43 and BSBD60, including radio data from this work and the literature, and X-ray and $\\gamma$-ray upper limits from the literature.",
+          "label": "tab:flux_comb"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Energy | (eV)",
+          "meaning": "Photon energy",
+          "unit_text": "eV",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Frequency | (GHz)",
+          "meaning": "Observing frequency",
+          "unit_text": "GHz",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\multicolumn2c\\nu F_\\nu | \\multicolumn2c(10^-12 \\sierg.cm^-2.s^-1) | BSBD43",
+          "meaning": "Spectral flux density (νF_ν) of BSBD43",
+          "unit_text": "10⁻¹² erg cm⁻² s⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Refs. | BSBD60",
+          "meaning": "Spectral flux density (νF_ν) of BSBD60",
+          "unit_text": "10⁻¹² erg cm⁻² s⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_005",
+          "meaning": "Literature reference for the data point",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Flux as a function of photon energy/frequency for BSBD43 and BSBD60, including radio data from this work and the literature, and X-ray and $\\gamma$-ray upper limits from the literature.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-SYNIC",
+      "kind": "latex_table",
+      "asset_type": "model_parameters",
+      "role_in_paper": "Best-fit parameters from naima synchrotron/inverse-Compton modelling of the non-thermal emission from the BSBD43 and BSBD60 bow shocks.",
+      "source_refs": [
+        {
+          "path": "literature/2204.11913/arxiv_source/main.tex",
+          "start_line": 1146,
+          "end_line": 1186,
+          "caption": "The results of the \\emph{naima} modelling discussed in subsection 5.2.",
+          "label": "tab:SYNIC"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameters",
+          "meaning": "Model parameter name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "BSBD43",
+          "meaning": "Best-fit parameter value for BSBD43 bow shock",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "BSBD60",
+          "meaning": "Best-fit parameter value for BSBD60 bow shock",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The results of the \\emph{naima} modelling discussed in subsection 5.2.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://casa.nrao.edu/casadocs/casa-5.5.0/global-task-list/task_tclean/about",
+      "local_path": "",
+      "description": "CASA tclean task documentation referenced in a footnote describing the imaging algorithm used for VLA data reduction.",
+      "source_refs": [
+        {
+          "path": "literature/2204.11913/arxiv_source/main.tex",
+          "start_line": 497,
+          "end_line": 497,
+          "context": "In addition, we selected a cell size of \\ang{;;0.7} and scales sizes of [0, 5, 10, 15, 20, 25, 50, 100, 200] pixels, with a small scale bias 0.9.\nThe scale size 0 represents a point source, whereas the larger sizes represent wider features that are dominant in the image.\nThe small scale bias is ``a numerical control to bias the solution towards smaller scales''\\footnote{\\url{https://casa.nrao.edu/casadocs/casa-5.5.0/global-task-list/task_tclean/about}}.\nScales that were too large were ignored by the software."
+        }
+      ],
+      "evidence": "Footnote in Section 3.1 explaining the small scale bias parameter used in the tclean task for MS-MFS imaging.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://casa.nrao.edu/casadocs/casa-5.5.0/global-task-list/task_widebandpbcor/about",
+      "local_path": "",
+      "description": "CASA widebandpbcor task documentation referenced in a footnote describing the primary-beam correction of spectral-index maps.",
+      "source_refs": [
+        {
+          "path": "literature/2204.11913/arxiv_source/main.tex",
+          "start_line": 504,
+          "end_line": 504,
+          "context": "In order to do that, we fed the task with the raw data as well as the basename of our imagefiles and selected the action \n\\emph{calcalpha}, \nwhich recalculates and corrects for PB response only the spectral index map and its error\\footnote{\\url{https://casa.nrao.edu/casadocs/casa-5.5.0/global-task-list/task_widebandpbcor/about}}.\nNext, we applied a mask of 5$\\sigma$ (which $\\sigma$ for BSBD43 is \\SI{0.06}{mJy.beam^{-1}} and \\SI{0.2}{mJy.beam^{-1}} for BSBD60) in order to bring forth the most significant areas of emission (Fig.~\\ref{fig:bd_spindx_all} top).\nWe repeated the steps for the spectral index error maps (Fig.~\\ref{fig:bd_spindx_all} bottom)."
+        }
+      ],
+      "evidence": "Footnote in Section 3.1 explaining the calcalpha action used to correct spectral index maps for primary beam response.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://hubblesite.org/contents/media/images/2016/13/3725-Image.html",
+      "local_path": "",
+      "description": "Hubble Space Telescope image of NGC 7635 (Bubble Nebula) referenced as an optical comparison to radio morphology.",
+      "source_refs": [
+        {
+          "path": "literature/2204.11913/arxiv_source/main.tex",
+          "start_line": 738,
+          "end_line": 738,
+          "context": "This part is also visible in our single-dish observation (Fig.~\\ref{fig:eff_int}, left), but in that case every other detail is not present.\n\nFor BSBD60, the details seen in our high-resolution radio image (Fig.~\\ref{fig:all_int}, right) correspond very well with the narrow-band nebular emission maps seen in optical with e.g. HST \\citepads{2002AJ....124.3313M}\\footnote{see also: \\url{https://hubblesite.org/contents/media/images/2016/13/3725-Image.html}}.\nThe bright arc on the North side of the Bubble corresponds to the brightest rim of the optical counterpart, and the bright-rimmed pillar seen projected onto the Bubble is the brightest emission region in radio.\nFurther bright-rimmed clouds photoionised by \\bdsixty to the NNE of the Bubble are also detected with the VLA."
+        }
+      ],
+      "evidence": "Footnote in Section 4.2 stating that the radio morphology of BSBD60 corresponds well with narrow-band nebular emission maps seen in optical with HST.",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://science.nrao.edu/facilities/vla/docs/manuals/oss/performance/resolution",
+      "local_path": "",
+      "description": "VLA observational performance and resolution documentation referenced when discussing spatial-scale sensitivity limits.",
+      "source_refs": [
+        {
+          "path": "literature/2204.11913/arxiv_source/main.tex",
+          "start_line": 749,
+          "end_line": 749,
+          "context": "This is primarily due to the observing limits of the VLA.\nIn particular, for our chosen D configuration, for C-band those limits are \\ang{;;12}--\\ang{;;240}, while for X-band are \\ang{;;7.2}--\\ang{;;145}.\nFor sources with emission structures on scales larger than those limits the VLA cannot detect any emission, while for smaller structures the array acts like a single-dish instrument, smoothing the image to a lower resolution\\footnote{\\url{https://science.nrao.edu/facilities/vla/docs/manuals/oss/performance/resolution}}. \nIn our case, BSBD60 is within the observational limits of the array, but BSBD43 is not, resulting in loss of emission and resolution."
+        }
+      ],
+      "evidence": "Footnote in Section 4.2 explaining the angular-scale limits of the VLA D configuration and why BSBD43 suffers from loss of emission and resolution.",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission website; the paper uses Gaia EDR3 astrometric data to calculate stellar space velocities.",
+      "source_refs": [
+        {
+          "path": "literature/2204.11913/arxiv_source/main.tex",
+          "start_line": 1288,
+          "end_line": 1288,
+          "context": "%\nThis work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC"
+        }
+      ],
+      "evidence": "Acknowledgements state that the work has made use of data from the ESA mission Gaia, with URL provided.",
+      "comments": ""
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "Gaia Data Processing and Analysis Consortium (DPAC) website.",
+      "source_refs": [
+        {
+          "path": "literature/2204.11913/arxiv_source/main.tex",
+          "start_line": 1290,
+          "end_line": 1290,
+          "context": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement."
+        }
+      ],
+      "evidence": "Acknowledgements reference the Gaia DPAC consortium and provide this URL.",
+      "comments": ""
+    },
+    {
+      "id": "resource-008",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/2204.11913/arxiv_source/readme.txt",
+      "description": "Local readme.txt file included in the arXiv source tarball.",
+      "source_refs": [],
+      "evidence": "Discovered as a local text file in the arXiv source directory.",
+      "comments": "Discovered local machine-readable file with suffix .txt."
+    }
+  ]
+}

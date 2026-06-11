@@ -1,0 +1,2207 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:16",
+  "paper": {
+    "arxiv_id": "2404.12523",
+    "title": "The longevity of the oldest open clusters: Structural parameters of NGC 188, NGC 2420, NGC 2425, NGC 2682, NGC 6791, NGC 6819",
+    "month": "2024-04"
+  },
+  "review": {
+    "path": "literature/2404.12523/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123916",
+    "started_at": "2026-05-17T12:39:16",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2404.12523",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 11,
+      "work_count": 11,
+      "table_count": 11,
+      "success_count": 11,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 11,
+      "file_success_count": 11,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-initialparameter",
+      "internal_table_id": "table-tab-initialparameter",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+        "start_line": 104,
+        "end_line": 123,
+        "caption": "Properties of the sampled clusters.",
+        "label": "tab:initialparameter"
+      },
+      "source_path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+      "excerpt_path": "literature/2404.12523/catalog_sources/table-tab-initialparameter/excerpt.tex",
+      "sha256": "7cf0c5101f4408833c69dd7e982efa256cf1a672eae19d1618d60b03498d272b",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-limepy_king",
+      "internal_table_id": "table-tab-limepy_king",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+        "start_line": 215,
+        "end_line": 234,
+        "caption": "Best-fitting parameters of King, g=1, and Wilson, g=2, \\limepy~models",
+        "label": "tab:limepy_king"
+      },
+      "source_path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+      "excerpt_path": "literature/2404.12523/catalog_sources/table-tab-limepy_king/excerpt.tex",
+      "sha256": "b60a83a067ad6c8e74471c6b42a66b25e480ae22255ba5c8a150c18c77a8eef4",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-limepymodels",
+      "internal_table_id": "table-tab-limepymodels",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+        "start_line": 237,
+        "end_line": 255,
+        "caption": "Best-fitting parameters of \\limepy~models",
+        "label": "tab:limepymodels"
+      },
+      "source_path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+      "excerpt_path": "literature/2404.12523/catalog_sources/table-tab-limepymodels/excerpt.tex",
+      "sha256": "278c84d467af7d989d4f8d0029b922687ccbf3ec71f8b16ddf80b95d97ba2dac",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-spesmodels",
+      "internal_table_id": "table-tab-spesmodels",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+        "start_line": 257,
+        "end_line": 282,
+        "caption": "Best-fitting parameters of \\spes~models",
+        "label": "tab:spesmodels"
+      },
+      "source_path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+      "excerpt_path": "literature/2404.12523/catalog_sources/table-tab-spesmodels/excerpt.tex",
+      "sha256": "40c08554db74b10afd133c9c66ecbc31030790e106fdab465f953683e5b8f6ed",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-tab-percentiles",
+      "internal_table_id": "table-tab-percentiles",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+        "start_line": 310,
+        "end_line": 330,
+        "caption": "Summary of cumulative projected radial distribution of different populations.",
+        "label": "tab:percentiles"
+      },
+      "source_path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+      "excerpt_path": "literature/2404.12523/catalog_sources/table-tab-percentiles/excerpt.tex",
+      "sha256": "4c2a580d76d89bec046c15f972b19fb1f30da9a8708d3129815da5ebc4a87bca",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-tab-othercalcs",
+      "internal_table_id": "table-tab-othercalcs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+        "start_line": 379,
+        "end_line": 397,
+        "caption": "Physical properties obtained using clusters' masses derived from \\spes~models.",
+        "label": "tab:othercalcs"
+      },
+      "source_path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+      "excerpt_path": "literature/2404.12523/catalog_sources/table-tab-othercalcs/excerpt.tex",
+      "sha256": "417c0cb35dd3878034fc03252d82943f0dd1ea582780d7cab0f0f505cb8c8229",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-test_prob",
+      "internal_table_id": "table-tab-test_prob",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+        "start_line": 532,
+        "end_line": 580,
+        "caption": "Best \\spes~models fitting parameters for different membership probabilities thresholds",
+        "label": "tab:test_prob"
+      },
+      "source_path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+      "excerpt_path": "literature/2404.12523/catalog_sources/table-tab-test_prob/excerpt.tex",
+      "sha256": "bcf160362dbf58e737fb828598ff46bc6ffae17a069d9bb2c9f26f81d13c5cdc",
+      "line_count": 49,
+      "error": ""
+    },
+    {
+      "id": "table-tab-spesmodels_bootstrap",
+      "internal_table_id": "table-tab-spesmodels_bootstrap",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+        "start_line": 599,
+        "end_line": 618,
+        "caption": "Best-fitting parameters of \\spes~models using a bootstrap sampling",
+        "label": "tab:spesmodels_bootstrap"
+      },
+      "source_path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+      "excerpt_path": "literature/2404.12523/catalog_sources/table-tab-spesmodels_bootstrap/excerpt.tex",
+      "sha256": "8a17a39642f839e50c57cc1dbf24c1d7998a7c6db4eb30b359a51571688fe18c",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-limepy_wilson",
+      "internal_table_id": "table-tab-limepy_wilson",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+        "start_line": 653,
+        "end_line": 671,
+        "caption": "Best-fitting parameters of Wilson, g=2, \\limepy~ models",
+        "label": "tab:limepy_wilson"
+      },
+      "source_path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+      "excerpt_path": "literature/2404.12523/catalog_sources/table-tab-limepy_wilson/excerpt.tex",
+      "sha256": "7e252048fc4701c2abcccab936dc6331d7296f5174524e41bd5136624ccc7f3f",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-percentiles-2",
+      "internal_table_id": "table-tab-percentiles-2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+        "start_line": 674,
+        "end_line": 696,
+        "caption": "Summary of cumulative projected radial distribution of different populations.",
+        "label": "tab:percentiles"
+      },
+      "source_path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+      "excerpt_path": "literature/2404.12523/catalog_sources/table-tab-percentiles-2/excerpt.tex",
+      "sha256": "54980c38216a69040f8800181029f7ce39600e36e7e9a3df1dc23c257c31e03a",
+      "line_count": 23,
+      "error": ""
+    },
+    {
+      "id": "table-tab-othercalcs-2",
+      "internal_table_id": "table-tab-othercalcs-2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+        "start_line": 791,
+        "end_line": 809,
+        "caption": "Physical properties obtained using clusters' masses derived from \\spes~models.",
+        "label": "tab:othercalcs"
+      },
+      "source_path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+      "excerpt_path": "literature/2404.12523/catalog_sources/table-tab-othercalcs-2/excerpt.tex",
+      "sha256": "db31f42edda986b3a3cad677b1141428056b8d88bece2ae73906352e46d70521",
+      "line_count": 19,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-initialparameter",
+      "internal_table_id": "table-tab-initialparameter",
+      "status": "success",
+      "ecsv_path": "literature/2404.12523/catalog_tables/table-tab-initialparameter.ecsv",
+      "caption": "Properties of the sampled clusters.",
+      "label": "tab:initialparameter",
+      "row_count": 6,
+      "column_count": 15,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster",
+          "RA \\tablefootmark a",
+          "DEC \\tablefootmark a",
+          "\\mu_\\alpha*,DR3 \\tablefootmark b",
+          "\\mu_\\delta,DR3 \\tablefootmark b",
+          "\\varpi_DR3 \\tablefootmark b",
+          "Distance \\tablefootmark a",
+          "Age \\tablefootmark c",
+          "X \\tablefootmark a",
+          "Y \\tablefootmark a",
+          "Z \\tablefootmark a",
+          "R_\\rm gc \\tablefootmark a",
+          "R_\\rm 150 \\tablefootmark d",
+          "N_\\rm member",
+          "[Fe/H]"
+        ],
+        [
+          "",
+          "[ \\degr ]",
+          "[ \\degr ]",
+          "[ \\masa ]",
+          "[ \\masa ]",
+          "[mas]",
+          "[pc]",
+          "[Ga]",
+          "[pc]",
+          "[pc]",
+          "[pc]",
+          "[kpc]",
+          "[ \\degr ]",
+          "[star]",
+          "[dex]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA \\tablefootmark a | [ \\degr ]",
+          "unit_text": "RA \\tablefootmark a",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "DEC \\tablefootmark a | [ \\degr ]",
+          "unit_text": "DEC \\tablefootmark a",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\alpha*,DR3 \\tablefootmark b | [ \\masa ]",
+          "unit_text": "\\mu_\\alpha*,DR3 \\tablefootmark b",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\delta,DR3 \\tablefootmark b | [ \\masa ]",
+          "unit_text": "\\mu_\\delta,DR3 \\tablefootmark b",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\varpi_DR3 \\tablefootmark b | [mas]",
+          "unit_text": "\\varpi_DR3 \\tablefootmark b",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Distance \\tablefootmark a | [pc]",
+          "unit_text": "Distance \\tablefootmark a",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Age \\tablefootmark c | [Ga]",
+          "unit_text": "Age \\tablefootmark c",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "X \\tablefootmark a | [pc]",
+          "unit_text": "X \\tablefootmark a",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Y \\tablefootmark a | [pc]",
+          "unit_text": "Y \\tablefootmark a",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Z \\tablefootmark a | [pc]",
+          "unit_text": "Z \\tablefootmark a",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "R_\\rm gc \\tablefootmark a | [kpc]",
+          "unit_text": "R_\\rm gc \\tablefootmark a",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "R_\\rm 150 \\tablefootmark d | [ \\degr ]",
+          "unit_text": "R_\\rm 150 \\tablefootmark d",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "N_\\rm member | [star]",
+          "unit_text": "[star]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "[Fe/H] | [dex]",
+          "unit_text": "[Fe/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgd8p2rh6/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2404.12523/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgd8p2rh6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2404.12523/catalog_sources/table-tab-initialparameter/wrapped.tex",
+            "html": "literature/2404.12523/catalog_sources/table-tab-initialparameter/latexml.html",
+            "stdout": "literature/2404.12523/catalog_sources/table-tab-initialparameter/latexml.stdout.txt",
+            "stderr": "literature/2404.12523/catalog_sources/table-tab-initialparameter/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7cf0c5101f4408833c69dd7e982efa256cf1a672eae19d1618d60b03498d272b"
+    },
+    {
+      "id": "table-tab-limepy_king",
+      "internal_table_id": "table-tab-limepy_king",
+      "status": "success",
+      "ecsv_path": "literature/2404.12523/catalog_tables/table-tab-limepy_king.ecsv",
+      "caption": "Best-fitting parameters of King, g=1, and Wilson, g=2, \\limepy~models",
+      "label": "tab:limepy_king",
+      "row_count": 6,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster",
+          "King (g=1)",
+          "",
+          "",
+          "",
+          "",
+          "Wilson (g=2)",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "W_0",
+          "M_\\rm cl",
+          "r_\\rm h",
+          "r_\\rm a",
+          "\\chi^2",
+          "W_0",
+          "M_\\rm cl",
+          "r_\\rm h",
+          "r_\\rm a",
+          "\\chi^2"
+        ],
+        [
+          "",
+          "",
+          "[10 3 M ⊙ ]",
+          "[pc]",
+          "[pc]",
+          "",
+          "",
+          "[10 3 M ⊙ ]",
+          "[pc]",
+          "[pc]",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "King (g=1) | W_0",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "M_\\rm cl | [10 3 M ⊙ ]",
+          "unit_text": "[10 3 M ⊙ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "r_\\rm h | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "r_\\rm a | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\chi^2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Wilson (g=2) | W_0",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "M_\\rm cl | [10 3 M ⊙ ]",
+          "unit_text": "[10 3 M ⊙ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "r_\\rm h | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "r_\\rm a | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\chi^2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcb6tgeu3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2404.12523/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcb6tgeu3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2404.12523/catalog_sources/table-tab-limepy_king/wrapped.tex",
+            "html": "literature/2404.12523/catalog_sources/table-tab-limepy_king/latexml.html",
+            "stdout": "literature/2404.12523/catalog_sources/table-tab-limepy_king/latexml.stdout.txt",
+            "stderr": "literature/2404.12523/catalog_sources/table-tab-limepy_king/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b60a83a067ad6c8e74471c6b42a66b25e480ae22255ba5c8a150c18c77a8eef4"
+    },
+    {
+      "id": "table-tab-limepymodels",
+      "internal_table_id": "table-tab-limepymodels",
+      "status": "success",
+      "ecsv_path": "literature/2404.12523/catalog_tables/table-tab-limepymodels.ecsv",
+      "caption": "Best-fitting parameters of \\limepy~models",
+      "label": "tab:limepymodels",
+      "row_count": 6,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster",
+          "W_0",
+          "g",
+          "M",
+          "r_\\rm h",
+          "r_\\rm a",
+          "r_\\rm c",
+          "r_\\rm t",
+          "c=\\log r_\\rm t/r_\\rm c",
+          "\\chi^2"
+        ],
+        [
+          "",
+          "",
+          "",
+          "[10 3 M ⊙ ]",
+          "[pc]",
+          "[pc]",
+          "[pc]",
+          "[pc]",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "W_0",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "g",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "M | [10 3 M ⊙ ]",
+          "unit_text": "[10 3 M ⊙ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "r_\\rm h | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "r_\\rm a | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "r_\\rm c | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "r_\\rm t | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "c=\\log r_\\rm t/r_\\rm c",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\chi^2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz78wmaj_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2404.12523/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz78wmaj_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2404.12523/catalog_sources/table-tab-limepymodels/wrapped.tex",
+            "html": "literature/2404.12523/catalog_sources/table-tab-limepymodels/latexml.html",
+            "stdout": "literature/2404.12523/catalog_sources/table-tab-limepymodels/latexml.stdout.txt",
+            "stderr": "literature/2404.12523/catalog_sources/table-tab-limepymodels/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "278c84d467af7d989d4f8d0029b922687ccbf3ec71f8b16ddf80b95d97ba2dac"
+    },
+    {
+      "id": "table-tab-spesmodels",
+      "internal_table_id": "table-tab-spesmodels",
+      "status": "success",
+      "ecsv_path": "literature/2404.12523/catalog_tables/table-tab-spesmodels.ecsv",
+      "caption": "Best-fitting parameters of \\spes~models",
+      "label": "tab:spesmodels",
+      "row_count": 6,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster",
+          "W_0",
+          "B",
+          "\\eta",
+          "M_\\rm cl",
+          "r_\\rm h",
+          "r_\\rm c",
+          "r_\\rm t",
+          "fpe \\tablefootmark a",
+          "c=\\log r_\\rm t/r_\\rm c",
+          "\\chi^2"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "[10 3 M ⊙ ]",
+          "[pc]",
+          "[pc]",
+          "[pc]",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "W_0",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "B",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\eta",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "M_\\rm cl | [10 3 M ⊙ ]",
+          "unit_text": "[10 3 M ⊙ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "r_\\rm h | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "r_\\rm c | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "r_\\rm t | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "fpe \\tablefootmark a",
+          "unit_text": "fpe \\tablefootmark a",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "c=\\log r_\\rm t/r_\\rm c",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\chi^2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpobxbzduz/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2404.12523/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpobxbzduz/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2404.12523/catalog_sources/table-tab-spesmodels/wrapped.tex",
+            "html": "literature/2404.12523/catalog_sources/table-tab-spesmodels/latexml.html",
+            "stdout": "literature/2404.12523/catalog_sources/table-tab-spesmodels/latexml.stdout.txt",
+            "stderr": "literature/2404.12523/catalog_sources/table-tab-spesmodels/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "40c08554db74b10afd133c9c66ecbc31030790e106fdab465f953683e5b8f6ed"
+    },
+    {
+      "id": "table-tab-percentiles",
+      "internal_table_id": "table-tab-percentiles",
+      "status": "success",
+      "ecsv_path": "literature/2404.12523/catalog_tables/table-tab-percentiles.ecsv",
+      "caption": "Summary of cumulative projected radial distribution of different populations.",
+      "label": "tab:percentiles",
+      "row_count": 8,
+      "column_count": 23,
+      "environment": "",
+      "header_rows": [
+        [
+          "Population",
+          "All",
+          "",
+          "",
+          "MS",
+          "",
+          "",
+          "TO",
+          "",
+          "",
+          "SGB",
+          "",
+          "",
+          "RGB",
+          "",
+          "",
+          "BSS",
+          "",
+          "",
+          "Binaries",
+          "",
+          "",
+          "\\Lambda_\\rm MSR (15)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Population",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "All",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "MS",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "TO",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "SGB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "RGB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "BSS",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_020",
+          "original_header": "Binaries",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_021",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_022",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_023",
+          "original_header": "\\Lambda_\\rm MSR (15)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp08j_031b/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2404.12523/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp08j_031b/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2404.12523/catalog_sources/table-tab-percentiles/wrapped.tex",
+            "html": "literature/2404.12523/catalog_sources/table-tab-percentiles/latexml.html",
+            "stdout": "literature/2404.12523/catalog_sources/table-tab-percentiles/latexml.stdout.txt",
+            "stderr": "literature/2404.12523/catalog_sources/table-tab-percentiles/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4c2a580d76d89bec046c15f972b19fb1f30da9a8708d3129815da5ebc4a87bca"
+    },
+    {
+      "id": "table-tab-othercalcs",
+      "internal_table_id": "table-tab-othercalcs",
+      "status": "success",
+      "ecsv_path": "literature/2404.12523/catalog_tables/table-tab-othercalcs.ecsv",
+      "caption": "Physical properties obtained using clusters' masses derived from \\spes~models.",
+      "label": "tab:othercalcs",
+      "row_count": 6,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster",
+          "t_rh",
+          "\\tau_rh",
+          "R_\\rm J",
+          "M_\\rm ini",
+          "t_\\rm dis",
+          "t_\\rm disc"
+        ],
+        [
+          "",
+          "[Ga]",
+          "[dex]",
+          "[pc]",
+          "[10 3 M ⊙ ]",
+          "[Ga]",
+          "[Ma]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "t_rh | [Ga]",
+          "unit_text": "[Ga]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\tau_rh | [dex]",
+          "unit_text": "[dex]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "R_\\rm J | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "M_\\rm ini | [10 3 M ⊙ ]",
+          "unit_text": "[10 3 M ⊙ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "t_\\rm dis | [Ga]",
+          "unit_text": "[Ga]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "t_\\rm disc | [Ma]",
+          "unit_text": "[Ma]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmn60bacf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2404.12523/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmn60bacf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2404.12523/catalog_sources/table-tab-othercalcs/wrapped.tex",
+            "html": "literature/2404.12523/catalog_sources/table-tab-othercalcs/latexml.html",
+            "stdout": "literature/2404.12523/catalog_sources/table-tab-othercalcs/latexml.stdout.txt",
+            "stderr": "literature/2404.12523/catalog_sources/table-tab-othercalcs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "417c0cb35dd3878034fc03252d82943f0dd1ea582780d7cab0f0f505cb8c8229"
+    },
+    {
+      "id": "table-tab-test_prob",
+      "internal_table_id": "table-tab-test_prob",
+      "status": "success",
+      "ecsv_path": "literature/2404.12523/catalog_tables/table-tab-test_prob.ecsv",
+      "caption": "Best \\spes~models fitting parameters for different membership probabilities thresholds",
+      "label": "tab:test_prob",
+      "row_count": 29,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "NGC_188",
+          "",
+          "",
+          "",
+          "NGC_2420",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "NGC_188",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "NGC_2420",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4x83qyzv/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2404.12523/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4x83qyzv/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2404.12523/catalog_sources/table-tab-test_prob/wrapped.tex",
+            "html": "literature/2404.12523/catalog_sources/table-tab-test_prob/latexml.html",
+            "stdout": "literature/2404.12523/catalog_sources/table-tab-test_prob/latexml.stdout.txt",
+            "stderr": "literature/2404.12523/catalog_sources/table-tab-test_prob/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "bcf160362dbf58e737fb828598ff46bc6ffae17a069d9bb2c9f26f81d13c5cdc"
+    },
+    {
+      "id": "table-tab-spesmodels_bootstrap",
+      "internal_table_id": "table-tab-spesmodels_bootstrap",
+      "status": "success",
+      "ecsv_path": "literature/2404.12523/catalog_tables/table-tab-spesmodels_bootstrap.ecsv",
+      "caption": "Best-fitting parameters of \\spes~models using a bootstrap sampling",
+      "label": "tab:spesmodels_bootstrap",
+      "row_count": 6,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster",
+          "W_0",
+          "B",
+          "\\eta",
+          "M_\\rm cl",
+          "r_\\rm h",
+          "r_\\rm c",
+          "r_\\rm t",
+          "fpe \\tablefootmark a"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "[10 3 M ⊙ ]",
+          "[pc]",
+          "[pc]",
+          "[pc]",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "W_0",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "B",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\eta",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "M_\\rm cl | [10 3 M ⊙ ]",
+          "unit_text": "[10 3 M ⊙ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "r_\\rm h | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "r_\\rm c | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "r_\\rm t | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "fpe \\tablefootmark a",
+          "unit_text": "fpe \\tablefootmark a",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv9m8n54t/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2404.12523/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv9m8n54t/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2404.12523/catalog_sources/table-tab-spesmodels_bootstrap/wrapped.tex",
+            "html": "literature/2404.12523/catalog_sources/table-tab-spesmodels_bootstrap/latexml.html",
+            "stdout": "literature/2404.12523/catalog_sources/table-tab-spesmodels_bootstrap/latexml.stdout.txt",
+            "stderr": "literature/2404.12523/catalog_sources/table-tab-spesmodels_bootstrap/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8a17a39642f839e50c57cc1dbf24c1d7998a7c6db4eb30b359a51571688fe18c"
+    },
+    {
+      "id": "table-tab-limepy_wilson",
+      "internal_table_id": "table-tab-limepy_wilson",
+      "status": "success",
+      "ecsv_path": "literature/2404.12523/catalog_tables/table-tab-limepy_wilson.ecsv",
+      "caption": "Best-fitting parameters of Wilson, g=2, \\limepy~ models",
+      "label": "tab:limepy_wilson",
+      "row_count": 6,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster",
+          "W 0",
+          "M \\times 10 3",
+          "r _h",
+          "r _a",
+          "\\chi^2"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "W 0",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "M \\times 10 3",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "r _h",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "r _a",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\chi^2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp63yyvk94/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2404.12523/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp63yyvk94/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2404.12523/catalog_sources/table-tab-limepy_wilson/wrapped.tex",
+            "html": "literature/2404.12523/catalog_sources/table-tab-limepy_wilson/latexml.html",
+            "stdout": "literature/2404.12523/catalog_sources/table-tab-limepy_wilson/latexml.stdout.txt",
+            "stderr": "literature/2404.12523/catalog_sources/table-tab-limepy_wilson/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7e252048fc4701c2abcccab936dc6331d7296f5174524e41bd5136624ccc7f3f"
+    },
+    {
+      "id": "table-tab-percentiles-2",
+      "internal_table_id": "table-tab-percentiles-2",
+      "status": "success",
+      "ecsv_path": "literature/2404.12523/catalog_tables/table-tab-percentiles-2.ecsv",
+      "caption": "Summary of cumulative projected radial distribution of different populations.",
+      "label": "tab:percentiles",
+      "row_count": 9,
+      "column_count": 19,
+      "environment": "",
+      "header_rows": [
+        [
+          "Population",
+          "NGC_188",
+          "",
+          "",
+          "NGC_2420",
+          "",
+          "",
+          "NGC_2425",
+          "",
+          "",
+          "NGC_2682",
+          "",
+          "",
+          "NGC_6791",
+          "",
+          "",
+          "NGC_6819",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Population",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "NGC_188",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "NGC_2420",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "NGC_2425",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "NGC_2682",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "NGC_6791",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "NGC_6819",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpo0vix3ug/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2404.12523/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpo0vix3ug/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2404.12523/catalog_sources/table-tab-percentiles-2/wrapped.tex",
+            "html": "literature/2404.12523/catalog_sources/table-tab-percentiles-2/latexml.html",
+            "stdout": "literature/2404.12523/catalog_sources/table-tab-percentiles-2/latexml.stdout.txt",
+            "stderr": "literature/2404.12523/catalog_sources/table-tab-percentiles-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "54980c38216a69040f8800181029f7ce39600e36e7e9a3df1dc23c257c31e03a"
+    },
+    {
+      "id": "table-tab-othercalcs-2",
+      "internal_table_id": "table-tab-othercalcs-2",
+      "status": "success",
+      "ecsv_path": "literature/2404.12523/catalog_tables/table-tab-othercalcs-2.ecsv",
+      "caption": "Physical properties obtained using clusters' masses derived from \\spes~models.",
+      "label": "tab:othercalcs",
+      "row_count": 6,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster",
+          "t_rh",
+          "\\tau_rh",
+          "R_\\rm J",
+          "M_\\rm ini",
+          "\\Delta M_\\rm dyn",
+          "t_\\rm dis",
+          "t_\\rm disc~pass"
+        ],
+        [
+          "",
+          "[Ga]",
+          "[dex]",
+          "[pc]",
+          "[10 3 M ⊙ ]",
+          "[%]",
+          "[Ga]",
+          "[Ma]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "t_rh | [Ga]",
+          "unit_text": "[Ga]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\tau_rh | [dex]",
+          "unit_text": "[dex]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "R_\\rm J | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "M_\\rm ini | [10 3 M ⊙ ]",
+          "unit_text": "[10 3 M ⊙ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\Delta M_\\rm dyn | [%]",
+          "unit_text": "[%]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "t_\\rm dis | [Ga]",
+          "unit_text": "[Ga]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "t_\\rm disc~pass | [Ma]",
+          "unit_text": "[Ma]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpti1zfq0v/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2404.12523/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpti1zfq0v/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2404.12523/catalog_sources/table-tab-othercalcs-2/wrapped.tex",
+            "html": "literature/2404.12523/catalog_sources/table-tab-othercalcs-2/latexml.html",
+            "stdout": "literature/2404.12523/catalog_sources/table-tab-othercalcs-2/latexml.stdout.txt",
+            "stderr": "literature/2404.12523/catalog_sources/table-tab-othercalcs-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "db31f42edda986b3a3cad677b1141428056b8d88bece2ae73906352e46d70521"
+    }
+  ]
+}

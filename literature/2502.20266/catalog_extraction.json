@@ -1,0 +1,959 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:41",
+  "paper": {
+    "arxiv_id": "2502.20266",
+    "title": "Discovery of WINERED-HVS1: A metal-rich hyper-velocity star candidate ejected from the Galactic center",
+    "month": "2025-02"
+  },
+  "review": {
+    "path": "literature/2502.20266/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123941",
+    "started_at": "2026-05-17T12:39:41",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2502.20266",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 6,
+      "work_count": 6,
+      "table_count": 6,
+      "success_count": 6,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 6,
+      "file_success_count": 6,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table-stellar_abn_all_res",
+      "internal_table_id": "table-table-stellar_abn_all_res",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2502.20266/arxiv_source/main.tex",
+        "start_line": 968,
+        "end_line": 998,
+        "caption": "\\revise{Spectroscopic results of \\targetstar }",
+        "label": "table:stellar_abn_all_res"
+      },
+      "source_path": "literature/2502.20266/arxiv_source/main.tex",
+      "excerpt_path": "literature/2502.20266/catalog_sources/table-table-stellar_abn_all_res/excerpt.tex",
+      "sha256": "77c90a427a76aee870dd321c9fe836eedb66212d6aab16b36b9cce3506c42431",
+      "line_count": 31,
+      "error": ""
+    },
+    {
+      "id": "table-table-stellar_abn_all_res_VALD3",
+      "internal_table_id": "table-table-stellar_abn_all_res_VALD3",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2502.20266/arxiv_source/main.tex",
+        "start_line": 2398,
+        "end_line": 2419,
+        "caption": "\\revise{Chemical abundances of \\targetstar measured with the VALD3 line list~\\citep{Ryabchikova2015} }",
+        "label": "table:stellar_abn_all_res_VALD3"
+      },
+      "source_path": "literature/2502.20266/arxiv_source/main.tex",
+      "excerpt_path": "literature/2502.20266/catalog_sources/table-table-stellar_abn_all_res_VALD3/excerpt.tex",
+      "sha256": "cec2e132b46dc505d6c1524cde684d136b6cdca3cc8952cf000be1488958b2b5",
+      "line_count": 22,
+      "error": ""
+    },
+    {
+      "id": "table-table-4methods",
+      "internal_table_id": "table-table-4methods",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2502.20266/arxiv_source/tabA_4methods.tex",
+        "start_line": 2,
+        "end_line": 37,
+        "caption": "Four methods to kinematically search for HVS candidates \\label{table:4methods}",
+        "label": "table:4methods"
+      },
+      "source_path": "literature/2502.20266/arxiv_source/tabA_4methods.tex",
+      "excerpt_path": "literature/2502.20266/catalog_sources/table-table-4methods/excerpt.tex",
+      "sha256": "d1e33074782f5b2dbbaedde1be377c1721770dc932bed402108647318223902c",
+      "line_count": 36,
+      "error": ""
+    },
+    {
+      "id": "table-table-notation",
+      "internal_table_id": "table-table-notation",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2502.20266/arxiv_source/table_appendix_notation.tex",
+        "start_line": 2,
+        "end_line": 48,
+        "caption": "Notations in this paper \\label{table:notation}",
+        "label": "table:notation"
+      },
+      "source_path": "literature/2502.20266/arxiv_source/table_appendix_notation.tex",
+      "excerpt_path": "literature/2502.20266/catalog_sources/table-table-notation/excerpt.tex",
+      "sha256": "c696553e3137b71d66cdc079c2ee44b1b4f7786f8d871a43c97e71c995b811e0",
+      "line_count": 47,
+      "error": ""
+    },
+    {
+      "id": "table-table-chemistry",
+      "internal_table_id": "table-table-chemistry",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2502.20266/arxiv_source/table_chemistry_v6.tex",
+        "start_line": 2,
+        "end_line": 107,
+        "caption": "Chemical properties of our HVS candidates \\label{table:chemistry}",
+        "label": "table:chemistry"
+      },
+      "source_path": "literature/2502.20266/arxiv_source/table_chemistry_v6.tex",
+      "excerpt_path": "literature/2502.20266/catalog_sources/table-table-chemistry/excerpt.tex",
+      "sha256": "6009cd54906722c4ce75cf9c45a6aa8f74d3bec5970633bf674e54f8b916220d",
+      "line_count": 106,
+      "error": ""
+    },
+    {
+      "id": "table-table-kinematics",
+      "internal_table_id": "table-table-kinematics",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2502.20266/arxiv_source/table_kinematics_v6.tex",
+        "start_line": 2,
+        "end_line": 102,
+        "caption": "Kinematical properties of our HVS candidates \\label{table:kinematics}",
+        "label": "table:kinematics"
+      },
+      "source_path": "literature/2502.20266/arxiv_source/table_kinematics_v6.tex",
+      "excerpt_path": "literature/2502.20266/catalog_sources/table-table-kinematics/excerpt.tex",
+      "sha256": "0cf2d029d7ae5c354d332d063f1f89c0e60d2e58ecbcc29cd5c57b57fc0854c3",
+      "line_count": 101,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table-stellar_abn_all_res",
+      "internal_table_id": "table-table-stellar_abn_all_res",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2502.20266/catalog_tables/table-table-stellar_abn_all_res.ecsv",
+      "caption": "\\revise{Spectroscopic results of \\targetstar }",
+      "label": "table:stellar_abn_all_res",
+      "row_count": 14,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "v_helio [ \\si km.s^-1]",
+          "34.79+/- 0.13 \\tablenotemark a",
+          "",
+          ""
+        ],
+        [
+          "T_eff [K]",
+          "4680+/- 76",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "v_helio [ \\si km.s^-1] | T_eff [K]",
+          "unit_text": "v_helio [ \\si km.s^-1]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "34.79+/- 0.13 \\tablenotemark a | 4680+/- 76",
+          "unit_text": "34.79+/- 0.13 \\tablenotemark a",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplkvn1u1e/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.20266/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplkvn1u1e/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.20266/catalog_sources/table-table-stellar_abn_all_res/wrapped.tex",
+            "html": "literature/2502.20266/catalog_sources/table-table-stellar_abn_all_res/latexml.html",
+            "stdout": "literature/2502.20266/catalog_sources/table-table-stellar_abn_all_res/latexml.stdout.txt",
+            "stderr": "literature/2502.20266/catalog_sources/table-table-stellar_abn_all_res/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "77c90a427a76aee870dd321c9fe836eedb66212d6aab16b36b9cce3506c42431"
+    },
+    {
+      "id": "table-table-stellar_abn_all_res_VALD3",
+      "internal_table_id": "table-table-stellar_abn_all_res_VALD3",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2502.20266/catalog_tables/table-table-stellar_abn_all_res_VALD3.ecsv",
+      "caption": "\\revise{Chemical abundances of \\targetstar measured with the VALD3 line list~\\citep{Ryabchikova2015} }",
+      "label": "table:stellar_abn_all_res_VALD3",
+      "row_count": 9,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "v_micro [ \\si km.s^-1]",
+          "1.453^+0.188_-0.186",
+          "",
+          ""
+        ],
+        [
+          "[Fe/H] [dex]",
+          "-0.162^+0.051_-0.047 ( 46 )",
+          "",
+          ""
+        ],
+        [
+          "",
+          "[X/H] [dex]",
+          "[X/Fe] [dex]",
+          ""
+        ],
+        [
+          "Na i",
+          "—",
+          "—",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "v_micro [ \\si km.s^-1] | [Fe/H] [dex] | Na i",
+          "unit_text": "v_micro [ \\si km.s^-1]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "1.453^+0.188_-0.186 | -0.162^+0.051_-0.047 ( 46 ) | [X/H] [dex] | —",
+          "unit_text": "[X/H] [dex]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "[X/Fe] [dex] | —",
+          "unit_text": "[X/Fe] [dex]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpk490g8du/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.20266/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpk490g8du/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.20266/catalog_sources/table-table-stellar_abn_all_res_VALD3/wrapped.tex",
+            "html": "literature/2502.20266/catalog_sources/table-table-stellar_abn_all_res_VALD3/latexml.html",
+            "stdout": "literature/2502.20266/catalog_sources/table-table-stellar_abn_all_res_VALD3/latexml.stdout.txt",
+            "stderr": "literature/2502.20266/catalog_sources/table-table-stellar_abn_all_res_VALD3/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "cec2e132b46dc505d6c1524cde684d136b6cdca3cc8952cf000be1488958b2b5"
+    },
+    {
+      "id": "table-table-4methods",
+      "internal_table_id": "table-table-4methods",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2502.20266/catalog_tables/table-table-4methods.ecsv",
+      "caption": "Four methods to kinematically search for HVS candidates \\label{table:4methods}",
+      "label": "table:4methods",
+      "row_count": 4,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "(1)",
+          "(2)",
+          "(3)"
+        ],
+        [
+          "Search method",
+          "Potential model",
+          "Assumed (R_0,V_\\odot)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "(1) | Search method",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "(2) | Potential model",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "(3) | Assumed (R_0,V_\\odot)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5jt09vkv/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.20266/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5jt09vkv/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.20266/catalog_sources/table-table-4methods/wrapped.tex",
+            "html": "literature/2502.20266/catalog_sources/table-table-4methods/latexml.html",
+            "stdout": "literature/2502.20266/catalog_sources/table-table-4methods/latexml.stdout.txt",
+            "stderr": "literature/2502.20266/catalog_sources/table-table-4methods/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d1e33074782f5b2dbbaedde1be377c1721770dc932bed402108647318223902c"
+    },
+    {
+      "id": "table-table-notation",
+      "internal_table_id": "table-table-notation",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2502.20266/catalog_tables/table-table-notation.ecsv",
+      "caption": "Notations in this paper \\label{table:notation}",
+      "label": "table:notation",
+      "row_count": 4,
+      "column_count": 2,
+      "environment": "deluxetable",
+      "header_rows": [
+        [
+          "Quantity",
+          "Meaning"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Quantity",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Meaning",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\alpha",
+        "unresolved LaTeX macro preserved: \\amxp",
+        "unresolved LaTeX macro preserved: \\citepHattori",
+        "unresolved LaTeX macro preserved: \\mathrm",
+        "unresolved LaTeX macro preserved: \\mhxp"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjvy67s76/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.20266/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjvy67s76/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.20266/catalog_sources/table-table-notation/wrapped.tex",
+            "html": "literature/2502.20266/catalog_sources/table-table-notation/latexml.html",
+            "stdout": "literature/2502.20266/catalog_sources/table-table-notation/latexml.stdout.txt",
+            "stderr": "literature/2502.20266/catalog_sources/table-table-notation/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1mjx7soi/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1mjx7soi/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.20266/catalog_sources/table-table-notation/wrapped.tex",
+            "html": "literature/2502.20266/catalog_sources/table-table-notation/pandoc.html",
+            "stdout": "literature/2502.20266/catalog_sources/table-table-notation/pandoc.stdout.txt",
+            "stderr": "literature/2502.20266/catalog_sources/table-table-notation/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "c696553e3137b71d66cdc079c2ee44b1b4f7786f8d871a43c97e71c995b811e0"
+    },
+    {
+      "id": "table-table-chemistry",
+      "internal_table_id": "table-table-chemistry",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2502.20266/catalog_tables/table-table-chemistry.ecsv",
+      "caption": "Chemical properties of our HVS candidates \\label{table:chemistry}",
+      "label": "table:chemistry",
+      "row_count": 13,
+      "column_count": 11,
+      "environment": "deluxetable*",
+      "header_rows": [
+        [
+          "(1)",
+          "(2)",
+          "(3)",
+          "(4)",
+          "(5)",
+          "(6)",
+          "(7)",
+          "(8)",
+          "(9)",
+          "(10)",
+          "(11)"
+        ],
+        [
+          "Name",
+          "DR3 source_id",
+          "[Fe/H]_spec",
+          "[Mg/Fe]_spec",
+          "[Si/Fe]_spec",
+          "[Ca/Fe]_spec",
+          "[Ti/Fe]_spec",
+          "[Al/Fe]_spec",
+          "[\\alpha/Fe]_spec",
+          "\\colhead\\mathrm[M/H]_XP",
+          "[\\alpha/M]_XP"
+        ],
+        [
+          "",
+          "",
+          "dex",
+          "dex",
+          "dex",
+          "dex",
+          "dex",
+          "dex",
+          "dex",
+          "dex",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "(1) | Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "(2) | DR3 source_id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "(3) | [Fe/H]_spec | dex",
+          "unit_text": "[Fe/H]_spec",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "(4) | [Mg/Fe]_spec | dex",
+          "unit_text": "[Mg/Fe]_spec",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "(5) | [Si/Fe]_spec | dex",
+          "unit_text": "[Si/Fe]_spec",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "(6) | [Ca/Fe]_spec | dex",
+          "unit_text": "[Ca/Fe]_spec",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "(7) | [Ti/Fe]_spec | dex",
+          "unit_text": "[Ti/Fe]_spec",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "(8) | [Al/Fe]_spec | dex",
+          "unit_text": "[Al/Fe]_spec",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "(9) | [\\alpha/Fe]_spec | dex",
+          "unit_text": "[\\alpha/Fe]_spec",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "(10) | \\colhead\\mathrm[M/H]_XP | dex",
+          "unit_text": "\\colhead\\mathrm[M/H]_XP",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "(11) | [\\alpha/M]_XP",
+          "unit_text": "[\\alpha/M]_XP",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\alpha",
+        "unresolved LaTeX macro preserved: \\colhead",
+        "unresolved LaTeX macro preserved: \\mathrm"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpiaj6msob/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.20266/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpiaj6msob/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.20266/catalog_sources/table-table-chemistry/wrapped.tex",
+            "html": "literature/2502.20266/catalog_sources/table-table-chemistry/latexml.html",
+            "stdout": "literature/2502.20266/catalog_sources/table-table-chemistry/latexml.stdout.txt",
+            "stderr": "literature/2502.20266/catalog_sources/table-table-chemistry/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp30vqtjd/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp30vqtjd/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.20266/catalog_sources/table-table-chemistry/wrapped.tex",
+            "html": "literature/2502.20266/catalog_sources/table-table-chemistry/pandoc.html",
+            "stdout": "literature/2502.20266/catalog_sources/table-table-chemistry/pandoc.stdout.txt",
+            "stderr": "literature/2502.20266/catalog_sources/table-table-chemistry/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "6009cd54906722c4ce75cf9c45a6aa8f74d3bec5970633bf674e54f8b916220d"
+    },
+    {
+      "id": "table-table-kinematics",
+      "internal_table_id": "table-table-kinematics",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2502.20266/catalog_tables/table-table-kinematics.ecsv",
+      "caption": "Kinematical properties of our HVS candidates \\label{table:kinematics}",
+      "label": "table:kinematics",
+      "row_count": 13,
+      "column_count": 11,
+      "environment": "deluxetable*",
+      "header_rows": [
+        [
+          "(1)",
+          "(2)",
+          "(3)",
+          "(4)",
+          "(5)",
+          "(6)",
+          "(7)",
+          "(8)",
+          "(9)",
+          "(10)",
+          "(11)"
+        ],
+        [
+          "Name",
+          "DR3 source_id",
+          "(f_50 \\pc, f_200 \\pc)",
+          "r_ej",
+          "v_ej",
+          "\\tau",
+          "(x,y,z)",
+          "(r,R)",
+          "(v_x,v_y,v_z)",
+          "(v_r,v_R,v_\\phi)",
+          "v"
+        ],
+        [
+          "",
+          "",
+          "",
+          "\\pc",
+          "\\kms",
+          "\\Myr",
+          "\\kpc",
+          "\\kpc",
+          "\\kms",
+          "\\kms",
+          "\\kms"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "(1) | Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "(2) | DR3 source_id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "(3) | (f_50 \\pc, f_200 \\pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "(4) | r_ej | \\pc",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "(5) | v_ej | \\kms",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "(6) | \\tau | \\Myr",
+          "unit_text": "\\Myr",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "(7) | (x,y,z) | \\kpc",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "(8) | (r,R) | \\kpc",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "(9) | (v_x,v_y,v_z) | \\kms",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "(10) | (v_r,v_R,v_\\phi) | \\kms",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "(11) | v | \\kms",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\Myr",
+        "unresolved LaTeX macro preserved: \\kms",
+        "unresolved LaTeX macro preserved: \\kpc",
+        "unresolved LaTeX macro preserved: \\pc",
+        "unresolved LaTeX macro preserved: \\phi",
+        "unresolved LaTeX macro preserved: \\tau"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9d2opz1t/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.20266/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9d2opz1t/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.20266/catalog_sources/table-table-kinematics/wrapped.tex",
+            "html": "literature/2502.20266/catalog_sources/table-table-kinematics/latexml.html",
+            "stdout": "literature/2502.20266/catalog_sources/table-table-kinematics/latexml.stdout.txt",
+            "stderr": "literature/2502.20266/catalog_sources/table-table-kinematics/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpef_o_rw1/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpef_o_rw1/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.20266/catalog_sources/table-table-kinematics/wrapped.tex",
+            "html": "literature/2502.20266/catalog_sources/table-table-kinematics/pandoc.html",
+            "stdout": "literature/2502.20266/catalog_sources/table-table-kinematics/pandoc.stdout.txt",
+            "stderr": "literature/2502.20266/catalog_sources/table-table-kinematics/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "0cf2d029d7ae5c354d332d063f1f89c0e60d2e58ecbcc29cd5c57b57fc0854c3"
+    }
+  ]
+}

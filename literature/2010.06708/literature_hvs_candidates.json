@@ -1,0 +1,94 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:34:00",
+  "paper": {
+    "arxiv_id": "2010.06708",
+    "bibcode": "2020AJ....160..274B",
+    "title": "BD+14°3061: A Luminous Yellow Post-AGB Star in the Galactic Halo",
+    "month": "2020-10",
+    "source_note_json": "notes/2020/2020-10/2020-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2010.06708",
+      "pdf": "https://arxiv.org/pdf/2010.06708"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2010.06708",
+    "audit_path": "literature/2010.06708/audit.json",
+    "catalog_review_path": "literature/2010.06708/catalog_review.json",
+    "catalog_extraction_path": "literature/2010.06708/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2010.06708/catalog_tables/table-table-basicdata.ecsv",
+      "literature/2010.06708/catalog_tables/table-table-rvs.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:34:00",
+    "extractor": "agent",
+    "summary": "本文报道了银河系晕中一颗亮黄色后渐近巨星支（PAGB）恒星BD+14°3061的发现。Gaia DR2视差给出绝对星等MV=-3.44±0.27，空间速度318 km/s，逆行银河轨道。论文将其描述为'very high-velocity star'，但明确将其归类为银河系晕族成员（Population II yellow PAGB star in the Galactic halo），用于讨论黄色PAGB星作为标准烛光的可能性。'Very high-velocity'在此语境下指相对太阳的高速运动和逆行轨道特征，属于银河系束缚恒星的运动学描述。论文从未声称该星为非束缚银河系超高速星（HVS）。因此无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文发现一颗银河系晕中黄色PAGB星，空间速度318 km/s、逆行轨道，但明确归类为银河系束缚的晕族恒星。'Very high-velocity'描述其运动学特征，不暗示银河系非束缚状态。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (main.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2010.06708/arxiv_source/main.tex",
+          "start_line": 33,
+          "end_line": 34,
+          "context": "Title: BD+14°3061: A Luminous Yellow Post-AGB Star in the Galactic Halo"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2010.06708/arxiv_source/main.tex",
+          "start_line": 43,
+          "end_line": 48,
+          "context": "Abstract: describes star as Galactic-halo member, very high-velocity with retrograde orbit; focuses on standard candle utility"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "bd14-3061",
+      "description": "单颗候选星BD+14°3061，黄色PAGB星，位于银河系晕中。Gaia DR2数据：视差0.251±0.032 mas（距离约3.57 kpc），自行(μα, μδ)=(-6.599, -17.148) mas/yr，视向速度-65.0±1.0 km/s。空间速度(U,V,W)=(-120,-290,-51) km/s，总空间速度318 km/s，逆行银河轨道。",
+      "decision": "excluded",
+      "reason": "论文明确将该星归类为银河系晕族成员（'Galactic-halo star'），其高速运动特征用于支持其属于老年星族（Population II）的结论。论文的核心科学目标是建立黄色PAGB星作为Population II标准烛光，分析其光度函数、脉动变星性质和双星性质。'Very high-velocity star'和'retrograde Galactic orbit'是对该星在银河系中运动学特征的描述，属于银河系束缚恒星的轨道特征描述。论文从未声称该星为非束缚银河系超高速星（HVS），亦未讨论银河系逃逸速度或非束缚概率。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2010.06708/arxiv_source/main.tex",
+          "start_line": 43,
+          "end_line": 48,
+          "context": "Abstract: Galactic-halo star, very high-velocity moving in retrograde Galactic orbit"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2010.06708/arxiv_source/main.tex",
+          "start_line": 209,
+          "end_line": 219,
+          "context": "Section 4: Space motion, absolute magnitude; 318 km/s total space motion, retrograde orbit, still a bound halo star"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2010.06708/arxiv_source/main.tex",
+          "start_line": 452,
+          "end_line": 456,
+          "context": "Summary: BD+14 is a metal-poor Galactic-halo field star, yellow PAGB member, useful Population II standard candle"
+        }
+      ]
+    }
+  ]
+}

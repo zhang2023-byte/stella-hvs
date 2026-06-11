@@ -1,0 +1,99 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:11:58",
+  "paper": {
+    "arxiv_id": "2510.21577",
+    "bibcode": "2026A&A...705A.215C",
+    "title": "An observational study of rotation and binarity of Galactic O-type runaway stars",
+    "month": "2025-10",
+    "source_note_json": "notes/2025/2025-10/2025-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2510.21577",
+      "pdf": "https://arxiv.org/pdf/2510.21577"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2510.21577",
+    "audit_path": "literature/2510.21577/audit.json",
+    "catalog_review_path": "literature/2510.21577/catalog_review.json",
+    "catalog_extraction_path": "literature/2510.21577/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2510.21577/catalog_tables/table-Tab-rotSnormRun.ecsv",
+      "literature/2510.21577/catalog_tables/table-Tab-rotSslowFast.ecsv",
+      "literature/2510.21577/catalog_tables/table-Tab-percent_rotLSSB1_regs.ecsv",
+      "literature/2510.21577/catalog_tables/table-Tab-percent_rotLSSB1.ecsv",
+      "literature/2510.21577/catalog_tables/table-Tab-SB1_runaways.ecsv",
+      "literature/2510.21577/catalog_tables/table-Tab-rotsample.ecsv",
+      "literature/2510.21577/catalog_tables/table-Tab-KStest_LS_SB1.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T12:12:58",
+    "extractor": "agent",
+    "summary": "The paper studies Galactic O-type runaway stars through rotation and binarity. It uses 2D peculiar velocities (V_PEC^2D) with respect to mean Galactic rotation to identify runaways, not 3D velocities or Galactic escape assessments. No object is explicitly discussed as possibly unbound from the Milky Way, escaping the Galaxy, or as an HVS/hyper-runaway candidate. All high-velocity objects are classified as runaway stars in the conventional sense (high peculiar velocity relative to local environment), not as Galactic-unbound candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-Tab-rotsample",
+      "description": "The rotation sample of 214 O-type stars (136 normal, 78 runaway) with projected rotational velocities. The first 10 stars with highest E values are shown in the table.",
+      "decision": "excluded",
+      "reason": "The paper does not present these objects as possibly unbound from the Galaxy. They are classified as runaway stars based on 2D peculiar velocities V_PEC^2D with respect to mean Galactic rotation (E parameter), with no assessment of Galactic escape velocity, 3D velocities, or bound/unbound status. The paper explicitly states it avoids using runaway velocity thresholds and focuses on runaway nature rather than Galactic unbinding.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2510.21577/arxiv_source/main.tex",
+          "start_line": 147,
+          "end_line": 176,
+          "context": "Paper describes the runaway identification method using E parameter based on 2D velocities V_PEC^2D with respect to mean Galactic rotation. Stars with E>=1 are classified as runaways, but no Galactic escape or bound/unbound assessment is performed."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2510.21577/arxiv_source/main.tex",
+          "start_line": 603,
+          "end_line": 627,
+          "context": "Table caption showing the first 10 stars of the rotation sample with higher E values."
+        }
+      ]
+    },
+    {
+      "group_id": "table-Tab-SB1_runaways",
+      "description": "Runaway SB1 systems with the higher values of E in decreasing order, comprising 12 single-lined spectroscopic binary runaway systems.",
+      "decision": "excluded",
+      "reason": "These are runaway SB1 systems discussed in the context of binary supernova scenario (BSS) products and possible HMXB/gamma-ray binary evolution. The paper does not assess whether any of these systems are possibly unbound from the Milky Way. Their velocities are 2D peculiar velocities; no 3D velocities, Galactic potential, or escape assessments are provided.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2510.21577/arxiv_source/main.tex",
+          "start_line": 391,
+          "end_line": 427,
+          "context": "Section discussing runaway SB1 systems and their multiwavelength properties. The systems are interpreted as BSS products and possible HMXB candidates, but no Galactic-unbound assessment is made."
+        }
+      ]
+    },
+    {
+      "group_id": "fast-moving-runaways-text",
+      "description": "Six fast-moving runaways with 2D peculiar velocities >=85 km/s, the highest-velocity subset of the runaway sample.",
+      "decision": "excluded",
+      "reason": "Although these are the highest-velocity runaways in the paper (V_PEC^2D from 85 to ~220 km/s), the paper does not discuss them as possibly unbound from the Milky Way. They are interpreted as dynamical ejection scenario (DES) products or two-step scenario products, not as Galactic-unbound candidates. The paper only uses 2D velocities and makes no escape velocity or bound/unbound calculations.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2510.21577/arxiv_source/main.tex",
+          "start_line": 453,
+          "end_line": 464,
+          "context": "Paper lists six fast-moving runaways with V_PEC^2D >=85 km/s and compares them to LMC runaways, but does not claim they are unbound from the Galaxy."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2510.21577/arxiv_source/main.tex",
+          "start_line": 494,
+          "end_line": 499,
+          "context": "Paper interprets fast-moving runaways as DES-single or two-step scenario products, not as Galactic-unbound candidates."
+        }
+      ]
+    }
+  ]
+}

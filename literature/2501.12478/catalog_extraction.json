@@ -1,0 +1,589 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:29",
+  "paper": {
+    "arxiv_id": "2501.12478",
+    "title": "Kinematics of High-Velocity Stars Utilizing LAMOST and Gaia DR3 Archives within 100 kpc",
+    "month": "2025-01"
+  },
+  "review": {
+    "path": "literature/2501.12478/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123929",
+    "started_at": "2026-05-17T12:39:29",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2501.12478",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+        "start_line": 298,
+        "end_line": 346,
+        "caption": "The fundamental parameters of the three Programs I, II, and III of HiVels adopted by \\cite{2021ApJS..252....3L,2023AJ....166...12L}, and \\cite{2024AJ....167...76L}, respectively.",
+        "label": "tab1"
+      },
+      "source_path": "literature/2501.12478/arxiv_source/Final_version.tex",
+      "excerpt_path": "literature/2501.12478/catalog_sources/table-tab1/excerpt.tex",
+      "sha256": "73317b6815c2c94121fa2ff2d0b51aa953f72d762b0c341ef0a43fe1c44e205f",
+      "line_count": 49,
+      "error": ""
+    },
+    {
+      "id": "table-tab2",
+      "internal_table_id": "table-tab2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+        "start_line": 525,
+        "end_line": 590,
+        "caption": "VEPs and CPs of the three Program HiVels calculated by us.",
+        "label": "tab2"
+      },
+      "source_path": "literature/2501.12478/arxiv_source/Final_version.tex",
+      "excerpt_path": "literature/2501.12478/catalog_sources/table-tab2/excerpt.tex",
+      "sha256": "2dd9b74687c7ce2ffb9e81f9c2ef00d64aebf373338aa36673604a994adba0fe",
+      "line_count": 66,
+      "error": ""
+    },
+    {
+      "id": "table-tab3",
+      "internal_table_id": "table-tab3",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+        "start_line": 594,
+        "end_line": 620,
+        "caption": "Ratios of velocity dispersions and the solar velocities for our three program HiVels and other components of the disks with different authors.",
+        "label": "tab3"
+      },
+      "source_path": "literature/2501.12478/arxiv_source/Final_version.tex",
+      "excerpt_path": "literature/2501.12478/catalog_sources/table-tab3/excerpt.tex",
+      "sha256": "06e0162ad96d6140e6e48ee4dc611aa0bb8d7827dae0cae7d43c14c43b33ccee",
+      "line_count": 27,
+      "error": ""
+    },
+    {
+      "id": "table-tab4",
+      "internal_table_id": "table-tab4",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+        "start_line": 647,
+        "end_line": 665,
+        "caption": "Velocity dispersion and rotation constants for three program HiVels under study.",
+        "label": "tab4"
+      },
+      "source_path": "literature/2501.12478/arxiv_source/Final_version.tex",
+      "excerpt_path": "literature/2501.12478/catalog_sources/table-tab4/excerpt.tex",
+      "sha256": "e6ec18c34f4169fa71abf69cfc789d8851b55163659a3ee4fcf57f572e7a8a3a",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab5",
+      "internal_table_id": "table-tab5",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+        "start_line": 669,
+        "end_line": 693,
+        "caption": "Velocity dispersion and rotation constants for three program HiVels under study.",
+        "label": "tab5"
+      },
+      "source_path": "literature/2501.12478/arxiv_source/Final_version.tex",
+      "excerpt_path": "literature/2501.12478/catalog_sources/table-tab5/excerpt.tex",
+      "sha256": "21fd31fb85b9a584b13bbcdfbcd590643431dfa12acba7effab7ad71d7608182",
+      "line_count": 25,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2501.12478/catalog_tables/table-tab1.ecsv",
+      "caption": "The fundamental parameters of the three Programs I, II, and III of HiVels adopted by \\cite{2021ApJS..252....3L,2023AJ....166...12L}, and \\cite{2024AJ....167...76L}, respectively.",
+      "label": "tab1",
+      "row_count": 28,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphpty9_hz/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2501.12478/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphpty9_hz/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2501.12478/catalog_sources/table-tab1/wrapped.tex",
+            "html": "literature/2501.12478/catalog_sources/table-tab1/latexml.html",
+            "stdout": "literature/2501.12478/catalog_sources/table-tab1/latexml.stdout.txt",
+            "stderr": "literature/2501.12478/catalog_sources/table-tab1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "73317b6815c2c94121fa2ff2d0b51aa953f72d762b0c341ef0a43fe1c44e205f"
+    },
+    {
+      "id": "table-tab2",
+      "internal_table_id": "table-tab2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2501.12478/catalog_tables/table-tab2.ecsv",
+      "caption": "VEPs and CPs of the three Program HiVels calculated by us.",
+      "label": "tab2",
+      "row_count": 48,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjl0uqlng/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2501.12478/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjl0uqlng/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2501.12478/catalog_sources/table-tab2/wrapped.tex",
+            "html": "literature/2501.12478/catalog_sources/table-tab2/latexml.html",
+            "stdout": "literature/2501.12478/catalog_sources/table-tab2/latexml.stdout.txt",
+            "stderr": "literature/2501.12478/catalog_sources/table-tab2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2dd9b74687c7ce2ffb9e81f9c2ef00d64aebf373338aa36673604a994adba0fe"
+    },
+    {
+      "id": "table-tab3",
+      "internal_table_id": "table-tab3",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2501.12478/catalog_tables/table-tab3.ecsv",
+      "caption": "Ratios of velocity dispersions and the solar velocities for our three program HiVels and other components of the disks with different authors.",
+      "label": "tab3",
+      "row_count": 12,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Type",
+          "S_\\odot (km s -1 )",
+          "\\sigma_2/\\sigma_1",
+          "\\sigma_3/\\sigma_1",
+          "References"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "S_\\odot (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma_2/\\sigma_1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\sigma_3/\\sigma_1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "References",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5iaq74hk/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2501.12478/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5iaq74hk/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2501.12478/catalog_sources/table-tab3/wrapped.tex",
+            "html": "literature/2501.12478/catalog_sources/table-tab3/latexml.html",
+            "stdout": "literature/2501.12478/catalog_sources/table-tab3/latexml.stdout.txt",
+            "stderr": "literature/2501.12478/catalog_sources/table-tab3/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "06e0162ad96d6140e6e48ee4dc611aa0bb8d7827dae0cae7d43c14c43b33ccee"
+    },
+    {
+      "id": "table-tab4",
+      "internal_table_id": "table-tab4",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2501.12478/catalog_tables/table-tab4.ecsv",
+      "caption": "Velocity dispersion and rotation constants for three program HiVels under study.",
+      "label": "tab4",
+      "row_count": 3,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Program",
+          "\\sigma_2/\\sigma_1",
+          "A",
+          "B",
+          "|A-B|",
+          "V_o"
+        ],
+        [
+          "HiVels",
+          "",
+          "km s -1 kpc -1",
+          "km s -1 kpc -1",
+          "km s -1 kpc -1",
+          "km s -1"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Program | HiVels",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\sigma_2/\\sigma_1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "A | km s -1 kpc -1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "B | km s -1 kpc -1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "|A-B| | km s -1 kpc -1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V_o | km s -1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpilzje9cn/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2501.12478/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpilzje9cn/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2501.12478/catalog_sources/table-tab4/wrapped.tex",
+            "html": "literature/2501.12478/catalog_sources/table-tab4/latexml.html",
+            "stdout": "literature/2501.12478/catalog_sources/table-tab4/latexml.stdout.txt",
+            "stderr": "literature/2501.12478/catalog_sources/table-tab4/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e6ec18c34f4169fa71abf69cfc789d8851b55163659a3ee4fcf57f572e7a8a3a"
+    },
+    {
+      "id": "table-tab5",
+      "internal_table_id": "table-tab5",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2501.12478/catalog_tables/table-tab5.ecsv",
+      "caption": "Velocity dispersion and rotation constants for three program HiVels under study.",
+      "label": "tab5",
+      "row_count": 10,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "A",
+          "B",
+          "|A-B|",
+          "Methods",
+          "References"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "A",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "B",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "|A-B|",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Methods",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "References",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzlwmv06n/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2501.12478/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzlwmv06n/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2501.12478/catalog_sources/table-tab5/wrapped.tex",
+            "html": "literature/2501.12478/catalog_sources/table-tab5/latexml.html",
+            "stdout": "literature/2501.12478/catalog_sources/table-tab5/latexml.stdout.txt",
+            "stderr": "literature/2501.12478/catalog_sources/table-tab5/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "21fd31fb85b9a584b13bbcdfbcd590643431dfa12acba7effab7ad71d7608182"
+    }
+  ]
+}

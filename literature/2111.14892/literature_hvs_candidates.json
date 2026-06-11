@@ -1,0 +1,98 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T03:57:59",
+  "paper": {
+    "arxiv_id": "2111.14892",
+    "bibcode": "",
+    "title": "Constraining the initial conditions of NGC 2264 using ejected stars found in Gaia DR2",
+    "month": "2021-11",
+    "source_note_json": "notes/2021/2021-11/2021-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2111.14892",
+      "pdf": "https://arxiv.org/pdf/2111.14892"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2111.14892",
+    "audit_path": "literature/2111.14892/audit.json",
+    "catalog_review_path": "literature/2111.14892/catalog_review.json",
+    "catalog_extraction_path": "literature/2111.14892/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T03:57:59",
+    "extractor": "agent",
+    "summary": "论文搜索从年轻星团NGC 2264中被动力学弹射的runaway（逃逸星，>30 km/s）和walkaway（漫步星，>5 km/s）恒星。这些恒星是从星团中被N体动力学相互作用弹射出来的，星团逃逸速度仅2-3 km/s。论文目标是利用弹射星的数量约束星团初始条件，而非搜索超高速星（HVS）。论文参考文献中包含HVS相关文献，但论文本身未声称任何恒星为HVS或银河系非束缚天体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "扫描arXiv摘要和论文全文，评估HVS相关性。Constraining the initial conditions of NGC 2264 using ejected stars found in Gaia DR2。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 98,
+          "end_line": 98,
+          "context": "We find five runaways and nine walkaways that trace back to S Mon and six runaways and five walkaways that trace back to IRS 1/2"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 185,
+          "end_line": 185,
+          "context": "escape velocity of ~2-3 km/s, lower walkaway limit of 5 km/s"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 671,
+          "end_line": 671,
+          "context": "average cluster masses of ~730 M☉ and escape velocity of ~2-3 km/s"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "ngc2264-ejected",
+      "description": "从NGC 2264星团中被弹射的恒星：5颗runaways (>30 km/s) + 9颗walkaways (>5 km/s) 追溯到S Mon；6颗runaways + 5颗walkaways 追溯到IRS 1/2。基于Gaia DR2 3D运动学。Gaia EDR3更新后IRS 1/2的runaways从6颗减少到4颗。",
+      "decision": "excluded",
+      "reason": "这些恒星是从小质量年轻星团NGC 2264（总质量~730 M☉，逃逸速度仅~2-3 km/s）中通过N体动力学相互作用弹射出来的。walkaway阈值仅5 km/s，runaway阈值30 km/s，远低于银河系逃逸速度（~500 km/s）。这是星团内部动力学弹射产生的低速逃逸星，不是超高速星（HVS）。论文本质是利用弹射星数量研究星团初始条件，不涉及银河系尺度的高速天体。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 98,
+          "end_line": 98,
+          "context": "We find five runaways and nine walkaways that trace back to S Mon and six runaways and five walkaways that trace back to IRS 1/2"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 185,
+          "end_line": 185,
+          "context": "escape velocity of ~2-3 km/s, lower walkaway limit of 5 km/s"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 671,
+          "end_line": 671,
+          "context": "average cluster masses of ~730 M☉ and escape velocity of ~2-3 km/s"
+        }
+      ]
+    }
+  ]
+}

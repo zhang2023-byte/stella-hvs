@@ -1,0 +1,5730 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-23T03:59:33+00:00",
+  "paper": {
+    "arxiv_id": "2206.00417",
+    "bibcode": "2022A&A...664A.148P",
+    "title": "Milky Way archaeology using RR Lyrae and type II Cepheids II. High velocity RR Lyrae stars, and mass of the Milky Way",
+    "month": "2022-06",
+    "source_note_json": "notes/2022/2022-06/2022-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2206.00417",
+      "pdf": "https://arxiv.org/pdf/2206.00417"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2206.00417",
+    "audit_path": "literature/2206.00417/audit.json",
+    "catalog_review_path": "literature/2206.00417/catalog_review.json",
+    "catalog_extraction_path": "literature/2206.00417/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+      "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+      "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-23T03:59:33+00:00",
+    "extractor": "agent",
+    "summary": "Extracted 9 high-velocity RR Lyrae candidates with P_unb > 0.5 from Prudil et al. (2022). All candidates are explicitly presented as likely unbound. HV-RRL-03 and HV-RRL-04 have uncertain RR Lyrae classifications per the paper. HV-RRL-02 and HV-RRL-08 show tentative orbital association with the Sagittarius dwarf spheroidal galaxy."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Input catalogs: Gaia EDR3 astrometry and photometry, PanSTARRS-1 i-band photometry, SDSS DR15 spectra, LAMOST DR6 spectra, and CSS variable-star photometry.",
+      "inputs": [
+        "Gaia EDR3",
+        "PanSTARRS-1",
+        "SDSS DR15",
+        "LAMOST DR6",
+        "Catalina Sky Survey"
+      ],
+      "outputs": [
+        "raw astrometry",
+        "raw photometry",
+        "raw spectra"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 167,
+          "end_line": 168,
+          "context": "Dataset description drawing from Gaia EDR3, PanSTARRS-1, SDSS DR15, and LAMOST DR6"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "cross_match",
+      "summary": "Cross-matched the RR Lyrae catalog (Gaia DR2 + CSS) with LAMOST DR6 spectra within 1 arcsec, yielding 3003 matches.",
+      "inputs": [
+        "RR Lyrae catalog",
+        "LAMOST DR6 spectra"
+      ],
+      "outputs": [
+        "cross-matched LAMOST sample"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 172,
+          "end_line": 172,
+          "context": "Cross-match of RR Lyrae catalog with LAMOST DR6"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "quality_filter",
+      "summary": "Astrometric quality cuts on proper-motion significance, ipd_gof_harmonic_amplitude, ipd_frac_multi_peak, astrometric_excess_noise_sig, visibility_periods_used, and RUWE scaling. Reduced sample from 6187 to 4847.",
+      "inputs": [
+        "cross-matched sample"
+      ],
+      "outputs": [
+        "study sample of 4847 RR Lyrae stars"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 189,
+          "end_line": 199,
+          "context": "Astrometric cuts and quality metrics"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Heliocentric distances estimated via the period-luminosity-metallicity (PLZ) relation using PanSTARRS-1 i-band mean magnitudes, metallicities from Crestani2021, and Schlafly2011 extinction maps.",
+      "inputs": [
+        "PanSTARRS-1 i-band magnitudes",
+        "metallicities",
+        "extinction maps"
+      ],
+      "outputs": [
+        "heliocentric distances and uncertainties"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 185,
+          "end_line": 185,
+          "context": "Distance estimation via PLZ relation using PanSTARRS-1 i-band"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "radial_velocity_measurement",
+      "summary": "Systemic radial velocities measured from SDSS and LAMOST low-resolution spectra using iSpec cross-correlation of Balmer lines and photometric phase templates.",
+      "inputs": [
+        "SDSS DR15 spectra",
+        "LAMOST DR6 spectra"
+      ],
+      "outputs": [
+        "systemic velocities v_sys and uncertainties"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 174,
+          "end_line": 185,
+          "context": "Radial velocity measurement via iSpec cross-correlation and systemic velocity templates"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "photometric_or_sed_modeling",
+      "summary": "Pulsation periods and amplitudes derived from Catalina Sky Survey photometry using period analysis.",
+      "inputs": [
+        "CSS photometry"
+      ],
+      "outputs": [
+        "pulsation periods, amplitudes"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 254,
+          "end_line": 272,
+          "context": "Table of pulsation and chemical properties from CSS photometry"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Metallicities [Fe/H] derived using the delta-S method from low-resolution spectra.",
+      "inputs": [
+        "low-resolution spectra"
+      ],
+      "outputs": [
+        "metallicities [Fe/H] and uncertainties"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 254,
+          "end_line": 272,
+          "context": "Metallicity derived using the delta-S method"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [
+        "step-04",
+        "step-05"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Galactocentric coordinates and velocities calculated using galpy with Solar parameters R_sun=8.2 kpc, Z_sun=20.8 pc, solar peculiar motion (11.1,12.24,7.25) km/s, and rotation velocity 230 km/s. Full covariance propagated via 100k MC iterations.",
+      "inputs": [
+        "astrometry",
+        "distances",
+        "systemic velocities"
+      ],
+      "outputs": [
+        "Galactocentric positions, velocities, and covariances"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 201,
+          "end_line": 224,
+          "context": "Galactocentric velocity calculation setup"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "MWPotential2014 composite potential (Miyamoto-Nagai disk, power-law bulge, NFW halo) and two variants with 25% and 50% higher mass.",
+      "inputs": [
+        "galpy MWPotential2014"
+      ],
+      "outputs": [
+        "Milky Way gravitational potential model"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 203,
+          "end_line": 221,
+          "context": "MWPotential2014 description and variants"
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "depends_on": [
+        "step-08",
+        "step-09"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Unbound probability P_unb estimated by Monte Carlo sampling: fraction of 100k iterations where v_GC exceeds local v_esc from MWPotential2014. Unbound criterion: P_unb > 0.5.",
+      "inputs": [
+        "Galactocentric velocities",
+        "Milky Way potential"
+      ],
+      "outputs": [
+        "unbound probabilities P_unb"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 225,
+          "end_line": 233,
+          "context": "Escape velocity and unbound probability definition"
+        }
+      ]
+    },
+    {
+      "id": "step-11",
+      "depends_on": [
+        "step-08",
+        "step-09"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Backward orbit integration for 6 Gyr to identify disk/bulge crossings and for 3 Gyr to test Sagittarius association.",
+      "inputs": [
+        "Galactocentric phase space",
+        "MW potential"
+      ],
+      "outputs": [
+        "orbital histories",
+        "minimum crossing radii"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 287,
+          "end_line": 292,
+          "context": "Orbit integration and minimum crossing radius analysis"
+        }
+      ]
+    },
+    {
+      "id": "step-12",
+      "depends_on": [
+        "step-11"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Tentative association with Sagittarius dSph based on orbital proximity over 3 Gyr using MC error propagation.",
+      "inputs": [
+        "orbital histories"
+      ],
+      "outputs": [
+        "Sagittarius association probabilities"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 293,
+          "end_line": 297,
+          "context": "Sagittarius association assessment"
+        }
+      ]
+    },
+    {
+      "id": "step-13",
+      "depends_on": [
+        "step-06"
+      ],
+      "step_type": "candidate_classification",
+      "summary": "RR Lyrae sub-type classification (RRab vs RRc) based on CSS photometric period analysis.",
+      "inputs": [
+        "pulsation periods",
+        "light-curve shapes"
+      ],
+      "outputs": [
+        "RR Lyrae sub-type labels"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 254,
+          "end_line": 272,
+          "context": "RR Lyrae sub-class from CSS photometry"
+        }
+      ]
+    },
+    {
+      "id": "step-14",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "reported_value_adoption",
+      "summary": "Direct adoption of Gaia EDR3 catalog photometry values (G magnitude and BP-RP color) without additional processing.",
+      "inputs": [
+        "Gaia EDR3 photometry"
+      ],
+      "outputs": [
+        "adopted G and BP-RP values"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 533,
+          "end_line": 551,
+          "context": "Gaia photometry from catalog"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2206.00417:cand-001",
+        "paper_candidate_id": "HV-RRL-01",
+        "gaia_source_id": "Gaia EDR3 2471437298673558400",
+        "all": [
+          {
+            "value": "HV-RRL-01",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 71,
+                "column": "col_001",
+                "column_header": "ID",
+                "raw_value": "HV-RRL-01"
+              }
+            ]
+          },
+          {
+            "value": "2471437298673558400",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 71,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "2471437298673558400"
+              }
+            ]
+          },
+          {
+            "value": "Gaia EDR3 2471437298673558400",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 71,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "2471437298673558400"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HV-RRL-01 is presented as a likely unbound RR Lyrae candidate with P_unb = 0.95. The paper notes that candidates at large distances may be 1-2 sigma outliers due to proper-motion uncertainties.",
+        "paper_labels": [
+          "high_velocity_star",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "likely_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Candidate is clearly listed in the unbound candidate tables with P_unb > 0.5 and explicitly discussed as a high-velocity RR Lyrae star.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract: identified nine RR Lyrae stars with Galactocentric velocities exceeding the local escape velocity"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 238,
+            "end_line": 240,
+            "context": "Section 3: found in total nine RR Lyrae variables that fulfilled the unbound condition"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract reports discovery of high-velocity candidates among RR Lyrae stars"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "18.0789",
+            "value": "18.0789",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 69,
+                "column": "col_003",
+                "column_header": "\\alpha | [deg]",
+                "raw_value": "18.0789"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "-10.1312",
+            "value": "-10.1312",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 69,
+                "column": "col_004",
+                "column_header": "\\delta | [deg]",
+                "raw_value": "-10.1312"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "53",
+            "value": "53",
+            "unit": "kpc",
+            "error": "2",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 71,
+                "column": "col_003",
+                "column_header": "d | [kpc]",
+                "raw_value": "53"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": {
+            "raw_value": "0.257",
+            "value": "0.257",
+            "unit": "mas",
+            "error": "0.424",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 69,
+                "column": "col_011",
+                "column_header": "\\varpi | [mas]",
+                "raw_value": "0.257"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-0.707",
+            "value": "-0.707",
+            "unit": "mas yr^-1",
+            "error": "0.506",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 69,
+                "column": "col_007",
+                "column_header": "\\mu_\\alpha^\\ast | [mas yr -1 ]",
+                "raw_value": "-0.707"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-2.994",
+            "value": "-2.994",
+            "unit": "mas yr^-1",
+            "error": "0.670",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 69,
+                "column": "col_009",
+                "column_header": "\\mu_\\delta | [mas yr -1 ]",
+                "raw_value": "-2.994"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "-146.4",
+            "value": "-146.4",
+            "unit": "km s^-1",
+            "error": "37.0",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 71,
+                "column": "col_005",
+                "column_header": "v_\\rm sys | [km s -1 ]",
+                "raw_value": "-146.4"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": {
+            "raw_value": "-284",
+            "value": "-284",
+            "unit": "km s^-1",
+            "error": "114",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 71,
+                "column": "col_008",
+                "column_header": "V | [km s -1 ]",
+                "raw_value": "-284"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Galactocentric azimuthal velocity component v_y"
+          },
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "655",
+            "value": "655",
+            "unit": "km s^-1",
+            "error": "189",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 71,
+                "column": "col_013",
+                "column_header": "v_\\rm GC | [km s -1 ]",
+                "raw_value": "655"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Total Galactocentric velocity v_GC"
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "0.95",
+            "value": "0.95",
+            "unit": "",
+            "error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 71,
+                "column": "col_007",
+                "column_header": "P_\\rm unb",
+                "raw_value": "0.95"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "description": "Probability that the star exceeds the local escape velocity in the assumed MW potential"
+          },
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "19.52",
+          "value": "19.52",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 69,
+              "column": "col_014",
+              "column_header": "G | [mag]",
+              "raw_value": "19.52"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        },
+        {
+          "raw_value": "0.49",
+          "value": "0.49",
+          "unit": "mag",
+          "measurement_type": "color",
+          "band": "G_BP - G_RP",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 69,
+              "column": "col_015",
+              "column_header": "G_\\rm BP-G_\\rm RP | [mag]",
+              "raw_value": "0.49"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": {
+          "raw_value": "-0.90+/- 0.08",
+          "value": "-0.90",
+          "unit": "dex",
+          "error": "0.08",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 23,
+              "column": "col_005",
+              "column_header": "[Fe/H] | [dex]",
+              "raw_value": "-0.90+/- 0.08"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": [
+          {
+            "raw_value": "0.33118",
+            "value": "0.33118",
+            "unit": "day",
+            "name": "pulsation_period",
+            "description": "Pulsation period of the RR Lyrae star from CSS photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 23,
+                "column": "col_002",
+                "column_header": "P | [day]",
+                "raw_value": "0.33118"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          {
+            "raw_value": "0.34221",
+            "value": "0.34221",
+            "unit": "mag",
+            "name": "pulsation_amplitude_v_css",
+            "description": "Amplitude of total light variations in the V-band from Catalina Sky Survey photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 23,
+                "column": "col_003",
+                "column_header": "Amp ^V_\\rm CSS | [mag]",
+                "raw_value": "0.34221"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          }
+        ]
+      },
+      "abundances": [],
+      "quality_flags": [
+        {
+          "raw_value": "1.048",
+          "value": "1.048",
+          "name": "RUWE",
+          "description": "Renormalized unit weight error from Gaia EDR3 astrometric solution",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 69,
+              "column": "col_013",
+              "column_header": "RUWE",
+              "raw_value": "1.048"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        {
+          "raw_value": "false",
+          "value": "false",
+          "name": "duplicated_source",
+          "description": "None of the candidates were flagged as duplicated_source in Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+              "start_line": 240,
+              "end_line": 240,
+              "context": "None of the candidates had been flagged as duplicated_source in Gaia EDR3"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        }
+      ],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "raw_value": "582",
+          "value": "582",
+          "unit": "km s^-1",
+          "error": "179",
+          "name": "sqrt_vx2_vz2",
+          "description": "Quadrature of the Galactocentric radial and vertical velocity components, sqrt(v_x^2 + v_z^2)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+              "line": 71,
+              "column": "col_010",
+              "column_header": "\\sqrtU^2+W^2 | [km s -1 ]",
+              "raw_value": "582"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        {
+          "raw_value": "RRc",
+          "value": "RRc",
+          "name": "rr_lyrae_type",
+          "description": "RR Lyrae sub-type classification (RRab = fundamental mode, RRc = first overtone)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 23,
+              "column": "col_004",
+              "column_header": "Type",
+              "raw_value": "RRc"
+            }
+          ],
+          "method_refs": [
+            "step-13"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2206.00417:cand-002",
+        "paper_candidate_id": "HV-RRL-02",
+        "gaia_source_id": "Gaia EDR3 3664033198603611520",
+        "all": [
+          {
+            "value": "HV-RRL-02",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 72,
+                "column": "col_001",
+                "column_header": "ID",
+                "raw_value": "HV-RRL-02"
+              }
+            ]
+          },
+          {
+            "value": "3664033198603611520",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 72,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "3664033198603611520"
+              }
+            ]
+          },
+          {
+            "value": "Gaia EDR3 3664033198603611520",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 72,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "3664033198603611520"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HV-RRL-02 is presented as a likely unbound RR Lyrae candidate with P_unb = 0.56. The paper notes that candidates at large distances may be 1-2 sigma outliers due to proper-motion uncertainties.",
+        "paper_labels": [
+          "high_velocity_star",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "likely_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Candidate is clearly listed in the unbound candidate tables with P_unb > 0.5 and explicitly discussed as a high-velocity RR Lyrae star.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract: identified nine RR Lyrae stars with Galactocentric velocities exceeding the local escape velocity"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 238,
+            "end_line": 240,
+            "context": "Section 3: found in total nine RR Lyrae variables that fulfilled the unbound condition"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract reports discovery of high-velocity candidates among RR Lyrae stars"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "207.1866",
+            "value": "207.1866",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 70,
+                "column": "col_003",
+                "column_header": "\\alpha | [deg]",
+                "raw_value": "207.1866"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "1.0410",
+            "value": "1.0410",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 70,
+                "column": "col_004",
+                "column_header": "\\delta | [deg]",
+                "raw_value": "1.0410"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "49",
+            "value": "49",
+            "unit": "kpc",
+            "error": "2",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 72,
+                "column": "col_003",
+                "column_header": "d | [kpc]",
+                "raw_value": "49"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": {
+            "raw_value": "0.244",
+            "value": "0.244",
+            "unit": "mas",
+            "error": "0.345",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 70,
+                "column": "col_011",
+                "column_header": "\\varpi | [mas]",
+                "raw_value": "0.244"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-2.157",
+            "value": "-2.157",
+            "unit": "mas yr^-1",
+            "error": "0.440",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 70,
+                "column": "col_007",
+                "column_header": "\\mu_\\alpha^\\ast | [mas yr -1 ]",
+                "raw_value": "-2.157"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.359",
+            "value": "-0.359",
+            "unit": "mas yr^-1",
+            "error": "0.234",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 70,
+                "column": "col_009",
+                "column_header": "\\mu_\\delta | [mas yr -1 ]",
+                "raw_value": "-0.359"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "21.9",
+            "value": "21.9",
+            "unit": "km s^-1",
+            "error": "31.9",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 72,
+                "column": "col_005",
+                "column_header": "v_\\rm sys | [km s -1 ]",
+                "raw_value": "21.9"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": {
+            "raw_value": "-141",
+            "value": "-141",
+            "unit": "km s^-1",
+            "error": "71",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 72,
+                "column": "col_008",
+                "column_header": "V | [km s -1 ]",
+                "raw_value": "-141"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Galactocentric azimuthal velocity component v_y"
+          },
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "388",
+            "value": "388",
+            "unit": "km s^-1",
+            "error": "105",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 72,
+                "column": "col_013",
+                "column_header": "v_\\rm GC | [km s -1 ]",
+                "raw_value": "388"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Total Galactocentric velocity v_GC"
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "0.56",
+            "value": "0.56",
+            "unit": "",
+            "error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 72,
+                "column": "col_007",
+                "column_header": "P_\\rm unb",
+                "raw_value": "0.56"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "description": "Probability that the star exceeds the local escape velocity in the assumed MW potential"
+          },
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "19.19",
+          "value": "19.19",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 70,
+              "column": "col_014",
+              "column_header": "G | [mag]",
+              "raw_value": "19.19"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        },
+        {
+          "raw_value": "0.63",
+          "value": "0.63",
+          "unit": "mag",
+          "measurement_type": "color",
+          "band": "G_BP - G_RP",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 70,
+              "column": "col_015",
+              "column_header": "G_\\rm BP-G_\\rm RP | [mag]",
+              "raw_value": "0.63"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": {
+          "raw_value": "-0.80+/- 0.13",
+          "value": "-0.80",
+          "unit": "dex",
+          "error": "0.13",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 24,
+              "column": "col_005",
+              "column_header": "[Fe/H] | [dex]",
+              "raw_value": "-0.80+/- 0.13"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": [
+          {
+            "raw_value": "0.56564",
+            "value": "0.56564",
+            "unit": "day",
+            "name": "pulsation_period",
+            "description": "Pulsation period of the RR Lyrae star from CSS photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 24,
+                "column": "col_002",
+                "column_header": "P | [day]",
+                "raw_value": "0.56564"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          {
+            "raw_value": "0.91313",
+            "value": "0.91313",
+            "unit": "mag",
+            "name": "pulsation_amplitude_v_css",
+            "description": "Amplitude of total light variations in the V-band from Catalina Sky Survey photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 24,
+                "column": "col_003",
+                "column_header": "Amp ^V_\\rm CSS | [mag]",
+                "raw_value": "0.91313"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          }
+        ]
+      },
+      "abundances": [],
+      "quality_flags": [
+        {
+          "raw_value": "0.908",
+          "value": "0.908",
+          "name": "RUWE",
+          "description": "Renormalized unit weight error from Gaia EDR3 astrometric solution",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 70,
+              "column": "col_013",
+              "column_header": "RUWE",
+              "raw_value": "0.908"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        {
+          "raw_value": "false",
+          "value": "false",
+          "name": "duplicated_source",
+          "description": "None of the candidates were flagged as duplicated_source in Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+              "start_line": 240,
+              "end_line": 240,
+              "context": "None of the candidates had been flagged as duplicated_source in Gaia EDR3"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        }
+      ],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [
+          {
+            "raw_value": "0.13",
+            "value": "0.13",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of association with the Sagittarius dwarf spheroidal galaxy based on backward orbit integration over 3 Gyr",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                "start_line": 295,
+                "end_line": 297,
+                "context": "Tentative link of HV-RRL-02 to Sagittarius dSph based on orbits"
+              }
+            ],
+            "method_refs": [
+              "step-12"
+            ],
+            "hypothesis": "Sagittarius dwarf spheroidal galaxy origin",
+            "metric_type": "probability"
+          }
+        ],
+        "other": []
+      },
+      "extra": [
+        {
+          "raw_value": "357",
+          "value": "357",
+          "unit": "km s^-1",
+          "error": "95",
+          "name": "sqrt_vx2_vz2",
+          "description": "Quadrature of the Galactocentric radial and vertical velocity components, sqrt(v_x^2 + v_z^2)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+              "line": 72,
+              "column": "col_010",
+              "column_header": "\\sqrtU^2+W^2 | [km s -1 ]",
+              "raw_value": "357"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        {
+          "raw_value": "RRab",
+          "value": "RRab",
+          "name": "rr_lyrae_type",
+          "description": "RR Lyrae sub-type classification (RRab = fundamental mode, RRc = first overtone)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 24,
+              "column": "col_004",
+              "column_header": "Type",
+              "raw_value": "RRab"
+            }
+          ],
+          "method_refs": [
+            "step-13"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2206.00417:cand-003",
+        "paper_candidate_id": "HV-RRL-03",
+        "gaia_source_id": "Gaia EDR3 2644870582050682240",
+        "all": [
+          {
+            "value": "HV-RRL-03",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 73,
+                "column": "col_001",
+                "column_header": "ID",
+                "raw_value": "HV-RRL-03 ∗"
+              }
+            ]
+          },
+          {
+            "value": "2644870582050682240",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 73,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "2644870582050682240"
+              }
+            ]
+          },
+          {
+            "value": "Gaia EDR3 2644870582050682240",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 73,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "2644870582050682240"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HV-RRL-03 is presented as a likely unbound RR Lyrae candidate with P_unb = 1.00, but the paper notes its classification as an RR Lyrae star is highly uncertain (HV-RRL-03) or incorrect (HV-RRL-04).",
+        "paper_labels": [
+          "high_velocity_star",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "likely_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "medium",
+        "confidence_reason": "Paper expresses strong doubt about the RR Lyrae classification of this candidate, suggesting it is probably bound due to misclassification, though it is still listed in the unbound candidate tables.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract: identified nine RR Lyrae stars with Galactocentric velocities exceeding the local escape velocity"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 238,
+            "end_line": 240,
+            "context": "Section 3: found in total nine RR Lyrae variables that fulfilled the unbound condition"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract reports discovery of high-velocity candidates among RR Lyrae stars"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "349.9803",
+            "value": "349.9803",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 71,
+                "column": "col_003",
+                "column_header": "\\alpha | [deg]",
+                "raw_value": "349.9803"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "-0.1865",
+            "value": "-0.1865",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 71,
+                "column": "col_004",
+                "column_header": "\\delta | [deg]",
+                "raw_value": "-0.1865"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "19",
+            "value": "19",
+            "unit": "kpc",
+            "error": "1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 73,
+                "column": "col_003",
+                "column_header": "d | [kpc]",
+                "raw_value": "19"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": {
+            "raw_value": "0.446",
+            "value": "0.446",
+            "unit": "mas",
+            "error": "0.112",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 71,
+                "column": "col_011",
+                "column_header": "\\varpi | [mas]",
+                "raw_value": "0.446"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "11.478",
+            "value": "11.478",
+            "unit": "mas yr^-1",
+            "error": "0.106",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 71,
+                "column": "col_007",
+                "column_header": "\\mu_\\alpha^\\ast | [mas yr -1 ]",
+                "raw_value": "11.478"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-9.324",
+            "value": "-9.324",
+            "unit": "mas yr^-1",
+            "error": "0.111",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 71,
+                "column": "col_009",
+                "column_header": "\\mu_\\delta | [mas yr -1 ]",
+                "raw_value": "-9.324"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "-10.8",
+            "value": "-10.8",
+            "unit": "km s^-1",
+            "error": "17.3",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 73,
+                "column": "col_005",
+                "column_header": "v_\\rm sys | [km s -1 ]",
+                "raw_value": "-10.8"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": {
+            "raw_value": "-759",
+            "value": "-759",
+            "unit": "km s^-1",
+            "error": "56",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 73,
+                "column": "col_008",
+                "column_header": "V | [km s -1 ]",
+                "raw_value": "-759"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Galactocentric azimuthal velocity component v_y"
+          },
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "1165",
+            "value": "1165",
+            "unit": "km s^-1",
+            "error": "73",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 73,
+                "column": "col_013",
+                "column_header": "v_\\rm GC | [km s -1 ]",
+                "raw_value": "1165"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Total Galactocentric velocity v_GC"
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "1.00",
+            "value": "1.00",
+            "unit": "",
+            "error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 73,
+                "column": "col_007",
+                "column_header": "P_\\rm unb",
+                "raw_value": "1.00"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "description": "Probability that the star exceeds the local escape velocity in the assumed MW potential"
+          },
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "17.26",
+          "value": "17.26",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 71,
+              "column": "col_014",
+              "column_header": "G | [mag]",
+              "raw_value": "17.26"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        },
+        {
+          "raw_value": "0.83",
+          "value": "0.83",
+          "unit": "mag",
+          "measurement_type": "color",
+          "band": "G_BP - G_RP",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 71,
+              "column": "col_015",
+              "column_header": "G_\\rm BP-G_\\rm RP | [mag]",
+              "raw_value": "0.83"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": {
+          "raw_value": "-1.36+/- 0.19",
+          "value": "-1.36",
+          "unit": "dex",
+          "error": "0.19",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 25,
+              "column": "col_005",
+              "column_header": "[Fe/H] | [dex]",
+              "raw_value": "-1.36+/- 0.19"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": [
+          {
+            "raw_value": "0.61772",
+            "value": "0.61772",
+            "unit": "day",
+            "name": "pulsation_period",
+            "description": "Pulsation period of the RR Lyrae star from CSS photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 25,
+                "column": "col_002",
+                "column_header": "P | [day]",
+                "raw_value": "0.61772"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          {
+            "raw_value": "0.17046",
+            "value": "0.17046",
+            "unit": "mag",
+            "name": "pulsation_amplitude_v_css",
+            "description": "Amplitude of total light variations in the V-band from Catalina Sky Survey photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 25,
+                "column": "col_003",
+                "column_header": "Amp ^V_\\rm CSS | [mag]",
+                "raw_value": "0.17046"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          }
+        ]
+      },
+      "abundances": [],
+      "quality_flags": [
+        {
+          "raw_value": "1.080",
+          "value": "1.080",
+          "name": "RUWE",
+          "description": "Renormalized unit weight error from Gaia EDR3 astrometric solution",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 71,
+              "column": "col_013",
+              "column_header": "RUWE",
+              "raw_value": "1.080"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        {
+          "raw_value": "false",
+          "value": "false",
+          "name": "duplicated_source",
+          "description": "None of the candidates were flagged as duplicated_source in Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+              "start_line": 240,
+              "end_line": 240,
+              "context": "None of the candidates had been flagged as duplicated_source in Gaia EDR3"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        }
+      ],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "raw_value": "883",
+          "value": "883",
+          "unit": "km s^-1",
+          "error": "51",
+          "name": "sqrt_vx2_vz2",
+          "description": "Quadrature of the Galactocentric radial and vertical velocity components, sqrt(v_x^2 + v_z^2)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+              "line": 73,
+              "column": "col_010",
+              "column_header": "\\sqrtU^2+W^2 | [km s -1 ]",
+              "raw_value": "883"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        {
+          "raw_value": "RRab",
+          "value": "RRab",
+          "name": "rr_lyrae_type",
+          "description": "RR Lyrae sub-type classification (RRab = fundamental mode, RRc = first overtone)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 25,
+              "column": "col_004",
+              "column_header": "Type",
+              "raw_value": "RRab"
+            }
+          ],
+          "method_refs": [
+            "step-13"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2206.00417:cand-004",
+        "paper_candidate_id": "HV-RRL-04",
+        "gaia_source_id": "Gaia EDR3 1018414089653402496",
+        "all": [
+          {
+            "value": "HV-RRL-04",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 74,
+                "column": "col_001",
+                "column_header": "ID",
+                "raw_value": "HV-RRL-04 ∗"
+              }
+            ]
+          },
+          {
+            "value": "1018414089653402496",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 74,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "1018414089653402496"
+              }
+            ]
+          },
+          {
+            "value": "Gaia EDR3 1018414089653402496",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 74,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "1018414089653402496"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HV-RRL-04 is presented as a likely unbound RR Lyrae candidate with P_unb = 1.00, but the paper notes its classification as an RR Lyrae star is highly uncertain (HV-RRL-03) or incorrect (HV-RRL-04).",
+        "paper_labels": [
+          "high_velocity_star",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "likely_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "medium",
+        "confidence_reason": "Paper expresses strong doubt about the RR Lyrae classification of this candidate, suggesting it is probably bound due to misclassification, though it is still listed in the unbound candidate tables.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract: identified nine RR Lyrae stars with Galactocentric velocities exceeding the local escape velocity"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 238,
+            "end_line": 240,
+            "context": "Section 3: found in total nine RR Lyrae variables that fulfilled the unbound condition"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract reports discovery of high-velocity candidates among RR Lyrae stars"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "144.0048",
+            "value": "144.0048",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 72,
+                "column": "col_003",
+                "column_header": "\\alpha | [deg]",
+                "raw_value": "144.0048"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "50.2509",
+            "value": "50.2509",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 72,
+                "column": "col_004",
+                "column_header": "\\delta | [deg]",
+                "raw_value": "50.2509"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "29",
+            "value": "29",
+            "unit": "kpc",
+            "error": "1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 74,
+                "column": "col_003",
+                "column_header": "d | [kpc]",
+                "raw_value": "29"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": {
+            "raw_value": "-0.201",
+            "value": "-0.201",
+            "unit": "mas",
+            "error": "0.112",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 72,
+                "column": "col_011",
+                "column_header": "\\varpi | [mas]",
+                "raw_value": "-0.201"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-0.917",
+            "value": "-0.917",
+            "unit": "mas yr^-1",
+            "error": "0.114",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 72,
+                "column": "col_007",
+                "column_header": "\\mu_\\alpha^\\ast | [mas yr -1 ]",
+                "raw_value": "-0.917"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-8.469",
+            "value": "-8.469",
+            "unit": "mas yr^-1",
+            "error": "0.088",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 72,
+                "column": "col_009",
+                "column_header": "\\mu_\\delta | [mas yr -1 ]",
+                "raw_value": "-8.469"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "6.9",
+            "value": "6.9",
+            "unit": "km s^-1",
+            "error": "46.9",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 74,
+                "column": "col_005",
+                "column_header": "v_\\rm sys | [km s -1 ]",
+                "raw_value": "6.9"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": {
+            "raw_value": "-927",
+            "value": "-927",
+            "unit": "km s^-1",
+            "error": "66",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 74,
+                "column": "col_008",
+                "column_header": "V | [km s -1 ]",
+                "raw_value": "-927"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Galactocentric azimuthal velocity component v_y"
+          },
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "950",
+            "value": "950",
+            "unit": "km s^-1",
+            "error": "66",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 74,
+                "column": "col_013",
+                "column_header": "v_\\rm GC | [km s -1 ]",
+                "raw_value": "950"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Total Galactocentric velocity v_GC"
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "1.00",
+            "value": "1.00",
+            "unit": "",
+            "error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 74,
+                "column": "col_007",
+                "column_header": "P_\\rm unb",
+                "raw_value": "1.00"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "description": "Probability that the star exceeds the local escape velocity in the assumed MW potential"
+          },
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "18.16",
+          "value": "18.16",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 72,
+              "column": "col_014",
+              "column_header": "G | [mag]",
+              "raw_value": "18.16"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        },
+        {
+          "raw_value": "0.77",
+          "value": "0.77",
+          "unit": "mag",
+          "measurement_type": "color",
+          "band": "G_BP - G_RP",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 72,
+              "column": "col_015",
+              "column_header": "G_\\rm BP-G_\\rm RP | [mag]",
+              "raw_value": "0.77"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": {
+          "raw_value": "-1.92+/- 0.19",
+          "value": "-1.92",
+          "unit": "dex",
+          "error": "0.19",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 26,
+              "column": "col_005",
+              "column_header": "[Fe/H] | [dex]",
+              "raw_value": "-1.92+/- 0.19"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": [
+          {
+            "raw_value": "0.39219",
+            "value": "0.39219",
+            "unit": "day",
+            "name": "pulsation_period",
+            "description": "Pulsation period of the RR Lyrae star from CSS photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 26,
+                "column": "col_002",
+                "column_header": "P | [day]",
+                "raw_value": "0.39219"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          {
+            "raw_value": "0.26468",
+            "value": "0.26468",
+            "unit": "mag",
+            "name": "pulsation_amplitude_v_css",
+            "description": "Amplitude of total light variations in the V-band from Catalina Sky Survey photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 26,
+                "column": "col_003",
+                "column_header": "Amp ^V_\\rm CSS | [mag]",
+                "raw_value": "0.26468"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          }
+        ]
+      },
+      "abundances": [],
+      "quality_flags": [
+        {
+          "raw_value": "1.004",
+          "value": "1.004",
+          "name": "RUWE",
+          "description": "Renormalized unit weight error from Gaia EDR3 astrometric solution",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 72,
+              "column": "col_013",
+              "column_header": "RUWE",
+              "raw_value": "1.004"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        {
+          "raw_value": "false",
+          "value": "false",
+          "name": "duplicated_source",
+          "description": "None of the candidates were flagged as duplicated_source in Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+              "start_line": 240,
+              "end_line": 240,
+              "context": "None of the candidates had been flagged as duplicated_source in Gaia EDR3"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        }
+      ],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "raw_value": "206",
+          "value": "206",
+          "unit": "km s^-1",
+          "error": "46",
+          "name": "sqrt_vx2_vz2",
+          "description": "Quadrature of the Galactocentric radial and vertical velocity components, sqrt(v_x^2 + v_z^2)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+              "line": 74,
+              "column": "col_010",
+              "column_header": "\\sqrtU^2+W^2 | [km s -1 ]",
+              "raw_value": "206"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        {
+          "raw_value": "RRc",
+          "value": "RRc",
+          "name": "rr_lyrae_type",
+          "description": "RR Lyrae sub-type classification (RRab = fundamental mode, RRc = first overtone)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 26,
+              "column": "col_004",
+              "column_header": "Type",
+              "raw_value": "RRc"
+            }
+          ],
+          "method_refs": [
+            "step-13"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2206.00417:cand-005",
+        "paper_candidate_id": "HV-RRL-05",
+        "gaia_source_id": "Gaia EDR3 3903031502808975616",
+        "all": [
+          {
+            "value": "HV-RRL-05",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 75,
+                "column": "col_001",
+                "column_header": "ID",
+                "raw_value": "HV-RRL-05"
+              }
+            ]
+          },
+          {
+            "value": "3903031502808975616",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 75,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "3903031502808975616"
+              }
+            ]
+          },
+          {
+            "value": "Gaia EDR3 3903031502808975616",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 75,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "3903031502808975616"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HV-RRL-05 is presented as a likely unbound RR Lyrae candidate with P_unb = 0.81. The paper notes that candidates at large distances may be 1-2 sigma outliers due to proper-motion uncertainties.",
+        "paper_labels": [
+          "high_velocity_star",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "likely_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Candidate is clearly listed in the unbound candidate tables with P_unb > 0.5 and explicitly discussed as a high-velocity RR Lyrae star.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract: identified nine RR Lyrae stars with Galactocentric velocities exceeding the local escape velocity"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 238,
+            "end_line": 240,
+            "context": "Section 3: found in total nine RR Lyrae variables that fulfilled the unbound condition"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract reports discovery of high-velocity candidates among RR Lyrae stars"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "189.5793",
+            "value": "189.5793",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 73,
+                "column": "col_003",
+                "column_header": "\\alpha | [deg]",
+                "raw_value": "189.5793"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "9.1371",
+            "value": "9.1371",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 73,
+                "column": "col_004",
+                "column_header": "\\delta | [deg]",
+                "raw_value": "9.1371"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "54",
+            "value": "54",
+            "unit": "kpc",
+            "error": "3",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 75,
+                "column": "col_003",
+                "column_header": "d | [kpc]",
+                "raw_value": "54"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": {
+            "raw_value": "0.494",
+            "value": "0.494",
+            "unit": "mas",
+            "error": "0.387",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 73,
+                "column": "col_011",
+                "column_header": "\\varpi | [mas]",
+                "raw_value": "0.494"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-1.833",
+            "value": "-1.833",
+            "unit": "mas yr^-1",
+            "error": "0.396",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 73,
+                "column": "col_007",
+                "column_header": "\\mu_\\alpha^\\ast | [mas yr -1 ]",
+                "raw_value": "-1.833"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "0.433",
+            "value": "0.433",
+            "unit": "mas yr^-1",
+            "error": "0.528",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 73,
+                "column": "col_009",
+                "column_header": "\\mu_\\delta | [mas yr -1 ]",
+                "raw_value": "0.433"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "57.5",
+            "value": "57.5",
+            "unit": "km s^-1",
+            "error": "32.0",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 75,
+                "column": "col_005",
+                "column_header": "v_\\rm sys | [km s -1 ]",
+                "raw_value": "57.5"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": {
+            "raw_value": "69",
+            "value": "69",
+            "unit": "km s^-1",
+            "error": "93",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 75,
+                "column": "col_008",
+                "column_header": "V | [km s -1 ]",
+                "raw_value": "69"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Galactocentric azimuthal velocity component v_y"
+          },
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "483",
+            "value": "483",
+            "unit": "km s^-1",
+            "error": "143",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 75,
+                "column": "col_013",
+                "column_header": "v_\\rm GC | [km s -1 ]",
+                "raw_value": "483"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Total Galactocentric velocity v_GC"
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "0.81",
+            "value": "0.81",
+            "unit": "",
+            "error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 75,
+                "column": "col_007",
+                "column_header": "P_\\rm unb",
+                "raw_value": "0.81"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "description": "Probability that the star exceeds the local escape velocity in the assumed MW potential"
+          },
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "19.30",
+          "value": "19.30",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 73,
+              "column": "col_014",
+              "column_header": "G | [mag]",
+              "raw_value": "19.30"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        },
+        {
+          "raw_value": "0.50",
+          "value": "0.50",
+          "unit": "mag",
+          "measurement_type": "color",
+          "band": "G_BP - G_RP",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 73,
+              "column": "col_015",
+              "column_header": "G_\\rm BP-G_\\rm RP | [mag]",
+              "raw_value": "0.50"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": {
+          "raw_value": "-1.78+/- 0.19",
+          "value": "-1.78",
+          "unit": "dex",
+          "error": "0.19",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 27,
+              "column": "col_005",
+              "column_header": "[Fe/H] | [dex]",
+              "raw_value": "-1.78+/- 0.19"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": [
+          {
+            "raw_value": "0.36655",
+            "value": "0.36655",
+            "unit": "day",
+            "name": "pulsation_period",
+            "description": "Pulsation period of the RR Lyrae star from CSS photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 27,
+                "column": "col_002",
+                "column_header": "P | [day]",
+                "raw_value": "0.36655"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          {
+            "raw_value": "0.44251",
+            "value": "0.44251",
+            "unit": "mag",
+            "name": "pulsation_amplitude_v_css",
+            "description": "Amplitude of total light variations in the V-band from Catalina Sky Survey photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 27,
+                "column": "col_003",
+                "column_header": "Amp ^V_\\rm CSS | [mag]",
+                "raw_value": "0.44251"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          }
+        ]
+      },
+      "abundances": [],
+      "quality_flags": [
+        {
+          "raw_value": "1.036",
+          "value": "1.036",
+          "name": "RUWE",
+          "description": "Renormalized unit weight error from Gaia EDR3 astrometric solution",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 73,
+              "column": "col_013",
+              "column_header": "RUWE",
+              "raw_value": "1.036"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        {
+          "raw_value": "false",
+          "value": "false",
+          "name": "duplicated_source",
+          "description": "None of the candidates were flagged as duplicated_source in Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+              "start_line": 240,
+              "end_line": 240,
+              "context": "None of the candidates had been flagged as duplicated_source in Gaia EDR3"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        }
+      ],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "raw_value": "470",
+          "value": "470",
+          "unit": "km s^-1",
+          "error": "141",
+          "name": "sqrt_vx2_vz2",
+          "description": "Quadrature of the Galactocentric radial and vertical velocity components, sqrt(v_x^2 + v_z^2)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+              "line": 75,
+              "column": "col_010",
+              "column_header": "\\sqrtU^2+W^2 | [km s -1 ]",
+              "raw_value": "470"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        {
+          "raw_value": "RRc",
+          "value": "RRc",
+          "name": "rr_lyrae_type",
+          "description": "RR Lyrae sub-type classification (RRab = fundamental mode, RRc = first overtone)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 27,
+              "column": "col_004",
+              "column_header": "Type",
+              "raw_value": "RRc"
+            }
+          ],
+          "method_refs": [
+            "step-13"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2206.00417:cand-006",
+        "paper_candidate_id": "HV-RRL-06",
+        "gaia_source_id": "Gaia EDR3 674694939356598528",
+        "all": [
+          {
+            "value": "HV-RRL-06",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 76,
+                "column": "col_001",
+                "column_header": "ID",
+                "raw_value": "HV-RRL-06"
+              }
+            ]
+          },
+          {
+            "value": "674694939356598528",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 76,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "674694939356598528"
+              }
+            ]
+          },
+          {
+            "value": "Gaia EDR3 674694939356598528",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 76,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "674694939356598528"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HV-RRL-06 is presented as a likely unbound RR Lyrae candidate with P_unb = 0.73. The paper notes that candidates at large distances may be 1-2 sigma outliers due to proper-motion uncertainties.",
+        "paper_labels": [
+          "high_velocity_star",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "likely_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Candidate is clearly listed in the unbound candidate tables with P_unb > 0.5 and explicitly discussed as a high-velocity RR Lyrae star.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract: identified nine RR Lyrae stars with Galactocentric velocities exceeding the local escape velocity"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 238,
+            "end_line": 240,
+            "context": "Section 3: found in total nine RR Lyrae variables that fulfilled the unbound condition"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract reports discovery of high-velocity candidates among RR Lyrae stars"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "117.3741",
+            "value": "117.3741",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 74,
+                "column": "col_003",
+                "column_header": "\\alpha | [deg]",
+                "raw_value": "117.3741"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "22.6240",
+            "value": "22.6240",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 74,
+                "column": "col_004",
+                "column_header": "\\delta | [deg]",
+                "raw_value": "22.6240"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "60",
+            "value": "60",
+            "unit": "kpc",
+            "error": "3",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 76,
+                "column": "col_003",
+                "column_header": "d | [kpc]",
+                "raw_value": "60"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": {
+            "raw_value": "-0.144",
+            "value": "-0.144",
+            "unit": "mas",
+            "error": "0.448",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 74,
+                "column": "col_011",
+                "column_header": "\\varpi | [mas]",
+                "raw_value": "-0.144"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-1.243",
+            "value": "-1.243",
+            "unit": "mas yr^-1",
+            "error": "0.547",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 74,
+                "column": "col_007",
+                "column_header": "\\mu_\\alpha^\\ast | [mas yr -1 ]",
+                "raw_value": "-1.243"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-1.053",
+            "value": "-1.053",
+            "unit": "mas yr^-1",
+            "error": "0.305",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 74,
+                "column": "col_009",
+                "column_header": "\\mu_\\delta | [mas yr -1 ]",
+                "raw_value": "-1.053"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "85.5",
+            "value": "85.5",
+            "unit": "km s^-1",
+            "error": "4.9",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 76,
+                "column": "col_005",
+                "column_header": "v_\\rm sys | [km s -1 ]",
+                "raw_value": "85.5"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": {
+            "raw_value": "20",
+            "value": "20",
+            "unit": "km s^-1",
+            "error": "87",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 76,
+                "column": "col_008",
+                "column_header": "V | [km s -1 ]",
+                "raw_value": "20"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Galactocentric azimuthal velocity component v_y"
+          },
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "432",
+            "value": "432",
+            "unit": "km s^-1",
+            "error": "153",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 76,
+                "column": "col_013",
+                "column_header": "v_\\rm GC | [km s -1 ]",
+                "raw_value": "432"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Total Galactocentric velocity v_GC"
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "0.73",
+            "value": "0.73",
+            "unit": "",
+            "error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 76,
+                "column": "col_007",
+                "column_header": "P_\\rm unb",
+                "raw_value": "0.73"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "description": "Probability that the star exceeds the local escape velocity in the assumed MW potential"
+          },
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "19.81",
+          "value": "19.81",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 74,
+              "column": "col_014",
+              "column_header": "G | [mag]",
+              "raw_value": "19.81"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        },
+        {
+          "raw_value": "0.70",
+          "value": "0.70",
+          "unit": "mag",
+          "measurement_type": "color",
+          "band": "G_BP - G_RP",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 74,
+              "column": "col_015",
+              "column_header": "G_\\rm BP-G_\\rm RP | [mag]",
+              "raw_value": "0.70"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": {
+          "raw_value": "-1.82+/- 0.19",
+          "value": "-1.82",
+          "unit": "dex",
+          "error": "0.19",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 28,
+              "column": "col_005",
+              "column_header": "[Fe/H] | [dex]",
+              "raw_value": "-1.82+/- 0.19"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": [
+          {
+            "raw_value": "0.40890",
+            "value": "0.40890",
+            "unit": "day",
+            "name": "pulsation_period",
+            "description": "Pulsation period of the RR Lyrae star from CSS photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 28,
+                "column": "col_002",
+                "column_header": "P | [day]",
+                "raw_value": "0.40890"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          {
+            "raw_value": "0.74320",
+            "value": "0.74320",
+            "unit": "mag",
+            "name": "pulsation_amplitude_v_css",
+            "description": "Amplitude of total light variations in the V-band from Catalina Sky Survey photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 28,
+                "column": "col_003",
+                "column_header": "Amp ^V_\\rm CSS | [mag]",
+                "raw_value": "0.74320"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          }
+        ]
+      },
+      "abundances": [],
+      "quality_flags": [
+        {
+          "raw_value": "0.987",
+          "value": "0.987",
+          "name": "RUWE",
+          "description": "Renormalized unit weight error from Gaia EDR3 astrometric solution",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 74,
+              "column": "col_013",
+              "column_header": "RUWE",
+              "raw_value": "0.987"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        {
+          "raw_value": "false",
+          "value": "false",
+          "name": "duplicated_source",
+          "description": "None of the candidates were flagged as duplicated_source in Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+              "start_line": 240,
+              "end_line": 240,
+              "context": "None of the candidates had been flagged as duplicated_source in Gaia EDR3"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        }
+      ],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "raw_value": "421",
+          "value": "421",
+          "unit": "km s^-1",
+          "error": "156",
+          "name": "sqrt_vx2_vz2",
+          "description": "Quadrature of the Galactocentric radial and vertical velocity components, sqrt(v_x^2 + v_z^2)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+              "line": 76,
+              "column": "col_010",
+              "column_header": "\\sqrtU^2+W^2 | [km s -1 ]",
+              "raw_value": "421"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        {
+          "raw_value": "RRab",
+          "value": "RRab",
+          "name": "rr_lyrae_type",
+          "description": "RR Lyrae sub-type classification (RRab = fundamental mode, RRc = first overtone)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 28,
+              "column": "col_004",
+              "column_header": "Type",
+              "raw_value": "RRab"
+            }
+          ],
+          "method_refs": [
+            "step-13"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2206.00417:cand-007",
+        "paper_candidate_id": "HV-RRL-07",
+        "gaia_source_id": "Gaia EDR3 3942539665718239360",
+        "all": [
+          {
+            "value": "HV-RRL-07",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 77,
+                "column": "col_001",
+                "column_header": "ID",
+                "raw_value": "HV-RRL-07"
+              }
+            ]
+          },
+          {
+            "value": "3942539665718239360",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 77,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "3942539665718239360"
+              }
+            ]
+          },
+          {
+            "value": "Gaia EDR3 3942539665718239360",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 77,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "3942539665718239360"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HV-RRL-07 is presented as a likely unbound RR Lyrae candidate with P_unb = 0.94. The paper notes that candidates at large distances may be 1-2 sigma outliers due to proper-motion uncertainties.",
+        "paper_labels": [
+          "high_velocity_star",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "likely_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Candidate is clearly listed in the unbound candidate tables with P_unb > 0.5 and explicitly discussed as a high-velocity RR Lyrae star.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract: identified nine RR Lyrae stars with Galactocentric velocities exceeding the local escape velocity"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 238,
+            "end_line": 240,
+            "context": "Section 3: found in total nine RR Lyrae variables that fulfilled the unbound condition"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract reports discovery of high-velocity candidates among RR Lyrae stars"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "194.9736",
+            "value": "194.9736",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 75,
+                "column": "col_003",
+                "column_header": "\\alpha | [deg]",
+                "raw_value": "194.9736"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "20.8361",
+            "value": "20.8361",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 75,
+                "column": "col_004",
+                "column_header": "\\delta | [deg]",
+                "raw_value": "20.8361"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "53",
+            "value": "53",
+            "unit": "kpc",
+            "error": "2",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 77,
+                "column": "col_003",
+                "column_header": "d | [kpc]",
+                "raw_value": "53"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": {
+            "raw_value": "-0.102",
+            "value": "-0.102",
+            "unit": "mas",
+            "error": "0.278",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 75,
+                "column": "col_011",
+                "column_header": "\\varpi | [mas]",
+                "raw_value": "-0.102"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-1.990",
+            "value": "-1.990",
+            "unit": "mas yr^-1",
+            "error": "0.326",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 75,
+                "column": "col_007",
+                "column_header": "\\mu_\\alpha^\\ast | [mas yr -1 ]",
+                "raw_value": "-1.990"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "0.451",
+            "value": "0.451",
+            "unit": "mas yr^-1",
+            "error": "0.383",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 75,
+                "column": "col_009",
+                "column_header": "\\mu_\\delta | [mas yr -1 ]",
+                "raw_value": "0.451"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "79.7",
+            "value": "79.7",
+            "unit": "km s^-1",
+            "error": "46.9",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 77,
+                "column": "col_005",
+                "column_header": "v_\\rm sys | [km s -1 ]",
+                "raw_value": "79.7"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": {
+            "raw_value": "49",
+            "value": "49",
+            "unit": "km s^-1",
+            "error": "82",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 77,
+                "column": "col_008",
+                "column_header": "V | [km s -1 ]",
+                "raw_value": "49"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Galactocentric azimuthal velocity component v_y"
+          },
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "511",
+            "value": "511",
+            "unit": "km s^-1",
+            "error": "101",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 77,
+                "column": "col_013",
+                "column_header": "v_\\rm GC | [km s -1 ]",
+                "raw_value": "511"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Total Galactocentric velocity v_GC"
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "0.94",
+            "value": "0.94",
+            "unit": "",
+            "error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 77,
+                "column": "col_007",
+                "column_header": "P_\\rm unb",
+                "raw_value": "0.94"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "description": "Probability that the star exceeds the local escape velocity in the assumed MW potential"
+          },
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "19.19",
+          "value": "19.19",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 75,
+              "column": "col_014",
+              "column_header": "G | [mag]",
+              "raw_value": "19.19"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        },
+        {
+          "raw_value": "0.64",
+          "value": "0.64",
+          "unit": "mag",
+          "measurement_type": "color",
+          "band": "G_BP - G_RP",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 75,
+              "column": "col_015",
+              "column_header": "G_\\rm BP-G_\\rm RP | [mag]",
+              "raw_value": "0.64"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": {
+          "raw_value": "-1.64+/- 0.19",
+          "value": "-1.64",
+          "unit": "dex",
+          "error": "0.19",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 29,
+              "column": "col_005",
+              "column_header": "[Fe/H] | [dex]",
+              "raw_value": "-1.64+/- 0.19"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": [
+          {
+            "raw_value": "0.75194",
+            "value": "0.75194",
+            "unit": "day",
+            "name": "pulsation_period",
+            "description": "Pulsation period of the RR Lyrae star from CSS photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 29,
+                "column": "col_002",
+                "column_header": "P | [day]",
+                "raw_value": "0.75194"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          {
+            "raw_value": "0.45923",
+            "value": "0.45923",
+            "unit": "mag",
+            "name": "pulsation_amplitude_v_css",
+            "description": "Amplitude of total light variations in the V-band from Catalina Sky Survey photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 29,
+                "column": "col_003",
+                "column_header": "Amp ^V_\\rm CSS | [mag]",
+                "raw_value": "0.45923"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          }
+        ]
+      },
+      "abundances": [],
+      "quality_flags": [
+        {
+          "raw_value": "0.934",
+          "value": "0.934",
+          "name": "RUWE",
+          "description": "Renormalized unit weight error from Gaia EDR3 astrometric solution",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 75,
+              "column": "col_013",
+              "column_header": "RUWE",
+              "raw_value": "0.934"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        {
+          "raw_value": "false",
+          "value": "false",
+          "name": "duplicated_source",
+          "description": "None of the candidates were flagged as duplicated_source in Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+              "start_line": 240,
+              "end_line": 240,
+              "context": "None of the candidates had been flagged as duplicated_source in Gaia EDR3"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        }
+      ],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "raw_value": "502",
+          "value": "502",
+          "unit": "km s^-1",
+          "error": "100",
+          "name": "sqrt_vx2_vz2",
+          "description": "Quadrature of the Galactocentric radial and vertical velocity components, sqrt(v_x^2 + v_z^2)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+              "line": 77,
+              "column": "col_010",
+              "column_header": "\\sqrtU^2+W^2 | [km s -1 ]",
+              "raw_value": "502"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        {
+          "raw_value": "RRab",
+          "value": "RRab",
+          "name": "rr_lyrae_type",
+          "description": "RR Lyrae sub-type classification (RRab = fundamental mode, RRc = first overtone)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 29,
+              "column": "col_004",
+              "column_header": "Type",
+              "raw_value": "RRab"
+            }
+          ],
+          "method_refs": [
+            "step-13"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2206.00417:cand-008",
+        "paper_candidate_id": "HV-RRL-08",
+        "gaia_source_id": "Gaia EDR3 3661050979472106880",
+        "all": [
+          {
+            "value": "HV-RRL-08",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 78,
+                "column": "col_001",
+                "column_header": "ID",
+                "raw_value": "HV-RRL-08"
+              }
+            ]
+          },
+          {
+            "value": "3661050979472106880",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 78,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "3661050979472106880"
+              }
+            ]
+          },
+          {
+            "value": "Gaia EDR3 3661050979472106880",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 78,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "3661050979472106880"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HV-RRL-08 is presented as a likely unbound RR Lyrae candidate with P_unb = 0.62. The paper notes that candidates at large distances may be 1-2 sigma outliers due to proper-motion uncertainties.",
+        "paper_labels": [
+          "high_velocity_star",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "likely_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Candidate is clearly listed in the unbound candidate tables with P_unb > 0.5 and explicitly discussed as a high-velocity RR Lyrae star.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract: identified nine RR Lyrae stars with Galactocentric velocities exceeding the local escape velocity"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 238,
+            "end_line": 240,
+            "context": "Section 3: found in total nine RR Lyrae variables that fulfilled the unbound condition"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract reports discovery of high-velocity candidates among RR Lyrae stars"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "212.2624",
+            "value": "212.2624",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 76,
+                "column": "col_003",
+                "column_header": "\\alpha | [deg]",
+                "raw_value": "212.2624"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "1.1819",
+            "value": "1.1819",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 76,
+                "column": "col_004",
+                "column_header": "\\delta | [deg]",
+                "raw_value": "1.1819"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "48",
+            "value": "48",
+            "unit": "kpc",
+            "error": "2",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 78,
+                "column": "col_003",
+                "column_header": "d | [kpc]",
+                "raw_value": "48"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": {
+            "raw_value": "-0.244",
+            "value": "-0.244",
+            "unit": "mas",
+            "error": "0.377",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 76,
+                "column": "col_011",
+                "column_header": "\\varpi | [mas]",
+                "raw_value": "-0.244"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-2.163",
+            "value": "-2.163",
+            "unit": "mas yr^-1",
+            "error": "0.435",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 76,
+                "column": "col_007",
+                "column_header": "\\mu_\\alpha^\\ast | [mas yr -1 ]",
+                "raw_value": "-2.163"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.041",
+            "value": "-0.041",
+            "unit": "mas yr^-1",
+            "error": "0.373",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 76,
+                "column": "col_009",
+                "column_header": "\\mu_\\delta | [mas yr -1 ]",
+                "raw_value": "-0.041"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "-24.5",
+            "value": "-24.5",
+            "unit": "km s^-1",
+            "error": "13.8",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 78,
+                "column": "col_005",
+                "column_header": "v_\\rm sys | [km s -1 ]",
+                "raw_value": "-24.5"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": {
+            "raw_value": "-79",
+            "value": "-79",
+            "unit": "km s^-1",
+            "error": "76",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 78,
+                "column": "col_008",
+                "column_header": "V | [km s -1 ]",
+                "raw_value": "-79"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Galactocentric azimuthal velocity component v_y"
+          },
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "409",
+            "value": "409",
+            "unit": "km s^-1",
+            "error": "107",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 78,
+                "column": "col_013",
+                "column_header": "v_\\rm GC | [km s -1 ]",
+                "raw_value": "409"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Total Galactocentric velocity v_GC"
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "0.62",
+            "value": "0.62",
+            "unit": "",
+            "error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 78,
+                "column": "col_007",
+                "column_header": "P_\\rm unb",
+                "raw_value": "0.62"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "description": "Probability that the star exceeds the local escape velocity in the assumed MW potential"
+          },
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "19.33",
+          "value": "19.33",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 76,
+              "column": "col_014",
+              "column_header": "G | [mag]",
+              "raw_value": "19.33"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        },
+        {
+          "raw_value": "0.53",
+          "value": "0.53",
+          "unit": "mag",
+          "measurement_type": "color",
+          "band": "G_BP - G_RP",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 76,
+              "column": "col_015",
+              "column_header": "G_\\rm BP-G_\\rm RP | [mag]",
+              "raw_value": "0.53"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": {
+          "raw_value": "-1.06+/- 0.19",
+          "value": "-1.06",
+          "unit": "dex",
+          "error": "0.19",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 30,
+              "column": "col_005",
+              "column_header": "[Fe/H] | [dex]",
+              "raw_value": "-1.06+/- 0.19"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": [
+          {
+            "raw_value": "0.50023",
+            "value": "0.50023",
+            "unit": "day",
+            "name": "pulsation_period",
+            "description": "Pulsation period of the RR Lyrae star from CSS photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 30,
+                "column": "col_002",
+                "column_header": "P | [day]",
+                "raw_value": "0.50023"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          {
+            "raw_value": "0.97984",
+            "value": "0.97984",
+            "unit": "mag",
+            "name": "pulsation_amplitude_v_css",
+            "description": "Amplitude of total light variations in the V-band from Catalina Sky Survey photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 30,
+                "column": "col_003",
+                "column_header": "Amp ^V_\\rm CSS | [mag]",
+                "raw_value": "0.97984"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          }
+        ]
+      },
+      "abundances": [],
+      "quality_flags": [
+        {
+          "raw_value": "1.046",
+          "value": "1.046",
+          "name": "RUWE",
+          "description": "Renormalized unit weight error from Gaia EDR3 astrometric solution",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 76,
+              "column": "col_013",
+              "column_header": "RUWE",
+              "raw_value": "1.046"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        {
+          "raw_value": "false",
+          "value": "false",
+          "name": "duplicated_source",
+          "description": "None of the candidates were flagged as duplicated_source in Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+              "start_line": 240,
+              "end_line": 240,
+              "context": "None of the candidates had been flagged as duplicated_source in Gaia EDR3"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        }
+      ],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [
+          {
+            "raw_value": "0.13",
+            "value": "0.13",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of association with the Sagittarius dwarf spheroidal galaxy based on backward orbit integration over 3 Gyr",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                "start_line": 295,
+                "end_line": 297,
+                "context": "Tentative link of HV-RRL-08 to Sagittarius dSph based on orbits"
+              }
+            ],
+            "method_refs": [
+              "step-12"
+            ],
+            "hypothesis": "Sagittarius dwarf spheroidal galaxy origin",
+            "metric_type": "probability"
+          }
+        ],
+        "other": []
+      },
+      "extra": [
+        {
+          "raw_value": "394",
+          "value": "394",
+          "unit": "km s^-1",
+          "error": "107",
+          "name": "sqrt_vx2_vz2",
+          "description": "Quadrature of the Galactocentric radial and vertical velocity components, sqrt(v_x^2 + v_z^2)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+              "line": 78,
+              "column": "col_010",
+              "column_header": "\\sqrtU^2+W^2 | [km s -1 ]",
+              "raw_value": "394"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        {
+          "raw_value": "RRab",
+          "value": "RRab",
+          "name": "rr_lyrae_type",
+          "description": "RR Lyrae sub-type classification (RRab = fundamental mode, RRc = first overtone)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 30,
+              "column": "col_004",
+              "column_header": "Type",
+              "raw_value": "RRab"
+            }
+          ],
+          "method_refs": [
+            "step-13"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2206.00417:cand-009",
+        "paper_candidate_id": "HV-RRL-09",
+        "gaia_source_id": "Gaia EDR3 3692326965681261184",
+        "all": [
+          {
+            "value": "HV-RRL-09",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 79,
+                "column": "col_001",
+                "column_header": "ID",
+                "raw_value": "HV-RRL-09"
+              }
+            ]
+          },
+          {
+            "value": "3692326965681261184",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 79,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "3692326965681261184"
+              }
+            ]
+          },
+          {
+            "value": "Gaia EDR3 3692326965681261184",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 79,
+                "column": "col_002",
+                "column_header": "Gaia -EDR3 ID",
+                "raw_value": "3692326965681261184"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HV-RRL-09 is presented as a likely unbound RR Lyrae candidate with P_unb = 0.95. The paper notes that candidates at large distances may be 1-2 sigma outliers due to proper-motion uncertainties.",
+        "paper_labels": [
+          "high_velocity_star",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "likely_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Candidate is clearly listed in the unbound candidate tables with P_unb > 0.5 and explicitly discussed as a high-velocity RR Lyrae star.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract: identified nine RR Lyrae stars with Galactocentric velocities exceeding the local escape velocity"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 238,
+            "end_line": 240,
+            "context": "Section 3: found in total nine RR Lyrae variables that fulfilled the unbound condition"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+            "start_line": 132,
+            "end_line": 133,
+            "context": "Abstract reports discovery of high-velocity candidates among RR Lyrae stars"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "195.0834",
+            "value": "195.0834",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 77,
+                "column": "col_003",
+                "column_header": "\\alpha | [deg]",
+                "raw_value": "195.0834"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "2.9494",
+            "value": "2.9494",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia EDR3",
+              "data_release": "EDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+                  "start_line": 533,
+                  "end_line": 551,
+                  "context": "Table of unbound RR Lyrae candidates with astrometric properties from Gaia catalog"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 77,
+                "column": "col_004",
+                "column_header": "\\delta | [deg]",
+                "raw_value": "2.9494"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "42",
+            "value": "42",
+            "unit": "kpc",
+            "error": "2",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 79,
+                "column": "col_003",
+                "column_header": "d | [kpc]",
+                "raw_value": "42"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": {
+            "raw_value": "-0.045",
+            "value": "-0.045",
+            "unit": "mas",
+            "error": "0.226",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 77,
+                "column": "col_011",
+                "column_header": "\\varpi | [mas]",
+                "raw_value": "-0.045"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-2.964",
+            "value": "-2.964",
+            "unit": "mas yr^-1",
+            "error": "0.314",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 77,
+                "column": "col_007",
+                "column_header": "\\mu_\\alpha^\\ast | [mas yr -1 ]",
+                "raw_value": "-2.964"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.415",
+            "value": "-0.415",
+            "unit": "mas yr^-1",
+            "error": "0.239",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+                "line": 77,
+                "column": "col_009",
+                "column_header": "\\mu_\\delta | [mas yr -1 ]",
+                "raw_value": "-0.415"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "185.3",
+            "value": "185.3",
+            "unit": "km s^-1",
+            "error": "7.1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 79,
+                "column": "col_005",
+                "column_header": "v_\\rm sys | [km s -1 ]",
+                "raw_value": "185.3"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": {
+            "raw_value": "-212",
+            "value": "-212",
+            "unit": "km s^-1",
+            "error": "51",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 79,
+                "column": "col_008",
+                "column_header": "V | [km s -1 ]",
+                "raw_value": "-212"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Galactocentric azimuthal velocity component v_y"
+          },
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "495",
+            "value": "495",
+            "unit": "km s^-1",
+            "error": "69",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 79,
+                "column": "col_013",
+                "column_header": "v_\\rm GC | [km s -1 ]",
+                "raw_value": "495"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "description": "Total Galactocentric velocity v_GC"
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "0.95",
+            "value": "0.95",
+            "unit": "",
+            "error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+                "line": 79,
+                "column": "col_007",
+                "column_header": "P_\\rm unb",
+                "raw_value": "0.95"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "description": "Probability that the star exceeds the local escape velocity in the assumed MW potential"
+          },
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "18.84",
+          "value": "18.84",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 77,
+              "column": "col_014",
+              "column_header": "G | [mag]",
+              "raw_value": "18.84"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        },
+        {
+          "raw_value": "0.50",
+          "value": "0.50",
+          "unit": "mag",
+          "measurement_type": "color",
+          "band": "G_BP - G_RP",
+          "system": "Gaia",
+          "survey": "Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 77,
+              "column": "col_015",
+              "column_header": "G_\\rm BP-G_\\rm RP | [mag]",
+              "raw_value": "0.50"
+            }
+          ],
+          "method_refs": [
+            "step-14"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": {
+          "raw_value": "-1.55+/- 0.51",
+          "value": "-1.55",
+          "unit": "dex",
+          "error": "0.51",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 31,
+              "column": "col_005",
+              "column_header": "[Fe/H] | [dex]",
+              "raw_value": "-1.55+/- 0.51"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": [
+          {
+            "raw_value": "0.35240",
+            "value": "0.35240",
+            "unit": "day",
+            "name": "pulsation_period",
+            "description": "Pulsation period of the RR Lyrae star from CSS photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 31,
+                "column": "col_002",
+                "column_header": "P | [day]",
+                "raw_value": "0.35240"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          {
+            "raw_value": "0.42820",
+            "value": "0.42820",
+            "unit": "mag",
+            "name": "pulsation_amplitude_v_css",
+            "description": "Amplitude of total light variations in the V-band from Catalina Sky Survey photometry",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+                "line": 31,
+                "column": "col_003",
+                "column_header": "Amp ^V_\\rm CSS | [mag]",
+                "raw_value": "0.42820"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          }
+        ]
+      },
+      "abundances": [],
+      "quality_flags": [
+        {
+          "raw_value": "1.040",
+          "value": "1.040",
+          "name": "RUWE",
+          "description": "Renormalized unit weight error from Gaia EDR3 astrometric solution",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+              "line": 77,
+              "column": "col_013",
+              "column_header": "RUWE",
+              "raw_value": "1.040"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        {
+          "raw_value": "false",
+          "value": "false",
+          "name": "duplicated_source",
+          "description": "None of the candidates were flagged as duplicated_source in Gaia EDR3",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+              "start_line": 240,
+              "end_line": 240,
+              "context": "None of the candidates had been flagged as duplicated_source in Gaia EDR3"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        }
+      ],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "raw_value": "445",
+          "value": "445",
+          "unit": "km s^-1",
+          "error": "66",
+          "name": "sqrt_vx2_vz2",
+          "description": "Quadrature of the Galactocentric radial and vertical velocity components, sqrt(v_x^2 + v_z^2)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+              "line": 79,
+              "column": "col_010",
+              "column_header": "\\sqrtU^2+W^2 | [km s -1 ]",
+              "raw_value": "445"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        {
+          "raw_value": "RRc",
+          "value": "RRc",
+          "name": "rr_lyrae_type",
+          "description": "RR Lyrae sub-type classification (RRab = fundamental mode, RRc = first overtone)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+              "line": 31,
+              "column": "col_004",
+              "column_header": "Type",
+              "raw_value": "RRc"
+            }
+          ],
+          "method_refs": [
+            "step-13"
+          ]
+        }
+      ]
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-HV-RR",
+      "description": "Nine RR Lyrae stars with P_unb > 0.5 identified as likely unbound high-velocity candidates.",
+      "decision": "included",
+      "reason": "The paper explicitly presents these objects as possibly unbound from the Milky Way based on Galactocentric velocities exceeding the local escape velocity.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 132,
+          "end_line": 133,
+          "context": "Abstract identifies nine RR Lyrae stars exceeding local escape velocity"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 506,
+          "end_line": 524,
+          "context": "Table of likely unbound RR Lyrae variables with P_unb > 0.5"
+        }
+      ]
+    },
+    {
+      "group_id": "high-velocity-tail-bound",
+      "description": "RR Lyrae variables with v_GC > 250 km/s that remain bound to the Milky Way, used for escape velocity modeling.",
+      "decision": "excluded",
+      "reason": "The paper explicitly states these objects remain bound to the Milky Way and uses them only for modeling the high-velocity tail, not as unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 300,
+          "end_line": 302,
+          "context": "Section focuses on RR Lyrae variables that possess high v_GC but remain bound to the MW"
+        }
+      ]
+    }
+  ]
+}

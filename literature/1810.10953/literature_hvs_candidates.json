@@ -1,0 +1,108 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:37:00",
+  "paper": {
+    "arxiv_id": "1810.10953",
+    "bibcode": "2019hsax.conf..421M",
+    "title": "The Gaia photometric calibration and results on Galactic runaways",
+    "month": "2018-10",
+    "source_note_json": "notes/2018/2018-10/2018-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1810.10953",
+      "pdf": "https://arxiv.org/pdf/1810.10953"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1810.10953",
+    "audit_path": "literature/1810.10953/audit.json",
+    "catalog_review_path": "literature/1810.10953/catalog_review.json",
+    "catalog_extraction_path": "literature/1810.10953/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:37:00",
+    "extractor": "agent",
+    "summary": "本文为SEA 11会议短文（proceedings），概述两项Gaia相关工作：(1) Gaia DR2 G/GBP/GRP测光波段的新定标（基于122颗HST/STIS光谱）；(2) 利用Gaia DR1 TGAS自行从GOSC星表中检测银河系逃逸星。论文报告共识别76颗runaway stars（其中17-19颗首次发现），但未提供星表或具体恒星数据——详细的76颗逃逸星表发表于主期刊论文 Maíz Apellániz et al. (2018, A&A 616, A149)。本proceedings无内部数据表（仅含5幅图），不包含可提取的HVS候选体数据。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR1 TGAS自行数据，结合Hipparcos（亮星）。从GOSC（Galactic O-Star Catalog）选取两个样本：(a) GOSSS光谱证认的O型星，(b) 其他Simbad O星和BA超巨星。",
+      "inputs": [
+        "Gaia DR1 TGAS",
+        "Hipparcos",
+        "GOSC (http://gosc.cab.inta-csic.es)"
+      ],
+      "outputs": [
+        "O星和BA超巨星样本的TGAS自行数据"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.10953/arxiv_source/Ma__z.Apell__nizJ_2.tex",
+          "start_line": 186,
+          "end_line": 198,
+          "context": "Sec 3: TGAS proper motions + Hipparcos, GOSC selection"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "sample_selection",
+      "summary": "通过拟合自行-银经关系并修正后寻找离群点（2σ偏差），识别出76颗银河系逃逸星（17-19颗新发现）。部分目标在WISE中红外图像中可见弓形激波。详细数据发表于Maíz Apellániz et al. (2018, A&A 616, A149)。",
+      "inputs": [
+        "TGAS proper motions (corrected)"
+      ],
+      "outputs": [
+        "76颗runaway stars（本proceedings未提供星表）"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.10953/arxiv_source/Ma__z.Apell__nizJ_2.tex",
+          "start_line": 112,
+          "end_line": 116,
+          "context": "Abstract: 76 runaway stars, 17-19 new detections"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.10953/arxiv_source/Ma__z.Apell__nizJ_2.tex",
+          "start_line": 193,
+          "end_line": 198,
+          "context": "Sec 3: proper motion fitting, outlier detection"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "galactic_runaways_76",
+      "description": "银河系逃逸星76颗：从GOSC O星和BA超巨星样本中通过TGAS自行离群检测识别的银河系逃逸星，其中17-19颗为首次发现。论文称部分目标在WISE图像中可见弓形激波结构。",
+      "decision": "not_relevant",
+      "reason": "本proceedings论文不包含可提取的恒星数据表。76颗runaway stars的详细星表（含具体天体标识、坐标、速度等）发表于主期刊论文 Maíz Apellániz et al. (2018, A&A 616, A149, arXiv:1804.10607 或其他)。本proceedings仅有5幅图（G波段改正对比、GRP灵敏度曲线、银纬/银经自行分布、WISE弓形激波图像），无内部数据表。HVS候选体应从主期刊论文中提取。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.10953/arxiv_source/Ma__z.Apell__nizJ_2.tex",
+          "start_line": 112,
+          "end_line": 116,
+          "context": "Abstract: 76 runaway stars, 17-19 new"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.10953/arxiv_source/Ma__z.Apell__nizJ_2.tex",
+          "start_line": 277,
+          "end_line": 277,
+          "context": "Ref: Maizetal18b = A&A 616, A149 (main journal paper with catalog)"
+        }
+      ]
+    }
+  ]
+}

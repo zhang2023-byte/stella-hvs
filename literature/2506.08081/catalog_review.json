@@ -1,0 +1,159 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2506.08081",
+    "title": "Spectroscopic and kinematic analyses of a warm survivor of a D6 supernova",
+    "month": "2025-06",
+    "source_note_json": "notes/2025/2025-06/2025-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2506.08081",
+      "pdf": "https://arxiv.org/pdf/2506.08081"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2506.08081",
+    "audit_path": "literature/2506.08081/audit.json",
+    "source_dir": "literature/2506.08081/arxiv_source",
+    "tex_root": "literature/2506.08081/arxiv_source/J1637.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T12:43:24",
+    "reviewer": "agent",
+    "summary": "This paper presents spectroscopic and kinematic analyses of a warm white dwarf (J1637+3631) identified as the surviving donor from a D6 supernova. It contains three internal tables: astrometry and multi-band photometry from Gaia and SDSS/PanSTARRS; atmospheric parameters and chemical abundances from spectroscopic fitting; and orbital fit results (distance, ejection velocity, donor mass, stellar parameters) under three model assumptions. External resources include the MOLLY spectral analysis software, the pocoMC posterior sampling code and its documentation, and the Astropy package (generic acknowledgement removed)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-astromphot",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Lists Gaia DR3 astrometry and optical photometry from Gaia, SDSS, and PanSTARRS for the target white dwarf.",
+      "source_refs": [
+        {
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 337,
+          "end_line": 345,
+          "caption": "Astrometry and photometry for \\WD.",
+          "label": "tab:astromphot"
+        }
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "meaning": "Parameter name for astrometry and photometry measurements (e.g. Gaia source ID, coordinates, parallax, proper motions, magnitudes)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Astrometry and photometry for \\WD.",
+      "comments": "The table is included via \\input{tables/tab_phot} and has two columns (Parameter and value); the template only detected a single placeholder column."
+    },
+    {
+      "id": "table-tab-spec",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Presents atmospheric parameters and logarithmic number abundances relative to carbon determined from spectroscopic fitting.",
+      "source_refs": [
+        {
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 550,
+          "end_line": 559,
+          "caption": "Atmospheric parameters for \\WD\\ determined from our spectroscopic fitting. Abundances are logarithmic number ratios relative to carbon.",
+          "label": "tab:spec"
+        }
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "meaning": "Parameter name for atmospheric properties and chemical abundances (e.g. Teff, log g, vr, v sin i, element abundances)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Atmospheric parameters for \\WD\\ determined from our spectroscopic fitting. Abundances are logarithmic number ratios relative to carbon.",
+      "comments": "The table is included via \\input{tables/tab_spec} and has two columns (Parameter and value); the template only detected a single placeholder column."
+    },
+    {
+      "id": "table-tab-kinematics",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Presents results from orbital fits to the white dwarf under three assumptions (Fit 0, 1, 2), including fitted and derived quantities such as ejection velocity, donor mass, and Galactocentric origin.",
+      "source_refs": [
+        {
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 1001,
+          "end_line": 1018,
+          "caption": "Results from our orbital fits to \\WD. The explicitly fitted parameters are listed first. The second group refer to quantities derived from the fitted parameters. \\Teff\\ is not shown as the results simply reflect the measured prior, instead allowing more freedom in the other parameters such as \\ebv. Parameters from Section~\\ref{sec:confD6} are listed under Fit~0 (note that $M_\\star$ is the fitted parameter here). Fit~1 represents our adopted parameters for \\WD, where the results from Fit~2 are potentially subject to uncertainties in the donor $\\Teff$/radius at the time of explosion.",
+          "label": "tab:kinematics"
+        }
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "meaning": "Parameter name for orbital fit quantities (e.g. distance, velocity components, time since explosion, donor mass, stellar radius, Galactocentric origin coordinates, ejection velocity)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Results from our orbital fits to \\WD. The explicitly fitted parameters are listed first. The second group refer to quantities derived from the fitted parameters. \\Teff\\ is not shown as the results simply reflect the measured prior, instead allowing more freedom in the other parameters such as \\ebv. Parameters from Section~\\ref{sec:confD6} are listed under Fit~0 (note that $M_\\star$ is the fitted parameter here). Fit~1 represents our adopted parameters for \\WD, where the results from Fit~2 are potentially subject to uncertainties in the donor $\\Teff$/radius at the time of explosion.",
+      "comments": "The table is included via \\input{tables/tab_kin} and has four columns (Parameter, Fit 0, Fit 1, Fit 2); the template only detected a single placeholder column."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://cygnus.astro.warwick.ac.uk/phsaap/software/",
+      "local_path": "",
+      "description": "MOLLY spectral analysis software package used for heliocentric velocity correction and spectral analysis.",
+      "source_refs": [
+        {
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 397,
+          "end_line": 397,
+          "context": "\\footnotetext{\\textsc{molly} can be found at\n\\url{https://cygnus.astro.warwick.ac.uk/phsaap/software/}}\n\n\\begin{figure*}"
+        }
+      ],
+      "evidence": "\\footnotetext{\\textsc{molly} can be found at\n\\url{https://cygnus.astro.warwick.ac.uk/phsaap/software/}}\n\n\\begin{figure*}",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://github.com/minaskar/pocomc",
+      "local_path": "",
+      "description": "pocoMC GitHub repository, a preconditioned Monte Carlo sampler used for posterior sampling in the orbital fits.",
+      "source_refs": [
+        {
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 815,
+          "end_line": 815,
+          "context": "description of the algorithm.\n\n\\footnotetext{\\url{https://github.com/minaskar/pocomc}\\\\\n\\url{https://pocomc.readthedocs.io/en/latest/}}"
+        }
+      ],
+      "evidence": "description of the algorithm.\n\n\\footnotetext{\\url{https://github.com/minaskar/pocomc}\\\\\n\\url{https://pocomc.readthedocs.io/en/latest/}}",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://pocomc.readthedocs.io/en/latest/",
+      "local_path": "",
+      "description": "pocoMC online documentation and reference manual.",
+      "source_refs": [
+        {
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 816,
+          "end_line": 816,
+          "context": "\\footnotetext{\\url{https://github.com/minaskar/pocomc}\\\\\n\\url{https://pocomc.readthedocs.io/en/latest/}}\n\n\\begin{figure} \\centering"
+        }
+      ],
+      "evidence": "\\footnotetext{\\url{https://github.com/minaskar/pocomc}\\\\\n\\url{https://pocomc.readthedocs.io/en/latest/}}\n\n\\begin{figure} \\centering",
+      "comments": ""
+    }
+  ]
+}

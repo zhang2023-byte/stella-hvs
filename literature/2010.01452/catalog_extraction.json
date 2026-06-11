@@ -1,0 +1,704 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:43:38",
+  "paper": {
+    "arxiv_id": "2010.01452",
+    "title": "Gaia DR 2 data and the evolutionary status of eight high velocity hot post-AGB candidates",
+    "month": "2020-10"
+  },
+  "review": {
+    "path": "literature/2010.01452/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084338",
+    "started_at": "2026-06-07T08:43:38",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2010.01452",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-obj",
+      "internal_table_id": "table-tab-obj",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2010.01452/arxiv_source/partha-aoki-arxiv.tex",
+        "start_line": 384,
+        "end_line": 404,
+        "caption": "Objects",
+        "label": "tab:obj"
+      },
+      "source_path": "literature/2010.01452/arxiv_source/partha-aoki-arxiv.tex",
+      "excerpt_path": "literature/2010.01452/catalog_sources/table-tab-obj/excerpt.tex",
+      "sha256": "d3694008e2b0e8a190d9c5dcb7c10bb1e82f26ffd9227b34dc661651df3f9619",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-tab-obj2",
+      "internal_table_id": "table-tab-obj2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2010.01452/arxiv_source/partha-aoki-arxiv.tex",
+        "start_line": 407,
+        "end_line": 429,
+        "caption": "Distance and stellar parameters",
+        "label": "tab:obj2"
+      },
+      "source_path": "literature/2010.01452/arxiv_source/partha-aoki-arxiv.tex",
+      "excerpt_path": "literature/2010.01452/catalog_sources/table-tab-obj2/excerpt.tex",
+      "sha256": "e7142880fd9b2e3e8b27ea171a83d7d3e0343133e662b0720a4d7f60c9dad173",
+      "line_count": 23,
+      "error": ""
+    },
+    {
+      "id": "table-tab-kinematics",
+      "internal_table_id": "table-tab-kinematics",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2010.01452/arxiv_source/partha-aoki-arxiv.tex",
+        "start_line": 431,
+        "end_line": 450,
+        "caption": "Kinamatics data",
+        "label": "tab:kinematics"
+      },
+      "source_path": "literature/2010.01452/arxiv_source/partha-aoki-arxiv.tex",
+      "excerpt_path": "literature/2010.01452/catalog_sources/table-tab-kinematics/excerpt.tex",
+      "sha256": "4cd76ef9ebece41e2e243f3e077be0c056dd68718c450f30dbb372de4b417b9b",
+      "line_count": 20,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-obj",
+      "internal_table_id": "table-tab-obj",
+      "status": "success",
+      "ecsv_path": "literature/2010.01452/catalog_tables/table-tab-obj.ecsv",
+      "caption": "Objects",
+      "label": "tab:obj",
+      "row_count": 10,
+      "column_count": 10,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\noalign\\vskip 3pt Object",
+          "l",
+          "b",
+          "Parallax(p)",
+          "V_\\rm r",
+          "G",
+          "V",
+          "B-V",
+          "spectral type",
+          ""
+        ],
+        [
+          "",
+          "(degree)",
+          "(degree)",
+          "(mas)",
+          "(km~s^-1)",
+          "(mag)",
+          "(mag)",
+          "(mag)",
+          "",
+          "Note"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\noalign\\vskip 3pt Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "l | (degree)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "b | (degree)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Parallax(p) | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V_\\rm r | (km~s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "G | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "V | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "B-V | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "spectral type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Note",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\noalign",
+        "unresolved LaTeX macro preserved: \\rm",
+        "unresolved LaTeX macro preserved: \\vskip"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp42l_m18w/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2010.01452/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp42l_m18w/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.01452/catalog_sources/table-tab-obj/wrapped.tex",
+            "html": "literature/2010.01452/catalog_sources/table-tab-obj/latexml.html",
+            "stdout": "literature/2010.01452/catalog_sources/table-tab-obj/latexml.stdout.txt",
+            "stderr": "literature/2010.01452/catalog_sources/table-tab-obj/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp713xcizs/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp713xcizs/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.01452/catalog_sources/table-tab-obj/wrapped.tex",
+            "html": "literature/2010.01452/catalog_sources/table-tab-obj/pandoc.html",
+            "stdout": "literature/2010.01452/catalog_sources/table-tab-obj/pandoc.stdout.txt",
+            "stderr": "literature/2010.01452/catalog_sources/table-tab-obj/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "d3694008e2b0e8a190d9c5dcb7c10bb1e82f26ffd9227b34dc661651df3f9619"
+    },
+    {
+      "id": "table-tab-obj2",
+      "internal_table_id": "table-tab-obj2",
+      "status": "success",
+      "ecsv_path": "literature/2010.01452/catalog_tables/table-tab-obj2.ecsv",
+      "caption": "Distance and stellar parameters",
+      "label": "tab:obj2",
+      "row_count": 9,
+      "column_count": 11,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\noalign\\vskip 3pt Object",
+          "Distance(D)",
+          "E(B-V)",
+          "E(B-V)_\\rm sp",
+          "M_V",
+          "M_g",
+          "\\log L/L_\\odot",
+          "T_\\rm eff",
+          "\\log g",
+          "[Fe/H]",
+          "references"
+        ],
+        [
+          "",
+          "(pc)",
+          "(mag)",
+          "(mag)",
+          "(mag)",
+          "(mag)",
+          "",
+          "(K)",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\noalign\\vskip 3pt Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Distance(D) | (pc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "E(B-V) | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "E(B-V)_\\rm sp | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "M_V | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "M_g | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\log L/L_\\odot",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "T_\\rm eff | (K)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\log g",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "[Fe/H]",
+          "unit_text": "[Fe/H]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "references",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\log",
+        "unresolved LaTeX macro preserved: \\noalign",
+        "unresolved LaTeX macro preserved: \\odot",
+        "unresolved LaTeX macro preserved: \\rm",
+        "unresolved LaTeX macro preserved: \\vskip"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpt1cle7_7/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2010.01452/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpt1cle7_7/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.01452/catalog_sources/table-tab-obj2/wrapped.tex",
+            "html": "literature/2010.01452/catalog_sources/table-tab-obj2/latexml.html",
+            "stdout": "literature/2010.01452/catalog_sources/table-tab-obj2/latexml.stdout.txt",
+            "stderr": "literature/2010.01452/catalog_sources/table-tab-obj2/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyv8tckgk/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyv8tckgk/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.01452/catalog_sources/table-tab-obj2/wrapped.tex",
+            "html": "literature/2010.01452/catalog_sources/table-tab-obj2/pandoc.html",
+            "stdout": "literature/2010.01452/catalog_sources/table-tab-obj2/pandoc.stdout.txt",
+            "stderr": "literature/2010.01452/catalog_sources/table-tab-obj2/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "e7142880fd9b2e3e8b27ea171a83d7d3e0343133e662b0720a4d7f60c9dad173"
+    },
+    {
+      "id": "table-tab-kinematics",
+      "internal_table_id": "table-tab-kinematics",
+      "status": "success",
+      "ecsv_path": "literature/2010.01452/catalog_tables/table-tab-kinematics.ecsv",
+      "caption": "Kinamatics data",
+      "label": "tab:kinematics",
+      "row_count": 9,
+      "column_count": 11,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\noalign\\vskip 3pt Object",
+          "\\mu_\\alpha",
+          "\\sigma(\\mu_\\alpha)",
+          "\\mu_\\delta",
+          "\\sigma(\\mu_\\delta)",
+          "V_R",
+          "\\sigma (V_R)",
+          "V_\\phi",
+          "\\sigma(V_\\phi)",
+          "V_Z",
+          "\\sigma(V_Z)"
+        ],
+        [
+          "",
+          "(mas)",
+          "(mas)",
+          "(mas)",
+          "(mas)",
+          "(km~s^-1)",
+          "(km~s^-1)",
+          "(km~s^-1)",
+          "(km~s^-1)",
+          "(km~s^-1)",
+          "(km~s^-1)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\noalign\\vskip 3pt Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\mu_\\alpha | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma(\\mu_\\alpha) | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\delta | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma(\\mu_\\delta) | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V_R | (km~s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma (V_R) | (km~s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "V_\\phi | (km~s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma(V_\\phi) | (km~s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "V_Z | (km~s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\sigma(V_Z) | (km~s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\alpha",
+        "unresolved LaTeX macro preserved: \\delta",
+        "unresolved LaTeX macro preserved: \\mu",
+        "unresolved LaTeX macro preserved: \\noalign",
+        "unresolved LaTeX macro preserved: \\phi",
+        "unresolved LaTeX macro preserved: \\sigma",
+        "unresolved LaTeX macro preserved: \\vskip"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpznmg9zkm/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2010.01452/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpznmg9zkm/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.01452/catalog_sources/table-tab-kinematics/wrapped.tex",
+            "html": "literature/2010.01452/catalog_sources/table-tab-kinematics/latexml.html",
+            "stdout": "literature/2010.01452/catalog_sources/table-tab-kinematics/latexml.stdout.txt",
+            "stderr": "literature/2010.01452/catalog_sources/table-tab-kinematics/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyqw6fs1c/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyqw6fs1c/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.01452/catalog_sources/table-tab-kinematics/wrapped.tex",
+            "html": "literature/2010.01452/catalog_sources/table-tab-kinematics/pandoc.html",
+            "stdout": "literature/2010.01452/catalog_sources/table-tab-kinematics/pandoc.stdout.txt",
+            "stderr": "literature/2010.01452/catalog_sources/table-tab-kinematics/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "4cd76ef9ebece41e2e243f3e077be0c056dd68718c450f30dbb372de4b417b9b"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1805.08277",
+    "title": "Gaia DR2 reveals a very massive runaway star ejected from R136",
+    "month": "2018-05",
+    "source_note_json": "notes/2018/2018-05/2018-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1805.08277",
+      "pdf": "https://arxiv.org/pdf/1805.08277"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1805.08277",
+    "audit_path": "literature/1805.08277/audit.json",
+    "source_dir": "literature/1805.08277/arxiv_source",
+    "tex_root": "literature/1805.08277/arxiv_source/vfts16_submitted_revised.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T08:05:00",
+    "reviewer": "agent",
+    "summary": "Paper uses Gaia DR2 proper motions to test whether two very massive (~100 Msun) O2 stars in the Tarantula Nebula (30 Doradus, LMC) — VFTS 16 and VFTS 72 — were ejected from the central cluster R136 via dynamical ejection. The authors extract a clean sample of 79 O-type VFTS stars with proper motion errors <0.07 mas/yr, compute proper motions relative to the mean motion of stars within 0.05 deg of R136, and identify VFTS 16 and VFTS 72 as clear proper-motion outliers. For VFTS 16, the relative proper motion magnitude (0.338±0.046 mas/yr, ~80±11 km/s) and position angle are consistent with ejection from R136 ~1.5±0.2 Myr ago. VFTS 72 has proper motion 0.392±0.062 mas/yr (~93±15 km/s) but its position angle is ~2σ discrepant with the R136 direction. Both stars are confirmed as fast runaway stars with 3D space velocities of ~100 km/s. The paper includes one internal table (Table 1): a two-column comparison of the stellar parameters (spectral type, Teff, mass, age, vsini, vLOS from VFTS) and Gaia DR2 astrometric measurements (source ID, relative proper motions, position angles, projected distance, tangential/3D speeds, flight time) for VFTS 16 and VFTS 72. No external data resources (CDS/VizieR tables) are provided by the paper; the Gaia URLs and CDS/Simbad/Vizier mentions are acknowledgements only."
+  },
+  "internal_tables": [
+    {
+      "id": "table-table-runaway_properties",
+      "kind": "latex_table",
+      "asset_type": "object_summary_table",
+      "role_in_paper": "Primary results table presenting stellar properties and Gaia DR2 astrometric measurements for the two candidate runaway O2 stars. The upper section lists stellar parameters from the VLT-FLAMES Tarantula Survey (VFTS): spectral type, effective temperature, current mass, age, projected rotational velocity, and line-of-sight velocity. The lower section lists Gaia DR2 data: source identifier, relative proper motion components (pmRA, pmDec), position angle of proper motion, position angle relative to R136, projected angular distance to R136, relative proper motion magnitude, tangential speed (assuming LMC distance of 50.1 kpc), 3D space velocity, and flight time from R136 (d_R136 divided by relative proper motion). This is the core data table from which all scientific conclusions about runaway status, ejection timing, and age discrepancies are drawn.",
+      "source_refs": [
+        {
+          "path": "literature/1805.08277/arxiv_source/vfts16_submitted_revised.tex",
+          "start_line": 432,
+          "end_line": 476,
+          "caption": "Properties of the candidate runaway O2 stars. Relevant stellar parameters in the upper section of the table are from the VFTS as indicated, while in the lower section we give the Gaia source identifier, relative proper motion components, position angle of proper motion (PA_pm), distance in projection to R136 (d_R136) in arcsec, and position angle (PA_R136) of source with respect to R136 (East of North) in degrees, and time of flight t_R136 from R136, calculated simply as d_R136/(rel. pm).",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Row label identifying the measured or derived quantity. Upper section parameters (Spectral Type, Teff, Current Mass, Age, vsini, vLOS) sourced from VFTS (Walborn et al. 2014 for spectral types; Schneider et al. 2018 for Teff/mass/age; Ramirez-Agudelo et al. 2013 for vsini; Sana et al. 2013 for vLOS). Lower section parameters are Gaia DR2 astrometric quantities and derived values (Gaia Source ID, relative proper motion components, position angles, projected distance to R136, proper motion magnitude, tangential speed, 3D speed, flight time from R136).",
+          "unit_text": "",
+          "source_of_definition": "Table row labels / Section 2",
+          "confidence": 1.0
+        },
+        {
+          "name": "VFTS 16",
+          "meaning": "Measured and derived values for the O2 III star VFTS 16. Spectral Type: O2 III; Teff: 50,600(+500/-590) K; Current Mass: 91.6(+11.5/-10.5) Msun; Age: 0.7±0.1 Myr (from Schneider et al. 2018, but see Section 3 for revised age of 0.9(+0.3/-0.2) Myr); vsini: 112±30 km/s; vLOS: 189.2±1.2 km/s. Gaia DR2 Source ID: 4657690620070706432; rel. pmRA: -0.336±0.046 mas/yr; rel. pmDec: -0.038±0.045 mas/yr; PA_pm: -96°±8°; PA_R136: -99°; d_R136: 506 arcsec; rel. pm: 0.338±0.048 mas/yr; tangential speed: 80±11 km/s (at 50.1 kpc); 3D speed: 112±8 km/s (adopting 267.7 km/s LOS velocity for R136); t_R136: 1.50±0.21 Myr.",
+          "unit_text": "",
+          "source_of_definition": "Table column header 'VFTS 16' / Section 2.2",
+          "confidence": 1.0
+        },
+        {
+          "name": "VFTS 72",
+          "meaning": "Measured and derived values for the O2 III-V(n)((f*)) star VFTS 72 (alias BI 253). Spectral Type: O2 III-V(n)((f*)); Teff: 54,000±1500 K; Current Mass: 97.6(+22.2/-23.1) Msun; Age: 0.4(+0.8/-0.4) Myr (from Schneider et al. 2018; Section 3 revises to 0.80(+0.35/-0.47) Myr); vsini: 185±30 km/s; vLOS: 273.4±1.9 km/s. Gaia DR2 Source ID: 4657698454092124416; rel. pmRA: -0.372±0.050 mas/yr; rel. pmDec: +0.125±0.061 mas/yr; PA_pm: -71°±8°; PA_R136: -51°; d_R136: 370 arcsec; rel. pm: 0.392±0.062 mas/yr; tangential speed: 93±15 km/s; 3D speed: 93±15 km/s; t_R136: 0.94±0.15 Myr. Its position angle is ~20° (2σ) discrepant with the direction to R136, making its origin less certain than VFTS 16.",
+          "unit_text": "",
+          "source_of_definition": "Table column header 'VFTS 72' / Section 2.2",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Properties for both of these stars are collected in Table 1, where we convert proper motion to velocity assuming a distance to the LMC of 50.1±2.5 kpc, corresponding to a distance modulus of m-M=18.50±0.1 (Freedman et al. 2001). In Table 1 we present the flight time to R136, t_R136, simply dividing the angular distance to the cluster, d_R136, by the tangential proper motion.",
+      "comments": "One table with 3 columns (Parameter | VFTS 16 | VFTS 72) and ~14 data rows. The LaTeX table uses a simple 'lll' column specification. Table footnotes: (a) Walborn et al. 2014 for spectral types; (b) Schneider et al. 2018 for Teff/mass/age but see Section 3 for revised ages; (c) Ramirez-Agudelo et al. 2013 for vsini; (d) Sana et al. 2013 for vLOS; (e) tangential speed assumes LMC distance of 50.1 kpc; (f) 3D speed adopts 267.7 km/s as LOS velocity of R136 from Henault-Brunet et al. 2012 (VFTS VII)."
+    }
+  ],
+  "external_resources": []
+}

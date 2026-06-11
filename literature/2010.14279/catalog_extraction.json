@@ -1,0 +1,302 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:44:04",
+  "paper": {
+    "arxiv_id": "2010.14279",
+    "title": "Existence of the Metal-Rich Stellar Halo and High-velocity Thick Disk in the Galaxy",
+    "month": "2020-10"
+  },
+  "review": {
+    "path": "literature/2010.14279/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084404",
+    "started_at": "2026-06-07T08:44:04",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2010.14279",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-Table-1",
+      "internal_table_id": "table-Table-1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2010.14279/arxiv_source/yyp1.tex",
+        "start_line": 177,
+        "end_line": 204,
+        "caption": "\\upshape {The Best-fit Values of Mean ($\\mu$), Standard Deviation ($\\sigma$), and Weight of Each Rotational Velocity Distribution of Gaussian Form in Different Metallicity Intervals}",
+        "label": "Table 1"
+      },
+      "source_path": "literature/2010.14279/arxiv_source/yyp1.tex",
+      "excerpt_path": "literature/2010.14279/catalog_sources/table-Table-1/excerpt.tex",
+      "sha256": "0a2223d4daa9b9beced6394dc23246066c233dfdec931d619f3043b17d0cdc29",
+      "line_count": 28,
+      "error": ""
+    },
+    {
+      "id": "table-Table-2",
+      "internal_table_id": "table-Table-2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2010.14279/arxiv_source/yyp1.tex",
+        "start_line": 283,
+        "end_line": 333,
+        "caption": "\\upshape {The Best-fit Values of Mean ($\\mu$), Standard Deviation ($\\sigma$), and Weight (W) of Each Metallicity Distribution of Gaussian Form in Different Vertical Height Intervals.}",
+        "label": "Table 2"
+      },
+      "source_path": "literature/2010.14279/arxiv_source/yyp1.tex",
+      "excerpt_path": "literature/2010.14279/catalog_sources/table-Table-2/excerpt.tex",
+      "sha256": "6ca2e6c950277e7fb5386f6cde42edd98194005a41f6e6cc7d58f960ac77a1ad",
+      "line_count": 51,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-Table-1",
+      "internal_table_id": "table-Table-1",
+      "status": "success",
+      "ecsv_path": "literature/2010.14279/catalog_tables/table-Table-1.ecsv",
+      "caption": "\\upshape {The Best-fit Values of Mean ($\\mu$), Standard Deviation ($\\sigma$), and Weight of Each Rotational Velocity Distribution of Gaussian Form in Different Metallicity Intervals}",
+      "label": "Table 1",
+      "row_count": 7,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "[Fe/H]",
+          "MRSH",
+          "",
+          "",
+          "HVTD",
+          "",
+          ""
+        ],
+        [
+          "-",
+          "\\mu",
+          "\\sigma",
+          "Weight",
+          "\\mu",
+          "\\sigma",
+          "Weight"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "[Fe/H] | -",
+          "unit_text": "[Fe/H]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "MRSH | \\mu",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Weight",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "HVTD | \\mu",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\sigma",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Weight",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgjdc0cy0/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2010.14279/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgjdc0cy0/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.14279/catalog_sources/table-Table-1/wrapped.tex",
+            "html": "literature/2010.14279/catalog_sources/table-Table-1/latexml.html",
+            "stdout": "literature/2010.14279/catalog_sources/table-Table-1/latexml.stdout.txt",
+            "stderr": "literature/2010.14279/catalog_sources/table-Table-1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0a2223d4daa9b9beced6394dc23246066c233dfdec931d619f3043b17d0cdc29"
+    },
+    {
+      "id": "table-Table-2",
+      "internal_table_id": "table-Table-2",
+      "status": "success",
+      "ecsv_path": "literature/2010.14279/catalog_tables/table-Table-2.ecsv",
+      "caption": "\\upshape {The Best-fit Values of Mean ($\\mu$), Standard Deviation ($\\sigma$), and Weight (W) of Each Metallicity Distribution of Gaussian Form in Different Vertical Height Intervals.}",
+      "label": "Table 2",
+      "row_count": 24,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "Outer-halo",
+          "Inner-halo",
+          "MRSH",
+          "HVTD"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Outer-halo",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Inner-halo",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "MRSH",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "HVTD",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjl1vhgof/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2010.14279/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjl1vhgof/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.14279/catalog_sources/table-Table-2/wrapped.tex",
+            "html": "literature/2010.14279/catalog_sources/table-Table-2/latexml.html",
+            "stdout": "literature/2010.14279/catalog_sources/table-Table-2/latexml.stdout.txt",
+            "stderr": "literature/2010.14279/catalog_sources/table-Table-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6ca2e6c950277e7fb5386f6cde42edd98194005a41f6e6cc7d58f960ac77a1ad"
+    }
+  ]
+}

@@ -1,0 +1,1615 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:24",
+  "paper": {
+    "arxiv_id": "2406.01420",
+    "title": "An absence of binary companions to Wolf-Rayet stars in the Small Magellanic Cloud: implications for mass loss and black hole masses at low metallicity",
+    "month": "2024-06"
+  },
+  "review": {
+    "path": "literature/2406.01420/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123924",
+    "started_at": "2026-05-17T12:39:24",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2406.01420",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 14,
+      "work_count": 14,
+      "table_count": 14,
+      "success_count": 14,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 14,
+      "file_success_count": 14,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-lines",
+      "internal_table_id": "table-tab-lines",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.01420/arxiv_source/main.tex",
+        "start_line": 187,
+        "end_line": 209,
+        "caption": "\\label{tab:lines} Median $\\Delta$RV and $\\sigma_\\mathrm{RV}$ measured in our campaign for our seven target stars, using different lines. The narrow He\\,{\\sc ii} and N lines from the last row are He\\,{\\sc ii}\\,4100, 4200, 4339, 4542\\,\\AA\\ in combination with N\\,{\\sc iv}\\,4058\\,\\AA\\ and N\\,{\\sc v}\\,4604+4620, 4944\\,\\AA.",
+        "label": "tab:lines"
+      },
+      "source_path": "literature/2406.01420/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.01420/catalog_sources/table-tab-lines/excerpt.tex",
+      "sha256": "a7e6b357f867b1d355499b02346d3d9d1bb0cc7b05baa70ae2e0d12bd2ebb9e2",
+      "line_count": 23,
+      "error": ""
+    },
+    {
+      "id": "table-tab-summary_data",
+      "internal_table_id": "table-tab-summary_data",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.01420/arxiv_source/main.tex",
+        "start_line": 212,
+        "end_line": 232,
+        "caption": "\\label{tab:summary_data} Summary of the results of our RV monitoring campaign obtained using N\\,{\\sc v} 4604+4620, 4944 \\AA\\ lines. We describe in Sect.\\,\\ref{sec:abs_rv} how we obtain the absolute radial velocity $\\mathrm{RV}_\\mathrm{abs}.$",
+        "label": "tab:summary_data"
+      },
+      "source_path": "literature/2406.01420/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.01420/catalog_sources/table-tab-summary_data/excerpt.tex",
+      "sha256": "3e81faa56ac73b43f676c59710d21c117156656112365ead4f761454ee9b921c",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-tab-mini_mfin",
+      "internal_table_id": "table-tab-mini_mfin",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.01420/arxiv_source/main.tex",
+        "start_line": 542,
+        "end_line": 571,
+        "caption": "\\label{tab:mini_mfin} Initial masses and He core masses found for the SMC WR stars. The errors on $M_\\mathrm{core}$ and $M_\\mathrm{ini}$ are correlated. \\textit{Potsdam} refers to \\cite{Hainich15} for the single stars and \\cite{Shenar16} for the binaries. \\textit{Martins} refers to \\cite{Martins09} and \\cite{Martins23}. Notes have the following meaning. $^\\mathrm{a)}$: object has a surface temperature that matches both H-core and He-core burning models; $^\\mathrm{b)}$: values from \\cite{Wang19b}.",
+        "label": "tab:mini_mfin"
+      },
+      "source_path": "literature/2406.01420/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.01420/catalog_sources/table-tab-mini_mfin/excerpt.tex",
+      "sha256": "8a4b67a8a408bbff04b0dd060170c4cd7bc76c346ae15a735ebb7de668d55954",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-tab-ab1_data",
+      "internal_table_id": "table-tab-ab1_data",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.01420/arxiv_source/main.tex",
+        "start_line": 632,
+        "end_line": 661,
+        "caption": "\\label{tab:ab1_data} RV measurements of SMC\\,AB\\,1. We provide the RVs relative to the co-added spectrum obtained using the N\\,{\\sc v} 4604+4620\\,\\AA\\ and N\\,{\\sc v} 4944\\,\\AA\\ lines. The absolute RVs can be found in Table\\,\\ref{tab:summary_data}. Measurements before MJD 54000 are based on spectra from \\cite{Marchenko07}. The MJD %is the MJD\\,2000 and it is measured at the start of the observations.",
+        "label": "tab:ab1_data"
+      },
+      "source_path": "literature/2406.01420/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.01420/catalog_sources/table-tab-ab1_data/excerpt.tex",
+      "sha256": "6b8d07a3aeb3ee695863681ff022f6af65438ed5860c5ae20e3d7ff24322a848",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-tab-ab2_data",
+      "internal_table_id": "table-tab-ab2_data",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.01420/arxiv_source/main.tex",
+        "start_line": 664,
+        "end_line": 693,
+        "caption": "\\label{tab:ab2_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB2.",
+        "label": "tab:ab2_data"
+      },
+      "source_path": "literature/2406.01420/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.01420/catalog_sources/table-tab-ab2_data/excerpt.tex",
+      "sha256": "580f5fb6cc327816e157bf1facb45c62d6975593ed617d7ea72529021021244c",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-tab-ab4_data",
+      "internal_table_id": "table-tab-ab4_data",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.01420/arxiv_source/main.tex",
+        "start_line": 698,
+        "end_line": 727,
+        "caption": "\\label{tab:ab4_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB4.",
+        "label": "tab:ab4_data"
+      },
+      "source_path": "literature/2406.01420/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.01420/catalog_sources/table-tab-ab4_data/excerpt.tex",
+      "sha256": "3e2177074eea0b64edc3e12e624154caa175f26b05e48a346bad3ed3c0479d27",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-tab-ab9_data",
+      "internal_table_id": "table-tab-ab9_data",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.01420/arxiv_source/main.tex",
+        "start_line": 733,
+        "end_line": 750,
+        "caption": "\\label{tab:ab9_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB9.",
+        "label": "tab:ab9_data"
+      },
+      "source_path": "literature/2406.01420/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.01420/catalog_sources/table-tab-ab9_data/excerpt.tex",
+      "sha256": "36421a19a5792504fb25d2e8630e51b63602ec8e3593fbc6f44230f266356189",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-tab-ab10_data",
+      "internal_table_id": "table-tab-ab10_data",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.01420/arxiv_source/main.tex",
+        "start_line": 753,
+        "end_line": 770,
+        "caption": "\\label{tab:ab10_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB10.",
+        "label": "tab:ab10_data"
+      },
+      "source_path": "literature/2406.01420/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.01420/catalog_sources/table-tab-ab10_data/excerpt.tex",
+      "sha256": "3f107a3e71d1ba2b1f67eb5c6eea648118920bf8246352da6c65623e9e7b5517",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-tab-ab11_data",
+      "internal_table_id": "table-tab-ab11_data",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.01420/arxiv_source/main.tex",
+        "start_line": 774,
+        "end_line": 791,
+        "caption": "\\label{tab:ab11_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB11.",
+        "label": "tab:ab11_data"
+      },
+      "source_path": "literature/2406.01420/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.01420/catalog_sources/table-tab-ab11_data/excerpt.tex",
+      "sha256": "c214255fb203218d332fb3de2652c9b1b6733834042f7addef635960abde40fa",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-tab-ab12_data",
+      "internal_table_id": "table-tab-ab12_data",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.01420/arxiv_source/main.tex",
+        "start_line": 794,
+        "end_line": 811,
+        "caption": "\\label{tab:ab12_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB12.",
+        "label": "tab:ab12_data"
+      },
+      "source_path": "literature/2406.01420/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.01420/catalog_sources/table-tab-ab12_data/excerpt.tex",
+      "sha256": "9e3978ca3ca4f92fab052356ac4417c1fe516f5b6d0311866e489a06b1a51411",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-tab-ogle",
+      "internal_table_id": "table-tab-ogle",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.01420/arxiv_source/main.tex",
+        "start_line": 825,
+        "end_line": 845,
+        "caption": "\\label{tab:ogle} Overview of the OGLE-III and OGLE-IV time-series photometry data that was analyzed in this work, showing the dates of the first and last observation, the number of observations ($N_\\mathrm{obs}$), and the maximum SNR (SNR$_\\mathrm{max}$) found for each source. No OGLE-IV data is available for SMC\\,AB4.",
+        "label": "tab:ogle"
+      },
+      "source_path": "literature/2406.01420/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.01420/catalog_sources/table-tab-ogle/excerpt.tex",
+      "sha256": "458dafd239933530d64c6580728c97cc8cc9d26d6451301589398ac41eb31db8",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-tab-integrated_pdetect",
+      "internal_table_id": "table-tab-integrated_pdetect",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.01420/arxiv_source/main.tex",
+        "start_line": 912,
+        "end_line": 934,
+        "caption": "\\label{tab:integrated_pdetect} Probabilities that binaries would have caused a larger $\\Delta$RV than observed. We integrated over different parts of the binary parameter space; if no extra restriction is mentioned, we consider the range $1 \\leq M_\\mathrm{2} / \\mathrm{M}_\\odot \\leq 40$ and $0 \\leq \\log ( P_\\mathrm{orb} / \\mathrm{d} )\\leq 3.5$. To calculate $\\hat{p}_\\mathrm{L20}$ and $\\hat{p}_\\mathrm{R19}$, we used orbital period and and mass ratio distributions based on \\cite{Langer20} and \\cite{Renzo19}, respectively (see text for details).",
+        "label": "tab:integrated_pdetect"
+      },
+      "source_path": "literature/2406.01420/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.01420/catalog_sources/table-tab-integrated_pdetect/excerpt.tex",
+      "sha256": "ef7a44cd2d8c33c4403ed16aec1fd2f12cea924aec89e6188df169d0e038270f",
+      "line_count": 23,
+      "error": ""
+    },
+    {
+      "id": "table-tab-integrated_pdetect_ecc",
+      "internal_table_id": "table-tab-integrated_pdetect_ecc",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.01420/arxiv_source/main.tex",
+        "start_line": 938,
+        "end_line": 960,
+        "caption": "\\label{tab:integrated_pdetect_ecc} Same as Table\\,\\ref{tab:integrated_pdetect}, but considering \\textbf{eccentric orbits} instead of only circular orbits. The eccentricity is drawn from a flat distribution between 0 and 0.9.",
+        "label": "tab:integrated_pdetect_ecc"
+      },
+      "source_path": "literature/2406.01420/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.01420/catalog_sources/table-tab-integrated_pdetect_ecc/excerpt.tex",
+      "sha256": "7d8705fc925603817ba50dc81a62088188f2e93a565eec6fa77029a9dae3105d",
+      "line_count": 23,
+      "error": ""
+    },
+    {
+      "id": "table-tab-integrated_pdetect_f03",
+      "internal_table_id": "table-tab-integrated_pdetect_f03",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.01420/arxiv_source/main.tex",
+        "start_line": 962,
+        "end_line": 983,
+        "caption": "\\label{tab:integrated_pdetect_f03} Same as Table\\,\\ref{tab:integrated_pdetect}, but for the observing campaign of \\cite{Foellmi03} and, for SMC\\,AB12, \\cite{Foellmi04}.",
+        "label": "tab:integrated_pdetect_f03"
+      },
+      "source_path": "literature/2406.01420/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.01420/catalog_sources/table-tab-integrated_pdetect_f03/excerpt.tex",
+      "sha256": "81cfc8dab5eb64d8d98fa77688f351c9de51248e88f30adbd93de8977f7c9021",
+      "line_count": 22,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-lines",
+      "internal_table_id": "table-tab-lines",
+      "status": "success",
+      "ecsv_path": "literature/2406.01420/catalog_tables/table-tab-lines.ecsv",
+      "caption": "\\label{tab:lines} Median $\\Delta$RV and $\\sigma_\\mathrm{RV}$ measured in our campaign for our seven target stars, using different lines. The narrow He\\,{\\sc ii} and N lines from the last row are He\\,{\\sc ii}\\,4100, 4200, 4339, 4542\\,\\AA\\ in combination with N\\,{\\sc iv}\\,4058\\,\\AA\\ and N\\,{\\sc v}\\,4604+4620, 4944\\,\\AA.",
+      "label": "tab:lines",
+      "row_count": 7,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "\\Delta RV median",
+          "\\sigma_RV, median"
+        ],
+        [
+          "Line (rest wavelength)",
+          "[km/s]",
+          "[km/s]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Line (rest wavelength)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\Delta RV median | [km/s]",
+          "unit_text": "[km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma_RV, median | [km/s]",
+          "unit_text": "[km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8omz6i9t/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.01420/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8omz6i9t/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.01420/catalog_sources/table-tab-lines/wrapped.tex",
+            "html": "literature/2406.01420/catalog_sources/table-tab-lines/latexml.html",
+            "stdout": "literature/2406.01420/catalog_sources/table-tab-lines/latexml.stdout.txt",
+            "stderr": "literature/2406.01420/catalog_sources/table-tab-lines/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a7e6b357f867b1d355499b02346d3d9d1bb0cc7b05baa70ae2e0d12bd2ebb9e2"
+    },
+    {
+      "id": "table-tab-summary_data",
+      "internal_table_id": "table-tab-summary_data",
+      "status": "success",
+      "ecsv_path": "literature/2406.01420/catalog_tables/table-tab-summary_data.ecsv",
+      "caption": "\\label{tab:summary_data} Summary of the results of our RV monitoring campaign obtained using N\\,{\\sc v} 4604+4620, 4944 \\AA\\ lines. We describe in Sect.\\,\\ref{sec:abs_rv} how we obtain the absolute radial velocity $\\mathrm{RV}_\\mathrm{abs}.$",
+      "label": "tab:summary_data",
+      "row_count": 7,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "\\Delta RV",
+          "\\sigma_RV",
+          "RV abs"
+        ],
+        [
+          "",
+          "[km/s]",
+          "[km/s]",
+          "[km/s]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\Delta RV | [km/s]",
+          "unit_text": "[km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma_RV | [km/s]",
+          "unit_text": "[km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RV abs | [km/s]",
+          "unit_text": "[km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwih8pslo/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.01420/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwih8pslo/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.01420/catalog_sources/table-tab-summary_data/wrapped.tex",
+            "html": "literature/2406.01420/catalog_sources/table-tab-summary_data/latexml.html",
+            "stdout": "literature/2406.01420/catalog_sources/table-tab-summary_data/latexml.stdout.txt",
+            "stderr": "literature/2406.01420/catalog_sources/table-tab-summary_data/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3e81faa56ac73b43f676c59710d21c117156656112365ead4f761454ee9b921c"
+    },
+    {
+      "id": "table-tab-mini_mfin",
+      "internal_table_id": "table-tab-mini_mfin",
+      "status": "success",
+      "ecsv_path": "literature/2406.01420/catalog_tables/table-tab-mini_mfin.ecsv",
+      "caption": "\\label{tab:mini_mfin} Initial masses and He core masses found for the SMC WR stars. The errors on $M_\\mathrm{core}$ and $M_\\mathrm{ini}$ are correlated. \\textit{Potsdam} refers to \\cite{Hainich15} for the single stars and \\cite{Shenar16} for the binaries. \\textit{Martins} refers to \\cite{Martins09} and \\cite{Martins23}. Notes have the following meaning. $^\\mathrm{a)}$: object has a surface temperature that matches both H-core and He-core burning models; $^\\mathrm{b)}$: values from \\cite{Wang19b}.",
+      "label": "tab:mini_mfin",
+      "row_count": 13,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "M_core/M_\\odot",
+          "M_ini/M_\\odot",
+          "M_core/M_\\odot",
+          "M_ini/M_\\odot"
+        ],
+        [
+          "Based on:",
+          "Potsdam",
+          "Potsdam",
+          "Martins",
+          "Martins"
+        ],
+        [
+          "Single:",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Based on: | Single:",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "M_core/M_\\odot | Potsdam",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "M_ini/M_\\odot | Potsdam",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "M_core/M_\\odot | Martins",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "M_ini/M_\\odot | Martins",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplfo1l0ep/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.01420/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplfo1l0ep/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.01420/catalog_sources/table-tab-mini_mfin/wrapped.tex",
+            "html": "literature/2406.01420/catalog_sources/table-tab-mini_mfin/latexml.html",
+            "stdout": "literature/2406.01420/catalog_sources/table-tab-mini_mfin/latexml.stdout.txt",
+            "stderr": "literature/2406.01420/catalog_sources/table-tab-mini_mfin/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8a4b67a8a408bbff04b0dd060170c4cd7bc76c346ae15a735ebb7de668d55954"
+    },
+    {
+      "id": "table-tab-ab1_data",
+      "internal_table_id": "table-tab-ab1_data",
+      "status": "success",
+      "ecsv_path": "literature/2406.01420/catalog_tables/table-tab-ab1_data.ecsv",
+      "caption": "\\label{tab:ab1_data} RV measurements of SMC\\,AB\\,1. We provide the RVs relative to the co-added spectrum obtained using the N\\,{\\sc v} 4604+4620\\,\\AA\\ and N\\,{\\sc v} 4944\\,\\AA\\ lines. The absolute RVs can be found in Table\\,\\ref{tab:summary_data}. Measurements before MJD 54000 are based on spectra from \\cite{Marchenko07}. The MJD %is the MJD\\,2000 and it is measured at the start of the observations.",
+      "label": "tab:ab1_data",
+      "row_count": 17,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "MJD",
+          "RV _N V",
+          "\\sigma_CCF, NV"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "MJD",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RV _N V",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma_CCF, NV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpze4ny_4w/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.01420/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpze4ny_4w/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.01420/catalog_sources/table-tab-ab1_data/wrapped.tex",
+            "html": "literature/2406.01420/catalog_sources/table-tab-ab1_data/latexml.html",
+            "stdout": "literature/2406.01420/catalog_sources/table-tab-ab1_data/latexml.stdout.txt",
+            "stderr": "literature/2406.01420/catalog_sources/table-tab-ab1_data/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6b8d07a3aeb3ee695863681ff022f6af65438ed5860c5ae20e3d7ff24322a848"
+    },
+    {
+      "id": "table-tab-ab2_data",
+      "internal_table_id": "table-tab-ab2_data",
+      "status": "success",
+      "ecsv_path": "literature/2406.01420/catalog_tables/table-tab-ab2_data.ecsv",
+      "caption": "\\label{tab:ab2_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB2.",
+      "label": "tab:ab2_data",
+      "row_count": 18,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "MJD",
+          "RV _N V",
+          "\\sigma_CCF, NV"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "MJD",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RV _N V",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma_CCF, NV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppyoqc7h2/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.01420/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppyoqc7h2/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.01420/catalog_sources/table-tab-ab2_data/wrapped.tex",
+            "html": "literature/2406.01420/catalog_sources/table-tab-ab2_data/latexml.html",
+            "stdout": "literature/2406.01420/catalog_sources/table-tab-ab2_data/latexml.stdout.txt",
+            "stderr": "literature/2406.01420/catalog_sources/table-tab-ab2_data/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "580f5fb6cc327816e157bf1facb45c62d6975593ed617d7ea72529021021244c"
+    },
+    {
+      "id": "table-tab-ab4_data",
+      "internal_table_id": "table-tab-ab4_data",
+      "status": "success",
+      "ecsv_path": "literature/2406.01420/catalog_tables/table-tab-ab4_data.ecsv",
+      "caption": "\\label{tab:ab4_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB4.",
+      "label": "tab:ab4_data",
+      "row_count": 18,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "MJD",
+          "RV _N V",
+          "\\sigma_CCF, NV"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "MJD",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RV _N V",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma_CCF, NV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxm7imxn_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.01420/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxm7imxn_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.01420/catalog_sources/table-tab-ab4_data/wrapped.tex",
+            "html": "literature/2406.01420/catalog_sources/table-tab-ab4_data/latexml.html",
+            "stdout": "literature/2406.01420/catalog_sources/table-tab-ab4_data/latexml.stdout.txt",
+            "stderr": "literature/2406.01420/catalog_sources/table-tab-ab4_data/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3e2177074eea0b64edc3e12e624154caa175f26b05e48a346bad3ed3c0479d27"
+    },
+    {
+      "id": "table-tab-ab9_data",
+      "internal_table_id": "table-tab-ab9_data",
+      "status": "success",
+      "ecsv_path": "literature/2406.01420/catalog_tables/table-tab-ab9_data.ecsv",
+      "caption": "\\label{tab:ab9_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB9.",
+      "label": "tab:ab9_data",
+      "row_count": 6,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "MJD",
+          "RV _N V",
+          "\\sigma_CCF, NV"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "MJD",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RV _N V",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma_CCF, NV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8e8evnu6/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.01420/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8e8evnu6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.01420/catalog_sources/table-tab-ab9_data/wrapped.tex",
+            "html": "literature/2406.01420/catalog_sources/table-tab-ab9_data/latexml.html",
+            "stdout": "literature/2406.01420/catalog_sources/table-tab-ab9_data/latexml.stdout.txt",
+            "stderr": "literature/2406.01420/catalog_sources/table-tab-ab9_data/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "36421a19a5792504fb25d2e8630e51b63602ec8e3593fbc6f44230f266356189"
+    },
+    {
+      "id": "table-tab-ab10_data",
+      "internal_table_id": "table-tab-ab10_data",
+      "status": "success",
+      "ecsv_path": "literature/2406.01420/catalog_tables/table-tab-ab10_data.ecsv",
+      "caption": "\\label{tab:ab10_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB10.",
+      "label": "tab:ab10_data",
+      "row_count": 6,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "MJD",
+          "RV _N V",
+          "\\sigma_CCF, NV"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "MJD",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RV _N V",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma_CCF, NV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmy93mreh/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.01420/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmy93mreh/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.01420/catalog_sources/table-tab-ab10_data/wrapped.tex",
+            "html": "literature/2406.01420/catalog_sources/table-tab-ab10_data/latexml.html",
+            "stdout": "literature/2406.01420/catalog_sources/table-tab-ab10_data/latexml.stdout.txt",
+            "stderr": "literature/2406.01420/catalog_sources/table-tab-ab10_data/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3f107a3e71d1ba2b1f67eb5c6eea648118920bf8246352da6c65623e9e7b5517"
+    },
+    {
+      "id": "table-tab-ab11_data",
+      "internal_table_id": "table-tab-ab11_data",
+      "status": "success",
+      "ecsv_path": "literature/2406.01420/catalog_tables/table-tab-ab11_data.ecsv",
+      "caption": "\\label{tab:ab11_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB11.",
+      "label": "tab:ab11_data",
+      "row_count": 6,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "MJD",
+          "RV _N V",
+          "\\sigma_CCF, NV"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "MJD",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RV _N V",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma_CCF, NV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpf9yg0qfp/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.01420/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpf9yg0qfp/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.01420/catalog_sources/table-tab-ab11_data/wrapped.tex",
+            "html": "literature/2406.01420/catalog_sources/table-tab-ab11_data/latexml.html",
+            "stdout": "literature/2406.01420/catalog_sources/table-tab-ab11_data/latexml.stdout.txt",
+            "stderr": "literature/2406.01420/catalog_sources/table-tab-ab11_data/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c214255fb203218d332fb3de2652c9b1b6733834042f7addef635960abde40fa"
+    },
+    {
+      "id": "table-tab-ab12_data",
+      "internal_table_id": "table-tab-ab12_data",
+      "status": "success",
+      "ecsv_path": "literature/2406.01420/catalog_tables/table-tab-ab12_data.ecsv",
+      "caption": "\\label{tab:ab12_data} Same as Table\\,\\ref{tab:ab1_data}, but for SMC\\,AB12.",
+      "label": "tab:ab12_data",
+      "row_count": 6,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "MJD",
+          "RV _N V",
+          "\\sigma_CCF, NV"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "MJD",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RV _N V",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma_CCF, NV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvj7nf_vq/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.01420/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvj7nf_vq/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.01420/catalog_sources/table-tab-ab12_data/wrapped.tex",
+            "html": "literature/2406.01420/catalog_sources/table-tab-ab12_data/latexml.html",
+            "stdout": "literature/2406.01420/catalog_sources/table-tab-ab12_data/latexml.stdout.txt",
+            "stderr": "literature/2406.01420/catalog_sources/table-tab-ab12_data/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9e3978ca3ca4f92fab052356ac4417c1fe516f5b6d0311866e489a06b1a51411"
+    },
+    {
+      "id": "table-tab-ogle",
+      "internal_table_id": "table-tab-ogle",
+      "status": "success",
+      "ecsv_path": "literature/2406.01420/catalog_tables/table-tab-ogle.ecsv",
+      "caption": "\\label{tab:ogle} Overview of the OGLE-III and OGLE-IV time-series photometry data that was analyzed in this work, showing the dates of the first and last observation, the number of observations ($N_\\mathrm{obs}$), and the maximum SNR (SNR$_\\mathrm{max}$) found for each source. No OGLE-IV data is available for SMC\\,AB4.",
+      "label": "tab:ogle",
+      "row_count": 7,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "First observation",
+          "Last observation",
+          "N_obs",
+          "SNR max"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "First observation",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Last observation",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "N_obs",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "SNR max",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpt02jgvw7/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.01420/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpt02jgvw7/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.01420/catalog_sources/table-tab-ogle/wrapped.tex",
+            "html": "literature/2406.01420/catalog_sources/table-tab-ogle/latexml.html",
+            "stdout": "literature/2406.01420/catalog_sources/table-tab-ogle/latexml.stdout.txt",
+            "stderr": "literature/2406.01420/catalog_sources/table-tab-ogle/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "458dafd239933530d64c6580728c97cc8cc9d26d6451301589398ac41eb31db8"
+    },
+    {
+      "id": "table-tab-integrated_pdetect",
+      "internal_table_id": "table-tab-integrated_pdetect",
+      "status": "success",
+      "ecsv_path": "literature/2406.01420/catalog_tables/table-tab-integrated_pdetect.ecsv",
+      "caption": "\\label{tab:integrated_pdetect} Probabilities that binaries would have caused a larger $\\Delta$RV than observed. We integrated over different parts of the binary parameter space; if no extra restriction is mentioned, we consider the range $1 \\leq M_\\mathrm{2} / \\mathrm{M}_\\odot \\leq 40$ and $0 \\leq \\log ( P_\\mathrm{orb} / \\mathrm{d} )\\leq 3.5$. To calculate $\\hat{p}_\\mathrm{L20}$ and $\\hat{p}_\\mathrm{R19}$, we used orbital period and and mass ratio distributions based on \\cite{Langer20} and \\cite{Renzo19}, respectively (see text for details).",
+      "label": "tab:integrated_pdetect",
+      "row_count": 11,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpssx5wzf0/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.01420/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpssx5wzf0/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.01420/catalog_sources/table-tab-integrated_pdetect/wrapped.tex",
+            "html": "literature/2406.01420/catalog_sources/table-tab-integrated_pdetect/latexml.html",
+            "stdout": "literature/2406.01420/catalog_sources/table-tab-integrated_pdetect/latexml.stdout.txt",
+            "stderr": "literature/2406.01420/catalog_sources/table-tab-integrated_pdetect/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ef7a44cd2d8c33c4403ed16aec1fd2f12cea924aec89e6188df169d0e038270f"
+    },
+    {
+      "id": "table-tab-integrated_pdetect_ecc",
+      "internal_table_id": "table-tab-integrated_pdetect_ecc",
+      "status": "success",
+      "ecsv_path": "literature/2406.01420/catalog_tables/table-tab-integrated_pdetect_ecc.ecsv",
+      "caption": "\\label{tab:integrated_pdetect_ecc} Same as Table\\,\\ref{tab:integrated_pdetect}, but considering \\textbf{eccentric orbits} instead of only circular orbits. The eccentricity is drawn from a flat distribution between 0 and 0.9.",
+      "label": "tab:integrated_pdetect_ecc",
+      "row_count": 11,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcm6oq6jq/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.01420/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcm6oq6jq/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.01420/catalog_sources/table-tab-integrated_pdetect_ecc/wrapped.tex",
+            "html": "literature/2406.01420/catalog_sources/table-tab-integrated_pdetect_ecc/latexml.html",
+            "stdout": "literature/2406.01420/catalog_sources/table-tab-integrated_pdetect_ecc/latexml.stdout.txt",
+            "stderr": "literature/2406.01420/catalog_sources/table-tab-integrated_pdetect_ecc/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7d8705fc925603817ba50dc81a62088188f2e93a565eec6fa77029a9dae3105d"
+    },
+    {
+      "id": "table-tab-integrated_pdetect_f03",
+      "internal_table_id": "table-tab-integrated_pdetect_f03",
+      "status": "success",
+      "ecsv_path": "literature/2406.01420/catalog_tables/table-tab-integrated_pdetect_f03.ecsv",
+      "caption": "\\label{tab:integrated_pdetect_f03} Same as Table\\,\\ref{tab:integrated_pdetect}, but for the observing campaign of \\cite{Foellmi03} and, for SMC\\,AB12, \\cite{Foellmi04}.",
+      "label": "tab:integrated_pdetect_f03",
+      "row_count": 11,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpuk0fmudf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.01420/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpuk0fmudf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.01420/catalog_sources/table-tab-integrated_pdetect_f03/wrapped.tex",
+            "html": "literature/2406.01420/catalog_sources/table-tab-integrated_pdetect_f03/latexml.html",
+            "stdout": "literature/2406.01420/catalog_sources/table-tab-integrated_pdetect_f03/latexml.stdout.txt",
+            "stderr": "literature/2406.01420/catalog_sources/table-tab-integrated_pdetect_f03/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "81cfc8dab5eb64d8d98fa77688f351c9de51248e88f30adbd93de8977f7c9021"
+    }
+  ]
+}

@@ -1,0 +1,521 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:30:50",
+  "paper": {
+    "arxiv_id": "1803.02794",
+    "title": "Demonstration of a novel method for measuring mass-loss rates for massive stars",
+    "month": "2018-03"
+  },
+  "review": {
+    "path": "literature/1803.02794/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083050",
+    "started_at": "2026-06-07T08:30:50",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1803.02794",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-basic",
+      "internal_table_id": "table-tab-basic",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1803.02794/arxiv_source/ms.tex",
+        "start_line": 957,
+        "end_line": 1005,
+        "caption": "Measured & adopted parameters for stars and their bowshock nebulae",
+        "label": "tab:basic"
+      },
+      "source_path": "literature/1803.02794/arxiv_source/ms.tex",
+      "excerpt_path": "literature/1803.02794/catalog_sources/table-tab-basic/excerpt.tex",
+      "sha256": "dd8bf5be8d1e960fb665fc9437aea1170bb02ff69ef3f30b0e2619619a2e0db0",
+      "line_count": 49,
+      "error": ""
+    },
+    {
+      "id": "table-tab-derived",
+      "internal_table_id": "table-tab-derived",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1803.02794/arxiv_source/ms.tex",
+        "start_line": 1009,
+        "end_line": 1045,
+        "caption": "Derived parameters for stars and their bowshock nebulae",
+        "label": "tab:derived"
+      },
+      "source_path": "literature/1803.02794/arxiv_source/ms.tex",
+      "excerpt_path": "literature/1803.02794/catalog_sources/table-tab-derived/excerpt.tex",
+      "sha256": "3fb63ef67cd78718428be4465ef8e47eb664f5bdd7dbdf2e3d14177d43f59ede",
+      "line_count": 37,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-basic",
+      "internal_table_id": "table-tab-basic",
+      "status": "success",
+      "ecsv_path": "literature/1803.02794/catalog_tables/table-tab-basic.ecsv",
+      "caption": "Measured & adopted parameters for stars and their bowshock nebulae",
+      "label": "tab:basic",
+      "row_count": 19,
+      "column_count": 15,
+      "environment": "deluxetable",
+      "header_rows": [
+        [
+          "ID",
+          "Name",
+          "Alt. name",
+          "Sp.T.",
+          "Ref.",
+          "\\colheadT_eff",
+          "R_*",
+          "Mass",
+          "V_\\infty",
+          "D",
+          "Ref.",
+          "R_0",
+          "R_0",
+          "\\colheadPeak_70",
+          "\\ell"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "(K)",
+          "(R_\\odot)",
+          "(M_\\odot)",
+          "(\\kms)",
+          "(kpc)",
+          "",
+          "(arcsec)",
+          "(pc)",
+          "\\colhead(10^7 Jy sr^-1)",
+          "(arcsec)"
+        ],
+        [
+          "(1)",
+          "(2)",
+          "(3)",
+          "(4)",
+          "(5)",
+          "(6)",
+          "(7)",
+          "(8)",
+          "(9)",
+          "(10)",
+          "(11)",
+          "(12)",
+          "(13)",
+          "(14)",
+          "(15)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID | (1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Name | (2)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Alt. name | (3)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Sp.T. | (4)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Ref. | (5)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\colheadT_eff | (K) | (6)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "R_* | (R_\\odot) | (7)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Mass | (M_\\odot) | (8)",
+          "unit_text": "Mass",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "V_\\infty | (\\kms) | (9)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "D | (kpc) | (10)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Ref. | (11)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "R_0 | (arcsec) | (12)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "R_0 | (pc) | (13)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "\\colheadPeak_70 | \\colhead(10^7 Jy sr^-1) | (14)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "\\ell | (arcsec) | (15)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\colhead",
+        "unresolved LaTeX macro preserved: \\colheadPeak",
+        "unresolved LaTeX macro preserved: \\colheadT",
+        "unresolved LaTeX macro preserved: \\ell",
+        "unresolved LaTeX macro preserved: \\infty",
+        "unresolved LaTeX macro preserved: \\kms",
+        "unresolved LaTeX macro preserved: \\odot",
+        "unresolved LaTeX macro preserved: \\tablenotemarka",
+        "unresolved LaTeX macro preserved: \\tablenotemarkb",
+        "unresolved LaTeX macro preserved: \\tablenotemarkc",
+        "unresolved LaTeX macro preserved: \\tablenotemarkd",
+        "unresolved LaTeX macro preserved: \\tablenotemarke",
+        "unresolved LaTeX macro preserved: \\tablenotemarkf",
+        "unresolved LaTeX macro preserved: \\tablenotemarkg"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvag2dq8u/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1803.02794/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvag2dq8u/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/1803.02794/catalog_sources/table-tab-basic/wrapped.tex",
+            "html": "literature/1803.02794/catalog_sources/table-tab-basic/latexml.html",
+            "stdout": "literature/1803.02794/catalog_sources/table-tab-basic/latexml.stdout.txt",
+            "stderr": "literature/1803.02794/catalog_sources/table-tab-basic/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7q4_mdjl/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7q4_mdjl/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/1803.02794/catalog_sources/table-tab-basic/wrapped.tex",
+            "html": "literature/1803.02794/catalog_sources/table-tab-basic/pandoc.html",
+            "stdout": "literature/1803.02794/catalog_sources/table-tab-basic/pandoc.stdout.txt",
+            "stderr": "literature/1803.02794/catalog_sources/table-tab-basic/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "dd8bf5be8d1e960fb665fc9437aea1170bb02ff69ef3f30b0e2619619a2e0db0"
+    },
+    {
+      "id": "table-tab-derived",
+      "internal_table_id": "table-tab-derived",
+      "status": "success",
+      "ecsv_path": "literature/1803.02794/catalog_tables/table-tab-derived.ecsv",
+      "caption": "Derived parameters for stars and their bowshock nebulae",
+      "label": "tab:derived",
+      "row_count": 20,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Name",
+          "Alt. name",
+          "Sp.T.",
+          "Lum.",
+          "U",
+          "j_\\nu",
+          "n_a",
+          "\\dotM"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "(10 4 L ⊙ )",
+          "",
+          "(Jy sr -1 cm 2 nuc -1 )",
+          "(cm -3 )",
+          "(M ⊙ yr -1 )"
+        ],
+        [
+          "(1)",
+          "(2)",
+          "(3)",
+          "(4)",
+          "(5)",
+          "(6)",
+          "(7)",
+          "(8)",
+          "(9)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID | (1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Name | (2)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Alt. name | (3)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Sp.T. | (4)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Lum. | (10 4 L ⊙ ) | (5)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "U | (6)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "j_\\nu | (Jy sr -1 cm 2 nuc -1 ) | (7)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "n_a | (cm -3 ) | (8)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\dotM | (M ⊙ yr -1 ) | (9)",
+          "unit_text": "(M ⊙ yr -1 )",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpifinvr01/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1803.02794/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpifinvr01/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1803.02794/catalog_sources/table-tab-derived/wrapped.tex",
+            "html": "literature/1803.02794/catalog_sources/table-tab-derived/latexml.html",
+            "stdout": "literature/1803.02794/catalog_sources/table-tab-derived/latexml.stdout.txt",
+            "stderr": "literature/1803.02794/catalog_sources/table-tab-derived/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3fb63ef67cd78718428be4465ef8e47eb664f5bdd7dbdf2e3d14177d43f59ede"
+    }
+  ]
+}

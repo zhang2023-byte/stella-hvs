@@ -1,0 +1,5226 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:31:16",
+  "paper": {
+    "arxiv_id": "1804.10197",
+    "bibcode": "2019MNRAS.483.2580E",
+    "title": "A hypervelocity star with a Magellanic origin",
+    "month": "2018-04",
+    "source_note_json": "notes/2018/2018-04/2018-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1804.10197",
+      "pdf": "https://arxiv.org/pdf/1804.10197"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1804.10197",
+    "audit_path": "literature/1804.10197/audit.json",
+    "catalog_review_path": "literature/1804.10197/catalog_review.json",
+    "catalog_extraction_path": "literature/1804.10197/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-06-07T10:31:16",
+    "extractor": "agent",
+    "summary": "26 previously known hypervelocity stars re-assessed with Gaia DR2 proper motions. HVS3 (HE 0437-5439) uniquely identified as originating from the LMC with ejection velocity 870 km/s, providing strong direct evidence for a massive black hole (>=4e3-1e4 Msun) in the LMC. Most other HVSs more consistent with MW origin. Table 1 provides RA, Dec, pmRA, pmDec, v_hel, D_hel for all 26 stars."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "26 previously known HVSs with positions, radial velocities, and distances from literature. Gaia DR2 proper motions for most stars (except HVS1, HVS4, HVS13, HIP60350 with HST). References: Brown+2015, Gaia DR2, Geier+2015, Brown+2014, Zheng+2014, Huang+2017, Heber+2008, Irrgang+2010.",
+      "inputs": [
+        "Gaia DR2",
+        "HST (Brown+2015)",
+        "Literature radial velocities and distances"
+      ],
+      "outputs": [
+        "6D phase space for 26 HVSs"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.10197/arxiv_source/hvs.tex",
+          "start_line": 275,
+          "end_line": 301,
+          "context": "Tab. 1: 26 HVSs, proper motions from Gaia DR2 + HST"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "Two MW potentials: MWPotential2014 (NFW halo + Miyamoto-Nagai disk + power-law bulge) and Piffl+2017 model. LMC: Hernquist profile, M=1.5e11 Msun, r_s=17.14 kpc. Dynamical friction on LMC included. Solar: R0=8.3±0.1 kpc, (U,V,W)=(11.1,24,7.3) km/s.",
+      "inputs": [
+        "MWPotential2014",
+        "Piffl+2017 potential",
+        "LMC Hernquist model"
+      ],
+      "outputs": [
+        "Combined MW+LMC gravitational potential"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.10197/arxiv_source/hvs.tex",
+          "start_line": 146,
+          "end_line": 148,
+          "context": "Sec 2.1: MWPotential2014 + Piffl+2017, LMC M=1.5e11 Msun"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-01",
+        "step-02"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "MC sampling (N varies: up to 100k for HVS3) of 6D phase space + LMC phase space + solar position. Rewind each HVS 500 Myr. Record closest approach distance, relative velocity, lookback time to MW and LMC. Disk plane crossing locations recorded.",
+      "inputs": [
+        "6D phase space samples",
+        "MW+LMC potential"
+      ],
+      "outputs": [
+        "Closest approach distances and times to MW and LMC for each HVS"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.10197/arxiv_source/hvs.tex",
+          "start_line": 152,
+          "end_line": 153,
+          "context": "Sec 2.2: MC sampling, rewind 500 Myr, closest approach to MW and LMC"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Determine probability of origin by computing P(r_min < 5 kpc) for MW and LMC. HVS3: P(LMC)=0.40 vs P(MW)=1e-4. Ejection velocity 870(+69/-66) km/s, time 21.1(+6.1/-4.6) Myr. Mock tests show false positive rate ~10^-3.",
+      "inputs": [
+        "Closest approach distributions",
+        "Mock HVS samples from N-body simulations"
+      ],
+      "outputs": [
+        "Origin probabilities for each HVS",
+        "HVS3: LMC origin confirmed"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.10197/arxiv_source/hvs.tex",
+          "start_line": 137,
+          "end_line": 138,
+          "context": "Fig 1: HVS3: P(LMC)=0.40 vs P(MW)=1e-4"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1804.10197/arxiv_source/hvs.tex",
+          "start_line": 170,
+          "end_line": 170,
+          "context": "HVS3: v_ej=870(+69/-66) km/s, t_ej=21.1(+6.1/-4.6) Myr"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1804.10197/arxiv_source/hvs.tex",
+          "start_line": 233,
+          "end_line": 233,
+          "context": "Mock tests: misclassification probability ~1/1000 with Gaia DR2"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-001",
+        "paper_candidate_id": "HVS1",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS1, RA=09:07:44.99, Dec=+02:45:06.9, D_hel=107 ± 15 kpc, v_hel=831.1 ± 5.7 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS1: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=09:07:44.99, Dec=+02:45:06.9, v_hel=831.1 ± 5.7 km/s, D_hel=107 ± 15 kpc. Prototype HVS, unbound B star at 107 kpc.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "107 ± 15",
+            "value": "107 ± 15",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=107 ± 15 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "0.1 ± 0.3",
+            "value": "0.1 ± 0.3",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=0.1 ± 0.3"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.1 ± 0.2",
+            "value": "-0.1 ± 0.2",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=-0.1 ± 0.2"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "831.1 ± 5.7",
+            "value": "831.1 ± 5.7",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=831.1 ± 5.7 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-002",
+        "paper_candidate_id": "HVS2",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS2",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS2, RA=09:33:20.86, Dec=+44:17:05.4, D_hel=8.5 ± 1 kpc, v_hel=917 ± 7 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS2: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=09:33:20.86, Dec=+44:17:05.4, v_hel=917 ± 7 km/s, D_hel=8.5 ± 1 kpc. sdO star US708, fastest known HVS, SN Ia survivor.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "8.5 ± 1",
+            "value": "8.5 ± 1",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=8.5 ± 1 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-5.363 ± 0.391",
+            "value": "-5.363 ± 0.391",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-5.363 ± 0.391"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "1.285 ± 0.382",
+            "value": "1.285 ± 0.382",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=1.285 ± 0.382"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "917 ± 7",
+            "value": "917 ± 7",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=917 ± 7 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-003",
+        "paper_candidate_id": "HVS3",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS3",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS3, RA=04:38:12.8, Dec=-54:33:12, D_hel=61 ± 10 kpc, v_hel=723 ± 3 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS3: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=04:38:12.8, Dec=-54:33:12, v_hel=723 ± 3 km/s, D_hel=61 ± 10 kpc. HE 0437-5439. Originates from LMC! v_ej=870 km/s, t_ej=21.1 Myr. Requires IMBH in LMC.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "61 ± 10",
+            "value": "61 ± 10",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=61 ± 10 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "0.851 ± 0.110",
+            "value": "0.851 ± 0.110",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=0.851 ± 0.110"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "1.936 ± 0.162",
+            "value": "1.936 ± 0.162",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=1.936 ± 0.162"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "723 ± 3",
+            "value": "723 ± 3",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=723 ± 3 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "Centre of the Large Magellanic Cloud",
+          "value": "lmc_center",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10197/arxiv_source/hvs.tex",
+              "start_line": 172,
+              "end_line": 172,
+              "context": "HVS3 is consistent with being ejected from the very center of the LMC"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "origin_classification": {
+          "raw_value": "Hills mechanism ejection by massive black hole in LMC (M_BH >= 4e3-1e4 Msun)",
+          "value": "hills_mechanism_lmc",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10197/arxiv_source/hvs.tex",
+              "start_line": 198,
+              "end_line": 198,
+              "context": "Ejection velocity 871 km/s requires M_BH >= 4e3-1e4 Msun"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "ejection_velocity": {
+          "raw_value": "870",
+          "value": "870",
+          "unit": "km s^-1",
+          "error": "",
+          "lower_error": "66",
+          "upper_error": "69",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10197/arxiv_source/hvs.tex",
+              "start_line": 170,
+              "end_line": 170,
+              "context": "v_ej=870(+69/-66) km/s"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "travel_time": {
+          "raw_value": "21.1",
+          "value": "21.1",
+          "unit": "Myr",
+          "error": "",
+          "lower_error": "4.6",
+          "upper_error": "6.1",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10197/arxiv_source/hvs.tex",
+              "start_line": 170,
+              "end_line": 170,
+              "context": "t_ej=21.1(+6.1/-4.6) Myr"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "hypothesis_metrics": [
+          {
+            "raw_value": "0.40",
+            "value": "0.40",
+            "unit": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 137,
+                "end_line": 138,
+                "context": "P(LMC) = 0.40"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ],
+            "hypothesis": "LMC_origin",
+            "metric_type": "probability"
+          },
+          {
+            "raw_value": "1e-4",
+            "value": "1e-4",
+            "unit": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 137,
+                "end_line": 138,
+                "context": "P(MW) = 1e-4"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ],
+            "hypothesis": "MW_origin",
+            "metric_type": "probability"
+          }
+        ],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-004",
+        "paper_candidate_id": "HVS4",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS4",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS4, RA=09:13:01.01, Dec=+30:51:19.8, D_hel=64 ± 9.8 kpc, v_hel=600.9 ± 6.2 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS4: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=09:13:01.01, Dec=+30:51:19.8, v_hel=600.9 ± 6.2 km/s, D_hel=64 ± 9.8 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "64 ± 9.8",
+            "value": "64 ± 9.8",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=64 ± 9.8 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-0.2 ± 0.4",
+            "value": "-0.2 ± 0.4",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-0.2 ± 0.4"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.4 ± 0.4",
+            "value": "-0.4 ± 0.4",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=-0.4 ± 0.4"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "600.9 ± 6.2",
+            "value": "600.9 ± 6.2",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=600.9 ± 6.2 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-005",
+        "paper_candidate_id": "HVS5",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS5",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS5, RA=09:17:59.48, Dec=+67:22:38.3, D_hel=45 ± 5.2 kpc, v_hel=545.5 ± 4.3 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS5: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=09:17:59.48, Dec=+67:22:38.3, v_hel=545.5 ± 4.3 km/s, D_hel=45 ± 5.2 kpc. Clearly prefers MW origin.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "45 ± 5.2",
+            "value": "45 ± 5.2",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=45 ± 5.2 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-0.023 ± 0.176",
+            "value": "-0.023 ± 0.176",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-0.023 ± 0.176"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-1.179 ± 0.268",
+            "value": "-1.179 ± 0.268",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=-1.179 ± 0.268"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "545.5 ± 4.3",
+            "value": "545.5 ± 4.3",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=545.5 ± 4.3 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-006",
+        "paper_candidate_id": "HVS6",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS6",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS6, RA=11:05:57.45, Dec=+09:34:39.47, D_hel=55 ± 6.9 kpc, v_hel=609.4 ± 6.8 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS6: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=11:05:57.45, Dec=+09:34:39.47, v_hel=609.4 ± 6.8 km/s, D_hel=55 ± 6.9 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "55 ± 6.9",
+            "value": "55 ± 6.9",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=55 ± 6.9 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-0.378 ± 0.664",
+            "value": "-0.378 ± 0.664",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-0.378 ± 0.664"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.503 ± 0.507",
+            "value": "-0.503 ± 0.507",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=-0.503 ± 0.507"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "609.4 ± 6.8",
+            "value": "609.4 ± 6.8",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=609.4 ± 6.8 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-007",
+        "paper_candidate_id": "HVS7",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS7",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS7, RA=11:33:12.12, Dec=+01:08:24.9, D_hel=52 ± 6.4 kpc, v_hel=526.9 ± 3 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS7: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=11:33:12.12, Dec=+01:08:24.9, v_hel=526.9 ± 3 km/s, D_hel=52 ± 6.4 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "52 ± 6.4",
+            "value": "52 ± 6.4",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=52 ± 6.4 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-0.677 ± 0.373",
+            "value": "-0.677 ± 0.373",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-0.677 ± 0.373"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "0.457 ± 0.253",
+            "value": "0.457 ± 0.253",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=0.457 ± 0.253"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "526.9 ± 3",
+            "value": "526.9 ± 3",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=526.9 ± 3 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-008",
+        "paper_candidate_id": "HVS8",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS8",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS8, RA=09:42:14.04, Dec=+20:03:22.1, D_hel=53 ± 9.8 kpc, v_hel=499.3 ± 2.9 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS8: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=09:42:14.04, Dec=+20:03:22.1, v_hel=499.3 ± 2.9 km/s, D_hel=53 ± 9.8 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "53 ± 9.8",
+            "value": "53 ± 9.8",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=53 ± 9.8 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-0.972 ± 0.365",
+            "value": "-0.972 ± 0.365",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-0.972 ± 0.365"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "0.117 ± 0.369",
+            "value": "0.117 ± 0.369",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=0.117 ± 0.369"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "499.3 ± 2.9",
+            "value": "499.3 ± 2.9",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=499.3 ± 2.9 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-009",
+        "paper_candidate_id": "HVS9",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS9",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS9, RA=10:21:37.08, Dec=-00:52:34.8, D_hel=74 ± 12 kpc, v_hel=616.8 ± 5.1 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS9: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=10:21:37.08, Dec=-00:52:34.8, v_hel=616.8 ± 5.1 km/s, D_hel=74 ± 12 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "74 ± 12",
+            "value": "74 ± 12",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=74 ± 12 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "0.412 ± 0.743",
+            "value": "0.412 ± 0.743",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=0.412 ± 0.743"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.213 ± 0.747",
+            "value": "-0.213 ± 0.747",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=-0.213 ± 0.747"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "616.8 ± 5.1",
+            "value": "616.8 ± 5.1",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=616.8 ± 5.1 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-010",
+        "paper_candidate_id": "HVS10",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS10",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS10, RA=12:03:37.85, Dec=+18:02:50.4, D_hel=52 ± 5.8 kpc, v_hel=467.9 ± 5.6 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS10: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=12:03:37.85, Dec=+18:02:50.4, v_hel=467.9 ± 5.6 km/s, D_hel=52 ± 5.8 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "52 ± 5.8",
+            "value": "52 ± 5.8",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=52 ± 5.8 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-2.597 ± 1.288",
+            "value": "-2.597 ± 1.288",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-2.597 ± 1.288"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.788 ± 0.494",
+            "value": "-0.788 ± 0.494",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=-0.788 ± 0.494"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "467.9 ± 5.6",
+            "value": "467.9 ± 5.6",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=467.9 ± 5.6 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-011",
+        "paper_candidate_id": "HVS12",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS12",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS12, RA=10:50:09.59, Dec=+03:15:50.67, D_hel=66 ± 8.5 kpc, v_hel=552.2 ± 6.6 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS12: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=10:50:09.59, Dec=+03:15:50.67, v_hel=552.2 ± 6.6 km/s, D_hel=66 ± 8.5 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "66 ± 8.5",
+            "value": "66 ± 8.5",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=66 ± 8.5 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "0.42 ± 1.377",
+            "value": "0.42 ± 1.377",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=0.42 ± 1.377"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "0.285 ± 0.993",
+            "value": "0.285 ± 0.993",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=0.285 ± 0.993"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "552.2 ± 6.6",
+            "value": "552.2 ± 6.6",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=552.2 ± 6.6 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-012",
+        "paper_candidate_id": "HVS13",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS13",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS13, RA=10:52:48.3, Dec=-00:01:33.94, D_hel=105 ± 19 kpc, v_hel=569.3 ± 6.1 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS13: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=10:52:48.3, Dec=-00:01:33.94, v_hel=569.3 ± 6.1 km/s, D_hel=105 ± 19 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "105 ± 19",
+            "value": "105 ± 19",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=105 ± 19 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-0.9 ± 0.4",
+            "value": "-0.9 ± 0.4",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-0.9 ± 0.4"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "0.5 ± 0.4",
+            "value": "0.5 ± 0.4",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=0.5 ± 0.4"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "569.3 ± 6.1",
+            "value": "569.3 ± 6.1",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=569.3 ± 6.1 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-013",
+        "paper_candidate_id": "HVS15",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS15",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS15, RA=11:33:41.09, Dec=-01:21:14.25, D_hel=67 ± 10 kpc, v_hel=461 ± 6.3 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS15: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=11:33:41.09, Dec=-01:21:14.25, v_hel=461 ± 6.3 km/s, D_hel=67 ± 10 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "67 ± 10",
+            "value": "67 ± 10",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=67 ± 10 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-0.498 ± 1.291",
+            "value": "-0.498 ± 1.291",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-0.498 ± 1.291"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.487 ± 0.567",
+            "value": "-0.487 ± 0.567",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=-0.487 ± 0.567"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "461 ± 6.3",
+            "value": "461 ± 6.3",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=461 ± 6.3 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-014",
+        "paper_candidate_id": "HVS16",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS16",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS16, RA=12:25:23.4, Dec=+05:22:33.84, D_hel=71 ± 12 kpc, v_hel=429.8 ± 7 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS16: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=12:25:23.4, Dec=+05:22:33.84, v_hel=429.8 ± 7 km/s, D_hel=71 ± 12 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "71 ± 12",
+            "value": "71 ± 12",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=71 ± 12 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-1.895 ± 1.518",
+            "value": "-1.895 ± 1.518",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-1.895 ± 1.518"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-1.145 ± 0.856",
+            "value": "-1.145 ± 0.856",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=-1.145 ± 0.856"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "429.8 ± 7",
+            "value": "429.8 ± 7",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=429.8 ± 7 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-015",
+        "paper_candidate_id": "HVS17",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS17",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS17, RA=16:41:56.39, Dec=+47:23:46.12, D_hel=49 ± 4 kpc, v_hel=250.2 ± 2.9 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS17: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=16:41:56.39, Dec=+47:23:46.12, v_hel=250.2 ± 2.9 km/s, D_hel=49 ± 4 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "49 ± 4",
+            "value": "49 ± 4",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=49 ± 4 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-1.034 ± 0.198",
+            "value": "-1.034 ± 0.198",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-1.034 ± 0.198"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-1.065 ± 0.323",
+            "value": "-1.065 ± 0.323",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=-1.065 ± 0.323"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "250.2 ± 2.9",
+            "value": "250.2 ± 2.9",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=250.2 ± 2.9 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-016",
+        "paper_candidate_id": "HVS18",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS18",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS18, RA=23:29:04.94, Dec=+33:00:11.47, D_hel=80 ± 11 kpc, v_hel=237.3 ± 6.4 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS18: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=23:29:04.94, Dec=+33:00:11.47, v_hel=237.3 ± 6.4 km/s, D_hel=80 ± 11 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "80 ± 11",
+            "value": "80 ± 11",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=80 ± 11 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-0.123 ± 0.656",
+            "value": "-0.123 ± 0.656",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-0.123 ± 0.656"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.119 ± 0.495",
+            "value": "-0.119 ± 0.495",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=-0.119 ± 0.495"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "237.3 ± 6.4",
+            "value": "237.3 ± 6.4",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=237.3 ± 6.4 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-017",
+        "paper_candidate_id": "HVS19",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS19",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS19, RA=11:35:17.75, Dec=+08:02:01.49, D_hel=98 ± 15 kpc, v_hel=592.8 ± 11.8 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS19: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=11:35:17.75, Dec=+08:02:01.49, v_hel=592.8 ± 11.8 km/s, D_hel=98 ± 15 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "98 ± 15",
+            "value": "98 ± 15",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=98 ± 15 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-0.295 ± 1.790",
+            "value": "-0.295 ± 1.790",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-0.295 ± 1.790"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "0.413 ± 1.224",
+            "value": "0.413 ± 1.224",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=0.413 ± 1.224"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "592.8 ± 11.8",
+            "value": "592.8 ± 11.8",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=592.8 ± 11.8 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-018",
+        "paper_candidate_id": "HVS20",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS20",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS20, RA=11:36:37.13, Dec=+03:31:06.84, D_hel=76 ± 11 kpc, v_hel=512.1 ± 8.5 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS20: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=11:36:37.13, Dec=+03:31:06.84, v_hel=512.1 ± 8.5 km/s, D_hel=76 ± 11 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "76 ± 11",
+            "value": "76 ± 11",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=76 ± 11 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "0.453 ± 1.451",
+            "value": "0.453 ± 1.451",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=0.453 ± 1.451"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "0.569 ± 1.014",
+            "value": "0.569 ± 1.014",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=0.569 ± 1.014"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "512.1 ± 8.5",
+            "value": "512.1 ± 8.5",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=512.1 ± 8.5 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-019",
+        "paper_candidate_id": "HVS21",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS21",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS21, RA=10:34:18.25, Dec=+48:11:34.57, D_hel=113 ± 21 kpc, v_hel=356.8 ± 7.5 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS21: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=10:34:18.25, Dec=+48:11:34.57, v_hel=356.8 ± 7.5 km/s, D_hel=113 ± 21 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "113 ± 21",
+            "value": "113 ± 21",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=113 ± 21 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "0.099 ± 0.693",
+            "value": "0.099 ± 0.693",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=0.099 ± 0.693"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.263 ± 0.881",
+            "value": "-0.263 ± 0.881",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=-0.263 ± 0.881"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "356.8 ± 7.5",
+            "value": "356.8 ± 7.5",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=356.8 ± 7.5 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-020",
+        "paper_candidate_id": "HVS22",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS22",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS22, RA=11:41:46.44, Dec=+04:42:17.29, D_hel=85 ± 13 kpc, v_hel=597.8 ± 13.4 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS22: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=11:41:46.44, Dec=+04:42:17.29, v_hel=597.8 ± 13.4 km/s, D_hel=85 ± 13 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "85 ± 13",
+            "value": "85 ± 13",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=85 ± 13 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "0.184 ± 2.024",
+            "value": "0.184 ± 2.024",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=0.184 ± 2.024"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "1.987 ± 1.443",
+            "value": "1.987 ± 1.443",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=1.987 ± 1.443"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "597.8 ± 13.4",
+            "value": "597.8 ± 13.4",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=597.8 ± 13.4 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-021",
+        "paper_candidate_id": "HVS24",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS24",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HVS24, RA=11:11:36.44, Dec=+00:58:56.44, D_hel=56 ± 7 kpc, v_hel=492.5 ± 5.3 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS24: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=11:11:36.44, Dec=+00:58:56.44, v_hel=492.5 ± 5.3 km/s, D_hel=56 ± 7 kpc. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "56 ± 7",
+            "value": "56 ± 7",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=56 ± 7 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "0.301 ± 0.777",
+            "value": "0.301 ± 0.777",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=0.301 ± 0.777"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.408 ± 0.578",
+            "value": "-0.408 ± 0.578",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=-0.408 ± 0.578"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "492.5 ± 5.3",
+            "value": "492.5 ± 5.3",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=492.5 ± 5.3 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-022",
+        "paper_candidate_id": "LAMOST-HVS1",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LAMOST-HVS1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: LAMOST-HVS1, RA=09:12:06.52, Dec=+09:16:21.8, D_hel=13.91 ± 2 kpc, v_hel=611.65 ± 4.63 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "LAMOST-HVS1: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=09:12:06.52, Dec=+09:16:21.8, v_hel=611.65 ± 4.63 km/s, D_hel=13.91 ± 2 kpc. Discovered by LAMOST. Clearly MW origin.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "13.91 ± 2",
+            "value": "13.91 ± 2",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=13.91 ± 2 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-3.537 ± 0.110",
+            "value": "-3.537 ± 0.110",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-3.537 ± 0.110"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.62 ± 0.093",
+            "value": "-0.62 ± 0.093",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=-0.62 ± 0.093"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "611.65 ± 4.63",
+            "value": "611.65 ± 4.63",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=611.65 ± 4.63 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-023",
+        "paper_candidate_id": "LAMOST-HVS2",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LAMOST-HVS2",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: LAMOST-HVS2, RA=16:20:20.77, Dec=+37:47:39.9, D_hel=22.24 ± 4.6 kpc, v_hel=341.1 ± 7.79 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "LAMOST-HVS2: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=16:20:20.77, Dec=+37:47:39.9, v_hel=341.1 ± 7.79 km/s, D_hel=22.24 ± 4.6 kpc. Discovered by LAMOST. Clearly MW origin.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "22.24 ± 4.6",
+            "value": "22.24 ± 4.6",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=22.24 ± 4.6 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-2.563 ± 0.056",
+            "value": "-2.563 ± 0.056",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-2.563 ± 0.056"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.924 ± 0.072",
+            "value": "-0.924 ± 0.072",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=-0.924 ± 0.072"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "341.1 ± 7.79",
+            "value": "341.1 ± 7.79",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=341.1 ± 7.79 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-024",
+        "paper_candidate_id": "LAMOST-HVS3",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LAMOST-HVS3",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: LAMOST-HVS3, RA=03:21:17.08, Dec=+19:07:36.2, D_hel=22.32 ± 2.5 kpc, v_hel=361.38 ± 12.52 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "LAMOST-HVS3: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=03:21:17.08, Dec=+19:07:36.2, v_hel=361.38 ± 12.52 km/s, D_hel=22.32 ± 2.5 kpc. Discovered by LAMOST. Clearly MW origin.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "22.32 ± 2.5",
+            "value": "22.32 ± 2.5",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=22.32 ± 2.5 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "1.509 ± 0.199",
+            "value": "1.509 ± 0.199",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=1.509 ± 0.199"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.281 ± 0.155",
+            "value": "-0.281 ± 0.155",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=-0.281 ± 0.155"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "361.38 ± 12.52",
+            "value": "361.38 ± 12.52",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=361.38 ± 12.52 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-025",
+        "paper_candidate_id": "HD271791",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HD271791",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HD271791, RA=06:02:27.88, Dec=-66:47:28.68, D_hel=21 ± 4 kpc, v_hel=441 ± 1 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HD271791: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=06:02:27.88, Dec=-66:47:28.68, v_hel=441 ± 1 km/s, D_hel=21 ± 4 kpc. B-type runaway. Previously known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "21 ± 4",
+            "value": "21 ± 4",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=21 ± 4 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-0.619 ± 0.067",
+            "value": "-0.619 ± 0.067",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-0.619 ± 0.067"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "4.731 ± 0.071",
+            "value": "4.731 ± 0.071",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=4.731 ± 0.071"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "441 ± 1",
+            "value": "441 ± 1",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=441 ± 1 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10197:cand-026",
+        "paper_candidate_id": "HIP60350",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HIP60350",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: HIP60350, RA=12:24:30.23, Dec=+34:57:58.72, D_hel=3.1 ± 0.6 kpc, v_hel=262 ± 5 km/s"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HIP60350: Previously known hypervelocity star, re-assessed with Gaia DR2 proper motions by Erkal et al. (2019). RA=12:24:30.23, Dec=+34:57:58.72, v_hel=262 ± 5 km/s, D_hel=3.1 ± 0.6 kpc. Nearby HVS candidate, HST proper motions.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper integrates Gaia DR2 proper motions to rewind orbits of 26 previously known HVSs in the combined Milky Way + LMC potential. Monte Carlo sampling of 6D phase space with observational uncertainties. Stars tabulated with RA, Dec, pm, v_hel, D_hel in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 110,
+            "end_line": 112,
+            "context": "Abstract: 26 previously known HVSs, Gaia DR2 proper motions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Sec 2.2: MC sampling of 6d phase space, rewind 500 Myr"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 270,
+            "end_line": 301,
+            "context": "Tab. 1: 26 HVSs with coordinates, proper motions, velocities, distances"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10197/arxiv_source/hvs.tex",
+            "start_line": 120,
+            "end_line": 121,
+            "context": "HVS1-24, US708, HE0437-5439, HD271791, HIP60350, LAMOST-HVS1-3 are previously known"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "3.1 ± 0.6",
+            "value": "3.1 ± 0.6",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: D_hel=3.1 ± 0.6 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-13.51 ± 1.31",
+            "value": "-13.51 ± 1.31",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmRA=-13.51 ± 1.31"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "16.34 ± 1.37",
+            "value": "16.34 ± 1.37",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: pmDec=16.34 ± 1.37"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "262 ± 5",
+            "value": "262 ± 5",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10197/arxiv_source/hvs.tex",
+                "start_line": 275,
+                "end_line": 301,
+                "context": "Tab. 1: v_hel=262 ± 5 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": []
+}

@@ -1,0 +1,200 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T13:17:34",
+  "paper": {
+    "arxiv_id": "2502.00102",
+    "title": "Hypervelocity Stars Trace a Supermassive Black Hole in the Large Magellanic Cloud",
+    "month": "2025-01"
+  },
+  "review": {
+    "path": "literature/2502.00102/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T131734",
+    "started_at": "2026-05-17T13:17:34",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2502.00102",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-hvs_data-2",
+      "internal_table_id": "table-tab-hvs_data-2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2502.00102/arxiv_source/sample631.tex",
+        "start_line": 121,
+        "end_line": 152,
+        "caption": "HVS Survey Data with \\textit{Gaia} DR3 astrometry. Velocities are in $\\text{km}\\text{ s}^{-1}$ and proper motions are in $\\text{mas}\\text{ yr}^{-1}$. All of these stars have RUWE values close to 1. We describe how $p-$values and the likelihood ratios are calculated for each origin hypothesis in Section \\ref{sec:inverse}.",
+        "label": "tab:hvs_data"
+      },
+      "source_path": "literature/2502.00102/arxiv_source/sample631.tex",
+      "excerpt_path": "literature/2502.00102/catalog_sources/table-tab-hvs_data-2/excerpt.tex",
+      "sha256": "72b07cf7fecedcad61f47a3571a82e7caea08f4a909c3f4a667d708b905b548e",
+      "line_count": 32,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-hvs_data-2",
+      "internal_table_id": "table-tab-hvs_data-2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2502.00102/catalog_tables/table-tab-hvs_data-2.ecsv",
+      "caption": "HVS Survey Data with \\textit{Gaia} DR3 astrometry. Velocities are in $\\text{km}\\text{ s}^{-1}$ and proper motions are in $\\text{mas}\\text{ yr}^{-1}$. All of these stars have RUWE values close to 1. We describe how $p-$values and the likelihood ratios are calculated for each origin hypothesis in Section \\ref{sec:inverse}.",
+      "label": "tab:hvs_data",
+      "row_count": 21,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "HVS",
+          "source_id",
+          "v_helio",
+          "pmra",
+          "pmdec",
+          "d_helio [kpc]",
+          "p_MW",
+          "p_LMC",
+          "\\log\\frac\\mathcalL_LMC\\mathcalL_MW"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "HVS",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "source_id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "v_helio",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "pmra",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "pmdec",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "d_helio [kpc]",
+          "unit_text": "d_helio [kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "p_MW",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "p_LMC",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\log\\frac\\mathcalL_LMC\\mathcalL_MW",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplcckx_1v/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.00102/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplcckx_1v/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.00102/catalog_sources/table-tab-hvs_data-2/wrapped.tex",
+            "html": "literature/2502.00102/catalog_sources/table-tab-hvs_data-2/latexml.html",
+            "stdout": "literature/2502.00102/catalog_sources/table-tab-hvs_data-2/latexml.stdout.txt",
+            "stderr": "literature/2502.00102/catalog_sources/table-tab-hvs_data-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "72b07cf7fecedcad61f47a3571a82e7caea08f4a909c3f4a667d708b905b548e"
+    }
+  ]
+}

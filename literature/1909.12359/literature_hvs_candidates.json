@@ -1,0 +1,89 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:16:03",
+  "paper": {
+    "arxiv_id": "1909.12359",
+    "bibcode": "2019ApJ...886...19S",
+    "title": "Lyman-$\\\\alpha$ Observations of High Radial Velocity Low-Mass Stars Ross 1044 and Ross 825",
+    "month": "2019-09",
+    "source_note_json": "notes/2019/2019-09/2019-09.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1909.12359",
+      "pdf": "https://arxiv.org/pdf/1909.12359"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1909.12359",
+    "audit_path": "literature/1909.12359/audit.json",
+    "catalog_review_path": "literature/1909.12359/catalog_review.json",
+    "catalog_extraction_path": "literature/1909.12359/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1909.12359/catalog_tables/table-tab-target-sample.ecsv",
+      "literature/1909.12359/catalog_tables/table-tab-hst-obs.ecsv",
+      "literature/1909.12359/catalog_tables/table-tab-emcee-params.ecsv",
+      "literature/1909.12359/catalog_tables/table-tab-galex-nuv.ecsv",
+      "literature/1909.12359/catalog_tables/table-tab-galex-fuv.ecsv",
+      "literature/1909.12359/catalog_tables/table-tab-all-lya-props.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:16:03",
+    "extractor": "agent",
+    "summary": "本文利用HST/STIS观测了两颗高视向速度低质量星Ross 825 (K3) 和 Ross 1044 (M0)的Lyman-α发射线，利用它们的高视向速度(≥150 km/s)使Lyα线发生显著波长位移以绕过ISM和geocoronal污染。两颗星为已确认的银河系晕族低质量星，具有高视向速度但非超高速星候选体。论文主要贡献为建立低质量星的Teff-Lyα流量关系和GALEX UV-Lyα流量转换关系，不涉及HVS候选体的发现或分类。无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "stellar_parameter_inference",
+      "summary": "HST/STIS G140M spectroscopy (1222 Å central wavelength). Lyα line profile fitting with Gaussian+H self-reversal model + ISM absorption model using emcee MCMC.",
+      "inputs": ["HST/STIS"],
+      "outputs": ["Lyα flux, line profiles"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1909.12359/arxiv_source/accepted1.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Sec 2-3"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": ["step-01"],
+      "step_type": "photometric_or_sed_modeling",
+      "summary": "Gaia DR2 astrometry + GALEX UV photometry + 2MASS photometry for distance and stellar parameters. Empirical Teff-Lyα and GALEX-Lyα flux relations.",
+      "inputs": ["Gaia DR2", "GALEX", "2MASS"],
+      "outputs": ["Teff-Lyα relation", "GALEX-Lyα flux conversion"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1909.12359/arxiv_source/accepted1.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Sec 4-5"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "grp-high-rv-low-mass",
+      "description": "Ross 825 (K3) and Ross 1044 (M0), two high-RV halo stars used as Lyα observation targets. High RV enables Lyα line shift past ISM/geocoronal contamination, but neither star is an HVS/unbound candidate.",
+      "decision": "excluded",
+      "reason": "Both stars are previously known low-mass halo stars with high radial velocities used as spectroscopic targets for Lyα measurements. Neither star is identified as a hypervelocity star or unbound candidate by the paper. The paper's focus is on Lyα flux calibration, not HVS discovery.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1909.12359/arxiv_source/accepted1.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Full paper"
+        }
+      ]
+    }
+  ]
+}

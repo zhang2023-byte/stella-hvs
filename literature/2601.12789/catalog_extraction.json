@@ -1,0 +1,1219 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:33",
+  "paper": {
+    "arxiv_id": "2601.12789",
+    "title": "Classical Be Stars and Classical Be Star Binaries from LAMOST DR12",
+    "month": "2026-01"
+  },
+  "review": {
+    "path": "literature/2601.12789/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124033",
+    "started_at": "2026-05-17T12:40:33",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2601.12789",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 7,
+      "work_count": 7,
+      "table_count": 7,
+      "success_count": 7,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 7,
+      "file_success_count": 7,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-final_sample",
+      "internal_table_id": "table-tab-final_sample",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2601.12789/arxiv_source/main.tex",
+        "start_line": 96,
+        "end_line": 114,
+        "caption": "CBe stars identified from LAMOST DR12 \\label{tab:final_sample}",
+        "label": "tab:final_sample"
+      },
+      "source_path": "literature/2601.12789/arxiv_source/main.tex",
+      "excerpt_path": "literature/2601.12789/catalog_sources/table-tab-final_sample/excerpt.tex",
+      "sha256": "5aaf70f144bc51776fcbce71d55412d4e15c39b0ab8f2e74948d80cec651d0cd",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-exluded",
+      "internal_table_id": "table-tab-exluded",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2601.12789/arxiv_source/main.tex",
+        "start_line": 116,
+        "end_line": 163,
+        "caption": "{33 sources excluded by cross-matching with known CBe star catalogs and IR test} \\label{tab:exluded}",
+        "label": "tab:exluded"
+      },
+      "source_path": "literature/2601.12789/arxiv_source/main.tex",
+      "excerpt_path": "literature/2601.12789/catalog_sources/table-tab-exluded/excerpt.tex",
+      "sha256": "de7809bb6c38d4f8d46dbba74299e8198d234f7eeef61cb7a083363dd9845f3c",
+      "line_count": 48,
+      "error": ""
+    },
+    {
+      "id": "table-tab-spectral_match",
+      "internal_table_id": "table-tab-spectral_match",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2601.12789/arxiv_source/main.tex",
+        "start_line": 165,
+        "end_line": 183,
+        "caption": "Spectral match results of sources with spectra of high SNR \\label{tab:spectral_match}",
+        "label": "tab:spectral_match"
+      },
+      "source_path": "literature/2601.12789/arxiv_source/main.tex",
+      "excerpt_path": "literature/2601.12789/catalog_sources/table-tab-spectral_match/excerpt.tex",
+      "sha256": "dc191978393f10c5d1abdf10e53a1e3487a0845448d0c75a1544333471d2fbe3",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-CBe-star-binaries",
+      "internal_table_id": "table-tab-CBe-star-binaries",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2601.12789/arxiv_source/main.tex",
+        "start_line": 205,
+        "end_line": 234,
+        "caption": "13 newly identified CBe star binaries from LAMOST DR12 \\label{tab:CBe star binaries}",
+        "label": "tab:CBe star binaries"
+      },
+      "source_path": "literature/2601.12789/arxiv_source/main.tex",
+      "excerpt_path": "literature/2601.12789/catalog_sources/table-tab-CBe-star-binaries/excerpt.tex",
+      "sha256": "f1743e1c41bc77d2a653b10b02d7c1d15b1a66dbadc70ec2b1a0c76d1eb980ee",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-tab-potential-CBe-star-binaries",
+      "internal_table_id": "table-tab-potential-CBe-star-binaries",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2601.12789/arxiv_source/main.tex",
+        "start_line": 277,
+        "end_line": 333,
+        "caption": "Potential CBe star binaries from LAMOST DR12 \\label{tab:potential CBe star binaries}",
+        "label": "tab:potential CBe star binaries"
+      },
+      "source_path": "literature/2601.12789/arxiv_source/main.tex",
+      "excerpt_path": "literature/2601.12789/catalog_sources/table-tab-potential-CBe-star-binaries/excerpt.tex",
+      "sha256": "0ad0335a7746edee520a10d724331d92c96b317d476f45971d261eb9217c6297",
+      "line_count": 57,
+      "error": ""
+    },
+    {
+      "id": "table-tab-potential-cluster-members",
+      "internal_table_id": "table-tab-potential-cluster-members",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2601.12789/arxiv_source/main.tex",
+        "start_line": 374,
+        "end_line": 435,
+        "caption": "Potential cluster members of CBe stars from LAMOST DR12. \\label{tab:potential cluster members}",
+        "label": "tab:potential cluster members"
+      },
+      "source_path": "literature/2601.12789/arxiv_source/main.tex",
+      "excerpt_path": "literature/2601.12789/catalog_sources/table-tab-potential-cluster-members/excerpt.tex",
+      "sha256": "0c79aef2fe2139187c9472d0e6aaf0fc8c3c9b32f4a1ddfb2adc3290ee47eaf5",
+      "line_count": 62,
+      "error": ""
+    },
+    {
+      "id": "table-tab-runaway-stars",
+      "internal_table_id": "table-tab-runaway-stars",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2601.12789/arxiv_source/main.tex",
+        "start_line": 438,
+        "end_line": 494,
+        "caption": "Peculiar velocities of partial CBe stars from LAMOST DR12. \\label{tab:runaway stars}",
+        "label": "tab:runaway stars"
+      },
+      "source_path": "literature/2601.12789/arxiv_source/main.tex",
+      "excerpt_path": "literature/2601.12789/catalog_sources/table-tab-runaway-stars/excerpt.tex",
+      "sha256": "802fe9cf783708889955425e59cb277730d314bf67a2739b347c82112bfd47bf",
+      "line_count": 57,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-final_sample",
+      "internal_table_id": "table-tab-final_sample",
+      "status": "success",
+      "ecsv_path": "literature/2601.12789/catalog_tables/table-tab-final_sample.ecsv",
+      "caption": "CBe stars identified from LAMOST DR12 \\label{tab:final_sample}",
+      "label": "tab:final_sample",
+      "row_count": 6,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "LAMOST",
+          "Simbad",
+          "Gaia DR3",
+          "R.A.",
+          "Decl.",
+          "New"
+        ],
+        [
+          "designation",
+          "name",
+          "ID",
+          "(deg)",
+          "(deg)",
+          "CBe star?"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "LAMOST | designation",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Simbad | name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Gaia DR3 | ID",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "R.A. | (deg)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Decl. | (deg)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "New | CBe star?",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_m4_4d6x/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2601.12789/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_m4_4d6x/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2601.12789/catalog_sources/table-tab-final_sample/wrapped.tex",
+            "html": "literature/2601.12789/catalog_sources/table-tab-final_sample/latexml.html",
+            "stdout": "literature/2601.12789/catalog_sources/table-tab-final_sample/latexml.stdout.txt",
+            "stderr": "literature/2601.12789/catalog_sources/table-tab-final_sample/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5aaf70f144bc51776fcbce71d55412d4e15c39b0ab8f2e74948d80cec651d0cd"
+    },
+    {
+      "id": "table-tab-exluded",
+      "internal_table_id": "table-tab-exluded",
+      "status": "success",
+      "ecsv_path": "literature/2601.12789/catalog_tables/table-tab-exluded.ecsv",
+      "caption": "{33 sources excluded by cross-matching with known CBe star catalogs and IR test} \\label{tab:exluded}",
+      "label": "tab:exluded",
+      "row_count": 33,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "LAMOST",
+          "Gaia DR3",
+          "R.A.",
+          "Decl.",
+          "Excluded by",
+          "Other type(s)",
+          "H - K",
+          "K - W 1"
+        ],
+        [
+          "designation",
+          "ID",
+          "(deg)",
+          "(deg)",
+          "",
+          "[Ref.]",
+          "(mag)",
+          "(mag)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "LAMOST | designation",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR3 | ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "R.A. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Decl. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Excluded by",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Other type(s) | [Ref.]",
+          "unit_text": "[Ref.]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "H - K | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "K - W 1 | (mag)",
+          "unit_text": "K - W 1",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpbvl8tp0l/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2601.12789/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpbvl8tp0l/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2601.12789/catalog_sources/table-tab-exluded/wrapped.tex",
+            "html": "literature/2601.12789/catalog_sources/table-tab-exluded/latexml.html",
+            "stdout": "literature/2601.12789/catalog_sources/table-tab-exluded/latexml.stdout.txt",
+            "stderr": "literature/2601.12789/catalog_sources/table-tab-exluded/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "de7809bb6c38d4f8d46dbba74299e8198d234f7eeef61cb7a083363dd9845f3c"
+    },
+    {
+      "id": "table-tab-spectral_match",
+      "internal_table_id": "table-tab-spectral_match",
+      "status": "success",
+      "ecsv_path": "literature/2601.12789/catalog_tables/table-tab-spectral_match.ecsv",
+      "caption": "Spectral match results of sources with spectra of high SNR \\label{tab:spectral_match}",
+      "label": "tab:spectral_match",
+      "row_count": 6,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "LAMOST",
+          "Gaia DR3",
+          "SNR",
+          "Best-matched",
+          "Spectral",
+          "Luminosity",
+          "\\chi^2 / N"
+        ],
+        [
+          "designation",
+          "ID",
+          "( g band)",
+          "standard star",
+          "type",
+          "class",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "LAMOST | designation",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR3 | ID",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "SNR | ( g band)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Best-matched | standard star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Spectral | type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Luminosity | class",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\chi^2 / N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphvq4tqjm/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2601.12789/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphvq4tqjm/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2601.12789/catalog_sources/table-tab-spectral_match/wrapped.tex",
+            "html": "literature/2601.12789/catalog_sources/table-tab-spectral_match/latexml.html",
+            "stdout": "literature/2601.12789/catalog_sources/table-tab-spectral_match/latexml.stdout.txt",
+            "stderr": "literature/2601.12789/catalog_sources/table-tab-spectral_match/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "dc191978393f10c5d1abdf10e53a1e3487a0845448d0c75a1544333471d2fbe3"
+    },
+    {
+      "id": "table-tab-CBe-star-binaries",
+      "internal_table_id": "table-tab-CBe-star-binaries",
+      "status": "success",
+      "ecsv_path": "literature/2601.12789/catalog_tables/table-tab-CBe-star-binaries.ecsv",
+      "caption": "13 newly identified CBe star binaries from LAMOST DR12 \\label{tab:CBe star binaries}",
+      "label": "tab:CBe star binaries",
+      "row_count": 16,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "LAMOST",
+          "Gaia DR3",
+          "R.A.",
+          "Decl.",
+          "N",
+          "\\triangle RV a",
+          "\\sigma_detect",
+          "RUWE",
+          "New",
+          "Notes"
+        ],
+        [
+          "designation",
+          "ID",
+          "(deg)",
+          "(deg)",
+          "",
+          "",
+          "",
+          "",
+          "CBe star?",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "LAMOST | designation",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR3 | ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "R.A. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Decl. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\triangle RV a",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_detect",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "RUWE",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "New | CBe star?",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Notes",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgs99fdqm/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2601.12789/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgs99fdqm/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2601.12789/catalog_sources/table-tab-CBe-star-binaries/wrapped.tex",
+            "html": "literature/2601.12789/catalog_sources/table-tab-CBe-star-binaries/latexml.html",
+            "stdout": "literature/2601.12789/catalog_sources/table-tab-CBe-star-binaries/latexml.stdout.txt",
+            "stderr": "literature/2601.12789/catalog_sources/table-tab-CBe-star-binaries/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f1743e1c41bc77d2a653b10b02d7c1d15b1a66dbadc70ec2b1a0c76d1eb980ee"
+    },
+    {
+      "id": "table-tab-potential-CBe-star-binaries",
+      "internal_table_id": "table-tab-potential-CBe-star-binaries",
+      "status": "success",
+      "ecsv_path": "literature/2601.12789/catalog_tables/table-tab-potential-CBe-star-binaries.ecsv",
+      "caption": "Potential CBe star binaries from LAMOST DR12 \\label{tab:potential CBe star binaries}",
+      "label": "tab:potential CBe star binaries",
+      "row_count": 39,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "LAMOST",
+          "Gaia DR3",
+          "N",
+          "visibility",
+          "RUWE",
+          "Percentage a",
+          "RUWE",
+          "ipd_frac",
+          "\\triangle RV b",
+          "New"
+        ],
+        [
+          "designation",
+          "ID",
+          "",
+          "_periods_used",
+          "",
+          "(%)",
+          "_sig",
+          "_multi_peak (%)",
+          "",
+          "CBe star?"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "LAMOST | designation",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR3 | ID",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "N",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "visibility | _periods_used",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "RUWE",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Percentage a | (%)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "RUWE | _sig",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "ipd_frac | _multi_peak (%)",
+          "unit_text": "_multi_peak (%)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\triangle RV b",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "New | CBe star?",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp23n17x4t/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2601.12789/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp23n17x4t/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2601.12789/catalog_sources/table-tab-potential-CBe-star-binaries/wrapped.tex",
+            "html": "literature/2601.12789/catalog_sources/table-tab-potential-CBe-star-binaries/latexml.html",
+            "stdout": "literature/2601.12789/catalog_sources/table-tab-potential-CBe-star-binaries/latexml.stdout.txt",
+            "stderr": "literature/2601.12789/catalog_sources/table-tab-potential-CBe-star-binaries/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0ad0335a7746edee520a10d724331d92c96b317d476f45971d261eb9217c6297"
+    },
+    {
+      "id": "table-tab-potential-cluster-members",
+      "internal_table_id": "table-tab-potential-cluster-members",
+      "status": "success",
+      "ecsv_path": "literature/2601.12789/catalog_tables/table-tab-potential-cluster-members.ecsv",
+      "caption": "Potential cluster members of CBe stars from LAMOST DR12. \\label{tab:potential cluster members}",
+      "label": "tab:potential cluster members",
+      "row_count": 39,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "LAMOST",
+          "Gaia DR3",
+          "pmra(s) a",
+          "pmdec(s) b",
+          "Dis.(s) c",
+          "New",
+          "Cluster",
+          "pmra(c) d",
+          "pmdec(c) e",
+          "Dis.(c) f"
+        ],
+        [
+          "designation",
+          "ID",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(kpc)",
+          "CBe star?",
+          "name",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(kpc)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "LAMOST | designation",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR3 | ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "pmra(s) a | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "pmdec(s) b | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Dis.(s) c | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "New | CBe star?",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Cluster | name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "pmra(c) d | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "pmdec(c) e | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Dis.(c) f | (kpc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpw7oq8uzr/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2601.12789/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpw7oq8uzr/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2601.12789/catalog_sources/table-tab-potential-cluster-members/wrapped.tex",
+            "html": "literature/2601.12789/catalog_sources/table-tab-potential-cluster-members/latexml.html",
+            "stdout": "literature/2601.12789/catalog_sources/table-tab-potential-cluster-members/latexml.stdout.txt",
+            "stderr": "literature/2601.12789/catalog_sources/table-tab-potential-cluster-members/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0c79aef2fe2139187c9472d0e6aaf0fc8c3c9b32f4a1ddfb2adc3290ee47eaf5"
+    },
+    {
+      "id": "table-tab-runaway-stars",
+      "internal_table_id": "table-tab-runaway-stars",
+      "status": "success",
+      "ecsv_path": "literature/2601.12789/catalog_tables/table-tab-runaway-stars.ecsv",
+      "caption": "Peculiar velocities of partial CBe stars from LAMOST DR12. \\label{tab:runaway stars}",
+      "label": "tab:runaway stars",
+      "row_count": 38,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR3",
+          "RV",
+          "pmra(s)",
+          "pmdec(s)",
+          "Dis.(s)",
+          "New",
+          "N",
+          "V_pec,McMillan17",
+          "V_pec,MWPotential2014",
+          "V_pec,Cautun20",
+          "V_pec,Irrgang13I"
+        ],
+        [
+          "ID",
+          "(km s -1 )",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(kpc)",
+          "CBe star?",
+          "",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR3 | ID",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RV | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "pmra(s) | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "pmdec(s) | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Dis.(s) | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "New | CBe star?",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "N",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "V_pec,McMillan17 | (km s -1 )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "V_pec,MWPotential2014 | (km s -1 )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "V_pec,Cautun20 | (km s -1 )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "V_pec,Irrgang13I | (km s -1 )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpd27pw4dj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2601.12789/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpd27pw4dj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2601.12789/catalog_sources/table-tab-runaway-stars/wrapped.tex",
+            "html": "literature/2601.12789/catalog_sources/table-tab-runaway-stars/latexml.html",
+            "stdout": "literature/2601.12789/catalog_sources/table-tab-runaway-stars/latexml.stdout.txt",
+            "stderr": "literature/2601.12789/catalog_sources/table-tab-runaway-stars/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "802fe9cf783708889955425e59cb277730d314bf67a2739b347c82112bfd47bf"
+    }
+  ]
+}

@@ -1,0 +1,199 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T13:17:18",
+  "paper": {
+    "arxiv_id": "2510.03393",
+    "title": "Threading the Magellanic Needle: Hypervelocity Stars Trace the Past Location of the LMC",
+    "month": "2025-10"
+  },
+  "review": {
+    "path": "literature/2510.03393/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T131718",
+    "started_at": "2026-05-17T13:17:18",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2510.03393",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-ICdata-2",
+      "internal_table_id": "table-tab-ICdata-2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2510.03393/arxiv_source/main.tex",
+        "start_line": 100,
+        "end_line": 112,
+        "caption": "Initial conditions of the LMC and HVSs used to integrate orbits.",
+        "label": "tab:ICdata"
+      },
+      "source_path": "literature/2510.03393/arxiv_source/main.tex",
+      "excerpt_path": "literature/2510.03393/catalog_sources/table-tab-ICdata-2/excerpt.tex",
+      "sha256": "398a4f2fdd68f739b14d10112b4809bdd0bb0f4f96af6a1268507cd65db2082b",
+      "line_count": 13,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-ICdata-2",
+      "internal_table_id": "table-tab-ICdata-2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+      "caption": "Initial conditions of the LMC and HVSs used to integrate orbits.",
+      "label": "tab:ICdata",
+      "row_count": 4,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "RA",
+          "Dec",
+          "Distance",
+          "\\mu_\\alpha",
+          "\\mu_\\delta",
+          "RV",
+          "Gaia source_id"
+        ],
+        [
+          "",
+          "(deg)",
+          "(deg)",
+          "(kpc)",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(km s^-1)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Distance | (kpc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\alpha | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_\\delta | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "RV | (km s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Gaia source_id",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_vkti_p_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2510.03393/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_vkti_p_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2510.03393/catalog_sources/table-tab-ICdata-2/wrapped.tex",
+            "html": "literature/2510.03393/catalog_sources/table-tab-ICdata-2/latexml.html",
+            "stdout": "literature/2510.03393/catalog_sources/table-tab-ICdata-2/latexml.stdout.txt",
+            "stderr": "literature/2510.03393/catalog_sources/table-tab-ICdata-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "398a4f2fdd68f739b14d10112b4809bdd0bb0f4f96af6a1268507cd65db2082b"
+    }
+  ]
+}

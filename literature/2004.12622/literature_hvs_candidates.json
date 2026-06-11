@@ -1,0 +1,79 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:31:07",
+  "paper": {
+    "arxiv_id": "2004.12622",
+    "bibcode": "2020A&A...638A..90C",
+    "title": "The K supergiant runaway star HD 137071",
+    "month": "2020-04",
+    "source_note_json": "notes/2020/2020-04/2020-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2004.12622",
+      "pdf": "https://arxiv.org/pdf/2004.12622"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2004.12622",
+    "audit_path": "literature/2004.12622/audit.json",
+    "catalog_review_path": "literature/2004.12622/catalog_review.json",
+    "catalog_extraction_path": "literature/2004.12622/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2004.12622/catalog_tables/table-basicpars.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:33:00",
+    "extractor": "agent",
+    "summary": "本文研究K4II超巨星HD 137071，确认其为一颗速逃星（runaway star），空间速度约54.1 km/s（相对于LSR）。该星虽被归类为速逃星，但其速度远低于银河系逃逸速度（~550 km/s），是银河系束缚恒星。论文追溯其起源至约32 Myr前的双星超新星爆发抛射机制，未声称该星为银河系非束缚超高速星（HVS）。因此无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文研究单颗K型超巨星速逃星HD 137071，其速度为54.1 km/s，远低于银河系逃逸速度，属于银河系束缚恒星。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (HD137071.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2004.12622/arxiv_source/HD137071.tex",
+          "start_line": 1,
+          "end_line": 5,
+          "context": "Title: The K supergiant runaway star HD 137071"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2004.12622/arxiv_source/HD137071.tex",
+          "start_line": 1,
+          "end_line": 1,
+          "context": "Abstract: spatial velocity of 54.1 km/s with respect to LSR; runaway star but not unbound from Galaxy"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "hd137071",
+      "description": "HD 137071是一颗K4II型超巨星，被确认为速逃星（runaway star），空间速度约54.1 km/s。论文通过Gaia DR2视差确定其光度分类，结合光谱分类和运动学数据追溯其起源。",
+      "decision": "excluded",
+      "reason": "HD 137071虽被归类为速逃星（runaway star），但其空间速度（54.1 km/s相对于LSR）远低于银河系逃逸速度（太阳附近约550 km/s），是银河系引力束缚的恒星。论文将其速逃机制归因于双星系统中伴星超新星爆发（Blaauw机制），未声称该星为银河系非束缚HVS。'Runaway star'在此语境下指相对于周围环境高速运动的恒星，不一定是银河系非束缚天体。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2004.12622/arxiv_source/HD137071.tex",
+          "start_line": 1,
+          "end_line": 1,
+          "context": "Abstract: spatial velocity of 54.1 km/s - clearly bound to the Galaxy"
+        }
+      ]
+    }
+  ]
+}

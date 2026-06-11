@@ -1,0 +1,542 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:53",
+  "paper": {
+    "arxiv_id": "2507.00150",
+    "title": "Searching for new Hypervelocity Stars with Gaia DR3 and VLT/FORS2 Spectroscopy",
+    "month": "2025-06"
+  },
+  "review": {
+    "path": "literature/2507.00150/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123953",
+    "started_at": "2026-05-17T12:39:53",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2507.00150",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table_fors",
+      "internal_table_id": "table-table_fors",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2507.00150/arxiv_source/aa54784-25.tex",
+        "start_line": 90,
+        "end_line": 125,
+        "caption": "Sample of HVS candidates selected for follow-spectroscopy.",
+        "label": "table_fors"
+      },
+      "source_path": "literature/2507.00150/arxiv_source/aa54784-25.tex",
+      "excerpt_path": "literature/2507.00150/catalog_sources/table-table_fors/excerpt.tex",
+      "sha256": "15065ddc5c7fa5ec921347e1b99a33dc556ee6b249a30d4b6bc027e6cda64338",
+      "line_count": 36,
+      "error": ""
+    },
+    {
+      "id": "table-table_results",
+      "internal_table_id": "table-table_results",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2507.00150/arxiv_source/aa54784-25.tex",
+        "start_line": 150,
+        "end_line": 185,
+        "caption": "Kinematic properties and classification of the analyzed HVS candidates.",
+        "label": "table_results"
+      },
+      "source_path": "literature/2507.00150/arxiv_source/aa54784-25.tex",
+      "excerpt_path": "literature/2507.00150/catalog_sources/table-table_results/excerpt.tex",
+      "sha256": "d19ece8748fda9fa8c5208257dc654ef2f8bdbedea710f9b2042bc15d0bff067",
+      "line_count": 36,
+      "error": ""
+    },
+    {
+      "id": "table-table_results2",
+      "internal_table_id": "table-table_results2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2507.00150/arxiv_source/aa54784-25.tex",
+        "start_line": 267,
+        "end_line": 302,
+        "caption": "Minimum Galactocentric distances and escape probabilities for the analyzed HVS candidates under different Galactic potential models.",
+        "label": "table_results2"
+      },
+      "source_path": "literature/2507.00150/arxiv_source/aa54784-25.tex",
+      "excerpt_path": "literature/2507.00150/catalog_sources/table-table_results2/excerpt.tex",
+      "sha256": "22ca2905a4d94d86dce3f3abbbff5155c25937470141e206cc85fb4aec0ee7f9",
+      "line_count": 36,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table_fors",
+      "internal_table_id": "table-table_fors",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2507.00150/catalog_tables/table-table_fors.ecsv",
+      "caption": "Sample of HVS candidates selected for follow-spectroscopy.",
+      "label": "table_fors",
+      "row_count": 25,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4zjwr8td/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.00150/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4zjwr8td/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.00150/catalog_sources/table-table_fors/wrapped.tex",
+            "html": "literature/2507.00150/catalog_sources/table-table_fors/latexml.html",
+            "stdout": "literature/2507.00150/catalog_sources/table-table_fors/latexml.stdout.txt",
+            "stderr": "literature/2507.00150/catalog_sources/table-table_fors/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "15065ddc5c7fa5ec921347e1b99a33dc556ee6b249a30d4b6bc027e6cda64338"
+    },
+    {
+      "id": "table-table_results",
+      "internal_table_id": "table-table_results",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2507.00150/catalog_tables/table-table_results.ecsv",
+      "caption": "Kinematic properties and classification of the analyzed HVS candidates.",
+      "label": "table_results",
+      "row_count": 23,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "P_\\rm esc",
+          "v_\\rm los",
+          "v_\\rm T",
+          "z",
+          "r_\\rm min",
+          "t_\\rm rmin",
+          "t_\\rm z=0",
+          "Classification"
+        ],
+        [
+          "",
+          "(%)",
+          "(km/s)",
+          "(km/s)",
+          "(kpc)",
+          "(kpc)",
+          "(Myr)",
+          "(Myr)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "P_\\rm esc | (%)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "v_\\rm los | (km/s)",
+          "unit_text": "(km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "v_\\rm T | (km/s)",
+          "unit_text": "(km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "z | (kpc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "r_\\rm min | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "t_\\rm rmin | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "t_\\rm z=0 | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Classification",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmps57vwnwp/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.00150/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmps57vwnwp/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.00150/catalog_sources/table-table_results/wrapped.tex",
+            "html": "literature/2507.00150/catalog_sources/table-table_results/latexml.html",
+            "stdout": "literature/2507.00150/catalog_sources/table-table_results/latexml.stdout.txt",
+            "stderr": "literature/2507.00150/catalog_sources/table-table_results/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d19ece8748fda9fa8c5208257dc654ef2f8bdbedea710f9b2042bc15d0bff067"
+    },
+    {
+      "id": "table-table_results2",
+      "internal_table_id": "table-table_results2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2507.00150/catalog_tables/table-table_results2.ecsv",
+      "caption": "Minimum Galactocentric distances and escape probabilities for the analyzed HVS candidates under different Galactic potential models.",
+      "label": "table_results2",
+      "row_count": 23,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "r_\\rm min,PW",
+          "P_\\rm esc,PW",
+          "r_\\rm min,MM",
+          "P_\\rm esc,MM",
+          "r_\\rm min,MM55",
+          "P_\\rm esc,MM55",
+          "r_\\rm min,LMCf",
+          "P_\\rm esc,LMCf",
+          "r_\\rm min,LMCl",
+          "P_\\rm esc,LMCl"
+        ],
+        [
+          "",
+          "(kpc)",
+          "(%)",
+          "(kpc)",
+          "(%)",
+          "(kpc)",
+          "(%)",
+          "(kpc)",
+          "(%)",
+          "(kpc)",
+          "(%)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "r_\\rm min,PW | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "P_\\rm esc,PW | (%)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "r_\\rm min,MM | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "P_\\rm esc,MM | (%)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "r_\\rm min,MM55 | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "P_\\rm esc,MM55 | (%)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "r_\\rm min,LMCf | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "P_\\rm esc,LMCf | (%)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "r_\\rm min,LMCl | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "P_\\rm esc,LMCl | (%)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq9pmln95/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.00150/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq9pmln95/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.00150/catalog_sources/table-table_results2/wrapped.tex",
+            "html": "literature/2507.00150/catalog_sources/table-table_results2/latexml.html",
+            "stdout": "literature/2507.00150/catalog_sources/table-table_results2/latexml.stdout.txt",
+            "stderr": "literature/2507.00150/catalog_sources/table-table_results2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "22ca2905a4d94d86dce3f3abbbff5155c25937470141e206cc85fb4aec0ee7f9"
+    }
+  ]
+}

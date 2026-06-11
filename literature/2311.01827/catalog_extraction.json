@@ -1,0 +1,1847 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:58:23",
+  "paper": {
+    "arxiv_id": "2311.01827",
+    "title": "Galactic runaway O and Be stars found using Gaia DR3",
+    "month": "2023-11"
+  },
+  "review": {
+    "path": "literature/2311.01827/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225823",
+    "started_at": "2026-05-22T22:58:23",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2311.01827",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 10,
+      "work_count": 10,
+      "table_count": 10,
+      "success_count": 10,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 10,
+      "file_success_count": 10,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-Tab-FitsAfterClippingField",
+      "internal_table_id": "table-Tab-FitsAfterClippingField",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.01827/arxiv_source/main.tex",
+        "start_line": 308,
+        "end_line": 333,
+        "caption": "Means and standard deviations of different distributions for the field stars after clipping.",
+        "label": "Tab:FitsAfterClippingField"
+      },
+      "source_path": "literature/2311.01827/arxiv_source/main.tex",
+      "excerpt_path": "literature/2311.01827/catalog_sources/table-Tab-FitsAfterClippingField/excerpt.tex",
+      "sha256": "4c8781b045af32155003b0719c0ed6eac42fd8d17911ca6acb6e2403bec08936",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-FitsAfterClippingRun",
+      "internal_table_id": "table-Tab-FitsAfterClippingRun",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.01827/arxiv_source/main.tex",
+        "start_line": 337,
+        "end_line": 362,
+        "caption": "Means and standard deviations of different distributions for the runaway stars after clipping.",
+        "label": "Tab:FitsAfterClippingRun"
+      },
+      "source_path": "literature/2311.01827/arxiv_source/main.tex",
+      "excerpt_path": "literature/2311.01827/catalog_sources/table-Tab-FitsAfterClippingRun/excerpt.tex",
+      "sha256": "97a71f8a2cf9e1a297f24a0e463380f0ddaa4b486e96c0f8bcac3e6b4776f02d",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-GOSC_Runaways",
+      "internal_table_id": "table-Tab-GOSC_Runaways",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.01827/arxiv_source/main.tex",
+        "start_line": 427,
+        "end_line": 450,
+        "caption": "Data of the 10 GOSC-\\textit{Gaia}~DR3 runaway stars with the higher values of $E$ in decreasing order.",
+        "label": "Tab:GOSC_Runaways"
+      },
+      "source_path": "literature/2311.01827/arxiv_source/main.tex",
+      "excerpt_path": "literature/2311.01827/catalog_sources/table-Tab-GOSC_Runaways/excerpt.tex",
+      "sha256": "4a7bc8173ac0e3f109a845773a63cfd1b94bc9d844616e0504e3b665d458b2cb",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-BeSS_Runaways",
+      "internal_table_id": "table-Tab-BeSS_Runaways",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.01827/arxiv_source/main.tex",
+        "start_line": 454,
+        "end_line": 478,
+        "caption": "Data of the 10 BeSS-\\textit{Gaia}~DR3 runaway stars with the higher values of $E$ in decreasing order.",
+        "label": "Tab:BeSS_Runaways"
+      },
+      "source_path": "literature/2311.01827/arxiv_source/main.tex",
+      "excerpt_path": "literature/2311.01827/catalog_sources/table-Tab-BeSS_Runaways/excerpt.tex",
+      "sha256": "a0cdcd5cd23a8f018f56adb2b49b47ebaa8f898a3c2543fb000b2c4fa3297b79",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-SpectralType",
+      "internal_table_id": "table-Tab-SpectralType",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.01827/arxiv_source/main.tex",
+        "start_line": 529,
+        "end_line": 552,
+        "caption": "Stars and runaway stars as a function of spectral type.",
+        "label": "Tab:SpectralType"
+      },
+      "source_path": "literature/2311.01827/arxiv_source/main.tex",
+      "excerpt_path": "literature/2311.01827/catalog_sources/table-Tab-SpectralType/excerpt.tex",
+      "sha256": "e24f041a69248921539ee220f749b0601231c8f1efebe387db128898d77e4624",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-Publications",
+      "internal_table_id": "table-Tab-Publications",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.01827/arxiv_source/main.tex",
+        "start_line": 556,
+        "end_line": 580,
+        "caption": "Main characteristics of works on all-sky searches of runaways among young stars discussed in Sec.\\ref{Sec:Comparison}.",
+        "label": "Tab:Publications"
+      },
+      "source_path": "literature/2311.01827/arxiv_source/main.tex",
+      "excerpt_path": "literature/2311.01827/catalog_sources/table-Tab-Publications/excerpt.tex",
+      "sha256": "4c60f0f0b21de5e09c0add0c2127e8f8b10e4433a0af9f2c873f34cc6565cf07",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-Cuts",
+      "internal_table_id": "table-Tab-Cuts",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.01827/arxiv_source/main.tex",
+        "start_line": 673,
+        "end_line": 697,
+        "caption": "Quality cuts applied to the 598 and 1808 stars obtained after the cross matches of GOSC and BeSS with \\textit{Gaia} DR3, respectively.",
+        "label": "Tab:Cuts"
+      },
+      "source_path": "literature/2311.01827/arxiv_source/main.tex",
+      "excerpt_path": "literature/2311.01827/catalog_sources/table-Tab-Cuts/excerpt.tex",
+      "sha256": "5b7a61fac1be5a71d2ea60eba5bf15d4391f1c1c4f1213dd96f90450f8fefd2c",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-GuassianFits",
+      "internal_table_id": "table-Tab-GuassianFits",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.01827/arxiv_source/main.tex",
+        "start_line": 738,
+        "end_line": 759,
+        "caption": "Means and standard deviations of the Gaussian fits applied to the RSR velocity distributions using a bin size of 2~km~s$^{-1}$.",
+        "label": "Tab:GuassianFits"
+      },
+      "source_path": "literature/2311.01827/arxiv_source/main.tex",
+      "excerpt_path": "literature/2311.01827/catalog_sources/table-Tab-GuassianFits/excerpt.tex",
+      "sha256": "d4303f6c3444e567d4ad40c2feafa6ceb96172af22427b1dcf97077ab0aca130",
+      "line_count": 22,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-Simulations_Input",
+      "internal_table_id": "table-Tab-Simulations_Input",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.01827/arxiv_source/main.tex",
+        "start_line": 845,
+        "end_line": 871,
+        "caption": "Input parameters for the simulations.",
+        "label": "Tab:Simulations_Input"
+      },
+      "source_path": "literature/2311.01827/arxiv_source/main.tex",
+      "excerpt_path": "literature/2311.01827/catalog_sources/table-Tab-Simulations_Input/excerpt.tex",
+      "sha256": "13261e4687f77f547158ed2e8b5de38da00c6521a4155cce732972e91c19e14b",
+      "line_count": 27,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-Simulations_Output",
+      "internal_table_id": "table-Tab-Simulations_Output",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.01827/arxiv_source/main.tex",
+        "start_line": 875,
+        "end_line": 904,
+        "caption": "Output results of the simulations.",
+        "label": "Tab:Simulations_Output"
+      },
+      "source_path": "literature/2311.01827/arxiv_source/main.tex",
+      "excerpt_path": "literature/2311.01827/catalog_sources/table-Tab-Simulations_Output/excerpt.tex",
+      "sha256": "614655f4b07ae01ae573712c44bcb7c27c32a8c966e29916d74ef7fc27f68d7b",
+      "line_count": 30,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-Tab-FitsAfterClippingField",
+      "internal_table_id": "table-Tab-FitsAfterClippingField",
+      "status": "success",
+      "ecsv_path": "literature/2311.01827/catalog_tables/table-Tab-FitsAfterClippingField.ecsv",
+      "caption": "Means and standard deviations of different distributions for the field stars after clipping.",
+      "label": "Tab:FitsAfterClippingField",
+      "row_count": 5,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Catalog",
+          "Stars",
+          "Field Stars",
+          "\\mu_V_TAN^GF +/-",
+          "\\sigma_V_TAN^GF",
+          "\\mu_W_RSR^GF +/-",
+          "\\sigma_W_RSR^GF",
+          "\\mu_Z +/-",
+          "\\sigma_Z",
+          "\\mu_b +/-",
+          "\\sigma_b"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Catalog",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Stars",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Field Stars",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_V_TAN^GF +/-",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_V_TAN^GF",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_W_RSR^GF +/-",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_W_RSR^GF",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\mu_Z +/-",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_Z",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\mu_b +/-",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\sigma_b",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpn00lnmn6/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.01827/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpn00lnmn6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.01827/catalog_sources/table-Tab-FitsAfterClippingField/wrapped.tex",
+            "html": "literature/2311.01827/catalog_sources/table-Tab-FitsAfterClippingField/latexml.html",
+            "stdout": "literature/2311.01827/catalog_sources/table-Tab-FitsAfterClippingField/latexml.stdout.txt",
+            "stderr": "literature/2311.01827/catalog_sources/table-Tab-FitsAfterClippingField/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4c8781b045af32155003b0719c0ed6eac42fd8d17911ca6acb6e2403bec08936"
+    },
+    {
+      "id": "table-Tab-FitsAfterClippingRun",
+      "internal_table_id": "table-Tab-FitsAfterClippingRun",
+      "status": "success",
+      "ecsv_path": "literature/2311.01827/catalog_tables/table-Tab-FitsAfterClippingRun.ecsv",
+      "caption": "Means and standard deviations of different distributions for the runaway stars after clipping.",
+      "label": "Tab:FitsAfterClippingRun",
+      "row_count": 5,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Catalog",
+          "Stars",
+          "Runaway Stars",
+          "\\mu_V_TAN +/-",
+          "\\sigma_V_TAN",
+          "\\mu_W_RSR +/-",
+          "\\sigma_W_RSR",
+          "\\mu_Z +/-",
+          "\\sigma_Z",
+          "\\mu_b +/-",
+          "\\sigma_b"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Catalog",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Stars",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Runaway Stars",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_V_TAN +/-",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_V_TAN",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_W_RSR +/-",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_W_RSR",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\mu_Z +/-",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_Z",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\mu_b +/-",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\sigma_b",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpy_h30861/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.01827/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpy_h30861/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.01827/catalog_sources/table-Tab-FitsAfterClippingRun/wrapped.tex",
+            "html": "literature/2311.01827/catalog_sources/table-Tab-FitsAfterClippingRun/latexml.html",
+            "stdout": "literature/2311.01827/catalog_sources/table-Tab-FitsAfterClippingRun/latexml.stdout.txt",
+            "stderr": "literature/2311.01827/catalog_sources/table-Tab-FitsAfterClippingRun/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "97a71f8a2cf9e1a297f24a0e463380f0ddaa4b486e96c0f8bcac3e6b4776f02d"
+    },
+    {
+      "id": "table-Tab-GOSC_Runaways",
+      "internal_table_id": "table-Tab-GOSC_Runaways",
+      "status": "success",
+      "ecsv_path": "literature/2311.01827/catalog_tables/table-Tab-GOSC_Runaways.ecsv",
+      "caption": "Data of the 10 GOSC-\\textit{Gaia}~DR3 runaway stars with the higher values of $E$ in decreasing order.",
+      "label": "Tab:GOSC_Runaways",
+      "row_count": 11,
+      "column_count": 22,
+      "environment": "",
+      "header_rows": [
+        [
+          "GOSC Name",
+          "Gaia DR3 id",
+          "RA",
+          "",
+          "",
+          "DEC",
+          "",
+          "",
+          "l",
+          "b",
+          "d",
+          "G",
+          "S.T.",
+          "V_TAN",
+          "",
+          "W_RSR",
+          "",
+          "V_PEC^2D",
+          "",
+          "E",
+          "Run. Ref.",
+          "Comments"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "GOSC Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR3 id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "RA",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "DEC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "l",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "b",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "d",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "G",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "S.T.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "V_TAN",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "W_RSR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "V_PEC^2D",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_020",
+          "original_header": "E",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_021",
+          "original_header": "Run. Ref.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_022",
+          "original_header": "Comments",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5tomgq4q/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.01827/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5tomgq4q/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.01827/catalog_sources/table-Tab-GOSC_Runaways/wrapped.tex",
+            "html": "literature/2311.01827/catalog_sources/table-Tab-GOSC_Runaways/latexml.html",
+            "stdout": "literature/2311.01827/catalog_sources/table-Tab-GOSC_Runaways/latexml.stdout.txt",
+            "stderr": "literature/2311.01827/catalog_sources/table-Tab-GOSC_Runaways/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4a7bc8173ac0e3f109a845773a63cfd1b94bc9d844616e0504e3b665d458b2cb"
+    },
+    {
+      "id": "table-Tab-BeSS_Runaways",
+      "internal_table_id": "table-Tab-BeSS_Runaways",
+      "status": "success",
+      "ecsv_path": "literature/2311.01827/catalog_tables/table-Tab-BeSS_Runaways.ecsv",
+      "caption": "Data of the 10 BeSS-\\textit{Gaia}~DR3 runaway stars with the higher values of $E$ in decreasing order.",
+      "label": "Tab:BeSS_Runaways",
+      "row_count": 11,
+      "column_count": 22,
+      "environment": "",
+      "header_rows": [
+        [
+          "BeSS Name",
+          "Gaia DR3 id",
+          "RA",
+          "",
+          "",
+          "DEC",
+          "",
+          "",
+          "l",
+          "b",
+          "d",
+          "G",
+          "S.T.",
+          "V_TAN",
+          "",
+          "W_RSR",
+          "",
+          "V_PEC^2D",
+          "",
+          "E",
+          "Run. Ref.",
+          "Comments"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "BeSS Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR3 id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "RA",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "DEC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "l",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "b",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "d",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "G",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "S.T.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "V_TAN",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "W_RSR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "V_PEC^2D",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_020",
+          "original_header": "E",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_021",
+          "original_header": "Run. Ref.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_022",
+          "original_header": "Comments",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6hxnp2ol/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.01827/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6hxnp2ol/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.01827/catalog_sources/table-Tab-BeSS_Runaways/wrapped.tex",
+            "html": "literature/2311.01827/catalog_sources/table-Tab-BeSS_Runaways/latexml.html",
+            "stdout": "literature/2311.01827/catalog_sources/table-Tab-BeSS_Runaways/latexml.stdout.txt",
+            "stderr": "literature/2311.01827/catalog_sources/table-Tab-BeSS_Runaways/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a0cdcd5cd23a8f018f56adb2b49b47ebaa8f898a3c2543fb000b2c4fa3297b79"
+    },
+    {
+      "id": "table-Tab-SpectralType",
+      "internal_table_id": "table-Tab-SpectralType",
+      "status": "success",
+      "ecsv_path": "literature/2311.01827/catalog_tables/table-Tab-SpectralType.ecsv",
+      "caption": "Stars and runaway stars as a function of spectral type.",
+      "label": "Tab:SpectralType",
+      "row_count": 5,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Spectral Type",
+          "Stars",
+          "Runaway Stars",
+          ""
+        ],
+        [
+          "",
+          "",
+          "———————–",
+          ""
+        ],
+        [
+          "",
+          "#",
+          "#",
+          "%"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Spectral Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Stars | #",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Runaway Stars | ———————– | #",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "%",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfrkf_li0/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.01827/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfrkf_li0/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.01827/catalog_sources/table-Tab-SpectralType/wrapped.tex",
+            "html": "literature/2311.01827/catalog_sources/table-Tab-SpectralType/latexml.html",
+            "stdout": "literature/2311.01827/catalog_sources/table-Tab-SpectralType/latexml.stdout.txt",
+            "stderr": "literature/2311.01827/catalog_sources/table-Tab-SpectralType/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e24f041a69248921539ee220f749b0601231c8f1efebe387db128898d77e4624"
+    },
+    {
+      "id": "table-Tab-Publications",
+      "internal_table_id": "table-Tab-Publications",
+      "status": "success",
+      "ecsv_path": "literature/2311.01827/catalog_tables/table-Tab-Publications.ecsv",
+      "caption": "Main characteristics of works on all-sky searches of runaways among young stars discussed in Sec.\\ref{Sec:Comparison}.",
+      "label": "Tab:Publications",
+      "row_count": 8,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Sample",
+          "Method",
+          "Thresholds",
+          "Runaways",
+          "References"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Sample",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Method",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Thresholds",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Runaways",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "References",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2kou8ct6/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.01827/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2kou8ct6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.01827/catalog_sources/table-Tab-Publications/wrapped.tex",
+            "html": "literature/2311.01827/catalog_sources/table-Tab-Publications/latexml.html",
+            "stdout": "literature/2311.01827/catalog_sources/table-Tab-Publications/latexml.stdout.txt",
+            "stderr": "literature/2311.01827/catalog_sources/table-Tab-Publications/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4c60f0f0b21de5e09c0add0c2127e8f8b10e4433a0af9f2c873f34cc6565cf07"
+    },
+    {
+      "id": "table-Tab-Cuts",
+      "internal_table_id": "table-Tab-Cuts",
+      "status": "success",
+      "ecsv_path": "literature/2311.01827/catalog_tables/table-Tab-Cuts.ecsv",
+      "caption": "Quality cuts applied to the 598 and 1808 stars obtained after the cross matches of GOSC and BeSS with \\textit{Gaia} DR3, respectively.",
+      "label": "Tab:Cuts",
+      "row_count": 8,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Quality Cut",
+          "GOSC Stars",
+          "",
+          "BeSS Stars",
+          ""
+        ],
+        [
+          "",
+          "#",
+          "%",
+          "#",
+          "%"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Quality Cut",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "GOSC Stars | #",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "%",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "BeSS Stars | #",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "%",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp118opr_2/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.01827/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp118opr_2/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.01827/catalog_sources/table-Tab-Cuts/wrapped.tex",
+            "html": "literature/2311.01827/catalog_sources/table-Tab-Cuts/latexml.html",
+            "stdout": "literature/2311.01827/catalog_sources/table-Tab-Cuts/latexml.stdout.txt",
+            "stderr": "literature/2311.01827/catalog_sources/table-Tab-Cuts/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5b7a61fac1be5a71d2ea60eba5bf15d4391f1c1c4f1213dd96f90450f8fefd2c"
+    },
+    {
+      "id": "table-Tab-GuassianFits",
+      "internal_table_id": "table-Tab-GuassianFits",
+      "status": "success",
+      "ecsv_path": "literature/2311.01827/catalog_tables/table-Tab-GuassianFits.ecsv",
+      "caption": "Means and standard deviations of the Gaussian fits applied to the RSR velocity distributions using a bin size of 2~km~s$^{-1}$.",
+      "label": "Tab:GuassianFits",
+      "row_count": 3,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Catalog",
+          "Stars",
+          "\\mu_U_RSR^GF +/-",
+          "\\sigma_U_RSR^GF",
+          "\\mu_V_RSR^GF +/-",
+          "\\sigma_V_RSR^GF",
+          "\\mu_W_RSR^GF +/-",
+          "\\sigma_W_RSR^GF"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Catalog",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Stars",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mu_U_RSR^GF +/-",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\sigma_U_RSR^GF",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_V_RSR^GF +/-",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\sigma_V_RSR^GF",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_W_RSR^GF +/-",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\sigma_W_RSR^GF",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp274rlo8/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.01827/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp274rlo8/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.01827/catalog_sources/table-Tab-GuassianFits/wrapped.tex",
+            "html": "literature/2311.01827/catalog_sources/table-Tab-GuassianFits/latexml.html",
+            "stdout": "literature/2311.01827/catalog_sources/table-Tab-GuassianFits/latexml.stdout.txt",
+            "stderr": "literature/2311.01827/catalog_sources/table-Tab-GuassianFits/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d4303f6c3444e567d4ad40c2feafa6ceb96172af22427b1dcf97077ab0aca130"
+    },
+    {
+      "id": "table-Tab-Simulations_Input",
+      "internal_table_id": "table-Tab-Simulations_Input",
+      "status": "success",
+      "ecsv_path": "literature/2311.01827/catalog_tables/table-Tab-Simulations_Input.ecsv",
+      "caption": "Input parameters for the simulations.",
+      "label": "Tab:Simulations_Input",
+      "row_count": 2,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Catalog",
+          "\\mu_\\widetildeV_LOS^GF",
+          "\\mu_\\widetildeV_TAN^GF",
+          "\\mu_\\widetildeW_RSR^GF",
+          "\\sigma_\\widetildeV_LOS^GF",
+          "\\sigma_\\widetildeV_TAN^GF",
+          "\\sigma_\\widetildeW_RSR^GF",
+          "\\sigma_\\widetildeV_LOS,*",
+          "\\sigma_\\widetildeV_TAN,*",
+          "\\sigma_\\widetildeW_RSR,*"
+        ],
+        [
+          "",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Catalog",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\mu_\\widetildeV_LOS^GF | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mu_\\widetildeV_TAN^GF | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\widetildeW_RSR^GF | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_\\widetildeV_LOS^GF | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\sigma_\\widetildeV_TAN^GF | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_\\widetildeW_RSR^GF | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\sigma_\\widetildeV_LOS,* | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_\\widetildeV_TAN,* | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\sigma_\\widetildeW_RSR,* | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm3vlc4zt/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.01827/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm3vlc4zt/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.01827/catalog_sources/table-Tab-Simulations_Input/wrapped.tex",
+            "html": "literature/2311.01827/catalog_sources/table-Tab-Simulations_Input/latexml.html",
+            "stdout": "literature/2311.01827/catalog_sources/table-Tab-Simulations_Input/latexml.stdout.txt",
+            "stderr": "literature/2311.01827/catalog_sources/table-Tab-Simulations_Input/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "13261e4687f77f547158ed2e8b5de38da00c6521a4155cce732972e91c19e14b"
+    },
+    {
+      "id": "table-Tab-Simulations_Output",
+      "internal_table_id": "table-Tab-Simulations_Output",
+      "status": "success",
+      "ecsv_path": "literature/2311.01827/catalog_tables/table-Tab-Simulations_Output.ecsv",
+      "caption": "Output results of the simulations.",
+      "label": "Tab:Simulations_Output",
+      "row_count": 5,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz8swjx8k/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.01827/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz8swjx8k/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.01827/catalog_sources/table-Tab-Simulations_Output/wrapped.tex",
+            "html": "literature/2311.01827/catalog_sources/table-Tab-Simulations_Output/latexml.html",
+            "stdout": "literature/2311.01827/catalog_sources/table-Tab-Simulations_Output/latexml.stdout.txt",
+            "stderr": "literature/2311.01827/catalog_sources/table-Tab-Simulations_Output/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "614655f4b07ae01ae573712c44bcb7c27c32a8c966e29916d74ef7fc27f68d7b"
+    }
+  ]
+}

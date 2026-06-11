@@ -1,0 +1,238 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:57:11",
+  "paper": {
+    "arxiv_id": "2305.11612",
+    "title": "Sapaki: Galactic O3If* star possibly born in isolation",
+    "month": "2023-05"
+  },
+  "review": {
+    "path": "literature/2305.11612/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225711",
+    "started_at": "2026-05-22T22:57:11",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2305.11612",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-Sapaki_astrophot",
+      "internal_table_id": "table-tab-Sapaki_astrophot",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2305.11612/arxiv_source/WR67a_Draft.tex",
+        "start_line": 110,
+        "end_line": 135,
+        "caption": "Literature data for Sapaki. Coordinates, parallaxes, proper motions, and G-band photometry were retrieved from Gaia Data Release 3 (Gaia Collaboration \\citeyear{Gaia2022}). The $B-$ and $V$-band photometry values were taken from the TESS Input Catalog V8.2 (Paegert et al. \\citeyear{Petal2021}). $J$-, $H$- and $K_{s}$-band photometry was taken from the 2MASS Point Source Catalog (Skrutskie et al. \\citeyear{Setal2006}). W1-band and W2-band photometry values were taken from the WISE All-Sky Data Release (Cutri et al. \\citeyear{Cetal2012}), while the [8.0] $\\mu$m photometry was taken from the GLIMPSE Source Catalog (Benjamin et al. \\citeyear{Betal2003})",
+        "label": "tab:Sapaki_astrophot"
+      },
+      "source_path": "literature/2305.11612/arxiv_source/WR67a_Draft.tex",
+      "excerpt_path": "literature/2305.11612/catalog_sources/table-tab-Sapaki_astrophot/excerpt.tex",
+      "sha256": "acf411f0f3e8c396cb347ab21fd67f30d1ab729155821d51f53d72899b24808b",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-tab-Sapaki_vr",
+      "internal_table_id": "table-tab-Sapaki_vr",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2305.11612/arxiv_source/WR67a_Draft.tex",
+        "start_line": 201,
+        "end_line": 221,
+        "caption": "Line-center measurements of several absorption/emission present in the atmosphere of Sapaki. $\\lambda_{0}$ is the air wavelength, $\\lambda_{\\text{obs}}$ is the measured wavelength with \\texttt{splot} routine in IRAF, $\\Delta\\lambda = \\lambda_{\\text{obs}} - \\lambda_{0}$, and $V_{r} = c \\Delta\\lambda/\\lambda_{\\lambda_{0}}$, where $c = 2.99 \\times 10^{5}$ km/s.",
+        "label": "tab:Sapaki_vr"
+      },
+      "source_path": "literature/2305.11612/arxiv_source/WR67a_Draft.tex",
+      "excerpt_path": "literature/2305.11612/catalog_sources/table-tab-Sapaki_vr/excerpt.tex",
+      "sha256": "3cff655f260c76a9696b7b46e26bc711d8436a9d55283780eef44544a3927f2d",
+      "line_count": 21,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-Sapaki_astrophot",
+      "internal_table_id": "table-tab-Sapaki_astrophot",
+      "status": "success",
+      "ecsv_path": "literature/2305.11612/catalog_tables/table-tab-Sapaki_astrophot.ecsv",
+      "caption": "Literature data for Sapaki. Coordinates, parallaxes, proper motions, and G-band photometry were retrieved from Gaia Data Release 3 (Gaia Collaboration \\citeyear{Gaia2022}). The $B-$ and $V$-band photometry values were taken from the TESS Input Catalog V8.2 (Paegert et al. \\citeyear{Petal2021}). $J$-, $H$- and $K_{s}$-band photometry was taken from the 2MASS Point Source Catalog (Skrutskie et al. \\citeyear{Setal2006}). W1-band and W2-band photometry values were taken from the WISE All-Sky Data Release (Cutri et al. \\citeyear{Cetal2012}), while the [8.0] $\\mu$m photometry was taken from the GLIMPSE Source Catalog (Benjamin et al. \\citeyear{Betal2003})",
+      "label": "tab:Sapaki_astrophot",
+      "row_count": 16,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Sapaki"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Sapaki",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9yka92cg/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2305.11612/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9yka92cg/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2305.11612/catalog_sources/table-tab-Sapaki_astrophot/wrapped.tex",
+            "html": "literature/2305.11612/catalog_sources/table-tab-Sapaki_astrophot/latexml.html",
+            "stdout": "literature/2305.11612/catalog_sources/table-tab-Sapaki_astrophot/latexml.stdout.txt",
+            "stderr": "literature/2305.11612/catalog_sources/table-tab-Sapaki_astrophot/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "acf411f0f3e8c396cb347ab21fd67f30d1ab729155821d51f53d72899b24808b"
+    },
+    {
+      "id": "table-tab-Sapaki_vr",
+      "internal_table_id": "table-tab-Sapaki_vr",
+      "status": "success",
+      "ecsv_path": "literature/2305.11612/catalog_tables/table-tab-Sapaki_vr.ecsv",
+      "caption": "Line-center measurements of several absorption/emission present in the atmosphere of Sapaki. $\\lambda_{0}$ is the air wavelength, $\\lambda_{\\text{obs}}$ is the measured wavelength with \\texttt{splot} routine in IRAF, $\\Delta\\lambda = \\lambda_{\\text{obs}} - \\lambda_{0}$, and $V_{r} = c \\Delta\\lambda/\\lambda_{\\lambda_{0}}$, where $c = 2.99 \\times 10^{5}$ km/s.",
+      "label": "tab:Sapaki_vr",
+      "row_count": 10,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Feature",
+          "\\lambda_0 (Å)",
+          "\\lambda_obs (Å)",
+          "\\Delta\\lambda (Å)",
+          "V_r (km/s)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Feature",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\lambda_0 (Å)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\lambda_obs (Å)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\Delta\\lambda (Å)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V_r (km/s)",
+          "unit_text": "V_r (km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplqs6t7lf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2305.11612/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplqs6t7lf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2305.11612/catalog_sources/table-tab-Sapaki_vr/wrapped.tex",
+            "html": "literature/2305.11612/catalog_sources/table-tab-Sapaki_vr/latexml.html",
+            "stdout": "literature/2305.11612/catalog_sources/table-tab-Sapaki_vr/latexml.stdout.txt",
+            "stderr": "literature/2305.11612/catalog_sources/table-tab-Sapaki_vr/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3cff655f260c76a9696b7b46e26bc711d8436a9d55283780eef44544a3927f2d"
+    }
+  ]
+}

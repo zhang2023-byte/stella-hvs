@@ -1,0 +1,731 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:33:37",
+  "paper": {
+    "arxiv_id": "1902.05061",
+    "title": "Partly burnt runaway stellar remnants from peculiar thermonuclear supernovae",
+    "month": "2019-02"
+  },
+  "review": {
+    "path": "literature/1902.05061/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083337",
+    "started_at": "2026-06-07T08:33:37",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1902.05061",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 6,
+      "work_count": 6,
+      "table_count": 6,
+      "success_count": 6,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 6,
+      "file_success_count": 6,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-t-gaia",
+      "internal_table_id": "table-t-gaia",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+        "start_line": 185,
+        "end_line": 232,
+        "caption": "Astrometric and photometric parameters of J1603-6613 and J1825-3757, including broad-band photometry from GALEX (NUV), SkyMapper (uvgriz), and Vista Hemisphere Survey (J).",
+        "label": "t:gaia"
+      },
+      "source_path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+      "excerpt_path": "literature/1902.05061/catalog_sources/table-t-gaia/excerpt.tex",
+      "sha256": "acd9352c14a276552bfbaa4cbcc05e5dfd6dfb4243699994c1c3e94afec29f51",
+      "line_count": 48,
+      "error": ""
+    },
+    {
+      "id": "table-t-logs",
+      "internal_table_id": "table-t-logs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+        "start_line": 269,
+        "end_line": 282,
+        "caption": "Observing logs of the data presented and analysed in this work.",
+        "label": "t:logs"
+      },
+      "source_path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+      "excerpt_path": "literature/1902.05061/catalog_sources/table-t-logs/excerpt.tex",
+      "sha256": "6db91e55b00f7a26f2965fa78bbb250b617c189ece5e1c4ed27e57c8bec17e80",
+      "line_count": 14,
+      "error": ""
+    },
+    {
+      "id": "table-tab-sdss",
+      "internal_table_id": "table-tab-sdss",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+        "start_line": 391,
+        "end_line": 428,
+        "caption": "Astrometry, photometry, and spectroscopic parameters for the objects identified from SDSS spectra, J0905+2510 and J1637+3631. Reddening values were determined from the Pan-STARRS dust-maps. Photometric Teff were calculated from fitting our 'LP 40-365 star' models to the GALEX NUV and SDSS photometry including the quoted reddening. Results from our template matching are given at the bottom.",
+        "label": "tab:sdss"
+      },
+      "source_path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+      "excerpt_path": "literature/1902.05061/catalog_sources/table-tab-sdss/excerpt.tex",
+      "sha256": "849f1a7ac66da9adc2882682d6afad6f884593d87fce68e8dba96a3525d4b541",
+      "line_count": 38,
+      "error": ""
+    },
+    {
+      "id": "table-tab-fits_new",
+      "internal_table_id": "table-tab-fits_new",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+        "start_line": 582,
+        "end_line": 618,
+        "caption": "Composition of our best-fitting synthetic spectra of LP 40-365, J1603-6613, and J1825-3757. Abundances are expressed as the number fraction of the total, log(Z/Tot), where the contribution from H and He is not included.",
+        "label": "tab:fits_new"
+      },
+      "source_path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+      "excerpt_path": "literature/1902.05061/catalog_sources/table-tab-fits_new/excerpt.tex",
+      "sha256": "1726657b1424042eec41acc0bf86c6b1d73fb3d610b834700fabcb5c4bb33d9b",
+      "line_count": 37,
+      "error": ""
+    },
+    {
+      "id": "table-t-kin",
+      "internal_table_id": "table-t-kin",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+        "start_line": 702,
+        "end_line": 753,
+        "caption": "Orbital parameters of LP 40-365, J1603-6613, and J1825-3757.",
+        "label": "t:kin"
+      },
+      "source_path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+      "excerpt_path": "literature/1902.05061/catalog_sources/table-t-kin/excerpt.tex",
+      "sha256": "d80ffd889543412b55a073bf516d13b238e70adda2b06945319c440420d49335",
+      "line_count": 52,
+      "error": ""
+    },
+    {
+      "id": "table-tab-phys",
+      "internal_table_id": "table-tab-phys",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+        "start_line": 833,
+        "end_line": 862,
+        "caption": "Physical parameters of the LP 40-365 stars. The 1σ errors and the 5-95 per cent ranges were estimated via Monte Carlo sampling. The apparent fluxes are listed without errors, because they carry very small errors from precise broad-band photometry and we did not include the effect of Teff uncertainties in the error budget. The errors on radius, luminosity, and mass, account for those on parallax, Teff, and log g.",
+        "label": "tab:phys"
+      },
+      "source_path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+      "excerpt_path": "literature/1902.05061/catalog_sources/table-tab-phys/excerpt.tex",
+      "sha256": "b877958649f289af1c91ec4df16156e624b926bf21621e563778ad714a9d3609",
+      "line_count": 30,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-t-gaia",
+      "internal_table_id": "table-t-gaia",
+      "status": "success",
+      "ecsv_path": "literature/1902.05061/catalog_tables/table-t-gaia.ecsv",
+      "caption": "Astrometric and photometric parameters of J1603-6613 and J1825-3757, including broad-band photometry from GALEX (NUV), SkyMapper (uvgriz), and Vista Hemisphere Survey (J).",
+      "label": "t:gaia",
+      "row_count": 19,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameters",
+          "Symbols",
+          "\\jg",
+          "\\jb"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameters",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Symbols",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\jg",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\jb",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp28lf1137/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1902.05061/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp28lf1137/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1902.05061/catalog_sources/table-t-gaia/wrapped.tex",
+            "html": "literature/1902.05061/catalog_sources/table-t-gaia/latexml.html",
+            "stdout": "literature/1902.05061/catalog_sources/table-t-gaia/latexml.stdout.txt",
+            "stderr": "literature/1902.05061/catalog_sources/table-t-gaia/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "acd9352c14a276552bfbaa4cbcc05e5dfd6dfb4243699994c1c3e94afec29f51"
+    },
+    {
+      "id": "table-t-logs",
+      "internal_table_id": "table-t-logs",
+      "status": "success",
+      "ecsv_path": "literature/1902.05061/catalog_tables/table-t-logs.ecsv",
+      "caption": "Observing logs of the data presented and analysed in this work.",
+      "label": "t:logs",
+      "row_count": 4,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Mode",
+          "Instrument",
+          "\\lp",
+          "\\jg",
+          "\\jb"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Mode",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Instrument",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\lp",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\jg",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\jb",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpe3ebl3u3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1902.05061/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpe3ebl3u3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1902.05061/catalog_sources/table-t-logs/wrapped.tex",
+            "html": "literature/1902.05061/catalog_sources/table-t-logs/latexml.html",
+            "stdout": "literature/1902.05061/catalog_sources/table-t-logs/latexml.stdout.txt",
+            "stderr": "literature/1902.05061/catalog_sources/table-t-logs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6db91e55b00f7a26f2965fa78bbb250b617c189ece5e1c4ed27e57c8bec17e80"
+    },
+    {
+      "id": "table-tab-sdss",
+      "internal_table_id": "table-tab-sdss",
+      "status": "success",
+      "ecsv_path": "literature/1902.05061/catalog_tables/table-tab-sdss.ecsv",
+      "caption": "Astrometry, photometry, and spectroscopic parameters for the objects identified from SDSS spectra, J0905+2510 and J1637+3631. Reddening values were determined from the Pan-STARRS dust-maps. Photometric Teff were calculated from fitting our 'LP 40-365 star' models to the GALEX NUV and SDSS photometry including the quoted reddening. Results from our template matching are given at the bottom.",
+      "label": "tab:sdss",
+      "row_count": 24,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter [units]",
+          "Symbol",
+          "\\jc",
+          "\\jd"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter [units]",
+          "unit_text": "Parameter [units]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Symbol",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\jc",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\jd",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfz5gbi6y/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1902.05061/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfz5gbi6y/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1902.05061/catalog_sources/table-tab-sdss/wrapped.tex",
+            "html": "literature/1902.05061/catalog_sources/table-tab-sdss/latexml.html",
+            "stdout": "literature/1902.05061/catalog_sources/table-tab-sdss/latexml.stdout.txt",
+            "stderr": "literature/1902.05061/catalog_sources/table-tab-sdss/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "849f1a7ac66da9adc2882682d6afad6f884593d87fce68e8dba96a3525d4b541"
+    },
+    {
+      "id": "table-tab-fits_new",
+      "internal_table_id": "table-tab-fits_new",
+      "status": "success",
+      "ecsv_path": "literature/1902.05061/catalog_tables/table-tab-fits_new.ecsv",
+      "caption": "Composition of our best-fitting synthetic spectra of LP 40-365, J1603-6613, and J1825-3757. Abundances are expressed as the number fraction of the total, log(Z/Tot), where the contribution from H and He is not included.",
+      "label": "tab:fits_new",
+      "row_count": 26,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameters",
+          "\\lp",
+          "\\jg",
+          "\\jb"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameters",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\lp",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\jg",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\jb",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpbq3cc27s/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1902.05061/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpbq3cc27s/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1902.05061/catalog_sources/table-tab-fits_new/wrapped.tex",
+            "html": "literature/1902.05061/catalog_sources/table-tab-fits_new/latexml.html",
+            "stdout": "literature/1902.05061/catalog_sources/table-tab-fits_new/latexml.stdout.txt",
+            "stderr": "literature/1902.05061/catalog_sources/table-tab-fits_new/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "1726657b1424042eec41acc0bf86c6b1d73fb3d610b834700fabcb5c4bb33d9b"
+    },
+    {
+      "id": "table-t-kin",
+      "internal_table_id": "table-t-kin",
+      "status": "success",
+      "ecsv_path": "literature/1902.05061/catalog_tables/table-t-kin.ecsv",
+      "caption": "Orbital parameters of LP 40-365, J1603-6613, and J1825-3757.",
+      "label": "t:kin",
+      "row_count": 14,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameters",
+          "Symbols",
+          "\\lp",
+          "\\jg",
+          "\\jb"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameters",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Symbols",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\lp",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\jg",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\jb",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5ykcmfrt/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1902.05061/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5ykcmfrt/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1902.05061/catalog_sources/table-t-kin/wrapped.tex",
+            "html": "literature/1902.05061/catalog_sources/table-t-kin/latexml.html",
+            "stdout": "literature/1902.05061/catalog_sources/table-t-kin/latexml.stdout.txt",
+            "stderr": "literature/1902.05061/catalog_sources/table-t-kin/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d80ffd889543412b55a073bf516d13b238e70adda2b06945319c440420d49335"
+    },
+    {
+      "id": "table-tab-phys",
+      "internal_table_id": "table-tab-phys",
+      "status": "success",
+      "ecsv_path": "literature/1902.05061/catalog_tables/table-tab-phys.ecsv",
+      "caption": "Physical parameters of the LP 40-365 stars. The 1σ errors and the 5-95 per cent ranges were estimated via Monte Carlo sampling. The apparent fluxes are listed without errors, because they carry very small errors from precise broad-band photometry and we did not include the effect of Teff uncertainties in the error budget. The errors on radius, luminosity, and mass, account for those on parallax, Teff, and log g.",
+      "label": "tab:phys",
+      "row_count": 6,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameters",
+          "Symbols",
+          "\\lp",
+          "",
+          "\\jg",
+          "",
+          "\\jb",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameters",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Symbols",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\lp",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\jg",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\jb",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3vefuiqx/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1902.05061/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3vefuiqx/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1902.05061/catalog_sources/table-tab-phys/wrapped.tex",
+            "html": "literature/1902.05061/catalog_sources/table-tab-phys/latexml.html",
+            "stdout": "literature/1902.05061/catalog_sources/table-tab-phys/latexml.stdout.txt",
+            "stderr": "literature/1902.05061/catalog_sources/table-tab-phys/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b877958649f289af1c91ec4df16156e624b926bf21621e563778ad714a9d3609"
+    }
+  ]
+}

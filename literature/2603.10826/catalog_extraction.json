@@ -1,0 +1,497 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:33",
+  "paper": {
+    "arxiv_id": "2603.10826",
+    "title": "Kinematics of Wolf-Rayet Stars in the LMC: Clues to Subtype Origins",
+    "month": "2026-03"
+  },
+  "review": {
+    "path": "literature/2603.10826/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124033",
+    "started_at": "2026-05-17T12:40:33",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2603.10826",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-subpop",
+      "internal_table_id": "table-tab-subpop",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+        "start_line": 89,
+        "end_line": 152,
+        "caption": "Kinematic Properties of WR Populations",
+        "label": "tab:subpop"
+      },
+      "source_path": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+      "excerpt_path": "literature/2603.10826/catalog_sources/table-tab-subpop/excerpt.tex",
+      "sha256": "5514c12487194166e35c2a5fcc473a45328bbab29751461ce805000f4b6a81c5",
+      "line_count": 64,
+      "error": ""
+    },
+    {
+      "id": "table-tab-HII",
+      "internal_table_id": "table-tab-HII",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+        "start_line": 205,
+        "end_line": 249,
+        "caption": "\\hii\\ region morphologies for various subpopulations",
+        "label": "tab:HII"
+      },
+      "source_path": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+      "excerpt_path": "literature/2603.10826/catalog_sources/table-tab-HII/excerpt.tex",
+      "sha256": "23ef030e4401ad8652e822c4d7db953ca0f2f20bbf46a04c57cad97fd85cfe19",
+      "line_count": 45,
+      "error": ""
+    },
+    {
+      "id": "table-tab-Full",
+      "internal_table_id": "table-tab-Full",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+        "start_line": 527,
+        "end_line": 667,
+        "caption": "Proper Motion Velocities for WR stars in the LMC",
+        "label": "tab:Full"
+      },
+      "source_path": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+      "excerpt_path": "literature/2603.10826/catalog_sources/table-tab-Full/excerpt.tex",
+      "sha256": "ddad8a8c7c4710b312d46fe6981947867b181cf651f3cd7a60b4f8470d1d3436",
+      "line_count": 141,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-subpop",
+      "internal_table_id": "table-tab-subpop",
+      "status": "success",
+      "ecsv_path": "literature/2603.10826/catalog_tables/table-tab-subpop.ecsv",
+      "caption": "Kinematic Properties of WR Populations",
+      "label": "tab:subpop",
+      "row_count": 23,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Population",
+          "N",
+          "N",
+          "median v_\\perp",
+          "wt med v_\\perp",
+          "std err",
+          "N (30 Dor)",
+          "N (30 Dor)",
+          "wt med v_\\perp",
+          "wt med v_\\perp"
+        ],
+        [
+          "",
+          "Total",
+          "Gaia",
+          "",
+          "",
+          "",
+          "Total",
+          "Gaia",
+          "30 Dor",
+          "Non-30 Dor"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Population",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "N | Total",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "N | Gaia",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "median v_\\perp",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "wt med v_\\perp",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "std err",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "N (30 Dor) | Total",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "N (30 Dor) | Gaia",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "wt med v_\\perp | 30 Dor",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "wt med v_\\perp | Non-30 Dor",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdvlkzk2i/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2603.10826/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdvlkzk2i/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2603.10826/catalog_sources/table-tab-subpop/wrapped.tex",
+            "html": "literature/2603.10826/catalog_sources/table-tab-subpop/latexml.html",
+            "stdout": "literature/2603.10826/catalog_sources/table-tab-subpop/latexml.stdout.txt",
+            "stderr": "literature/2603.10826/catalog_sources/table-tab-subpop/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5514c12487194166e35c2a5fcc473a45328bbab29751461ce805000f4b6a81c5"
+    },
+    {
+      "id": "table-tab-HII",
+      "internal_table_id": "table-tab-HII",
+      "status": "success",
+      "ecsv_path": "literature/2603.10826/catalog_tables/table-tab-HII.ecsv",
+      "caption": "\\hii\\ region morphologies for various subpopulations",
+      "label": "tab:HII",
+      "row_count": 23,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Sub-population",
+          "Total",
+          "Class 1",
+          "Class 2",
+          "Class 3"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Sub-population",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Total",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Class 1",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Class 2",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Class 3",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp64a8uh5s/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2603.10826/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp64a8uh5s/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2603.10826/catalog_sources/table-tab-HII/wrapped.tex",
+            "html": "literature/2603.10826/catalog_sources/table-tab-HII/latexml.html",
+            "stdout": "literature/2603.10826/catalog_sources/table-tab-HII/latexml.stdout.txt",
+            "stderr": "literature/2603.10826/catalog_sources/table-tab-HII/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "23ef030e4401ad8652e822c4d7db953ca0f2f20bbf46a04c57cad97fd85cfe19"
+    },
+    {
+      "id": "table-tab-Full",
+      "internal_table_id": "table-tab-Full",
+      "status": "success",
+      "ecsv_path": "literature/2603.10826/catalog_tables/table-tab-Full.ecsv",
+      "caption": "Proper Motion Velocities for WR stars in the LMC",
+      "label": "tab:Full",
+      "row_count": 119,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star Name(s)",
+          "Spectral Type",
+          "Number of Field Stars",
+          "v_\\alpha (target) km s -1",
+          "v_\\delta (target) km s -1",
+          "v_\\alpha (field) km s -1",
+          "v_\\delta (field) km s -1",
+          "v_\\perp km s -1",
+          "\\log_10L/L_\\odot a a Luminosities for WN, WNh, and O If*/WN stars are taken from Hainich2014 , luminosities for WC stars are taken from Aadland2022a ; Aadland2022b , and luminosities for WN3/O3 stars are taken from Neugent2017"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star Name(s)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Spectral Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Number of Field Stars",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "v_\\alpha (target) km s -1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "v_\\delta (target) km s -1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v_\\alpha (field) km s -1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_\\delta (field) km s -1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "v_\\perp km s -1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\log_10L/L_\\odot a a Luminosities for WN, WNh, and O If*/WN stars are taken from Hainich2014 , luminosities for WC stars are taken from Aadland2022a ; Aadland2022b , and luminosities for WN3/O3 stars are taken from Neugent2017",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwx1n7dhc/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2603.10826/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwx1n7dhc/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2603.10826/catalog_sources/table-tab-Full/wrapped.tex",
+            "html": "literature/2603.10826/catalog_sources/table-tab-Full/latexml.html",
+            "stdout": "literature/2603.10826/catalog_sources/table-tab-Full/latexml.stdout.txt",
+            "stderr": "literature/2603.10826/catalog_sources/table-tab-Full/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ddad8a8c7c4710b312d46fe6981947867b181cf651f3cd7a60b4f8470d1d3436"
+    }
+  ]
+}

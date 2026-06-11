@@ -1,0 +1,241 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T03:11:47.335465",
+  "paper": {
+    "arxiv_id": "1907.06375",
+    "bibcode": "2019A&A...628L...5I",
+    "title": "PG 1610$+$062: a runaway B star challenging classical ejection mechanisms",
+    "month": "2019-07",
+    "source_note_json": "notes/2019/2019-07/2019-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1907.06375",
+      "pdf": "https://arxiv.org/pdf/1907.06375"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1907.06375",
+    "audit_path": "literature/1907.06375/audit.json",
+    "catalog_review_path": "literature/1907.06375/catalog_review.json",
+    "catalog_extraction_path": "literature/1907.06375/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1907.06375/catalog_tables/table-atmospheric_parameters.ecsv",
+      "literature/1907.06375/catalog_tables/table-stellar_parameters.ecsv",
+      "literature/1907.06375/catalog_tables/table-photometry.ecsv",
+      "literature/1907.06375/catalog_tables/table-kinematic_parameters.ecsv",
+      "literature/1907.06375/catalog_tables/table-ejection_velocities.ecsv",
+      "literature/1907.06375/catalog_tables/table-oscillation_params.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-06-07T03:11:47.335462",
+    "extractor": "agent",
+    "summary": "论文发现一颗新的极端盘面逃逸B型星PG 1610+062。Keck/ESI光谱定量分析推导大气参数及10种元素丰度。分光光度距离17.3 kpc，从Carina-Sagittarius旋臂以550±40 km/s弹射，超过经典弹射机制上限。属于前5最极端MS盘面逃逸星。1颗候选体已提取。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "spectroscopy",
+      "summary": "Keck/ESI medium-resolution spectroscopy. LTE model atmospheres. Differential abundance analysis vs HD 137366 (C,N,O,Ne,Mg,Al,Si,S,Ar,Fe).",
+      "inputs": [
+        "Keck/ESI"
+      ],
+      "outputs": [
+        "Teff, log g, abundances"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.06375/arxiv_source/paper.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Sec 2"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Spectrophotometric distance 17.3 kpc from SED fitting + Gaia DR2 photometry.",
+      "inputs": [
+        "Gaia DR2 photometry"
+      ],
+      "outputs": [
+        "d = 17.3 kpc"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.06375/arxiv_source/paper.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Sec 3"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "kinematic_analysis",
+      "summary": "Gaia DR2 proper motions. Three Galactic models. Trajectory to Carina-Sagittarius arm.",
+      "inputs": [
+        "Gaia DR2",
+        "Galactic potentials"
+      ],
+      "outputs": [
+        "v_ej = 550±40 km/s"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.06375/arxiv_source/paper.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Sec 4"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "bound_classification",
+      "summary": "Extreme disk runaway (not classical GC HVS). Exceeds classical ejection limits. Top 5 MS disk runaways.",
+      "inputs": [
+        "Kinematic parameters"
+      ],
+      "outputs": [
+        "Classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.06375/arxiv_source/paper.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Sec 5"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "1907.06375:cand-001",
+        "paper_candidate_id": "PG 1610+062",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "PG 1610+062",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1907.06375/arxiv_source/paper.tex",
+                "start_line": 1,
+                "end_line": 5,
+                "context": "Title"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Extreme disk runaway B star (slowly pulsating B, 4-5 M_sun). Ejected from Carina-Sagittarius arm at 550±40 km/s, exceeding classical limits. d=17.3 kpc. Metal-rich. Top 5 most extreme MS disk runaways.",
+        "paper_labels": [
+          "runaway_candidate",
+          "high_velocity_star"
+        ],
+        "galactic_bound_claim": "not_reported",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Discovery paper with spectroscopic, chemical, and kinematic analysis.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1907.06375/arxiv_source/paper.tex",
+            "start_line": 1,
+            "end_line": 50,
+            "context": "Full paper"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1907.06375/arxiv_source/paper.tex",
+            "start_line": 1,
+            "end_line": 50,
+            "context": "Discovery"
+          }
+        ]
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "242.5",
+          "value": "242.5",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA ~16h10m"
+        },
+        "dec": {
+          "raw_value": "6.2",
+          "value": "6.2",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec ~+06d"
+        }
+      },
+      "derived_quantities": {
+        "distance": {
+          "raw_value": "17.3",
+          "value": "17.3",
+          "unit": "kpc",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-02"
+          ]
+        },
+        "v_gc": {
+          "raw_value": "550 ± 40",
+          "value": "550",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-03"
+          ],
+          "description": "Ejection velocity"
+        }
+      }
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_name": "Extreme disk runaway",
+      "description": "Single runaway B star PG 1610+062, ejected from disk at 550 km/s.",
+      "candidate_count": 1
+    }
+  ]
+}

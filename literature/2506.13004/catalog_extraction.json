@@ -1,0 +1,1056 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:04",
+  "paper": {
+    "arxiv_id": "2506.13004",
+    "title": "New Field OB and OBe Binaries of the SMC Wing: Observational Properties and Population Modeling",
+    "month": "2025-06"
+  },
+  "review": {
+    "path": "literature/2506.13004/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124004",
+    "started_at": "2026-05-17T12:40:04",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2506.13004",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 6,
+      "work_count": 6,
+      "table_count": 6,
+      "success_count": 6,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 6,
+      "file_success_count": 6,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table-OBbinaryresults",
+      "internal_table_id": "table-table-OBbinaryresults",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+        "start_line": 248,
+        "end_line": 297,
+        "caption": "RIOTS4 OB Wing Binaries\\label{table:OBbinaryresults}",
+        "label": "table:OBbinaryresults"
+      },
+      "source_path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+      "excerpt_path": "literature/2506.13004/catalog_sources/table-table-OBbinaryresults/excerpt.tex",
+      "sha256": "e87e81a89e905e07be75d03bf14fdd2f7d15433bd78f481a7efcddc51333f48f",
+      "line_count": 50,
+      "error": ""
+    },
+    {
+      "id": "table-table-OBebinaryresults",
+      "internal_table_id": "table-table-OBebinaryresults",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+        "start_line": 331,
+        "end_line": 379,
+        "caption": "RIOTS4 OBe Wing Binaries\\label{table:OBebinaryresults}",
+        "label": "table:OBebinaryresults"
+      },
+      "source_path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+      "excerpt_path": "literature/2506.13004/catalog_sources/table-table-OBebinaryresults/excerpt.tex",
+      "sha256": "b2d73f2cd7666b7a477bb91cf31f7b71c703b814a3a776768f5a238a88ed1706",
+      "line_count": 49,
+      "error": ""
+    },
+    {
+      "id": "table-table-Binfreq",
+      "internal_table_id": "table-table-Binfreq",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+        "start_line": 684,
+        "end_line": 716,
+        "caption": "RIOTS4 SMC Field Binary Frequencies\\tablenotemark{a} \\label{table:Binfreq}",
+        "label": "table:Binfreq"
+      },
+      "source_path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+      "excerpt_path": "literature/2506.13004/catalog_sources/table-table-Binfreq/excerpt.tex",
+      "sha256": "56feedabc4e61274335a410295b38bad8d607e6e036e2303e0dafdfd560bfc64",
+      "line_count": 33,
+      "error": ""
+    },
+    {
+      "id": "table-table-BPASSpop",
+      "internal_table_id": "table-table-BPASSpop",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+        "start_line": 970,
+        "end_line": 999,
+        "caption": "Observed Populations and BPASS BSS Predictions\\tablenotemark{a} \\label{table:BPASSpop}",
+        "label": "table:BPASSpop"
+      },
+      "source_path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+      "excerpt_path": "literature/2506.13004/catalog_sources/table-table-BPASSpop/excerpt.tex",
+      "sha256": "f0cd5f4f72f0d8effcd4c8640c4f86df3edaaa29f2d5848c2d6c51afc3ef187d",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-table-DESvsBSS",
+      "internal_table_id": "table-table-DESvsBSS",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+        "start_line": 1401,
+        "end_line": 1425,
+        "caption": "DES and BSS Walkaway and Runaway Ratios for Field SMC Wing Binaries\\tablenotemark{a} \\label{table:DESvsBSS}",
+        "label": "table:DESvsBSS"
+      },
+      "source_path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+      "excerpt_path": "literature/2506.13004/catalog_sources/table-table-DESvsBSS/excerpt.tex",
+      "sha256": "eeb28e2b76c65954ac5a3e9723f8db5a53520a1dacb089338415df3667920715",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-table-RVmeas",
+      "internal_table_id": "table-table-RVmeas",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+        "start_line": 1644,
+        "end_line": 2036,
+        "caption": "RIOTS4 Wing RV Measurements\\label{table:RVmeas}",
+        "label": "table:RVmeas"
+      },
+      "source_path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+      "excerpt_path": "literature/2506.13004/catalog_sources/table-table-RVmeas/excerpt.tex",
+      "sha256": "66d34cd2165aff6bd409fc0b6b4e82af30444c091d4dc3b808059f22590adcc8",
+      "line_count": 393,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table-OBbinaryresults",
+      "internal_table_id": "table-table-OBbinaryresults",
+      "status": "success",
+      "ecsv_path": "literature/2506.13004/catalog_tables/table-table-OBbinaryresults.ecsv",
+      "caption": "RIOTS4 OB Wing Binaries\\label{table:OBbinaryresults}",
+      "label": "table:OBbinaryresults",
+      "row_count": 16,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Massey ID",
+          "SpT a a From Grant2024 , except for those marked with a \\star , which are from Dallas2022 .",
+          "Classification b b “E”, “Ec”, “H”, “R”, “Rc”, “S”, and “Sc” indicate EB, EB candidate, HMXB, RV binary, RV binary candidate, SB2, and SB2 candidate, respectively (see text).",
+          "RV Measurements",
+          "RV Method c c “1” indicates binary identification using the maximum \\Delta RV method, “2” indicates identification with the F -test, “3” indicates identification from both methods",
+          "M_1 d d From DorigoJones2020 , except for those marked with \\ast , which are from Dallas2022 . Masses from Dallas2022 may be the average of two values given in that paper; details can be found in the corresponding target’s section in the Appendix LABEL:App:starnotes .",
+          "M_\\rm 2,min",
+          "M_\\rm 2,max e e Upper limit of the secondary mass assuming it is not a compact object, obtained from our detection threshold. For SB2 candidates, this value corresponds to the estimated mass of the possibly detected companion. Details for each target are found in Appendix LABEL:App:starnotes .",
+          "Period"
+        ],
+        [
+          "[M2002] SMC",
+          "",
+          "",
+          "N",
+          "",
+          "M_\\odot",
+          "M_\\odot",
+          "M_\\odot",
+          "(days)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Massey ID | [M2002] SMC",
+          "unit_text": "Massey ID",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "SpT a a From Grant2024 , except for those marked with a \\star , which are from Dallas2022 .",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Classification b b “E”, “Ec”, “H”, “R”, “Rc”, “S”, and “Sc” indicate EB, EB candidate, HMXB, RV binary, RV binary candidate, SB2, and SB2 candidate, respectively (see text).",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RV Measurements | N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "RV Method c c “1” indicates binary identification using the maximum \\Delta RV method, “2” indicates identification with the F -test, “3” indicates identification from both methods",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "M_1 d d From DorigoJones2020 , except for those marked with \\ast , which are from Dallas2022 . Masses from Dallas2022 may be the average of two values given in that paper; details can be found in the corresponding target’s section in the Appendix LABEL:App:starnotes . | M_\\odot",
+          "unit_text": "M_1 d d From DorigoJones2020 , except for those marked with \\ast , which are from Dallas2022 . Masses from Dallas2022 may be the average of two values given in that paper; details can be found in the corresponding target’s section in the Appendix LABEL:App:starnotes .",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "M_\\rm 2,min | M_\\odot",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "M_\\rm 2,max e e Upper limit of the secondary mass assuming it is not a compact object, obtained from our detection threshold. For SB2 candidates, this value corresponds to the estimated mass of the possibly detected companion. Details for each target are found in Appendix LABEL:App:starnotes . | M_\\odot",
+          "unit_text": "M_\\rm 2,max e e Upper limit of the secondary mass assuming it is not a compact object, obtained from our detection threshold. For SB2 candidates, this value corresponds to the estimated mass of the possibly detected companion. Details for each target are found in Appendix LABEL:App:starnotes .",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Period | (days)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8clvv5i5/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2506.13004/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8clvv5i5/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.13004/catalog_sources/table-table-OBbinaryresults/wrapped.tex",
+            "html": "literature/2506.13004/catalog_sources/table-table-OBbinaryresults/latexml.html",
+            "stdout": "literature/2506.13004/catalog_sources/table-table-OBbinaryresults/latexml.stdout.txt",
+            "stderr": "literature/2506.13004/catalog_sources/table-table-OBbinaryresults/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e87e81a89e905e07be75d03bf14fdd2f7d15433bd78f481a7efcddc51333f48f"
+    },
+    {
+      "id": "table-table-OBebinaryresults",
+      "internal_table_id": "table-table-OBebinaryresults",
+      "status": "success",
+      "ecsv_path": "literature/2506.13004/catalog_tables/table-table-OBebinaryresults.ecsv",
+      "caption": "RIOTS4 OBe Wing Binaries\\label{table:OBebinaryresults}",
+      "label": "table:OBebinaryresults",
+      "row_count": 17,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Massey ID",
+          "SpT a a From Grant2024 , except for those marked with \\star , which are from Dallas2022 .",
+          "Classification b b “E”, “Ec”, “H”, “R”, “Rc”, “S”, and “Sc” indicate EB, EB candidate, HMXB, RV binary, RV binary candidate, SB2, and SB2 candidate, respectively (see text).",
+          "RV Measurements",
+          "RV Method c c “1” indicates binary identification using the maximum \\Delta RV method, “2” indicates identification with the F -test, “3” indicates identification by both methods",
+          "M_1 d d From DorigoJones2020 , except for those marked with \\ast , which are from Dallas2022 . Masses from Dallas2022 may be the average of two values given in that paper; details can be found in the corresponding target’s section in Appendix LABEL:App:starnotes .",
+          "M_\\rm 2,min",
+          "M_\\rm 2,max e e Upper limit of the secondary mass assuming it is not a compact object, obtained from our detection threshold. For SB2 candidates, this value corresponds to the estimated mass of the possibly detected companion. Details for each target are found in Appendix LABEL:App:starnotes .",
+          "Period"
+        ],
+        [
+          "[M2002] SMC",
+          "",
+          "",
+          "N",
+          "",
+          "M_\\odot",
+          "M_\\odot",
+          "M_\\odot",
+          "(days)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Massey ID | [M2002] SMC",
+          "unit_text": "Massey ID",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "SpT a a From Grant2024 , except for those marked with \\star , which are from Dallas2022 .",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Classification b b “E”, “Ec”, “H”, “R”, “Rc”, “S”, and “Sc” indicate EB, EB candidate, HMXB, RV binary, RV binary candidate, SB2, and SB2 candidate, respectively (see text).",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RV Measurements | N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "RV Method c c “1” indicates binary identification using the maximum \\Delta RV method, “2” indicates identification with the F -test, “3” indicates identification by both methods",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "M_1 d d From DorigoJones2020 , except for those marked with \\ast , which are from Dallas2022 . Masses from Dallas2022 may be the average of two values given in that paper; details can be found in the corresponding target’s section in Appendix LABEL:App:starnotes . | M_\\odot",
+          "unit_text": "M_1 d d From DorigoJones2020 , except for those marked with \\ast , which are from Dallas2022 . Masses from Dallas2022 may be the average of two values given in that paper; details can be found in the corresponding target’s section in Appendix LABEL:App:starnotes .",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "M_\\rm 2,min | M_\\odot",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "M_\\rm 2,max e e Upper limit of the secondary mass assuming it is not a compact object, obtained from our detection threshold. For SB2 candidates, this value corresponds to the estimated mass of the possibly detected companion. Details for each target are found in Appendix LABEL:App:starnotes . | M_\\odot",
+          "unit_text": "M_\\rm 2,max e e Upper limit of the secondary mass assuming it is not a compact object, obtained from our detection threshold. For SB2 candidates, this value corresponds to the estimated mass of the possibly detected companion. Details for each target are found in Appendix LABEL:App:starnotes .",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Period | (days)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp7h29y62/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2506.13004/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp7h29y62/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.13004/catalog_sources/table-table-OBebinaryresults/wrapped.tex",
+            "html": "literature/2506.13004/catalog_sources/table-table-OBebinaryresults/latexml.html",
+            "stdout": "literature/2506.13004/catalog_sources/table-table-OBebinaryresults/latexml.stdout.txt",
+            "stderr": "literature/2506.13004/catalog_sources/table-table-OBebinaryresults/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b2d73f2cd7666b7a477bb91cf31f7b71c703b814a3a776768f5a238a88ed1706"
+    },
+    {
+      "id": "table-table-Binfreq",
+      "internal_table_id": "table-table-Binfreq",
+      "status": "success",
+      "ecsv_path": "literature/2506.13004/catalog_tables/table-table-Binfreq.ecsv",
+      "caption": "RIOTS4 SMC Field Binary Frequencies\\tablenotemark{a} \\label{table:Binfreq}",
+      "label": "table:Binfreq",
+      "row_count": 5,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Type",
+          "Wing Confirmed",
+          "Frequency b b Errors are derived from Poisson errors and error propagation. However, values should be considered lower limits.",
+          "Wing Confirmed",
+          "Frequency b b Errors are derived from Poisson errors and error propagation. However, values should be considered lower limits.",
+          "SMC Confirmed",
+          "Frequency b,d b,d footnotemark:",
+          "SMC Confirmed",
+          "Frequency b,d b,d footnotemark:"
+        ],
+        [
+          "",
+          "+ Candidates",
+          "",
+          "Only",
+          "",
+          "+ Candidates d d footnotemark:",
+          "",
+          "Only d d footnotemark:",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Wing Confirmed | + Candidates",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Frequency b b Errors are derived from Poisson errors and error propagation. However, values should be considered lower limits.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Wing Confirmed | Only",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Frequency b b Errors are derived from Poisson errors and error propagation. However, values should be considered lower limits.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "SMC Confirmed | + Candidates d d footnotemark:",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Frequency b,d b,d footnotemark:",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "SMC Confirmed | Only d d footnotemark:",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Frequency b,d b,d footnotemark:",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvcwtppgb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2506.13004/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvcwtppgb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.13004/catalog_sources/table-table-Binfreq/wrapped.tex",
+            "html": "literature/2506.13004/catalog_sources/table-table-Binfreq/latexml.html",
+            "stdout": "literature/2506.13004/catalog_sources/table-table-Binfreq/latexml.stdout.txt",
+            "stderr": "literature/2506.13004/catalog_sources/table-table-Binfreq/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "56feedabc4e61274335a410295b38bad8d607e6e036e2303e0dafdfd560bfc64"
+    },
+    {
+      "id": "table-table-BPASSpop",
+      "internal_table_id": "table-table-BPASSpop",
+      "status": "success",
+      "ecsv_path": "literature/2506.13004/catalog_tables/table-table-BPASSpop.ecsv",
+      "caption": "Observed Populations and BPASS BSS Predictions\\tablenotemark{a} \\label{table:BPASSpop}",
+      "label": "table:BPASSpop",
+      "row_count": 7,
+      "column_count": 9,
+      "environment": "deluxetable*",
+      "header_rows": [
+        [
+          "Population",
+          "Observed",
+          "Observed",
+          "BPASS",
+          "BPASS",
+          "SMC Wing",
+          "SMC Wing",
+          "BPASS Binary",
+          "BPASS Binary"
+        ],
+        [
+          "",
+          "Number",
+          "Freq",
+          "Freq",
+          "Single",
+          "\\colheadTotal Binaries \\tablenotemarkb",
+          "\\colheadBSS Binaries \\tablenotemarkc",
+          "\\colhead(OB/OBe+star/He)\\tablenotemarkd",
+          "(OB/OBe+NS/BH)"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "(Conf.+Cand./Conf.)",
+          "(Conf.+Cand./Conf.)",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Population",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Observed | Number",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Observed | Freq",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "BPASS | Freq",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "BPASS | Single",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "SMC Wing | \\colheadTotal Binaries \\tablenotemarkb | (Conf.+Cand./Conf.)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "SMC Wing | \\colheadBSS Binaries \\tablenotemarkc | (Conf.+Cand./Conf.)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "BPASS Binary | \\colhead(OB/OBe+star/He)\\tablenotemarkd",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "BPASS Binary | (OB/OBe+NS/BH)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\colhead",
+        "unresolved LaTeX macro preserved: \\colheadBSS",
+        "unresolved LaTeX macro preserved: \\colheadTotal",
+        "unresolved LaTeX macro preserved: \\tablenotemarkb",
+        "unresolved LaTeX macro preserved: \\tablenotemarkc",
+        "unresolved LaTeX macro preserved: \\tablenotemarkd"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptq2okie2/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2506.13004/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptq2okie2/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.13004/catalog_sources/table-table-BPASSpop/wrapped.tex",
+            "html": "literature/2506.13004/catalog_sources/table-table-BPASSpop/latexml.html",
+            "stdout": "literature/2506.13004/catalog_sources/table-table-BPASSpop/latexml.stdout.txt",
+            "stderr": "literature/2506.13004/catalog_sources/table-table-BPASSpop/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvjr5rov3/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvjr5rov3/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.13004/catalog_sources/table-table-BPASSpop/wrapped.tex",
+            "html": "literature/2506.13004/catalog_sources/table-table-BPASSpop/pandoc.html",
+            "stdout": "literature/2506.13004/catalog_sources/table-table-BPASSpop/pandoc.stdout.txt",
+            "stderr": "literature/2506.13004/catalog_sources/table-table-BPASSpop/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "f0cd5f4f72f0d8effcd4c8640c4f86df3edaaa29f2d5848c2d6c51afc3ef187d"
+    },
+    {
+      "id": "table-table-DESvsBSS",
+      "internal_table_id": "table-table-DESvsBSS",
+      "status": "success",
+      "ecsv_path": "literature/2506.13004/catalog_tables/table-table-DESvsBSS.ecsv",
+      "caption": "DES and BSS Walkaway and Runaway Ratios for Field SMC Wing Binaries\\tablenotemark{a} \\label{table:DESvsBSS}",
+      "label": "table:DESvsBSS",
+      "row_count": 7,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Ratio",
+          "Conf. + cand.",
+          "Confirmed",
+          "Conf. + cand.",
+          "Model b b From Tables 3 and 4 of Grant2024 (see text). We consider the DES contributions from pre-SN binaries; and for BSS contributions, the bound BSS targets and half of the bound the two-step population."
+        ],
+        [
+          "",
+          "New alloc.",
+          "New alloc.",
+          "Simple alloc.",
+          "Simple alloc."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Ratio",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Conf. + cand. | New alloc.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Confirmed | New alloc.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Conf. + cand. | Simple alloc.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Model b b From Tables 3 and 4 of Grant2024 (see text). We consider the DES contributions from pre-SN binaries; and for BSS contributions, the bound BSS targets and half of the bound the two-step population. | Simple alloc.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptdz1z7hh/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2506.13004/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptdz1z7hh/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.13004/catalog_sources/table-table-DESvsBSS/wrapped.tex",
+            "html": "literature/2506.13004/catalog_sources/table-table-DESvsBSS/latexml.html",
+            "stdout": "literature/2506.13004/catalog_sources/table-table-DESvsBSS/latexml.stdout.txt",
+            "stderr": "literature/2506.13004/catalog_sources/table-table-DESvsBSS/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "eeb28e2b76c65954ac5a3e9723f8db5a53520a1dacb089338415df3667920715"
+    },
+    {
+      "id": "table-table-RVmeas",
+      "internal_table_id": "table-table-RVmeas",
+      "status": "success",
+      "ecsv_path": "literature/2506.13004/catalog_tables/table-table-RVmeas.ecsv",
+      "caption": "RIOTS4 Wing RV Measurements\\label{table:RVmeas}",
+      "label": "table:RVmeas",
+      "row_count": 373,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Massey ID",
+          "SpT",
+          "RA",
+          "DEC",
+          "Instrument",
+          "Field",
+          "Date",
+          "RV",
+          "RV Err"
+        ],
+        [
+          "[M2002] SMC",
+          "",
+          "hrs",
+          "deg",
+          "",
+          "",
+          "JD",
+          "km/s",
+          "km/s"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Massey ID | [M2002] SMC",
+          "unit_text": "Massey ID",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "SpT",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "RA | hrs",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "DEC | deg",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Instrument",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Field",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Date | JD",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "RV | km/s",
+          "unit_text": "km/s",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "RV Err | km/s",
+          "unit_text": "km/s",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjrhc7j0v/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2506.13004/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjrhc7j0v/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.13004/catalog_sources/table-table-RVmeas/wrapped.tex",
+            "html": "literature/2506.13004/catalog_sources/table-table-RVmeas/latexml.html",
+            "stdout": "literature/2506.13004/catalog_sources/table-table-RVmeas/latexml.stdout.txt",
+            "stderr": "literature/2506.13004/catalog_sources/table-table-RVmeas/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "66d34cd2165aff6bd409fc0b6b4e82af30444c091d4dc3b808059f22590adcc8"
+    }
+  ]
+}

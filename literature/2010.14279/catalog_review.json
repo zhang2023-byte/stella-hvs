@@ -1,0 +1,151 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2010.14279",
+    "title": "Existence of the Metal-Rich Stellar Halo and High-velocity Thick Disk in the Galaxy",
+    "month": "2020-10",
+    "source_note_json": "notes/2020/2020-10/2020-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2010.14279",
+      "pdf": "https://arxiv.org/pdf/2010.14279"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2010.14279",
+    "audit_path": "literature/2010.14279/audit.json",
+    "source_dir": "literature/2010.14279/arxiv_source",
+    "tex_root": "literature/2010.14279/arxiv_source/yyp1.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:41:00",
+    "reviewer": "agent",
+    "summary": "该论文使用 Gaia DR2 结合 LAMOST DR5 和 APOGEE DR14 光谱巡天数据，研究了银河系中高速恒星的 kinematics 和金属丰度分布。论文包含两个数据表：Table 1 给出了高速恒星旋转速度分布在双高斯模型下的最佳拟合参数（均值、标准差和权重），用于证明金属富集恒星晕(MRSH)和高速厚盘(HVTD)的存在；Table 2 给出了不同垂直高度区间内金属丰度分布的多高斯拟合参数。论文未提供可直接下载的机器可读星表文件；Gaia URL 为致谢性链接而非数据资源。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-Table-1",
+      "kind": "latex_table",
+      "asset_type": "fit_results_table",
+      "role_in_paper": "提供高速恒星旋转速度分布的双高斯拟合参数（均值μ、标准差σ、权重），定量证明金属富集恒星晕(MRSH)和高速厚盘(HVTD)作为两个独立运动学成分的存在。分别给出低分辨率(LAMOST)和高分辨率(APOGEE)样本在[Fe/H]>-1.0和[Fe/H]>-0.8条件下的拟合结果。",
+      "source_refs": [
+        {
+          "path": "literature/2010.14279/arxiv_source/yyp1.tex",
+          "start_line": 177,
+          "end_line": 204,
+          "caption": "\\upshape {The Best-fit Values of Mean ($\\mu$), Standard Deviation ($\\sigma$), and Weight of Each Rotational Velocity Distribution of Gaussian Form in Different Metallicity Intervals}",
+          "label": "Table 1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "[Fe/H]",
+          "meaning": "金属丰度区间（dex），如 [Fe/H]>-1 和 [Fe/H]>-0.8",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "MRSH μ",
+          "meaning": "金属富集恒星晕(MRSH)成分旋转速度高斯拟合的均值",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "MRSH σ",
+          "meaning": "金属富集恒星晕(MRSH)成分旋转速度高斯拟合的标准差（速度弥散）",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "MRSH Weight",
+          "meaning": "金属富集恒星晕(MRSH)高斯成分在双高斯模型中的权重（占比）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "HVTD μ",
+          "meaning": "高速厚盘(HVTD)成分旋转速度高斯拟合的均值",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "HVTD σ",
+          "meaning": "高速厚盘(HVTD)成分旋转速度高斯拟合的标准差（速度弥散）",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "HVTD Weight",
+          "meaning": "高速厚盘(HVTD)高斯成分在双高斯模型中的权重（占比）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Figure 4 shows that the rotational velocity distribution of the metal-rich stars can be fitted with a two-peak Gaussian model according to the lowest BIC. Table 1 lists the best-fit values of the two single-Gaussians components... For the stars with [Fe/H]>-1.0, one component peaks at <V_phi> ~ 201.3 km/s for the high-resolution sample and <V_phi> ~ 164.2 km/s for the low-resolution sample, which is consistent with the thick disk (HVTD). Another component peaks at <V_phi> ~ +4.7 km/s for the high-resolution sample and <V_phi> ~ +3.0 km/s for the low-resolution sample, regarded as a metal-rich stellar halo (MRSH).",
+      "comments": "Table 1 使用多列标题（\\multicolumn），原始列名解析可能不精确，已根据表头语义手工修正。"
+    },
+    {
+      "id": "table-Table-2",
+      "kind": "latex_table",
+      "asset_type": "fit_results_table",
+      "role_in_paper": "给出不同垂直高度区间（|z|<3 kpc, 3<|z|<6 kpc, |z|≲6 kpc）内高速恒星金属丰度分布的多高斯模型拟合参数，展示 outer-halo, inner-halo, MRSH, HVTD 四个成分的均值、标准差和权重随高度的变化。用于确认 HVTD 主要分布在 |z|<3 kpc 内，而 MRSH 延伸至更高高度。",
+      "source_refs": [
+        {
+          "path": "literature/2010.14279/arxiv_source/yyp1.tex",
+          "start_line": 283,
+          "end_line": 333,
+          "caption": "\\upshape {The Best-fit Values of Mean ($\\mu$), Standard Deviation ($\\sigma$), and Weight (W) of Each Metallicity Distribution of Gaussian Form in Different Vertical Height Intervals.}",
+          "label": "Table 2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "行标识：μ为均值（dex），σ为标准差（dex），W为权重",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Outer-halo",
+          "meaning": "外晕成分的高斯拟合参数（均值金属丰度、弥散、权重）",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Inner-halo",
+          "meaning": "内晕成分的高斯拟合参数（均值金属丰度、弥散、权重）",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "MRSH",
+          "meaning": "金属富集恒星晕成分的高斯拟合参数（均值金属丰度、弥散、权重）",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "HVTD",
+          "meaning": "高速厚盘成分的高斯拟合参数（均值金属丰度、弥散、权重）；在 |z|>3 kpc 高度该成分消失",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "The metallicity distributions of both high-velocity sample stars are well fitted with a four-peak Gaussian model according to the lowest BIC in Figure 9. The inner-halo and MRSH occupy the vast majority... When |z|>3 kpc, the HVTD component disappeared, which indicates that most of the HVTD stars are within |z|<3 kpc. Table 2 lists the best-fit values.",
+      "comments": "Table 2 以行为导向（各行分别为μ、σ、W），与 Table 1 的列导向结构不同。当 |z|>3 kpc 时 HVTD 列无数据（标记为 -）。"
+    }
+  ],
+  "external_resources": []
+}

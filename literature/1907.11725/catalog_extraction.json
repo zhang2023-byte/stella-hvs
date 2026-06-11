@@ -1,0 +1,244 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:34:59",
+  "paper": {
+    "arxiv_id": "1907.11725",
+    "title": "The Great Escape: Discovery of a nearby 1700 km/s star ejected from the Milky Way by Sgr A*",
+    "month": "2019-07"
+  },
+  "review": {
+    "path": "literature/1907.11725/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083459",
+    "started_at": "2026-06-07T08:34:59",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1907.11725",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-hvspar",
+      "internal_table_id": "table-tab-hvspar",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+        "start_line": 136,
+        "end_line": 171,
+        "caption": "The measured parameters of the hyper-velocity star S5-HVS1. The top part of the Table refers to the measurements from previous surveys, while the bottom one summarises the measurements presented in the paper. HRV is the heliocentric radial velocity. $\\dhel$, $D_{\\rm hel,GC}$ are heliocentric distance constraints without and with the Galactocentric origin assumption respectively. $V_{\\rm GSR}$, $V_{\\rm GSR,GC}$ are the inferred Galactic standard of rest (GSR) velocities of S5-HVS1 determined without and with the Galactocentric origin assumption respectively. $V_{\\rm ej,GC}$ is the expected ejection speed from the Galactic Centre. $\\mu_{\\alpha,\\rm pred} \\cos \\delta$, $\\mu_{\\delta,\\rm pred}$ are the predicted proper motions of S5-HVS1 based on the Galactocentric origin.",
+        "label": "tab:hvspar"
+      },
+      "source_path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+      "excerpt_path": "literature/1907.11725/catalog_sources/table-tab-hvspar/excerpt.tex",
+      "sha256": "a1304984cd52ea96f9ac48d9fa93d913b994fc2db277ba2da338a8e1455a5eec",
+      "line_count": 36,
+      "error": ""
+    },
+    {
+      "id": "table-tab-sed_fitres",
+      "internal_table_id": "table-tab-sed_fitres",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+        "start_line": 231,
+        "end_line": 248,
+        "caption": "The parameters measured from fitting MIST isochrones to the S5-HVS1 SED (Model P) and by combining SED constraints with spectroscopic constraints (Model SP).",
+        "label": "tab:sed_fitres"
+      },
+      "source_path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+      "excerpt_path": "literature/1907.11725/catalog_sources/table-tab-sed_fitres/excerpt.tex",
+      "sha256": "8ecf4f41ca86d94b9ec65f94b5a969caf0e4cd478846bf952b8697fb9fc23012",
+      "line_count": 18,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-hvspar",
+      "internal_table_id": "table-tab-hvspar",
+      "status": "success",
+      "ecsv_path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+      "caption": "The measured parameters of the hyper-velocity star S5-HVS1. The top part of the Table refers to the measurements from previous surveys, while the bottom one summarises the measurements presented in the paper. HRV is the heliocentric radial velocity. $\\dhel$, $D_{\\rm hel,GC}$ are heliocentric distance constraints without and with the Galactocentric origin assumption respectively. $V_{\\rm GSR}$, $V_{\\rm GSR,GC}$ are the inferred Galactic standard of rest (GSR) velocities of S5-HVS1 determined without and with the Galactocentric origin assumption respectively. $V_{\\rm ej,GC}$ is the expected ejection speed from the Galactic Centre. $\\mu_{\\alpha,\\rm pred} \\cos \\delta$, $\\mu_{\\delta,\\rm pred}$ are the predicted proper motions of S5-HVS1 based on the Galactocentric origin.",
+      "label": "tab:hvspar",
+      "row_count": 22,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value",
+          "unit"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "unit",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpe0e48d23/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1907.11725/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpe0e48d23/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1907.11725/catalog_sources/table-tab-hvspar/wrapped.tex",
+            "html": "literature/1907.11725/catalog_sources/table-tab-hvspar/latexml.html",
+            "stdout": "literature/1907.11725/catalog_sources/table-tab-hvspar/latexml.stdout.txt",
+            "stderr": "literature/1907.11725/catalog_sources/table-tab-hvspar/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a1304984cd52ea96f9ac48d9fa93d913b994fc2db277ba2da338a8e1455a5eec"
+    },
+    {
+      "id": "table-tab-sed_fitres",
+      "internal_table_id": "table-tab-sed_fitres",
+      "status": "success",
+      "ecsv_path": "literature/1907.11725/catalog_tables/table-tab-sed_fitres.ecsv",
+      "caption": "The parameters measured from fitting MIST isochrones to the S5-HVS1 SED (Model P) and by combining SED constraints with spectroscopic constraints (Model SP).",
+      "label": "tab:sed_fitres",
+      "row_count": 5,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value",
+          "Value",
+          "unit"
+        ],
+        [
+          "",
+          "Photometric",
+          "Spectro-Photometric",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value | Photometric",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Value | Spectro-Photometric",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "unit",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpu5j337xs/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1907.11725/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpu5j337xs/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1907.11725/catalog_sources/table-tab-sed_fitres/wrapped.tex",
+            "html": "literature/1907.11725/catalog_sources/table-tab-sed_fitres/latexml.html",
+            "stdout": "literature/1907.11725/catalog_sources/table-tab-sed_fitres/latexml.stdout.txt",
+            "stderr": "literature/1907.11725/catalog_sources/table-tab-sed_fitres/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8ecf4f41ca86d94b9ec65f94b5a969caf0e4cd478846bf952b8697fb9fc23012"
+    }
+  ]
+}

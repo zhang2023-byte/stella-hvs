@@ -1,0 +1,63 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:39:00",
+  "paper": {
+    "arxiv_id": "2306.11663",
+    "bibcode": "2023ApJ...952..129L",
+    "title": "Not so fast, not so furious: just magnetic",
+    "month": "2023-08",
+    "source_note_json": "notes/2023/2023-08/2023-08.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2306.11663",
+      "pdf": "https://arxiv.org/pdf/2306.11663"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2306.11663",
+    "audit_path": "literature/2306.11663/audit.json",
+    "catalog_review_path": "literature/2306.11663/catalog_review.json",
+    "catalog_extraction_path": "literature/2306.11663/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2306.11663/catalog_tables/table-Tab_Log.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:39:00",
+    "extractor": "agent",
+    "summary": "This paper performs spectropolarimetric observations of WD 0810-353, a magnetic white dwarf. The Gaia DR3 radial velocity (-373.7 km/s) had previously been used to predict a very close fly-by of the Solar System in ~30 kyr, and some researchers suggested it might be a hypervelocity runaway star (v ~ -4300 km/s). Through new polarized spectral analysis, this paper reveals two regions with different magnetic field strengths (~30 MG and ~45 MG) and opposite polarities on the stellar surface, and remeasures the radial velocity as +83 ± 140 km/s. The paper explicitly rules out the hypervelocity runaway star hypothesis and the prediction of a close encounter with the Solar System. The paper does not discuss Galactic escape velocity or gravitational unbound status, and yields no HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2306.11663:group-01",
+      "description": "WD 0810-353 — previously erroneously labeled as a hypervelocity runaway star (v ~ -4300 km/s) by Gaia DR3 spectra and follow-up studies, but refuted by this paper's magnetic white dwarf spectropolarimetric analysis.",
+      "decision": "rejected",
+      "reason": "The paper explicitly refutes the only HVS claim for WD 0810-353. The newly measured radial velocity is +83 ± 140 km/s, which does not meet HVS criteria at all. The paper's subject is the magnetic field structure and spectropolarimetric analysis of magnetic white dwarfs, not any genuine HVS candidate search or confirmation.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2306.11663/arxiv_source/NFNF.tex",
+          "start_line": 49,
+          "end_line": 49,
+          "context": "Abstract: 'We also reject the suggestion that the star is a hypervelocity runaway star, a survivor of a Type Ia Supernova explosion. It is just a stellar remnant in the Solar neighborhood with a very strong and complex magnetic field.'"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2306.11663/arxiv_source/NFNF.tex",
+          "start_line": 61,
+          "end_line": 61,
+          "context": "Introduction: cites Delafuentemarcos2022 who suggested the star 'might have a very large radial velocity of about -4300 km/s and thus might be a hypervelocity runaway star.'"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2306.11663/arxiv_source/NFNF.tex",
+          "start_line": 171,
+          "end_line": 171,
+          "context": "Conclusion: 'we are able to rule out the possibility that the strongly blue-shifted π component of Hα indicates that this star has a huge radial velocity of the order of -4300 km/s.'"
+        }
+      ]
+    }
+  ]
+}

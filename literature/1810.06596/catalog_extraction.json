@@ -1,0 +1,397 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:32:56",
+  "paper": {
+    "arxiv_id": "1810.06596",
+    "title": "Resolved Kinematics of Runaway and Field OB Stars in the Small Magellanic Cloud",
+    "month": "2018-10"
+  },
+  "review": {
+    "path": "literature/1810.06596/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083256",
+    "started_at": "2026-06-07T08:32:56",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1810.06596",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-t_master",
+      "internal_table_id": "table-t_master",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.06596/arxiv_source/Oey.tex",
+        "start_line": 375,
+        "end_line": 424,
+        "caption": "Kinematic Data for RIOTS4 Field OB Stars",
+        "label": "t_master"
+      },
+      "source_path": "literature/1810.06596/arxiv_source/Oey.tex",
+      "excerpt_path": "literature/1810.06596/catalog_sources/table-t_master/excerpt.tex",
+      "sha256": "47f6f477f1bcb29e8adb6aa3dcffcdefde8fd935ab67599e6c85f6cbe23d8861",
+      "line_count": 50,
+      "error": ""
+    },
+    {
+      "id": "table-t_binaries",
+      "internal_table_id": "table-t_binaries",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.06596/arxiv_source/Oey.tex",
+        "start_line": 612,
+        "end_line": 643,
+        "caption": "Kinematics of Binary SMC Field OB Stars",
+        "label": "t_binaries"
+      },
+      "source_path": "literature/1810.06596/arxiv_source/Oey.tex",
+      "excerpt_path": "literature/1810.06596/catalog_sources/table-t_binaries/excerpt.tex",
+      "sha256": "9941b659453adb80adf84fe7c518f33398c61f242c51b294b044bb1ad58731c2",
+      "line_count": 32,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-t_master",
+      "internal_table_id": "table-t_master",
+      "status": "success",
+      "ecsv_path": "literature/1810.06596/catalog_tables/table-t_master.ecsv",
+      "caption": "Kinematic Data for RIOTS4 Field OB Stars",
+      "label": "t_master",
+      "row_count": 10,
+      "column_count": 14,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID b b From Massey2002",
+          "Subgroup c c ‘E’, ‘S’, ‘X’ indicate EB, SB2 and HMXB, respectively; ‘B’, ‘W’, ‘D’ indicate Bar, Wing, and boundary stars, respectively; ‘m’ indicates object in multi-epoch spectroscopic sample.",
+          "\\vtot d d Final residual velocity relative to SMC and Wing systemic motion. The \\vloctot values are computed relative to local velocity fields (see text). RV errors are typically 10 \\rm km s^-1 .",
+          "\\vloctot d d Final residual velocity relative to SMC and Wing systemic motion. The \\vloctot values are computed relative to local velocity fields (see text). RV errors are typically 10 \\rm km s^-1 .",
+          "Quality e e ‘a’ indicates object meets \\sim 10 % asymmetry criterion in RA vs Dec; the second and third values give the number of stars within 1 \\arcsec and 1.5 \\arcsec , respectively.",
+          "RV d d Final residual velocity relative to SMC and Wing systemic motion. The \\vloctot values are computed relative to local velocity fields (see text). RV errors are typically 10 \\rm km s^-1 .",
+          "v_\\rm RA f f Transverse velocity computed from proper motion, without geometric or systemic velocity corrections.",
+          "err g g Measurement errors, not including systematic errors (see text).",
+          "v_\\rm Dec f f Transverse velocity computed from proper motion, without geometric or systemic velocity corrections.",
+          "err g g Measurement errors, not including systematic errors (see text).",
+          "v_\\rm loc,\\rm RA f f Transverse velocity computed from proper motion, without geometric or systemic velocity corrections.",
+          "err g g Measurement errors, not including systematic errors (see text).",
+          "v_\\rm loc,\\rm Dec f f Transverse velocity computed from proper motion, without geometric or systemic velocity corrections.",
+          "err g g Measurement errors, not including systematic errors (see text)."
+        ],
+        [
+          "-",
+          "-",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "-",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\rm km s^-1"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID b b From Massey2002 | -",
+          "unit_text": "ID b b From Massey2002",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Subgroup c c ‘E’, ‘S’, ‘X’ indicate EB, SB2 and HMXB, respectively; ‘B’, ‘W’, ‘D’ indicate Bar, Wing, and boundary stars, respectively; ‘m’ indicates object in multi-epoch spectroscopic sample. | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\vtot d d Final residual velocity relative to SMC and Wing systemic motion. The \\vloctot values are computed relative to local velocity fields (see text). RV errors are typically 10 \\rm km s^-1 . | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\vloctot d d Final residual velocity relative to SMC and Wing systemic motion. The \\vloctot values are computed relative to local velocity fields (see text). RV errors are typically 10 \\rm km s^-1 . | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Quality e e ‘a’ indicates object meets \\sim 10 % asymmetry criterion in RA vs Dec; the second and third values give the number of stars within 1 \\arcsec and 1.5 \\arcsec , respectively. | -",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "RV d d Final residual velocity relative to SMC and Wing systemic motion. The \\vloctot values are computed relative to local velocity fields (see text). RV errors are typically 10 \\rm km s^-1 . | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_\\rm RA f f Transverse velocity computed from proper motion, without geometric or systemic velocity corrections. | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "err g g Measurement errors, not including systematic errors (see text). | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "v_\\rm Dec f f Transverse velocity computed from proper motion, without geometric or systemic velocity corrections. | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "err g g Measurement errors, not including systematic errors (see text). | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "v_\\rm loc,\\rm RA f f Transverse velocity computed from proper motion, without geometric or systemic velocity corrections. | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "err g g Measurement errors, not including systematic errors (see text). | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "v_\\rm loc,\\rm Dec f f Transverse velocity computed from proper motion, without geometric or systemic velocity corrections. | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "err g g Measurement errors, not including systematic errors (see text). | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1yu19m0r/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.06596/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1yu19m0r/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.06596/catalog_sources/table-t_master/wrapped.tex",
+            "html": "literature/1810.06596/catalog_sources/table-t_master/latexml.html",
+            "stdout": "literature/1810.06596/catalog_sources/table-t_master/latexml.stdout.txt",
+            "stderr": "literature/1810.06596/catalog_sources/table-t_master/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "47f6f477f1bcb29e8adb6aa3dcffcdefde8fd935ab67599e6c85f6cbe23d8861"
+    },
+    {
+      "id": "table-t_binaries",
+      "internal_table_id": "table-t_binaries",
+      "status": "success",
+      "ecsv_path": "literature/1810.06596/catalog_tables/table-t_binaries.ecsv",
+      "caption": "Kinematics of Binary SMC Field OB Stars",
+      "label": "t_binaries",
+      "row_count": 13,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "Unclassified a a Includes unidentified binaries.",
+          "EB",
+          "SB2",
+          "HMXB",
+          "Total"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Unclassified a a Includes unidentified binaries.",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "EB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "SB2",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "HMXB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Total",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphroi486k/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.06596/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphroi486k/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.06596/catalog_sources/table-t_binaries/wrapped.tex",
+            "html": "literature/1810.06596/catalog_sources/table-t_binaries/latexml.html",
+            "stdout": "literature/1810.06596/catalog_sources/table-t_binaries/latexml.stdout.txt",
+            "stderr": "literature/1810.06596/catalog_sources/table-t_binaries/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9941b659453adb80adf84fe7c518f33398c61f242c51b294b044bb1ad58731c2"
+    }
+  ]
+}

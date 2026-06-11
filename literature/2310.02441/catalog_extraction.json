@@ -1,0 +1,853 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:57:55",
+  "paper": {
+    "arxiv_id": "2310.02441",
+    "title": "Finding the dispersing siblings of young open clusters. Dynamical traceback simulations using Gaia DR3",
+    "month": "2023-10"
+  },
+  "review": {
+    "path": "literature/2310.02441/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225755",
+    "started_at": "2026-05-22T22:57:55",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2310.02441",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 7,
+      "work_count": 7,
+      "table_count": 7,
+      "success_count": 7,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 7,
+      "file_success_count": 7,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-solar_parameters",
+      "internal_table_id": "table-tab-solar_parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2310.02441/arxiv_source/traceback.tex",
+        "start_line": 310,
+        "end_line": 335,
+        "caption": "Adopted parameters of the solar orbit.",
+        "label": "tab:solar_parameters"
+      },
+      "source_path": "literature/2310.02441/arxiv_source/traceback.tex",
+      "excerpt_path": "literature/2310.02441/catalog_sources/table-tab-solar_parameters/excerpt.tex",
+      "sha256": "c74317828c0d4b6bf6a4a386d689d6e05dfde7b9aee5338a28d028cb1b635584",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-tab-galactocentric_selection",
+      "internal_table_id": "table-tab-galactocentric_selection",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2310.02441/arxiv_source/traceback.tex",
+        "start_line": 337,
+        "end_line": 355,
+        "caption": "Limits for the coordinates of the stars included in the initial traceback computation.",
+        "label": "tab:galactocentric_selection"
+      },
+      "source_path": "literature/2310.02441/arxiv_source/traceback.tex",
+      "excerpt_path": "literature/2310.02441/catalog_sources/table-tab-galactocentric_selection/excerpt.tex",
+      "sha256": "8512671d5fb711f5e4ff32ee4efee4e8436eff599045be61d2badbdc102719c8",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-cluster_parameters",
+      "internal_table_id": "table-tab-cluster_parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2310.02441/arxiv_source/traceback.tex",
+        "start_line": 436,
+        "end_line": 462,
+        "caption": "Cluster ages and metallicities from Bossini et al. (2019).",
+        "label": "tab:cluster_parameters"
+      },
+      "source_path": "literature/2310.02441/arxiv_source/traceback.tex",
+      "excerpt_path": "literature/2310.02441/catalog_sources/table-tab-cluster_parameters/excerpt.tex",
+      "sha256": "a247caf66a44bc3b17b84984a2a4493facbb56aa567978dc251c2cc17320e073",
+      "line_count": 27,
+      "error": ""
+    },
+    {
+      "id": "table-tab-probabilities",
+      "internal_table_id": "table-tab-probabilities",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2310.02441/arxiv_source/traceback.tex",
+        "start_line": 521,
+        "end_line": 537,
+        "caption": "Membership and fugitive probabilities of the Gaia DR3 sources.",
+        "label": "tab:probabilities"
+      },
+      "source_path": "literature/2310.02441/arxiv_source/traceback.tex",
+      "excerpt_path": "literature/2310.02441/catalog_sources/table-tab-probabilities/excerpt.tex",
+      "sha256": "4de6cb4e63bf113e4db206b42a0b851338f7bee15347ac9213f5f09f5248c13f",
+      "line_count": 17,
+      "error": ""
+    },
+    {
+      "id": "table-tab-cluster_results",
+      "internal_table_id": "table-tab-cluster_results",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2310.02441/arxiv_source/traceback.tex",
+        "start_line": 539,
+        "end_line": 563,
+        "caption": "False positive rates (medians with 16th/84th percentiles) across Monte Carlo tracebacks.",
+        "label": "tab:cluster_results"
+      },
+      "source_path": "literature/2310.02441/arxiv_source/traceback.tex",
+      "excerpt_path": "literature/2310.02441/catalog_sources/table-tab-cluster_results/excerpt.tex",
+      "sha256": "d25177d4d270884cff5ba89b5887d8bc67108ba89ed8c371d8fec497822e4586",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-tab-alternative_solar_parameters",
+      "internal_table_id": "table-tab-alternative_solar_parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2310.02441/arxiv_source/traceback.tex",
+        "start_line": 940,
+        "end_line": 960,
+        "caption": "Alternative solar orbit parameters, also used by Meingast et al. (2021).",
+        "label": "tab:alternative_solar_parameters"
+      },
+      "source_path": "literature/2310.02441/arxiv_source/traceback.tex",
+      "excerpt_path": "literature/2310.02441/catalog_sources/table-tab-alternative_solar_parameters/excerpt.tex",
+      "sha256": "0692aecab5ad4ddca483b4f4dfb63ab2945c156b82b44a5bbfae95a633625657",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-tab-rough_cluster_coordinates",
+      "internal_table_id": "table-tab-rough_cluster_coordinates",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2310.02441/arxiv_source/traceback.tex",
+        "start_line": 1570,
+        "end_line": 1592,
+        "caption": "Rough cluster coordinates from SIMBAD used as initial guesses.",
+        "label": "tab:rough_cluster_coordinates"
+      },
+      "source_path": "literature/2310.02441/arxiv_source/traceback.tex",
+      "excerpt_path": "literature/2310.02441/catalog_sources/table-tab-rough_cluster_coordinates/excerpt.tex",
+      "sha256": "804c635cf151f7baa7a486d06eb296b2d12ae052920e962f6a7a7bf52ab69c92",
+      "line_count": 23,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-solar_parameters",
+      "internal_table_id": "table-tab-solar_parameters",
+      "status": "success",
+      "ecsv_path": "literature/2310.02441/catalog_tables/table-tab-solar_parameters.ecsv",
+      "caption": "Adopted parameters of the solar orbit.",
+      "label": "tab:solar_parameters",
+      "row_count": 4,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Symbol",
+          "Value",
+          "Reference"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Symbol",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Reference",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm0i5sq7j/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2310.02441/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm0i5sq7j/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2310.02441/catalog_sources/table-tab-solar_parameters/wrapped.tex",
+            "html": "literature/2310.02441/catalog_sources/table-tab-solar_parameters/latexml.html",
+            "stdout": "literature/2310.02441/catalog_sources/table-tab-solar_parameters/latexml.stdout.txt",
+            "stderr": "literature/2310.02441/catalog_sources/table-tab-solar_parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c74317828c0d4b6bf6a4a386d689d6e05dfde7b9aee5338a28d028cb1b635584"
+    },
+    {
+      "id": "table-tab-galactocentric_selection",
+      "internal_table_id": "table-tab-galactocentric_selection",
+      "status": "success",
+      "ecsv_path": "literature/2310.02441/catalog_tables/table-tab-galactocentric_selection.ecsv",
+      "caption": "Limits for the coordinates of the stars included in the initial traceback computation.",
+      "label": "tab:galactocentric_selection",
+      "row_count": 7,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Symbol",
+          "Minimum",
+          "Maximum"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Symbol",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Minimum",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Maximum",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7mwzqk3_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2310.02441/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7mwzqk3_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2310.02441/catalog_sources/table-tab-galactocentric_selection/wrapped.tex",
+            "html": "literature/2310.02441/catalog_sources/table-tab-galactocentric_selection/latexml.html",
+            "stdout": "literature/2310.02441/catalog_sources/table-tab-galactocentric_selection/latexml.stdout.txt",
+            "stderr": "literature/2310.02441/catalog_sources/table-tab-galactocentric_selection/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8512671d5fb711f5e4ff32ee4efee4e8436eff599045be61d2badbdc102719c8"
+    },
+    {
+      "id": "table-tab-cluster_parameters",
+      "internal_table_id": "table-tab-cluster_parameters",
+      "status": "success",
+      "ecsv_path": "literature/2310.02441/catalog_tables/table-tab-cluster_parameters.ecsv",
+      "caption": "Cluster ages and metallicities from Bossini et al. (2019).",
+      "label": "tab:cluster_parameters",
+      "row_count": 10,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "Cluster age",
+          "[Fe/H]",
+          "[Fe/H] reference"
+        ],
+        [
+          "",
+          "Myr",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Cluster age | Myr",
+          "unit_text": "Myr",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "[Fe/H]",
+          "unit_text": "[Fe/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "[Fe/H] reference",
+          "unit_text": "[Fe/H] reference",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzv3ym8eq/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2310.02441/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzv3ym8eq/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2310.02441/catalog_sources/table-tab-cluster_parameters/wrapped.tex",
+            "html": "literature/2310.02441/catalog_sources/table-tab-cluster_parameters/latexml.html",
+            "stdout": "literature/2310.02441/catalog_sources/table-tab-cluster_parameters/latexml.stdout.txt",
+            "stderr": "literature/2310.02441/catalog_sources/table-tab-cluster_parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a247caf66a44bc3b17b84984a2a4493facbb56aa567978dc251c2cc17320e073"
+    },
+    {
+      "id": "table-tab-probabilities",
+      "internal_table_id": "table-tab-probabilities",
+      "status": "success",
+      "ecsv_path": "literature/2310.02441/catalog_tables/table-tab-probabilities.ecsv",
+      "caption": "Membership and fugitive probabilities of the Gaia DR3 sources.",
+      "label": "tab:probabilities",
+      "row_count": 5,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Source ID",
+          "\\alpha",
+          "\\delta",
+          "Membership probability",
+          "Fugitive probability",
+          "Cluster"
+        ],
+        [
+          "",
+          "deg",
+          "deg",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Source ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha | deg",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta | deg",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Membership probability",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Fugitive probability",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Cluster",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprs2znv53/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2310.02441/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprs2znv53/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2310.02441/catalog_sources/table-tab-probabilities/wrapped.tex",
+            "html": "literature/2310.02441/catalog_sources/table-tab-probabilities/latexml.html",
+            "stdout": "literature/2310.02441/catalog_sources/table-tab-probabilities/latexml.stdout.txt",
+            "stderr": "literature/2310.02441/catalog_sources/table-tab-probabilities/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4de6cb4e63bf113e4db206b42a0b851338f7bee15347ac9213f5f09f5248c13f"
+    },
+    {
+      "id": "table-tab-cluster_results",
+      "internal_table_id": "table-tab-cluster_results",
+      "status": "success",
+      "ecsv_path": "literature/2310.02441/catalog_tables/table-tab-cluster_results.ecsv",
+      "caption": "False positive rates (medians with 16th/84th percentiles) across Monte Carlo tracebacks.",
+      "label": "tab:cluster_results",
+      "row_count": 10,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "No. of fugitives",
+          "No. of members",
+          "False positive rate"
+        ],
+        [
+          "",
+          "",
+          "",
+          "%"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "No. of fugitives",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "No. of members",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "False positive rate | %",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyzaviomg/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2310.02441/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyzaviomg/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2310.02441/catalog_sources/table-tab-cluster_results/wrapped.tex",
+            "html": "literature/2310.02441/catalog_sources/table-tab-cluster_results/latexml.html",
+            "stdout": "literature/2310.02441/catalog_sources/table-tab-cluster_results/latexml.stdout.txt",
+            "stderr": "literature/2310.02441/catalog_sources/table-tab-cluster_results/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d25177d4d270884cff5ba89b5887d8bc67108ba89ed8c371d8fec497822e4586"
+    },
+    {
+      "id": "table-tab-alternative_solar_parameters",
+      "internal_table_id": "table-tab-alternative_solar_parameters",
+      "status": "success",
+      "ecsv_path": "literature/2310.02441/catalog_tables/table-tab-alternative_solar_parameters.ecsv",
+      "caption": "Alternative solar orbit parameters, also used by Meingast et al. (2021).",
+      "label": "tab:alternative_solar_parameters",
+      "row_count": 3,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Symbol",
+          "Value",
+          "Reference"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Symbol",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Reference",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppt3hghmm/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2310.02441/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppt3hghmm/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2310.02441/catalog_sources/table-tab-alternative_solar_parameters/wrapped.tex",
+            "html": "literature/2310.02441/catalog_sources/table-tab-alternative_solar_parameters/latexml.html",
+            "stdout": "literature/2310.02441/catalog_sources/table-tab-alternative_solar_parameters/latexml.stdout.txt",
+            "stderr": "literature/2310.02441/catalog_sources/table-tab-alternative_solar_parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0692aecab5ad4ddca483b4f4dfb63ab2945c156b82b44a5bbfae95a633625657"
+    },
+    {
+      "id": "table-tab-rough_cluster_coordinates",
+      "internal_table_id": "table-tab-rough_cluster_coordinates",
+      "status": "success",
+      "ecsv_path": "literature/2310.02441/catalog_tables/table-tab-rough_cluster_coordinates.ecsv",
+      "caption": "Rough cluster coordinates from SIMBAD used as initial guesses.",
+      "label": "tab:rough_cluster_coordinates",
+      "row_count": 10,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster name",
+          "\\alpha",
+          "\\delta",
+          "\\varpi",
+          "\\mu_\\alpha*",
+          "\\mu_\\delta",
+          "v_r"
+        ],
+        [
+          "",
+          "",
+          "",
+          "mas",
+          "\\mathrmmas yr^-1",
+          "\\mathrmmas yr^-1",
+          "\\mathrmkm s^-1"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\varpi | mas",
+          "unit_text": "mas",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\alpha* | \\mathrmmas yr^-1",
+          "unit_text": "\\mathrmmas yr^-1",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_\\delta | \\mathrmmas yr^-1",
+          "unit_text": "\\mathrmmas yr^-1",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_r | \\mathrmkm s^-1",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppypbjk61/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2310.02441/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppypbjk61/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2310.02441/catalog_sources/table-tab-rough_cluster_coordinates/wrapped.tex",
+            "html": "literature/2310.02441/catalog_sources/table-tab-rough_cluster_coordinates/latexml.html",
+            "stdout": "literature/2310.02441/catalog_sources/table-tab-rough_cluster_coordinates/latexml.stdout.txt",
+            "stderr": "literature/2310.02441/catalog_sources/table-tab-rough_cluster_coordinates/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "804c635cf151f7baa7a486d06eb296b2d12ae052920e962f6a7a7bf52ab69c92"
+    }
+  ]
+}

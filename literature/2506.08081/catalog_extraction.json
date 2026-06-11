@@ -1,0 +1,302 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:44",
+  "paper": {
+    "arxiv_id": "2506.08081",
+    "title": "Spectroscopic and kinematic analyses of a warm survivor of a D6 supernova",
+    "month": "2025-06"
+  },
+  "review": {
+    "path": "literature/2506.08081/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123944",
+    "started_at": "2026-05-17T12:39:44",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2506.08081",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-astromphot",
+      "internal_table_id": "table-tab-astromphot",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2506.08081/arxiv_source/J1637.tex",
+        "start_line": 337,
+        "end_line": 345,
+        "caption": "Astrometry and photometry for \\WD.",
+        "label": "tab:astromphot"
+      },
+      "source_path": "literature/2506.08081/arxiv_source/J1637.tex",
+      "excerpt_path": "literature/2506.08081/catalog_sources/table-tab-astromphot/excerpt.tex",
+      "sha256": "4932166cc6027e1ed94280bdb606842281a787b585d2135c7c8b37fa2d627757",
+      "line_count": 9,
+      "error": ""
+    },
+    {
+      "id": "table-tab-spec",
+      "internal_table_id": "table-tab-spec",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2506.08081/arxiv_source/J1637.tex",
+        "start_line": 550,
+        "end_line": 559,
+        "caption": "Atmospheric parameters for \\WD\\ determined from our spectroscopic fitting. Abundances are logarithmic number ratios relative to carbon.",
+        "label": "tab:spec"
+      },
+      "source_path": "literature/2506.08081/arxiv_source/J1637.tex",
+      "excerpt_path": "literature/2506.08081/catalog_sources/table-tab-spec/excerpt.tex",
+      "sha256": "e851a3f7d66fa81bcfa601f3f777445132f4c2c10a5d3e0e85d776a5a76d7869",
+      "line_count": 10,
+      "error": ""
+    },
+    {
+      "id": "table-tab-kinematics",
+      "internal_table_id": "table-tab-kinematics",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2506.08081/arxiv_source/J1637.tex",
+        "start_line": 1001,
+        "end_line": 1018,
+        "caption": "Results from our orbital fits to \\WD. The explicitly fitted parameters are listed first. The second group refer to quantities derived from the fitted parameters. \\Teff\\ is not shown as the results simply reflect the measured prior, instead allowing more freedom in the other parameters such as \\ebv. Parameters from Section~\\ref{sec:confD6} are listed under Fit~0 (note that $M_\\star$ is the fitted parameter here). Fit~1 represents our adopted parameters for \\WD, where the results from Fit~2 are potentially subject to uncertainties in the donor $\\Teff$/radius at the time of explosion.",
+        "label": "tab:kinematics"
+      },
+      "source_path": "literature/2506.08081/arxiv_source/J1637.tex",
+      "excerpt_path": "literature/2506.08081/catalog_sources/table-tab-kinematics/excerpt.tex",
+      "sha256": "41b5cc61eabadfab21cedca61df2daca52b1052e4c408af0a9d0af8d8a0ac668",
+      "line_count": 18,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-astromphot",
+      "internal_table_id": "table-tab-astromphot",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2506.08081/catalog_tables/table-tab-astromphot.ecsv",
+      "caption": "Astrometry and photometry for \\WD.",
+      "label": "tab:astromphot",
+      "row_count": 18,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "value"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpi03_nkgs/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2506.08081/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpi03_nkgs/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.08081/catalog_sources/table-tab-astromphot/wrapped.tex",
+            "html": "literature/2506.08081/catalog_sources/table-tab-astromphot/latexml.html",
+            "stdout": "literature/2506.08081/catalog_sources/table-tab-astromphot/latexml.stdout.txt",
+            "stderr": "literature/2506.08081/catalog_sources/table-tab-astromphot/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4932166cc6027e1ed94280bdb606842281a787b585d2135c7c8b37fa2d627757"
+    },
+    {
+      "id": "table-tab-spec",
+      "internal_table_id": "table-tab-spec",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2506.08081/catalog_tables/table-tab-spec.ecsv",
+      "caption": "Atmospheric parameters for \\WD\\ determined from our spectroscopic fitting. Abundances are logarithmic number ratios relative to carbon.",
+      "label": "tab:spec",
+      "row_count": 15,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "value"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv74nww24/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2506.08081/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv74nww24/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.08081/catalog_sources/table-tab-spec/wrapped.tex",
+            "html": "literature/2506.08081/catalog_sources/table-tab-spec/latexml.html",
+            "stdout": "literature/2506.08081/catalog_sources/table-tab-spec/latexml.stdout.txt",
+            "stderr": "literature/2506.08081/catalog_sources/table-tab-spec/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e851a3f7d66fa81bcfa601f3f777445132f4c2c10a5d3e0e85d776a5a76d7869"
+    },
+    {
+      "id": "table-tab-kinematics",
+      "internal_table_id": "table-tab-kinematics",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2506.08081/catalog_tables/table-tab-kinematics.ecsv",
+      "caption": "Results from our orbital fits to \\WD. The explicitly fitted parameters are listed first. The second group refer to quantities derived from the fitted parameters. \\Teff\\ is not shown as the results simply reflect the measured prior, instead allowing more freedom in the other parameters such as \\ebv. Parameters from Section~\\ref{sec:confD6} are listed under Fit~0 (note that $M_\\star$ is the fitted parameter here). Fit~1 represents our adopted parameters for \\WD, where the results from Fit~2 are potentially subject to uncertainties in the donor $\\Teff$/radius at the time of explosion.",
+      "label": "tab:kinematics",
+      "row_count": 21,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1egbfhp5/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2506.08081/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1egbfhp5/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.08081/catalog_sources/table-tab-kinematics/wrapped.tex",
+            "html": "literature/2506.08081/catalog_sources/table-tab-kinematics/latexml.html",
+            "stdout": "literature/2506.08081/catalog_sources/table-tab-kinematics/latexml.stdout.txt",
+            "stderr": "literature/2506.08081/catalog_sources/table-tab-kinematics/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "41b5cc61eabadfab21cedca61df2daca52b1052e4c408af0a9d0af8d8a0ac668"
+    }
+  ]
+}

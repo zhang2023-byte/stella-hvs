@@ -1,0 +1,89 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T12:00:00",
+  "paper": {
+    "arxiv_id": "2108.11393",
+    "bibcode": "2021MNRAS.507.4788G",
+    "title": "Central kinematics of the Galactic globular cluster M80",
+    "month": "2021-08",
+    "source_note_json": "notes/2021/2021-08/2021-08.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2108.11393",
+      "pdf": "https://arxiv.org/pdf/2108.11393"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2108.11393",
+    "audit_path": "literature/2108.11393/audit.json",
+    "catalog_review_path": "literature/2108.11393/catalog_review.json",
+    "catalog_extraction_path": "literature/2108.11393/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2108.11393/catalog_tables/table-tab-observations.ecsv",
+      "literature/2108.11393/catalog_tables/table-tab-priors.ecsv",
+      "literature/2108.11393/catalog_tables/table-tab-fits_north.ecsv",
+      "literature/2108.11393/catalog_tables/table-tab-fits_south.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T12:00:00",
+    "extractor": "agent",
+    "summary": "论文利用MUSE积分场光谱仪观测银河系球状星团M80（NGC 6093）的中心运动学，分析中心7.5×7.5角秒区域932颗恒星的速度，通过轴对称Jeans模型搜索中等质量黑洞（IMBH）。论文在摘要和讨论中提到检测到两颗潜在的高速恒星，径向速度相对星团平均值为80-90 km/s。这些恒星是在星团内部具有高速的成员星（cluster high-velocity stars），可能通过IMBH相互作用产生，但仍受星团引力束缚，论文未声称其为银河系非束缚天体。'High-velocity stars'在此语境下指星团内部高速星，而非逃离银河系的超高速星（HVS）。论文核心科学问题是星团中心是否存在IMBH，而非银河系逃逸天体。因此无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文利用MUSE数据研究球状星团M80的中心运动学和中等质量黑洞，在讨论中提到两颗星团内部高速星（相对星团v_rad=80-90 km/s），但这些是星团束缚的恒星，非银河系非束缚HVS。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (ngc6093_paper.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+          "start_line": 51,
+          "end_line": 51,
+          "context": "Title: Central kinematics of the Galactic globular cluster M80"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+          "start_line": 97,
+          "end_line": 101,
+          "context": "Abstract: search for IMBH; two potential high-velocity stars with radial velocities of 80 to 90 km/s relative to the cluster mean"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "m80-high-velocity-stars",
+      "description": "论文在M80球状星团中心区域检测到的两颗潜在高速恒星，径向速度相对星团平均值为80-90 km/s。这两颗恒星在摘要（第101行）和讨论（第482-486行）中被提及，可能在IMBH存在情景下通过引力相互作用获得高速。",
+      "decision": "excluded",
+      "reason": "论文中的'high-velocity stars'指在球状星团M80内部具有相对星团平均值80-90 km/s径向速度的成员星。这些恒星的速度是相对于星团而非银河系参考系，它们仍受星团引力束缚，并未脱离星团。论文核心研究球状星团中心是否存在IMBH，这两颗高速星被用作潜在IMBH存在的间接证据，而非声称它们是银河系非束缚的超高速星（HVS）。星团内部高速星与逃离银河系的超高速星（hypervelocity stars）是不同天体类别。论文未讨论银河系逃逸速度或非束缚状态。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+          "start_line": 101,
+          "end_line": 101,
+          "context": "We further discuss the detection of two potential high-velocity stars with radial velocities of 80 to 90 km/s relative to the cluster mean."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+          "start_line": 482,
+          "end_line": 486,
+          "context": "Discussion: high velocity dispersion around southern centre; no individual high-velocity stars responsible for the southern solution; two potential high-velocity stars discussed"
+        }
+      ]
+    }
+  ]
+}

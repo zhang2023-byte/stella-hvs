@@ -1,0 +1,2496 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-23T03:55:22Z",
+  "paper": {
+    "arxiv_id": "2209.03560",
+    "bibcode": "2022AJ....164..187Q",
+    "title": "High Velocity Stars in SDSS/APOGEE DR17",
+    "month": "2022-09",
+    "source_note_json": "notes/2022/2022-09/2022-09.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2209.03560",
+      "pdf": "https://arxiv.org/pdf/2209.03560"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2209.03560",
+    "audit_path": "literature/2209.03560/audit.json",
+    "catalog_review_path": "literature/2209.03560/catalog_review.json",
+    "catalog_extraction_path": "literature/2209.03560/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+      "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter2.ecsv",
+      "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+      "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+      "literature/2209.03560/catalog_tables/table-tab-stellar_masses.ecsv",
+      "literature/2209.03560/catalog_tables/table-tab-cemp_properties.ecsv",
+      "literature/2209.03560/catalog_tables/table-tab-model-I-parameters.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-23T03:55:22Z",
+    "extractor": "agent",
+    "summary": "Three unbound candidates extracted from the HiVel sample. The paper explicitly labels these stars as 'unbound candidates' because they exceed the MWPotential2014 escape velocity, but notes the excess is within 1σ uncertainties and concludes they are bound in the preferred Irrgang Model I potential. The remaining 20 HiVel stars are excluded as the paper concludes they are bound in all potentials."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "APOGEE DR17 spectroscopic catalog and Gaia eDR3 astrometric catalog",
+      "inputs": [
+        "APOGEE DR17",
+        "Gaia eDR3"
+      ],
+      "outputs": [
+        "radial velocities",
+        "stellar parameters",
+        "chemical abundances",
+        "positions",
+        "parallaxes",
+        "proper motions",
+        "photometry"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 119,
+          "end_line": 143,
+          "context": "Data sources: APOGEE DR17 and Gaia eDR3"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "cross_match",
+      "summary": "Cross-match APOGEE DR17 with Gaia eDR3 to obtain full 6D phase space",
+      "inputs": [
+        "APOGEE DR17 sources",
+        "Gaia eDR3 sources"
+      ],
+      "outputs": [
+        "matched sample"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 242,
+          "end_line": 243,
+          "context": "Complementing APOGEE DR17 with Gaia eDR3 astrometry"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "quality_filter",
+      "summary": "Quality cuts on APOGEE and Gaia data: SNR>10, VERR<1 km/s, NVISITS>1, VSCATTER<1 km/s, ASPCAPFLAG/STARFLAG cuts, Gaia ruwe<1.4, fidelity_v2>0.5, norm_dG<-3, sigma_v/v_GC<30%",
+      "inputs": [
+        "matched APOGEE-Gaia sample"
+      ],
+      "outputs": [
+        "26 high-quality stars",
+        "23 final HiVel stars"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 144,
+          "end_line": 252,
+          "context": "Quality cuts and sample selection"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Bailer-Jones 2021 photogeometric distances",
+      "inputs": [
+        "Gaia eDR3 parallaxes",
+        "Gaia photometry",
+        "colors"
+      ],
+      "outputs": [
+        "photogeometric distances"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 242,
+          "end_line": 245,
+          "context": "Photogeometric distances from Bailer-Jones et al. (2021)"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "radial_velocity_measurement",
+      "summary": "APOGEE DR17 radial velocities from Doppler pipeline",
+      "inputs": [
+        "APOGEE spectra"
+      ],
+      "outputs": [
+        "radial velocities"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 133,
+          "end_line": 136,
+          "context": "APOGEE DR17 radial velocity determination with Doppler algorithm"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-04",
+        "step-05"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Galactocentric coordinate transformation with 1000 Monte Carlo realizations using Astropy and Pyia",
+      "inputs": [
+        "positions",
+        "proper motions",
+        "parallaxes",
+        "distances",
+        "radial velocities"
+      ],
+      "outputs": [
+        "Galactocentric positions",
+        "Galactocentric velocities",
+        "v_GC"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 247,
+          "end_line": 249,
+          "context": "Transformation from ICRS to Galactocentric coordinates with Monte Carlo uncertainty propagation"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "stellar_parameter_inference",
+      "summary": "ASPCAP stellar atmospheric parameters and isochrone-derived masses and radii",
+      "inputs": [
+        "APOGEE DR17 spectra",
+        "Gaia eDR3 parallaxes",
+        "Gaia photometry",
+        "2MASS photometry"
+      ],
+      "outputs": [
+        "T_eff",
+        "log g",
+        "[Fe/H]",
+        "[alpha/Fe]",
+        "mass",
+        "radius"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 136,
+          "end_line": 140,
+          "context": "ASPCAP stellar parameter and abundance pipeline"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [
+        "step-06"
+      ],
+      "step_type": "galactic_potential_model",
+      "summary": "Irrgang Model I, McMillan17, and MWPotential2014 gravitational potentials implemented in galpy",
+      "inputs": [
+        "Galactocentric positions and velocities"
+      ],
+      "outputs": [
+        "potential models for orbit integration and escape velocity"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 264,
+          "end_line": 268,
+          "context": "Three gravitational potential models for unbound assessment"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": [
+        "step-08"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Back-in-time orbit integration with 1000 MC realizations for 10 Gyr in Irrgang Model I potential using galpy",
+      "inputs": [
+        "Galactocentric phase space",
+        "gravitational potential"
+      ],
+      "outputs": [
+        "orbital parameters",
+        "trajectories",
+        "R_dc"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 293,
+          "end_line": 296,
+          "context": "Orbit integration methodology"
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "depends_on": [
+        "step-06",
+        "step-08"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Unbound probability p_ub = n(v_GC > v_esc)/1000 computed for each potential model",
+      "inputs": [
+        "v_GC",
+        "escape velocity curves"
+      ],
+      "outputs": [
+        "unbound probabilities",
+        "bound/unbound classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 264,
+          "end_line": 270,
+          "context": "Unbound candidate identification and probability calculation"
+        }
+      ]
+    },
+    {
+      "id": "step-11",
+      "depends_on": [
+        "step-07",
+        "step-09"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Chemical tagging with APOGEE abundances and dynamical origin analysis including LMC perturbation",
+      "inputs": [
+        "chemical abundances",
+        "orbital parameters",
+        "trajectories"
+      ],
+      "outputs": [
+        "origin hypotheses",
+        "accreted vs in-situ classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 469,
+          "end_line": 513,
+          "context": "Chemical patterns and dynamical origin analysis"
+        }
+      ]
+    },
+    {
+      "id": "step-12",
+      "depends_on": [
+        "step-01",
+        "step-04"
+      ],
+      "step_type": "photometric_or_sed_modeling",
+      "summary": "Absolute magnitude determination from Gaia eDR3 photometry, Bailer-Jones distances, and extinction correction",
+      "inputs": [
+        "Gaia eDR3 G/BP/RP magnitudes",
+        "distances",
+        "extinction"
+      ],
+      "outputs": [
+        "absolute magnitudes G, BP, RP"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 363,
+          "end_line": 365,
+          "context": "Absolute magnitudes from Gaia eDR3 with dust extinction correction"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2209.03560:cand-001",
+        "paper_candidate_id": "2M14503361+4921331",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "2M14503361+4921331",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+                "line": 43,
+                "column": "col_001",
+                "column_header": "APOGEE ID",
+                "raw_value": "2M14503361+4921331"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Unbound candidate exceeding MWPotential2014 escape velocity. The paper finds it has an 18% probability of passing within 5 kpc of the LMC. Kinematically and chemically consistent with halo stars.",
+        "paper_labels": [
+          "unbound_star",
+          "high_velocity_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "low",
+        "confidence_reason": "The paper explicitly labels this object as an unbound candidate with respect to the MWPotential2014 model, but concludes it is bound in the preferred Irrgang Model I potential and notes the excess is within 1σ uncertainties.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+            "start_line": 65,
+            "end_line": 72,
+            "context": "Abstract: three stars could be unbound depending on the adopted potential"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+            "start_line": 254,
+            "end_line": 270,
+            "context": "Unbound candidates section: three stars exceed MWPotential2014 escape velocity"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+            "start_line": 566,
+            "end_line": 573,
+            "context": "Conclusions: 3 stars unbounded to MWPotential2014 but bounded to Irrgang Model I"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+            "start_line": 65,
+            "end_line": 72,
+            "context": "Abstract introduces three unbound candidates"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+            "start_line": 566,
+            "end_line": 573,
+            "context": "Conclusions reassess unbound status"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "222.640 +/- 0.011",
+            "value": "222.640",
+            "error": "0.011",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia eDR3",
+              "data_release": "eDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                  "start_line": 123,
+                  "end_line": 125,
+                  "context": "Gaia eDR3 astrometric data"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia eDR3",
+              "data_release": "eDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                  "start_line": 123,
+                  "end_line": 125,
+                  "context": "Gaia eDR3 astrometric data"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+                "line": 43,
+                "column": "col_002",
+                "column_header": "\\alpha | ( deg+/- mas )",
+                "raw_value": "222.640 +/- 0.011"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "49.359 +/- 0.014",
+            "value": "49.359",
+            "error": "0.014",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia eDR3",
+              "data_release": "eDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                  "start_line": 123,
+                  "end_line": 125,
+                  "context": "Gaia eDR3 astrometric data"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia eDR3",
+              "data_release": "eDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                  "start_line": 123,
+                  "end_line": 125,
+                  "context": "Gaia eDR3 astrometric data"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+                "line": 43,
+                "column": "col_003",
+                "column_header": "\\delta | ( deg+/- mas )",
+                "raw_value": "49.359 +/- 0.014"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": {
+            "raw_value": "0.103 +/- 0.014",
+            "value": "0.103",
+            "error": "0.014",
+            "unit": "mas",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+                "line": 43,
+                "column": "col_004",
+                "column_header": "\\varpi | ( mas )",
+                "raw_value": "0.103 +/- 0.014"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-15.377 +/- 0.013",
+            "value": "-15.377",
+            "error": "0.013",
+            "unit": "mas yr^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter2.ecsv",
+                "line": 40,
+                "column": "col_002",
+                "column_header": "\\mu_\\alpha\\cos\\delta | ( \\mathrmmas yr^-1 )",
+                "raw_value": "-15.377 +/- 0.013"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-13.192 +/- 0.018",
+            "value": "-13.192",
+            "error": "0.018",
+            "unit": "mas yr^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter2.ecsv",
+                "line": 40,
+                "column": "col_003",
+                "column_header": "\\mu_\\delta | ( \\mathrmmas yr^-1 )",
+                "raw_value": "-13.192 +/- 0.018"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "-120.268 +/- 0.008",
+            "value": "-120.268",
+            "error": "0.008",
+            "unit": "km s^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter2.ecsv",
+                "line": 40,
+                "column": "col_004",
+                "column_header": "v_rad_APOGEE | ( \\mathrmkm s^-1 )",
+                "raw_value": "-120.268 +/- 0.008"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "distance": {
+            "raw_value": "7.457_-0.689^+0.675",
+            "value": "7.457",
+            "lower_error": "0.689",
+            "upper_error": "0.675",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+                "line": 43,
+                "column": "col_005",
+                "column_header": "d_\\mathrmBJ | ( kpc )",
+                "raw_value": "7.457_-0.689^+0.675"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "total_velocity": {
+            "raw_value": "512.687_-63.112^+59.956",
+            "value": "512.687",
+            "lower_error": "63.112",
+            "upper_error": "59.956",
+            "unit": "km s^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter2.ecsv",
+                "line": 40,
+                "column": "col_006",
+                "column_header": "v_GC | ( \\mathrmkm s^-1 )",
+                "raw_value": "512.687_-63.112^+59.956"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "bound_status_metric": {
+            "raw_value": "-40949_-32571^+34658",
+            "value": "-40949",
+            "lower_error": "32571",
+            "upper_error": "34658",
+            "unit": "km^2 s^-2",
+            "description": "Orbital energy in the Irrgang Model I potential. Negative value indicates a bound orbit. The paper concludes all HiVel stars are bound in this potential.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+                "line": 33,
+                "column": "col_006",
+                "column_header": "E",
+                "raw_value": "-40949_-32571^+34658"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                "start_line": 353,
+                "end_line": 355,
+                "context": "All stars result to have bound orbits in Irrgang Model I"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ]
+          }
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "11.08",
+          "value": "11.08",
+          "unit": "mag",
+          "measurement_type": "absolute_magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia eDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 53,
+              "column": "col_002",
+              "column_header": "G | (mag)",
+              "raw_value": "11.08"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        {
+          "raw_value": "12.14",
+          "value": "12.14",
+          "unit": "mag",
+          "measurement_type": "absolute_magnitude",
+          "band": "BP",
+          "system": "Gaia",
+          "survey": "Gaia eDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 53,
+              "column": "col_003",
+              "column_header": "BP | (mag)",
+              "raw_value": "12.14"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        {
+          "raw_value": "10.06",
+          "value": "10.06",
+          "unit": "mag",
+          "measurement_type": "absolute_magnitude",
+          "band": "RP",
+          "system": "Gaia",
+          "survey": "Gaia eDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 53,
+              "column": "col_004",
+              "column_header": "RP | (mag)",
+              "raw_value": "10.06"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "raw_value": "RGB",
+          "value": "RGB",
+          "measurement_type": "classification",
+          "description": "Red Giant Branch classification from Hertzsprung-Russell diagram analysis",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+              "start_line": 363,
+              "end_line": 365,
+              "context": "All HiVel stars are located in the Red Giant Branch"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "3878.89 +/- 5.78",
+          "value": "3878.89",
+          "error": "5.78",
+          "unit": "K",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 53,
+              "column": "col_005",
+              "column_header": "T_eff | (K)",
+              "raw_value": "3878.89 +/- 5.78"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "log_g": {
+          "raw_value": "0.46 +/- 0.03",
+          "value": "0.46",
+          "error": "0.03",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-stellar_masses.ecsv",
+              "line": 37,
+              "column": "col_002",
+              "column_header": "\\log g",
+              "raw_value": "0.46 +/- 0.03"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "-1.15 +/- 0.01",
+          "value": "-1.15",
+          "error": "0.01",
+          "unit": "dex",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 53,
+              "column": "col_006",
+              "column_header": "[Fe/H] | (dex)",
+              "raw_value": "-1.15 +/- 0.01"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "mass": {
+          "raw_value": "1.39_-0.15^+0.13",
+          "value": "1.39",
+          "lower_error": "0.15",
+          "upper_error": "0.13",
+          "unit": "M_sun",
+          "description": "Mass derived from APOGEE DR17 parameters and MIST isochrones. The paper notes some isochrone masses may be unreliable.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-stellar_masses.ecsv",
+              "line": 37,
+              "column": "col_003",
+              "column_header": "M",
+              "raw_value": "1.39_-0.15^+0.13"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "radius": {
+          "raw_value": "132.28_-7.35^+9.62",
+          "value": "132.28",
+          "lower_error": "7.35",
+          "upper_error": "9.62",
+          "unit": "R_sun",
+          "description": "Radius derived from APOGEE DR17 parameters and MIST isochrones.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-stellar_masses.ecsv",
+              "line": 37,
+              "column": "col_004",
+              "column_header": "R",
+              "raw_value": "132.28_-7.35^+9.62"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "other": [
+          {
+            "name": "starhorse_mass",
+            "raw_value": "0.83_-0.00^+0.01",
+            "value": "0.83",
+            "lower_error": "0.00",
+            "upper_error": "0.01",
+            "unit": "M_sun",
+            "description": "Stellar mass from StarHorse2 catalog",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-stellar_masses.ecsv",
+                "line": 37,
+                "column": "col_007",
+                "column_header": "M",
+                "raw_value": "0.83_-0.00^+0.01"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ]
+          },
+          {
+            "name": "starhorse_radius",
+            "raw_value": "103.24",
+            "value": "103.24",
+            "unit": "R_sun",
+            "description": "Stellar radius from StarHorse2 catalog",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-stellar_masses.ecsv",
+                "line": 37,
+                "column": "col_008",
+                "column_header": "R",
+                "raw_value": "103.24"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ]
+          }
+        ]
+      },
+      "abundances": [
+        {
+          "raw_value": "0.12 +/- 0.01",
+          "value": "0.12",
+          "error": "0.01",
+          "unit": "dex",
+          "element": "alpha",
+          "reference_element": "Fe",
+          "abundance_scale": "[X/Fe]",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 53,
+              "column": "col_007",
+              "column_header": "[ \\alpha /Fe] | (dex)",
+              "raw_value": "0.12 +/- 0.01"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        }
+      ],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": {
+          "raw_value": "0.90_-0.11^+0.08",
+          "value": "0.90",
+          "lower_error": "0.11",
+          "upper_error": "0.08",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+              "line": 33,
+              "column": "col_004",
+              "column_header": "e",
+              "raw_value": "0.90_-0.11^+0.08"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        },
+        "pericenter": {
+          "raw_value": "10.72_-0.43^+0.48",
+          "value": "10.72",
+          "lower_error": "0.43",
+          "upper_error": "0.48",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+              "line": 33,
+              "column": "col_002",
+              "column_header": "R_\\mathrmperi",
+              "raw_value": "10.72_-0.43^+0.48"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        },
+        "apocenter": {
+          "raw_value": "199.69_-110.96^+941.34",
+          "value": "199.69",
+          "lower_error": "110.96",
+          "upper_error": "941.34",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+              "line": 33,
+              "column": "col_003",
+              "column_header": "R_\\mathrmapo",
+              "raw_value": "199.69_-110.96^+941.34"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        },
+        "zmax": {
+          "raw_value": "151.62_-80.66^+706.35",
+          "value": "151.62",
+          "lower_error": "80.66",
+          "upper_error": "706.35",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+              "line": 33,
+              "column": "col_005",
+              "column_header": "Z_\\mathrmmax",
+              "raw_value": "151.62_-80.66^+706.35"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        }
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": {
+          "raw_value": "halo star, probably accreted",
+          "value": "halo star, probably accreted",
+          "description": "Chemical and kinematic analysis suggests the star belongs to the low-alpha halo population of probably accreted stars.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+              "start_line": 519,
+              "end_line": 523,
+              "context": "Most HiVel stars belong to low-alpha halo population of probably accreted stars"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        },
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [
+          {
+            "raw_value": "0.18",
+            "value": "0.18",
+            "unit": "",
+            "hypothesis": "Large Magellanic Cloud dynamical origin",
+            "metric_type": "probability",
+            "description": "Probability of passing within 5 kpc of the LMC during orbit integration including LMC perturbation",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                "start_line": 358,
+                "end_line": 360,
+                "context": "Only star with probability >0.1 of LMC proximity"
+              }
+            ],
+            "method_refs": [
+              "step-11"
+            ]
+          }
+        ],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2209.03560:cand-002",
+        "paper_candidate_id": "2M15180013+0209292",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "2M15180013+0209292",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+                "line": 44,
+                "column": "col_001",
+                "column_header": "APOGEE ID",
+                "raw_value": "2M15180013+0209292"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Unbound candidate exceeding MWPotential2014 escape velocity. Highly enriched in aluminum and nitrogen. The paper notes the isochrone mass is probably wrong and suggests possible accretion from a globular cluster.",
+        "paper_labels": [
+          "unbound_star",
+          "high_velocity_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "low",
+        "confidence_reason": "The paper explicitly labels this object as an unbound candidate with respect to the MWPotential2014 model, but concludes it is bound in the preferred Irrgang Model I potential and notes the excess is within 1σ uncertainties.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+            "start_line": 65,
+            "end_line": 72,
+            "context": "Abstract: three stars could be unbound depending on the adopted potential"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+            "start_line": 254,
+            "end_line": 270,
+            "context": "Unbound candidates section: three stars exceed MWPotential2014 escape velocity"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+            "start_line": 566,
+            "end_line": 573,
+            "context": "Conclusions: 3 stars unbounded to MWPotential2014 but bounded to Irrgang Model I"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+            "start_line": 65,
+            "end_line": 72,
+            "context": "Abstract introduces three unbound candidates"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+            "start_line": 566,
+            "end_line": 573,
+            "context": "Conclusions reassess unbound status"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "229.501 +/- 0.014",
+            "value": "229.501",
+            "error": "0.014",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia eDR3",
+              "data_release": "eDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                  "start_line": 123,
+                  "end_line": 125,
+                  "context": "Gaia eDR3 astrometric data"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia eDR3",
+              "data_release": "eDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                  "start_line": 123,
+                  "end_line": 125,
+                  "context": "Gaia eDR3 astrometric data"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+                "line": 44,
+                "column": "col_002",
+                "column_header": "\\alpha | ( deg+/- mas )",
+                "raw_value": "229.501 +/- 0.014"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "2.158 +/- 0.013",
+            "value": "2.158",
+            "error": "0.013",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia eDR3",
+              "data_release": "eDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                  "start_line": 123,
+                  "end_line": 125,
+                  "context": "Gaia eDR3 astrometric data"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia eDR3",
+              "data_release": "eDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                  "start_line": 123,
+                  "end_line": 125,
+                  "context": "Gaia eDR3 astrometric data"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+                "line": 44,
+                "column": "col_003",
+                "column_header": "\\delta | ( deg+/- mas )",
+                "raw_value": "2.158 +/- 0.013"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": {
+            "raw_value": "0.047 +/- 0.015",
+            "value": "0.047",
+            "error": "0.015",
+            "unit": "mas",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+                "line": 44,
+                "column": "col_004",
+                "column_header": "\\varpi | ( mas )",
+                "raw_value": "0.047 +/- 0.015"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "4.194 +/- 0.019",
+            "value": "4.194",
+            "error": "0.019",
+            "unit": "mas yr^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter2.ecsv",
+                "line": 41,
+                "column": "col_002",
+                "column_header": "\\mu_\\alpha\\cos\\delta | ( \\mathrmmas yr^-1 )",
+                "raw_value": "4.194 +/- 0.019"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-9.785 +/- 0.017",
+            "value": "-9.785",
+            "error": "0.017",
+            "unit": "mas yr^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter2.ecsv",
+                "line": 41,
+                "column": "col_003",
+                "column_header": "\\mu_\\delta | ( \\mathrmmas yr^-1 )",
+                "raw_value": "-9.785 +/- 0.017"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "54.910 +/- 0.644",
+            "value": "54.910",
+            "error": "0.644",
+            "unit": "km s^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter2.ecsv",
+                "line": 41,
+                "column": "col_004",
+                "column_header": "v_rad_APOGEE | ( \\mathrmkm s^-1 )",
+                "raw_value": "54.910 +/- 0.644"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "distance": {
+            "raw_value": "11.714_-1.449^+2.777",
+            "value": "11.714",
+            "lower_error": "1.449",
+            "upper_error": "2.777",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+                "line": 44,
+                "column": "col_005",
+                "column_header": "d_\\mathrmBJ | ( kpc )",
+                "raw_value": "11.714_-1.449^+2.777"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "total_velocity": {
+            "raw_value": "546.256_-61.675^+118.447",
+            "value": "546.256",
+            "lower_error": "61.675",
+            "upper_error": "118.447",
+            "unit": "km s^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter2.ecsv",
+                "line": 41,
+                "column": "col_006",
+                "column_header": "v_GC | ( \\mathrmkm s^-1 )",
+                "raw_value": "546.256_-61.675^+118.447"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "bound_status_metric": {
+            "raw_value": "-32646_-37646^+82007",
+            "value": "-32646",
+            "lower_error": "37646",
+            "upper_error": "82007",
+            "unit": "km^2 s^-2",
+            "description": "Orbital energy in the Irrgang Model I potential. Negative value indicates a bound orbit. The paper concludes all HiVel stars are bound in this potential.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+                "line": 34,
+                "column": "col_006",
+                "column_header": "E",
+                "raw_value": "-32646_-37646^+82007"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                "start_line": 353,
+                "end_line": 355,
+                "context": "All stars result to have bound orbits in Irrgang Model I"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ]
+          }
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "11.82",
+          "value": "11.82",
+          "unit": "mag",
+          "measurement_type": "absolute_magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia eDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 54,
+              "column": "col_002",
+              "column_header": "G | (mag)",
+              "raw_value": "11.82"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        {
+          "raw_value": "12.61",
+          "value": "12.61",
+          "unit": "mag",
+          "measurement_type": "absolute_magnitude",
+          "band": "BP",
+          "system": "Gaia",
+          "survey": "Gaia eDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 54,
+              "column": "col_003",
+              "column_header": "BP | (mag)",
+              "raw_value": "12.61"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        {
+          "raw_value": "10.95",
+          "value": "10.95",
+          "unit": "mag",
+          "measurement_type": "absolute_magnitude",
+          "band": "RP",
+          "system": "Gaia",
+          "survey": "Gaia eDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 54,
+              "column": "col_004",
+              "column_header": "RP | (mag)",
+              "raw_value": "10.95"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "raw_value": "RGB",
+          "value": "RGB",
+          "measurement_type": "classification",
+          "description": "Red Giant Branch classification from Hertzsprung-Russell diagram analysis",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+              "start_line": 363,
+              "end_line": 365,
+              "context": "All HiVel stars are located in the Red Giant Branch"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "4406.14 +/- 8.15",
+          "value": "4406.14",
+          "error": "8.15",
+          "unit": "K",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 54,
+              "column": "col_005",
+              "column_header": "T_eff | (K)",
+              "raw_value": "4406.14 +/- 8.15"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "log_g": {
+          "raw_value": "1.05 +/- 0.03",
+          "value": "1.05",
+          "error": "0.03",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-stellar_masses.ecsv",
+              "line": 38,
+              "column": "col_002",
+              "column_header": "\\log g",
+              "raw_value": "1.05 +/- 0.03"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "-1.12 +/- 0.01",
+          "value": "-1.12",
+          "error": "0.01",
+          "unit": "dex",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 54,
+              "column": "col_006",
+              "column_header": "[Fe/H] | (dex)",
+              "raw_value": "-1.12 +/- 0.01"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "mass": {
+          "raw_value": "3.17_-0.26^+0.17",
+          "value": "3.17",
+          "lower_error": "0.26",
+          "upper_error": "0.17",
+          "unit": "M_sun",
+          "description": "Mass derived from APOGEE DR17 parameters and MIST isochrones. The paper notes some isochrone masses may be unreliable.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-stellar_masses.ecsv",
+              "line": 38,
+              "column": "col_003",
+              "column_header": "M",
+              "raw_value": "3.17_-0.26^+0.17"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "radius": {
+          "raw_value": "91.37_-5.80^+4.01",
+          "value": "91.37",
+          "lower_error": "5.80",
+          "upper_error": "4.01",
+          "unit": "R_sun",
+          "description": "Radius derived from APOGEE DR17 parameters and MIST isochrones.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-stellar_masses.ecsv",
+              "line": 38,
+              "column": "col_004",
+              "column_header": "R",
+              "raw_value": "91.37_-5.80^+4.01"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "other": [
+          {
+            "name": "anders2019_mass",
+            "raw_value": "1.02^{+0.27}_{-0.18}",
+            "value": "1.02",
+            "lower_error": "0.18",
+            "upper_error": "0.27",
+            "unit": "M_sun",
+            "description": "Mass estimate from original StarHorse catalog (Anders et al. 2019). The paper considers the isochrone mass unreliable.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                "start_line": 459,
+                "end_line": 461,
+                "context": "Mass estimate in original StarHorse catalog for 2M15180013+0209292"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ]
+          }
+        ]
+      },
+      "abundances": [
+        {
+          "raw_value": "0.11 +/- 0.01",
+          "value": "0.11",
+          "error": "0.01",
+          "unit": "dex",
+          "element": "alpha",
+          "reference_element": "Fe",
+          "abundance_scale": "[X/Fe]",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 54,
+              "column": "col_007",
+              "column_header": "[ \\alpha /Fe] | (dex)",
+              "raw_value": "0.11 +/- 0.01"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        }
+      ],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": {
+          "raw_value": "0.95_-0.05^+0.05",
+          "value": "0.95",
+          "lower_error": "0.05",
+          "upper_error": "0.05",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+              "line": 34,
+              "column": "col_004",
+              "column_header": "e",
+              "raw_value": "0.95_-0.05^+0.05"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        },
+        "pericenter": {
+          "raw_value": "6.78_-1.60^+3.80",
+          "value": "6.78",
+          "lower_error": "1.60",
+          "upper_error": "3.80",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+              "line": 34,
+              "column": "col_002",
+              "column_header": "R_\\mathrmperi",
+              "raw_value": "6.78_-1.60^+3.80"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        },
+        "apocenter": {
+          "raw_value": "252.06_-154.06^+3238.42",
+          "value": "252.06",
+          "lower_error": "154.06",
+          "upper_error": "3238.42",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+              "line": 34,
+              "column": "col_003",
+              "column_header": "R_\\mathrmapo",
+              "raw_value": "252.06_-154.06^+3238.42"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        },
+        "zmax": {
+          "raw_value": "202.81_-105.19^+1355.99",
+          "value": "202.81",
+          "lower_error": "105.19",
+          "upper_error": "1355.99",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+              "line": 34,
+              "column": "col_005",
+              "column_header": "Z_\\mathrmmax",
+              "raw_value": "202.81_-105.19^+1355.99"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        }
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": {
+          "raw_value": "halo star, probably accreted",
+          "value": "halo star, probably accreted",
+          "description": "Chemical and kinematic analysis suggests the star belongs to the low-alpha halo population of probably accreted stars.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+              "start_line": 519,
+              "end_line": 523,
+              "context": "Most HiVel stars belong to low-alpha halo population of probably accreted stars"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        },
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": [
+          {
+            "name": "globular_cluster_origin",
+            "raw_value": "possible globular cluster accretion",
+            "value": "",
+            "description": "Highly enriched in Al and N, fitting the population of stars probably accreted from globular clusters",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                "start_line": 562,
+                "end_line": 564,
+                "context": "Peculiar case 2M15180013+0209292: enriched in Al and N, possible globular cluster origin"
+              }
+            ],
+            "method_refs": [
+              "step-11"
+            ]
+          }
+        ]
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2209.03560:cand-003",
+        "paper_candidate_id": "2M19284379-0005176",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "2M19284379-0005176",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+                "line": 45,
+                "column": "col_001",
+                "column_header": "APOGEE ID",
+                "raw_value": "2M19284379-0005176"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Unbound candidate exceeding MWPotential2014 escape velocity. Metal-poor star with typical halo kinematics and chemistry.",
+        "paper_labels": [
+          "unbound_star",
+          "high_velocity_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "low",
+        "confidence_reason": "The paper explicitly labels this object as an unbound candidate with respect to the MWPotential2014 model, but concludes it is bound in the preferred Irrgang Model I potential and notes the excess is within 1σ uncertainties.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+            "start_line": 65,
+            "end_line": 72,
+            "context": "Abstract: three stars could be unbound depending on the adopted potential"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+            "start_line": 254,
+            "end_line": 270,
+            "context": "Unbound candidates section: three stars exceed MWPotential2014 escape velocity"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+            "start_line": 566,
+            "end_line": 573,
+            "context": "Conclusions: 3 stars unbounded to MWPotential2014 but bounded to Irrgang Model I"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+            "start_line": 65,
+            "end_line": 72,
+            "context": "Abstract introduces three unbound candidates"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+            "start_line": 566,
+            "end_line": 573,
+            "context": "Conclusions reassess unbound status"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "292.182 +/- 0.015",
+            "value": "292.182",
+            "error": "0.015",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia eDR3",
+              "data_release": "eDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                  "start_line": 123,
+                  "end_line": 125,
+                  "context": "Gaia eDR3 astrometric data"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia eDR3",
+              "data_release": "eDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                  "start_line": 123,
+                  "end_line": 125,
+                  "context": "Gaia eDR3 astrometric data"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+                "line": 45,
+                "column": "col_002",
+                "column_header": "\\alpha | ( deg+/- mas )",
+                "raw_value": "292.182 +/- 0.015"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "-0.088 +/- 0.014",
+            "value": "-0.088",
+            "error": "0.014",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia eDR3",
+              "data_release": "eDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                  "start_line": 123,
+                  "end_line": 125,
+                  "context": "Gaia eDR3 astrometric data"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia eDR3",
+              "data_release": "eDR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-edr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                  "start_line": 123,
+                  "end_line": 125,
+                  "context": "Gaia eDR3 astrometric data"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+                "line": 45,
+                "column": "col_003",
+                "column_header": "\\delta | ( deg+/- mas )",
+                "raw_value": "-0.088 +/- 0.014"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "parallax": {
+            "raw_value": "0.078 +/- 0.019",
+            "value": "0.078",
+            "error": "0.019",
+            "unit": "mas",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+                "line": 45,
+                "column": "col_004",
+                "column_header": "\\varpi | ( mas )",
+                "raw_value": "0.078 +/- 0.019"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-1.037 +/- 0.020",
+            "value": "-1.037",
+            "error": "0.020",
+            "unit": "mas yr^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter2.ecsv",
+                "line": 42,
+                "column": "col_002",
+                "column_header": "\\mu_\\alpha\\cos\\delta | ( \\mathrmmas yr^-1 )",
+                "raw_value": "-1.037 +/- 0.020"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-21.443 +/- 0.017",
+            "value": "-21.443",
+            "error": "0.017",
+            "unit": "mas yr^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter2.ecsv",
+                "line": 42,
+                "column": "col_003",
+                "column_header": "\\mu_\\delta | ( \\mathrmmas yr^-1 )",
+                "raw_value": "-21.443 +/- 0.017"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "-30.883 +/- 0.234",
+            "value": "-30.883",
+            "error": "0.234",
+            "unit": "km s^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter2.ecsv",
+                "line": 42,
+                "column": "col_004",
+                "column_header": "v_rad_APOGEE | ( \\mathrmkm s^-1 )",
+                "raw_value": "-30.883 +/- 0.234"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "distance": {
+            "raw_value": "8.055_-0.943^+1.170",
+            "value": "8.055",
+            "lower_error": "0.943",
+            "upper_error": "1.170",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+                "line": 45,
+                "column": "col_005",
+                "column_header": "d_\\mathrmBJ | ( kpc )",
+                "raw_value": "8.055_-0.943^+1.170"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "total_velocity": {
+            "raw_value": "649.449_-90.470^+110.097",
+            "value": "649.449",
+            "lower_error": "90.470",
+            "upper_error": "110.097",
+            "unit": "km s^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter2.ecsv",
+                "line": 42,
+                "column": "col_006",
+                "column_header": "v_GC | ( \\mathrmkm s^-1 )",
+                "raw_value": "649.449_-90.470^+110.097"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "bound_status_metric": {
+            "raw_value": "-4113_-57260^+82321",
+            "value": "-4113",
+            "lower_error": "57260",
+            "upper_error": "82321",
+            "unit": "km^2 s^-2",
+            "description": "Orbital energy in the Irrgang Model I potential. Negative value indicates a bound orbit. The paper concludes all HiVel stars are bound in this potential.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+                "line": 35,
+                "column": "col_006",
+                "column_header": "E",
+                "raw_value": "-4113_-57260^+82321"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+                "start_line": 353,
+                "end_line": 355,
+                "context": "All stars result to have bound orbits in Irrgang Model I"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ]
+          }
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "13.30",
+          "value": "13.30",
+          "unit": "mag",
+          "measurement_type": "absolute_magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia eDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 55,
+              "column": "col_002",
+              "column_header": "G | (mag)",
+              "raw_value": "13.30"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        {
+          "raw_value": "13.95",
+          "value": "13.95",
+          "unit": "mag",
+          "measurement_type": "absolute_magnitude",
+          "band": "BP",
+          "system": "Gaia",
+          "survey": "Gaia eDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 55,
+              "column": "col_003",
+              "column_header": "BP | (mag)",
+              "raw_value": "13.95"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        {
+          "raw_value": "12.50",
+          "value": "12.50",
+          "unit": "mag",
+          "measurement_type": "absolute_magnitude",
+          "band": "RP",
+          "system": "Gaia",
+          "survey": "Gaia eDR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 55,
+              "column": "col_004",
+              "column_header": "RP | (mag)",
+              "raw_value": "12.50"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "raw_value": "RGB",
+          "value": "RGB",
+          "measurement_type": "classification",
+          "description": "Red Giant Branch classification from Hertzsprung-Russell diagram analysis",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+              "start_line": 363,
+              "end_line": 365,
+              "context": "All HiVel stars are located in the Red Giant Branch"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "4996.48 +/- 16.13",
+          "value": "4996.48",
+          "error": "16.13",
+          "unit": "K",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 55,
+              "column": "col_005",
+              "column_header": "T_eff | (K)",
+              "raw_value": "4996.48 +/- 16.13"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "log_g": {
+          "raw_value": "2.19 +/- 0.06",
+          "value": "2.19",
+          "error": "0.06",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-stellar_masses.ecsv",
+              "line": 39,
+              "column": "col_002",
+              "column_header": "\\log g",
+              "raw_value": "2.19 +/- 0.06"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "-2.18 +/- 0.01",
+          "value": "-2.18",
+          "error": "0.01",
+          "unit": "dex",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 55,
+              "column": "col_006",
+              "column_header": "[Fe/H] | (dex)",
+              "raw_value": "-2.18 +/- 0.01"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "mass": {
+          "raw_value": "1.46_-0.15^+0.19",
+          "value": "1.46",
+          "lower_error": "0.15",
+          "upper_error": "0.19",
+          "unit": "M_sun",
+          "description": "Mass derived from APOGEE DR17 parameters and MIST isochrones. The paper notes some isochrone masses may be unreliable.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-stellar_masses.ecsv",
+              "line": 39,
+              "column": "col_003",
+              "column_header": "M",
+              "raw_value": "1.46_-0.15^+0.19"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "radius": {
+          "raw_value": "24.07_-2.95^+1.92",
+          "value": "24.07",
+          "lower_error": "2.95",
+          "upper_error": "1.92",
+          "unit": "R_sun",
+          "description": "Radius derived from APOGEE DR17 parameters and MIST isochrones.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-stellar_masses.ecsv",
+              "line": 39,
+              "column": "col_004",
+              "column_header": "R",
+              "raw_value": "24.07_-2.95^+1.92"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "other": [
+          {
+            "name": "starhorse_mass",
+            "raw_value": "0.77_-0.03^+0.00",
+            "value": "0.77",
+            "lower_error": "0.03",
+            "upper_error": "0.00",
+            "unit": "M_sun",
+            "description": "Stellar mass from StarHorse2 catalog",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-stellar_masses.ecsv",
+                "line": 39,
+                "column": "col_007",
+                "column_header": "M",
+                "raw_value": "0.77_-0.03^+0.00"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ]
+          },
+          {
+            "name": "starhorse_radius",
+            "raw_value": "27.07",
+            "value": "27.07",
+            "unit": "R_sun",
+            "description": "Stellar radius from StarHorse2 catalog",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2209.03560/catalog_tables/table-tab-stellar_masses.ecsv",
+                "line": 39,
+                "column": "col_008",
+                "column_header": "R",
+                "raw_value": "27.07"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ]
+          }
+        ]
+      },
+      "abundances": [
+        {
+          "raw_value": "0.26 +/- 0.03",
+          "value": "0.26",
+          "error": "0.03",
+          "unit": "dex",
+          "element": "alpha",
+          "reference_element": "Fe",
+          "abundance_scale": "[X/Fe]",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+              "line": 55,
+              "column": "col_007",
+              "column_header": "[ \\alpha /Fe] | (dex)",
+              "raw_value": "0.26 +/- 0.03"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        }
+      ],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": {
+          "raw_value": "0.99_-0.04^+0.01",
+          "value": "0.99",
+          "lower_error": "0.04",
+          "upper_error": "0.01",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+              "line": 35,
+              "column": "col_004",
+              "column_header": "e",
+              "raw_value": "0.99_-0.04^+0.01"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        },
+        "pericenter": {
+          "raw_value": "5.26_-2.38^+0.44",
+          "value": "5.26",
+          "lower_error": "2.38",
+          "upper_error": "0.44",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+              "line": 35,
+              "column": "col_002",
+              "column_header": "R_\\mathrmperi",
+              "raw_value": "5.26_-2.38^+0.44"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        },
+        "apocenter": {
+          "raw_value": "1302.64_-1180.38^+2946.40",
+          "value": "1302.64",
+          "lower_error": "1180.38",
+          "upper_error": "2946.40",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+              "line": 35,
+              "column": "col_003",
+              "column_header": "R_\\mathrmapo",
+              "raw_value": "1302.64_-1180.38^+2946.40"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        },
+        "zmax": {
+          "raw_value": "803.96_-694.01^+1559.30",
+          "value": "803.96",
+          "lower_error": "694.01",
+          "upper_error": "1559.30",
+          "unit": "kpc",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+              "line": 35,
+              "column": "col_005",
+              "column_header": "Z_\\mathrmmax",
+              "raw_value": "803.96_-694.01^+1559.30"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        }
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": {
+          "raw_value": "halo star, probably accreted",
+          "value": "halo star, probably accreted",
+          "description": "Chemical and kinematic analysis suggests the star belongs to the low-alpha halo population of probably accreted stars.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+              "start_line": 519,
+              "end_line": 523,
+              "context": "Most HiVel stars belong to low-alpha halo population of probably accreted stars"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        },
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "hivel-bound-20",
+      "description": "The 20 HiVel stars with Galactocentric velocities >450 km/s that are bound in all adopted potential models.",
+      "decision": "excluded",
+      "reason": "The paper concludes these 20 stars are bound to the Galaxy in all potential models considered (Irrgang Model I, McMillan17, MWPotential2014). They are treated as high-velocity halo stars, not as unbound or HVS candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 566,
+          "end_line": 573,
+          "context": "Conclusions: 20 stars display velocities greater than 450 km/s but are all bounded to the Galaxy"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+          "start_line": 264,
+          "end_line": 270,
+          "context": "Unbound candidates section: only three stars exceed MWPotential2014 escape velocity"
+        }
+      ]
+    }
+  ]
+}

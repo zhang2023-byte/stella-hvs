@@ -1,0 +1,511 @@
+{
+    "schema_version": "stella.article_data_assets.review.v1",
+    "paper": {
+        "arxiv_id": "2506.13004",
+        "title": "New Field OB and OBe Binaries of the SMC Wing: Observational Properties and Population Modeling",
+        "month": "2025-06",
+        "source_note_json": "notes/2025/2025-06/2025-06.json",
+        "links": {
+            "abs": "https://arxiv.org/abs/2506.13004",
+            "pdf": "https://arxiv.org/pdf/2506.13004"
+        }
+    },
+    "source": {
+        "paper_dir": "literature/2506.13004",
+        "audit_path": "literature/2506.13004/audit.json",
+        "source_dir": "literature/2506.13004/arxiv_source",
+        "tex_root": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+        "source_available": true
+    },
+    "review": {
+        "status": "reviewed",
+        "reviewed_at": "2026-05-17T12:34:20",
+        "reviewer": "agent",
+        "summary": "Auto-filled review: 6 internal table(s), 1 external resource(s)."
+    },
+    "internal_tables": [
+        {
+            "id": "table-table-OBbinaryresults",
+            "kind": "latex_table",
+            "asset_type": "data_table",
+            "role_in_paper": "RIOTS4 OB Wing Binaries\\label{table:OBbinaryresults}",
+            "source_refs": [
+                {
+                    "path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+                    "start_line": 248,
+                    "end_line": 297,
+                    "caption": "RIOTS4 OB Wing Binaries\\label{table:OBbinaryresults}",
+                    "label": "table:OBbinaryresults"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Massey ID | [M2002] SMC",
+                    "meaning": "Stellar mass",
+                    "unit_text": "Massey ID",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadSpT \\tablenotemarka",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadClassification \\tablenotemarkb",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "RV Measurements | N",
+                    "meaning": "Heliocentric radial velocity",
+                    "unit_text": "km/s",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadRV Method \\tablenotemarkc",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadM_1 \\tablenotemarkd | \\colheadM_\\odot",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadM_\\rm 2,min | \\colheadM_\\odot",
+                    "meaning": "Column from table header",
+                    "unit_text": "Msun",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadM_\\rm 2,max \\tablenotemarke | \\colheadM_\\odot",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Period | (days)",
+                    "meaning": "Column from table header",
+                    "unit_text": "days",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "RIOTS4 OB Wing Binaries\\label{table:OBbinaryresults}",
+            "comments": ""
+        },
+        {
+            "id": "table-table-OBebinaryresults",
+            "kind": "latex_table",
+            "asset_type": "data_table",
+            "role_in_paper": "RIOTS4 OBe Wing Binaries\\label{table:OBebinaryresults}",
+            "source_refs": [
+                {
+                    "path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+                    "start_line": 331,
+                    "end_line": 379,
+                    "caption": "RIOTS4 OBe Wing Binaries\\label{table:OBebinaryresults}",
+                    "label": "table:OBebinaryresults"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Massey ID | [M2002] SMC",
+                    "meaning": "Stellar mass",
+                    "unit_text": "Massey ID",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadSpT \\tablenotemarka",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadClassification \\tablenotemarkb",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "RV Measurements | N",
+                    "meaning": "Heliocentric radial velocity",
+                    "unit_text": "km/s",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadRV Method \\tablenotemarkc",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadM_1 \\tablenotemarkd | \\colheadM_\\odot",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadM_\\rm 2,min | \\colheadM_\\odot",
+                    "meaning": "Column from table header",
+                    "unit_text": "Msun",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadM_\\rm 2,max \\tablenotemarke | \\colheadM_\\odot",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Period | (days)",
+                    "meaning": "Column from table header",
+                    "unit_text": "days",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "RIOTS4 OBe Wing Binaries\\label{table:OBebinaryresults}",
+            "comments": ""
+        },
+        {
+            "id": "table-table-Binfreq",
+            "kind": "latex_table",
+            "asset_type": "observation_log",
+            "role_in_paper": "RIOTS4 SMC Field Binary Frequencies\\tablenotemark{a} \\label{table:Binfreq}",
+            "source_refs": [
+                {
+                    "path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+                    "start_line": 684,
+                    "end_line": 716,
+                    "caption": "RIOTS4 SMC Field Binary Frequencies\\tablenotemark{a} \\label{table:Binfreq}",
+                    "label": "table:Binfreq"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Type",
+                    "meaning": "Classification or quality flag",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Wing Confirmed | + Candidates",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadFrequency\\tablenotemarkb",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Wing Confirmed | Only",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadFrequency\\tablenotemarkb",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "SMC Confirmed | \\colhead+ Candidates\\tablenotemarkd",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadFrequency\\tablenotemarkb,d",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "SMC Confirmed | \\colheadOnly\\tablenotemarkd",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadFrequency\\tablenotemarkb,d",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "RIOTS4 SMC Field Binary Frequencies\\tablenotemark{a} \\label{table:Binfreq}",
+            "comments": ""
+        },
+        {
+            "id": "table-table-BPASSpop",
+            "kind": "latex_table",
+            "asset_type": "data_table",
+            "role_in_paper": "Observed Populations and BPASS BSS Predictions\\tablenotemark{a} \\label{table:BPASSpop}",
+            "source_refs": [
+                {
+                    "path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+                    "start_line": 970,
+                    "end_line": 999,
+                    "caption": "Observed Populations and BPASS BSS Predictions\\tablenotemark{a} \\label{table:BPASSpop}",
+                    "label": "table:BPASSpop"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Population",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Observed | Number",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Observed | Freq",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "BPASS | Freq",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "BPASS | Single",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "SMC Wing | \\colheadTotal Binaries \\tablenotemarkb | (Conf.+Cand./Conf.)",
+                    "meaning": "Column from table header",
+                    "unit_text": "Conf.+Cand./Conf.",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "SMC Wing | \\colheadBSS Binaries \\tablenotemarkc | (Conf.+Cand./Conf.)",
+                    "meaning": "Column from table header",
+                    "unit_text": "Conf.+Cand./Conf.",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "BPASS Binary | \\colhead(OB/OBe+star/He)\\tablenotemarkd",
+                    "meaning": "Column from table header",
+                    "unit_text": "OB/OBe+star/He",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "BPASS Binary | (OB/OBe+NS/BH)",
+                    "meaning": "Column from table header",
+                    "unit_text": "OB/OBe+NS/BH",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Observed Populations and BPASS BSS Predictions\\tablenotemark{a} \\label{table:BPASSpop}",
+            "comments": ""
+        },
+        {
+            "id": "table-table-DESvsBSS",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "DES and BSS Walkaway and Runaway Ratios for Field SMC Wing Binaries\\tablenotemark{a} \\label{table:DESvsBSS}",
+            "source_refs": [
+                {
+                    "path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+                    "start_line": 1401,
+                    "end_line": 1425,
+                    "caption": "DES and BSS Walkaway and Runaway Ratios for Field SMC Wing Binaries\\tablenotemark{a} \\label{table:DESvsBSS}",
+                    "label": "table:DESvsBSS"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Ratio",
+                    "meaning": "Right Ascension",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Conf. + cand. | New alloc.",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Confirmed | New alloc.",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Conf. + cand. | Simple alloc.",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadModel \\tablenotemarkb | Simple alloc.",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "DES and BSS Walkaway and Runaway Ratios for Field SMC Wing Binaries\\tablenotemark{a} \\label{table:DESvsBSS}",
+            "comments": ""
+        },
+        {
+            "id": "table-table-RVmeas",
+            "kind": "latex_table",
+            "asset_type": "data_table",
+            "role_in_paper": "RIOTS4 Wing RV Measurements\\label{table:RVmeas}",
+            "source_refs": [
+                {
+                    "path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+                    "start_line": 1644,
+                    "end_line": 2036,
+                    "caption": "RIOTS4 Wing RV Measurements\\label{table:RVmeas}",
+                    "label": "table:RVmeas"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Massey ID | [M2002] SMC",
+                    "meaning": "Stellar mass",
+                    "unit_text": "Massey ID",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "SpT",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "RA | hrs",
+                    "meaning": "Right Ascension",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "DEC | deg",
+                    "meaning": "Declination",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Instrument",
+                    "meaning": "Observing facility or survey",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Field",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Date | JD",
+                    "meaning": "Observation date/MJD",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "RV | km/s",
+                    "meaning": "Heliocentric radial velocity",
+                    "unit_text": "km/s",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "RV Err | km/s",
+                    "meaning": "Heliocentric radial velocity",
+                    "unit_text": "km/s",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "RIOTS4 Wing RV Measurements\\label{table:RVmeas}",
+            "comments": ""
+        }
+    ],
+    "external_resources": [
+        {
+            "id": "resource-001",
+            "kind": "external_url",
+            "url": "https://doi.org/10.17909/0cp4-2j79",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+                    "start_line": 1616,
+                    "end_line": 1616,
+                    "context": "We are also grateful to Myungshin Im, Dohyeong Kim, Yongmin Yoon, and Yoon Chan Taak for help with observing.\nFinally, we thank Jeff Crane, Steve Shectman and Ian Thompson for their help in developing, deploying and supporting M2FS at the Magellan/Clay telescope. Some of the data presented in this paper were obtained from the Mikulski Archive for Space Telescopes (MAST) at the Space Telescope Science Institute\n\\citep{https://doi.org/10.17909/0cp4-2j79}. \nThis work was supported by NSF grant AST-1514838 to M.S.O. and by the University of Michigan, including through a Rackham Graduate School Predoctoral Fellowship to I.V.S.\nN.C. acknowledges funding from the Deutsche Forschungs-gemeinschaft (DFG) - CA 2551/1-1,2. M.M. and J.B. acknowledge support from NSF via grant MRI/NSF-0923160 to fund the design, development and deployment of M2FS. Y. K. was supported by the National Research Foundation of Korea (NRF) grant funded by the Korean government (MSIT) (No. 2021R1C1C2091550)."
+                }
+            ],
+            "evidence": "We are also grateful to Myungshin Im, Dohyeong Kim, Yongmin Yoon, and Yoon Chan Taak for help with observing.\nFinally, we thank Jeff Crane, Steve Shectman and Ian Thompson for their help in developing, deploying and supporting M2FS at the Magellan/Clay telescope. Some of the data presented in this paper were obtained from the Mikulski Archive for Space Telescopes (MAST) at the Space Telescope Science Institute\n\\citep{https://doi.org/10.17909/0cp4-2j79}. \nThis work was supported by NSF grant AST-1514838 to M.S.O. and by the University of Michigan, including through a Rackham Graduate School Predoctoral Fellowship to I.V.S.\nN.C. acknowledges funding from the Deutsche Forschungs-gemeinschaft (DFG) - CA 2551/1-1,2. M.M. and J.B. acknowledge support from NSF via grant MRI/NSF-0923160 to fund the design, development and deployment of M2FS. Y. K. was supported by the National Research Foundation of Korea (NRF) grant funded by the Korean government (MSIT) (No. 2021R1C1C2091550).",
+            "comments": ""
+        }
+    ]
+}

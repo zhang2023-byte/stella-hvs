@@ -1,0 +1,285 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2005.12358",
+    "title": "Understanding the rotational variability of K2 targets. HgMn star KIC 250152017 and blue horizontal branch star KIC 249660366",
+    "month": "2020-05",
+    "source_note_json": "notes/2020/2020-05/2020-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2005.12358",
+      "pdf": "https://arxiv.org/pdf/2005.12358"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2005.12358",
+    "audit_path": "literature/2005.12358/audit.json",
+    "source_dir": "literature/2005.12358/arxiv_source",
+    "tex_root": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:15:00",
+    "reviewer": "agent",
+    "summary": "本文利用ESO XSHOOTER中分辨率光谱（ESO programme 0103.D-0194(A)）对两颗K2卫星探测到旋转调制的候选体——KIC 250152017（HgMn化学丰度特殊星）和KIC 249660366（贫氦高速蓝水平分支星）——进行了相位分辨光谱分析。论文包含5个内部表格：(1) XSHOOTER观测日志（8条光谱记录，列出星名、光谱臂、日期、相位、曝光时间、信噪比）；(2) 天体测量与测光参数表（坐标、视差、距离、星等、色余、U/V/W空间速度）；(3) 平均恒星参数与元素丰度表（Teff、log g、质量、半径、vsini、径向速度、He到Hg共16种元素丰度及其太阳参考值）；(4) KIC 250152017丰度分析所用谱线波长表（He I至Hg共9种离子/元素）；(5) KIC 249660366丰度分析所用谱线波长表（He I至Ca II共11种离子）。外部资源2项：MAST数据库（K2测光数据来源）和BONNSAI服务（演化参数计算工具），均为论文使用的方法论资源，非本文产生的独特数据产品。XSHOOTER原始光谱可通过ESO归档获取（programme 0103.D-0194(A)），但论文未给出显式数据链接。GAIA DR2天体测量数据被引用但同样无显式URL。KIC 249660366的径向速度为107±3 km/s，空间速度(U,V,W)=(22,-205,92) km/s，属于高速星。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-spek",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "列出XSHOOTER光谱仪对两颗目标星（KIC 250152017和KIC 249660366）的所有观测记录，包括紫外-蓝端（UVB）和可见光（VIS）两臂的光谱文件名、儒略日、旋转相位、曝光时间和信噪比。这是后续大气参数测定和丰度分析的数据基础。",
+      "source_refs": [
+        {
+          "path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+          "start_line": 136,
+          "end_line": 163,
+          "caption": "List of spectra used for analysis.",
+          "label": "spek"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "目标星标识：KIC 250152017或KIC 249660366",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Arm",
+          "meaning": "XSHOOTER光谱仪臂：UVB（紫外-蓝端，分辨率R≈9700）或VIS（可见光，分辨率R≈18400）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectrum",
+          "meaning": "ESO归档中的XSHOOTER光谱文件名（格式XSHOO.YYYY-MM-DDTHH:MM:SS.sss）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "JD-2 400 000",
+          "meaning": "质心改正后的儒略日减去2400000（即MJD-40000），用于确定旋转相位",
+          "unit_text": "day",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Phase\\tablefootmark{\\ast}",
+          "meaning": "根据K2测光星历表计算得到的旋转相位（0到1之间）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Exposure time [s]",
+          "meaning": "单次光谱曝光时间（秒）；KIC 250152017为1100 s（UVB）/1006 s（VIS），KIC 249660366为1500 s（UVB）/1406 s（VIS）",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S/N\\tablefootmark{\\ast\\ast}",
+          "meaning": "信噪比；UVB臂参考波长4400 Å，VIS臂参考波长6500 Å。范围50–120（UVB）和50–70（VIS）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1记录了KIC 250152017的4组（每组UVB+VIS共8条）光谱和KIC 249660366的2组（共4条）光谱。KIC 250152017观测日期为2019年6–8月，KIC 249660366为2019年7–8月。相位由K2测光星历表确定，脚注说明S/N参考波长。",
+      "comments": "Table notes: *Phase determined from photometry. **S/N given at 4400 Å and 6500 Å for UVB and VIS arms, respectively."
+    },
+    {
+      "id": "table-hveztab",
+      "kind": "latex_table",
+      "asset_type": "reference_values",
+      "role_in_paper": "汇总两颗目标星的基本天体测量和测光参数：J2000坐标、GAIA DR2视差与距离、V/B星等、色余E(B-V)和U/V/W空间速度分量。为恒星分类和运动学分析（特别是KIC 249660366的高速性质判断）提供基础数据。",
+      "source_refs": [
+        {
+          "path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+          "start_line": 214,
+          "end_line": 232,
+          "caption": "Basic astrometric and photometric parameters of studied stars.",
+          "label": "hveztab"
+        }
+      ],
+      "columns": [
+        {
+          "name": "KIC (EPIC)",
+          "meaning": "参数名称行：赤经α、赤纬δ、视差π、距离d、V星等、B星等、色余E(B-V)、空间速度(U,V,W)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "250152017",
+          "meaning": "KIC 250152017（HgMn星）的参数值：α=15h25m08.282s, δ=-13°34'49.11'', π=0.296±0.057 mas, d=3.2±0.7 kpc, mV=14.726±0.042, mB=14.769±0.040, E(B-V)=0.12±0.02, (U,V,W)=(-10,-174,-23) km/s",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "249660366",
+          "meaning": "KIC 249660366（He-weak高速蓝水平分支星）的参数值：α=15h24m48.378s, δ=-19°44'53.62'', π=0.439±0.074 mas, d=2.2±0.4 kpc, mV=14.967±0.045, mB=15.014±0.030, E(B-V)=0.09±0.02, (U,V,W)=(22,-205,92) km/s",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 2列出了两颗星的坐标、视差和距离（GAIA DR2）、星等（MAST K2星表/EPIC）、色余（银河系红化图）、空间速度（由GAIA DR2自行和本文测得的径向速度计算）。KIC 249660366的V速度分量达-205 km/s，表明其为高速星。",
+      "comments": "Coordinates and magnitudes from MAST K2 catalogue (EPIC). Parallax and proper motions from GAIA DR2. Distances from Bailer-Jones method. Colour excesses from Galactic reddening maps. Space velocities from GAIA DR2 PMs + radial velocities."
+    },
+    {
+      "id": "table-hvezpar",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "给出两颗星的平均（相位平均）大气参数和化学丰度，并与太阳丰度对比。参数包括有效温度Teff、表面重力log g、质量M、半径R、投影自转速度vsini、径向速度vrad以及He到Hg共16种元素的绝对丰度logε。这是本文光谱分析的核心科学产出。",
+      "source_refs": [
+        {
+          "path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+          "start_line": 247,
+          "end_line": 281,
+          "caption": "Derived mean parameters of the studied stars compared to solar abundances \\citep{asp09}.",
+          "label": "hvezpar"
+        }
+      ],
+      "columns": [
+        {
+          "name": "KIC",
+          "meaning": "参数名称：Teff、log g、质量、半径、vsini、径向速度、各元素绝对丰度logε（He、C、N、O、Mg、Al、Si、S、Ar、Ca、Ti、Mn、Fe、Ni、Y、Hg）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "250152017",
+          "meaning": "KIC 250152017（HgMn星）参数：Teff=12160±130 K, log g=3.95±0.02, M=3.33±0.08 Msun, R=3.19±0.10 Rsun, vsini=22±5 km/s, vrad=2±4 km/s。Hg过丰（logε=-5.08，太阳-10.83）、Mn过丰（-4.61，太阳-6.57），He欠丰（-1.60，太阳-1.07），符合HgMn星特征",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "249660366",
+          "meaning": "KIC 249660366（He-weak高速蓝水平分支星）参数：Teff=19700±300 K, log g=4.57±0.06, M=0.27±0.10 Msun, R=0.45±0.09 Rsun, vsini=26±4 km/s, vrad=107±3 km/s。He严重欠丰（-2.91，太阳-1.07），Si过丰（-4.05，太阳-4.49），Ar过丰（-4.86，太阳-5.60）。缺少Ti、Mn、Fe、Ni、Y、Hg的丰度测定",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Sun",
+          "meaning": "太阳参考丰度值（Asplund et al. 2009），用于对比判断各元素是过丰还是欠丰",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 3给出了16种元素（He到Hg）的绝对丰度logε及其误差。KIC 250152017的Hg丰度比太阳高约5.7 dex；KIC 249660366的径向速度107±3 km/s证实其为高速星，且He丰度比太阳低约1.8 dex。Si和Ar的过丰可能解释光变。质量0.27 Msun、半径0.45 Rsun符合水平分支星特征。",
+      "comments": "KIC 250152017 parameters from LTE ATLAS12 models. KIC 249660366 parameters from NLTE TLUSTY/BSTAR2006 models. Mass and radius from BONNSAI. Solar abundances from Asplund et al. 2009. N, O, Al, S, Ar only measured for KIC 249660366. Ti, Mn, Fe, Ni, Y, Hg only measured for KIC 250152017."
+    },
+    {
+      "id": "table-hvezdacar",
+      "kind": "latex_table",
+      "asset_type": "line_list",
+      "role_in_paper": "列出用于KIC 250152017（HgMn星）大气丰度分析的最强谱线波长（单位Å）。包含He I、C II、Mg II、Si II、Ca II、Ti II、Mn I/II、Fe II、Ni II、Y II和Hg的谱线。这些谱线是本文丰度测定的主要依据。",
+      "source_refs": [
+        {
+          "path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+          "start_line": 304,
+          "end_line": 350,
+          "caption": "List of wavelengths (in \\AA) of the strongest lines used for \\hvezda\\ abundance determination.",
+          "label": "hvezdacar"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\ionHei",
+          "meaning": "离子/元素种类：He I、C II、Mg II、Si II、Ca II、Ti II、Mn I、Mn II、Fe II、Ni II、Y II、Hg（中性汞）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "3819.603, 3819.614, 4026.187, 4026.198, 4026.199,",
+          "meaning": "对应元素/离子的谱线波长列表，单位为Å。以逗号分隔多条谱线。例如He I有17条谱线（3819–5015 Å），Mn II有30+条（3715–5302 Å），Fe II有28条（4173–5316 Å）",
+          "unit_text": "Å",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 4列出了9种离子/元素共约100条谱线。He I（17条）、C II（3条）、Mg II（6条）、Si II（9条）、Ca II（2条）、Ti II（27条）、Mn I（2条）、Mn II（30+条）、Fe II（28条）、Ni II（1条）、Y II（2条）、Hg（2条）。谱线覆盖紫外到可见光波段。",
+      "comments": ""
+    },
+    {
+      "id": "table-hvezdadcar",
+      "kind": "latex_table",
+      "asset_type": "line_list",
+      "role_in_paper": "列出用于KIC 249660366（He-weak高速蓝水平分支星）大气丰度分析的最强谱线波长（单位Å）。包含He I、C II、N II、O II、Mg II、Al III、Si II/III、S II、Ar II和Ca II的谱线。这些是高速星丰度测定的直接依据。",
+      "source_refs": [
+        {
+          "path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+          "start_line": 547,
+          "end_line": 572,
+          "caption": "List of wavelengths (in \\AA) of the strongest lines used for \\hvezdad\\ abundance determination.",
+          "label": "hvezdadcar"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\ionHei",
+          "meaning": "离子/元素种类：He I、C II、N II、O II、Mg II、Al III、Si II、Si III、S II、Ar II、Ca II",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "3867.470, 3867.482, 3926.535, 4713.139, 4713.156,",
+          "meaning": "对应元素/离子的谱线波长列表，单位为Å。例如He I有15条谱线（含同位素分裂线如5875 Å附近6条），Ar II有13条（3850–4965 Å）",
+          "unit_text": "Å",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 5列出了11种离子/元素共约50条谱线：He I（15条，含同位素分裂线）、C II（5条）、N II（8条）、O II（2条）、Mg II（3条）、Al III（2条）、Si II（7条）、Si III（3条）、S II（3条）、Ar II（13条）、Ca II（1条）。He I同位素分裂线（4388 Å和6678 Å）被排除在丰度分析之外。",
+      "comments": "He I lines at 4388 Å and 6678 Å show isotopic splitting and were excluded from abundance analysis."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://archive.stsci.edu",
+      "local_path": "",
+      "description": "Mikulski Archive for Space Telescopes (MAST)数据库，作为K2测光数据和EPIC星表的数据来源。论文中的K2光变曲线和星等数据均由此获取。",
+      "source_refs": [
+        {
+          "path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+          "start_line": 298,
+          "end_line": 298,
+          "context": "derived from K2 photometry\\footnote{K2 photometry was obtained from the MAST\narchive http://archive.stsci.edu, \\citet{epic}.}"
+        }
+      ],
+      "evidence": "第298行脚注明确指出K2测光数据从MAST归档（http://archive.stsci.edu）获取并引用EPIC星表。MAST是NASA的空间望远镜数据归档，非本文产生的数据产品。",
+      "comments": "K2 photometry and EPIC catalogue accessed via MAST."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.astro.uni-bonn.de/stars/bonnsai",
+      "local_path": "",
+      "description": "The Bonn Stellar Astrophysics Interface (BONNSAI)网络服务，用于根据观测参数（Teff、log g）结合太阳金属丰度演化模型确定恒星的质量、半径和年龄等演化参数。",
+      "source_refs": [
+        {
+          "path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+          "start_line": 378,
+          "end_line": 378,
+          "context": "We used the BONNSAI\\footnote{The Bonn Stellar Astrophysics Interface web service is available\nat https://www.astro.uni-bonn.de/stars/bonnsai.} service \\citep{bonnsai} to\ndetermine the evolutionary parameters of the star from observational parameters"
+        }
+      ],
+      "evidence": "第378行脚注给出BONNSAI网址，正文说明用于根据观测参数和Brott et al.演化模型确定演化参数（质量、半径、年龄）。",
+      "comments": "Used with Brott et al. solar metallicity evolutionary models."
+    }
+  ]
+}

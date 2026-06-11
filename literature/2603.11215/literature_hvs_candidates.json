@@ -1,0 +1,68 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T16:48:33+08:00",
+  "paper": {
+    "arxiv_id": "2603.11215",
+    "bibcode": "2026arXiv260311215G",
+    "title": "Unveiling Massive Main-Sequence Stars in Sextans A through Panchromatic Photometry",
+    "month": "2026-03",
+    "source_note_json": "notes/2026/2026-03/2026-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2603.11215",
+      "pdf": "https://arxiv.org/pdf/2603.11215"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2603.11215",
+    "audit_path": "literature/2603.11215/audit.json",
+    "catalog_review_path": "literature/2603.11215/catalog_review.json",
+    "catalog_extraction_path": "literature/2603.11215/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2603.11215/catalog_tables/table-tab-beast.ecsv",
+      "literature/2603.11215/catalog_tables/table-mostmassive.ecsv",
+      "literature/2603.11215/catalog_tables/table-allstars.ecsv",
+      "literature/2603.11215/catalog_tables/table-tab-clust.ecsv",
+      "literature/2603.11215/catalog_tables/table-tab-esfr.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T16:48:33+08:00",
+    "extractor": "agent",
+    "summary": "The paper studies massive main-sequence stars in the external dwarf galaxy Sextans A. It identifies six runaway candidates ejected from birth clusters within Sextans A, but does not present any object as possibly unbound from the Milky Way / Galactic potential."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-allstars",
+      "description": "Catalog of massive stars in Sextans A with BEAST fits (Table allstars).",
+      "decision": "excluded",
+      "reason": "The paper studies stars in the external dwarf galaxy Sextans A and does not present them as Galactic-unbound or HVS candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.11215/arxiv_source/main.tex",
+          "start_line": 246,
+          "end_line": 270,
+          "context": "Table allstars: BEAST fit catalog for massive stars in Sextans A"
+        }
+      ]
+    },
+    {
+      "group_id": "runaway-candidates",
+      "description": "Six runaway candidates discussed in the text, inferred from ages and positions in Sextans A.",
+      "decision": "excluded",
+      "reason": "The paper treats these as runaway stars ejected from birth clusters within Sextans A, not as objects possibly unbound from the Milky Way.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.11215/arxiv_source/main.tex",
+          "start_line": 482,
+          "end_line": 486,
+          "context": "Discussion of six runaway candidates within Sextans A and their inferred velocities"
+        }
+      ]
+    }
+  ]
+}

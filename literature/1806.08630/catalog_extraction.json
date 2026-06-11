@@ -1,0 +1,523 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:39:36",
+  "paper": {
+    "arxiv_id": "1806.08630",
+    "title": "A quantitative spectral analysis of 14 hypervelocity stars from the MMT survey",
+    "month": "2018-06"
+  },
+  "review": {
+    "path": "literature/1806.08630/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083936",
+    "started_at": "2026-06-07T08:39:36",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1806.08630",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table:parameters",
+      "internal_table_id": "table-table:parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1806.08630/arxiv_source/paper.tex",
+        "start_line": 130,
+        "end_line": 164,
+        "caption": "Atmospheric and stellar parameters of the program stars.",
+        "label": "table:parameters"
+      },
+      "source_path": "literature/1806.08630/arxiv_source/paper.tex",
+      "excerpt_path": "literature/1806.08630/catalog_sources/table-table-parameters/excerpt.tex",
+      "sha256": "241e156acdd1e584011dcc3e42addeeb8d5adb1aaa7ed0b7c4154d8600d0ceb5",
+      "line_count": 35,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table:parameters",
+      "internal_table_id": "table-table:parameters",
+      "status": "success",
+      "ecsv_path": "literature/1806.08630/catalog_tables/table-table-parameters.ecsv",
+      "caption": "Atmospheric and stellar parameters of the program stars.",
+      "label": "table:parameters",
+      "row_count": 14,
+      "column_count": 35,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "",
+          "T_eff",
+          "",
+          "",
+          "\\log(g)",
+          "",
+          "",
+          "\\varv_rad",
+          "",
+          "",
+          "\\varv\\sin(i)",
+          "",
+          "",
+          "M",
+          "",
+          "",
+          "\\tau",
+          "",
+          "",
+          "\\log(L/L_\\odot)",
+          "",
+          "",
+          "R",
+          "",
+          "",
+          "\\Omega/\\Omega_crit",
+          "",
+          "",
+          "E(B-V)",
+          "",
+          "",
+          "d",
+          "",
+          "1\\sigma"
+        ],
+        [
+          "",
+          "",
+          "(K)",
+          "",
+          "",
+          "(cgs)",
+          "",
+          "",
+          "(\\mathrmkm s^-1)",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "( M_\\odot )",
+          "",
+          "",
+          "(Myr)",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "( R_\\odot )",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "(mag)",
+          "",
+          "",
+          "(kpc)",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "T_eff | (K)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\log(g) | (cgs)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\varv_rad | (\\mathrmkm s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\varv\\sin(i)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "M | ( M_\\odot )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "\\tau | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_020",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_021",
+          "original_header": "\\log(L/L_\\odot)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_022",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_023",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_024",
+          "original_header": "R | ( R_\\odot )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_025",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_026",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_027",
+          "original_header": "\\Omega/\\Omega_crit",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_028",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_029",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_030",
+          "original_header": "E(B-V) | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_031",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_032",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_033",
+          "original_header": "d | (kpc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_034",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_035",
+          "original_header": "1\\sigma",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4pfd6me_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1806.08630/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4pfd6me_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1806.08630/catalog_sources/table-table-parameters/wrapped.tex",
+            "html": "literature/1806.08630/catalog_sources/table-table-parameters/latexml.html",
+            "stdout": "literature/1806.08630/catalog_sources/table-table-parameters/latexml.stdout.txt",
+            "stderr": "literature/1806.08630/catalog_sources/table-table-parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "241e156acdd1e584011dcc3e42addeeb8d5adb1aaa7ed0b7c4154d8600d0ceb5"
+    }
+  ]
+}

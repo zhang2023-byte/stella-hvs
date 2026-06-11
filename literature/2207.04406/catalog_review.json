@@ -1,0 +1,873 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2207.04406",
+    "title": "On the origins of extreme velocity stars as revealed by large-scale Galactic surveys",
+    "month": "2022-07",
+    "source_note_json": "notes/2022/2022-07/2022-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2207.04406",
+      "pdf": "https://arxiv.org/pdf/2207.04406"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2207.04406",
+    "audit_path": "literature/2207.04406/audit.json",
+    "source_dir": "literature/2207.04406/arxiv_source",
+    "tex_root": "literature/2207.04406/arxiv_source/HVS.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-23T10:59:41",
+    "reviewer": "agent",
+    "summary": "本论文基于RAVE DR5、SDSS DR12、LAMOST DR8、APOGEE DR16、GALAH DR2和Gaia EDR3数据，构建了12,784颗高速星（V_GSR ≥ 300 km/s）样本，其中52颗为HVS候选体（40颗为新发现）。论文包含7个内部表格：Table 1为方法验证表（巡天径向速度精度比较）；Table 2（分两部分）列出52颗HVS候选体的天体测量、运动学参数及五种银势模型下的未束缚概率；Table 3列出8颗轨道接近银心的HiVel星；Table 4列出15颗可能起源于Sgr dSph的极端速度星；Table A1（分三部分）汇编88颗已知HVS或候选体的完整参数。外部资源包括LAMOST DR8、RAVE、Gaia、Gaia DPAC和SDSS等官方网站。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-001",
+      "kind": "latex_table",
+      "asset_type": "method_table",
+      "role_in_paper": "比较各大型光谱巡天与径向速度标准星的系统偏差和离散度，验证数据质量",
+      "source_refs": [
+        {
+          "path": "literature/2207.04406/arxiv_source/HVS.tex",
+          "start_line": 123,
+          "end_line": 139,
+          "caption": "",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\multirow1*",
+          "meaning": "占位符列（multirow标记，无实际数据）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Surveys",
+          "meaning": "光谱巡天名称",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\Delta v_\\rm los (\\rmkm s^-1)",
+          "meaning": "径向速度零点偏差（巡天减标准星）",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "s.d. (\\rmkm s^-1)",
+          "meaning": "径向速度标准差",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N",
+          "meaning": "标准星样本数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 展示 GALAH、APOGEE、RAVE、LAMOST 与标准星的径向速度差异、标准差和样本数",
+      "comments": "非核心科学数据资产，仅用于方法验证"
+    },
+    {
+      "id": "table-tbl-table2",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "列出52颗HVS候选体中第1-37颗的天体测量参数、运动学参数及在五种不同银河系引力势模型下的未束缚概率",
+      "source_refs": [
+        {
+          "path": "literature/2207.04406/arxiv_source/HVS.tex",
+          "start_line": 410,
+          "end_line": 536,
+          "caption": "",
+          "label": "tbl:table2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\multirow1* Notation",
+          "meaning": "天体名称标记",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\rmra",
+          "meaning": "赤经（J2000）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha\\rmcos \\delta",
+          "meaning": "赤经方向自行（含cos δ因子）",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta",
+          "meaning": "赤纬方向自行",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_\\rmlos",
+          "meaning": "视向速度（line-of-sight velocity）",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "距离",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_\\rmGSR",
+          "meaning": "银河系静止系总速度",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm ub (MW)\\tnotea",
+          "meaning": "MilkyWayPotential模型下的未束缚概率",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm ub (M18)\\tnoteb",
+          "meaning": "Monari et al. (2018) 势模型下的未束缚概率",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm ub (D19)\\tnotec",
+          "meaning": "Deason et al. (2019) 势模型下的未束缚概率",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm ub (BMW)\\tnoted",
+          "meaning": "BovyMWPotential2014模型下的未束缚概率",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm ub (W17)\\tnotee",
+          "meaning": "Williams et al. (2017) 观测逃逸速度曲线下的未束缚概率",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 2 是本工作的核心数据表，包含52颗HVS候选体的Gaia EDR3天体测量、视向速度、距离、总速度及Monte Carlo模拟得到的未束缚概率",
+      "comments": "表格分两部分呈现（第1-37颗和第38-52颗），共用相同的列结构和表注"
+    },
+    {
+      "id": "table-tbl-table2-2",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "列出52颗HVS候选体中第38-52颗的天体测量参数、运动学参数及在五种不同银河系引力势模型下的未束缚概率",
+      "source_refs": [
+        {
+          "path": "literature/2207.04406/arxiv_source/HVS.tex",
+          "start_line": 539,
+          "end_line": 607,
+          "caption": "",
+          "label": "tbl:table2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\multirow1* Notation",
+          "meaning": "天体名称标记",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\rmra",
+          "meaning": "赤经（J2000）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha\\rmcos \\delta",
+          "meaning": "赤经方向自行（含cos δ因子）",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta",
+          "meaning": "赤纬方向自行",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_\\rmlos",
+          "meaning": "视向速度（line-of-sight velocity）",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "距离",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_\\rmGSR",
+          "meaning": "银河系静止系总速度",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm ub (MW)\\tnotea",
+          "meaning": "MilkyWayPotential模型下的未束缚概率",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm ub (M18)\\tnoteb",
+          "meaning": "Monari et al. (2018) 势模型下的未束缚概率",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm ub (D19)\\tnotec",
+          "meaning": "Deason et al. (2019) 势模型下的未束缚概率",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm ub (MMW)\\tnoted",
+          "meaning": "BovyMWPotential2014模型下的未束缚概率",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm ub (W17)\\tnotee",
+          "meaning": "Williams et al. (2017) 观测逃逸速度曲线下的未束缚概率",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 2 是本工作的核心数据表，包含52颗HVS候选体的Gaia EDR3天体测量、视向速度、距离、总速度及Monte Carlo模拟得到的未束缚概率",
+      "comments": "表格分两部分呈现（第1-37颗和第38-52颗），共用相同的列结构和表注"
+    },
+    {
+      "id": "table-tbl-table2-3",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "列出8颗向后积分轨道穿过银心1kpc范围内的极端速度星的天体测量参数、运动学参数及轨道回溯结果",
+      "source_refs": [
+        {
+          "path": "literature/2207.04406/arxiv_source/HVS.tex",
+          "start_line": 613,
+          "end_line": 652,
+          "caption": "",
+          "label": "tbl:table2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\multirow1* Notation",
+          "meaning": "天体名称标记",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\rmra",
+          "meaning": "赤经（J2000）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha\\rmcos \\delta",
+          "meaning": "赤经方向自行（含cos δ因子）",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta",
+          "meaning": "赤纬方向自行",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_\\rmlos",
+          "meaning": "视向速度（line-of-sight velocity）",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "距离",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_\\rmGSR",
+          "meaning": "银河系静止系总速度",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Closest distance",
+          "meaning": "向后积分轨道与目标天体的最近距离",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Backward time",
+          "meaning": "轨道回溯至最近交会点的时间",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 3 展示轨道接近银心的8颗HiVel星，用于探讨其是否可能起源于银心",
+      "comments": ""
+    },
+    {
+      "id": "table-tbl-table2-4",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "列出15颗可能与Sgr矮星系有近距离交会历史的极端速度星（含2颗HVS候选体）的天体测量参数、运动学参数及轨道回溯结果",
+      "source_refs": [
+        {
+          "path": "literature/2207.04406/arxiv_source/HVS.tex",
+          "start_line": 654,
+          "end_line": 714,
+          "caption": "",
+          "label": "tbl:table2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\multirow1* Notation",
+          "meaning": "天体名称标记",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\rmra",
+          "meaning": "赤经（J2000）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha\\rmcos \\delta",
+          "meaning": "赤经方向自行（含cos δ因子）",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta",
+          "meaning": "赤纬方向自行",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_\\rmlos",
+          "meaning": "视向速度（line-of-sight velocity）",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "距离",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_\\rmGSR",
+          "meaning": "银河系静止系总速度",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Closest distance",
+          "meaning": "向后积分轨道与目标天体的最近距离",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Backward time",
+          "meaning": "轨道回溯至最近交会点的时间",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 4 展示与Sgr dSph轨道有交会的15颗极端速度星，支持其可能起源于该矮星系的假说",
+      "comments": ""
+    },
+    {
+      "id": "table-tbl-table2-5",
+      "kind": "latex_table",
+      "asset_type": "compilation_table",
+      "role_in_paper": "汇编88颗已知HVS或候选体的基本天体测量、恒星大气参数和运动学信息（第1-36颗）",
+      "source_refs": [
+        {
+          "path": "literature/2207.04406/arxiv_source/HVS.tex",
+          "start_line": 976,
+          "end_line": 1101,
+          "caption": "",
+          "label": "tbl:table2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\multirow1* ID",
+          "meaning": "序号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Notation",
+          "meaning": "HVS名称或编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\rmra",
+          "meaning": "赤经（J2000）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha\\rmcos \\delta",
+          "meaning": "赤经方向自行（含cos δ因子）",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta",
+          "meaning": "赤纬方向自行",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_\\rmlos",
+          "meaning": "视向速度（line-of-sight velocity）",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\itd",
+          "meaning": "距离",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_\\rm eff",
+          "meaning": "有效温度",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\rm log g",
+          "meaning": "表面重力",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]",
+          "meaning": "铁丰度",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[\\alpha/Fe]",
+          "meaning": "α元素丰度比",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\itV_\\rmrf",
+          "meaning": "银河系静止系径向速度",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\itV_\\rmGSR",
+          "meaning": "银河系静止系总速度",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Reference",
+          "meaning": "数据来源参考文献",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table A1 是本工作的附录表，包含52颗新发现HVS候选体和36颗文献已知HVS的完整参数及文献来源",
+      "comments": "表格分三部分呈现，涵盖所有88颗HVS或候选体"
+    },
+    {
+      "id": "table-tbl-table2-6",
+      "kind": "latex_table",
+      "asset_type": "compilation_table",
+      "role_in_paper": "汇编88颗已知HVS或候选体的基本天体测量、恒星大气参数和运动学信息（第37-75颗）",
+      "source_refs": [
+        {
+          "path": "literature/2207.04406/arxiv_source/HVS.tex",
+          "start_line": 1104,
+          "end_line": 1239,
+          "caption": "",
+          "label": "tbl:table2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\multirow1* ID",
+          "meaning": "序号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Notation",
+          "meaning": "HVS名称或编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\rmra",
+          "meaning": "赤经（J2000）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha\\rmcos \\delta",
+          "meaning": "赤经方向自行（含cos δ因子）",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta",
+          "meaning": "赤纬方向自行",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_\\rmlos",
+          "meaning": "视向速度（line-of-sight velocity）",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\itd",
+          "meaning": "距离",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_\\rm eff",
+          "meaning": "有效温度",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\rm log g",
+          "meaning": "表面重力",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]",
+          "meaning": "铁丰度",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[\\alpha/Fe]",
+          "meaning": "α元素丰度比",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\itV_\\rmrf",
+          "meaning": "银河系静止系径向速度",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\itV_\\rmGSR",
+          "meaning": "银河系静止系总速度",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Reference",
+          "meaning": "数据来源参考文献",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table A1 是本工作的附录表，包含52颗新发现HVS候选体和36颗文献已知HVS的完整参数及文献来源",
+      "comments": "表格分三部分呈现，涵盖所有88颗HVS或候选体"
+    },
+    {
+      "id": "table-tbl-table2-7",
+      "kind": "latex_table",
+      "asset_type": "compilation_table",
+      "role_in_paper": "汇编88颗已知HVS或候选体的基本天体测量、恒星大气参数和运动学信息（第76-88颗）",
+      "source_refs": [
+        {
+          "path": "literature/2207.04406/arxiv_source/HVS.tex",
+          "start_line": 1244,
+          "end_line": 1302,
+          "caption": "",
+          "label": "tbl:table2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\multirow1* ID",
+          "meaning": "序号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Notation",
+          "meaning": "HVS名称或编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\rmra",
+          "meaning": "赤经（J2000）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha\\rmcos \\delta",
+          "meaning": "赤经方向自行（含cos δ因子）",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta",
+          "meaning": "赤纬方向自行",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_\\rmlos",
+          "meaning": "视向速度（line-of-sight velocity）",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\itd",
+          "meaning": "距离",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_\\rm eff",
+          "meaning": "有效温度",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\rm log g",
+          "meaning": "表面重力",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]",
+          "meaning": "铁丰度",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[\\alpha/Fe]",
+          "meaning": "α元素丰度比",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\itV_\\rmrf",
+          "meaning": "银河系静止系径向速度",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\itV_\\rmGSR",
+          "meaning": "银河系静止系总速度",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Reference",
+          "meaning": "数据来源参考文献",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table A1 是本工作的附录表，包含52颗新发现HVS候选体和36颗文献已知HVS的完整参数及文献来源",
+      "comments": "表格分三部分呈现，涵盖所有88颗HVS或候选体"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://www.lamost.org/dr8/",
+      "local_path": "",
+      "description": "LAMOST DR8 数据发布网站，提供约650万条恒星光谱及恒星参数测量",
+      "source_refs": [
+        {
+          "path": "literature/2207.04406/arxiv_source/HVS.tex",
+          "start_line": 181,
+          "end_line": 181,
+          "context": "LAMOST is a 4-meter quasi-meridian reflecting Schmidt telescope equipped with 4000 fibers distributed over a field of view $5^{\\circ}$ in diameter \\citep{Cui2012}. \nIt can collect 4000 optical spectra per exposure, with wavelength coverage ranging from 3700 to 9000\\,\\AA\\, and spectral resolving power around $R = 2000$. \nIn the current work, we adopt the data from LAMOST\\,DR8\\footnote{\\url{http://www.lamost.org/dr8/}}, which has released 6.5 million stellar spectra with reliable stellar parameter measurements for about 4 million unique stars.\nThe $v_{\\rm los}$ and stellar atmospheric parameters and from LAMOST spectra are derived by the official pipeline -- LAMOST Stellar Parameter Pipeline \\citep[LASP;][]{Luo2015}.\nThe typical uncertainties achieved by this pipeline are 5 \\,km\\,s$^{-1}$, 100\\,K, 0.25\\,dex, and 0.10\\,dex for $v_{\\rm los}$, $T_{\\rm eff}$, log\\,$g$, and [Fe/H], respectively."
+        }
+      ],
+      "evidence": "论文使用LAMOST DR8的恒星参数和视向速度数据，与Gaia EDR3交叉匹配筛选高速星候选体",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.rave-survey.org",
+      "local_path": "",
+      "description": "RAVE巡天官方网站",
+      "source_refs": [
+        {
+          "path": "literature/2207.04406/arxiv_source/HVS.tex",
+          "start_line": 952,
+          "end_line": 952,
+          "context": "%%RAVE\nFunding for RAVE has been provided by: the Australian Astronomical Observatory; the Leibniz-Institut fuer Astrophysik Potsdam (AIP); the Australian National University; the Australian Research Council; the French National Research Agency; the German Research Foundation (SPP 1177 and SFB 881); the European Research Council (ERC-StG 240271 Galactica); the Istituto Nazionale di Astrofisica at Padova; The Johns Hopkins University; the National Science Foundation of the USA (AST-0908326); the W. M. Keck foundation; the Macquarie University; the Netherlands Research School for Astronomy; the Natural Sciences and Engineering Research Council of Canada; the Slovenian Research Agency; the Swiss National Science Foundation; the Science \\& Technology Facilities Council of the UK; Opticon; Strasbourg Observatory; and the Universities of Groningen, Heidelberg and Sydney. The RAVE web site is at https://www.rave-survey.org.\n\n%Gaia"
+        }
+      ],
+      "evidence": "论文使用RAVE DR5的视向速度、恒星大气参数和α元素丰度数据",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia任务官方网站，提供天体测量和测光数据",
+      "source_refs": [
+        {
+          "path": "literature/2207.04406/arxiv_source/HVS.tex",
+          "start_line": 955,
+          "end_line": 955,
+          "context": "%Gaia\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}%Data Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions"
+        }
+      ],
+      "evidence": "论文使用Gaia EDR3的视差、自行和测光数据进行高速星筛选和速度计算",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "Gaia数据处理与分析联盟（DPAC）官方网站",
+      "source_refs": [
+        {
+          "path": "literature/2207.04406/arxiv_source/HVS.tex",
+          "start_line": 956,
+          "end_line": 956,
+          "context": "%Gaia\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}%Data Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement."
+        }
+      ],
+      "evidence": "论文使用的Gaia EDR3数据由DPAC处理生成",
+      "comments": ""
+    }
+  ]
+}

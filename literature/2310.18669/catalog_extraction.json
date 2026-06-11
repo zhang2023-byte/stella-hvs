@@ -1,0 +1,342 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:58:05",
+  "paper": {
+    "arxiv_id": "2310.18669",
+    "title": "Probing the non-thermal physics of stellar bow shocks using radio observations",
+    "month": "2023-10"
+  },
+  "review": {
+    "path": "literature/2310.18669/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225805",
+    "started_at": "2026-05-22T22:58:05",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2310.18669",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table-systems",
+      "internal_table_id": "table-table-systems",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2310.18669/arxiv_source/paper_v1.tex",
+        "start_line": 157,
+        "end_line": 176,
+        "caption": "Parameters of the systems studied (see Sect.~\\ref{sec:systems} for a discussion on their possible uncertainties). (a) \\cite{Benaglia_2021}; (b) \\cite{Gaia3} (stellar velocities are estimations based on tangential components);  (c) \\cite{Peri_2012}; (d) \\cite{Sota_2011}; (e) \\cite{Peri_2015}; (f) \\cite{Houk_1978}; (g) \\cite{Muijres_2012}; (h) \\cite{Moutzouri_2022}; (i) \\cite{Grinberg_2017}; (j) \\cite{Toala_2020}. The ambient densities are calculated in terms of the projections $R_{\\rm 0, proj}$ in the plane of the sky reported by \\cite{Peri_2012}, \\cite{Peri_2015}, \\cite{Benaglia_2021}, \\cite{Moutzouri_2022} and \\cite{Gvaramadze_2018}. We assume solar abundances.",
+        "label": "table:systems"
+      },
+      "source_path": "literature/2310.18669/arxiv_source/paper_v1.tex",
+      "excerpt_path": "literature/2310.18669/catalog_sources/table-table-systems/excerpt.tex",
+      "sha256": "66a93a836a270068ea69ccbe57dfc1211ec3fefd6a3a88622c3a72047af83a43",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-table-parameters",
+      "internal_table_id": "table-table-parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2310.18669/arxiv_source/paper_v1.tex",
+        "start_line": 537,
+        "end_line": 559,
+        "caption": "Main results regarding the radio emission from the modelled stellar BSs. Column 3 shows the power injected in the RS by the stellar wind typically, $L_{\\rm w\\perp} \\approx 0.5 - 0.7 L_{\\rm w}$). Columns 4--6 are model parameters: the fraction of the injected power that goes into electrons, the electrons-to-magnetic energy density ratio, and the IL width parameter; we fix $\\eta_{\\rm B} = 0.2$ for all systems. Column 7 summarises our conclusions about the origin of the emission of each source.",
+        "label": "table:parameters"
+      },
+      "source_path": "literature/2310.18669/arxiv_source/paper_v1.tex",
+      "excerpt_path": "literature/2310.18669/catalog_sources/table-table-parameters/excerpt.tex",
+      "sha256": "f2cc4cfbb3618737f00440607c08063243649181d74d186162353b256d8e7ffc",
+      "line_count": 23,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table-systems",
+      "internal_table_id": "table-table-systems",
+      "status": "success",
+      "ecsv_path": "literature/2310.18669/catalog_tables/table-table-systems.ecsv",
+      "caption": "Parameters of the systems studied (see Sect.~\\ref{sec:systems} for a discussion on their possible uncertainties). (a) \\cite{Benaglia_2021}; (b) \\cite{Gaia3} (stellar velocities are estimations based on tangential components);  (c) \\cite{Peri_2012}; (d) \\cite{Sota_2011}; (e) \\cite{Peri_2015}; (f) \\cite{Houk_1978}; (g) \\cite{Muijres_2012}; (h) \\cite{Moutzouri_2022}; (i) \\cite{Grinberg_2017}; (j) \\cite{Toala_2020}. The ambient densities are calculated in terms of the projections $R_{\\rm 0, proj}$ in the plane of the sky reported by \\cite{Peri_2012}, \\cite{Peri_2015}, \\cite{Benaglia_2021}, \\cite{Moutzouri_2022} and \\cite{Gvaramadze_2018}. We assume solar abundances.",
+      "label": "table:systems",
+      "row_count": 6,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Symbol",
+          "System",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Parameter",
+          "Symbol",
+          "\\BD",
+          "BD+60 \\degree 2522",
+          "G1",
+          "G3",
+          "Vela X-1"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter | Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Symbol | Symbol",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "System | \\BD",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "BD+60 \\degree 2522",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "G1",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "G3",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Vela X-1",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpki3_4fgj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2310.18669/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpki3_4fgj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2310.18669/catalog_sources/table-table-systems/wrapped.tex",
+            "html": "literature/2310.18669/catalog_sources/table-table-systems/latexml.html",
+            "stdout": "literature/2310.18669/catalog_sources/table-table-systems/latexml.stdout.txt",
+            "stderr": "literature/2310.18669/catalog_sources/table-table-systems/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "66a93a836a270068ea69ccbe57dfc1211ec3fefd6a3a88622c3a72047af83a43"
+    },
+    {
+      "id": "table-table-parameters",
+      "internal_table_id": "table-table-parameters",
+      "status": "success",
+      "ecsv_path": "literature/2310.18669/catalog_tables/table-table-parameters.ecsv",
+      "caption": "Main results regarding the radio emission from the modelled stellar BSs. Column 3 shows the power injected in the RS by the stellar wind typically, $L_{\\rm w\\perp} \\approx 0.5 - 0.7 L_{\\rm w}$). Columns 4--6 are model parameters: the fraction of the injected power that goes into electrons, the electrons-to-magnetic energy density ratio, and the IL width parameter; we fix $\\eta_{\\rm B} = 0.2$ for all systems. Column 7 summarises our conclusions about the origin of the emission of each source.",
+      "label": "table:parameters",
+      "row_count": 7,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "System",
+          "Radiation type",
+          "L_\\rm w\\perp [erg s -1 ]",
+          "f_\\rm NT, e",
+          "U_\\rm B/U_\\rm NT,e",
+          "\\eta_\\rm H",
+          "Comments"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "System",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Radiation type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "L_\\rm w\\perp [erg s -1 ]",
+          "unit_text": "L_\\rm w\\perp [erg s -1 ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "f_\\rm NT, e",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "U_\\rm B/U_\\rm NT,e",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\eta_\\rm H",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Comments",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "pandoc",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpo2d4941d/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2310.18669/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpo2d4941d/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2310.18669/catalog_sources/table-table-parameters/wrapped.tex",
+            "html": "literature/2310.18669/catalog_sources/table-table-parameters/latexml.html",
+            "stdout": "literature/2310.18669/catalog_sources/table-table-parameters/latexml.stdout.txt",
+            "stderr": "literature/2310.18669/catalog_sources/table-table-parameters/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpropg01qm/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpropg01qm/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2310.18669/catalog_sources/table-table-parameters/wrapped.tex",
+            "html": "literature/2310.18669/catalog_sources/table-table-parameters/pandoc.html",
+            "stdout": "literature/2310.18669/catalog_sources/table-table-parameters/pandoc.stdout.txt",
+            "stderr": "literature/2310.18669/catalog_sources/table-table-parameters/pandoc.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f2cc4cfbb3618737f00440607c08063243649181d74d186162353b256d8e7ffc"
+    }
+  ]
+}

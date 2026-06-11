@@ -1,0 +1,1115 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T18:06:03",
+  "paper": {
+    "arxiv_id": "2407.08578",
+    "bibcode": "2024ApJ...971L..25B",
+    "title": "Discovery of a Hypervelocity L Subdwarf at the Star/Brown Dwarf Mass Limit",
+    "month": "2024-07",
+    "source_note_json": "notes/2024/2024-07/2024-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2407.08578",
+      "pdf": "https://arxiv.org/pdf/2407.08578"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2407.08578",
+    "audit_path": "literature/2407.08578/audit.json",
+    "catalog_review_path": "literature/2407.08578/catalog_review.json",
+    "catalog_extraction_path": "literature/2407.08578/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2407.08578/catalog_tables/table-tab-source.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-22T18:06:03",
+    "extractor": "agent",
+    "summary": "Extracted 1 candidate: CWISE J124909.08+362116.0 (J1249+3621), presented by the paper as a hypervelocity L subdwarf possibly unbound from the Milky Way."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Adopted astrometry and photometry from CatWISE2020, PanSTARRS, and UKIRT Hemisphere Survey.",
+      "inputs": [
+        "CatWISE2020",
+        "PanSTARRS",
+        "UKIRT Hemisphere Survey"
+      ],
+      "outputs": [
+        "Multi-epoch infrared photometry",
+        "Optical/NIR astrometry"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 252,
+          "end_line": 260,
+          "context": "Identification from unWISE images and astrometry from PanSTARRS and UHS"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 304,
+          "end_line": 307,
+          "context": "Table references for CatWISE2020, PanSTARRS, and UHS"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "sample_selection",
+      "summary": "Citizen scientists in Backyard Worlds: Planet 9 identified CWISE J1249+3621 as a high proper motion faint red source.",
+      "inputs": [
+        "unWISE multi-epoch images"
+      ],
+      "outputs": [
+        "High-priority spectroscopic follow-up target"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 252,
+          "end_line": 254,
+          "context": "Identification by citizen scientists in BYW program"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "cross_match",
+      "summary": "Combined astrometry from PanSTARRS and UHS to determine proper motion.",
+      "inputs": [
+        "PanSTARRS astrometry",
+        "UHS astrometry"
+      ],
+      "outputs": [
+        "Proper motion mu = 884 +/- 5 mas/yr"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 257,
+          "end_line": 260,
+          "context": "Combining astrometry from PanSTARRS and UHS yields proper motion"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Spectral classification of the Keck/NIRES spectrum as sdL1 by comparison to dwarf and subdwarf templates.",
+      "inputs": [
+        "Keck/NIRES spectrum"
+      ],
+      "outputs": [
+        "Spectral type sdL1"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 330,
+          "end_line": 334,
+          "context": "Spectral classification as sdL1 from SPLAT comparison"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "photometric_or_sed_modeling",
+      "summary": "MCMC fits of Sonora Elf Owl and SAND atmosphere models to the NIRES spectral flux densities, scaled by UHS J-band photometry.",
+      "inputs": [
+        "NIRES spectrum",
+        "UHS J-band magnitude"
+      ],
+      "outputs": [
+        "Best-fit Teff, logg, [M/H], and scaled surface fluxes"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 336,
+          "end_line": 343,
+          "context": "Atmosphere model fits with Elf Owl and SAND grids"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-01",
+        "step-04"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Spectrophotometric distance from spectral type sdL1 and WISE/UKIRT photometry using absolute magnitude relations.",
+      "inputs": [
+        "Spectral type sdL1",
+        "W1W2JK photometry"
+      ],
+      "outputs": [
+        "Distance estimate 125 +/- 8 pc"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 334,
+          "end_line": 335,
+          "context": "Distance estimate from spectral type/absolute magnitude relations"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [
+        "step-05"
+      ],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Mass inferred from SANDee evolutionary models assuming age >= 5 Gyr and the atmosphere-parameter ranges.",
+      "inputs": [
+        "Teff and [M/H] ranges from SED modeling",
+        "assumed age >= 5 Gyr"
+      ],
+      "outputs": [
+        "Mass 0.082^{+0.002}_{-0.003} M_sun"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 350,
+          "end_line": 353,
+          "context": "Mass prediction from SANDee evolutionary models"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [],
+      "step_type": "radial_velocity_measurement",
+      "summary": "Forward modeling of the NIRES spectrum with BT-Settl stellar model and telluric template to measure RV.",
+      "inputs": [
+        "Keck/NIRES spectrum"
+      ],
+      "outputs": [
+        "Radial velocity -103 +/- 10 km/s"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 388,
+          "end_line": 416,
+          "context": "RV measurement from forward modeling of NIRES spectrum"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": [
+        "step-03",
+        "step-06",
+        "step-08"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Computation of UVW LSR velocities and Galactic rest-frame speed from position, proper motion, distance, and RV.",
+      "inputs": [
+        "Proper motion",
+        "Distance",
+        "Radial velocity",
+        "Solar motion"
+      ],
+      "outputs": [
+        "U_LSR, V_LSR, W_LSR",
+        "v_GRF = 456 +/- 27 km/s"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 437,
+          "end_line": 442,
+          "context": "UVW LSR and Galactic rest-frame speed calculation"
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "Adopted axisymmetric MWPotential2014 from Bovy (2015) for orbit integration.",
+      "inputs": [
+        "MWPotential2014 parameters"
+      ],
+      "outputs": [
+        "Galactic potential model"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 483,
+          "end_line": 484,
+          "context": "Galactic orbit generated using galpy with MWPotential2014"
+        }
+      ]
+    },
+    {
+      "id": "step-11",
+      "depends_on": [
+        "step-09",
+        "step-10"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Forward and backward orbit integration with 100 random initial conditions sampling uncertainties.",
+      "inputs": [
+        "Initial phase-space coordinates",
+        "MWPotential2014"
+      ],
+      "outputs": [
+        "Forward orbit up to 10 Gyr",
+        "Backward orbit up to 150 Myr",
+        "Pericenter 0.94^{+0.28}_{-0.19} kpc",
+        "Orbital angular momentum L_z"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 483,
+          "end_line": 487,
+          "context": "Orbit integration details and results"
+        }
+      ]
+    },
+    {
+      "id": "step-12",
+      "depends_on": [
+        "step-09",
+        "step-10"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Comparison of v_GRF to local escape velocity estimates and assessment of bound/unbound probability from orbit simulations.",
+      "inputs": [
+        "v_GRF",
+        "Escape velocity estimates",
+        "Orbit simulation ensemble"
+      ],
+      "outputs": [
+        "17% of simulated orbits are unbound over 10 Gyr"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 442,
+          "end_line": 448,
+          "context": "Comparison to escape velocity and probability of being unbound"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 483,
+          "end_line": 485,
+          "context": "Orbit simulation bound/unbound fraction"
+        }
+      ]
+    },
+    {
+      "id": "step-13",
+      "depends_on": [
+        "step-11",
+        "step-12"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Evaluation of Galactic center, Type Ia supernova companion, globular cluster, and extragalactic origin scenarios.",
+      "inputs": [
+        "Orbit parameters",
+        "Bound/unbound assessment",
+        "Atmospheric abundances"
+      ],
+      "outputs": [
+        "Origin scenario rankings"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 499,
+          "end_line": 593,
+          "context": "Section 4: Assessing the Origins of J1249+3621"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2407.08578:cand-001",
+        "paper_candidate_id": "J1249+3621",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "J1249+3621",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2407.08578/arxiv_source/speedl.tex",
+                "start_line": 57,
+                "end_line": 57,
+                "context": "Macro defines sname as J1249+3621"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2407.08578/arxiv_source/speedl.tex",
+                "start_line": 240,
+                "end_line": 241,
+                "context": "Introduction refers to the object as J1249+3621"
+              }
+            ]
+          },
+          {
+            "value": "CWISE J124909.08+362116.0",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2407.08578/arxiv_source/speedl.tex",
+                "start_line": 158,
+                "end_line": 158,
+                "context": "Abstract names CWISE J124909.08+362116.0"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2407.08578/arxiv_source/speedl.tex",
+                "start_line": 240,
+                "end_line": 240,
+                "context": "Introduction names CWISE J124909.08+362116.0"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "The paper presents CWISE J1249+3621 as a hypervelocity L subdwarf whose kinematics suggest it is possibly unbound from the Milky Way. The median Galactic rest-frame speed is 456 +/- 27 km/s, just below local escape velocity estimates, and 17% of simulated orbits are unbound over 10 Gyr.",
+        "paper_labels": [
+          "hvs_candidate",
+          "escaping_star",
+          "high_velocity_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The paper unambiguously presents this single object as a hypervelocity candidate with detailed kinematic analysis and bound/unbound assessment.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2407.08578/arxiv_source/speedl.tex",
+            "start_line": 158,
+            "end_line": 172,
+            "context": "Abstract describing hypervelocity status and unbound possibility"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2407.08578/arxiv_source/speedl.tex",
+            "start_line": 240,
+            "end_line": 241,
+            "context": "Introduction states it may exceed local escape velocity"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2407.08578/arxiv_source/speedl.tex",
+            "start_line": 437,
+            "end_line": 448,
+            "context": "Kinematic analysis and significant probability of being unbound"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2407.08578/arxiv_source/speedl.tex",
+            "start_line": 158,
+            "end_line": 172,
+            "context": "Paper reports discovery and proposes hypervelocity/unbound status"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "12 h 49 m 09 \\fs 08",
+            "value": "12h49m09.08s",
+            "unit": "hourangle",
+            "coordinate_format": "sexagesimal_hms",
+            "reference_frame": {
+              "value": "unknown",
+              "inference_basis": "not_reported",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2407.08578/arxiv_source/speedl.tex",
+                  "start_line": 273,
+                  "end_line": 274,
+                  "context": "Table header uses alpha_J2000 without stated frame"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2000.0",
+              "epoch_kind": "ambiguous",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2407.08578/arxiv_source/speedl.tex",
+                  "start_line": 273,
+                  "end_line": 274,
+                  "context": "Table header uses J2000 label as convention"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+                "line": 9,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "12 h 49 m 09 \\fs 08"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "+36 \\arcdeg 21 \\arcmin 16 \\arcsec",
+            "value": "+36d21m16s",
+            "unit": "deg",
+            "coordinate_format": "sexagesimal_dms",
+            "reference_frame": {
+              "value": "unknown",
+              "inference_basis": "not_reported",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2407.08578/arxiv_source/speedl.tex",
+                  "start_line": 273,
+                  "end_line": 274,
+                  "context": "Table header uses delta_J2000 without stated frame"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2000.0",
+              "epoch_kind": "ambiguous",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2407.08578/arxiv_source/speedl.tex",
+                  "start_line": 273,
+                  "end_line": 274,
+                  "context": "Table header uses J2000 label as convention"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+                "line": 10,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "+36 \\arcdeg 21 \\arcmin 16 \\arcsec"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "125 +/- 8 pc",
+            "value": "125",
+            "error": "8",
+            "unit": "pc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+                "line": 21,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "125 +/- 8 pc"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "344 +/- 5 mas/yr",
+            "value": "344",
+            "error": "5",
+            "unit": "mas/yr",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+                "line": 11,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "344 +/- 5 mas/yr"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "- 814 +/- 5 mas/yr",
+            "value": "-814",
+            "error": "5",
+            "unit": "mas/yr",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+                "line": 12,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "- 814 +/- 5 mas/yr"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "- 103 +/- 10 km/s",
+            "value": "-103",
+            "error": "10",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+                "line": 28,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "- 103 +/- 10 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": {
+            "raw_value": "449 +/- 28 km/s",
+            "value": "449",
+            "error": "28",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+                "line": 29,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "449 +/- 28 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "- 292 +/- 19 km/s",
+            "value": "-292",
+            "error": "19",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+                "line": 30,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "- 292 +/- 19 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "- 15 +/- 11 km/s",
+            "value": "-15",
+            "error": "11",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+                "line": 31,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "- 15 +/- 11 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "tangential_velocity": {
+            "raw_value": "524 +/- 33 km/s",
+            "value": "524",
+            "error": "33",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+                "line": 22,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "524 +/- 33 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": {
+            "raw_value": "456 +/- 27 km/s",
+            "value": "456",
+            "error": "27",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+                "line": 32,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "456 +/- 27 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "17%",
+            "value": "0.17",
+            "unit": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2407.08578/arxiv_source/speedl.tex",
+                "start_line": 483,
+                "end_line": 485,
+                "context": "Fraction of simulated orbits that are unbound over 10 Gyr"
+              }
+            ],
+            "method_refs": [
+              "step-12"
+            ]
+          },
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "21.48 +/- 0.15 mag",
+          "value": "21.48",
+          "error": "0.15",
+          "unit": "mag",
+          "kind": "magnitude",
+          "measurement_type": "magnitude",
+          "description": "PanSTARRS i-band apparent magnitude (AB)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+              "line": 13,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "21.48 +/- 0.15 mag"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "20.01 +/- 0.06 mag",
+          "value": "20.01",
+          "error": "0.06",
+          "unit": "mag",
+          "kind": "magnitude",
+          "measurement_type": "magnitude",
+          "description": "PanSTARRS z-band apparent magnitude (AB)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+              "line": 14,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "20.01 +/- 0.06 mag"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "19.13 +/- 0.05 mag",
+          "value": "19.13",
+          "error": "0.05",
+          "unit": "mag",
+          "kind": "magnitude",
+          "measurement_type": "magnitude",
+          "description": "PanSTARRS y-band apparent magnitude (AB)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+              "line": 15,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "19.13 +/- 0.05 mag"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "17.10 +/- 0.03 mag",
+          "value": "17.10",
+          "error": "0.03",
+          "unit": "mag",
+          "kind": "magnitude",
+          "measurement_type": "magnitude",
+          "description": "UHS J-band apparent magnitude (Vega)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+              "line": 16,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "17.10 +/- 0.03 mag"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "16.46 +/- 0.04 mag",
+          "value": "16.46",
+          "error": "0.04",
+          "unit": "mag",
+          "kind": "magnitude",
+          "measurement_type": "magnitude",
+          "description": "UHS K-band apparent magnitude (Vega)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+              "line": 17,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "16.46 +/- 0.04 mag"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "15.92 +/- 0.04 mag",
+          "value": "15.92",
+          "error": "0.04",
+          "unit": "mag",
+          "kind": "magnitude",
+          "measurement_type": "magnitude",
+          "description": "CatWISE W1-band apparent magnitude (Vega)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+              "line": 18,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "15.92 +/- 0.04 mag"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "15.59 +/- 0.07 mag",
+          "value": "15.59",
+          "error": "0.07",
+          "unit": "mag",
+          "kind": "magnitude",
+          "measurement_type": "magnitude",
+          "description": "CatWISE W2-band apparent magnitude (Vega)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+              "line": 19,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "15.59 +/- 0.07 mag"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "1715 K to 2320 K",
+          "value": "",
+          "unit": "K",
+          "description": "Range from +/-1sigma of Elf Owl and SAND model fits",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+              "line": 23,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "1715 K to 2320 K"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "log_g": {
+          "raw_value": "4.4 to 5.1 (cm/s 2 )",
+          "value": "",
+          "unit": "cm/s^2",
+          "description": "Range from +/-1sigma of Elf Owl and SAND model fits",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+              "line": 24,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "4.4 to 5.1 (cm/s 2 )"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "- 1.4 to - 0.5",
+          "value": "",
+          "unit": "dex",
+          "description": "[M/H] range from +/-1sigma of Elf Owl and SAND model fits",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+              "line": 25,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "- 1.4 to - 0.5"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "mass": {
+          "raw_value": "0.082 ^+0.002_-0.003 M ⊙",
+          "value": "0.082",
+          "lower_error": "0.003",
+          "upper_error": "0.002",
+          "unit": "M_sun",
+          "description": "Mass from SANDee evolutionary models",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+              "line": 27,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "0.082 ^+0.002_-0.003 M ⊙"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "sdL1",
+          "value": "sdL1",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+              "line": 20,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "sdL1"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "other": []
+      },
+      "abundances": [
+        {
+          "raw_value": "+0.25 +/- 0.07",
+          "value": "0.25",
+          "error": "0.07",
+          "unit": "dex",
+          "element": "alpha",
+          "reference_element": "Fe",
+          "description": "Alpha enhancement from SAND models",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+              "line": 26,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "+0.25 +/- 0.07"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        }
+      ],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": {
+          "raw_value": "0.94 ^{+0.28}_{-0.19} kpc",
+          "value": "0.94",
+          "lower_error": "0.19",
+          "upper_error": "0.28",
+          "unit": "kpc",
+          "description": "Closest approach to Galactic center",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2407.08578/arxiv_source/speedl.tex",
+              "start_line": 484,
+              "end_line": 484,
+              "context": "Forward orbit close approach to Galactic center"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        },
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": {
+          "raw_value": "572 ^{+147}_{-146} kpc km s^{-1}",
+          "value": "572",
+          "lower_error": "146",
+          "upper_error": "147",
+          "unit": "kpc km s^-1",
+          "description": "z-component of orbital angular momentum in Galactic rest frame",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2407.08578/arxiv_source/speedl.tex",
+              "start_line": 507,
+              "end_line": 507,
+              "context": "Orbital angular momentum Lz in Galactic rest frame"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        },
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-source",
+      "description": "Properties of J1249+3621 (single-object property table).",
+      "decision": "included",
+      "reason": "The paper explicitly presents J1249+3621 in this table as a hypervelocity L subdwarf candidate possibly unbound from the Milky Way.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.08578/arxiv_source/speedl.tex",
+          "start_line": 263,
+          "end_line": 313,
+          "context": "Table tab:source presenting properties of the hypervelocity candidate"
+        }
+      ]
+    }
+  ]
+}

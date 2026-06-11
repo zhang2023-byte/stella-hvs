@@ -1,0 +1,649 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:26",
+  "paper": {
+    "arxiv_id": "2602.23900",
+    "title": "Discovery of a runaway star likely ejected by a Type Iax Supernova",
+    "month": "2026-02"
+  },
+  "review": {
+    "path": "literature/2602.23900/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124026",
+    "started_at": "2026-05-17T12:40:26",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2602.23900",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 6,
+      "work_count": 6,
+      "table_count": 6,
+      "success_count": 6,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 6,
+      "file_success_count": 6,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-kinematics",
+      "internal_table_id": "table-tab-kinematics",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2602.23900/arxiv_source/aanda.tex",
+        "start_line": 142,
+        "end_line": 162,
+        "caption": "Astrometric parameters of \\gstar",
+        "label": "tab:kinematics"
+      },
+      "source_path": "literature/2602.23900/arxiv_source/aanda.tex",
+      "excerpt_path": "literature/2602.23900/catalog_sources/table-tab-kinematics/excerpt.tex",
+      "sha256": "da2ce140b6148f3253ce6443d832087f146c167f2569d54c5be7a33526d48c1a",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-tab-abundances",
+      "internal_table_id": "table-tab-abundances",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2602.23900/arxiv_source/aanda.tex",
+        "start_line": 261,
+        "end_line": 287,
+        "caption": "Stellar atmospheric parameters and abundance ratios.",
+        "label": "tab:abundances"
+      },
+      "source_path": "literature/2602.23900/arxiv_source/aanda.tex",
+      "excerpt_path": "literature/2602.23900/catalog_sources/table-tab-abundances/excerpt.tex",
+      "sha256": "bf06360f8f412231ee9166ca2c317813c8a6fea2ec2d80c9890bf1f09abfa42c",
+      "line_count": 27,
+      "error": ""
+    },
+    {
+      "id": "table-tab-stats",
+      "internal_table_id": "table-tab-stats",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2602.23900/arxiv_source/aanda.tex",
+        "start_line": 354,
+        "end_line": 371,
+        "caption": "Summary of parameters sampled with emcee with mode, median, and 16--84\\% confidence intervals.",
+        "label": "tab:stats"
+      },
+      "source_path": "literature/2602.23900/arxiv_source/aanda.tex",
+      "excerpt_path": "literature/2602.23900/catalog_sources/table-tab-stats/excerpt.tex",
+      "sha256": "9136ec661a0ff73a762bb5e50d77fb5af7ccf4a0035d642f367a43f107c92459",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-tab-kinematicparams",
+      "internal_table_id": "table-tab-kinematicparams",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2602.23900/arxiv_source/aanda.tex",
+        "start_line": 393,
+        "end_line": 454,
+        "caption": "Orbital parameters for \\gstar. Quoted uncertainties correspond to the 1$\\sigma$ confidence intervals.",
+        "label": "tab:kinematicparams"
+      },
+      "source_path": "literature/2602.23900/arxiv_source/aanda.tex",
+      "excerpt_path": "literature/2602.23900/catalog_sources/table-tab-kinematicparams/excerpt.tex",
+      "sha256": "c3a06baa55f0bf3b45fd80ef54bca0340856c0e1fe5baf6156c8c388c722b359",
+      "line_count": 62,
+      "error": ""
+    },
+    {
+      "id": "table-tab-stats2",
+      "internal_table_id": "table-tab-stats2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2602.23900/arxiv_source/aanda.tex",
+        "start_line": 532,
+        "end_line": 548,
+        "caption": "Summary of parameters sampled with \\texttt{emcee} with mode, median, and 16--84\\% confidence intervals.",
+        "label": "tab:stats2"
+      },
+      "source_path": "literature/2602.23900/arxiv_source/aanda.tex",
+      "excerpt_path": "literature/2602.23900/catalog_sources/table-tab-stats2/excerpt.tex",
+      "sha256": "d2f439bce2455c81c2a6cb128aec378f40f2c6418b449aa03c21e98153b6be09",
+      "line_count": 17,
+      "error": ""
+    },
+    {
+      "id": "table-tab-stats3",
+      "internal_table_id": "table-tab-stats3",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2602.23900/arxiv_source/aanda.tex",
+        "start_line": 567,
+        "end_line": 585,
+        "caption": "Summary of stellar parameters with mode, median, and 16--84\\% confidence intervals, assuming a $<0.5$ \\msun\\, prior on mass.",
+        "label": "tab:stats3"
+      },
+      "source_path": "literature/2602.23900/arxiv_source/aanda.tex",
+      "excerpt_path": "literature/2602.23900/catalog_sources/table-tab-stats3/excerpt.tex",
+      "sha256": "eb0bd3376927f913a2d219a23ba43effbea8859f3d126c7906f448ee138eaccf",
+      "line_count": 19,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-kinematics",
+      "internal_table_id": "table-tab-kinematics",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2602.23900/catalog_tables/table-tab-kinematics.ecsv",
+      "caption": "Astrometric parameters of \\gstar",
+      "label": "tab:kinematics",
+      "row_count": 7,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Units",
+          "Value"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Units",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2ui3dfp3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2602.23900/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2ui3dfp3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2602.23900/catalog_sources/table-tab-kinematics/wrapped.tex",
+            "html": "literature/2602.23900/catalog_sources/table-tab-kinematics/latexml.html",
+            "stdout": "literature/2602.23900/catalog_sources/table-tab-kinematics/latexml.stdout.txt",
+            "stderr": "literature/2602.23900/catalog_sources/table-tab-kinematics/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "da2ce140b6148f3253ce6443d832087f146c167f2569d54c5be7a33526d48c1a"
+    },
+    {
+      "id": "table-tab-abundances",
+      "internal_table_id": "table-tab-abundances",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2602.23900/catalog_tables/table-tab-abundances.ecsv",
+      "caption": "Stellar atmospheric parameters and abundance ratios.",
+      "label": "tab:abundances",
+      "row_count": 14,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value",
+          "Unit"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Unit",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp41chctu2/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2602.23900/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp41chctu2/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2602.23900/catalog_sources/table-tab-abundances/wrapped.tex",
+            "html": "literature/2602.23900/catalog_sources/table-tab-abundances/latexml.html",
+            "stdout": "literature/2602.23900/catalog_sources/table-tab-abundances/latexml.stdout.txt",
+            "stderr": "literature/2602.23900/catalog_sources/table-tab-abundances/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "bf06360f8f412231ee9166ca2c317813c8a6fea2ec2d80c9890bf1f09abfa42c"
+    },
+    {
+      "id": "table-tab-stats",
+      "internal_table_id": "table-tab-stats",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2602.23900/catalog_tables/table-tab-stats.ecsv",
+      "caption": "Summary of parameters sampled with emcee with mode, median, and 16--84\\% confidence intervals.",
+      "label": "tab:stats",
+      "row_count": 7,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprz_hzdh5/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2602.23900/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprz_hzdh5/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2602.23900/catalog_sources/table-tab-stats/wrapped.tex",
+            "html": "literature/2602.23900/catalog_sources/table-tab-stats/latexml.html",
+            "stdout": "literature/2602.23900/catalog_sources/table-tab-stats/latexml.stdout.txt",
+            "stderr": "literature/2602.23900/catalog_sources/table-tab-stats/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9136ec661a0ff73a762bb5e50d77fb5af7ccf4a0035d642f367a43f107c92459"
+    },
+    {
+      "id": "table-tab-kinematicparams",
+      "internal_table_id": "table-tab-kinematicparams",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2602.23900/catalog_tables/table-tab-kinematicparams.ecsv",
+      "caption": "Orbital parameters for \\gstar. Quoted uncertainties correspond to the 1$\\sigma$ confidence intervals.",
+      "label": "tab:kinematicparams",
+      "row_count": 10,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value",
+          "Parameter",
+          "Value"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\rm"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq2hajwpd/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2602.23900/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq2hajwpd/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2602.23900/catalog_sources/table-tab-kinematicparams/wrapped.tex",
+            "html": "literature/2602.23900/catalog_sources/table-tab-kinematicparams/latexml.html",
+            "stdout": "literature/2602.23900/catalog_sources/table-tab-kinematicparams/latexml.stdout.txt",
+            "stderr": "literature/2602.23900/catalog_sources/table-tab-kinematicparams/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfdso97b4/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfdso97b4/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2602.23900/catalog_sources/table-tab-kinematicparams/wrapped.tex",
+            "html": "literature/2602.23900/catalog_sources/table-tab-kinematicparams/pandoc.html",
+            "stdout": "literature/2602.23900/catalog_sources/table-tab-kinematicparams/pandoc.stdout.txt",
+            "stderr": "literature/2602.23900/catalog_sources/table-tab-kinematicparams/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "c3a06baa55f0bf3b45fd80ef54bca0340856c0e1fe5baf6156c8c388c722b359"
+    },
+    {
+      "id": "table-tab-stats2",
+      "internal_table_id": "table-tab-stats2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2602.23900/catalog_tables/table-tab-stats2.ecsv",
+      "caption": "Summary of parameters sampled with \\texttt{emcee} with mode, median, and 16--84\\% confidence intervals.",
+      "label": "tab:stats2",
+      "row_count": 7,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2l8_02zz/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2602.23900/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2l8_02zz/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2602.23900/catalog_sources/table-tab-stats2/wrapped.tex",
+            "html": "literature/2602.23900/catalog_sources/table-tab-stats2/latexml.html",
+            "stdout": "literature/2602.23900/catalog_sources/table-tab-stats2/latexml.stdout.txt",
+            "stderr": "literature/2602.23900/catalog_sources/table-tab-stats2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d2f439bce2455c81c2a6cb128aec378f40f2c6418b449aa03c21e98153b6be09"
+    },
+    {
+      "id": "table-tab-stats3",
+      "internal_table_id": "table-tab-stats3",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2602.23900/catalog_tables/table-tab-stats3.ecsv",
+      "caption": "Summary of stellar parameters with mode, median, and 16--84\\% confidence intervals, assuming a $<0.5$ \\msun\\, prior on mass.",
+      "label": "tab:stats3",
+      "row_count": 8,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpbsm29xhr/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2602.23900/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpbsm29xhr/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2602.23900/catalog_sources/table-tab-stats3/wrapped.tex",
+            "html": "literature/2602.23900/catalog_sources/table-tab-stats3/latexml.html",
+            "stdout": "literature/2602.23900/catalog_sources/table-tab-stats3/latexml.stdout.txt",
+            "stderr": "literature/2602.23900/catalog_sources/table-tab-stats3/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "eb0bd3376927f913a2d219a23ba43effbea8859f3d126c7906f448ee138eaccf"
+    }
+  ]
+}

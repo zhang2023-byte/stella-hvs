@@ -1,0 +1,78 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:40:00",
+  "paper": {
+    "arxiv_id": "2009.05773",
+    "bibcode": "2020A&A...643A.138M",
+    "title": "The Villafranca catalog of Galactic OB groups: I. Systems with O2-O3.5 stars",
+    "month": "2020-09",
+    "source_note_json": "notes/2020/2020-09/2020-09.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2009.05773",
+      "pdf": "https://arxiv.org/pdf/2009.05773"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2009.05773",
+    "audit_path": "literature/2009.05773/audit.json",
+    "catalog_review_path": "literature/2009.05773/catalog_review.json",
+    "catalog_extraction_path": "literature/2009.05773/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2009.05773/catalog_tables/table-diststat.ecsv",
+      "literature/2009.05773/catalog_tables/table-sample.ecsv",
+      "literature/2009.05773/catalog_tables/table-filters.ecsv",
+      "literature/2009.05773/catalog_tables/table-results.ecsv",
+      "literature/2009.05773/catalog_tables/table-North_America_sample.ecsv",
+      "literature/2009.05773/catalog_tables/table-literature.ecsv",
+      "literature/2009.05773/catalog_tables/table-runaways.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:40:00",
+    "extractor": "agent",
+    "summary": "本文为Villafranca星表系列首篇，利用GOSSS光谱分类和Gaia DR2天体测量/测光数据，确定了16个含O2-O3.5型星的银河系OB星群（Villafranca O-001至O-016）的成员星和距离。论文含一张可能的速逃星表（Table runaways），列出各星群附近视差相容且自行方向背离星群中心的亮星候选体，包括HD 64568和HD 64315 AB这对可能同时从Haffner 18动力学弹射的O型星。但这些是星团逃逸星（cluster escapees），并非银河系非束缚超高速星（HVS）。论文核心是OB星群的距离测量和成员星确定，速逃星识别仅为星群分析的副产品，未涉及银河系逃逸速度或非束缚状态判定。因此无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文为银河系OB星群距离目录，Table runaways中列出的可能速逃星是从星团中弹射出来的候选体（cluster escapees），并非银河系非束缚HVS。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (ms.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2009.05773/arxiv_source/ms.tex",
+          "start_line": 99,
+          "end_line": 100,
+          "context": "The Villafranca catalog of Galactic OB groups: I. Systems with O2-O3.5 stars"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "villafranca-runaways",
+      "description": "Table runaways中列出的16个OB星群周围的可能速逃星候选体（Gaia DR2 ID + 别名），通过视差相容性和自行方向背离星群中心筛选。包括HD 64568、HD 64315 AB（O-012 S/Haffner 18）、Cyg OB2-24（O-008/Cyg OB2）等。",
+      "decision": "excluded",
+      "reason": "论文中的'possible runaway stars'指从银河系OB星团/星协中被动力学弹射（dynamical ejection）出来的大质量恒星。这些恒星虽逃离出生星群（视差相容但自行方向背离星群中心），但仍位于银河系盘内，受银河系引力束缚。'Runaway star'在此语境下指星团逃逸星，是OB星群距离分析的副产品——通过搜索星群附近自行异常的亮星来识别。论文核心是16个OB星群的距离测定（基于Gaia DR2视差零点改正和贝叶斯先验）和成员星确定，速逃星仅为星群成员分析的额外发现，未涉及银河系非束缚HVS/hypervelocity star的判定。恒星速度量级为典型的星团逃逸速度，远低于银河系逃逸速度。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2009.05773/arxiv_source/ms.tex",
+          "start_line": 166,
+          "end_line": 168,
+          "context": "We propose that HD 64568 and HD 64315 AB could have been ejected simultaneously from Haffner 18 (VO 012 S)"
+        }
+      ]
+    }
+  ]
+}

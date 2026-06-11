@@ -1,0 +1,285 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:32:49",
+  "paper": {
+    "arxiv_id": "1810.05650",
+    "title": "Gaia and HST astrometry of the very massive $\\sim$150 $M_\\odot$ candidate runaway star VFTS682",
+    "month": "2018-10"
+  },
+  "review": {
+    "path": "literature/1810.05650/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083249",
+    "started_at": "2026-06-07T08:32:49",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1810.05650",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-star_param",
+      "internal_table_id": "table-tab-star_param",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.05650/arxiv_source/VFTS682_MNRASL.tex",
+        "start_line": 181,
+        "end_line": 205,
+        "caption": "Stellar parameters of VFTS682.",
+        "label": "tab:star_param"
+      },
+      "source_path": "literature/1810.05650/arxiv_source/VFTS682_MNRASL.tex",
+      "excerpt_path": "literature/1810.05650/catalog_sources/table-tab-star_param/excerpt.tex",
+      "sha256": "21be41cf7f08136dc54a471a6a96d14cdffd696115451f1b41ebbd3920a2012f",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-tab-vfts682",
+      "internal_table_id": "table-tab-vfts682",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.05650/arxiv_source/VFTS682_MNRASL.tex",
+        "start_line": 207,
+        "end_line": 317,
+        "caption": "Kinematics of VFTS682.",
+        "label": "tab:vfts682"
+      },
+      "source_path": "literature/1810.05650/arxiv_source/VFTS682_MNRASL.tex",
+      "excerpt_path": "literature/1810.05650/catalog_sources/table-tab-vfts682/excerpt.tex",
+      "sha256": "2d15188ef6f782adce87aa3c963fe060edb7c23aeaa1d46bb10bb2be26b839ba",
+      "line_count": 111,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-star_param",
+      "internal_table_id": "table-tab-star_param",
+      "status": "success",
+      "ecsv_path": "literature/1810.05650/catalog_tables/table-tab-star_param.ecsv",
+      "caption": "Stellar parameters of VFTS682.",
+      "label": "tab:star_param",
+      "row_count": 2,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "Parameter",
+          "Units",
+          "Value",
+          "Ref."
+        ],
+        [
+          "",
+          "present day mass",
+          "[M_\\odot]",
+          "137.8^+27.5_-15.9",
+          "(1)"
+        ],
+        [
+          "",
+          "initial mass",
+          "[M_\\odot]",
+          "150.0^+28.7_-17.4",
+          "(1)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Parameter | present day mass | initial mass",
+          "unit_text": "present day mass",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Units | [M_\\odot] | [M_\\odot]",
+          "unit_text": "[M_\\odot]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Value | 137.8^+27.5_-15.9 | 150.0^+28.7_-17.4",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Ref. | (1) | (1)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpiscnaw4x/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.05650/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpiscnaw4x/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.05650/catalog_sources/table-tab-star_param/wrapped.tex",
+            "html": "literature/1810.05650/catalog_sources/table-tab-star_param/latexml.html",
+            "stdout": "literature/1810.05650/catalog_sources/table-tab-star_param/latexml.stdout.txt",
+            "stderr": "literature/1810.05650/catalog_sources/table-tab-star_param/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "21be41cf7f08136dc54a471a6a96d14cdffd696115451f1b41ebbd3920a2012f"
+    },
+    {
+      "id": "table-tab-vfts682",
+      "internal_table_id": "table-tab-vfts682",
+      "status": "success",
+      "ecsv_path": "literature/1810.05650/catalog_tables/table-tab-vfts682.ecsv",
+      "caption": "Kinematics of VFTS682.",
+      "label": "tab:vfts682",
+      "row_count": 35,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "Parameter",
+          "Units",
+          "Value",
+          "Ref."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Units",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Ref.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpuual8fo4/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.05650/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpuual8fo4/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.05650/catalog_sources/table-tab-vfts682/wrapped.tex",
+            "html": "literature/1810.05650/catalog_sources/table-tab-vfts682/latexml.html",
+            "stdout": "literature/1810.05650/catalog_sources/table-tab-vfts682/latexml.stdout.txt",
+            "stderr": "literature/1810.05650/catalog_sources/table-tab-vfts682/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2d15188ef6f782adce87aa3c963fe060edb7c23aeaa1d46bb10bb2be26b839ba"
+    }
+  ]
+}

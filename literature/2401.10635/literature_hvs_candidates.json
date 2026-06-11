@@ -1,0 +1,5105 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T09:05:08",
+  "paper": {
+    "arxiv_id": "2401.10635",
+    "bibcode": "2024RNAAS...8...23P",
+    "title": "Seventeen 2 Micron All Sky Survey (2MASS) hypervelocity stars (HVS) from Gaia DR3",
+    "month": "2024-01",
+    "source_note_json": "notes/2024/2024-01/2024-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2401.10635",
+      "pdf": "https://arxiv.org/pdf/2401.10635"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2401.10635",
+    "audit_path": "literature/2401.10635/audit.json",
+    "catalog_review_path": "literature/2401.10635/catalog_review.json",
+    "catalog_extraction_path": "literature/2401.10635/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-22T09:05:08",
+    "extractor": "agent",
+    "summary": "Thirteen HVS candidates extracted from Table 1. Four objects excluded as cluster members or YSOs."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Adopt Gaia DR3 astrometry, photometry, and radial velocities, and 2MASS source identifiers.",
+      "inputs": [
+        "Gaia DR3",
+        "2MASS"
+      ],
+      "outputs": [
+        "positions",
+        "proper motions",
+        "G magnitudes",
+        "radial velocities",
+        "stellar parameters"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.10635/arxiv_text.txt",
+          "start_line": 23,
+          "end_line": 26,
+          "context": "searched the Gaia DR3 data for HVS adopting a simple search criteria"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "cross_match",
+      "summary": "Cross-match 2MASS sources with Gaia DR3.",
+      "inputs": [
+        "2MASS catalog",
+        "Gaia DR3"
+      ],
+      "outputs": [
+        "matched 2MASS-Gaia sources"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.10635/arxiv_text.txt",
+          "start_line": 9,
+          "end_line": 11,
+          "context": "seventeen 2MASS sources with Gaia DR3 G magnitudes"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "sample_selection",
+      "summary": "Select sources with Gaia G < 16.0 and radial velocity < -600 km/s.",
+      "inputs": [
+        "cross-matched 2MASS-Gaia sample"
+      ],
+      "outputs": [
+        "seventeen candidate HVS"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.10635/arxiv_text.txt",
+          "start_line": 9,
+          "end_line": 11,
+          "context": "Gaia G magnitudes less than 16.0 and radial velocities less than -600 km/sec"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Adopt geometric distances from Bailer-Jones et al. (2021).",
+      "inputs": [
+        "Gaia DR3 parallaxes"
+      ],
+      "outputs": [
+        "distances in pc"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.10635/arxiv_text.txt",
+          "start_line": 72,
+          "end_line": 72,
+          "context": "The distances given in Table 1 are from Bailer-Jones et al. (2021)"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "radial_velocity_measurement",
+      "summary": "Adopt radial velocities from Gaia DR3 (10 LPVs) or Jonsson et al. (2020) high-resolution spectra (5 stars).",
+      "inputs": [
+        "Gaia DR3 spectrography",
+        "Jonsson et al. 2020 catalogue"
+      ],
+      "outputs": [
+        "radial velocities with typical errors ~10 km/s (Gaia) or ~1 km/s (Jonsson)"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.10635/arxiv_text.txt",
+          "start_line": 69,
+          "end_line": 72,
+          "context": "For 10 LPVs the radial velocities given in Table 1 are from Gaia DR3"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-03",
+        "step-04",
+        "step-05"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Calculate Galactic velocity components U, V, W and tangential velocity Vt from proper motions, distances, and radial velocities.",
+      "inputs": [
+        "proper motions",
+        "distances",
+        "radial velocities"
+      ],
+      "outputs": [
+        "U, V, W, Vt"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.10635/arxiv_text.txt",
+          "start_line": 66,
+          "end_line": 68,
+          "context": "calculated the U, V, W, and Vt (tangential velocity) velocities"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [
+        "step-06"
+      ],
+      "step_type": "candidate_classification",
+      "summary": "Author classifies the seventeen stars as hypervelocity stars (HVS) based on their high radial velocities and calculated kinematics, without explicit bound/unbound orbit integration.",
+      "inputs": [
+        "U, V, W, Vt",
+        "radial velocities"
+      ],
+      "outputs": [
+        "HVS candidate designation"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.10635/arxiv_text.txt",
+          "start_line": 66,
+          "end_line": 68,
+          "context": "These velocities and radial velocities (Table 1) clearly indicate that these seventeen 2MASS stars are HVS"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [],
+      "step_type": "reported_value_adoption",
+      "summary": "Paper reports stellar parameters and spectral types from Gaia DR3, SIMBAD, or other literature without describing the original inference method.",
+      "inputs": [
+        "Gaia DR3 catalog",
+        "SIMBAD",
+        "Frasca et al. 2016",
+        "Ting et al. 2019"
+      ],
+      "outputs": [
+        "Teff",
+        "log g",
+        "[Fe/H]",
+        "spectral types"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.10635/arxiv_text.txt",
+          "start_line": 74,
+          "end_line": 75,
+          "context": "Teff, log g, and [Fe/H] values given below for some of the stars are from the Gaia DR3 data"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2401.10635:cand-001",
+        "paper_candidate_id": "J17500025-1542221",
+        "gaia_source_id": "Gaia DR3 4148047120720805760",
+        "all": [
+          {
+            "value": "J17500025-1542221",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 45,
+                "end_line": 45,
+                "context": "Table 1 row for J17500025-1542221"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 4148047120720805760",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 77,
+                "end_line": 80,
+                "context": "Discussion of J17500025-1542221"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper presents J17500025-1542221 as a hypervelocity star (HVS) based on Gaia DR3 kinematics with RV < -600 km/s.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this star as a hypervelocity star (HVS) in the title, abstract, and discussion text.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 66,
+            "end_line": 68,
+            "context": "These velocities and radial velocities (Table 1) clearly indicate that these seventeen 2MASS stars are HVS"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 77,
+            "end_line": 80,
+            "context": "Notes on J17500025-1542221"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 77,
+            "end_line": 80,
+            "context": "Notes on J17500025-1542221"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "4833",
+            "value": "4833",
+            "unit": "pc",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 45,
+                "end_line": 45,
+                "context": "Table 1 row for J17500025-1542221"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-633",
+            "value": "-633",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 45,
+                "end_line": 45,
+                "context": "Table 1 row for J17500025-1542221"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": {
+            "raw_value": "-617",
+            "value": "-617",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 45,
+                "end_line": 45,
+                "context": "Table 1 row for J17500025-1542221"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "-130",
+            "value": "-130",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 45,
+                "end_line": 45,
+                "context": "Table 1 row for J17500025-1542221"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "-66",
+            "value": "-66",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 45,
+                "end_line": 45,
+                "context": "Table 1 row for J17500025-1542221"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "tangential_velocity": {
+            "raw_value": "225",
+            "value": "225",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 45,
+                "end_line": 45,
+                "context": "Table 1 row for J17500025-1542221"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "14.08",
+          "value": "14.08",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 45,
+              "end_line": 45,
+              "context": "Table 1 row for J17500025-1542221"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "total_proper_motion",
+          "raw_value": "9.83",
+          "value": "9.83",
+          "unit": "mas/yr",
+          "description": "Total proper motion",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 45,
+              "end_line": 45,
+              "context": "Table 1 row for J17500025-1542221"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_longitude",
+          "raw_value": "11.9",
+          "value": "11.9",
+          "unit": "deg",
+          "description": "Galactic longitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 45,
+              "end_line": 45,
+              "context": "Table 1 row for J17500025-1542221"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_latitude",
+          "raw_value": "5.9",
+          "value": "5.9",
+          "unit": "deg",
+          "description": "Galactic latitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 45,
+              "end_line": 45,
+              "context": "Table 1 row for J17500025-1542221"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.10635:cand-002",
+        "paper_candidate_id": "J18213211-1740598",
+        "gaia_source_id": "Gaia DR3 4096520535498750976",
+        "all": [
+          {
+            "value": "J18213211-1740598",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 47,
+                "end_line": 47,
+                "context": "Table 1 row for J18213211-1740598"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 4096520535498750976",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 83,
+                "end_line": 85,
+                "context": "Discussion of J18213211-1740598"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper presents J18213211-1740598 as a hypervelocity star (HVS) based on Gaia DR3 kinematics with RV < -600 km/s.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this star as a hypervelocity star (HVS) in the title, abstract, and discussion text.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 66,
+            "end_line": 68,
+            "context": "These velocities and radial velocities (Table 1) clearly indicate that these seventeen 2MASS stars are HVS"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 83,
+            "end_line": 85,
+            "context": "Notes on J18213211-1740598"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 83,
+            "end_line": 85,
+            "context": "Notes on J18213211-1740598"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "7836",
+            "value": "7836",
+            "unit": "pc",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 47,
+                "end_line": 47,
+                "context": "Table 1 row for J18213211-1740598"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-712",
+            "value": "-712",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 47,
+                "end_line": 47,
+                "context": "Table 1 row for J18213211-1740598"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": {
+            "raw_value": "-691",
+            "value": "-691",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 47,
+                "end_line": 47,
+                "context": "Table 1 row for J18213211-1740598"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "-170",
+            "value": "-170",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 47,
+                "end_line": 47,
+                "context": "Table 1 row for J18213211-1740598"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "20",
+            "value": "20",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 47,
+                "end_line": 47,
+                "context": "Table 1 row for J18213211-1740598"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "tangential_velocity": {
+            "raw_value": "334",
+            "value": "334",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 47,
+                "end_line": 47,
+                "context": "Table 1 row for J18213211-1740598"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "15.98",
+          "value": "15.98",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 47,
+              "end_line": 47,
+              "context": "Table 1 row for J18213211-1740598"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "total_proper_motion",
+          "raw_value": "8.99",
+          "value": "8.99",
+          "unit": "mas/yr",
+          "description": "Total proper motion",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 47,
+              "end_line": 47,
+              "context": "Table 1 row for J18213211-1740598"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_longitude",
+          "raw_value": "13.8",
+          "value": "13.8",
+          "unit": "deg",
+          "description": "Galactic longitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 47,
+              "end_line": 47,
+              "context": "Table 1 row for J18213211-1740598"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_latitude",
+          "raw_value": "-1.6",
+          "value": "-1.6",
+          "unit": "deg",
+          "description": "Galactic latitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 47,
+              "end_line": 47,
+              "context": "Table 1 row for J18213211-1740598"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.10635:cand-003",
+        "paper_candidate_id": "J15003649-5529145",
+        "gaia_source_id": "Gaia DR3 5881574502067686016",
+        "all": [
+          {
+            "value": "J15003649-5529145",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 48,
+                "end_line": 48,
+                "context": "Table 1 row for J15003649-5529145"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 5881574502067686016",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 87,
+                "end_line": 88,
+                "context": "Discussion of J15003649-5529145"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper presents J15003649-5529145 as a hypervelocity star (HVS) based on Gaia DR3 kinematics with RV < -600 km/s.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this star as a hypervelocity star (HVS) in the title, abstract, and discussion text.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 66,
+            "end_line": 68,
+            "context": "These velocities and radial velocities (Table 1) clearly indicate that these seventeen 2MASS stars are HVS"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 87,
+            "end_line": 88,
+            "context": "Notes on J15003649-5529145"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 87,
+            "end_line": 88,
+            "context": "Notes on J15003649-5529145"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "7335",
+            "value": "7335",
+            "unit": "pc",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 48,
+                "end_line": 48,
+                "context": "Table 1 row for J15003649-5529145"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-754",
+            "value": "-754",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 48,
+                "end_line": 48,
+                "context": "Table 1 row for J15003649-5529145"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": {
+            "raw_value": "-581",
+            "value": "-581",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 48,
+                "end_line": 48,
+                "context": "Table 1 row for J15003649-5529145"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "478",
+            "value": "478",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 48,
+                "end_line": 48,
+                "context": "Table 1 row for J15003649-5529145"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "-38",
+            "value": "-38",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 48,
+                "end_line": 48,
+                "context": "Table 1 row for J15003649-5529145"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "tangential_velocity": {
+            "raw_value": "232",
+            "value": "232",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 48,
+                "end_line": 48,
+                "context": "Table 1 row for J15003649-5529145"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "15.74",
+          "value": "15.74",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 48,
+              "end_line": 48,
+              "context": "Table 1 row for J15003649-5529145"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "4384",
+          "value": "4384",
+          "unit": "K",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 87,
+              "end_line": 88,
+              "context": "Teff = 4384K, log g = 1.523, [Fe/H] = -0.724 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "log_g": {
+          "raw_value": "1.523",
+          "value": "1.523",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 87,
+              "end_line": 88,
+              "context": "Teff = 4384K, log g = 1.523, [Fe/H] = -0.724 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "-0.724",
+          "value": "-0.724",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 87,
+              "end_line": 88,
+              "context": "Teff = 4384K, log g = 1.523, [Fe/H] = -0.724 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "total_proper_motion",
+          "raw_value": "6.68",
+          "value": "6.68",
+          "unit": "mas/yr",
+          "description": "Total proper motion",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 48,
+              "end_line": 48,
+              "context": "Table 1 row for J15003649-5529145"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_longitude",
+          "raw_value": "320.6",
+          "value": "320.6",
+          "unit": "deg",
+          "description": "Galactic longitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 48,
+              "end_line": 48,
+              "context": "Table 1 row for J15003649-5529145"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_latitude",
+          "raw_value": "2.9",
+          "value": "2.9",
+          "unit": "deg",
+          "description": "Galactic latitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 48,
+              "end_line": 48,
+              "context": "Table 1 row for J15003649-5529145"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.10635:cand-004",
+        "paper_candidate_id": "J17322853-3342336",
+        "gaia_source_id": "Gaia DR3 4054394740276777856",
+        "all": [
+          {
+            "value": "J17322853-3342336",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 49,
+                "end_line": 49,
+                "context": "Table 1 row for J17322853-3342336"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 4054394740276777856",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 90,
+                "end_line": 91,
+                "context": "Discussion of J17322853-3342336"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper presents J17322853-3342336 as a hypervelocity star (HVS) based on Gaia DR3 kinematics with RV < -600 km/s.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this star as a hypervelocity star (HVS) in the title, abstract, and discussion text.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 66,
+            "end_line": 68,
+            "context": "These velocities and radial velocities (Table 1) clearly indicate that these seventeen 2MASS stars are HVS"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 90,
+            "end_line": 91,
+            "context": "Notes on J17322853-3342336"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 90,
+            "end_line": 91,
+            "context": "Notes on J17322853-3342336"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "5581",
+            "value": "5581",
+            "unit": "pc",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 49,
+                "end_line": 49,
+                "context": "Table 1 row for J17322853-3342336"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-632",
+            "value": "-632",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 49,
+                "end_line": 49,
+                "context": "Table 1 row for J17322853-3342336"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": {
+            "raw_value": "-629",
+            "value": "-629",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 49,
+                "end_line": 49,
+                "context": "Table 1 row for J17322853-3342336"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "61",
+            "value": "61",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 49,
+                "end_line": 49,
+                "context": "Table 1 row for J17322853-3342336"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "2",
+            "value": "2",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 49,
+                "end_line": 49,
+                "context": "Table 1 row for J17322853-3342336"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "tangential_velocity": {
+            "raw_value": "167",
+            "value": "167",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 49,
+                "end_line": 49,
+                "context": "Table 1 row for J17322853-3342336"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "15.08",
+          "value": "15.08",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 49,
+              "end_line": 49,
+              "context": "Table 1 row for J17322853-3342336"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "total_proper_motion",
+          "raw_value": "6.32",
+          "value": "6.32",
+          "unit": "mas/yr",
+          "description": "Total proper motion",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 49,
+              "end_line": 49,
+              "context": "Table 1 row for J17322853-3342336"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_longitude",
+          "raw_value": "354.5",
+          "value": "354.5",
+          "unit": "deg",
+          "description": "Galactic longitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 49,
+              "end_line": 49,
+              "context": "Table 1 row for J17322853-3342336"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_latitude",
+          "raw_value": "-0.2",
+          "value": "-0.2",
+          "unit": "deg",
+          "description": "Galactic latitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 49,
+              "end_line": 49,
+              "context": "Table 1 row for J17322853-3342336"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.10635:cand-005",
+        "paper_candidate_id": "J17502866-3242362",
+        "gaia_source_id": "Gaia DR3 4043485523412935040",
+        "all": [
+          {
+            "value": "J17502866-3242362",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 50,
+                "end_line": 50,
+                "context": "Table 1 row for J17502866-3242362"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 4043485523412935040",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 93,
+                "end_line": 94,
+                "context": "Discussion of J17502866-3242362"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper presents J17502866-3242362 as a hypervelocity star (HVS) based on Gaia DR3 kinematics with RV < -600 km/s.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this star as a hypervelocity star (HVS) in the title, abstract, and discussion text.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 66,
+            "end_line": 68,
+            "context": "These velocities and radial velocities (Table 1) clearly indicate that these seventeen 2MASS stars are HVS"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 93,
+            "end_line": 94,
+            "context": "Notes on J17502866-3242362"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 93,
+            "end_line": 94,
+            "context": "Notes on J17502866-3242362"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "7770",
+            "value": "7770",
+            "unit": "pc",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 50,
+                "end_line": 50,
+                "context": "Table 1 row for J17502866-3242362"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-740",
+            "value": "-740",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 50,
+                "end_line": 50,
+                "context": "Table 1 row for J17502866-3242362"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": {
+            "raw_value": "-738",
+            "value": "-738",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 50,
+                "end_line": 50,
+                "context": "Table 1 row for J17502866-3242362"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "35",
+            "value": "35",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 50,
+                "end_line": 50,
+                "context": "Table 1 row for J17502866-3242362"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "37",
+            "value": "37",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 50,
+                "end_line": 50,
+                "context": "Table 1 row for J17502866-3242362"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "tangential_velocity": {
+            "raw_value": "85",
+            "value": "85",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 50,
+                "end_line": 50,
+                "context": "Table 1 row for J17502866-3242362"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "15.73",
+          "value": "15.73",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 50,
+              "end_line": 50,
+              "context": "Table 1 row for J17502866-3242362"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "total_proper_motion",
+          "raw_value": "2.31",
+          "value": "2.31",
+          "unit": "mas/yr",
+          "description": "Total proper motion",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 50,
+              "end_line": 50,
+              "context": "Table 1 row for J17502866-3242362"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_longitude",
+          "raw_value": "357.3",
+          "value": "357.3",
+          "unit": "deg",
+          "description": "Galactic longitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 50,
+              "end_line": 50,
+              "context": "Table 1 row for J17502866-3242362"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_latitude",
+          "raw_value": "-2.8",
+          "value": "-2.8",
+          "unit": "deg",
+          "description": "Galactic latitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 50,
+              "end_line": 50,
+              "context": "Table 1 row for J17502866-3242362"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.10635:cand-006",
+        "paper_candidate_id": "J17563584-2152290",
+        "gaia_source_id": "Gaia DR3 4070380230599079552",
+        "all": [
+          {
+            "value": "J17563584-2152290",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 51,
+                "end_line": 51,
+                "context": "Table 1 row for J17563584-2152290"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 4070380230599079552",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 96,
+                "end_line": 97,
+                "context": "Discussion of J17563584-2152290"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper presents J17563584-2152290 as a hypervelocity star (HVS) based on Gaia DR3 kinematics with RV < -600 km/s.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this star as a hypervelocity star (HVS) in the title, abstract, and discussion text.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 66,
+            "end_line": 68,
+            "context": "These velocities and radial velocities (Table 1) clearly indicate that these seventeen 2MASS stars are HVS"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 96,
+            "end_line": 97,
+            "context": "Notes on J17563584-2152290"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 96,
+            "end_line": 97,
+            "context": "Notes on J17563584-2152290"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "9184",
+            "value": "9184",
+            "unit": "pc",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 51,
+                "end_line": 51,
+                "context": "Table 1 row for J17563584-2152290"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-620",
+            "value": "-620",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 51,
+                "end_line": 51,
+                "context": "Table 1 row for J17563584-2152290"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": {
+            "raw_value": "-615",
+            "value": "-615",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 51,
+                "end_line": 51,
+                "context": "Table 1 row for J17563584-2152290"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "-79",
+            "value": "-79",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 51,
+                "end_line": 51,
+                "context": "Table 1 row for J17563584-2152290"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "-16",
+            "value": "-16",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 51,
+                "end_line": 51,
+                "context": "Table 1 row for J17563584-2152290"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "tangential_velocity": {
+            "raw_value": "416",
+            "value": "416",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 51,
+                "end_line": 51,
+                "context": "Table 1 row for J17563584-2152290"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "15.82",
+          "value": "15.82",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 51,
+              "end_line": 51,
+              "context": "Table 1 row for J17563584-2152290"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "3663",
+          "value": "3663",
+          "unit": "K",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 96,
+              "end_line": 97,
+              "context": "Teff = 3663K, log g = 1.026, [Fe/H] = -0.440 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "log_g": {
+          "raw_value": "1.026",
+          "value": "1.026",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 96,
+              "end_line": 97,
+              "context": "Teff = 3663K, log g = 1.026, [Fe/H] = -0.440 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "-0.440",
+          "value": "-0.440",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 96,
+              "end_line": 97,
+              "context": "Teff = 3663K, log g = 1.026, [Fe/H] = -0.440 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "total_proper_motion",
+          "raw_value": "9.57",
+          "value": "9.57",
+          "unit": "mas/yr",
+          "description": "Total proper motion",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 51,
+              "end_line": 51,
+              "context": "Table 1 row for J17563584-2152290"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_longitude",
+          "raw_value": "7.3",
+          "value": "7.3",
+          "unit": "deg",
+          "description": "Galactic longitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 51,
+              "end_line": 51,
+              "context": "Table 1 row for J17563584-2152290"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_latitude",
+          "raw_value": "1.5",
+          "value": "1.5",
+          "unit": "deg",
+          "description": "Galactic latitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 51,
+              "end_line": 51,
+              "context": "Table 1 row for J17563584-2152290"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.10635:cand-007",
+        "paper_candidate_id": "J18084725-1403252",
+        "gaia_source_id": "Gaia DR3 4146964342221788160",
+        "all": [
+          {
+            "value": "J18084725-1403252",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 52,
+                "end_line": 52,
+                "context": "Table 1 row for J18084725-1403252"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 4146964342221788160",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 99,
+                "end_line": 101,
+                "context": "Discussion of J18084725-1403252"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper presents J18084725-1403252 as a hypervelocity star (HVS) based on Gaia DR3 kinematics with RV < -600 km/s.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this star as a hypervelocity star (HVS) in the title, abstract, and discussion text.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 66,
+            "end_line": 68,
+            "context": "These velocities and radial velocities (Table 1) clearly indicate that these seventeen 2MASS stars are HVS"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 99,
+            "end_line": 101,
+            "context": "Notes on J18084725-1403252"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 99,
+            "end_line": 101,
+            "context": "Notes on J18084725-1403252"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "8127",
+            "value": "8127",
+            "unit": "pc",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 52,
+                "end_line": 52,
+                "context": "Table 1 row for J18084725-1403252"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-805",
+            "value": "-805",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 52,
+                "end_line": 52,
+                "context": "Table 1 row for J18084725-1403252"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": {
+            "raw_value": "-775",
+            "value": "-775",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 52,
+                "end_line": 52,
+                "context": "Table 1 row for J18084725-1403252"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "-216",
+            "value": "-216",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 52,
+                "end_line": 52,
+                "context": "Table 1 row for J18084725-1403252"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "-39",
+            "value": "-39",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 52,
+                "end_line": 52,
+                "context": "Table 1 row for J18084725-1403252"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "tangential_velocity": {
+            "raw_value": "302",
+            "value": "302",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 52,
+                "end_line": 52,
+                "context": "Table 1 row for J18084725-1403252"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "15.74",
+          "value": "15.74",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 52,
+              "end_line": 52,
+              "context": "Table 1 row for J18084725-1403252"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "3523",
+          "value": "3523",
+          "unit": "K",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 99,
+              "end_line": 101,
+              "context": "Teff = 3523K, log g = 0.557, [Fe/H] = -0.247 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "log_g": {
+          "raw_value": "0.557",
+          "value": "0.557",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 99,
+              "end_line": 101,
+              "context": "Teff = 3523K, log g = 0.557, [Fe/H] = -0.247 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "-0.247",
+          "value": "-0.247",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 99,
+              "end_line": 101,
+              "context": "Teff = 3523K, log g = 0.557, [Fe/H] = -0.247 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "total_proper_motion",
+          "raw_value": "7.84",
+          "value": "7.84",
+          "unit": "mas/yr",
+          "description": "Total proper motion",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 52,
+              "end_line": 52,
+              "context": "Table 1 row for J18084725-1403252"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_longitude",
+          "raw_value": "15.6",
+          "value": "15.6",
+          "unit": "deg",
+          "description": "Galactic longitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 52,
+              "end_line": 52,
+              "context": "Table 1 row for J18084725-1403252"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_latitude",
+          "raw_value": "2.8",
+          "value": "2.8",
+          "unit": "deg",
+          "description": "Galactic latitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 52,
+              "end_line": 52,
+              "context": "Table 1 row for J18084725-1403252"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.10635:cand-008",
+        "paper_candidate_id": "J18271007-1907365",
+        "gaia_source_id": "Gaia DR3 4093092155089523200",
+        "all": [
+          {
+            "value": "J18271007-1907365",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 53,
+                "end_line": 53,
+                "context": "Table 1 row for J18271007-1907365"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 4093092155089523200",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 103,
+                "end_line": 104,
+                "context": "Discussion of J18271007-1907365"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper presents J18271007-1907365 as a hypervelocity star (HVS) based on Gaia DR3 kinematics with RV < -600 km/s.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this star as a hypervelocity star (HVS) in the title, abstract, and discussion text.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 66,
+            "end_line": 68,
+            "context": "These velocities and radial velocities (Table 1) clearly indicate that these seventeen 2MASS stars are HVS"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 103,
+            "end_line": 104,
+            "context": "Notes on J18271007-1907365"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 103,
+            "end_line": 104,
+            "context": "Notes on J18271007-1907365"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "6582",
+            "value": "6582",
+            "unit": "pc",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 53,
+                "end_line": 53,
+                "context": "Table 1 row for J18271007-1907365"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-682",
+            "value": "-682",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 53,
+                "end_line": 53,
+                "context": "Table 1 row for J18271007-1907365"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": {
+            "raw_value": "-662",
+            "value": "-662",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 53,
+                "end_line": 53,
+                "context": "Table 1 row for J18271007-1907365"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "-155",
+            "value": "-155",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 53,
+                "end_line": 53,
+                "context": "Table 1 row for J18271007-1907365"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "41",
+            "value": "41",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 53,
+                "end_line": 53,
+                "context": "Table 1 row for J18271007-1907365"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "tangential_velocity": {
+            "raw_value": "266",
+            "value": "266",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 53,
+                "end_line": 53,
+                "context": "Table 1 row for J18271007-1907365"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "14.68",
+          "value": "14.68",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 53,
+              "end_line": 53,
+              "context": "Table 1 row for J18271007-1907365"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "3407",
+          "value": "3407",
+          "unit": "K",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 103,
+              "end_line": 104,
+              "context": "Teff = 3407K, log g = 0.244, [Fe/H] = -0.62 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "log_g": {
+          "raw_value": "0.244",
+          "value": "0.244",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 103,
+              "end_line": 104,
+              "context": "Teff = 3407K, log g = 0.244, [Fe/H] = -0.62 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "-0.62",
+          "value": "-0.62",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 103,
+              "end_line": 104,
+              "context": "Teff = 3407K, log g = 0.244, [Fe/H] = -0.62 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "total_proper_motion",
+          "raw_value": "8.53",
+          "value": "8.53",
+          "unit": "mas/yr",
+          "description": "Total proper motion",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 53,
+              "end_line": 53,
+              "context": "Table 1 row for J18271007-1907365"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_longitude",
+          "raw_value": "13.2",
+          "value": "13.2",
+          "unit": "deg",
+          "description": "Galactic longitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 53,
+              "end_line": 53,
+              "context": "Table 1 row for J18271007-1907365"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_latitude",
+          "raw_value": "-3.5",
+          "value": "-3.5",
+          "unit": "deg",
+          "description": "Galactic latitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 53,
+              "end_line": 53,
+              "context": "Table 1 row for J18271007-1907365"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.10635:cand-009",
+        "paper_candidate_id": "J18443216+0253312",
+        "gaia_source_id": "Gaia DR3 4280188249119889536",
+        "all": [
+          {
+            "value": "J18443216+0253312",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 54,
+                "end_line": 54,
+                "context": "Table 1 row for J18443216+0253312"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 4280188249119889536",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 106,
+                "end_line": 107,
+                "context": "Discussion of J18443216+0253312"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper presents J18443216+0253312 as a hypervelocity star (HVS) based on Gaia DR3 kinematics with RV < -600 km/s.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this star as a hypervelocity star (HVS) in the title, abstract, and discussion text.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 66,
+            "end_line": 68,
+            "context": "These velocities and radial velocities (Table 1) clearly indicate that these seventeen 2MASS stars are HVS"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 106,
+            "end_line": 107,
+            "context": "Notes on J18443216+0253312"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 106,
+            "end_line": 107,
+            "context": "Notes on J18443216+0253312"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "7604",
+            "value": "7604",
+            "unit": "pc",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 54,
+                "end_line": 54,
+                "context": "Table 1 row for J18443216+0253312"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-792",
+            "value": "-792",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 54,
+                "end_line": 54,
+                "context": "Table 1 row for J18443216+0253312"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": {
+            "raw_value": "-650",
+            "value": "-650",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 54,
+                "end_line": 54,
+                "context": "Table 1 row for J18443216+0253312"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "-450",
+            "value": "-450",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 54,
+                "end_line": 54,
+                "context": "Table 1 row for J18443216+0253312"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "-39",
+            "value": "-39",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 54,
+                "end_line": 54,
+                "context": "Table 1 row for J18443216+0253312"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "tangential_velocity": {
+            "raw_value": "236",
+            "value": "236",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 54,
+                "end_line": 54,
+                "context": "Table 1 row for J18443216+0253312"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "15.88",
+          "value": "15.88",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 54,
+              "end_line": 54,
+              "context": "Table 1 row for J18443216+0253312"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "3882",
+          "value": "3882",
+          "unit": "K",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 106,
+              "end_line": 107,
+              "context": "Teff = 3882K, log g = 0.178, [Fe/H] = -1.1 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "log_g": {
+          "raw_value": "0.178",
+          "value": "0.178",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 106,
+              "end_line": 107,
+              "context": "Teff = 3882K, log g = 0.178, [Fe/H] = -1.1 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "-1.1",
+          "value": "-1.1",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 106,
+              "end_line": 107,
+              "context": "Teff = 3882K, log g = 0.178, [Fe/H] = -1.1 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "total_proper_motion",
+          "raw_value": "6.54",
+          "value": "6.54",
+          "unit": "mas/yr",
+          "description": "Total proper motion",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 54,
+              "end_line": 54,
+              "context": "Table 1 row for J18443216+0253312"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_longitude",
+          "raw_value": "34.7",
+          "value": "34.7",
+          "unit": "deg",
+          "description": "Galactic longitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 54,
+              "end_line": 54,
+              "context": "Table 1 row for J18443216+0253312"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_latitude",
+          "raw_value": "2.9",
+          "value": "2.9",
+          "unit": "deg",
+          "description": "Galactic latitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 54,
+              "end_line": 54,
+              "context": "Table 1 row for J18443216+0253312"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.10635:cand-010",
+        "paper_candidate_id": "J19283045+1312303",
+        "gaia_source_id": "Gaia DR3 4316462477768150144",
+        "all": [
+          {
+            "value": "J19283045+1312303",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 55,
+                "end_line": 55,
+                "context": "Table 1 row for J19283045+1312303"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 4316462477768150144",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 109,
+                "end_line": 110,
+                "context": "Discussion of J19283045+1312303"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper presents J19283045+1312303 as a hypervelocity star (HVS) based on Gaia DR3 kinematics with RV < -600 km/s.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this star as a hypervelocity star (HVS) in the title, abstract, and discussion text.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 66,
+            "end_line": 68,
+            "context": "These velocities and radial velocities (Table 1) clearly indicate that these seventeen 2MASS stars are HVS"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 109,
+            "end_line": 110,
+            "context": "Notes on J19283045+1312303"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 109,
+            "end_line": 110,
+            "context": "Notes on J19283045+1312303"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "5516",
+            "value": "5516",
+            "unit": "pc",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 55,
+                "end_line": 55,
+                "context": "Table 1 row for J19283045+1312303"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-804",
+            "value": "-804",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 55,
+                "end_line": 55,
+                "context": "Table 1 row for J19283045+1312303"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": {
+            "raw_value": "-528",
+            "value": "-528",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 55,
+                "end_line": 55,
+                "context": "Table 1 row for J19283045+1312303"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "-605",
+            "value": "-605",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 55,
+                "end_line": 55,
+                "context": "Table 1 row for J19283045+1312303"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "28",
+            "value": "28",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 55,
+                "end_line": 55,
+                "context": "Table 1 row for J19283045+1312303"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "tangential_velocity": {
+            "raw_value": "157",
+            "value": "157",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 55,
+                "end_line": 55,
+                "context": "Table 1 row for J19283045+1312303"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "15.19",
+          "value": "15.19",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 55,
+              "end_line": 55,
+              "context": "Table 1 row for J19283045+1312303"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "3265",
+          "value": "3265",
+          "unit": "K",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 109,
+              "end_line": 110,
+              "context": "Teff = 3265K, log g = 0.361, [Fe/H] = 0.35 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "log_g": {
+          "raw_value": "0.361",
+          "value": "0.361",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 109,
+              "end_line": 110,
+              "context": "Teff = 3265K, log g = 0.361, [Fe/H] = 0.35 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "0.35",
+          "value": "0.35",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 109,
+              "end_line": 110,
+              "context": "Teff = 3265K, log g = 0.361, [Fe/H] = 0.35 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "total_proper_motion",
+          "raw_value": "6.02",
+          "value": "6.02",
+          "unit": "mas/yr",
+          "description": "Total proper motion",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 55,
+              "end_line": 55,
+              "context": "Table 1 row for J19283045+1312303"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_longitude",
+          "raw_value": "48.9",
+          "value": "48.9",
+          "unit": "deg",
+          "description": "Galactic longitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 55,
+              "end_line": 55,
+              "context": "Table 1 row for J19283045+1312303"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_latitude",
+          "raw_value": "-2.0",
+          "value": "-2.0",
+          "unit": "deg",
+          "description": "Galactic latitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 55,
+              "end_line": 55,
+              "context": "Table 1 row for J19283045+1312303"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.10635:cand-011",
+        "paper_candidate_id": "J07383691+3212208",
+        "gaia_source_id": "Gaia DR3 892417483109166976",
+        "all": [
+          {
+            "value": "J07383691+3212208",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 56,
+                "end_line": 56,
+                "context": "Table 1 row for J07383691+3212208"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 892417483109166976",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 112,
+                "end_line": 116,
+                "context": "Discussion of J07383691+3212208"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper presents J07383691+3212208 as a hypervelocity star (HVS) based on Gaia DR3 kinematics with RV < -600 km/s.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this star as a hypervelocity star (HVS) in the title, abstract, and discussion text.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 66,
+            "end_line": 68,
+            "context": "These velocities and radial velocities (Table 1) clearly indicate that these seventeen 2MASS stars are HVS"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 112,
+            "end_line": 116,
+            "context": "Notes on J07383691+3212208"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 112,
+            "end_line": 116,
+            "context": "Notes on J07383691+3212208"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "187",
+            "value": "187",
+            "unit": "pc",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 56,
+                "end_line": 56,
+                "context": "Table 1 row for J07383691+3212208"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-689",
+            "value": "-689",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 56,
+                "end_line": 56,
+                "context": "Table 1 row for J07383691+3212208"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": {
+            "raw_value": "627",
+            "value": "627",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 56,
+                "end_line": 56,
+                "context": "Table 1 row for J07383691+3212208"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "82",
+            "value": "82",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 56,
+                "end_line": 56,
+                "context": "Table 1 row for J07383691+3212208"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "-273",
+            "value": "-273",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 56,
+                "end_line": 56,
+                "context": "Table 1 row for J07383691+3212208"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "tangential_velocity": {
+            "raw_value": "100",
+            "value": "100",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 56,
+                "end_line": 56,
+                "context": "Table 1 row for J07383691+3212208"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "13.77",
+          "value": "13.77",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 56,
+              "end_line": 56,
+              "context": "Table 1 row for J07383691+3212208"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "raw_value": "red dwarf",
+          "value": "red dwarf",
+          "measurement_type": "spectral_type",
+          "spectral_type": "red dwarf",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 112,
+              "end_line": 116,
+              "context": "red dwarf from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "3783",
+          "value": "3783",
+          "unit": "K",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 112,
+              "end_line": 116,
+              "context": "Teff = 3783K, log g = 4.535, [Fe/H] = -1.004 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "log_g": {
+          "raw_value": "4.535",
+          "value": "4.535",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 112,
+              "end_line": 116,
+              "context": "Teff = 3783K, log g = 4.535, [Fe/H] = -1.004 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "-1.004",
+          "value": "-1.004",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 112,
+              "end_line": 116,
+              "context": "Teff = 3783K, log g = 4.535, [Fe/H] = -1.004 from Gaia DR3"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "total_proper_motion",
+          "raw_value": "112.05",
+          "value": "112.05",
+          "unit": "mas/yr",
+          "description": "Total proper motion",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 56,
+              "end_line": 56,
+              "context": "Table 1 row for J07383691+3212208"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_longitude",
+          "raw_value": "187.4",
+          "value": "187.4",
+          "unit": "deg",
+          "description": "Galactic longitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 56,
+              "end_line": 56,
+              "context": "Table 1 row for J07383691+3212208"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_latitude",
+          "raw_value": "23.4",
+          "value": "23.4",
+          "unit": "deg",
+          "description": "Galactic latitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 56,
+              "end_line": 56,
+              "context": "Table 1 row for J07383691+3212208"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.10635:cand-012",
+        "paper_candidate_id": "J19352291+4626156",
+        "gaia_source_id": "Gaia DR3 2128166023276246400",
+        "all": [
+          {
+            "value": "J19352291+4626156",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 57,
+                "end_line": 57,
+                "context": "Table 1 row for J19352291+4626156"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 2128166023276246400",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 120,
+                "end_line": 124,
+                "context": "Discussion of J19352291+4626156"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper presents J19352291+4626156 as a hypervelocity star (HVS) based on Gaia DR3 kinematics with RV < -600 km/s.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this star as a hypervelocity star (HVS) in the title, abstract, and discussion text.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 66,
+            "end_line": 68,
+            "context": "These velocities and radial velocities (Table 1) clearly indicate that these seventeen 2MASS stars are HVS"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 120,
+            "end_line": 124,
+            "context": "Notes on J19352291+4626156"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 120,
+            "end_line": 124,
+            "context": "Notes on J19352291+4626156"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "6169",
+            "value": "6169",
+            "unit": "pc",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 57,
+                "end_line": 57,
+                "context": "Table 1 row for J19352291+4626156"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-620",
+            "value": "-620",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 57,
+                "end_line": 57,
+                "context": "Table 1 row for J19352291+4626156"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": {
+            "raw_value": "-114",
+            "value": "-114",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 57,
+                "end_line": 57,
+                "context": "Table 1 row for J19352291+4626156"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "-594",
+            "value": "-594",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 57,
+                "end_line": 57,
+                "context": "Table 1 row for J19352291+4626156"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "-132",
+            "value": "-132",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 57,
+                "end_line": 57,
+                "context": "Table 1 row for J19352291+4626156"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "tangential_velocity": {
+            "raw_value": "111",
+            "value": "111",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 57,
+                "end_line": 57,
+                "context": "Table 1 row for J19352291+4626156"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "14.26",
+          "value": "14.26",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 57,
+              "end_line": 57,
+              "context": "Table 1 row for J19352291+4626156"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "raw_value": "G5 III",
+          "value": "G5 III",
+          "measurement_type": "spectral_type",
+          "spectral_type": "G5 III",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 120,
+              "end_line": 124,
+              "context": "G5 III from Frasca et al. 2016"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "5306",
+          "value": "5306",
+          "unit": "K",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 120,
+              "end_line": 124,
+              "context": "Teff = 5306K, log g = 3.13, [Fe/H] = -1.08 from Frasca et al. 2016"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "log_g": {
+          "raw_value": "3.13",
+          "value": "3.13",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 120,
+              "end_line": 124,
+              "context": "Teff = 5306K, log g = 3.13, [Fe/H] = -1.08 from Frasca et al. 2016"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "-1.08",
+          "value": "-1.08",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 120,
+              "end_line": 124,
+              "context": "Teff = 5306K, log g = 3.13, [Fe/H] = -1.08 from Frasca et al. 2016"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "total_proper_motion",
+          "raw_value": "3.78",
+          "value": "3.78",
+          "unit": "mas/yr",
+          "description": "Total proper motion",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 57,
+              "end_line": 57,
+              "context": "Table 1 row for J19352291+4626156"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_longitude",
+          "raw_value": "79.1",
+          "value": "79.1",
+          "unit": "deg",
+          "description": "Galactic longitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 57,
+              "end_line": 57,
+              "context": "Table 1 row for J19352291+4626156"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_latitude",
+          "raw_value": "12.3",
+          "value": "12.3",
+          "unit": "deg",
+          "description": "Galactic latitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 57,
+              "end_line": 57,
+              "context": "Table 1 row for J19352291+4626156"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.10635:cand-013",
+        "paper_candidate_id": "J11220124+5309490",
+        "gaia_source_id": "Gaia DR3 839759740951501952",
+        "all": [
+          {
+            "value": "J11220124+5309490",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 58,
+                "end_line": 58,
+                "context": "Table 1 row for J11220124+5309490"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 839759740951501952",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 126,
+                "end_line": 129,
+                "context": "Discussion of J11220124+5309490"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper presents J11220124+5309490 as a hypervelocity star (HVS) based on Gaia DR3 kinematics with RV < -600 km/s.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this star as a hypervelocity star (HVS) in the title, abstract, and discussion text.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 66,
+            "end_line": 68,
+            "context": "These velocities and radial velocities (Table 1) clearly indicate that these seventeen 2MASS stars are HVS"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 126,
+            "end_line": 129,
+            "context": "Notes on J11220124+5309490"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 9,
+            "end_line": 11,
+            "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.10635/arxiv_text.txt",
+            "start_line": 126,
+            "end_line": 129,
+            "context": "Notes on J11220124+5309490"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "10722",
+            "value": "10722",
+            "unit": "pc",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 58,
+                "end_line": 58,
+                "context": "Table 1 row for J11220124+5309490"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-800",
+            "value": "-800",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 58,
+                "end_line": 58,
+                "context": "Table 1 row for J11220124+5309490"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": {
+            "raw_value": "353",
+            "value": "353",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 58,
+                "end_line": 58,
+                "context": "Table 1 row for J11220124+5309490"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "-209",
+            "value": "-209",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 58,
+                "end_line": 58,
+                "context": "Table 1 row for J11220124+5309490"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "-686",
+            "value": "-686",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 58,
+                "end_line": 58,
+                "context": "Table 1 row for J11220124+5309490"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "tangential_velocity": {
+            "raw_value": "243",
+            "value": "243",
+            "unit": "km/s",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2401.10635/arxiv_text.txt",
+                "start_line": 58,
+                "end_line": 58,
+                "context": "Table 1 row for J11220124+5309490"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "13.20",
+          "value": "13.20",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 58,
+              "end_line": 58,
+              "context": "Table 1 row for J11220124+5309490"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "4241",
+          "value": "4241",
+          "unit": "K",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 126,
+              "end_line": 129,
+              "context": "Teff = 4241K, log g = 1.152, [Fe/H] = -1.114 from SIMBAD"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "log_g": {
+          "raw_value": "1.152",
+          "value": "1.152",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 126,
+              "end_line": 129,
+              "context": "Teff = 4241K, log g = 1.152, [Fe/H] = -1.114 from SIMBAD"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "-1.114",
+          "value": "-1.114",
+          "unit": "",
+          "description": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 126,
+              "end_line": 129,
+              "context": "Teff = 4241K, log g = 1.152, [Fe/H] = -1.114 from SIMBAD"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "total_proper_motion",
+          "raw_value": "4.78",
+          "value": "4.78",
+          "unit": "mas/yr",
+          "description": "Total proper motion",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 58,
+              "end_line": 58,
+              "context": "Table 1 row for J11220124+5309490"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_longitude",
+          "raw_value": "149.3",
+          "value": "149.3",
+          "unit": "deg",
+          "description": "Galactic longitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 58,
+              "end_line": 58,
+              "context": "Table 1 row for J11220124+5309490"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "name": "galactic_latitude",
+          "raw_value": "59.1",
+          "value": "59.1",
+          "unit": "deg",
+          "description": "Galactic latitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.10635/arxiv_text.txt",
+              "start_line": 58,
+              "end_line": 58,
+              "context": "Table 1 row for J11220124+5309490"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ]
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-1-hvs",
+      "description": "Thirteen 2MASS stars from Table 1 presented by the paper as hypervelocity stars without local cluster or YSO associations.",
+      "decision": "included",
+      "reason": "Paper explicitly identifies these stars as hypervelocity stars (HVS) in the title, abstract, and discussion text.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.10635/arxiv_text.txt",
+          "start_line": 9,
+          "end_line": 11,
+          "context": "ongoing search for hypervelocity stars (HVS) I found seventeen two micron all sky survey (2MASS) sources"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2401.10635/arxiv_text.txt",
+          "start_line": 66,
+          "end_line": 68,
+          "context": "These velocities and radial velocities (Table 1) clearly indicate that these seventeen 2MASS stars are HVS"
+        }
+      ]
+    },
+    {
+      "group_id": "table-1-cluster-ysos",
+      "description": "Four objects from Table 1 identified in the paper as cluster members or young stellar objects.",
+      "decision": "excluded",
+      "reason": "J23470671+6311571 and J00504461+5824384 are identified as cluster members; J02274456+6140299 and J02475329+6044285 are identified as YSOs in star-forming regions W3 and W5. These are cluster escapers or runaways, not Galactic-unbound HVS candidates per Stella criteria.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.10635/arxiv_text.txt",
+          "start_line": 131,
+          "end_line": 133,
+          "context": "may be a member of galactic cluster"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2401.10635/arxiv_text.txt",
+          "start_line": 134,
+          "end_line": 136,
+          "context": "red giant in an open cluster"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2401.10635/arxiv_text.txt",
+          "start_line": 137,
+          "end_line": 143,
+          "context": "B3-6 Ve star in star forming complex W3"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2401.10635/arxiv_text.txt",
+          "start_line": 145,
+          "end_line": 150,
+          "context": "B6e star in star forming region W5"
+        }
+      ]
+    }
+  ]
+}

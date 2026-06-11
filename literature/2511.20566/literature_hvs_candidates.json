@@ -1,0 +1,118 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:15:44",
+  "paper": {
+    "arxiv_id": "2511.20566",
+    "bibcode": "2026A&A...705A.178G",
+    "title": "The origin of B-type runaway stars based on kinematics",
+    "month": "2025-11",
+    "source_note_json": "notes/2025/2025-11/2025-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2511.20566",
+      "pdf": "https://arxiv.org/pdf/2511.20566"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2511.20566",
+    "audit_path": "literature/2511.20566/audit.json",
+    "catalog_review_path": "literature/2511.20566/catalog_review.json",
+    "catalog_extraction_path": "literature/2511.20566/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2511.20566/catalog_tables/table-Tab-1.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T20:15:44",
+    "extractor": "agent",
+    "summary": "The paper investigates 39 B-type runaway stars via orbital traceback. All 39 stars are found to be bound to the Galaxy: 29 have trajectories entirely within the Galactic disk, and 10 have disk-passing orbits yet still trace back to the disk. The paper does not present any object as possibly unbound from the Milky Way."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "step_type": "input_catalog",
+      "summary": "LAMOST DR8 radial velocities combined with Gaia DR3 astrometry from the catalog of 547 early-type runaway stars by Guo et al. (2024).",
+      "depends_on": []
+    },
+    {
+      "id": "step-02",
+      "step_type": "sample_selection",
+      "summary": "Selection of 46 B-type runaway stars from the catalog, followed by removal of one BHB contaminant and six stars outside the PARSEC training grid, yielding a final sample of 39 stars.",
+      "depends_on": ["step-01"]
+    },
+    {
+      "id": "step-03",
+      "step_type": "other",
+      "summary": "Visual spectral subclassification of LAMOST LRS spectra using MKCLASS-based criteria.",
+      "depends_on": ["step-02"]
+    },
+    {
+      "id": "step-04",
+      "step_type": "stellar_parameter_inference",
+      "summary": "Atmospheric parameters (Teff, log g, [M/H], v sin i) derived with the Stellar Label Machine (SLAM) for Teff >= 15000 K, or adopted from Xiang et al. (2022) for Teff < 15000 K.",
+      "depends_on": ["step-03"]
+    },
+    {
+      "id": "step-05",
+      "step_type": "stellar_parameter_inference",
+      "summary": "Stellar masses and ages estimated with a random-forest regression model trained on PARSEC 1.2S evolutionary tracks.",
+      "depends_on": ["step-04"]
+    },
+    {
+      "id": "step-06",
+      "step_type": "distance_estimation",
+      "summary": "Distances obtained from the posterior distribution of geometric distances by Bailer-Jones et al. (2021).",
+      "depends_on": ["step-01"]
+    },
+    {
+      "id": "step-07",
+      "step_type": "velocity_calculation",
+      "summary": "Galactocentric positions and velocities computed adopting solar motion, R0 = 8.5 kpc, and Vc = 220 km/s.",
+      "depends_on": ["step-06"]
+    },
+    {
+      "id": "step-08",
+      "step_type": "orbit_integration",
+      "summary": "Orbital traceback performed with GALPY using Monte Carlo simulations to propagate orbits backward in time and infer birthplaces.",
+      "depends_on": ["step-07"]
+    },
+    {
+      "id": "step-09",
+      "step_type": "origin_assessment",
+      "summary": "Origin assessment via orbital morphology and cluster cross-matching to distinguish binary supernova scenario (BSS) and dynamical ejection scenario (DES).",
+      "depends_on": ["step-08"]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-Tab-1-runaways",
+      "description": "The 39 B-type runaway stars listed in Table 1, selected from the LAMOST runaway catalog and analyzed with orbital traceback.",
+      "decision": "excluded",
+      "reason": "The paper does not present these objects as possibly unbound from the Galaxy. All 39 stars are concluded to be Galactic-disk-bound: 29 have trajectories entirely within the disk, and 10 are disk-passing yet still trace back to the disk. They are ordinary runaway stars, not HVS or unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2511.20566/arxiv_source/aa57420-25.tex",
+          "start_line": 57,
+          "end_line": 60,
+          "context": "Abstract states all 39 stars trace back to the Galactic disk, with 29 confined and 10 disk-passing."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2511.20566/arxiv_source/aa57420-25.tex",
+          "start_line": 235,
+          "end_line": 240,
+          "context": "Results section explicitly states all 39 stars originate from within the Galactic disk."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2511.20566/arxiv_source/aa57420-25.tex",
+          "start_line": 304,
+          "end_line": 315,
+          "context": "Summary reiterates that all 39 stars are disk-bound, with no mention of unbound or escaping candidates."
+        }
+      ]
+    }
+  ]
+}

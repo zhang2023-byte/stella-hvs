@@ -1,0 +1,81 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:06:34",
+  "paper": {
+    "arxiv_id": "1905.10251",
+    "bibcode": "2019MNRAS.487.2977G",
+    "title": "Gaia Stellar Kinematics in the Head of the Orion A Cloud: Runaway Stellar Groups and Gravitational Infall",
+    "month": "2019-05",
+    "source_note_json": "notes/2019/2019-05/2019-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1905.10251",
+      "pdf": "https://arxiv.org/pdf/1905.10251"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1905.10251",
+    "audit_path": "literature/1905.10251/audit.json",
+    "catalog_review_path": "literature/1905.10251/catalog_review.json",
+    "catalog_extraction_path": "literature/1905.10251/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1905.10251/catalog_tables/table-tbl_gaia_props.ecsv",
+      "literature/1905.10251/catalog_tables/table-tbl_other_props.ecsv",
+      "literature/1905.10251/catalog_tables/table-tbl_vrad.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:10:00",
+    "extractor": "agent",
+    "summary": "本文利用Gaia视差和自行数据结合红外、光学、X射线选源，研究猎户座A分子云头部（Orion A Head）年轻恒星的3D运动学。发现NGC 1977星团和扩展猎户星云（EON）中两个恒星群表现出'runaway'（逃逸）运动特征，正在离开其诞生地。此外识别出Orion A东西两侧缓慢漂移的稀疏恒星群。论文核心关注恒星形成区的气体动力学：分层引力塌缩、OB星反馈、超声湍流等过程。'Runaway stellar groups'在此语境下指星团/恒星群从诞生云核中逃逸，属于恒星形成区内部动力学过程，与银河系非束缚HVS无关。所有恒星均位于太阳邻域（~400 pc），远低于银河系逃逸速度。因此无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文研究猎户座A恒星形成区的年轻星运动学，'runaway'指星团从诞生云核逃逸，非银河系逃逸。",
+      "inputs": [
+        "arXiv abstract",
+        "Monthly literature notes"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1905.10251/arxiv_source/ms.tex",
+          "start_line": 96,
+          "end_line": 98,
+          "context": "Paper abstract: studies kinematics of young stars in Orion A Head; identifies runaway stellar groups (NGC 1977, EON groups) departing birthplaces"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "quick-scan-orion-runaway-groups",
+      "description": "论文识别出Orion A分子云头部具有异常运动学的年轻恒星群：NGC 1977星团和EON两个恒星群表现为'runaway stellar groups'（正在离开诞生地的逃逸星群）；东西两侧稀疏恒星群呈现缓慢漂移特征。研究对象包括1487颗年轻恒星的Gaia天体测量和视向速度数据。",
+      "decision": "excluded",
+      "reason": "论文中的'runaway stellar groups'指恒星群从猎户座A分子云中的诞生云核逃逸，涉及云核到星团尺度（<10 pc）的动力学过程。所有恒星位于太阳邻域~400 pc距离，其运动速度远低于银河系逃逸速度（~550 km/s）。论文核心科学目标是研究恒星形成区内的气体/恒星动力学（引力塌缩、OB反馈、湍流），完全属于恒星形成领域，与银河系非束缚HVS研究无关。因此无HVS候选体。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1905.10251/arxiv_source/ms.tex",
+          "start_line": 96,
+          "end_line": 98,
+          "context": "Abstract: NGC 1977 cluster and EON groups caught in act of departing birthplaces; hierarchical gravitational collapse"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1905.10251/arxiv_source/ms.tex",
+          "start_line": 120,
+          "end_line": 121,
+          "context": "Introduction: paper aims to search for signs of stellar contraction, expansion, and anomalous flows across the cloud's Head"
+        }
+      ]
+    }
+  ]
+}

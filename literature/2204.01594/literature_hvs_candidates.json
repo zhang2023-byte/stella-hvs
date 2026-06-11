@@ -1,0 +1,132 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-23T11:43:37",
+  "paper": {
+    "arxiv_id": "2204.01594",
+    "bibcode": "2022A&A...663A..39B",
+    "title": "The origin of early-type runaway stars from open clusters",
+    "month": "2022-04",
+    "source_note_json": "notes/2022/2022-04/2022-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2204.01594",
+      "pdf": "https://arxiv.org/pdf/2204.01594"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2204.01594",
+    "audit_path": "literature/2204.01594/audit.json",
+    "catalog_review_path": "literature/2204.01594/catalog_review.json",
+    "catalog_extraction_path": "literature/2204.01594/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2204.01594/catalog_tables/table-tab-significance.ecsv",
+      "literature/2204.01594/catalog_tables/table-tab-extentofclusters.ecsv",
+      "literature/2204.01594/catalog_tables/table-tab-schoetller.ecsv",
+      "literature/2204.01594/catalog_tables/table-tab-spacevelocity.ecsv",
+      "literature/2204.01594/catalog_tables/table-tab-identification.ecsv",
+      "literature/2204.01594/catalog_tables/table-tab-haloidenfication.ecsv",
+      "literature/2204.01594/catalog_tables/table-tab-hypervelparams.ecsv",
+      "literature/2204.01594/catalog_tables/table-tab-clusterparams.ecsv",
+      "literature/2204.01594/catalog_tables/table-tab-hyperrun.ecsv",
+      "literature/2204.01594/catalog_tables/table-tab-table1.ecsv",
+      "literature/2204.01594/catalog_tables/table-tab-oldtars.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-23T11:43:37",
+    "extractor": "agent",
+    "summary": "The paper studies runaway and walkaway stars ejected from open clusters. It discusses disk runaways (space velocities 5-160 km/s), ONC runaway candidates, and more distant Galactic halo B-type runaways (ejection velocities 160-410 km/s). The only object explicitly discussed as a hyper-runaway candidate is HIP 60350, but the paper explicitly dismisses it as bound because its Galactic rest-frame velocity is lower than the local escape velocity. None of the other objects are presented as possibly unbound from the Milky Way; all are traced back to candidate parent clusters in the Galactic disk."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "hoogerwerf-disk-sample",
+      "description": "The Hoogerwerf et al. sample of 23 early-type disk runaway and walkaway stars revisited with Gaia EDR3 astrometry and updated radial velocities.",
+      "decision": "excluded",
+      "reason": "The paper classifies these objects as ordinary disk runaways (11 stars with space velocities 37-162 km/s) and walkaways (12 stars with space velocities <30 km/s). They are all traced back to candidate parent clusters or associations in the Galactic disk and are never presented as possibly unbound from the Milky Way.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 524,
+          "end_line": 589,
+          "context": "Table and discussion classifying the Hoogerwerf sample into walkaway stars (v_s < 30 km/s) and runaway stars, with space velocities derived from Gaia EDR3 astrometry."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 936,
+          "end_line": 947,
+          "context": "Summary stating that only half the sample qualifies as runaways, while the other half are walkaways with space velocities below 30 km/s."
+        }
+      ]
+    },
+    {
+      "group_id": "onc-runaways",
+      "description": "Three-dimensional runaway and walkaway candidate stars from the Orion Nebula Cluster compiled from Schoettler+2020 and Farias+.",
+      "decision": "excluded",
+      "reason": "These are young late-type stars recently ejected from the ONC, a nearby star-forming region in the Galactic disk. The paper confirms their origin in the ONC using p-value minimization and does not present them as possibly unbound from the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 410,
+          "end_line": 417,
+          "context": "Section introduction describing the ONC as a close and young testbed for runaway traceback, with candidates compiled from Schoettler+2020 and Farias+."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 464,
+          "end_line": 466,
+          "context": "Discussion of minimized times of flight and distances confirming origin in the ONC for most stars, with three stars ruled out due to large closest approaches."
+        }
+      ]
+    },
+    {
+      "group_id": "halo-b-runaways",
+      "description": "Distant B-type runaway stars in the Galactic halo compiled from Fuhrmeister (2021, PhD thesis) with ejection velocities 160-410 km/s.",
+      "decision": "excluded",
+      "reason": "Although these stars are far from the Galactic plane and have high rest-frame velocities, the paper traces them back to candidate parent open clusters in the Galactic disk. The paper does not claim any of them are unbound from the Milky Way; they are treated as bound runaways that were violently ejected from clusters but remain gravitationally bound to the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 1145,
+          "end_line": 1157,
+          "context": "Section introduction describing runaway B stars in the Galactic halo, stating that due to their high velocity they are farther away, making it difficult to trace back their orbits, but presenting them as runaways from the disk."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 1322,
+          "end_line": 1324,
+          "context": "Summary stating that candidate clusters were found for four halo runaway stars with ejection velocities 160-410 km/s, considerably larger than the disk sample but still treated as bound disk ejecta."
+        }
+      ]
+    },
+    {
+      "group_id": "hip-60350",
+      "description": "HIP 60350, a star previously considered as a hyper-runaway candidate with a space velocity of about 400 km/s.",
+      "decision": "excluded",
+      "reason": "The paper explicitly discusses HIP 60350 as a former hyper-runaway candidate but dismisses it because recent Gaia EDR3 kinematic analysis shows its Galactic rest-frame velocity is lower than the local escape velocity. The paper therefore concludes it is bound to the Galaxy and not a hyper-runaway star.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 1255,
+          "end_line": 1284,
+          "context": "Discussion of HIP 60350 as a former hyper-runaway candidate, previous suggested origins, and the new fitting results with Cl Pismis 19 and Cl Pismis 20."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 1324,
+          "end_line": 1326,
+          "context": "Summary explicitly dismissing HIP 60350 as a hyper-runaway star because its Galactic rest-frame velocity is lower than the local escape velocity."
+        }
+      ]
+    }
+  ]
+}

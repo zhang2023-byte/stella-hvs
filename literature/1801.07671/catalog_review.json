@@ -1,0 +1,156 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1801.07671",
+    "title": "Search for Stellar Streams Based on Data from the RAVE5 and Gaia TGAS Catalogues",
+    "month": "2018-01",
+    "source_note_json": "notes/2018/2018-01/2018-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1801.07671",
+      "pdf": "https://arxiv.org/pdf/1801.07671"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1801.07671",
+    "audit_path": "literature/1801.07671/audit.json",
+    "source_dir": "literature/1801.07671/arxiv_source",
+    "tex_root": "literature/1801.07671/arxiv_source/Om_Cen-arxiv=2018.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T08:30:00",
+    "reviewer": "agent",
+    "summary": "Bajkova & Bobylev (2018, Astronomy Letters, 44, 193-201) analyze the space velocities of stars combining proper motions and trigonometric parallaxes from the Gaia TGAS catalogue (~2 million stars) with line-of-sight velocities from the RAVE5 catalogue (457,588 stars). Using wavelet transform analysis (Mexican HAT) of the (V, sqrt(U^2+2V^2)) velocity plane, they identify three kinematic clumps (BB17-1, BB17-2, BB17-3) in the high-velocity region (V < -150 km/s). BB17-1 and BB17-2 are associated with the VelHel-6 and VelHel-7 groups of Helmi et al. (2017). The main focus is on BB17-3, which is linked to the debris of the globular cluster ω Centauri. From this clump they identify 28 stars with low velocity dispersion, all having very similar age estimates (log t ≈ 10) and metallicity distribution typical of ω Cen stars. The paper contains 1 internal table: Table 1 lists the 28 BB17-3 clump stars with their Tycho-2 identifiers, Galactic coordinates (l, b), stellar parameters from RAVE (T_eff, log g, [M/H]), Gaia TGAS trigonometric parallaxes (π_Gaia), and individual age estimates from RAVE4. Key external resources include the Gaia TGAS catalogue (Gaia DR1), RAVE5 and RAVE4 catalogues, and the SIMBAD astronomical database."
+  },
+  "internal_tables": [
+    {
+      "id": "table-1-bb17-3-clump-stars",
+      "kind": "latex_table",
+      "asset_type": "reference_table",
+      "role_in_paper": "Primary results table presenting the 28 member stars of the BB17-3 kinematic clump identified through wavelet analysis of the (V, sqrt(U^2+2V^2)) velocity plane. These stars are proposed as members of a homogeneous stellar stream within the extended tidal debris of the globular cluster ω Centauri. Each row corresponds to one star with its catalog identifier, positional data, stellar atmospheric parameters, astrometric measurement, and age estimate. This table is the core data product of the paper, providing the complete list of stars that constitute the newly identified BB17-3 stream.",
+      "source_refs": [
+        {
+          "path": "literature/1801.07671/arxiv_source/Om_Cen-arxiv=2018.tex",
+          "start_line": 253,
+          "end_line": 294,
+          "caption": "Data on the stars of the BB17-3 clump",
+          "label": "t:01"
+        }
+      ],
+      "columns": [
+        {
+          "name": "TYC",
+          "meaning": "Tycho-2 catalogue identifier for each star. Format: NNNN-NNNN-N (e.g., 8004-1288-1). The Tycho-2 catalogue (Hog et al. 2000) is the primary astrometric reference catalogue underlying the Gaia TGAS solution. One star (TYC 8890-0860-1) is noted as not found in SIMBAD by its Tycho number and has an alternative designation RAVE J051701.4-661815.",
+          "unit_text": "",
+          "source_of_definition": "Table header 'TYC' and Tycho-2 catalogue convention",
+          "confidence": 1.0
+        },
+        {
+          "name": "l",
+          "meaning": "Galactic longitude in decimal degrees. Values range from 1.4° to 352.1°, indicating the stars are distributed across a wide range of Galactic longitudes with a concentration in the fourth Galactic quadrant (l > 270°), consistent with the location of ω Cen debris as noted by Majewski et al. (2012).",
+          "unit_text": "deg",
+          "source_of_definition": "Table header 'l, deg.'",
+          "confidence": 1.0
+        },
+        {
+          "name": "b",
+          "meaning": "Galactic latitude in decimal degrees. Values range from -78.1° to +56.3°, showing the stars span both southern and northern Galactic hemispheres with a preference for southern latitudes, consistent with the location of ω Cen (b ≈ +15°).",
+          "unit_text": "deg",
+          "source_of_definition": "Table header 'b, deg.'",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_eff",
+          "meaning": "Effective temperature in Kelvin, copied from the RAVE5 catalogue (Kunder et al. 2017). Values range from 3800 K to 6000 K, spanning late G through early G spectral types. This is typical for old, metal-poor halo/stream giant stars. The coolest star (TYC 8890-0860-1) has T_eff = 3800 K.",
+          "unit_text": "K",
+          "source_of_definition": "Table header 'T_eff, K' and RAVE5 catalogue",
+          "confidence": 1.0
+        },
+        {
+          "name": "log g",
+          "meaning": "Logarithm of surface gravity (cgs units), copied from the RAVE5 catalogue. Values range from 0.55 to 4.74. The range includes both giants (low log g ~0.5-2) and dwarfs/subgiants (higher log g ~3-4.7), indicating the BB17-3 stream contains stars at different evolutionary stages.",
+          "unit_text": "dex (cgs)",
+          "source_of_definition": "Table header 'log g' and RAVE5 catalogue",
+          "confidence": 1.0
+        },
+        {
+          "name": "[M/H]",
+          "meaning": "Metallicity index in dex, copied from the RAVE5 catalogue with associated uncertainties. Values range from -2.82 ± 0.14 to 0.00 ± 0.10 dex. The metallicity distribution spans the range observed in ω Cen stars (Gratton et al. 2011), which hosts multiple populations with different chemical compositions up to solar metallicity. Most stars are metal-poor ([M/H] < -1.0) as expected for halo/stream stars.",
+          "unit_text": "dex",
+          "source_of_definition": "Table header '[M/H], dex' and RAVE5 catalogue",
+          "confidence": 1.0
+        },
+        {
+          "name": "π_Gaia",
+          "meaning": "Trigonometric parallax from the Gaia TGAS catalogue (Gaia DR1; Brown et al. 2016, Lindegren et al. 2016) in milliarcseconds with associated uncertainty. Values range from 0.62 ± 0.26 to 5.35 ± 0.29 mas, corresponding to heliocentric distances from ~0.2 to ~1.6 kpc (r = 1/π). The relative parallax errors σ_π/π do not exceed 0.27 for most stars, making the Lutz-Kelker bias negligible.",
+          "unit_text": "mas",
+          "source_of_definition": "Table header 'π_Gaia, mas' and Gaia TGAS catalogue",
+          "confidence": 1.0
+        },
+        {
+          "name": "log t",
+          "meaning": "Logarithm of individual stellar age estimate (in years), copied from the RAVE4 catalogue (Kordopatis et al. 2013). Values range from 9.76 ± 0.25 to 10.01 ± 0.06, corresponding to ages of ~6-10 Gyr. The remarkable homogeneity of these age estimates (all clustering around log t ≈ 10, i.e., ~10 Gyr) is a key argument for the stars' common origin. Four stars lack age estimates (blank entries).",
+          "unit_text": "log(yr)",
+          "source_of_definition": "Table header 'log t' and RAVE4 catalogue (Kordopatis et al. 2013)",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The table is described in the Results section (line 439-454 of the tex source). The text states: 'The stars of the BB17-3 stream that we selected are listed in the table. Column 1 gives the numbers according to the Tycho-2 catalogue; columns 2 and 3 give the Galactic coordinates l, b; columns 4-6 give the effective temperature T_eff, gravity log g, and metallicity [M/H] copied from the RAVE5 catalogue; the next-to-last column gives the trigonometric parallax π_Gaia; and the last column gives the individual age estimate copied from the RAVE4 catalogue.'",
+      "comments": "8-column table with 28 data rows. The BB17-3 stars were selected based on boundaries of the corresponding peak in Figure 1: V from -258 to -278 km/s and sqrt(U^2+2V^2) from 380 to 405 km/s. The list has no overlap with the ω Cen stream members proposed by Helmi et al. (2017) or Navarrete et al. (2015). One star (TYC 8890-0860-1) has an alternative designation RAVE J051701.4-661815 as it cannot be found in SIMBAD by its Tycho number. Stars are concentrated in the fourth Galactic quadrant near the current position of ω Cen, consistent with Majewski et al. (2012)."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_resource_mention",
+      "url": "https://www.cosmos.esa.int/web/gaia/dr1",
+      "local_path": "",
+      "description": "Gaia TGAS (Tycho-Gaia Astrometric Solution) catalogue from Gaia Data Release 1 (Gaia Collaboration, Prusti et al. 2016; Brown et al. 2016; Lindegren et al. 2016). Contains positions, trigonometric parallaxes, and proper motions for ~2 million stars. Formed by combining first-year Gaia observations with Tycho-2 positions. For ~90,000 stars common to Hipparcos the mean proper motion error is ~0.06 mas/yr; for the remaining stars ~1 mas/yr. The paper uses TGAS proper motions and parallaxes to compute 3D space velocities (U, V, W) for over 200,000 stars that also have RAVE5 radial velocities and satisfy quality cuts.",
+      "source_refs": [
+        {
+          "path": "literature/1801.07671/arxiv_source/Om_Cen-arxiv=2018.tex",
+          "start_line": 42,
+          "end_line": 44,
+          "context": "We have analyzed the space velocities of stars with the proper motions and trigonometric parallaxes from the Gaia TGAS catalogue in combination with the line-of-sight velocities from the RAVE5 catalogue."
+        }
+      ],
+      "evidence": "Abstract and Section DATA (lines 42-44, 146-155) describe the use of Gaia TGAS. The paper states: 'This version was produced from a combination of the data in the first year of orbital Gaia satellite observations with the Tycho-2 stellar positions... it contains the positions, trigonometric parallaxes, and proper motions of ~2 million stars.'",
+      "comments": "Gaia DR1 data accessible at https://www.cosmos.esa.int/web/gaia/dr1. The TGAS subset contains stars from the Tycho-2 catalogue with Gaia astrometry. The paper applies quality filters: σ_μαcosδ < 10 mas/yr, σ_μδ < 10 mas/yr, σ_π/π < 0.5."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "https://www.rave-survey.org/",
+      "local_path": "",
+      "description": "RAVE (RAdial Velocity Experiment) Data Release 5 (RAVE5; Kunder et al. 2017) and Data Release 4 (RAVE4; Kordopatis et al. 2013). RAVE5 provides line-of-sight (radial) velocities for 457,588 stars observed with the 1.2-m Schmidt telescope at the Anglo-Australian Observatory since 2003. Mean radial velocity error is ~3 km/s. Over 200,000 RAVE5 stars are in common with Gaia TGAS. RAVE5 also provides stellar atmospheric parameters (T_eff, log g, [M/H]) used in Table 1. RAVE4 provides the individual stellar age estimates (log t) used in the last column of Table 1.",
+      "source_refs": [
+        {
+          "path": "literature/1801.07671/arxiv_source/Om_Cen-arxiv=2018.tex",
+          "start_line": 42,
+          "end_line": 44,
+          "context": "We have analyzed the space velocities of stars... in combination with the line-of-sight velocities from the RAVE5 catalogue."
+        }
+      ],
+      "evidence": "Section DATA (lines 138-144) describes RAVE5: 'Five releases of the catalogue have been published. The mean line-of-sight velocity error is about 3 km/s. The RAVE5 version (Kunder et al. 2017) contains data on 457,588 stars; more than 200,000 of them are common to the first published version of the Gaia catalogue.' RAVE4 is cited for age estimates (line 446-447).",
+      "comments": "RAVE website: https://www.rave-survey.org/. The paper uses RAVE5 radial velocities and stellar parameters, and RAVE4 age estimates (Kordopatis et al. 2013). Quality filters applied: |V_r| < 350 km/s, σ_Vr < 5 km/s."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "https://simbad.u-strasbg.fr/simbad/",
+      "local_path": "",
+      "description": "SIMBAD astronomical database (Wenger et al. 2000) operated by CDS Strasbourg. Used in this paper to obtain the astrometric parameters of the globular cluster ω Centauri (coordinates, proper motions, radial velocity, distance) for computing its Galactic orbit, and for cross-identifying the Tycho-2 stars in the BB17-3 clump. One star (TYC 8890-0860-1) is noted as not found in SIMBAD by its Tycho number but has an alternative designation RAVE J051701.4-661815.",
+      "source_refs": [
+        {
+          "path": "literature/1801.07671/arxiv_source/Om_Cen-arxiv=2018.tex",
+          "start_line": 483,
+          "end_line": 491,
+          "context": "The following input parameters taken from the SIMBAD electronic astronomical database were used for the cluster ω Cen: α=201.69165°, δ=-47.47694°, μαcosδ=-6.01±0.25 mas/yr, μδ=-5.02±0.25 mas/yr, V_r=238±5 km/s, and d=5.5±0.2 kpc."
+        }
+      ],
+      "evidence": "The paper explicitly states (lines 483-484): 'The following input parameters taken from the SIMBAD electronic astronomical database were used for the cluster ω Cen.' SIMBAD is also acknowledged in the Acknowledgments section (line 617): 'In our study we used the SIMBAD electronic database.' The table footnote (line 292-293) notes one star cannot be found in SIMBAD by its Tycho number.",
+      "comments": "SIMBAD is operated by CDS Strasbourg: https://simbad.u-strasbg.fr/simbad/. The paper used SIMBAD to retrieve ω Cen's astrometric parameters for orbit computation and for cross-identification of the 28 BB17-3 stars."
+    }
+  ]
+}

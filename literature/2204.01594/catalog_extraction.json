@@ -1,0 +1,1798 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-23T11:39:18",
+  "paper": {
+    "arxiv_id": "2204.01594",
+    "title": "The origin of early-type runaway stars from open clusters",
+    "month": "2022-04"
+  },
+  "review": {
+    "path": "literature/2204.01594/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260523T113918",
+    "started_at": "2026-05-23T11:39:18",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2204.01594",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": true
+    },
+    "summary": {
+      "internal_table_count": 11,
+      "work_count": 11,
+      "table_count": 11,
+      "success_count": 11,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 11,
+      "file_success_count": 11,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-significance",
+      "internal_table_id": "table-tab-significance",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2204.01594/arxiv_source/main.tex",
+        "start_line": 297,
+        "end_line": 315,
+        "caption": "P-values corresponding to different significance levels for 1 and 8 parameters using the $\\chi^2$ distribution when all parameters are at the respective ends of the uncertainty.",
+        "label": "tab:significance"
+      },
+      "source_path": "literature/2204.01594/arxiv_source/main.tex",
+      "excerpt_path": "literature/2204.01594/catalog_sources/table-tab-significance/excerpt.tex",
+      "sha256": "9309cff791e81c4a19be17979c37cd1f0bc10bd4c494872f4781bb0211a19287",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-extentofclusters",
+      "internal_table_id": "table-tab-extentofclusters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2204.01594/arxiv_source/main.tex",
+        "start_line": 321,
+        "end_line": 341,
+        "caption": "Radius containing 50\\% of the member stars of new clusters reported in this paper.",
+        "label": "tab:extentofclusters"
+      },
+      "source_path": "literature/2204.01594/arxiv_source/main.tex",
+      "excerpt_path": "literature/2204.01594/catalog_sources/table-tab-extentofclusters/excerpt.tex",
+      "sha256": "3ad4855df3b1420a79181f227ec2cf9389f5fd4e0b9b26051cf156175c29ffd4",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-tab-schoetller",
+      "internal_table_id": "table-tab-schoetller",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2204.01594/arxiv_source/main.tex",
+        "start_line": 419,
+        "end_line": 463,
+        "caption": "P values for the three-dimensional runaway samples of \\citetads{2020MNRAS.495.3104S} and \\citetads{Farias_orion}, thought to come from the ONC.",
+        "label": "tab:schoetller"
+      },
+      "source_path": "literature/2204.01594/arxiv_source/main.tex",
+      "excerpt_path": "literature/2204.01594/catalog_sources/table-tab-schoetller/excerpt.tex",
+      "sha256": "007d2366a2bdb84911ef5e9b358d9ed4ce4e279a905c29da14451b03af00eb47",
+      "line_count": 45,
+      "error": ""
+    },
+    {
+      "id": "table-tab-spacevelocity",
+      "internal_table_id": "table-tab-spacevelocity",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2204.01594/arxiv_source/main.tex",
+        "start_line": 524,
+        "end_line": 575,
+        "caption": "Radial velocities v$_\\textrm{rad}$ and derived space velocities v$_\\textrm{s}$ for the sample of \\citetads{hoog}.",
+        "label": "tab:spacevelocity"
+      },
+      "source_path": "literature/2204.01594/arxiv_source/main.tex",
+      "excerpt_path": "literature/2204.01594/catalog_sources/table-tab-spacevelocity/excerpt.tex",
+      "sha256": "8e6e0bafc2992a16a3238e7c4bec903a2eebb587024698e3876456d428ae0c5a",
+      "line_count": 52,
+      "error": ""
+    },
+    {
+      "id": "table-tab-identification",
+      "internal_table_id": "table-tab-identification",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2204.01594/arxiv_source/main.tex",
+        "start_line": 949,
+        "end_line": 1019,
+        "caption": "Suggested Clusters as places of origin for runaway stars based on spatial coincidence.",
+        "label": "tab:identification"
+      },
+      "source_path": "literature/2204.01594/arxiv_source/main.tex",
+      "excerpt_path": "literature/2204.01594/catalog_sources/table-tab-identification/excerpt.tex",
+      "sha256": "b3cd47fc3cedd31ad92c67f49f40631ea5de001ab8e604c002e7cc873181a5ed",
+      "line_count": 71,
+      "error": ""
+    },
+    {
+      "id": "table-tab-haloidenfication",
+      "internal_table_id": "table-tab-haloidenfication",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2204.01594/arxiv_source/main.tex",
+        "start_line": 1222,
+        "end_line": 1254,
+        "caption": "Possible Clusters as sites of origin of the Halo runaway stars using spatial coincidence.",
+        "label": "tab:haloidenfication"
+      },
+      "source_path": "literature/2204.01594/arxiv_source/main.tex",
+      "excerpt_path": "literature/2204.01594/catalog_sources/table-tab-haloidenfication/excerpt.tex",
+      "sha256": "24bc90aaeb421100d851ad5802e95e2c001f0969ba89bb06a173e258f179e848",
+      "line_count": 33,
+      "error": ""
+    },
+    {
+      "id": "table-tab-hypervelparams",
+      "internal_table_id": "table-tab-hypervelparams",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2204.01594/arxiv_source/main.tex",
+        "start_line": 1406,
+        "end_line": 1452,
+        "caption": "Parameters of runaways from the \\citetads{hoog} sample. \\textit{Hipparcos}, \\textit{Gaia} DR2 \\citepads{2018A&A...616A...2L} and EDR3 \\citepads{2021A&A...649A...2L} astrometric data are given.",
+        "label": "tab:hypervelparams"
+      },
+      "source_path": "literature/2204.01594/arxiv_source/main.tex",
+      "excerpt_path": "literature/2204.01594/catalog_sources/table-tab-hypervelparams/excerpt.tex",
+      "sha256": "499472afbce1e9f2f5cd76afec096e8d09d2925134809d5f22b2d2326b39b770",
+      "line_count": 47,
+      "error": ""
+    },
+    {
+      "id": "table-tab-clusterparams",
+      "internal_table_id": "table-tab-clusterparams",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2204.01594/arxiv_source/main.tex",
+        "start_line": 1455,
+        "end_line": 1486,
+        "caption": "Kinematic parameters of stellar clusters.",
+        "label": "tab:clusterparams"
+      },
+      "source_path": "literature/2204.01594/arxiv_source/main.tex",
+      "excerpt_path": "literature/2204.01594/catalog_sources/table-tab-clusterparams/excerpt.tex",
+      "sha256": "44642cfecf48703f03810103e653065273fb6b1d990c7419676ba82d42265155",
+      "line_count": 32,
+      "error": ""
+    },
+    {
+      "id": "table-tab-hyperrun",
+      "internal_table_id": "table-tab-hyperrun",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2204.01594/arxiv_source/main.tex",
+        "start_line": 1489,
+        "end_line": 1511,
+        "caption": "Kinematic parameters of B type runaways in the Galactic halo taken from \\citeads{Markus:Thesis:2021}",
+        "label": "tab:hyperrun"
+      },
+      "source_path": "literature/2204.01594/arxiv_source/main.tex",
+      "excerpt_path": "literature/2204.01594/catalog_sources/table-tab-hyperrun/excerpt.tex",
+      "sha256": "b23cebfebec7de77d76a0a000855ad7f89d9dc3000ec38f316add08373c22977",
+      "line_count": 23,
+      "error": ""
+    },
+    {
+      "id": "table-tab-table1",
+      "internal_table_id": "table-tab-table1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2204.01594/arxiv_source/main.tex",
+        "start_line": 1580,
+        "end_line": 1660,
+        "caption": "P values for the list of stars in the sample of \\citetads{hoog}. The column p-val lists the p-values and the column T$_f$ lists the best fit times of flight for the \\textit{Hipparcos} astrometry.",
+        "label": "tab:table1"
+      },
+      "source_path": "literature/2204.01594/arxiv_source/main.tex",
+      "excerpt_path": "literature/2204.01594/catalog_sources/table-tab-table1/excerpt.tex",
+      "sha256": "05043de0261e7571c9c92d2c6a3f88f8c7c9a0a9d595c45b63126ffe2dbc79ef",
+      "line_count": 81,
+      "error": ""
+    },
+    {
+      "id": "table-tab-oldtars",
+      "internal_table_id": "table-tab-oldtars",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2204.01594/arxiv_source/main.tex",
+        "start_line": 1664,
+        "end_line": 1728,
+        "caption": "P values for the previously known single and binary stars in the sample of \\citetads{hoog} with \\textit{Gaia} DR2 \\citepads{2018A&A...616A...2L} and EDR3 \\citepads{2021A&A...649A...2L} astrometries.",
+        "label": "tab:oldtars"
+      },
+      "source_path": "literature/2204.01594/arxiv_source/main.tex",
+      "excerpt_path": "literature/2204.01594/catalog_sources/table-tab-oldtars/excerpt.tex",
+      "sha256": "83c343d662ffb69f40b1e2f1567a90315ee22dfa2e8189cf015b95bdd1d2d832",
+      "line_count": 65,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-significance",
+      "internal_table_id": "table-tab-significance",
+      "status": "success",
+      "ecsv_path": "literature/2204.01594/catalog_tables/table-tab-significance.ecsv",
+      "caption": "P-values corresponding to different significance levels for 1 and 8 parameters using the $\\chi^2$ distribution when all parameters are at the respective ends of the uncertainty.",
+      "label": "tab:significance",
+      "row_count": 5,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz37851qb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2204.01594/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz37851qb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2204.01594/catalog_sources/table-tab-significance/wrapped.tex",
+            "html": "literature/2204.01594/catalog_sources/table-tab-significance/latexml.html",
+            "stdout": "literature/2204.01594/catalog_sources/table-tab-significance/latexml.stdout.txt",
+            "stderr": "literature/2204.01594/catalog_sources/table-tab-significance/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9309cff791e81c4a19be17979c37cd1f0bc10bd4c494872f4781bb0211a19287"
+    },
+    {
+      "id": "table-tab-extentofclusters",
+      "internal_table_id": "table-tab-extentofclusters",
+      "status": "success",
+      "ecsv_path": "literature/2204.01594/catalog_tables/table-tab-extentofclusters.ecsv",
+      "caption": "Radius containing 50\\% of the member stars of new clusters reported in this paper.",
+      "label": "tab:extentofclusters",
+      "row_count": 6,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster",
+          "Extent (pc)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Extent (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz5n0wvj2/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2204.01594/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz5n0wvj2/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2204.01594/catalog_sources/table-tab-extentofclusters/wrapped.tex",
+            "html": "literature/2204.01594/catalog_sources/table-tab-extentofclusters/latexml.html",
+            "stdout": "literature/2204.01594/catalog_sources/table-tab-extentofclusters/latexml.stdout.txt",
+            "stderr": "literature/2204.01594/catalog_sources/table-tab-extentofclusters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3ad4855df3b1420a79181f227ec2cf9389f5fd4e0b9b26051cf156175c29ffd4"
+    },
+    {
+      "id": "table-tab-schoetller",
+      "internal_table_id": "table-tab-schoetller",
+      "status": "success",
+      "ecsv_path": "literature/2204.01594/catalog_tables/table-tab-schoetller.ecsv",
+      "caption": "P values for the three-dimensional runaway samples of \\citetads{2020MNRAS.495.3104S} and \\citetads{Farias_orion}, thought to come from the ONC.",
+      "label": "tab:schoetller",
+      "row_count": 27,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp52q_om5_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2204.01594/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp52q_om5_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2204.01594/catalog_sources/table-tab-schoetller/wrapped.tex",
+            "html": "literature/2204.01594/catalog_sources/table-tab-schoetller/latexml.html",
+            "stdout": "literature/2204.01594/catalog_sources/table-tab-schoetller/latexml.stdout.txt",
+            "stderr": "literature/2204.01594/catalog_sources/table-tab-schoetller/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "007d2366a2bdb84911ef5e9b358d9ed4ce4e279a905c29da14451b03af00eb47"
+    },
+    {
+      "id": "table-tab-spacevelocity",
+      "internal_table_id": "table-tab-spacevelocity",
+      "status": "success",
+      "ecsv_path": "literature/2204.01594/catalog_tables/table-tab-spacevelocity.ecsv",
+      "caption": "Radial velocities v$_\\textrm{rad}$ and derived space velocities v$_\\textrm{s}$ for the sample of \\citetads{hoog}.",
+      "label": "tab:spacevelocity",
+      "row_count": 27,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "HIP",
+          "RVV",
+          "v _rad",
+          "v _s",
+          "Reference"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "HIP",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RVV",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "v _rad",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "v _s",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Reference",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2eaz7gnw/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2204.01594/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2eaz7gnw/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2204.01594/catalog_sources/table-tab-spacevelocity/wrapped.tex",
+            "html": "literature/2204.01594/catalog_sources/table-tab-spacevelocity/latexml.html",
+            "stdout": "literature/2204.01594/catalog_sources/table-tab-spacevelocity/latexml.stdout.txt",
+            "stderr": "literature/2204.01594/catalog_sources/table-tab-spacevelocity/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8e6e0bafc2992a16a3238e7c4bec903a2eebb587024698e3876456d428ae0c5a"
+    },
+    {
+      "id": "table-tab-identification",
+      "internal_table_id": "table-tab-identification",
+      "status": "success",
+      "ecsv_path": "literature/2204.01594/catalog_tables/table-tab-identification.ecsv",
+      "caption": "Suggested Clusters as places of origin for runaway stars based on spatial coincidence.",
+      "label": "tab:identification",
+      "row_count": 35,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "HIP Num",
+          "Origin",
+          "p-val",
+          "T _f",
+          "T _rel",
+          "V _rel",
+          "T _c",
+          "Flag _age",
+          "Suggested",
+          "Original",
+          "References"
+        ],
+        [
+          "",
+          "",
+          "",
+          "Myrs",
+          "Myrs",
+          "km s -1",
+          "Myrs",
+          "",
+          "Mechanism",
+          "Mechanism",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "HIP Num",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Origin",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "p-val",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "T _f | Myrs",
+          "unit_text": "Myrs",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "T _rel | Myrs",
+          "unit_text": "Myrs",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V _rel | km s -1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "T _c | Myrs",
+          "unit_text": "Myrs",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Flag _age",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Suggested | Mechanism",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Original | Mechanism",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "References",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5z5am2wx/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2204.01594/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5z5am2wx/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2204.01594/catalog_sources/table-tab-identification/wrapped.tex",
+            "html": "literature/2204.01594/catalog_sources/table-tab-identification/latexml.html",
+            "stdout": "literature/2204.01594/catalog_sources/table-tab-identification/latexml.stdout.txt",
+            "stderr": "literature/2204.01594/catalog_sources/table-tab-identification/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b3cd47fc3cedd31ad92c67f49f40631ea5de001ab8e604c002e7cc873181a5ed"
+    },
+    {
+      "id": "table-tab-haloidenfication",
+      "internal_table_id": "table-tab-haloidenfication",
+      "status": "success",
+      "ecsv_path": "literature/2204.01594/catalog_tables/table-tab-haloidenfication.ecsv",
+      "caption": "Possible Clusters as sites of origin of the Halo runaway stars using spatial coincidence.",
+      "label": "tab:haloidenfication",
+      "row_count": 13,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "Cluster Name",
+          "p-val",
+          "T f",
+          "T rel",
+          "v _rel",
+          "T c",
+          "Flag age",
+          "Suggested",
+          "References",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "Myrs",
+          "Myrs",
+          "km s -1",
+          "Myrs",
+          "",
+          "mechanism",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Cluster Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "p-val",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "T f | Myrs",
+          "unit_text": "Myrs",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "T rel | Myrs",
+          "unit_text": "Myrs",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v _rel | km s -1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "T c | Myrs",
+          "unit_text": "Myrs",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Flag age",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Suggested | mechanism",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "References",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfo64we8y/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2204.01594/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfo64we8y/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2204.01594/catalog_sources/table-tab-haloidenfication/wrapped.tex",
+            "html": "literature/2204.01594/catalog_sources/table-tab-haloidenfication/latexml.html",
+            "stdout": "literature/2204.01594/catalog_sources/table-tab-haloidenfication/latexml.stdout.txt",
+            "stderr": "literature/2204.01594/catalog_sources/table-tab-haloidenfication/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "24bc90aaeb421100d851ad5802e95e2c001f0969ba89bb06a173e258f179e848"
+    },
+    {
+      "id": "table-tab-hypervelparams",
+      "internal_table_id": "table-tab-hypervelparams",
+      "status": "success",
+      "ecsv_path": "literature/2204.01594/catalog_tables/table-tab-hypervelparams.ecsv",
+      "caption": "Parameters of runaways from the \\citetads{hoog} sample. \\textit{Hipparcos}, \\textit{Gaia} DR2 \\citepads{2018A&A...616A...2L} and EDR3 \\citepads{2021A&A...649A...2L} astrometric data are given.",
+      "label": "tab:hypervelparams",
+      "row_count": 23,
+      "column_count": 25,
+      "environment": "pgfplotstable",
+      "header_rows": [
+        [
+          "HIP",
+          "\\varpi",
+          "e_\\varpi",
+          "\\mu_\\alpha*",
+          "e\\mu_\\alpha*",
+          "\\mu_\\delta",
+          "e\\mu_\\delta",
+          "F2",
+          "\\varpi",
+          "e_\\varpi",
+          "\\mu_\\alpha*",
+          "e\\mu_\\alpha*",
+          "\\mu_\\delta",
+          "e\\mu_\\delta",
+          "RUWE(DR2)",
+          "\\varpi",
+          "e\\varpi",
+          "\\mu_\\alpha*",
+          "e\\mu_\\alpha*",
+          "\\mu_\\delta",
+          "e\\mu_\\delta",
+          "RUWE(EDR3)",
+          "RV",
+          "e_RV",
+          "V mag"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "hip_number_1",
+          "original_header": "HIP",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "plx_hip",
+          "original_header": "\\varpi",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "e_plx_hip",
+          "original_header": "e_\\varpi",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "pmra_hip",
+          "original_header": "\\mu_\\alpha*",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "e_pmra_hip",
+          "original_header": "e\\mu_\\alpha*",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "pmde_hip",
+          "original_header": "\\mu_\\delta",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "e_pmde_hip",
+          "original_header": "e\\mu_\\delta",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "F2",
+          "original_header": "F2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "plx_dr2",
+          "original_header": "\\varpi",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "e_plx",
+          "original_header": "e_\\varpi",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "pmra",
+          "original_header": "\\mu_\\alpha*",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "e_pmra",
+          "original_header": "e\\mu_\\alpha*",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "pmde",
+          "original_header": "\\mu_\\delta",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "e_pmde",
+          "original_header": "e\\mu_\\delta",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "ruwe_dr2",
+          "original_header": "RUWE(DR2)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "parallax_dr3",
+          "original_header": "\\varpi",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "parallax_error_dr3",
+          "original_header": "e\\varpi",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "pmra_dr3",
+          "original_header": "\\mu_\\alpha*",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "pmra_error_dr3",
+          "original_header": "e\\mu_\\alpha*",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "pmdec_dr3",
+          "original_header": "\\mu_\\delta",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "pmdec_error_dr3",
+          "original_header": "e\\mu_\\delta",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "ruwe_dr3",
+          "original_header": "RUWE(EDR3)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "rv",
+          "original_header": "RV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "rv_error",
+          "original_header": "e_RV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "V",
+          "original_header": "V mag",
+          "unit_text": "V mag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "converted from pgfplotstable backing CSV: literature/2204.01594/arxiv_source/tables/Hypervel_Hooglist.csv"
+      ],
+      "error": "",
+      "extraction_method": "pgfplotstable_csv",
+      "conversion_attempts": [
+        {
+          "method": "pgfplotstable_csv",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "499472afbce1e9f2f5cd76afec096e8d09d2925134809d5f22b2d2326b39b770"
+    },
+    {
+      "id": "table-tab-clusterparams",
+      "internal_table_id": "table-tab-clusterparams",
+      "status": "success",
+      "ecsv_path": "literature/2204.01594/catalog_tables/table-tab-clusterparams.ecsv",
+      "caption": "Kinematic parameters of stellar clusters.",
+      "label": "tab:clusterparams",
+      "row_count": 46,
+      "column_count": 11,
+      "environment": "pgfplotstable",
+      "header_rows": [
+        [
+          "Name",
+          "\\varpi",
+          "e_\\varpi",
+          "\\mu_\\alpha*",
+          "e\\mu_\\alpha*",
+          "\\mu_\\delta",
+          "e\\mu_\\delta",
+          "RV",
+          "eRV",
+          "N_PM",
+          "N_RV"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "SimbadName_1",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "Plx",
+          "original_header": "\\varpi",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "e_Plx",
+          "original_header": "e_\\varpi",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "pmRA",
+          "original_header": "\\mu_\\alpha*",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "e_pmRA",
+          "original_header": "e\\mu_\\alpha*",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "pmDE",
+          "original_header": "\\mu_\\delta",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "e_pmDE",
+          "original_header": "e\\mu_\\delta",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "RV",
+          "original_header": "RV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "s_RV",
+          "original_header": "eRV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "N",
+          "original_header": "N_PM",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "NStars",
+          "original_header": "N_RV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "converted from pgfplotstable backing CSV: literature/2204.01594/arxiv_source/tables/cluster_parameters.csv"
+      ],
+      "error": "",
+      "extraction_method": "pgfplotstable_csv",
+      "conversion_attempts": [
+        {
+          "method": "pgfplotstable_csv",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "44642cfecf48703f03810103e653065273fb6b1d990c7419676ba82d42265155"
+    },
+    {
+      "id": "table-tab-hyperrun",
+      "internal_table_id": "table-tab-hyperrun",
+      "status": "success",
+      "ecsv_path": "literature/2204.01594/catalog_tables/table-tab-hyperrun.ecsv",
+      "caption": "Kinematic parameters of B type runaways in the Galactic halo taken from \\citeads{Markus:Thesis:2021}",
+      "label": "tab:hyperrun",
+      "row_count": 12,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "\\mu_\\alpha\\cos\\delta",
+          "\\mu_\\delta",
+          "\\varpi",
+          "RUWE",
+          "v_rad",
+          "d_spec",
+          "t_evol",
+          "t_flight"
+        ],
+        [
+          "",
+          "(mas/yr)",
+          "(mas/yr)",
+          "(mas)",
+          "",
+          "(km s -1 )",
+          "Kpc",
+          "Myr",
+          "Myr"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\mu_\\alpha\\cos\\delta | (mas/yr)",
+          "unit_text": "(mas/yr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mu_\\delta | (mas/yr)",
+          "unit_text": "(mas/yr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\varpi | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "RUWE",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v_rad | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "d_spec | Kpc",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "t_evol | Myr",
+          "unit_text": "Myr",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "t_flight | Myr",
+          "unit_text": "Myr",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpiangmouf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2204.01594/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpiangmouf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2204.01594/catalog_sources/table-tab-hyperrun/wrapped.tex",
+            "html": "literature/2204.01594/catalog_sources/table-tab-hyperrun/latexml.html",
+            "stdout": "literature/2204.01594/catalog_sources/table-tab-hyperrun/latexml.stdout.txt",
+            "stderr": "literature/2204.01594/catalog_sources/table-tab-hyperrun/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b23cebfebec7de77d76a0a000855ad7f89d9dc3000ec38f316add08373c22977"
+    },
+    {
+      "id": "table-tab-table1",
+      "internal_table_id": "table-tab-table1",
+      "status": "success",
+      "ecsv_path": "literature/2204.01594/catalog_tables/table-tab-table1.ecsv",
+      "caption": "P values for the list of stars in the sample of \\citetads{hoog}. The column p-val lists the p-values and the column T$_f$ lists the best fit times of flight for the \\textit{Hipparcos} astrometry.",
+      "label": "tab:table1",
+      "row_count": 41,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star Name",
+          "HIP Number",
+          "Star/Place of Origin",
+          "p-val (Hip)",
+          "T f",
+          "Reference"
+        ],
+        [
+          "",
+          "6",
+          "",
+          "Myrs",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "HIP Number | 6",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Star/Place of Origin",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "p-val (Hip) | Myrs",
+          "unit_text": "Myrs",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "T f",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Reference",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwhf7tuon/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2204.01594/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwhf7tuon/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2204.01594/catalog_sources/table-tab-table1/wrapped.tex",
+            "html": "literature/2204.01594/catalog_sources/table-tab-table1/latexml.html",
+            "stdout": "literature/2204.01594/catalog_sources/table-tab-table1/latexml.stdout.txt",
+            "stderr": "literature/2204.01594/catalog_sources/table-tab-table1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "05043de0261e7571c9c92d2c6a3f88f8c7c9a0a9d595c45b63126ffe2dbc79ef"
+    },
+    {
+      "id": "table-tab-oldtars",
+      "internal_table_id": "table-tab-oldtars",
+      "status": "success",
+      "ecsv_path": "literature/2204.01594/catalog_tables/table-tab-oldtars.ecsv",
+      "caption": "P values for the previously known single and binary stars in the sample of \\citetads{hoog} with \\textit{Gaia} DR2 \\citepads{2018A&A...616A...2L} and EDR3 \\citepads{2021A&A...649A...2L} astrometries.",
+      "label": "tab:oldtars",
+      "row_count": 31,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star Name",
+          "HIP Number",
+          "Star/Place of Origin",
+          "p-val (DR2)",
+          "T f (DR2)",
+          "p-val (EDR3)",
+          "T f (EDR3)",
+          "Reference"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "HIP Number",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Star/Place of Origin",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "p-val (DR2)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "T f (DR2)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "p-val (EDR3)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "T f (EDR3)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Reference",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpec3hie3q/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2204.01594/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpec3hie3q/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2204.01594/catalog_sources/table-tab-oldtars/wrapped.tex",
+            "html": "literature/2204.01594/catalog_sources/table-tab-oldtars/latexml.html",
+            "stdout": "literature/2204.01594/catalog_sources/table-tab-oldtars/latexml.stdout.txt",
+            "stderr": "literature/2204.01594/catalog_sources/table-tab-oldtars/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "83c343d662ffb69f40b1e2f1567a90315ee22dfa2e8189cf015b95bdd1d2d832"
+    }
+  ]
+}

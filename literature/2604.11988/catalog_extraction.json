@@ -1,0 +1,1084 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:36",
+  "paper": {
+    "arxiv_id": "2604.11988",
+    "title": "OB runaway stars originating in the Vel OB1 association",
+    "month": "2026-04"
+  },
+  "review": {
+    "path": "literature/2604.11988/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124036",
+    "started_at": "2026-05-17T12:40:36",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2604.11988",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-parori",
+      "internal_table_id": "table-tab-parori",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+        "start_line": 113,
+        "end_line": 140,
+        "caption": "Young stellar clusters in Vel~OB1.",
+        "label": "tab:parori"
+      },
+      "source_path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+      "excerpt_path": "literature/2604.11988/catalog_sources/table-tab-parori/excerpt.tex",
+      "sha256": "eb02d47973ace8adc27d9714cf248279b81b7c69ea4337f67db95746ca252896",
+      "line_count": 28,
+      "error": ""
+    },
+    {
+      "id": "table-tab-estpar1",
+      "internal_table_id": "table-tab-estpar1",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+        "start_line": 336,
+        "end_line": 381,
+        "caption": "Adopted and estimated parameters of the observed bow shock around the runaway stars.",
+        "label": "tab:estpar1"
+      },
+      "source_path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+      "excerpt_path": "literature/2604.11988/catalog_sources/table-tab-estpar1/excerpt.tex",
+      "sha256": "15fd4b699b0c8be9c96553c05a0a4d7362c87e145e5c66c3cde2035f3b2e4de6",
+      "line_count": 46,
+      "error": ""
+    },
+    {
+      "id": "table-tab-par1",
+      "internal_table_id": "table-tab-par1",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+        "start_line": 462,
+        "end_line": 576,
+        "caption": "Candidate members of Vel~OB1 according to literature.",
+        "label": "tab:par1"
+      },
+      "source_path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+      "excerpt_path": "literature/2604.11988/catalog_sources/table-tab-par1/excerpt.tex",
+      "sha256": "dc3d5bdff0274c14a7420620ae20e04c1d5896eca75de3009c4c273c6e977bef",
+      "line_count": 115,
+      "error": ""
+    },
+    {
+      "id": "table-tab-parrun",
+      "internal_table_id": "table-tab-parrun",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+        "start_line": 594,
+        "end_line": 655,
+        "caption": "Astrometric and kinematic properties of the OB runaway stars in the area of Vel~OB1.",
+        "label": "tab:parrun"
+      },
+      "source_path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+      "excerpt_path": "literature/2604.11988/catalog_sources/table-tab-parrun/excerpt.tex",
+      "sha256": "374ce404529565c0004a2a73897fc60513692446459097e630efa082222c2ee6",
+      "line_count": 62,
+      "error": ""
+    },
+    {
+      "id": "table-tab-parrunori",
+      "internal_table_id": "table-tab-parrunori",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+        "start_line": 657,
+        "end_line": 715,
+        "caption": "Estimate of the kinematical age of the OB runaways in Vel~OB1.",
+        "label": "tab:parrunori"
+      },
+      "source_path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+      "excerpt_path": "literature/2604.11988/catalog_sources/table-tab-parrunori/excerpt.tex",
+      "sha256": "72b51e835f39f00f45b76f01c191942b56fe307cb674ac788a8c0d234d1fca9a",
+      "line_count": 59,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-parori",
+      "internal_table_id": "table-tab-parori",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2604.11988/catalog_tables/table-tab-parori.ecsv",
+      "caption": "Young stellar clusters in Vel~OB1.",
+      "label": "tab:parori",
+      "row_count": 6,
+      "column_count": 12,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "l",
+          "b",
+          "N",
+          "Parallax",
+          "\\mu_l^*",
+          "\\mu_b",
+          "V LSR",
+          "D",
+          "Age",
+          "A V",
+          "p"
+        ],
+        [
+          "-",
+          "(deg)",
+          "(deg)",
+          "-",
+          "(mas)",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(km s -1 )",
+          "(pc)",
+          "(Myr)",
+          "(mag)",
+          "-"
+        ],
+        [
+          "(1)",
+          "(2)",
+          "(3)",
+          "(4)",
+          "(5)",
+          "(6)",
+          "(7)",
+          "(8)",
+          "(9)",
+          "(10)",
+          "(11)",
+          "(12)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name | - | (1)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "l | (deg) | (2)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "b | (deg) | (3)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "N | - | (4)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Parallax | (mas) | (5)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_l^* | (mas yr -1 ) | (6)",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_b | (mas yr -1 ) | (7)",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "V LSR | (km s -1 ) | (8)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "D | (pc) | (9)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Age | (Myr) | (10)",
+          "unit_text": "(Myr)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "A V | (mag) | (11)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "p | - | (12)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp4vr5i23/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2604.11988/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp4vr5i23/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2604.11988/catalog_sources/table-tab-parori/wrapped.tex",
+            "html": "literature/2604.11988/catalog_sources/table-tab-parori/latexml.html",
+            "stdout": "literature/2604.11988/catalog_sources/table-tab-parori/latexml.stdout.txt",
+            "stderr": "literature/2604.11988/catalog_sources/table-tab-parori/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "eb02d47973ace8adc27d9714cf248279b81b7c69ea4337f67db95746ca252896"
+    },
+    {
+      "id": "table-tab-estpar1",
+      "internal_table_id": "table-tab-estpar1",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2604.11988/catalog_tables/table-tab-estpar1.ecsv",
+      "caption": "Adopted and estimated parameters of the observed bow shock around the runaway stars.",
+      "label": "tab:estpar1",
+      "row_count": 16,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Runaway",
+          "l",
+          "b",
+          "V w",
+          "\\dotM",
+          "n _\\rm ISM^\\rm BS",
+          "n _\\rm ISM^\\rm St",
+          "R St",
+          "R"
+        ],
+        [
+          "-",
+          "(deg)",
+          "(deg)",
+          "(km s -1 )",
+          "(M _\\sun yr -1 )",
+          "(cm -3 )",
+          "(cm -3 )",
+          "( ∘ )",
+          "(arcsec)"
+        ],
+        [
+          "(1)",
+          "(2)",
+          "(3)",
+          "(4)",
+          "(5)",
+          "(6)",
+          "(7)",
+          "(8)",
+          "(9)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Runaway | - | (1)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "l | (deg) | (2)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "b | (deg) | (3)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "V w | (km s -1 ) | (4)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\dotM | (M _\\sun yr -1 ) | (5)",
+          "unit_text": "(M _\\sun yr -1 )",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "n _\\rm ISM^\\rm BS | (cm -3 ) | (6)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "n _\\rm ISM^\\rm St | (cm -3 ) | (7)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "R St | ( ∘ ) | (8)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "R | (arcsec) | (9)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp35h2owpk/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2604.11988/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp35h2owpk/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2604.11988/catalog_sources/table-tab-estpar1/wrapped.tex",
+            "html": "literature/2604.11988/catalog_sources/table-tab-estpar1/latexml.html",
+            "stdout": "literature/2604.11988/catalog_sources/table-tab-estpar1/latexml.stdout.txt",
+            "stderr": "literature/2604.11988/catalog_sources/table-tab-estpar1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "15fd4b699b0c8be9c96553c05a0a4d7362c87e145e5c66c3cde2035f3b2e4de6"
+    },
+    {
+      "id": "table-tab-par1",
+      "internal_table_id": "table-tab-par1",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2604.11988/catalog_tables/table-tab-par1.ecsv",
+      "caption": "Candidate members of Vel~OB1 according to literature.",
+      "label": "tab:par1",
+      "row_count": 80,
+      "column_count": 14,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "l",
+          "b",
+          "Sp. Type",
+          "V r",
+          "Parallax",
+          "\\mu_l^*",
+          "\\mu_b",
+          "G",
+          "D",
+          "V pec",
+          "",
+          "Member",
+          "Ref (SpT,V r )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "l",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "b",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Sp. Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V r",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Parallax",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_l^*",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\mu_b",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "G",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "D",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "V pec",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "Member",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "Ref (SpT,V r )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxs4vnvid/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2604.11988/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxs4vnvid/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2604.11988/catalog_sources/table-tab-par1/wrapped.tex",
+            "html": "literature/2604.11988/catalog_sources/table-tab-par1/latexml.html",
+            "stdout": "literature/2604.11988/catalog_sources/table-tab-par1/latexml.stdout.txt",
+            "stderr": "literature/2604.11988/catalog_sources/table-tab-par1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "dc3d5bdff0274c14a7420620ae20e04c1d5896eca75de3009c4c273c6e977bef"
+    },
+    {
+      "id": "table-tab-parrun",
+      "internal_table_id": "table-tab-parrun",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2604.11988/catalog_tables/table-tab-parrun.ecsv",
+      "caption": "Astrometric and kinematic properties of the OB runaway stars in the area of Vel~OB1.",
+      "label": "tab:parrun",
+      "row_count": 41,
+      "column_count": 16,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "l",
+          "b",
+          "Sp. Type",
+          "Parallax",
+          "D",
+          "\\mu_l^*",
+          "\\mu_b",
+          "V r",
+          "V pec",
+          "",
+          "",
+          "Z",
+          "Bow shock",
+          "Aligned",
+          "Angle"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "l",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "b",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Sp. Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Parallax",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "D",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_l^*",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\mu_b",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "V r",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "V pec",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "Z",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "Bow shock",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "Aligned",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "Angle",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6p6h456q/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2604.11988/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6p6h456q/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2604.11988/catalog_sources/table-tab-parrun/wrapped.tex",
+            "html": "literature/2604.11988/catalog_sources/table-tab-parrun/latexml.html",
+            "stdout": "literature/2604.11988/catalog_sources/table-tab-parrun/latexml.stdout.txt",
+            "stderr": "literature/2604.11988/catalog_sources/table-tab-parrun/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "374ce404529565c0004a2a73897fc60513692446459097e630efa082222c2ee6"
+    },
+    {
+      "id": "table-tab-parrunori",
+      "internal_table_id": "table-tab-parrunori",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2604.11988/catalog_tables/table-tab-parrunori.ecsv",
+      "caption": "Estimate of the kinematical age of the OB runaways in Vel~OB1.",
+      "label": "tab:parrunori",
+      "row_count": 38,
+      "column_count": 12,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "l",
+          "b",
+          "D",
+          "V r",
+          "V pecLSR",
+          "Runaway direction",
+          "Age kinGP",
+          "Parent",
+          "D par",
+          "Age kinpar",
+          "V pecpar"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "l",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "b",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "D",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V r",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V pecLSR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Runaway direction",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Age kinGP",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Parent",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "D par",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Age kinpar",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "V pecpar",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7d63btk6/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2604.11988/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7d63btk6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2604.11988/catalog_sources/table-tab-parrunori/wrapped.tex",
+            "html": "literature/2604.11988/catalog_sources/table-tab-parrunori/latexml.html",
+            "stdout": "literature/2604.11988/catalog_sources/table-tab-parrunori/latexml.stdout.txt",
+            "stderr": "literature/2604.11988/catalog_sources/table-tab-parrunori/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "72b51e835f39f00f45b76f01c191942b56fe307cb674ac788a8c0d234d1fca9a"
+    }
+  ]
+}

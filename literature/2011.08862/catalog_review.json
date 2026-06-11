@@ -1,0 +1,411 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2011.08862",
+    "title": "Runaway blue main-sequence stars at high Galactic latitudes. Target selection with Gaia and spectroscopic identification",
+    "month": "2020-11",
+    "source_note_json": "notes/2020/2020-11/2020-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2011.08862",
+      "pdf": "https://arxiv.org/pdf/2011.08862"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2011.08862",
+    "audit_path": "literature/2011.08862/audit.json",
+    "source_dir": "literature/2011.08862/arxiv_source",
+    "tex_root": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:40:00",
+    "reviewer": "agent",
+    "summary": "论文利用Gaia DR2天体测量和测光数据，选出~2300颗高银纬蓝色恒星候选体，并对其中的48颗进行低分辨率光谱跟踪观测。通过分光光度距离与视差距离的比较，区分出12颗主序速逃星候选体、27颗蓝水平分支星候选体和2颗热演化星。对12颗MS候选体进行银河系轨道回溯，确定其抛射速度（200-802 km/s）、银盘交叉位置和飞行时间。其中3颗星的抛射速度超过450 km/s，挑战经典抛射机制；最快的星（2207-4329: 802 km/s）有不可忽略的逃逸概率。论文含五张LaTeX表格：Table 1（t:phot）列出48颗观测目标的Gaia DR2天体测量和测光数据；Table 2（t:spec）列出全部48颗星的光谱参数及7颗未分类星；Table 3（t:ms）列出12颗MS候选体的物理参数（质量、半径、光度、年龄、距离）；Table 4（t:bhb_physical）列出27颗BHB及2颗post-EHB候选体的物理参数；Table 5（t:orbit）列出12颗MS候选体的轨道参数（位置、速度、逃逸概率、偏心率、角动量、近心点/远心点、抛射速度、飞行时间）。致谢中提及Gaia、GALEX、2MASS、WISE等望远镜/巡天为通用致谢，非结构化数据资产。附录A含Gaia归档查询代码（非数据URL）。未发现外部URL数据资源。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-t-phot",
+      "kind": "latex_table",
+      "asset_type": "source_catalog",
+      "role_in_paper": "列出48颗光谱跟踪观测目标的Gaia DR2天体测量（坐标、自行、视差）和测光（G、G_BP、G_RP星等）数据，以及观测日期和简化名称，是整个论文的基础源星表。",
+      "source_refs": [
+        {
+          "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+          "start_line": 166,
+          "end_line": 227,
+          "caption": "Gaia DR2 data for the observed 48 targets.",
+          "label": "t:phot"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2",
+          "meaning": "Gaia DR2 源标识符（19位数字），用于在Gaia星表中唯一标识该恒星",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "α",
+          "meaning": "赤经坐标（J2000历元）",
+          "unit_text": "hms",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "δ",
+          "meaning": "赤纬坐标（J2000历元）",
+          "unit_text": "dms",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ*_α",
+          "meaning": "赤经方向自行（含cosδ因子）",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_δ",
+          "meaning": "赤纬方向自行",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ϖ",
+          "meaning": "Gaia DR2视差测量值",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia G波段视星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G_BP",
+          "meaning": "Gaia BP波段视星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G_RP",
+          "meaning": "Gaia RP波段视星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Short name",
+          "meaning": "简化名称（hhmm±ddmm），由Gaia坐标截断而来，用于全文标识目标恒星；1900-7033和2239-2455分别为已知星JL 6和PHL 5382",
+          "unit_text": "",
+          "source_of_definition": "table header and table foot",
+          "confidence": 1.0
+        },
+        {
+          "name": "Observing date",
+          "meaning": "NTT/EFOSC2光谱观测日期",
+          "unit_text": "yyyy-mm-dd",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 3 Observations: 'The relevant Gaia data for the observed targets are listed in Table 1.' 表注说明简化名称基于Gaia赤经赤纬的六十进制表示。",
+      "comments": "48颗目标星，其中1900-7033 = JL 6，2239-2455 = PHL 5382为已知星。观测日期跨2019年8月16-20日。"
+    },
+    {
+      "id": "table-t-spec",
+      "kind": "latex_table",
+      "asset_type": "derived_stellar_parameters",
+      "role_in_paper": "列出48颗观测星的光谱拟合参数（信噪比S/N、有效温度Teff、表面重力log g、视向速度v_rad、星际红化E(44-55)）和MS候选体分类标记（✓/✗），底部附7颗未分类星。该表为区分MS/BHB候选体提供关键输入参数。",
+      "source_refs": [
+        {
+          "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+          "start_line": 381,
+          "end_line": 444,
+          "caption": "Spectroscopic parameters of the sample derived from model spectra, as appropriate for their classification (MS or BHB candidate, respectively). Unclassified stars are listed at the bottom with their parameters derived from models with sub-solar composition.",
+          "label": "t:spec"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Short name",
+          "meaning": "恒星简化名称（与Table 1一致）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S/N",
+          "meaning": "叠加光谱的信噪比",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_eff",
+          "meaning": "有效温度（由光谱拟合得出，系统不确定性约4%）",
+          "unit_text": "K",
+          "source_of_definition": "table header and footnotes",
+          "confidence": 1.0
+        },
+        {
+          "name": "log g",
+          "meaning": "表面重力对数（由光谱拟合得出，系统不确定性约0.1 dex）",
+          "unit_text": "log(cm/s^2)",
+          "source_of_definition": "table header and footnotes",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_rad",
+          "meaning": "日心视向速度（系统不确定性约25 km/s，由白矮星标准星比对确定）",
+          "unit_text": "km/s",
+          "source_of_definition": "table header and Sect. 3 observation text",
+          "confidence": 1.0
+        },
+        {
+          "name": "E(44-55)",
+          "meaning": "单色星际红化（在4400Å和5500Å处测量），与传统色余E(B-V)密切相关",
+          "unit_text": "mag",
+          "source_of_definition": "table header and Sect. 4 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "MS",
+          "meaning": "MS候选体分类标记：✓✓（同时满足MS和BHB分类）、✓（唯一MS候选体）、✗（非MS候选体/BHB或其他）；底部7行无此标记为未分类星",
+          "unit_text": "",
+          "source_of_definition": "table header (MS column) and footnotes",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 4 Data analysis: 'Table 2 lists the atmospheric parameters corresponding to the spectroscopic best-fit models...'",
+      "comments": "3颗星（0035-5900, 1900-7032, 2019-7107）被同时分类为MS和BHB候选体（✓✓标记）。1621-8350和1944-4628为热演化星（post-EHB），采用太阳金属丰度模型。底部7颗未分类星采用次太阳金属丰度模型拟合。"
+    },
+    {
+      "id": "table-t-ms",
+      "kind": "latex_table",
+      "asset_type": "derived_stellar_parameters",
+      "role_in_paper": "列出12颗经距离比较法唯一确认为MS候选体的物理参数：质量M、半径R、光度log(L/L_sun)、演化年龄τ_evo和分光光度距离D(SpT)。这些参数由光谱拟合结果结合Ekström et al. (2012)旋转演化轨迹和SED角直径推导得出，是整个论文的核心结果表之一。",
+      "source_refs": [
+        {
+          "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+          "start_line": 446,
+          "end_line": 471,
+          "caption": "Physical parameters of the MS candidates: mass, radius, luminosity, age, and spectrophotometric distance.",
+          "label": "t:ms"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Short name",
+          "meaning": "恒星简化名称（与Table 1一致）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M/M_sun",
+          "meaning": "恒星质量（模式值及1σ置信区间），通过插值Ekström et al. (2012)旋转演化轨迹得出",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header and Sect. 4.4 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "R/R_sun",
+          "meaning": "恒星半径（模式值及1σ置信区间），由表面重力定义和角直径推导",
+          "unit_text": "R_sun",
+          "source_of_definition": "table header and Sect. 4.4 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(L/L_sun)",
+          "meaning": "光度的对数（以太阳光度为单位）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "τ_evo",
+          "meaning": "演化年龄（模式值及1σ置信区间），由与Ekström et al. (2012)轨迹比较得出",
+          "unit_text": "Myr",
+          "source_of_definition": "table header and Sect. 4.4 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "D(SpT)",
+          "meaning": "分光光度距离（模式值及1σ置信区间），由D(SpT) = 2R/Θ计算，Θ为SED拟合的角直径，是区分MS/BHB的关键参数",
+          "unit_text": "kpc",
+          "source_of_definition": "table header and Sect. 4.4 text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 4.4 Distance-driven classification: 'We list the physical parameters of the 12 MS candidates in Table 3.' 'In the MS-star assumption, we first determine the stellar masses, radii, and luminosities via interpolation of the Ekstrom et al. (2012) tracks... The spectrophotometric distance is then computed from the resulting stellar radius and the angular diameter determined via SED-fitting: D(SpT) = 2R/Θ.'",
+      "comments": "12颗唯一MS候选体，质量范围2-6 M_sun。三颗抛射速度最高星：2207-4329（M=2.97）、2259-4931（M=2.17）、2307-3157（M=3.15）。其中2259-4931是质量最小的MS候选体。"
+    },
+    {
+      "id": "table-t-bhb_physical",
+      "kind": "latex_table",
+      "asset_type": "derived_stellar_parameters",
+      "role_in_paper": "列出27颗BHB候选体和2颗热演化post-EHB星（1621-8350, 1944-4628）及其伴星（1944-4628B）的物理参数：半径R、光度log(L/L_sun)和分光光度距离D(SpT)。采用金属匮乏大气模型和典型BHB质量M=0.5±0.1 M_sun推导。",
+      "source_refs": [
+        {
+          "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+          "start_line": 473,
+          "end_line": 517,
+          "caption": "Physical parameters of BHB and post-EHB candidates computed adopting the atmospheric parameters derived from metal deficient atmospheric models and a mass of M = 0.5 ± 0.1 M_sun. The two hot post-EHB stars are listed at the end. 1944-4628B denotes the cool companion of 1944-4628.",
+          "label": "t:bhb_physical"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Short name",
+          "meaning": "恒星简化名称（与Table 1一致）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R/R_sun",
+          "meaning": "恒星半径（模式值及1σ置信区间），由R = √(G M/g)计算，M=0.5±0.1 M_sun为典型BHB质量",
+          "unit_text": "R_sun",
+          "source_of_definition": "table header and Sect. 4.4 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(L/L_sun)",
+          "meaning": "光度的对数（以太阳光度为单位）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D(SpT)",
+          "meaning": "分光光度距离（模式值及1σ置信区间），由D(SpT) = 2R/Θ计算",
+          "unit_text": "kpc",
+          "source_of_definition": "table header and Sect. 4.4 text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 4.4: 'The physical parameters of the 27 BHB candidates as well as those of the two post-EHB candidates and the late-type companion of 1944-4628 are given in Table 4.' 'In the BHB-star assumption, we assume a canonical BHB-star mass of M = 0.5 ± 0.1 M_sun from which we infer the stellar radius as R = √(G M/g).'",
+      "comments": "底部列出两颗post-EHB星（1621-8350为O型、1944-4628为早B型）和1944-4628B（G型MS伴星，由红外超揭示的复合SED拟合得出）。post-EHB星采用太阳金属丰度模型。"
+    },
+    {
+      "id": "table-t-orbit",
+      "kind": "latex_table",
+      "asset_type": "derived_kinematic_parameters",
+      "role_in_paper": "列出12颗MS候选体基于Irrgang et al. (2013) Model I银河系势模型的轨道参数：当前位置和速度、逃逸概率、偏心率、角动量、近心点/远心点、最大垂直位移、银盘交叉位置、抛射速度和飞行时间。该表是全文最详细的数据表，为速逃星起源分析提供核心动力学参数。",
+      "source_refs": [
+        {
+          "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+          "start_line": 532,
+          "end_line": 560,
+          "caption": "Orbital parameters of our MS candidates.",
+          "label": "t:orbit"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Short name",
+          "meaning": "恒星简化名称（与Table 1一致）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "X, Y, Z",
+          "meaning": "当前银心笛卡尔坐标的三个分量（模式值及1σ置信区间），左手坐标系：x指向太阳方向，y沿银河系旋转方向",
+          "unit_text": "kpc",
+          "source_of_definition": "table header and Sect. 5 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_Z",
+          "meaning": "银河系静止框架中垂直方向（Z）的速度分量",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_rf",
+          "meaning": "银河系静止框架速度（三维速度大小）",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_esc",
+          "meaning": "银河系逃逸概率：10000次蒙特卡洛模拟中v_rf > v_esc的初始条件比例",
+          "unit_text": "",
+          "source_of_definition": "table header and Sect. 5 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "e",
+          "meaning": "轨道离心率（数值估算）；2207-4329因非零逃逸概率而无法约束（...）",
+          "unit_text": "",
+          "source_of_definition": "table header and Sect. 5 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "L_Z",
+          "meaning": "角动量的垂直分量（Z方向），正值表示顺银河系旋转方向运动",
+          "unit_text": "kpc·km/s",
+          "source_of_definition": "table header and Sect. 6.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "R_peri",
+          "meaning": "轨道近心点（中位数）",
+          "unit_text": "kpc",
+          "source_of_definition": "table header and Sect. 6.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "R_apo",
+          "meaning": "轨道远心点（中位数）；2207-4329因非零逃逸概率而无法约束",
+          "unit_text": "kpc",
+          "source_of_definition": "table header and Sect. 6.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "Z_max",
+          "meaning": "最大垂直位移（中位数）；2207-4329因非零逃逸概率而无法约束",
+          "unit_text": "kpc",
+          "source_of_definition": "table header and Sect. 6.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "R(Z=0)",
+          "meaning": "过去轨迹最近一次穿越银盘平面（Z=0）处的银心距（模式值及1σ置信区间），表示银盘内的空间起源位置",
+          "unit_text": "kpc",
+          "source_of_definition": "table header and Sect. 5/6.2 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_ej",
+          "meaning": "抛射速度：在R(Z=0)处相对于旋转银盘的银河系静止框架速度，已改正太阳运动和银河系旋转",
+          "unit_text": "km/s",
+          "source_of_definition": "table header and Sect. 5 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "τ_flight",
+          "meaning": "飞行时间：从最近银盘交叉位置R(Z=0)到当前位置的轨迹回溯时间",
+          "unit_text": "Myr",
+          "source_of_definition": "table header and Sect. 5 text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 5 Galactic orbit simulation: 'Table 5 lists the relevant orbital quantities for the 12 MS runaway candidates in a Galactocentric reference system...' 表注详细说明了各列含义。Section 6.1 讨论轨道分析、Section 6.2 讨论出生地和飞行时间。",
+      "comments": "2207-4329是唯一有非零银河系逃逸概率（P_esc=0.4）的候选体，其e、R_apo、Z_max因存在无界轨迹而无法约束。3颗星的抛射速度超过450 km/s：2207-4329 (802 km/s)、2259-4931 (541 km/s)、2307-3157 (469 km/s)。2307-3157的近心点R_peri<1 kpc可能受银河系棒势影响。"
+    }
+  ],
+  "external_resources": []
+}

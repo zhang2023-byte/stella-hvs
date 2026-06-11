@@ -1,0 +1,71 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T19:39:29",
+  "paper": {
+    "arxiv_id": "2506.23588",
+    "bibcode": "2025PASA...42..101B",
+    "title": "Evolutionary Map of the Universe: Detection and Analysis of the Shell Surrounding the Runaway Wolf-Rayet Star WR16",
+    "month": "2025-06",
+    "source_note_json": "notes/2025/2025-06/2025-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2506.23588",
+      "pdf": "https://arxiv.org/pdf/2506.23588"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2506.23588",
+    "audit_path": "literature/2506.23588/audit.json",
+    "catalog_review_path": "literature/2506.23588/catalog_review.json",
+    "catalog_extraction_path": "literature/2506.23588/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2506.23588/catalog_tables/table-Table-Data_Fluxes.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T19:39:29",
+    "extractor": "agent",
+    "summary": "The paper studies the runaway Wolf-Rayet star WR16 and its circumstellar shell. WR16 is described as a runaway star with a peculiar tangential velocity of ~50 km/s, but the paper does not assess whether it is bound or unbound to the Galaxy, nor does it present WR16 as a possible Galactic-unbound or hypervelocity star candidate. No other objects are discussed as potentially escaping the Milky Way."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "wr16-runaway-star",
+      "description": "The runaway Wolf-Rayet star WR16, for which the paper reports Gaia proper motions and a peculiar tangential velocity of ~50 km/s.",
+      "decision": "excluded",
+      "reason": "The paper describes WR16 as a runaway star but does not present it as possibly unbound from the Galaxy. No bound/unbound assessment is performed, and the velocity is consistent with a Galactic runaway rather than a hypervelocity or unbound star.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.23588/arxiv_source/WR16.tex",
+          "start_line": 184,
+          "end_line": 184,
+          "context": "paper title describing WR16 as a runaway Wolf-Rayet star"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2506.23588/arxiv_source/WR16.tex",
+          "start_line": 419,
+          "end_line": 422,
+          "context": "measurement of peculiar velocities and tangential velocity, with no bound/unbound discussion"
+        }
+      ]
+    },
+    {
+      "group_id": "table-Table-Data_Fluxes",
+      "description": "Internal observation log table listing radio flux densities for WR16 and its nebulous shell.",
+      "decision": "excluded",
+      "reason": "The table contains only radio flux density measurements and a spectral index; it does not list stellar candidates or kinematic data relevant to Galactic escape assessment.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.23588/arxiv_source/WR16.tex",
+          "start_line": 364,
+          "end_line": 379,
+          "context": "table caption and contents showing radio flux densities"
+        }
+      ]
+    }
+  ]
+}

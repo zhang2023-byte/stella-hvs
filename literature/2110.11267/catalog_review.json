@@ -1,0 +1,477 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2110.11267",
+    "title": "HD144941: The most extreme helium-strong star",
+    "month": "2021-10",
+    "source_note_json": "notes/2021/2021-10/2021-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2110.11267",
+      "pdf": "https://arxiv.org/pdf/2110.11267"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2110.11267",
+    "audit_path": "literature/2110.11267/audit.json",
+    "source_dir": "literature/2110.11267/arxiv_source",
+    "tex_root": "literature/2110.11267/arxiv_source/HD144941.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:05:00",
+    "reviewer": "agent",
+    "summary": "HD144941 is identified as the most extreme magnetic helium-strong star (not an EHe star). Paper reports FORS2 spectropolarimetry detecting ~9kG longitudinal field, Zeeman splitting confirming >=15kG, hybrid non-LTE model atmosphere analysis yielding Teff=22000K, logg=4.20, He fraction 0.95, Gaia EDR3 parallax confirming massive star nature (~8 Msun), and kinematic analysis identifying it as a runaway star. Contains 4 internal tables (FORS2 observing log, parameter summary, line-by-line NLTE abundances in two parts) and references multiple external data assets (IUE, 2MASS, WISE, Gaia EDR3, K2, ESO spectroscopy, Kurucz atomic data)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-FOR2log_results",
+      "kind": "latex_table",
+      "asset_type": "observing_log_and_measurements",
+      "role_in_paper": "Reports FORS2 spectropolarimetric observing log and derived surface-averaged longitudinal magnetic field measurements for each of 10 observing epochs",
+      "source_refs": [
+        {
+          "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+          "start_line": 139,
+          "end_line": 164,
+          "caption": "FORS2 Observing log and average longitudinal magnetic field ($\\langle B_z\\rangle$) values.",
+          "label": "tab:FOR2log_results"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Date | YYYY-MM-DD",
+          "meaning": "UT date of observation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "JD- | 2450000",
+          "meaning": "Julian Date minus 2450000 at beginning of exposure sequence",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "No. of | frames",
+          "meaning": "Number of spectral frames obtained per night",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Exposure | time (s)",
+          "meaning": "Exposure time per frame",
+          "unit_text": "seconds",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S/N at | 4950 \\AA",
+          "meaning": "Signal-to-noise ratio per pixel of Stokes I spectrum at ~4950A over 100A range",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\bz (G) | Hydrogen",
+          "meaning": "Longitudinal magnetic field from hydrogen lines (Stokes V)",
+          "unit_text": "Gauss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\nz (G) | All",
+          "meaning": "Null profile N parameter from hydrogen lines",
+          "unit_text": "Gauss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\bz (G)",
+          "meaning": "Longitudinal magnetic field from full spectrum (Stokes V)",
+          "unit_text": "Gauss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\nz (G)",
+          "meaning": "Null profile N parameter from full spectrum",
+          "unit_text": "Gauss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "FORS2 Observing log and average longitudinal magnetic field values for 10 epochs spanning 2021-03-15 to 2021-07-18.",
+      "comments": "Table footnotes explain JD reference, number of frames, S/N calculation, and differences between hydrogen-line and full-spectrum Bz/Nz measurements."
+    },
+    {
+      "id": "table-tab-parameters",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters_summary",
+      "role_in_paper": "Central summary table collecting all derived atmospheric parameters, non-LTE elemental abundances, photometric data, fundamental stellar parameters, and kinematic data for HD144941",
+      "source_refs": [
+        {
+          "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+          "start_line": 250,
+          "end_line": 291,
+          "caption": "Parameters and elemental abundances of HD144941.",
+          "label": "tab:parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Atmospheric parameters:",
+          "meaning": "Section header for atmospheric parameter block: Teff, logg, helium fraction y, microturbulence xi, v sin i, macroturbulence zeta",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_002",
+          "meaning": "Parameter values and 1-sigma uncertainties for atmospheric parameters (Teff=22000±500K, logg=4.20±0.10, y=0.950±0.002, xi=2±1km/s, v sin i=7±5km/s, zeta=25/15±5km/s)",
+          "unit_text": "",
+          "source_of_definition": "derived from table content",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_003",
+          "meaning": "Non-LTE abundances log n_X normalized to sum n_X=1 for H, C, N, O, Ne, Mg, Al, Si, S, Fe; photometric data V, B-V, E(B-V), R_V, M_V, M_bol; fundamental parameters M, R, logL, tau, tau/tau_MS, P_rot; kinematic data parallax, proper motions, radial velocity, distances",
+          "unit_text": "",
+          "source_of_definition": "derived from table content",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_004",
+          "meaning": "Additional parameter values and references for photometric/kinematic data (e.g., microturbulence footnote a, photometry reference b, rotation period reference c, Gaia reference d)",
+          "unit_text": "",
+          "source_of_definition": "derived from table content",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Multi-block summary table: Atmospheric parameters section with Teff=22000±500K, logg=4.20±0.10, y=0.950±0.002; Non-LTE abundances for 10 elements; Photometric data from Slawsonetal92; Fundamental parameters M=8.1±0.3Msun, R=3.8±0.2Rsun; Kinematic data from Gaia EDR3.",
+      "comments": "This is the paper's primary summary table. The 4-column layout groups parameters into blocks: atmospheric, abundance, photometric, fundamental, kinematic. Table footnotes reference external data sources (Slawsonetal92, JeRa18, Gaia)."
+    },
+    {
+      "id": "table-tab-abundances_lines_nlte",
+      "kind": "latex_table",
+      "asset_type": "line_by_line_abundances",
+      "role_in_paper": "Presents detailed line-by-line non-LTE abundance measurements for H, C, N, O, and Ne (first part of the appendix abundance table)",
+      "source_refs": [
+        {
+          "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+          "start_line": 581,
+          "end_line": 653,
+          "caption": "Line-by-line abundances from the non-LTE analysis of HD144941. Abundances $\\log n_X$ (normalised to $\\sum n_X$\\,=\\,1). \\label{tab:abundances_lines_nlte}",
+          "label": "tab:abundances_lines_nlte"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Line",
+          "meaning": "Spectral line identification (ion and multiplet)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\lambda (\\AA)",
+          "meaning": "Rest-frame wavelength of the spectral line",
+          "unit_text": "Angstrom",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\chi(eV)",
+          "meaning": "Excitation energy of the lower level of the transition",
+          "unit_text": "eV",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\log gf",
+          "meaning": "Logarithm of the oscillator strength times statistical weight",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Accu.",
+          "meaning": "Accuracy flag for the gf-value (AAA=0.3%, AA=1%, A=3%, B=10%, C=25%, D=50%, E>50%, X=unknown)",
+          "unit_text": "",
+          "source_of_definition": "table header + footnote",
+          "confidence": 1.0
+        },
+        {
+          "name": "Source",
+          "meaning": "Bibliographic source code for the gf-value (WF, WFD, FFT, MAR, K14, etc. — see table footnote for full references)",
+          "unit_text": "",
+          "source_of_definition": "table header + footnote",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\log n_X",
+          "meaning": "Non-LTE abundance log n_X normalized to sum of all number fractions = 1",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Line-by-line NLTE abundances for H (Balmer lines Hdelta-Halpha), C II (9 transitions), N II (17 transitions), O I/II (25 transitions), Ne I (2 transitions). Includes gf-value accuracy grades and source references.",
+      "comments": "First of two consecutive tables in the appendix. Table footnote lists the gf-value accuracy scale and bibliographic source codes."
+    },
+    {
+      "id": "table-004",
+      "kind": "latex_table",
+      "asset_type": "line_by_line_abundances",
+      "role_in_paper": "Continues the line-by-line non-LTE abundance measurements for Mg, Al, Si, S, and Fe (second part of the appendix abundance table)",
+      "source_refs": [
+        {
+          "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+          "start_line": 655,
+          "end_line": 737,
+          "caption": "(cont.)",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Line",
+          "meaning": "Spectral line identification (ion and multiplet)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\lambda (\\AA)",
+          "meaning": "Rest-frame wavelength of the spectral line",
+          "unit_text": "Angstrom",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\chi(eV)",
+          "meaning": "Excitation energy of the lower level of the transition",
+          "unit_text": "eV",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\log gf",
+          "meaning": "Logarithm of the oscillator strength times statistical weight",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Accu.",
+          "meaning": "Accuracy flag for the gf-value (AAA=0.3%, AA=1%, A=3%, B=10%, C=25%, D=50%, E>50%, X=unknown)",
+          "unit_text": "",
+          "source_of_definition": "table header + footnote",
+          "confidence": 1.0
+        },
+        {
+          "name": "Source",
+          "meaning": "Bibliographic source code for the gf-value (FW, FFTI, KP, WSM, KB, etc. — see table footnote for full references)",
+          "unit_text": "",
+          "source_of_definition": "table header + footnote",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\log n_X",
+          "meaning": "Non-LTE abundance log n_X normalized to sum of all number fractions = 1",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Continuation: line-by-line NLTE abundances for Mg II (1 multiplet), Al III (4 transitions), Si II/III (21 transitions), S II/III (5 transitions), Fe III (multiple transitions).",
+      "comments": "Continuation of tab:abundances_lines_nlte. Contains the gf-value source footnote with bibliographic references including the Kurucz URL (http://kurucz.harvard.edu/atoms.html) and other atomic data references."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-IUE-SWP07696-LWR06703",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "IUE low-dispersion large-aperture UV spectrophotometry datasets SWP07696 and LWR06703, used to constrain the spectral energy distribution of HD144941",
+      "source_refs": [
+        {
+          "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+          "start_line": 182,
+          "end_line": 183,
+          "context": "Low-dispersion and large-aperture spectrophotometry from the International Ultraviolet Exporer (IUE) was employed to constrain the spectral energy distribution (SED) of HD144941 (data sets SWP07696 and LWR06703)."
+        }
+      ],
+      "evidence": "Text in Observations section: IUE data sets SWP07696 and LWR06703 used for SED fitting.",
+      "comments": "IUE final archive at MAST: https://archive.stsci.edu/iue/"
+    },
+    {
+      "id": "resource-2MASS",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Two Micron All Sky Survey (2MASS) JHK-band photometry for HD144941, supplementing the SED constraints",
+      "source_refs": [
+        {
+          "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+          "start_line": 184,
+          "end_line": 184,
+          "context": "in the Two Micron All Sky Survey (2MASS) $JHK$-bands from \\citet{2MASS2006}"
+        }
+      ],
+      "evidence": "Text in Observations section: 2MASS JHK photometry from Skrutskie et al. 2006.",
+      "comments": "2MASS All-Sky Point Source Catalog"
+    },
+    {
+      "id": "resource-ALLWISE",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Wide-field Infrared Survey Explorer (WISE) ALLWISE photometry for HD144941, supplementing the SED in thermal infrared",
+      "source_refs": [
+        {
+          "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+          "start_line": 184,
+          "end_line": 185,
+          "context": "Wide-field Infrared Survey Explorer (WISE) bands from \\citet{ALLWISE_vizier}"
+        }
+      ],
+      "evidence": "Text in Observations section: WISE ALLWISE photometry from Cutri et al. 2021 (VizieR II/328).",
+      "comments": "ALLWISE data release, available via VizieR catalog II/328 and IRSA"
+    },
+    {
+      "id": "resource-UBV-Slawson92",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Johnson UBV-band photometry for HD144941 from Slawson, Hill & Landstreet (1992, ApJS, 82, 117): V=10.141±0.008, B-V=0.034±0.007",
+      "source_refs": [
+        {
+          "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+          "start_line": 183,
+          "end_line": 184,
+          "context": "Johnson $UBV$-bands from \\citet{Slawsonetal92}"
+        }
+      ],
+      "evidence": "Text in Observations section + Table tab:parameters footnotes b: V and B-V values from Slawsonetal92.",
+      "comments": "Ground-based UBV photometry used for SED fitting and absolute magnitude calibration"
+    },
+    {
+      "id": "resource-Gaia-EDR3",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Gaia Early Data Release 3 astrometry for HD144941: parallax pi=0.6714±0.0282 mas, proper motions mu_alpha=-6.834±0.034 mas/yr, mu_delta=8.023±0.025 mas/yr",
+      "source_refs": [
+        {
+          "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+          "start_line": 278,
+          "end_line": 280,
+          "context": "$\\pi_\\mathrm{EDR3}$ & ~~~0.6714$\\pm$0.0282\\,mas\\tablefootmark{d}"
+        },
+        {
+          "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+          "start_line": 419,
+          "end_line": 421,
+          "context": "Parallax $\\pi_\\mathrm{EDR3}$ and proper motion data $\\mu_\\alpha$ and $\\mu_\\delta$ from Gaia Early Data Release 3"
+        }
+      ],
+      "evidence": "Table tab:parameters footnotes d and kinematic analysis section: Gaia EDR3 data from Gaia Collaboration (2016, 2021), parallax zero-point correction from Ren et al. 2021.",
+      "comments": "Gaia EDR3 source ID not explicitly stated. Used to derive distance d_Gaia=1556pc and kinematic orbit."
+    },
+    {
+      "id": "resource-K2-lightcurve",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "K2 mission light curve of HD144941 showing rotational modulation with a fundamental period of 13.93d, previously published by Jeffery & Ramsay (2018)",
+      "source_refs": [
+        {
+          "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+          "start_line": 222,
+          "end_line": 223,
+          "context": "\\citet{JeRa18} found a highly structured singly periodic signal in K2 observations, with a fundamental period of 13.9$\\pm$0.2\\,d"
+        }
+      ],
+      "evidence": "Magnetic field section and Table tab:parameters footnote c: rotation period from K2 light curve (JeRa18).",
+      "comments": "K2 data used to phase magnetic field measurements. Rotation period adopted as 13.93d."
+    },
+    {
+      "id": "resource-FORS2-spectropolarimetry",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "ESO VLT FORS2 spectropolarimetric observations of HD144941 under programmes 105.205U.001 and 106.211U.001 (March–July 2021), 10 epochs with grism 600B, R~1700, 3250-6215A",
+      "source_refs": [
+        {
+          "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+          "start_line": 105,
+          "end_line": 117,
+          "context": "Our target star HD144941 was observed in service mode on a total of nine nights in March, June, and July 2021 using the FOcal Reducer and low dispersion Spectrograph 2 (FORS2)"
+        },
+        {
+          "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+          "start_line": 558,
+          "end_line": 559,
+          "context": "Based on observations collected at the European Southern Observatory under ESO programmes 077.D-0458(A,B), 105.205U.001 and 106.211U.001."
+        }
+      ],
+      "evidence": "Observations section and acknowledgements: ESO programmes 105.205U.001, 106.211U.001 for FORS2 spectropolarimetry.",
+      "comments": "ESO archive data. FORS2 data reduced with custom pipeline based on Fossati et al. 2015 and Bagnulo et al. 2012."
+    },
+    {
+      "id": "resource-FEROS-spectrum",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "ESO FEROS high-resolution optical spectrum (R=48000) of HD144941 from 2006-04-08, 3000s exposure, S/N~200, under ESO programme 077.D-0458(A,B)",
+      "source_refs": [
+        {
+          "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+          "start_line": 168,
+          "end_line": 171,
+          "context": "An optical spectrum with $R$\\,=\\,48\\,000 was obtained on April 8, 2006 using the Fibre-fed Optical Echelle Spectrograph [FEROS]"
+        }
+      ],
+      "evidence": "Observations section: FEROS spectrum on ESO-MPG 2.2m telescope at La Silla.",
+      "comments": "ESO programme 077.D-0458(A,B). Normalised using sdB star HD188112 spectrum."
+    },
+    {
+      "id": "resource-UVES-spectrum",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "ESO VLT UVES high-resolution optical-UV spectrum (R~41000) of HD144941 from 2006-04-10, 780s exposure, S/N~170, covering ~3200-8000A",
+      "source_refs": [
+        {
+          "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+          "start_line": 172,
+          "end_line": 180,
+          "context": "a 780\\,s exposure with the Ultraviolet and Visual Echelle Spectrograph [UVES] on the ESO-VLT UT2 on April 10, 2006"
+        }
+      ],
+      "evidence": "Observations section: UVES spectrum. Normalised using DC white dwarf WD1917-07.",
+      "comments": "ESO programme 077.D-0458(A,B). Combined FEROS+UVES wavelength coverage ~3200-8000A."
+    },
+    {
+      "id": "resource-kurucz-atomic-data",
+      "kind": "external_url",
+      "url": "http://kurucz.harvard.edu/atoms.html",
+      "local_path": "",
+      "description": "Kurucz atomic data (energy levels, gf-values) for Si III lines, referenced as source codes K13 and K14 in the line abundance table footnote",
+      "source_refs": [
+        {
+          "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+          "start_line": 729,
+          "end_line": 729,
+          "context": "K13, K14: {\\tt http://kurucz.harvard.edu/atoms.html};"
+        }
+      ],
+      "evidence": "Table footnote in the continued abundance table: source code K13, K14 for gf-values refer to Kurucz website.",
+      "comments": "Canonical Kurucz atomic data repository. Used for Si III oscillator strengths."
+    }
+  ]
+}

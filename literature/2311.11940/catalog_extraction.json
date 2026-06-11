@@ -1,0 +1,657 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:58:45",
+  "paper": {
+    "arxiv_id": "2311.11940",
+    "title": "Characterisation of high velocity stars in the S-PLUS internal fourth data release",
+    "month": "2023-11"
+  },
+  "review": {
+    "path": "literature/2311.11940/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225845",
+    "started_at": "2026-05-22T22:58:45",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2311.11940",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-jplus_filters",
+      "internal_table_id": "table-tab-jplus_filters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+        "start_line": 101,
+        "end_line": 124,
+        "caption": "S-PLUS photometric bands",
+        "label": "tab:jplus_filters"
+      },
+      "source_path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+      "excerpt_path": "literature/2311.11940/catalog_sources/table-tab-jplus_filters/excerpt.tex",
+      "sha256": "dec4c81c092eef028c89590a13421177ad57042f156643e636c52e1e2f1635da",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-tab-astrometric_parameters_splus",
+      "internal_table_id": "table-tab-astrometric_parameters_splus",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+        "start_line": 140,
+        "end_line": 220,
+        "caption": "Astrometric parameters from the Gaia DR3. The last column reports the radial velocity from other spectroscopic surveys.",
+        "label": "tab:astrometric_parameters_splus"
+      },
+      "source_path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+      "excerpt_path": "literature/2311.11940/catalog_sources/table-tab-astrometric_parameters_splus/excerpt.tex",
+      "sha256": "d515a4c187838f23096c659346593fde67c3492196cbec75a6e75991e41b2ffd",
+      "line_count": 81,
+      "error": ""
+    },
+    {
+      "id": "table-tab-stellar_parameters_splus",
+      "internal_table_id": "table-tab-stellar_parameters_splus",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+        "start_line": 321,
+        "end_line": 397,
+        "caption": "Stellar parameters derived with our CNN and with SPHINX",
+        "label": "tab:stellar_parameters_splus"
+      },
+      "source_path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+      "excerpt_path": "literature/2311.11940/catalog_sources/table-tab-stellar_parameters_splus/excerpt.tex",
+      "sha256": "7513d8f8eff7669b07b9aa6ca6c266855b2605af61436fa03c7b7359b6ee7345",
+      "line_count": 77,
+      "error": ""
+    },
+    {
+      "id": "table-tab-mass_logg_rad",
+      "internal_table_id": "table-tab-mass_logg_rad",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+        "start_line": 429,
+        "end_line": 508,
+        "caption": "Stellar radii of the high velocity stars.",
+        "label": "tab:mass_logg_rad"
+      },
+      "source_path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+      "excerpt_path": "literature/2311.11940/catalog_sources/table-tab-mass_logg_rad/excerpt.tex",
+      "sha256": "0a4135529f4b0def3369c8b4499121c73407ce2320120ebc868ce1f32dc36f21",
+      "line_count": 80,
+      "error": ""
+    },
+    {
+      "id": "table-tab-stellar_abundances",
+      "internal_table_id": "table-tab-stellar_abundances",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+        "start_line": 531,
+        "end_line": 553,
+        "caption": "Metallicity, alpha-elements and [Mg/Fe] abundance from spectroscopic surveys.",
+        "label": "tab:stellar_abundances"
+      },
+      "source_path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+      "excerpt_path": "literature/2311.11940/catalog_sources/table-tab-stellar_abundances/excerpt.tex",
+      "sha256": "e14cdb77ad0445fefab31637b634f8b61e8d2b0af3effde721e3120efd90899c",
+      "line_count": 23,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-jplus_filters",
+      "internal_table_id": "table-tab-jplus_filters",
+      "status": "success",
+      "ecsv_path": "literature/2311.11940/catalog_tables/table-tab-jplus_filters.ecsv",
+      "caption": "S-PLUS photometric bands",
+      "label": "tab:jplus_filters",
+      "row_count": 12,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Filter",
+          "Central wavelength",
+          "\\Delta\\lambda",
+          "Spectral features"
+        ],
+        [
+          "",
+          "Å",
+          "Å",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Filter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Central wavelength | Å",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\Delta\\lambda | Å",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Spectral features",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpn_ebo1ws/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.11940/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpn_ebo1ws/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.11940/catalog_sources/table-tab-jplus_filters/wrapped.tex",
+            "html": "literature/2311.11940/catalog_sources/table-tab-jplus_filters/latexml.html",
+            "stdout": "literature/2311.11940/catalog_sources/table-tab-jplus_filters/latexml.stdout.txt",
+            "stderr": "literature/2311.11940/catalog_sources/table-tab-jplus_filters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "dec4c81c092eef028c89590a13421177ad57042f156643e636c52e1e2f1635da"
+    },
+    {
+      "id": "table-tab-astrometric_parameters_splus",
+      "internal_table_id": "table-tab-astrometric_parameters_splus",
+      "status": "success",
+      "ecsv_path": "literature/2311.11940/catalog_tables/table-tab-astrometric_parameters_splus.ecsv",
+      "caption": "Astrometric parameters from the Gaia DR3. The last column reports the radial velocity from other spectroscopic surveys.",
+      "label": "tab:astrometric_parameters_splus",
+      "row_count": 68,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpinbs0oy9/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.11940/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpinbs0oy9/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.11940/catalog_sources/table-tab-astrometric_parameters_splus/wrapped.tex",
+            "html": "literature/2311.11940/catalog_sources/table-tab-astrometric_parameters_splus/latexml.html",
+            "stdout": "literature/2311.11940/catalog_sources/table-tab-astrometric_parameters_splus/latexml.stdout.txt",
+            "stderr": "literature/2311.11940/catalog_sources/table-tab-astrometric_parameters_splus/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d515a4c187838f23096c659346593fde67c3492196cbec75a6e75991e41b2ffd"
+    },
+    {
+      "id": "table-tab-stellar_parameters_splus",
+      "internal_table_id": "table-tab-stellar_parameters_splus",
+      "status": "success",
+      "ecsv_path": "literature/2311.11940/catalog_tables/table-tab-stellar_parameters_splus.ecsv",
+      "caption": "Stellar parameters derived with our CNN and with SPHINX",
+      "label": "tab:stellar_parameters_splus",
+      "row_count": 67,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7tn5on2x/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.11940/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7tn5on2x/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.11940/catalog_sources/table-tab-stellar_parameters_splus/wrapped.tex",
+            "html": "literature/2311.11940/catalog_sources/table-tab-stellar_parameters_splus/latexml.html",
+            "stdout": "literature/2311.11940/catalog_sources/table-tab-stellar_parameters_splus/latexml.stdout.txt",
+            "stderr": "literature/2311.11940/catalog_sources/table-tab-stellar_parameters_splus/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7513d8f8eff7669b07b9aa6ca6c266855b2605af61436fa03c7b7359b6ee7345"
+    },
+    {
+      "id": "table-tab-mass_logg_rad",
+      "internal_table_id": "table-tab-mass_logg_rad",
+      "status": "success",
+      "ecsv_path": "literature/2311.11940/catalog_tables/table-tab-mass_logg_rad.ecsv",
+      "caption": "Stellar radii of the high velocity stars.",
+      "label": "tab:mass_logg_rad",
+      "row_count": 70,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp31rjtj1w/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.11940/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp31rjtj1w/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.11940/catalog_sources/table-tab-mass_logg_rad/wrapped.tex",
+            "html": "literature/2311.11940/catalog_sources/table-tab-mass_logg_rad/latexml.html",
+            "stdout": "literature/2311.11940/catalog_sources/table-tab-mass_logg_rad/latexml.stdout.txt",
+            "stderr": "literature/2311.11940/catalog_sources/table-tab-mass_logg_rad/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0a4135529f4b0def3369c8b4499121c73407ce2320120ebc868ce1f32dc36f21"
+    },
+    {
+      "id": "table-tab-stellar_abundances",
+      "internal_table_id": "table-tab-stellar_abundances",
+      "status": "success",
+      "ecsv_path": "literature/2311.11940/catalog_tables/table-tab-stellar_abundances.ecsv",
+      "caption": "Metallicity, alpha-elements and [Mg/Fe] abundance from spectroscopic surveys.",
+      "label": "tab:stellar_abundances",
+      "row_count": 11,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR3 ID",
+          "[Fe/H]",
+          "[ \\alpha /Fe]",
+          "[Mg/Fe]",
+          "Survey"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR3 ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "[Fe/H]",
+          "unit_text": "[Fe/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "[ \\alpha /Fe]",
+          "unit_text": "[ \\alpha /Fe]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "[Mg/Fe]",
+          "unit_text": "[Mg/Fe]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Survey",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgf6haalx/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.11940/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgf6haalx/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.11940/catalog_sources/table-tab-stellar_abundances/wrapped.tex",
+            "html": "literature/2311.11940/catalog_sources/table-tab-stellar_abundances/latexml.html",
+            "stdout": "literature/2311.11940/catalog_sources/table-tab-stellar_abundances/latexml.stdout.txt",
+            "stderr": "literature/2311.11940/catalog_sources/table-tab-stellar_abundances/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e14cdb77ad0445fefab31637b634f8b61e8d2b0af3effde721e3120efd90899c"
+    }
+  ]
+}

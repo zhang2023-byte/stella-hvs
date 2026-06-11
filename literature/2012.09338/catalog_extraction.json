@@ -1,0 +1,256 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:44:57",
+  "paper": {
+    "arxiv_id": "2012.09338",
+    "title": "Discovery of A candidate Hypervelocity star originated from the Sagittarius Dwarf Spheroidal galaxy",
+    "month": "2020-12"
+  },
+  "review": {
+    "path": "literature/2012.09338/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084457",
+    "started_at": "2026-06-07T08:44:57",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2012.09338",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-measured-params",
+      "internal_table_id": "table-measured-params",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+        "start_line": 57,
+        "end_line": 87,
+        "caption": "The measured parameters of HVS candidate J1443+1453.",
+        "label": ""
+      },
+      "source_path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+      "excerpt_path": "literature/2012.09338/catalog_sources/table-measured-params/excerpt.tex",
+      "sha256": "2a991a7e7b72563cea482351896bc731e067e501eb9491b785b3f192152af821",
+      "line_count": 31,
+      "error": ""
+    },
+    {
+      "id": "table-orbit-top3",
+      "internal_table_id": "table-orbit-top3",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+        "start_line": 172,
+        "end_line": 191,
+        "caption": "Top three systems sorted by the value of d_min/r_h (from small to large) in the backward orbital analysis of J1443+1453.",
+        "label": ""
+      },
+      "source_path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+      "excerpt_path": "literature/2012.09338/catalog_sources/table-orbit-top3/excerpt.tex",
+      "sha256": "2a091a0403d919338930349b3edf05a9d4a8a77ad0c1da41c945742ed688ceb1",
+      "line_count": 20,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-measured-params",
+      "internal_table_id": "table-measured-params",
+      "status": "success",
+      "ecsv_path": "literature/2012.09338/catalog_tables/table-measured-params.ecsv",
+      "caption": "The measured parameters of HVS candidate J1443+1453.",
+      "label": "",
+      "row_count": 21,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value",
+          "Units"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Units",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpf_ztoio4/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2012.09338/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpf_ztoio4/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2012.09338/catalog_sources/table-measured-params/wrapped.tex",
+            "html": "literature/2012.09338/catalog_sources/table-measured-params/latexml.html",
+            "stdout": "literature/2012.09338/catalog_sources/table-measured-params/latexml.stdout.txt",
+            "stderr": "literature/2012.09338/catalog_sources/table-measured-params/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2a991a7e7b72563cea482351896bc731e067e501eb9491b785b3f192152af821"
+    },
+    {
+      "id": "table-orbit-top3",
+      "internal_table_id": "table-orbit-top3",
+      "status": "success",
+      "ecsv_path": "literature/2012.09338/catalog_tables/table-orbit-top3.ecsv",
+      "caption": "Top three systems sorted by the value of d_min/r_h (from small to large) in the backward orbital analysis of J1443+1453.",
+      "label": "",
+      "row_count": 3,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "Closest distance ( d_\\rm min )",
+          "Backward time",
+          "Half-light radius ( r_h )",
+          "d_\\rm min/r_h"
+        ],
+        [
+          "",
+          "(kpc)",
+          "(Myr)",
+          "(kpc)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Closest distance ( d_\\rm min ) | (kpc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Backward time | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Half-light radius ( r_h ) | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "d_\\rm min/r_h",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_uccklvg/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2012.09338/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_uccklvg/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2012.09338/catalog_sources/table-orbit-top3/wrapped.tex",
+            "html": "literature/2012.09338/catalog_sources/table-orbit-top3/latexml.html",
+            "stdout": "literature/2012.09338/catalog_sources/table-orbit-top3/latexml.stdout.txt",
+            "stderr": "literature/2012.09338/catalog_sources/table-orbit-top3/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2a091a0403d919338930349b3edf05a9d4a8a77ad0c1da41c945742ed688ceb1"
+    }
+  ]
+}

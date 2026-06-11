@@ -1,0 +1,751 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T17:46:31",
+  "paper": {
+    "arxiv_id": "2404.07731",
+    "bibcode": "2024A&A...684L...4C",
+    "title": "High speed stars: III. Detailed abundances and binary nature of the extreme speed star GHS143",
+    "month": "2024-04",
+    "source_note_json": "notes/2024/2024-04/2024-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2404.07731",
+      "pdf": "https://arxiv.org/pdf/2404.07731"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2404.07731",
+    "audit_path": "literature/2404.07731/audit.json",
+    "catalog_review_path": "literature/2404.07731/catalog_review.json",
+    "catalog_extraction_path": "literature/2404.07731/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2404.07731/catalog_tables/table-tab-abbo.ecsv",
+      "literature/2404.07731/catalog_tables/table-tab-sist.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-22T17:46:31",
+    "extractor": "agent",
+    "summary": "One candidate (GHS143) explicitly discussed as possibly unbound from the Milky Way. The paper presents new UVES spectroscopic follow-up that reveals binarity and revised stellar parameters, leading to a reassessment of the bound/unbound status first claimed in Paper II. The paper concludes the star is probably still unbound, but there is a real possibility it is bound."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "step_type": "input_catalog",
+      "summary": "Gaia EDR3/DR3 astrometry, photometry, and radial velocities used to select the high-speed star GHS143",
+      "depends_on": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+          "start_line": 124,
+          "end_line": 127,
+          "context": "Introduction describing selection of GHS143 in Gaia EDR3/DR3 for extreme kinematics"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "step_type": "sample_selection",
+      "summary": "GHS143 selected from the high-speed sample for detailed high-resolution spectroscopic follow-up",
+      "depends_on": ["step-01"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+          "start_line": 126,
+          "end_line": 134,
+          "context": "Introduction stating GHS143 is not bound to the Galaxy and motivating follow-up observations"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "step_type": "follow_up_validation",
+      "summary": "Two UVES high-resolution spectra secured at VLT in August and November 2023",
+      "depends_on": ["step-02"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+          "start_line": 138,
+          "end_line": 147,
+          "context": "Observations section describing UVES spectroscopic follow-up"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "step_type": "radial_velocity_measurement",
+      "summary": "Radial velocities measured from UVES spectra via template matching to synthetic spectra",
+      "depends_on": ["step-03"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+          "start_line": 169,
+          "end_line": 186,
+          "context": "Radial velocity section describing template matching and measured values"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "step_type": "astrometric_calibration",
+      "summary": "Gaia DR3 coordinates, proper motions, and parallax adopted as astrometric inputs",
+      "depends_on": ["step-01"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+          "start_line": 126,
+          "end_line": 127,
+          "context": "Gaia DR3 parallax, proper motions, and radial velocity used for initial kinematics"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "step_type": "stellar_parameter_inference",
+      "summary": "Stellar parameters (Teff, logg, microturbulence, [Fe/H]) derived from UVES spectra using MyGIsFOS and NLTE corrections",
+      "depends_on": ["step-04"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+          "start_line": 200,
+          "end_line": 248,
+          "context": "Stellar parameters section describing analysis and adopted values"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "step_type": "distance_estimation",
+      "summary": "Parallax range inferred from spectroscopic surface gravity via Stefan-Boltzmann relation",
+      "depends_on": ["step-05", "step-06"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+          "start_line": 317,
+          "end_line": 324,
+          "context": "Kinematics section deriving parallax range 0.098-0.222 mas from surface gravity"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "step_type": "velocity_calculation",
+      "summary": "Galactocentric space velocities computed with galpy and Pyia using astrometric covariance matrix random realisations",
+      "depends_on": ["step-05", "step-07"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+          "start_line": 324,
+          "end_line": 332,
+          "context": "Kinematics section describing velocity calculations with galpy and Pyia"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "step_type": "galactic_potential_model",
+      "summary": "MWPotential2014 from Bovy+15 used as default Galactic potential in galpy",
+      "depends_on": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+          "start_line": 326,
+          "end_line": 327,
+          "context": "Kinematics section mentioning MWPotential2014"
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Bound/unbound status assessed via 1000 Monte Carlo realisations of astrometric parameters for varying parallaxes",
+      "depends_on": ["step-08", "step-09"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+          "start_line": 333,
+          "end_line": 341,
+          "context": "Kinematics section presenting bound/unbound results from Monte Carlo assessment"
+        }
+      ]
+    },
+    {
+      "id": "step-11",
+      "step_type": "orbit_integration",
+      "summary": "Orbit integration performed with galpy to assess Galactic trajectory and apocentre distances",
+      "depends_on": ["step-08", "step-09"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+          "start_line": 336,
+          "end_line": 338,
+          "context": "Kinematics section mentioning bound cases have large apocentres in excess of 30 kpc"
+        }
+      ]
+    },
+    {
+      "id": "step-12",
+      "step_type": "origin_assessment",
+      "summary": "Chemical abundance pattern (low C, high O, enhanced alpha) suggests formation in an external dwarf galaxy",
+      "depends_on": ["step-11", "step-06"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+          "start_line": 493,
+          "end_line": 496,
+          "context": "Discussion concluding the star was formed in an external galaxy"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2404.07731:cand-001",
+        "paper_candidate_id": "GHS143",
+        "gaia_source_id": "Gaia DR3 6632370485122299776",
+        "all": [
+          {
+            "value": "GHS143",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+                "start_line": 124,
+                "end_line": 124,
+                "context": "Paper identifier for the extreme speed star"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 6632370485122299776",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+                "start_line": 124,
+                "end_line": 124,
+                "context": "Gaia DR3 source identifier for GHS143"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "GHS143 is the sole object of this paper, explicitly selected for its extreme speed and investigated as possibly unbound from the Milky Way. New UVES spectroscopy reveals it is a spectroscopic binary and the revised surface gravity makes the bound/unbound status uncertain. The paper concludes it is probably still unbound, but there is a real possibility it is bound.",
+        "paper_labels": [
+          "high_velocity_star",
+          "escaping_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "The paper is entirely devoted to this single star and contains multiple explicit statements about its possible unbound status, including a reassessment of the earlier unbound claim from Paper II.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+            "start_line": 94,
+            "end_line": 95,
+            "context": "Methods abstract stating the star appears unbound to the Galaxy"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+            "start_line": 124,
+            "end_line": 125,
+            "context": "Introduction identifying GHS143 and its extreme kinematics"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+            "start_line": 333,
+            "end_line": 341,
+            "context": "Kinematics section presenting the bound/unbound assessment results"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+            "start_line": 121,
+            "end_line": 123,
+            "context": "Introduction citing Paper II (ghs2) where GHS143 was first identified as unbound"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+            "start_line": 265,
+            "end_line": 266,
+            "context": "Reference to Paper II for previous parallax and mass derivation"
+          }
+        ],
+        "citation": {
+          "bibkey": "ghs2",
+          "authors": [
+            "Bonifacio, P.",
+            "Caffau, E.",
+            "Monaco, L.",
+            "et al."
+          ],
+          "year": "2024",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+              "start_line": 121,
+              "end_line": 123,
+              "context": "Cite of Paper II in introduction where GHS143 was first identified"
+            },
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+              "start_line": 265,
+              "end_line": 266,
+              "context": "Cite of Paper II for previous stellar parameters"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.bbl",
+              "start_line": 49,
+              "end_line": 52,
+              "context": "Bibliography entry for ghs2 (Paper II)"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "25.58 +/- 0.40",
+            "value": "25.58",
+            "error": "0.40",
+            "unit": "km/s",
+            "description": "Radial velocity from the higher-S/N UVES observation in November 2023, the paper's primary new measurement",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+                "start_line": 184,
+                "end_line": 184,
+                "context": "UVES radial velocity measurement from November 2023"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "13.06",
+          "value": "13.06",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia",
+          "description": "Gaia G magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+              "start_line": 124,
+              "end_line": 124,
+              "context": "G magnitude of GHS143 from Gaia"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "5160",
+          "value": "5160",
+          "error": "100",
+          "unit": "K",
+          "description": "Adopted effective temperature from spectroscopic analysis and photometric calibrations",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+              "start_line": 218,
+              "end_line": 218,
+              "context": "Adopted effective temperature"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        },
+        "log_g": {
+          "raw_value": "2.1",
+          "value": "2.1",
+          "error": "0.4",
+          "unit": "dex",
+          "description": "Preferred surface gravity from Fe ionisation equilibrium with NLTE corrections",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+              "start_line": 231,
+              "end_line": 233,
+              "context": "Best agreement in [Fe/H] from Fe I and Fe II lines for logg = 2.1 dex"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "-1.81 +/- 0.11",
+          "value": "-1.81",
+          "error": "0.11",
+          "unit": "dex",
+          "description": "[Fe/H] from Fe I lines in LTE; consistent with -1.70 from Fe II lines after expected NLTE correction of +0.11 dex",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+              "start_line": 243,
+              "end_line": 245,
+              "context": "[Fe/H] derived from Fe I and Fe II lines"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        },
+        "mass": {
+          "raw_value": "2.3 / 1.9",
+          "value": "",
+          "unit": "M_sun",
+          "description": "Possible stellar masses from PARSEC isochrone fitting for RGB/CHEB (2.3 Msun) and EAGB (1.9 Msun) solutions",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+              "start_line": 280,
+              "end_line": 285,
+              "context": "Possible masses and ages from isochrone fitting"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        },
+        "radius": null,
+        "age": {
+          "raw_value": "493 / 504 / 904",
+          "value": "",
+          "unit": "Ma",
+          "description": "Possible stellar ages from PARSEC isochrone fitting for RGB (493 Ma), CHEB (504 Ma), and EAGB (904 Ma) solutions",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+              "start_line": 280,
+              "end_line": 285,
+              "context": "Possible ages from isochrone fitting"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      },
+      "abundances": [
+        {
+          "raw_value": "-1.808",
+          "value": "-1.808",
+          "error": "0.106",
+          "unit": "dex",
+          "element": "Fe",
+          "reference_element": "H",
+          "description": "[Fe/H] from Fe I lines in LTE from the abundance table",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2404.07731/catalog_tables/table-tab-abbo.ecsv",
+              "line": 43,
+              "column": "col_005",
+              "column_header": "[X/H]",
+              "raw_value": "-1.808"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        },
+        {
+          "raw_value": "-0.390",
+          "value": "-0.390",
+          "error": "0.145",
+          "unit": "dex",
+          "element": "C",
+          "reference_element": "Fe",
+          "description": "[C/Fe] from C I G-band line profile fitting",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2404.07731/catalog_tables/table-tab-abbo.ecsv",
+              "line": 23,
+              "column": "col_007",
+              "column_header": "[X/Fe]",
+              "raw_value": "-0.390"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        },
+        {
+          "raw_value": "0.897",
+          "value": "0.897",
+          "error": "0.135",
+          "unit": "dex",
+          "element": "O",
+          "reference_element": "Fe",
+          "description": "[O/Fe] from O I forbidden line and triplet with NLTE corrections",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2404.07731/catalog_tables/table-tab-abbo.ecsv",
+              "line": 25,
+              "column": "col_007",
+              "column_header": "[X/Fe]",
+              "raw_value": "0.897"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      ],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": {
+          "raw_value": "> 30",
+          "value": "",
+          "unit": "kpc",
+          "description": "Lower limit on apocentre distance for bound cases with larger parallaxes",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+              "start_line": 336,
+              "end_line": 338,
+              "context": "Apocentre distance for bound cases exceeds 30 kpc"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        },
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "external galaxy / dwarf galaxy",
+          "value": "external galaxy",
+          "unit": "",
+          "description": "Proposed formation site based on low carbon abundance and peculiar CNO pattern",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+              "start_line": 493,
+              "end_line": 496,
+              "context": "Discussion concluding the star was formed in an external galaxy"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "raw_value": "17.5 +/- 1.64",
+          "value": "17.5",
+          "error": "1.64",
+          "unit": "km/s",
+          "name": "reference_rv_gaia_dr3",
+          "description": "Gaia DR3 radial velocity adopted in the paper for initial kinematic analysis",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+              "start_line": 185,
+              "end_line": 185,
+              "context": "Gaia DR3 radial velocity value for GHS143"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "22.71 +/- 0.30",
+          "value": "22.71",
+          "error": "0.30",
+          "unit": "km/s",
+          "name": "rv_uves_august_2023",
+          "description": "Radial velocity from UVES observation in August 2023, supporting binary hypothesis via RV variation",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+              "start_line": 183,
+              "end_line": 184,
+              "context": "UVES radial velocity measurement from August 2023"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        {
+          "raw_value": "0.098 - 0.222",
+          "value": "",
+          "unit": "mas",
+          "name": "gravity_inferred_parallax_range",
+          "description": "Parallax range inferred from surface gravity interval 1.8-2.5 dex via Stefan-Boltzmann relation",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+              "start_line": 322,
+              "end_line": 324,
+              "context": "Parallax range corresponding to surface gravity interval"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        {
+          "raw_value": "0.168",
+          "value": "0.168",
+          "unit": "mas",
+          "name": "critical_parallax_bound_unbound",
+          "description": "Critical parallax at which the star is partially unbound (609 out of 1000 realisations)",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+              "start_line": 333,
+              "end_line": 336,
+              "context": "Critical parallax value separating bound and unbound regimes"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        {
+          "raw_value": "609 / 1000",
+          "value": "0.609",
+          "unit": "",
+          "name": "unbound_realisations_at_critical_parallax",
+          "description": "Fraction of 1000 Monte Carlo realisations that are unbound at the critical parallax of 0.168 mas",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+              "start_line": 335,
+              "end_line": 336,
+              "context": "Number of unbound realisations at critical parallax"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        {
+          "raw_value": "+0.65",
+          "value": "0.65",
+          "unit": "dex",
+          "name": "cno_over_fe",
+          "description": "[(C+N+O)/Fe] ratio, a key chemical signature discussed in the paper",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+              "start_line": 100,
+              "end_line": 100,
+              "context": "[(C+N+O)/Fe] = +0.65 from results abstract"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      ]
+    }
+  ],
+  "candidate_groups_considered": []
+}

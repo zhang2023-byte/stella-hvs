@@ -1,0 +1,234 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T18:24:59",
+  "paper": {
+    "arxiv_id": "2502.20266",
+    "bibcode": "2025ApJ...989..142H",
+    "title": "Discovery of WINERED-HVS1: A metal-rich hyper-velocity star candidate ejected from the Galactic center",
+    "month": "2025-02",
+    "source_note_json": "notes/2025/2025-02/2025-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2502.20266",
+      "pdf": "https://arxiv.org/pdf/2502.20266"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2502.20266",
+    "audit_path": "literature/2502.20266/audit.json",
+    "catalog_review_path": "literature/2502.20266/catalog_review.json",
+    "catalog_extraction_path": "literature/2502.20266/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2502.20266/catalog_tables/table-table-stellar_abn_all_res.ecsv",
+      "literature/2502.20266/catalog_tables/table-table-stellar_abn_all_res_VALD3.ecsv",
+      "literature/2502.20266/catalog_tables/table-table-4methods.ecsv",
+      "literature/2502.20266/catalog_tables/table-table-notation.ecsv",
+      "literature/2502.20266/catalog_tables/table-table-chemistry.ecsv",
+      "literature/2502.20266/catalog_tables/table-table-kinematics.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T18:24:59",
+    "extractor": "agent",
+    "summary": "Paper searches for HVS candidates ejected from the Galactic center using kinematic backward orbit integration with four method variants. It identifies 74 kinematically-selected HVS candidates, all of which the paper explicitly concludes are bound to the Milky Way. From these, 22 metal-rich HVS candidates are selected (9 spectroscopically-confirmed mrHVSspec1-9 and 13 XP-based WINERED-HVS1 + mrHVSxp2-13). The paper repeatedly states that all candidates are bound to the Milky Way, with ejection velocities 500-600 km/s below the Galactic center escape velocity of ~700-800 km/s. Because the paper explicitly judges all candidates as bound to the Galaxy, no candidates meet the Stella inclusion criteria."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "step_type": "input_catalog",
+      "summary": "Gaia DR3 6D position-velocity catalog",
+      "depends_on": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2502.20266/arxiv_source/main.tex",
+          "start_line": 250,
+          "end_line": 254,
+          "context": "Gaia DR3 catalog used for HVS search"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "step_type": "cross_match",
+      "summary": "Cross-match with chemical abundance catalog from Hattori et al. (2025) on Zenodo",
+      "depends_on": ["step-01"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2502.20266/arxiv_source/main.tex",
+          "start_line": 473,
+          "end_line": 478,
+          "context": "we cross-match the sample with the chemical abundance catalog"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "step_type": "quality_filter",
+      "summary": "Quality criteria cuts on astrometry and XP spectrophotometry",
+      "depends_on": ["step-01"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2502.20266/arxiv_source/main.tex",
+          "start_line": 479,
+          "end_line": 481,
+          "context": "select stars with [M/H]_XP>-1 and bool_flag_cmd_good=True"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "step_type": "distance_estimation",
+      "summary": "Distance estimates from geometric and photogeometric distances in Gaia DR3",
+      "depends_on": ["step-01"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2502.20266/arxiv_source/main.tex",
+          "start_line": 461,
+          "end_line": 468,
+          "context": "cross-match with StarHorse catalog to obtain photometric distance information"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "step_type": "velocity_calculation",
+      "summary": "Galactocentric position and velocity calculations with Solar motion corrections",
+      "depends_on": ["step-01", "step-04"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2502.20266/arxiv_source/main.tex",
+          "start_line": 640,
+          "end_line": 648,
+          "context": "Galactocentric coordinates and velocities"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "step_type": "galactic_potential_model",
+      "summary": "Four methods with different Galactic potential models (axisymmetric and barred) and Solar position assumptions",
+      "depends_on": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2502.20266/arxiv_source/tabA_4methods.tex",
+          "start_line": 2,
+          "end_line": 37,
+          "context": "Four methods to kinematically search for HVS candidates"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "step_type": "orbit_integration",
+      "summary": "Backward orbit integration for 200 Myr in Galactic potential to find last disk crossing",
+      "depends_on": ["step-05", "step-06"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2502.20266/arxiv_source/main.tex",
+          "start_line": 640,
+          "end_line": 648,
+          "context": "backward orbit integration for 200 Myr"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Monte Carlo orbit assessment with Conditions 1 and 2 for HVS candidacy, evaluating ejection radius and velocity",
+      "depends_on": ["step-07"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2502.20266/arxiv_source/main.tex",
+          "start_line": 717,
+          "end_line": 730,
+          "context": "Kinematic conditions for HVS candidate selection"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "step_type": "origin_assessment",
+      "summary": "Chemical abundance analysis to distinguish Galactic center origin from halo contaminants (GES, Splash)",
+      "depends_on": ["step-02", "step-08"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2502.20266/arxiv_source/main.tex",
+          "start_line": 817,
+          "end_line": 867,
+          "context": "Further pruning of HVS candidates with chemistry"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "kinematically-selected-hvs-candidates",
+      "description": "74 kinematically-selected HVS candidates from Gaia DR3 identified via backward orbit integration with four method variants (Methods A-D).",
+      "decision": "excluded",
+      "reason": "The paper explicitly concludes that all 74 kinematically-selected HVS candidates are bound to the Milky Way (\\citealt{main.tex}:811). Their ejection velocities of 500-600 km/s are below the Galactic center escape velocity of ~700-800 km/s. Stella excludes objects the paper judges bound to the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2502.20266/arxiv_source/main.tex",
+          "start_line": 801,
+          "end_line": 814,
+          "context": "Paper states all 74 kinematically-selected HVS candidates are bound to the Milky Way"
+        }
+      ]
+    },
+    {
+      "group_id": "metal-rich-hvs-candidates-spectroscopic",
+      "description": "9 spectroscopically confirmed metal-rich HVS candidates (mrHVSspec1-9) with literature spectroscopic abundances satisfying [Fe/H]_spec > -1.",
+      "decision": "excluded",
+      "reason": "These candidates are a subset of the 74 kinematically-selected candidates, and the paper explicitly states that all 74 candidates are bound to the Milky Way. The paper further suggests these are likely non-HVS contaminants from GES or Splash populations.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2502.20266/arxiv_source/main.tex",
+          "start_line": 822,
+          "end_line": 844,
+          "context": "Selection of 9 spectroscopically confirmed metal-rich HVS candidates"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2502.20266/arxiv_source/main.tex",
+          "start_line": 1269,
+          "end_line": 1281,
+          "context": "Chemical assessment suggesting mrHVSspec1-9 are consistent with non-HVS reference stars"
+        }
+      ]
+    },
+    {
+      "group_id": "metal-rich-hvs-candidates-xp-based",
+      "description": "13 XP-based metal-rich HVS candidates including WINERED-HVS1 and mrHVSxp2-13, selected with Gaia XP chemistry satisfying [M/H]_XP > -1.",
+      "decision": "excluded",
+      "reason": "These candidates are also a subset of the 74 kinematically-selected candidates. The paper explicitly states all 74 candidates are bound to the Milky Way. While WINERED-HVS1 is called the 'most promising HVS candidate,' the paper still concludes it is gravitationally bound and 'not an unambiguous HVS candidate from a kinematic perspective.'",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2502.20266/arxiv_source/main.tex",
+          "start_line": 846,
+          "end_line": 867,
+          "context": "Selection of 13 XP-based metal-rich HVS candidates"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2502.20266/arxiv_source/main.tex",
+          "start_line": 113,
+          "end_line": 116,
+          "context": "Paper states WINERED-HVS1 is gravitationally bound and not an unambiguous HVS candidate from a kinematic perspective"
+        }
+      ]
+    }
+  ]
+}

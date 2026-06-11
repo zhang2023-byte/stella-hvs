@@ -1,0 +1,335 @@
+{
+    "schema_version": "stella.article_data_assets.review.v1",
+    "paper": {
+        "arxiv_id": "2412.07738",
+        "title": "Runaway O and Be stars found using Gaia DR3, new stellar bow shocks and search for binaries",
+        "month": "2024-12",
+        "source_note_json": "notes/2024/2024-12/2024-12.json",
+        "links": {
+            "abs": "https://arxiv.org/abs/2412.07738",
+            "pdf": "https://arxiv.org/pdf/2412.07738"
+        }
+    },
+    "source": {
+        "paper_dir": "literature/2412.07738",
+        "audit_path": "literature/2412.07738/audit.json",
+        "source_dir": "literature/2412.07738/arxiv_source",
+        "tex_root": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+        "source_available": true
+    },
+    "review": {
+        "status": "reviewed",
+        "reviewed_at": "2026-05-17T12:34:12",
+        "reviewer": "agent",
+        "summary": "Auto-filled review: 4 internal table(s), 4 external resource(s)."
+    },
+    "internal_tables": [
+        {
+            "id": "table-Tab-Review",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Main characteristics of works on all-sky searches of runaways among O, B, Be and young stars in the Milky Way, except for two references of the LMC and SMC",
+            "source_refs": [
+                {
+                    "path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+                    "start_line": 92,
+                    "end_line": 125,
+                    "caption": "Main characteristics of works on all-sky searches of runaways among O, B, Be and young stars in the Milky Way, except for two references of the LMC and SMC.",
+                    "label": "Tab:Review"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Sample",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Method",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Threshold",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Runaways",
+                    "meaning": "High-velocity or runaway classification flag",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "References",
+                    "meaning": "Bibliographic reference",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Main characteristics of works on all-sky searches of runaways among O, B, Be and young stars in the Milky Way, except for two references of the LMC and SMC.",
+            "comments": ""
+        },
+        {
+            "id": "table-Tab-FitsAfterClippingField",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Means and standard deviations of the velocity distributions for the field stars",
+            "source_refs": [
+                {
+                    "path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+                    "start_line": 190,
+                    "end_line": 213,
+                    "caption": "Means and standard deviations of the velocity distributions for the field stars. Adapted from \\cite{MCC2023}.",
+                    "label": "Tab:FitsAfterClippingField"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Catalog",
+                    "meaning": "Closest approach distance",
+                    "unit_text": "pc or arcmin",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Stars | \\#",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Field Stars | \\#",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\mathbf\\mu_V_TAN^GF | \\multicolumn2c(km~s^-1)",
+                    "meaning": "Tangential velocity",
+                    "unit_text": "km~s^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\mathbf\\sigma_V_TAN^GF | \\multicolumn2c(km~s^-1)",
+                    "meaning": "Tangential velocity",
+                    "unit_text": "km~s^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\mathbf\\mu_W_RSR^GF",
+                    "meaning": "Column from table header",
+                    "unit_text": "mA",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\mathbf\\sigma_W_RSR^GF",
+                    "meaning": "Column from table header",
+                    "unit_text": "mA",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Means and standard deviations of the velocity distributions for the field stars. Adapted from \\cite{MCC2023}.",
+            "comments": ""
+        },
+        {
+            "id": "table-Tab-FitsAfterClippingRun",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Means and standard deviations of the velocity distributions for the runaway stars",
+            "source_refs": [
+                {
+                    "path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+                    "start_line": 216,
+                    "end_line": 239,
+                    "caption": "Means and standard deviations of the velocity distributions for the runaway stars. Adapted from \\cite{MCC2023}.",
+                    "label": "Tab:FitsAfterClippingRun"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Catalog",
+                    "meaning": "Closest approach distance",
+                    "unit_text": "pc or arcmin",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Stars | \\#",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Runaway Stars | \\#",
+                    "meaning": "High-velocity or runaway classification flag",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\mathbf\\mu_V_TAN | \\multicolumn2c(km~s^-1)",
+                    "meaning": "Tangential velocity",
+                    "unit_text": "km~s^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\mathbf\\sigma_V_TAN | \\multicolumn2c(km~s^-1)",
+                    "meaning": "Tangential velocity",
+                    "unit_text": "km~s^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\mathbf\\mu_W_RSR",
+                    "meaning": "Column from table header",
+                    "unit_text": "mA",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\mathbf\\sigma_W_RSR",
+                    "meaning": "Column from table header",
+                    "unit_text": "mA",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Means and standard deviations of the velocity distributions for the runaway stars. Adapted from \\cite{MCC2023}.",
+            "comments": ""
+        },
+        {
+            "id": "table-Tab-SpectralType",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Field and runaway stars as a function of spectral type",
+            "source_refs": [
+                {
+                    "path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+                    "start_line": 286,
+                    "end_line": 310,
+                    "caption": "Field and runaway stars as a function of spectral type. Adapted from \\cite{MCC2023}.",
+                    "label": "Tab:SpectralType"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Spectral Type | \\vspace-2mm",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Stars | \\#",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\multicolumn2cRunaway Stars \\vspace-4mm | ----------------------- \\vspace0mm | \\#",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "%",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Field and runaway stars as a function of spectral type. Adapted from \\cite{MCC2023}.",
+            "comments": ""
+        }
+    ],
+    "external_resources": [
+        {
+            "id": "resource-001",
+            "kind": "external_url",
+            "url": "https://www.cosmos.esa.int/gaia",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+                    "start_line": 365,
+                    "end_line": 365,
+                    "context": "We would like to thank the members of the \\textit{Gaia} team at Universitat de Barcelona for many useful discussions. We thank J. Maíz Apellániz, S.R. Berlanas, S. Sim\\'on-D\\'{\\i}az, C. Martínez-Sebastián, M. Pantaleoni González, G. Holgado and A. de Burgos for valuable insights and feedback.\nWe acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants, PID2022-136828NB-C41/AEI/10.13039/\\\\501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/ 501100011033/ERDF/\\\\EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\nFig.~\\ref{Fig:runawayDistribution} was generated using the \\texttt{mw-plot} Python package. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\nThis work has made use of the BeSS database, operated at LESIA, Observatoire de Meudon, France: \\url{http://basebe.obspm.fr}.\nThis publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration."
+                }
+            ],
+            "evidence": "We would like to thank the members of the \\textit{Gaia} team at Universitat de Barcelona for many useful discussions. We thank J. Maíz Apellániz, S.R. Berlanas, S. Sim\\'on-D\\'{\\i}az, C. Martínez-Sebastián, M. Pantaleoni González, G. Holgado and A. de Burgos for valuable insights and feedback.\nWe acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants, PID2022-136828NB-C41/AEI/10.13039/\\\\501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/ 501100011033/ERDF/\\\\EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\nFig.~\\ref{Fig:runawayDistribution} was generated using the \\texttt{mw-plot} Python package. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\nThis work has made use of the BeSS database, operated at LESIA, Observatoire de Meudon, France: \\url{http://basebe.obspm.fr}.\nThis publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration.",
+            "comments": ""
+        },
+        {
+            "id": "resource-002",
+            "kind": "external_url",
+            "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+                    "start_line": 365,
+                    "end_line": 365,
+                    "context": "We would like to thank the members of the \\textit{Gaia} team at Universitat de Barcelona for many useful discussions. We thank J. Maíz Apellániz, S.R. Berlanas, S. Sim\\'on-D\\'{\\i}az, C. Martínez-Sebastián, M. Pantaleoni González, G. Holgado and A. de Burgos for valuable insights and feedback.\nWe acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants, PID2022-136828NB-C41/AEI/10.13039/\\\\501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/ 501100011033/ERDF/\\\\EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\nFig.~\\ref{Fig:runawayDistribution} was generated using the \\texttt{mw-plot} Python package. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\nThis work has made use of the BeSS database, operated at LESIA, Observatoire de Meudon, France: \\url{http://basebe.obspm.fr}.\nThis publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration."
+                }
+            ],
+            "evidence": "We would like to thank the members of the \\textit{Gaia} team at Universitat de Barcelona for many useful discussions. We thank J. Maíz Apellániz, S.R. Berlanas, S. Sim\\'on-D\\'{\\i}az, C. Martínez-Sebastián, M. Pantaleoni González, G. Holgado and A. de Burgos for valuable insights and feedback.\nWe acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants, PID2022-136828NB-C41/AEI/10.13039/\\\\501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/ 501100011033/ERDF/\\\\EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\nFig.~\\ref{Fig:runawayDistribution} was generated using the \\texttt{mw-plot} Python package. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\nThis work has made use of the BeSS database, operated at LESIA, Observatoire de Meudon, France: \\url{http://basebe.obspm.fr}.\nThis publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration.",
+            "comments": ""
+        },
+        {
+            "id": "resource-003",
+            "kind": "external_url",
+            "url": "http://basebe.obspm.fr",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+                    "start_line": 366,
+                    "end_line": 366,
+                    "context": "We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants, PID2022-136828NB-C41/AEI/10.13039/\\\\501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/ 501100011033/ERDF/\\\\EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\nFig.~\\ref{Fig:runawayDistribution} was generated using the \\texttt{mw-plot} Python package. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\nThis work has made use of the BeSS database, operated at LESIA, Observatoire de Meudon, France: \\url{http://basebe.obspm.fr}.\nThis publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration.\nThis research has made use of NASA’s Astrophysics Data System."
+                }
+            ],
+            "evidence": "We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants, PID2022-136828NB-C41/AEI/10.13039/\\\\501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/ 501100011033/ERDF/\\\\EU, and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\nFig.~\\ref{Fig:runawayDistribution} was generated using the \\texttt{mw-plot} Python package. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\nThis work has made use of the BeSS database, operated at LESIA, Observatoire de Meudon, France: \\url{http://basebe.obspm.fr}.\nThis publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration.\nThis research has made use of NASA’s Astrophysics Data System.",
+            "comments": ""
+        },
+        {
+            "id": "resource-004",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+                    "start_line": 369,
+                    "end_line": 369,
+                    "context": "This publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration.\nThis research has made use of NASA’s Astrophysics Data System.\nThis research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n\n\\end{acknowledgments}"
+                }
+            ],
+            "evidence": "This publication makes use of data products from the Wide-field Infrared Survey Explorer, which is a joint project of the University of California, Los Angeles, and the Jet Propulsion Laboratory/California Institute of Technology, funded by the National Aeronautics and Space Administration.\nThis research has made use of NASA’s Astrophysics Data System.\nThis research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n\n\\end{acknowledgments}",
+            "comments": ""
+        }
+    ]
+}

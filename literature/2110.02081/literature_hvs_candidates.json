@@ -1,0 +1,98 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T03:57:59",
+  "paper": {
+    "arxiv_id": "2110.02081",
+    "bibcode": "",
+    "title": "Proper motions of OB stars in the far Carina Arm",
+    "month": "2021-10",
+    "source_note_json": "notes/2021/2021-10/2021-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2110.02081",
+      "pdf": "https://arxiv.org/pdf/2110.02081"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2110.02081",
+    "audit_path": "literature/2110.02081/audit.json",
+    "catalog_review_path": "literature/2110.02081/catalog_review.json",
+    "catalog_extraction_path": "literature/2110.02081/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T03:57:59",
+    "extractor": "agent",
+    "summary": "论文研究船底座远臂OB星的自行，识别出逃逸OB星（runaway OB stars），它们是通过双星超新星或动力学弹射从星团（NGC 3603和Westerlund 2）中抛出的恒星。这些是传统意义上的'runaway stars'（相对速度>30 km/s），而非超高速星（HVS）。论文未声称任何恒星达到银河系逃逸速度或为非束缚天体，未使用'hypervelocity star'一词。runaway OB stars与HVS是不同的天体类别——前者速度通常在30-200 km/s范围且仍受银河系束缚。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "扫描arXiv摘要和论文全文，评估HVS相关性。Proper motions of OB stars in the far Carina Arm。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+          "start_line": 60,
+          "end_line": 61,
+          "context": "runaway OB stars thought to be produced through binary supernova or dynamical ejection"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+          "start_line": 257,
+          "end_line": 257,
+          "context": "velocity dispersions of 17 and 9 km/s, threshold of velocity contrast 30 km/s for runaways"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+          "start_line": 311,
+          "end_line": 311,
+          "context": "vt_rel > 20 km/s threshold for candidate runaway component"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "runaway-ob-carina",
+      "description": "船底座远臂4199颗OB星样本中的逃逸候选体，通过相对切向速度>20/25/30 km/s阈值筛选。主要集中在NGC 3603 (~10颗) 和Westerlund 2 (~8颗)附近。Table 2列出了具体候选体。",
+      "decision": "excluded",
+      "reason": "论文中的'runaway stars'是传统定义的OB逃逸星（相对星团速度>30 km/s），由双星超新星爆发或动力学弹射产生。其空间速度远低于银河系逃逸速度（~500 km/s）。论文未声称任何恒星为超高速星（HVS）或银河系非束缚天体。runaway OB stars与HVS是不同的天体类别：前者仍是银河系束缚天体，后者速度需超过银河系逃逸速度。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+          "start_line": 60,
+          "end_line": 61,
+          "context": "runaway OB stars thought to be produced through binary supernova or dynamical ejection"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+          "start_line": 257,
+          "end_line": 257,
+          "context": "velocity dispersions of 17 and 9 km/s, threshold of velocity contrast 30 km/s for runaways"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+          "start_line": 311,
+          "end_line": 311,
+          "context": "vt_rel > 20 km/s threshold for candidate runaway component"
+        }
+      ]
+    }
+  ]
+}

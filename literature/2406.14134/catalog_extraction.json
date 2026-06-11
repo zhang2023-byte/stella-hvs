@@ -1,0 +1,517 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:07",
+  "paper": {
+    "arxiv_id": "2406.14134",
+    "title": "Improved constraints on Galactic Centre ejection of hypervelocity stars based on novel search method",
+    "month": "2024-06"
+  },
+  "review": {
+    "path": "literature/2406.14134/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123907",
+    "started_at": "2026-05-17T12:39:07",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2406.14134",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-selections",
+      "internal_table_id": "table-tab-selections",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.14134/arxiv_source/main.tex",
+        "start_line": 230,
+        "end_line": 251,
+        "caption": "Overview of the HVS candidate selections used in this study.",
+        "label": "tab:selections"
+      },
+      "source_path": "literature/2406.14134/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.14134/catalog_sources/table-tab-selections/excerpt.tex",
+      "sha256": "8b0b76ef8b730af170d8acb1fc25cb1b4cf8f6b78906f256e5e733d73e137d8d",
+      "line_count": 22,
+      "error": ""
+    },
+    {
+      "id": "table-tab-source_table",
+      "internal_table_id": "table-tab-source_table",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.14134/arxiv_source/main.tex",
+        "start_line": 253,
+        "end_line": 269,
+        "caption": "Here we provide the first five sources, ordered by {\\tt source\\_id}, from our catalogue of 600 HVS candidates with their \\gaia DR3 {\\tt source\\_id}, implied heliocentric radial velocity, and implied heliocentric distance.",
+        "label": "tab:source_table"
+      },
+      "source_path": "literature/2406.14134/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.14134/catalog_sources/table-tab-source_table/excerpt.tex",
+      "sha256": "39ee4220c03582bd3c563616eed8eb453839b8762328b5da583e2cdf1a9d1b34",
+      "line_count": 17,
+      "error": ""
+    },
+    {
+      "id": "table-tab-obs",
+      "internal_table_id": "table-tab-obs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.14134/arxiv_source/main.tex",
+        "start_line": 292,
+        "end_line": 307,
+        "caption": "Overview of the observing dates for our survey.",
+        "label": "tab:obs"
+      },
+      "source_path": "literature/2406.14134/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.14134/catalog_sources/table-tab-obs/excerpt.tex",
+      "sha256": "041a7c00c0d3d5e125af9a3ea24c852ca5efdd4c927c58a8db27f54e0af17c46",
+      "line_count": 16,
+      "error": ""
+    },
+    {
+      "id": "table-tab-obs_results",
+      "internal_table_id": "table-tab-obs_results",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.14134/arxiv_source/main.tex",
+        "start_line": 342,
+        "end_line": 358,
+        "caption": "Five sources from our observed HVS candidates in no particular order. The full table can be accessed online (see main text). The radial velocities are in the barycentric frame.",
+        "label": "tab:obs_results"
+      },
+      "source_path": "literature/2406.14134/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.14134/catalog_sources/table-tab-obs_results/excerpt.tex",
+      "sha256": "ccb9522cd6d746e9f1bf2c9201e7270324c91d92c0df7bf7cfdb537e71e75a94",
+      "line_count": 17,
+      "error": ""
+    },
+    {
+      "id": "table-tab-external",
+      "internal_table_id": "table-tab-external",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2406.14134/arxiv_source/main.tex",
+        "start_line": 633,
+        "end_line": 648,
+        "caption": "\\gaia DR3 {\\it source\\_id}'s and radial velocities for the five stars for which we used literature radial velocity measurements.",
+        "label": "tab:external"
+      },
+      "source_path": "literature/2406.14134/arxiv_source/main.tex",
+      "excerpt_path": "literature/2406.14134/catalog_sources/table-tab-external/excerpt.tex",
+      "sha256": "11a28fcf65879e088128107ead1ce47cbcc7db07ccc7251c7bcd16d1ee53268f",
+      "line_count": 16,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-selections",
+      "internal_table_id": "table-tab-selections",
+      "status": "success",
+      "ecsv_path": "literature/2406.14134/catalog_tables/table-tab-selections.ecsv",
+      "caption": "Overview of the HVS candidate selections used in this study.",
+      "label": "tab:selections",
+      "row_count": 11,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Selection",
+          "Section for reference"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Selection",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Section for reference",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpok7cp2p9/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.14134/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpok7cp2p9/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.14134/catalog_sources/table-tab-selections/wrapped.tex",
+            "html": "literature/2406.14134/catalog_sources/table-tab-selections/latexml.html",
+            "stdout": "literature/2406.14134/catalog_sources/table-tab-selections/latexml.stdout.txt",
+            "stderr": "literature/2406.14134/catalog_sources/table-tab-selections/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8b0b76ef8b730af170d8acb1fc25cb1b4cf8f6b78906f256e5e733d73e137d8d"
+    },
+    {
+      "id": "table-tab-source_table",
+      "internal_table_id": "table-tab-source_table",
+      "status": "success",
+      "ecsv_path": "literature/2406.14134/catalog_tables/table-tab-source_table.ecsv",
+      "caption": "Here we provide the first five sources, ordered by {\\tt source\\_id}, from our catalogue of 600 HVS candidates with their \\gaia DR3 {\\tt source\\_id}, implied heliocentric radial velocity, and implied heliocentric distance.",
+      "label": "tab:source_table",
+      "row_count": 6,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\gaia DR3 source_id",
+          "V_\\rm r,I [km s^-1]",
+          "D_\\rm I[kpc]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\gaia DR3 source_id",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "V_\\rm r,I [km s^-1]",
+          "unit_text": "V_\\rm r,I [km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "D_\\rm I[kpc]",
+          "unit_text": "D_\\rm I[kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprsb64nh1/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.14134/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprsb64nh1/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.14134/catalog_sources/table-tab-source_table/wrapped.tex",
+            "html": "literature/2406.14134/catalog_sources/table-tab-source_table/latexml.html",
+            "stdout": "literature/2406.14134/catalog_sources/table-tab-source_table/latexml.stdout.txt",
+            "stderr": "literature/2406.14134/catalog_sources/table-tab-source_table/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "39ee4220c03582bd3c563616eed8eb453839b8762328b5da583e2cdf1a9d1b34"
+    },
+    {
+      "id": "table-tab-obs",
+      "internal_table_id": "table-tab-obs",
+      "status": "success",
+      "ecsv_path": "literature/2406.14134/catalog_tables/table-tab-obs.ecsv",
+      "caption": "Overview of the observing dates for our survey.",
+      "label": "tab:obs",
+      "row_count": 5,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Instrument",
+          "Observing dates",
+          "Run number"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Instrument",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Observing dates",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Run number",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxj67zp3r/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.14134/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxj67zp3r/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.14134/catalog_sources/table-tab-obs/wrapped.tex",
+            "html": "literature/2406.14134/catalog_sources/table-tab-obs/latexml.html",
+            "stdout": "literature/2406.14134/catalog_sources/table-tab-obs/latexml.stdout.txt",
+            "stderr": "literature/2406.14134/catalog_sources/table-tab-obs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "041a7c00c0d3d5e125af9a3ea24c852ca5efdd4c927c58a8db27f54e0af17c46"
+    },
+    {
+      "id": "table-tab-obs_results",
+      "internal_table_id": "table-tab-obs_results",
+      "status": "success",
+      "ecsv_path": "literature/2406.14134/catalog_tables/table-tab-obs_results.ecsv",
+      "caption": "Five sources from our observed HVS candidates in no particular order. The full table can be accessed online (see main text). The radial velocities are in the barycentric frame.",
+      "label": "tab:obs_results",
+      "row_count": 6,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\gaia DR3 source_id",
+          "radial velocity [km s^-1]",
+          "radial velocity uncertainty [km s^-1]",
+          "date of observation",
+          "instrument"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\gaia DR3 source_id",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "radial velocity [km s^-1]",
+          "unit_text": "radial velocity [km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "radial velocity uncertainty [km s^-1]",
+          "unit_text": "radial velocity uncertainty [km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "date of observation",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "instrument",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfzxz93lo/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.14134/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfzxz93lo/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.14134/catalog_sources/table-tab-obs_results/wrapped.tex",
+            "html": "literature/2406.14134/catalog_sources/table-tab-obs_results/latexml.html",
+            "stdout": "literature/2406.14134/catalog_sources/table-tab-obs_results/latexml.stdout.txt",
+            "stderr": "literature/2406.14134/catalog_sources/table-tab-obs_results/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ccb9522cd6d746e9f1bf2c9201e7270324c91d92c0df7bf7cfdb537e71e75a94"
+    },
+    {
+      "id": "table-tab-external",
+      "internal_table_id": "table-tab-external",
+      "status": "success",
+      "ecsv_path": "literature/2406.14134/catalog_tables/table-tab-external.ecsv",
+      "caption": "\\gaia DR3 {\\it source\\_id}'s and radial velocities for the five stars for which we used literature radial velocity measurements.",
+      "label": "tab:external",
+      "row_count": 5,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\gaia DR3 source_id",
+          "Radial velocity [km s^-1]",
+          "Source"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\gaia DR3 source_id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Radial velocity [km s^-1]",
+          "unit_text": "Radial velocity [km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpx1vqdua3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2406.14134/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpx1vqdua3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2406.14134/catalog_sources/table-tab-external/wrapped.tex",
+            "html": "literature/2406.14134/catalog_sources/table-tab-external/latexml.html",
+            "stdout": "literature/2406.14134/catalog_sources/table-tab-external/latexml.stdout.txt",
+            "stderr": "literature/2406.14134/catalog_sources/table-tab-external/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "11a28fcf65879e088128107ead1ce47cbcc7db07ccc7251c7bcd16d1ee53268f"
+    }
+  ]
+}

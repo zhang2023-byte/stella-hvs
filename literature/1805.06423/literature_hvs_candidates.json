@@ -1,0 +1,99 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:24:00",
+  "paper": {
+    "arxiv_id": "1805.06423",
+
+    "title": "LP 543-25: a rare low-mass runaway disk star",
+    "month": "2018-05",
+    "source_note_json": "",
+    "links": {
+      "abs": "https://arxiv.org/abs/1805.06423",
+      "pdf": "https://arxiv.org/pdf/1805.06423"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1805.06423",
+    "audit_path": "",
+    "catalog_review_path": "literature/1805.06423/catalog_review.json",
+    "catalog_extraction_path": "literature/1805.06423/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:24:00",
+    "extractor": "agent",
+    "summary": "No Galactic-unbound HVS candidates. Paper studies a single low-mass star LP 543-25 (Gaia DR2 3137866242753594624) using Gaia DR2 astrometry. The paper explicitly states the star is bound to the Galaxy (line 56: 'i.e. it is bound to the Galaxy'). The star has Galactocentric velocity components U=-195, V=-34, W=37 km/s, moving in the Galactic plane at ~200 km/s away from the Galactic Center. Classified as a low-mass runaway disk star, not a hypervelocity or unbound star."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR2 astrometry (RA, Dec, parallax, proper motions) for LP 543-25 (source 3137866242753594624). No radial velocity in Gaia DR2 for this star.",
+      "inputs": ["Gaia DR2"],
+      "outputs": ["Gaia DR2 astrometric parameters for LP 543-25"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1805.06423/arxiv_source/ms.tex",
+          "start_line": 44,
+          "end_line": 49,
+          "context": "Gaia DR2 provides RA, Dec, parallax, proper motions. Source ID 3137866242753594624."
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": ["step-01"],
+      "step_type": "velocity_calculation",
+      "summary": "Compute heliocentric and Galactocentric Galactic velocity components following Johnson & Soderblom (1987). Assumes negligible radial velocity. Solar motion from Schönrich et al. (2010).",
+      "inputs": ["Gaia DR2 astrometry", "Solar motion"],
+      "outputs": ["U,V,W heliocentric: 206, -289, 30 km/s. Galactocentric: -195, -34, 37 km/s"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1805.06423/arxiv_source/ms.tex",
+          "start_line": 46,
+          "end_line": 56,
+          "context": "Galactic velocity computation and result: U=206, V=-289, W=30 km/s."
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": ["step-02"],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Paper states star is bound to Galaxy. Compares with known low-mass runaway stars. Concludes LP 543-25 is a low-mass runaway disk star.",
+      "inputs": ["Galactic velocity components"],
+      "outputs": ["Bound status: bound to Galaxy. Classification: low-mass runaway disk star."],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1805.06423/arxiv_source/ms.tex",
+          "start_line": 55,
+          "end_line": 69,
+          "context": "'i.e. it is bound to the Galaxy' and comparison with other low-mass runaways."
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "lp543-25",
+      "description": "Single star LP 543-25 (PSS 544-7, Gaia DR2 3137866242753594624). High proper-motion star at 458 pc, previously proposed as a candidate cannonball star ejected by a star cluster. Revisited with Gaia DR2.",
+      "decision": "excluded",
+      "reason": "Paper explicitly concludes LP 543-25 is bound to the Galaxy ('i.e. it is bound to the Galaxy', line 56). Galactocentric velocity ~200 km/s in the Galactic plane is typical of a runaway star but not an unbound HVS. Classified as a low-mass runaway disk star.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1805.06423/arxiv_source/ms.tex",
+          "start_line": 37,
+          "end_line": 69,
+          "context": "Full paper text: introduction, Gaia DR2 kinematics, bound conclusion, runaway classification."
+        }
+      ]
+    }
+  ]
+}

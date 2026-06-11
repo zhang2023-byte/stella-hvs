@@ -1,0 +1,717 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1804.06915",
+    "title": "A search for Galactic runaway stars using Gaia Data Release 1 and Hipparcos proper motions",
+    "month": "2018-04",
+    "source_note_json": "notes/2018/2018-04/2018-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1804.06915",
+      "pdf": "https://arxiv.org/pdf/1804.06915"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1804.06915",
+    "audit_path": "literature/1804.06915/audit.json",
+    "source_dir": "literature/1804.06915/arxiv_source",
+    "tex_root": "literature/1804.06915/arxiv_source/ms.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T08:15:17",
+    "reviewer": "agent",
+    "summary": "Paper presents a 2-D proper-motion search for Galactic runaway stars using Gaia DR1 (TGAS) and Hipparcos proper motions. Three samples are analyzed: GOSSS O stars, additional Simbad O stars, and BA supergiants. 76 runaway candidates are detected (17 possibly new). Contains 9 internal LaTeX tables: sample statistics (1), new GOSSS spectral classifications (1), CHORIZOS photometric analysis (1), proper-motion fit parameters (1), line-width/rotation statistics (1), and four tables of runaway candidates (4). External resources include the GOSC database, CDS data distribution, and Gaia mission data."
+  },
+  "internal_tables": [
+    {
+      "id": "table-samples",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Overview of the three stellar samples analyzed, with counts of TGAS/Hipparcos entries, runaway candidates detected, runaway percentages, and discarded objects.",
+      "source_refs": [
+        {
+          "path": "literature/1804.06915/arxiv_source/ms.tex",
+          "start_line": 261,
+          "end_line": 278,
+          "caption": "Samples used in this paper. T and H refer to TGAS and Hipparcos, respectively, and those columns indicate the number of entries in those catalogs. R is the number of runaway candidates, R\\% is the percentage of runaways, and D is the number of discarded objects.",
+          "label": "samples"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Sample",
+          "meaning": "Sample identifier: 1+2 for O stars (GOSSS + Simbad), 3 for BA I supergiants",
+          "unit_text": "",
+          "source_of_definition": "table header and section 2.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "Sp. ty.",
+          "meaning": "Spectral type of stars in the sample (O or BA I)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T",
+          "meaning": "Number of sample entries with TGAS proper motions",
+          "unit_text": "",
+          "source_of_definition": "table header and caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "H",
+          "meaning": "Number of sample entries with Hipparcos proper motions",
+          "unit_text": "",
+          "source_of_definition": "table header and caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "T or H",
+          "meaning": "Total number of unique entries (union of TGAS and Hipparcos cross-matches)",
+          "unit_text": "",
+          "source_of_definition": "table header and section 2.1 text (lines 280-282)",
+          "confidence": 1.0
+        },
+        {
+          "name": "R",
+          "meaning": "Number of runaway candidates detected",
+          "unit_text": "",
+          "source_of_definition": "table caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "R%",
+          "meaning": "Percentage of runaways among the non-discarded sample: R / (T or H - D) * 100",
+          "unit_text": "%",
+          "source_of_definition": "table caption and computed from values in table",
+          "confidence": 1.0
+        },
+        {
+          "name": "D",
+          "meaning": "Number of objects discarded (due to large proper-motion uncertainties, unconfirmed spectral types, or proximity)",
+          "unit_text": "",
+          "source_of_definition": "table caption and section 2.1 text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 in paper. Caption states T and H are TGAS/Hipparcos counts, R is runaway candidates, R% is percentage, D is discarded. Section 2.1 explains sample composition and cleaning procedures.",
+      "comments": "Summary table; not an object catalog. The O-star row includes a footnote excluding ALS 18929 which was reclassified as B0 V."
+    },
+    {
+      "id": "table-tabGOSSS",
+      "kind": "latex_table",
+      "asset_type": "spectroscopic_catalog",
+      "role_in_paper": "Presents new GOSSS spectral classifications for 25 stars observed as part of the Galactic O-Star Spectroscopic Survey, with coordinates, spectral types, luminosity classes, and quality flags.",
+      "source_refs": [
+        {
+          "path": "literature/1804.06915/arxiv_source/ms.tex",
+          "start_line": 375,
+          "end_line": 416,
+          "caption": "New GOSSS spectral classifications sorted by Galactic longitude. GOS/GAS/GBS stands for Galactic O/B/A Star. The last column indicates which GOSSS paper (if any) was the star included in. The information in this table is also available in electronic form at the GOSC web site ({\\tt http://gosc.cab.inta-csic.es}) and at the CDS via anonymous ftp to {\\tt cdsarc.u-strasbg.fr} (130.79.128.5) or via {\\tt http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}.",
+          "label": "tabGOSSS"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Star identifier (HD, ALS, BD, CPD, or Greek-letter designation)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "GOSSS ID",
+          "meaning": "Galactic O/B/A Star identifier with format GOS/GAS/GBS lll.ll±bb.bb_NN, encoding Galactic longitude and latitude",
+          "unit_text": "",
+          "source_of_definition": "table caption and GOSSS survey conventions",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A. (J2000)",
+          "meaning": "Right ascension (J2000.0 epoch)",
+          "unit_text": "hh:mm:ss.ss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Decl. (J2000)",
+          "meaning": "Declination (J2000.0 epoch)",
+          "unit_text": "dd:mm:ss.ss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ST",
+          "meaning": "Spectral type (e.g., ON5, O8.5, B0.2, A0) following GOSSS classification standards",
+          "unit_text": "",
+          "source_of_definition": "section 2.2 and GOSSS methodology",
+          "confidence": 1.0
+        },
+        {
+          "name": "LC",
+          "meaning": "Luminosity class in Roman numerals (I, Ia, Iab, Ib, II, III, IV, V)",
+          "unit_text": "",
+          "source_of_definition": "table header and GOSSS standards",
+          "confidence": 1.0
+        },
+        {
+          "name": "Qual.",
+          "meaning": "Spectral classification qualifiers: fp (P-Cygni in HeII 4686), (n) / n / nn (rotational broadening indices), (f) (HeII 4686 emission), Nstr (nitrogen strong), p (peculiar), colon for uncertain values",
+          "unit_text": "",
+          "source_of_definition": "GOSSS classification conventions, sections 2.2 and 3.4",
+          "confidence": 1.0
+        },
+        {
+          "name": "Second .",
+          "meaning": "Spectral classification of the secondary component for binary/multiple systems (e.g., BN0.2: Ib: for AB Cru's secondary)",
+          "unit_text": "",
+          "source_of_definition": "section 2.2 text discussing AB Cru as an SB2",
+          "confidence": 0.9
+        },
+        {
+          "name": "Paper",
+          "meaning": "GOSSS survey paper (I, II, or III) where the star was previously included, or ellipsis if newly added",
+          "unit_text": "",
+          "source_of_definition": "table caption",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table in section 2.2. Caption explicitly describes each column. Section 2.2 and Results section discuss individual stars and their classifications. GOSSS methodology explained in sections 1 and 2.2.",
+      "comments": "This table is noted as also available electronically at GOSC and CDS. Contains 23 rows (1 commented out). Includes both O-type and non-O-type stars (B and A supergiants)."
+    },
+    {
+      "id": "table-chorizos",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Results of CHORIZOS photometric analysis for 5 stars without GOSSS spectra, providing effective temperature and extinction estimates to confirm O-type classification.",
+      "source_refs": [
+        {
+          "path": "literature/1804.06915/arxiv_source/ms.tex",
+          "start_line": 478,
+          "end_line": 500,
+          "caption": "Results of the CHORIZOS runs. The photometry (Phot.) column gives the bands included in each run with the same nomenclature as in Ma{\\'\\i}z Apell\\'aniz \\& Barb\\'a (submitted to A\\&A) i.e. J for Johnson $UBV$, 2 for 2MASS $JHK_{\\rm S}$, G for Gaia $G$, T for Tycho-2 $BV$, and S for Str\\\"omgren $uvby$.",
+          "label": "chorizos"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Star identifier (CPD or HDE designation)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A. (J2000)",
+          "meaning": "Right ascension (J2000.0 epoch)",
+          "unit_text": "hh:mm:ss.sss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Decl. (J2000)",
+          "meaning": "Declination (J2000.0 epoch)",
+          "unit_text": "dd:mm:ss.ss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Phot.",
+          "meaning": "Photometric band codes used in the CHORIZOS fit: J=Johnson UBV, 2=2MASS JHKs, G=Gaia G, T=Tycho-2 BV, S=Strömgren uvby",
+          "unit_text": "",
+          "source_of_definition": "table caption and section 2.3 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_\\rm eff (kK)",
+          "meaning": "Effective temperature from CHORIZOS fit, with asymmetric uncertainties (upper and lower bounds) in kilo-Kelvin",
+          "unit_text": "kK",
+          "source_of_definition": "table header and section 2.3",
+          "confidence": 1.0
+        },
+        {
+          "name": "LC",
+          "meaning": "Luminosity class (fixed to 5.0 = V for all runs as stated in section 2.3)",
+          "unit_text": "",
+          "source_of_definition": "section 2.3 text (line 475)",
+          "confidence": 1.0
+        },
+        {
+          "name": "E(4405-5495)",
+          "meaning": "Color excess / amount of extinction in the CHORIZOS monochromatic system, with uncertainties",
+          "unit_text": "mag",
+          "source_of_definition": "section 2.3 and CHORIZOS methodology",
+          "confidence": 1.0
+        },
+        {
+          "name": "R_5495",
+          "meaning": "Ratio of total to selective extinction R_5495 = A(5495 Å) / E(4405-5495), with uncertainties. Canonical value ~3.1",
+          "unit_text": "",
+          "source_of_definition": "section 2.3 and CHORIZOS methodology",
+          "confidence": 1.0
+        },
+        {
+          "name": "Conclusion",
+          "meaning": "Interpretation of whether the star is likely O-type or possibly early B-type based on photometric Teff",
+          "unit_text": "",
+          "source_of_definition": "section 3.3 text discussing individual stars",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table in section 2.3. Caption fully describes photometry band codes. Section 2.3 explains CHORIZOS methodology: free parameters are Teff, E(4405-5495), R_5495; LC fixed; log d as dummy parameter. Results discussed in section 3.3.",
+      "comments": "5 stars shown (2 additional rows commented out). Stars identified as 'Likely O' or 'Likely O, possibly early B'. All are photometric-only O-type confirmations pending spectroscopic follow-up."
+    },
+    {
+      "id": "table-parameters",
+      "kind": "latex_table",
+      "asset_type": "fit_parameters",
+      "role_in_paper": "Robust statistical fit parameters for the mean proper motions of O stars and BA supergiants used as the baseline for runaway detection via the Delta deviation method.",
+      "source_refs": [
+        {
+          "path": "literature/1804.06915/arxiv_source/ms.tex",
+          "start_line": 888,
+          "end_line": 901,
+          "caption": "Robust parameter fits for the O stars and BA supergiants in this paper.",
+          "label": "parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Sp. ty.",
+          "meaning": "Spectral type group: O (O stars, samples 1+2) or BA I (BA supergiants, sample 3)",
+          "unit_text": "",
+          "source_of_definition": "table header and section 2.1",
+          "confidence": 1.0
+        },
+        {
+          "name": "< \\mu_b >",
+          "meaning": "Robust mean of proper motion in Galactic latitude, reflecting solar vertical motion, in mas/a",
+          "unit_text": "mas/a",
+          "source_of_definition": "section 2.1 text (lines 347-349)",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_\\mu_b",
+          "meaning": "Robust standard deviation of proper motion in Galactic latitude, in mas/a",
+          "unit_text": "mas/a",
+          "source_of_definition": "section 2.1 text (lines 347-349)",
+          "confidence": 1.0
+        },
+        {
+          "name": "a_0",
+          "meaning": "Constant term of the robust fit for Galactic longitude proper motion: mu_l = a_0 + a_1*cos(l) + a_2*cos(2l), in mas/a",
+          "unit_text": "mas/a",
+          "source_of_definition": "section 2.1 text (lines 351-352)",
+          "confidence": 1.0
+        },
+        {
+          "name": "a_1",
+          "meaning": "cos(l) coefficient of the robust fit for mu_l, in mas/a",
+          "unit_text": "mas/a",
+          "source_of_definition": "section 2.1 text (line 352)",
+          "confidence": 1.0
+        },
+        {
+          "name": "a_2",
+          "meaning": "cos(2l) coefficient of the robust fit for mu_l, in mas/a",
+          "unit_text": "mas/a",
+          "source_of_definition": "section 2.1 text (line 352)",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_\\mu_l",
+          "meaning": "Robust standard deviation of mu_l residuals from the functional fit, in mas/a",
+          "unit_text": "mas/a",
+          "source_of_definition": "section 2.1 text (line 353)",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table in section 4.1 (Completeness). Caption states 'Robust parameter fits for the O stars and BA supergiants'. Section 2.1 describes the fitting methodology: robust mean for mu_b, robust functional fit f(l)=a0+a1*cos(l)+a2*cos(2l) for mu_l.",
+      "comments": "Methodological parameters table. These values define the baseline from which Delta deviations are computed to identify runaways. The cut at Delta = 3.5 is used for runaway classification."
+    },
+    {
+      "id": "table-linewidth",
+      "kind": "latex_table",
+      "asset_type": "sample_statistics",
+      "role_in_paper": "Comparison of rotational velocity indicators (line-width indices) between the full GOSSS O-star sample and the runaway O stars, testing the supernova ejection scenario prediction of faster rotation among runaways.",
+      "source_refs": [
+        {
+          "path": "literature/1804.06915/arxiv_source/ms.tex",
+          "start_line": 1022,
+          "end_line": 1036,
+          "caption": "Line-width index statistics for the GOSSS I+II+III O-star sample and the O stars identified as runaways in this paper with GOSSS spectral classifications.",
+          "label": "linewidth"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Sample",
+          "meaning": "Sample: GOSSS I+II+III (full 590 O stars) or O runaways (44 O stars with GOSSS classifications identified as runaways)",
+          "unit_text": "",
+          "source_of_definition": "table caption and section 4.3 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "Total",
+          "meaning": "Total number of stars in the sample",
+          "unit_text": "",
+          "source_of_definition": "table caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "Empty",
+          "meaning": "Number of stars with empty line-width index (slow rotators, low v sin i)",
+          "unit_text": "",
+          "source_of_definition": "section 4.3 text (lines 1041-1043)",
+          "confidence": 1.0
+        },
+        {
+          "name": "(n)",
+          "meaning": "Number of stars with (n) line-width index: moderate rotational broadening, v sin i ~ 200 km/s",
+          "unit_text": "",
+          "source_of_definition": "section 4.3 text and footnote",
+          "confidence": 1.0
+        },
+        {
+          "name": "n",
+          "meaning": "Number of stars with n line-width index: fast rotators, v sin i ~ 300 km/s",
+          "unit_text": "",
+          "source_of_definition": "section 4.3 text and footnote",
+          "confidence": 1.0
+        },
+        {
+          "name": "nn",
+          "meaning": "Number of stars with nn line-width index: very fast rotators, v sin i ~ 400 km/s",
+          "unit_text": "",
+          "source_of_definition": "section 4.3 text and footnote",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table in section 4.3 (Runaways and rotational velocity). Section 4.3 explains the GOSSS line-width index system: empty = low v sin i, (n) ~ 200 km/s, n ~ 300 km/s, nn ~ 400 km/s. The O-runaway sample shows 46.5% non-empty vs 26.2% for the full sample.",
+      "comments": "Statistical comparison table. Supports the conclusion that runaway O stars rotate faster on average, favoring the supernova explosion ejection scenario. Note potential contamination from unresolved SB2s in the 'broad line' categories."
+    },
+    {
+      "id": "table-tabs1",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Catalog of 29 previously known O-type runaway stars from Paper I, with corrected proper motions, proper-motion source flags, and literature references for their runaway identification.",
+      "source_refs": [
+        {
+          "path": "literature/1804.06915/arxiv_source/tabs1.tex",
+          "start_line": 1,
+          "end_line": 56,
+          "caption": "Previously known O-type runaway stars from Table~1 in Paper~1. The list is sorted by $\\Delta$, the normalized deviation from the mean latitude and longitude proper motions for their Galactic longitude. An ID is provided for each star in order to identify it in Figs.~\\ref{pmlat}~and~\\ref{pmlon}. The T/H flag indicates the origin of the proper motions (TGAS or Hipparcos, respectively). Some relevant references are listed in the last column. See Tables~\\ref{tabs2},~\\ref{tabs3a},~and~\\ref{tabs3b} for the rest of the runaways in this paper.",
+          "label": "tabs1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Numeric identifier (1-29) used to locate the star in Figures showing proper-motion plots",
+          "unit_text": "",
+          "source_of_definition": "table caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "Name",
+          "meaning": "Star identifier (HD, BD, ALS, Greek-letter, or variable-star designation)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_b^\\prime",
+          "meaning": "Corrected proper motion in Galactic latitude: mu_b - <mu_b>, in mas/a",
+          "unit_text": "mas/a",
+          "source_of_definition": "section 2.1 text (line 364)",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_l^\\prime",
+          "meaning": "Corrected proper motion in Galactic longitude: mu_l - f(l), in mas/a",
+          "unit_text": "mas/a",
+          "source_of_definition": "section 2.1 text (line 364)",
+          "confidence": 1.0
+        },
+        {
+          "name": "T/H",
+          "meaning": "Proper motion source: T = TGAS (Gaia DR1), H = Hipparcos",
+          "unit_text": "",
+          "source_of_definition": "table caption and section 2.1",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ref.",
+          "meaning": "Abbreviated literature references for the star's identification as a runaway (decoded in table footnotes)",
+          "unit_text": "",
+          "source_of_definition": "table caption and footnote reference key",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Input table (tabs1.tex) in section 3.1. Caption fully describes columns. Section 3.1 explains these are previously known O-type runaways. The 29 stars are sorted by decreasing Delta. Reference abbreviations are decoded in table footnotes.",
+      "comments": "Primary runaway catalog table. Contains previously known objects (not new discoveries). All stars have GOSSS spectral classifications from GOSSS I+II+III except BD-08 4617 which is added here. Many bright stars in this sample lack TGAS data and use Hipparcos proper motions."
+    },
+    {
+      "id": "table-tabs2",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Catalog of 13 new O- and B0-type runaway star candidates first identified in Paper I, with corrected proper motions and proper-motion source flags.",
+      "source_refs": [
+        {
+          "path": "literature/1804.06915/arxiv_source/tabs2.tex",
+          "start_line": 1,
+          "end_line": 31,
+          "caption": "New O- and B0-type runaway star candidates from Table~1 in Paper~1. The list is sorted by $\\Delta$, the normalized deviation from the mean latitude and longitude proper motions for their Galactic longitude. An ID is provided for each star in order to identify it in Figs.~\\ref{pmlat}~and~\\ref{pmlon}. The corrected proper motions are in mas/a. The T/H flag indicates the origin of the proper motions (TGAS or Hipparcos, respectively). See Tables~\\ref{tabs1},~\\ref{tabs3a},~and~\\ref{tabs3b} for the rest of the runaways in this paper.",
+          "label": "tabs2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Alphabetic identifier (A-M) used to locate the star in proper-motion figures",
+          "unit_text": "",
+          "source_of_definition": "table caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "Name",
+          "meaning": "Star identifier (HD, ALS, HDE, BD, or CPD designation)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_b^\\prime",
+          "meaning": "Corrected proper motion in Galactic latitude: mu_b - <mu_b>, in mas/a",
+          "unit_text": "mas/a",
+          "source_of_definition": "section 2.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_l^\\prime",
+          "meaning": "Corrected proper motion in Galactic longitude: mu_l - f(l), in mas/a",
+          "unit_text": "mas/a",
+          "source_of_definition": "section 2.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "T/H",
+          "meaning": "Proper motion source: T = TGAS (Gaia DR1), H = Hipparcos",
+          "unit_text": "",
+          "source_of_definition": "table caption",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Input table (tabs2.tex) in section 3.2. Caption fully describes columns. Section 3.2 discusses each star individually, including spectral types, possible origins, bow shock detections, and binary status. ALS 18929 noted as B0 V (not O-type).",
+      "comments": "All 13 stars use TGAS proper motions. Includes a footnote that ALS 18929 is not an O star but B0 V. Stars are discussed individually in paragraphs ordered by decreasing Delta. Several show bow shocks in WISE imaging."
+    },
+    {
+      "id": "table-tabs3a",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Catalog of 7 O-type runaway star candidates not included in Paper I, with corrected proper motions, proper-motion source, photometric/spectroscopic classification flag, and prior-knowledge status.",
+      "source_refs": [
+        {
+          "path": "literature/1804.06915/arxiv_source/tabs3a.tex",
+          "start_line": 1,
+          "end_line": 28,
+          "caption": "O-type runaway star candidates not in Paper~1. The list is sorted by $\\Delta$, the normalized deviation from the mean latitude and longitude proper motions for their Galactic longitude. An ID is provided for each star in order to identify it in Figs.~\\ref{pmlat}~and~\\ref{pmlon}. The corrected proper motions are in mas/a. The T/H flag indicates the origin of the proper motions (TGAS or Hipparcos, respectively). The P/S flag indicates whether the identification of the star as being of O type is photometric or spectroscopic, respectively. The Known column indicates whether the runaway character of the object had been identified previously or not. See Tables~\\ref{tabs1},~\\ref{tabs2},~and~\\ref{tabs3b} for the rest of the runaways in this paper.",
+          "label": "tabs3a"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Greek-letter identifier (alpha through eta) used to locate the star in figures",
+          "unit_text": "",
+          "source_of_definition": "table caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "Name",
+          "meaning": "Star identifier (HDE, CPD, ALS, or HD designation)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_b^\\prime",
+          "meaning": "Corrected proper motion in Galactic latitude, in mas/a",
+          "unit_text": "mas/a",
+          "source_of_definition": "section 2.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_l^\\prime",
+          "meaning": "Corrected proper motion in Galactic longitude, in mas/a",
+          "unit_text": "mas/a",
+          "source_of_definition": "section 2.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "T/H",
+          "meaning": "Proper motion source: T = TGAS (Gaia DR1), H = Hipparcos",
+          "unit_text": "",
+          "source_of_definition": "table caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "P/S",
+          "meaning": "O-type identification method: P = photometric (CHORIZOS analysis), S = spectroscopic (GOSSS)",
+          "unit_text": "",
+          "source_of_definition": "table caption and section 3.3 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "Known",
+          "meaning": "Whether the star's runaway character was previously identified: yes or no",
+          "unit_text": "",
+          "source_of_definition": "table caption",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Input table (tabs3a.tex) in section 3.3.1. Caption fully describes columns. Each star is discussed individually with spectral type references, CHORIZOS results, possible origins, and bow shock notes.",
+      "comments": "7 new O-type runaways (1 commented out originally). Mostly photometric O-type identifications (P), 2 spectroscopic (S). 5 are previously unknown as runaways. All but CPD-72 1184 use TGAS proper motions."
+    },
+    {
+      "id": "table-tabs3b",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Catalog of 27 BA-supergiant runaway star candidates with corrected proper motions, proper-motion source, prior-knowledge status, and early/late spectral-type classification.",
+      "source_refs": [
+        {
+          "path": "literature/1804.06915/arxiv_source/tabs3b.tex",
+          "start_line": 1,
+          "end_line": 47,
+          "caption": "BA-supergiant runaway star candidates. The list is sorted by $\\Delta$, the normalized deviation from the mean latitude and longitude proper motions for their Galactic longitude. An ID is provided for each star in order to identify it in Figs.~\\ref{pmlat}~and~\\ref{pmlon}. The corrected proper motions are in mas/a. The T/H flag indicates the origin of the proper motions (TGAS or Hipparcos, respectively). The Known column indicates whether the runaway character of the object had been identified previously or not. The last column indicates whether the spectral type is E(arly, from B0 to B0.7) or L(ate, B1 or later). See Tables~\\ref{tabs1},~\\ref{tabs2},~and~\\ref{tabs3a} for the rest of the runaways in this paper.",
+          "label": "tabs3b"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Alphabetic identifier (a through aa) used to locate the star in figures",
+          "unit_text": "",
+          "source_of_definition": "table caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "Name",
+          "meaning": "Star identifier (HD, BD, CPD, Greek-letter, or variable-star designation)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_b^\\prime",
+          "meaning": "Corrected proper motion in Galactic latitude, in mas/a",
+          "unit_text": "mas/a",
+          "source_of_definition": "section 2.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_l^\\prime",
+          "meaning": "Corrected proper motion in Galactic longitude, in mas/a",
+          "unit_text": "mas/a",
+          "source_of_definition": "section 2.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "T/H",
+          "meaning": "Proper motion source: T = TGAS (Gaia DR1), H = Hipparcos",
+          "unit_text": "",
+          "source_of_definition": "table caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "Known",
+          "meaning": "Whether the star's runaway character was previously identified: yes, no, or unclear",
+          "unit_text": "",
+          "source_of_definition": "table caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "E/L",
+          "meaning": "Spectral type age indicator: E = Early (B0 to B0.7), L = Late (B1 or later), used to analyze age effects on runaway travel distances",
+          "unit_text": "",
+          "source_of_definition": "table caption and section 4.2 analysis",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Input table (tabs3b.tex) in section 3.3.2. Caption fully describes columns. Section 3.3.2 discusses each star individually with spectral types, prior runaway references, possible origins, and bow shock detections. Section 4.2 uses E/L classification for age-effect analysis.",
+      "comments": "Largest runaway table with 27 BA supergiants. Mix of TGAS and Hipparcos proper motions. Mix of previously known (yes), previously unknown (no), and unclear-status runaways. The E/L column enables the age-effect analysis showing later-type runaways have traveled farther from the Galactic Plane."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-gosc-new",
+      "kind": "external_url",
+      "url": "http://gosc.cab.inta-csic.es",
+      "local_path": "",
+      "description": "Galactic O-Star Catalog (GOSC) web site — current URL. Provides access to GOSSS spectrograms, spectral classifications, and related data for Galactic O, B, and A stars. Referenced as the primary online repository for the spectral data presented in this paper.",
+      "source_refs": [
+        {
+          "path": "literature/1804.06915/arxiv_source/ms.tex",
+          "start_line": 379,
+          "end_line": 379,
+          "context": "Table tabGOSSS caption: data available at GOSC web site http://gosc.cab.inta-csic.es"
+        }
+      ],
+      "evidence": "Mentioned in Table tabGOSSS caption (line 379) and section 2.2 (lines 455-457): 'The spectrograms and spectral types are available from the Galactic O-Star Catalog (GOSC) web site. GOSC has been recently moved to a new URL (http://gosc.cab.inta-csic.es).'",
+      "comments": "Primary current URL for GOSC. Paper also notes the old URL (gosc.iaa.es) is maintained as a mirror."
+    },
+    {
+      "id": "resource-gosc-old",
+      "kind": "external_url",
+      "url": "http://gosc.iaa.es",
+      "local_path": "",
+      "description": "Galactic O-Star Catalog (GOSC) old/mirror URL. Maintained temporarily as a mirror of the GOSC database after the move to gosc.cab.inta-csic.es.",
+      "source_refs": [
+        {
+          "path": "literature/1804.06915/arxiv_source/ms.tex",
+          "start_line": 457,
+          "end_line": 457,
+          "context": "GOSC moved to new URL http://gosc.cab.inta-csic.es but old one http://gosc.iaa.es kept as mirror"
+        }
+      ],
+      "evidence": "Section 2.2 text (line 457): 'but the old one (http://gosc.iaa.es) will be kept as a mirror, at least temporarily.'",
+      "comments": "Legacy mirror URL. Same content as the new GOSC URL."
+    },
+    {
+      "id": "resource-cds",
+      "kind": "external_url",
+      "url": "http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/",
+      "local_path": "",
+      "description": "Centre de Données astronomiques de Strasbourg (CDS) access point where the electronic version of the GOSSS spectral classification table (Table tabGOSSS) is archived and available for download.",
+      "source_refs": [
+        {
+          "path": "literature/1804.06915/arxiv_source/ms.tex",
+          "start_line": 380,
+          "end_line": 380,
+          "context": "Table tabGOSSS caption: data also available at CDS via http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/"
+        }
+      ],
+      "evidence": "Mentioned in Table tabGOSSS caption (line 380): 'at the CDS via anonymous ftp to cdsarc.u-strasbg.fr (130.79.128.5) or via http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/.' This is the standard CDS data distribution URL for A&A journal tables.",
+      "comments": "The CDS URL with J/A+A/ prefix is the standard access pattern for A&A journal data. This paper's electronic tables are published through this channel."
+    },
+    {
+      "id": "resource-gaia",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission website. This paper uses Gaia Data Release 1 (DR1) proper motions from the TGAS (Tycho-Gaia Astrometric Solution) catalog as its core astrometric data source for detecting runaway stars.",
+      "source_refs": [
+        {
+          "path": "literature/1804.06915/arxiv_source/ms.tex",
+          "start_line": 1097,
+          "end_line": 1097,
+          "context": "Acknowledgements: this work uses data from the ESA mission Gaia (https://www.cosmos.esa.int/gaia)"
+        }
+      ],
+      "evidence": "Acknowledgements section (line 1097): 'This work makes use of [a] data from the European Space Agency (ESA) mission Gaia (https://www.cosmos.esa.int/gaia).' The entire paper is built on Gaia DR1/TGAS proper motions as described in section 2.1.",
+      "comments": "Core data source for the paper. Gaia DR1 TGAS proper motions are the primary astrometric input. Not a generic acknowledgement — the paper's scientific results depend directly on this data source."
+    }
+  ]
+}

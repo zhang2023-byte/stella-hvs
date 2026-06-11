@@ -1,0 +1,97 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:30:00",
+  "paper": {
+    "arxiv_id": "2005.04762",
+    "bibcode": "2020ApJ...900...14F",
+    "title": "Hunting for Runaways from the Orion Nebula Cluster",
+    "month": "2020-05",
+    "source_note_json": "notes/2020/2020-05/2020-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2005.04762",
+      "pdf": "https://arxiv.org/pdf/2005.04762"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2005.04762",
+    "audit_path": "literature/2005.04762/audit.json",
+    "catalog_review_path": "literature/2005.04762/catalog_review.json",
+    "catalog_extraction_path": "literature/2005.04762/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2005.04762/catalog_tables/table-tab-flags.ecsv",
+      "literature/2005.04762/catalog_tables/table-tab-score.ecsv",
+      "literature/2005.04762/catalog_tables/table-tab-known.ecsv",
+      "literature/2005.04762/catalog_tables/table-tab-bestcandidates.ecsv",
+      "literature/2005.04762/catalog_tables/table-tab-rv.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:30:00",
+    "extractor": "agent",
+    "summary": "本文利用Gaia DR2天体测量数据，通过2D轨迹回溯方法（搜索ONC周围45°、1 kpc范围内过去10 Myr内角度位置与星团重叠的源），寻找从猎户座星云星团（ONC）中弹射的逃逸/漫步星（runaway/walkaway stars）。初始获得约17,000个2D轨迹回溯候选体，经6项年轻星标志测试（YSO颜色、WISE红外超、光学变异性、最近接近距离、弹射方向避开银河流污染区、视向速度）筛选后，得到25个最佳候选体（其中13个在清洁区）。论文讨论的'runaway/walkaway stars'和'high-velocity population'均指从ONC星团中被动力学弹射的恒星群体，其速度是相对ONC星团的速度（典型值4-30 km/s），远低于银河系逃逸速度（~550 km/s at Sun）。'Unbound'在论文中始终指'从星团中非束缚'（unbound from the cluster），而非从银河系非束缚。论文核心关注星团形成理论中的动力学弹射过程，未涉及银河系非束缚状态判定，未声称任何恒星为银河系非束缚超高速星（HVS）。因此无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文利用Gaia DR2在ONC周围搜寻星团逃逸/漫步星，速度量级为数十km/s（相对ONC），非银河系非束缚。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (oncgaia.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+          "start_line": 57,
+          "end_line": 78,
+          "context": "Abstract: Gaia DR2 runaway hunt; ~17,000 2D traceback candidates; 6 youth tests; 25 best candidates; 10 pass 3D traceback"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+          "start_line": 116,
+          "end_line": 118,
+          "context": "Introduction: 'unbound population of a forming star cluster' — cluster-scale unbound, not Galactic"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "onc-runaway-walkaway-candidates",
+      "description": "ONC逃逸/漫步星候选体：通过Gaia DR2 2D轨迹回溯方法（搜索45°、1 kpc范围内过去~10 Myr与ONC角度位置重叠的源）获得约17,000个初始候选体。经6项测试（YSO光学颜色-星等、WISE红外超YSO概率、光学变异性Vi、最近2D接近距离Dmin<ONC半质量半径、弹射方向避开银河流污染区、合理视向速度或测量RV满足3D回溯）筛选后，25个获最高评分a+（通过所有已测试标志），13个在清洁区，10个有测量RV且通过最严格的3D回溯条件。论文还列出了已知Orion A成员中满足2D回溯且切向速度>4 km/s的源。",
+      "decision": "excluded",
+      "reason": "论文中的'runaway/walkaway stars'和'high-velocity population'均指从ONC星团中被动力学弹射的恒星群体。如引言所述，论文关注'characterising the unbound population of a forming star cluster'（描述形成中星团的非束缚星族），其中'unbound'指从星团中非束缚。论文讨论的典型速度为4-30 km/s量级（如BN天体~30 km/s，已知逃逸星AE Aur和μ Col），追踪距离1 kpc范围内。这些速度远低于银河系逃逸速度（太阳位置处~550 km/s），所有候选体均为银河系引力束缚的星团逃逸星，而非银河系非束缚HVS。论文核心目标是为星团形成理论提供动力学弹射约束，未涉及银河系非束缚状态判定。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+          "start_line": 57,
+          "end_line": 78,
+          "context": "Abstract: methodology, candidate numbers, and scope of runaway/walkaway search"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+          "start_line": 110,
+          "end_line": 131,
+          "context": "Introduction: unbound population of forming cluster; AE Aur, mu Col as ~2.5 Myr ejectees; BN object at ~30 km/s"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+          "start_line": 900,
+          "end_line": 912,
+          "context": "Section 4: 'unbound stars moving outwards' — cluster-scale dynamics, not Galactic escape"
+        }
+      ]
+    }
+  ]
+}

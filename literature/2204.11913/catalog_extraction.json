@@ -1,0 +1,500 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-23T11:39:25",
+  "paper": {
+    "arxiv_id": "2204.11913",
+    "title": "And then they were two: detection of non-thermal radio emission from the bow shocks of two runaway stars",
+    "month": "2022-04"
+  },
+  "review": {
+    "path": "literature/2204.11913/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260523T113925",
+    "started_at": "2026-05-23T11:39:25",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2204.11913",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": true
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-lit_info",
+      "internal_table_id": "table-tab-lit_info",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2204.11913/arxiv_source/main.tex",
+        "start_line": 227,
+        "end_line": 323,
+        "caption": "Parameters of the massive stars driving the two bow shocks.",
+        "label": "tab:lit_info"
+      },
+      "source_path": "literature/2204.11913/arxiv_source/main.tex",
+      "excerpt_path": "literature/2204.11913/catalog_sources/table-tab-lit_info/excerpt.tex",
+      "sha256": "a4db81ae91140b303fe5c1eccca133d837eb3cb9689161b2bb7c5ea9ffe83e44",
+      "line_count": 97,
+      "error": ""
+    },
+    {
+      "id": "table-tab-five_sig",
+      "internal_table_id": "table-tab-five_sig",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2204.11913/arxiv_source/main.tex",
+        "start_line": 527,
+        "end_line": 723,
+        "caption": "Fluxes within a 5$\\sigma$ contour of Fig. \\ref{fig:all_int}, for the wide-band VLA data, the smoothed C-band, Effelsberg and feathered data.",
+        "label": "tab:five_sig"
+      },
+      "source_path": "literature/2204.11913/arxiv_source/main.tex",
+      "excerpt_path": "literature/2204.11913/catalog_sources/table-tab-five_sig/excerpt.tex",
+      "sha256": "cb32996a1a053caaaf9b906364cd3aff193aeb3f75236a54bb9bfeb63868e230",
+      "line_count": 197,
+      "error": ""
+    },
+    {
+      "id": "table-tab-flux_comb",
+      "internal_table_id": "table-tab-flux_comb",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2204.11913/arxiv_source/main.tex",
+        "start_line": 779,
+        "end_line": 910,
+        "caption": "Flux as a function of photon energy/frequency for BSBD43 and BSBD60, including radio data from this work and the literature, and X-ray and $\\gamma$-ray upper limits from the literature.",
+        "label": "tab:flux_comb"
+      },
+      "source_path": "literature/2204.11913/arxiv_source/main.tex",
+      "excerpt_path": "literature/2204.11913/catalog_sources/table-tab-flux_comb/excerpt.tex",
+      "sha256": "b584100025a6d12a771895262e5775e72079ccf6904169fe45ec875f388c3f62",
+      "line_count": 132,
+      "error": ""
+    },
+    {
+      "id": "table-tab-SYNIC",
+      "internal_table_id": "table-tab-SYNIC",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2204.11913/arxiv_source/main.tex",
+        "start_line": 1146,
+        "end_line": 1186,
+        "caption": "The results of the \\emph{naima} modelling discussed in subsection 5.2.",
+        "label": "tab:SYNIC"
+      },
+      "source_path": "literature/2204.11913/arxiv_source/main.tex",
+      "excerpt_path": "literature/2204.11913/catalog_sources/table-tab-SYNIC/excerpt.tex",
+      "sha256": "48b6344d46e6a76ebf1977fb05d00f7d504aeaf5ce6e1bf8b457ed041daf8265",
+      "line_count": 41,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-lit_info",
+      "internal_table_id": "table-tab-lit_info",
+      "status": "success",
+      "ecsv_path": "literature/2204.11913/catalog_tables/table-tab-lit_info.ecsv",
+      "caption": "Parameters of the massive stars driving the two bow shocks.",
+      "label": "tab:lit_info",
+      "row_count": 12,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "\\bdforty",
+          "\\bdsixty",
+          "Refs."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\bdforty",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\bdsixty",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Refs.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprwuwl4gu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2204.11913/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprwuwl4gu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2204.11913/catalog_sources/table-tab-lit_info/wrapped.tex",
+            "html": "literature/2204.11913/catalog_sources/table-tab-lit_info/latexml.html",
+            "stdout": "literature/2204.11913/catalog_sources/table-tab-lit_info/latexml.stdout.txt",
+            "stderr": "literature/2204.11913/catalog_sources/table-tab-lit_info/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a4db81ae91140b303fe5c1eccca133d837eb3cb9689161b2bb7c5ea9ffe83e44"
+    },
+    {
+      "id": "table-tab-five_sig",
+      "internal_table_id": "table-tab-five_sig",
+      "status": "success",
+      "ecsv_path": "literature/2204.11913/catalog_tables/table-tab-five_sig.ecsv",
+      "caption": "Fluxes within a 5$\\sigma$ contour of Fig. \\ref{fig:all_int}, for the wide-band VLA data, the smoothed C-band, Effelsberg and feathered data.",
+      "label": "tab:five_sig",
+      "row_count": 17,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp6mvybaj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2204.11913/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp6mvybaj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2204.11913/catalog_sources/table-tab-five_sig/wrapped.tex",
+            "html": "literature/2204.11913/catalog_sources/table-tab-five_sig/latexml.html",
+            "stdout": "literature/2204.11913/catalog_sources/table-tab-five_sig/latexml.stdout.txt",
+            "stderr": "literature/2204.11913/catalog_sources/table-tab-five_sig/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "cb32996a1a053caaaf9b906364cd3aff193aeb3f75236a54bb9bfeb63868e230"
+    },
+    {
+      "id": "table-tab-flux_comb",
+      "internal_table_id": "table-tab-flux_comb",
+      "status": "success",
+      "ecsv_path": "literature/2204.11913/catalog_tables/table-tab-flux_comb.ecsv",
+      "caption": "Flux as a function of photon energy/frequency for BSBD43 and BSBD60, including radio data from this work and the literature, and X-ray and $\\gamma$-ray upper limits from the literature.",
+      "label": "tab:flux_comb",
+      "row_count": 17,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Energy",
+          "Frequency",
+          "\\nu F_\\nu",
+          "",
+          "Refs."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Energy",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Frequency",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\nu F_\\nu",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Refs.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplwv68wig/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2204.11913/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplwv68wig/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2204.11913/catalog_sources/table-tab-flux_comb/wrapped.tex",
+            "html": "literature/2204.11913/catalog_sources/table-tab-flux_comb/latexml.html",
+            "stdout": "literature/2204.11913/catalog_sources/table-tab-flux_comb/latexml.stdout.txt",
+            "stderr": "literature/2204.11913/catalog_sources/table-tab-flux_comb/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b584100025a6d12a771895262e5775e72079ccf6904169fe45ec875f388c3f62"
+    },
+    {
+      "id": "table-tab-SYNIC",
+      "internal_table_id": "table-tab-SYNIC",
+      "status": "success",
+      "ecsv_path": "literature/2204.11913/catalog_tables/table-tab-SYNIC.ecsv",
+      "caption": "The results of the \\emph{naima} modelling discussed in subsection 5.2.",
+      "label": "tab:SYNIC",
+      "row_count": 4,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameters",
+          "BSBD43",
+          "BSBD60"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameters",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "BSBD43",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "BSBD60",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6t74bi4g/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2204.11913/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6t74bi4g/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2204.11913/catalog_sources/table-tab-SYNIC/wrapped.tex",
+            "html": "literature/2204.11913/catalog_sources/table-tab-SYNIC/latexml.html",
+            "stdout": "literature/2204.11913/catalog_sources/table-tab-SYNIC/latexml.stdout.txt",
+            "stderr": "literature/2204.11913/catalog_sources/table-tab-SYNIC/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "48b6344d46e6a76ebf1977fb05d00f7d504aeaf5ce6e1bf8b457ed041daf8265"
+    }
+  ]
+}

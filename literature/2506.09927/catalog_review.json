@@ -1,0 +1,243 @@
+{
+    "schema_version": "stella.article_data_assets.review.v1",
+    "paper": {
+        "arxiv_id": "2506.09927",
+        "title": "Counterculture Stars: Slow and Retrograde Stars with Low-Alpha Disk Abundances",
+        "month": "2025-06",
+        "source_note_json": "notes/2025/2025-06/2025-06.json",
+        "links": {
+            "abs": "https://arxiv.org/abs/2506.09927",
+            "pdf": "https://arxiv.org/pdf/2506.09927"
+        }
+    },
+    "source": {
+        "paper_dir": "literature/2506.09927",
+        "audit_path": "literature/2506.09927/audit.json",
+        "source_dir": "literature/2506.09927/arxiv_source",
+        "tex_root": "literature/2506.09927/arxiv_source/clean_text.tex",
+        "source_available": true
+    },
+    "review": {
+        "status": "reviewed",
+        "reviewed_at": "2026-05-17T12:34:19",
+        "reviewer": "agent",
+        "summary": "Auto-filled review: 2 internal table(s), 7 external resource(s)."
+    },
+    "internal_tables": [
+        {
+            "id": "table-tab-results",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Summary of the the properties determining whether a star was considered consistent, plausible, and unlikely for each mechanism",
+            "source_refs": [
+                {
+                    "path": "literature/2506.09927/arxiv_source/clean_text.tex",
+                    "start_line": 597,
+                    "end_line": 624,
+                    "caption": "Summary of the the properties determining whether a star was considered consistent, plausible, and unlikely for each mechanism. Note that while we provide the requisite properties, there are no consistent stars for the Galactic bar mechanism.",
+                    "label": "tab:results"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "col_001",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Consistent",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Plausible",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Unlikely",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Summary of the the properties determining whether a star was considered consistent, plausible, and unlikely for each mechanism. Note that while we provide the requisite properties, there are no consistent stars for the Galactic bar mechanism.",
+            "comments": ""
+        },
+        {
+            "id": "table-002",
+            "kind": "latex_table",
+            "asset_type": "data_table",
+            "role_in_paper": "The APOGEE IDs corresponding to the numbers given in Figure \\ref{fig:results}",
+            "source_refs": [
+                {
+                    "path": "literature/2506.09927/arxiv_source/clean_text.tex",
+                    "start_line": 731,
+                    "end_line": 772,
+                    "caption": "The APOGEE IDs corresponding to the numbers given in Figure \\ref{fig:results}",
+                    "label": ""
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Number",
+                    "meaning": "Number of objects or count",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "APOGEE ID",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Number",
+                    "meaning": "Number of objects or count",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "APOGEE ID",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "The APOGEE IDs corresponding to the numbers given in Figure \\ref{fig:results}",
+            "comments": ""
+        }
+    ],
+    "external_resources": [
+        {
+            "id": "resource-003",
+            "kind": "external_url",
+            "url": "https://astrothesaurus.org",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2506.09927/arxiv_source/clean_text.tex",
+                    "start_line": 281,
+                    "end_line": 281,
+                    "context": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want"
+                }
+            ],
+            "evidence": "%% Keywords should appear after the \\end{abstract} command. \n%% The AAS Journals now uses Unified Astronomy Thesaurus concepts:\n%% https://astrothesaurus.org\n%% You will be asked to selected these concepts during the submission process\n%% but this old \"keyword\" functionality is maintained in case authors want",
+            "comments": ""
+        },
+        {
+            "id": "resource-004",
+            "kind": "external_url",
+            "url": "https://github.com/callendeprieto/ferre",
+            "local_path": "",
+            "description": "GitHub repository or code release referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2506.09927/arxiv_source/clean_text.tex",
+                    "start_line": 321,
+                    "end_line": 321,
+                    "context": "\\section{Observational Data}\\label{sec:selection}\n\nWe first identify stars that 1) have abundances consistent with that of the low-alpha, thin disk 2) have $V_\\phi$ velocities that are slowly prograde or retrograde.  We perform this search in the set of stars with homogeneously-derived, individual elemental abundances from APOGEE DR17 \\citep{majewski, abdurrouf_2022} and full 6-D phase space information from the combination of APOGEE line-of-sight velocities \\citep{nidever_2015} and \\textit{Gaia} astrometry \\citep{gaia_2016,gaia_2021, gaia_astrometry}. We use the abundance values from the ASPCAP pipeline \\citep{garcia_perez_2016}, which uses the FERRE code\\footnote{available on github: \\url{https://github.com/callendeprieto/ferre}} \\citep{allende_prieto_2006} and linelists presented in \\cite{shetrone_2015} and \\cite{smith_2021}. The spectrographs and Northern and Southern hemisphere telescopes are detailed in \\cite{wilson_2019}, \\cite{gunn_2006}, and \\cite{bowen_1973}, respectively, and the targeting is described in \\cite{zasowski_2013}, \\cite{zasowski_2017}, \\cite{beaton_2021}, and \\cite{santana_2021}. We use the \\textit{Gaia} information that is included in the ASPCAP catalog, based on a positional cross-match.\n\nWe enforce a number of quality cuts on both the spectroscopic and astrometric parameters. For the spectroscopic parameters from APOGEE, we first require that the stars be relatively warm red giants with $4000 < \\rm{T}_{eff} < 5500$~K, $0 < \\rm{log(g)} < 3$, log(g) error $< 0.2$, and signal to noise $>50$. We remove entries that are not the highest quality, primary science targets by requiring that \\texttt{EXTRATARG} = 0, and exclude stars with problematic spectra (those marked as bad, stars with very bright neighbors, etc.) by requiring that \\texttt{ASPCAPFLAG} bits are not set to 23, and that the \\texttt{STARFLAG} bits are not set to 0, 1, 3, 16, 17, 19, 21, or 22. We remove likely members of clusters and dwarf galaxies by requiring \\texttt{MEMBERFLAG} $ = 0$. Finally, we require that the flags for each of the abundances that we employ in this work are set to zero. We consider stars that pass these cuts to have quality spectra and abundance information."
+                }
+            ],
+            "evidence": "\\section{Observational Data}\\label{sec:selection}\n\nWe first identify stars that 1) have abundances consistent with that of the low-alpha, thin disk 2) have $V_\\phi$ velocities that are slowly prograde or retrograde.  We perform this search in the set of stars with homogeneously-derived, individual elemental abundances from APOGEE DR17 \\citep{majewski, abdurrouf_2022} and full 6-D phase space information from the combination of APOGEE line-of-sight velocities \\citep{nidever_2015} and \\textit{Gaia} astrometry \\citep{gaia_2016,gaia_2021, gaia_astrometry}. We use the abundance values from the ASPCAP pipeline \\citep{garcia_perez_2016}, which uses the FERRE code\\footnote{available on github: \\url{https://github.com/callendeprieto/ferre}} \\citep{allende_prieto_2006} and linelists presented in \\cite{shetrone_2015} and \\cite{smith_2021}. The spectrographs and Northern and Southern hemisphere telescopes are detailed in \\cite{wilson_2019}, \\cite{gunn_2006}, and \\cite{bowen_1973}, respectively, and the targeting is described in \\cite{zasowski_2013}, \\cite{zasowski_2017}, \\cite{beaton_2021}, and \\cite{santana_2021}. We use the \\textit{Gaia} information that is included in the ASPCAP catalog, based on a positional cross-match.\n\nWe enforce a number of quality cuts on both the spectroscopic and astrometric parameters. For the spectroscopic parameters from APOGEE, we first require that the stars be relatively warm red giants with $4000 < \\rm{T}_{eff} < 5500$~K, $0 < \\rm{log(g)} < 3$, log(g) error $< 0.2$, and signal to noise $>50$. We remove entries that are not the highest quality, primary science targets by requiring that \\texttt{EXTRATARG} = 0, and exclude stars with problematic spectra (those marked as bad, stars with very bright neighbors, etc.) by requiring that \\texttt{ASPCAPFLAG} bits are not set to 23, and that the \\texttt{STARFLAG} bits are not set to 0, 1, 3, 16, 17, 19, 21, or 22. We remove likely members of clusters and dwarf galaxies by requiring \\texttt{MEMBERFLAG} $ = 0$. Finally, we require that the flags for each of the abundances that we employ in this work are set to zero. We consider stars that pass these cuts to have quality spectra and abundance information.",
+            "comments": ""
+        },
+        {
+            "id": "resource-005",
+            "kind": "external_url",
+            "url": "https://github.com/henrysky/astroNN",
+            "local_path": "",
+            "description": "GitHub repository or code release referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2506.09927/arxiv_source/clean_text.tex",
+                    "start_line": 333,
+                    "end_line": 333,
+                    "context": "We also use the stellar age estimates provided in the \\texttt{astroNN} \\citep{astro_nn}\\footnote{GitHub page available at \\url{https://github.com/henrysky/astroNN}} value added catalog\\footnote{see \\url{https://www.sdss4.org/dr17/data_access/value-added-catalogs/?vac_id=the-astronn-catalog-of-abundances,-distances,-and-ages-for-apogee-dr17-stars}}. \\texttt{astroNN} is a neural network that has been trained on and applied to the APOGEE data to provide estimates for abundances, ages, stellar parameters, etc. In this analysis, we use the recommended \\texttt{age\\_lowess\\_correct} ages (see e.g. \\citealt{mackereth_2019}). The average \\texttt{age\\_total\\_error} for the final sample is $\\sim 1.7$ Gyr, while the maximum is $3.4$ Gyr. We use these age estimates mainly to group stars into old versus young, and stress that the accuracy of any given individual age estimate cannot be guaranteed. As \\texttt{astroNN} uses spectra, atypical stellar abundances, in particular, may impact a given age estimate."
+                }
+            ],
+            "evidence": "We also use the stellar age estimates provided in the \\texttt{astroNN} \\citep{astro_nn}\\footnote{GitHub page available at \\url{https://github.com/henrysky/astroNN}} value added catalog\\footnote{see \\url{https://www.sdss4.org/dr17/data_access/value-added-catalogs/?vac_id=the-astronn-catalog-of-abundances,-distances,-and-ages-for-apogee-dr17-stars}}. \\texttt{astroNN} is a neural network that has been trained on and applied to the APOGEE data to provide estimates for abundances, ages, stellar parameters, etc. In this analysis, we use the recommended \\texttt{age\\_lowess\\_correct} ages (see e.g. \\citealt{mackereth_2019}). The average \\texttt{age\\_total\\_error} for the final sample is $\\sim 1.7$ Gyr, while the maximum is $3.4$ Gyr. We use these age estimates mainly to group stars into old versus young, and stress that the accuracy of any given individual age estimate cannot be guaranteed. As \\texttt{astroNN} uses spectra, atypical stellar abundances, in particular, may impact a given age estimate.",
+            "comments": ""
+        },
+        {
+            "id": "resource-006",
+            "kind": "external_url",
+            "url": "https://www.sdss4.org/dr17/data_access/value-added-catalogs/?vac_id=the-astronn-catalog-of-abundances",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2506.09927/arxiv_source/clean_text.tex",
+                    "start_line": 333,
+                    "end_line": 333,
+                    "context": "We also use the stellar age estimates provided in the \\texttt{astroNN} \\citep{astro_nn}\\footnote{GitHub page available at \\url{https://github.com/henrysky/astroNN}} value added catalog\\footnote{see \\url{https://www.sdss4.org/dr17/data_access/value-added-catalogs/?vac_id=the-astronn-catalog-of-abundances,-distances,-and-ages-for-apogee-dr17-stars}}. \\texttt{astroNN} is a neural network that has been trained on and applied to the APOGEE data to provide estimates for abundances, ages, stellar parameters, etc. In this analysis, we use the recommended \\texttt{age\\_lowess\\_correct} ages (see e.g. \\citealt{mackereth_2019}). The average \\texttt{age\\_total\\_error} for the final sample is $\\sim 1.7$ Gyr, while the maximum is $3.4$ Gyr. We use these age estimates mainly to group stars into old versus young, and stress that the accuracy of any given individual age estimate cannot be guaranteed. As \\texttt{astroNN} uses spectra, atypical stellar abundances, in particular, may impact a given age estimate."
+                }
+            ],
+            "evidence": "We also use the stellar age estimates provided in the \\texttt{astroNN} \\citep{astro_nn}\\footnote{GitHub page available at \\url{https://github.com/henrysky/astroNN}} value added catalog\\footnote{see \\url{https://www.sdss4.org/dr17/data_access/value-added-catalogs/?vac_id=the-astronn-catalog-of-abundances,-distances,-and-ages-for-apogee-dr17-stars}}. \\texttt{astroNN} is a neural network that has been trained on and applied to the APOGEE data to provide estimates for abundances, ages, stellar parameters, etc. In this analysis, we use the recommended \\texttt{age\\_lowess\\_correct} ages (see e.g. \\citealt{mackereth_2019}). The average \\texttt{age\\_total\\_error} for the final sample is $\\sim 1.7$ Gyr, while the maximum is $3.4$ Gyr. We use these age estimates mainly to group stars into old versus young, and stress that the accuracy of any given individual age estimate cannot be guaranteed. As \\texttt{astroNN} uses spectra, atypical stellar abundances, in particular, may impact a given age estimate.",
+            "comments": ""
+        },
+        {
+            "id": "resource-007",
+            "kind": "external_url",
+            "url": "https://www.sdss4.org/dr17/data_access/value-added-catalogs/?vac_id=the-astronn-catalog-of-abundances,-distances,-and-ages-for-apogee-dr17-stars",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2506.09927/arxiv_source/clean_text.tex",
+                    "start_line": 333,
+                    "end_line": 333,
+                    "context": "We also use the stellar age estimates provided in the \\texttt{astroNN} \\citep{astro_nn}\\footnote{GitHub page available at \\url{https://github.com/henrysky/astroNN}} value added catalog\\footnote{see \\url{https://www.sdss4.org/dr17/data_access/value-added-catalogs/?vac_id=the-astronn-catalog-of-abundances,-distances,-and-ages-for-apogee-dr17-stars}}. \\texttt{astroNN} is a neural network that has been trained on and applied to the APOGEE data to provide estimates for abundances, ages, stellar parameters, etc. In this analysis, we use the recommended \\texttt{age\\_lowess\\_correct} ages (see e.g. \\citealt{mackereth_2019}). The average \\texttt{age\\_total\\_error} for the final sample is $\\sim 1.7$ Gyr, while the maximum is $3.4$ Gyr. We use these age estimates mainly to group stars into old versus young, and stress that the accuracy of any given individual age estimate cannot be guaranteed. As \\texttt{astroNN} uses spectra, atypical stellar abundances, in particular, may impact a given age estimate."
+                }
+            ],
+            "evidence": "We also use the stellar age estimates provided in the \\texttt{astroNN} \\citep{astro_nn}\\footnote{GitHub page available at \\url{https://github.com/henrysky/astroNN}} value added catalog\\footnote{see \\url{https://www.sdss4.org/dr17/data_access/value-added-catalogs/?vac_id=the-astronn-catalog-of-abundances,-distances,-and-ages-for-apogee-dr17-stars}}. \\texttt{astroNN} is a neural network that has been trained on and applied to the APOGEE data to provide estimates for abundances, ages, stellar parameters, etc. In this analysis, we use the recommended \\texttt{age\\_lowess\\_correct} ages (see e.g. \\citealt{mackereth_2019}). The average \\texttt{age\\_total\\_error} for the final sample is $\\sim 1.7$ Gyr, while the maximum is $3.4$ Gyr. We use these age estimates mainly to group stars into old versus young, and stress that the accuracy of any given individual age estimate cannot be guaranteed. As \\texttt{astroNN} uses spectra, atypical stellar abundances, in particular, may impact a given age estimate.",
+            "comments": ""
+        },
+        {
+            "id": "resource-008",
+            "kind": "external_url",
+            "url": "https://www.cosmos.esa.int/gaia",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2506.09927/arxiv_source/clean_text.tex",
+                    "start_line": 786,
+                    "end_line": 786,
+                    "context": "This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n\\end{acknowledgments}"
+                }
+            ],
+            "evidence": "This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n\\end{acknowledgments}",
+            "comments": ""
+        },
+        {
+            "id": "resource-009",
+            "kind": "external_url",
+            "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2506.09927/arxiv_source/clean_text.tex",
+                    "start_line": 786,
+                    "end_line": 786,
+                    "context": "This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n\\end{acknowledgments}"
+                }
+            ],
+            "evidence": "This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n\\end{acknowledgments}",
+            "comments": ""
+        }
+    ]
+}

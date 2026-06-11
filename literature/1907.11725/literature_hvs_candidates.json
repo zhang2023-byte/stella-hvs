@@ -1,0 +1,1178 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T08:55:00",
+  "paper": {
+    "arxiv_id": "1907.11725",
+    "bibcode": "2020MNRAS.491.2465K",
+    "title": "The Great Escape: Discovery of a nearby 1700 km/s star ejected from the Milky Way by Sgr A*",
+    "month": "2019-07",
+    "source_note_json": "notes/2019/2019-07/2019-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1907.11725",
+      "pdf": "https://arxiv.org/pdf/1907.11725"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1907.11725",
+    "audit_path": "literature/1907.11725/audit.json",
+    "catalog_review_path": "literature/1907.11725/catalog_review.json",
+    "catalog_extraction_path": "literature/1907.11725/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+      "literature/1907.11725/catalog_tables/table-tab-sed_fitres.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-06-07T08:55:00",
+    "extractor": "agent",
+    "summary": "Paper presents the discovery of S5-HVS1, the fastest main-sequence hyper-velocity star known. It is a ~2.35 Msun A-type star at ~9 kpc with heliocentric RV = 1017+/-2.7 km/s and GSR velocity 1755+55/-45 km/s. Orbit integration traces it unambiguously back to the Galactic Centre with an ejection velocity of ~1800 km/s and travel time of 4.8 Myr. The star is explicitly described as unbound from the Galaxy. One HVS candidate extracted."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Adopt Gaia DR2 astrometry and multi-wavelength photometry for S5-HVS1. Source ID 6513109241989477504. Position: RA=343.715345 deg, Dec=-51.195607 deg (ICRS, epoch J2015.5). Proper motions: mu_alpha cos delta = 35.328+/-0.084 mas/yr, mu_delta = 0.587+/-0.125 mas/yr. Parallax: -0.042+/-0.091 mas. Gaia G=16.0211 mag, BP-RP=-0.0082+/-0.0066 mag. Also adopt DES DR1, 2MASS, AllWISE, SkyMapper, GALEX photometry. SFD E(B-V)=0.00721. The S5 survey targeted this star as a blue candidate using Gaia DR2.",
+      "inputs": [
+        "Gaia DR2 catalog",
+        "DES DR1",
+        "2MASS",
+        "AllWISE",
+        "SkyMapper DR1.1",
+        "GALEX",
+        "SFD dust map"
+      ],
+      "outputs": [
+        "Gaia DR2 astrometry (position, proper motion, parallax)",
+        "Gaia G, BP-RP photometry",
+        "multi-wavelength photometry"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 121,
+          "end_line": 122,
+          "context": "S5 uses photometric information from DES DR1 and proper motion/parallax from Gaia DR2"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 215,
+          "end_line": 217,
+          "context": "Photometry from DES DR1, 2MASS, AllWISE, SkyMapper DR1.1, GALEX, and Gaia DR2"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "quality_filter",
+      "summary": "Gaia DR2 astrometric quality check. S5-HVS1 has Gaia RUWE=1.06284, indicating no astrometric problems (RUWE close to 1.0). The star's astrometry does not seem to be affected by any issues according to Lindegren (2018).",
+      "inputs": [
+        "Gaia DR2 RUWE value"
+      ],
+      "outputs": [
+        "RUWE=1.06284, astrometry confirmed reliable"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 304,
+          "end_line": 304,
+          "context": "The astrometry of S5-HVS1 does not seem to be affected by any astrometric problems according to RUWE which is ~1.06"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "input_catalog",
+      "summary": "S5 survey spectroscopic data collection: AAOmega dual-arm spectrograph on AAT 3.9m telescope. 580V (blue, R~1300) and 1700D (red, R~10000) gratings. Three individual exposures totaling 2 hours on 2018 Aug 1. Data processed through standard AAT pipeline reduction.",
+      "inputs": [
+        "AAT/AAOmega 580V+1700D raw spectra"
+      ],
+      "outputs": [
+        "reduced blue and red arm spectra for S5-HVS1"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 118,
+          "end_line": 123,
+          "context": "S5 survey description: AAOmega spectrograph on AAT, 580V and 1700D gratings"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 182,
+          "end_line": 183,
+          "context": "S5-HVS1 observed 2018 Aug 1, 2 hours in three exposures with 580V and 1700D"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "radial_velocity_measurement",
+      "summary": "Radial velocity measurement via rvspecfit cross-correlation against PHOENIX-2.0 spectral templates. RV from 1700D red arm only (better wavelength calibration). Systematic error floor of ~0.6 km/s included in uncertainty. Heliocentric RV measured: 1017.0+/-2.7 km/s. Validated with repeat observations at +240 days (1017+/-24 km/s) and +260 days (1005+/-15 km/s), confirming no binary RV variability.",
+      "inputs": [
+        "reduced 1700D red arm spectrum",
+        "PHOENIX-2.0 spectral library (Husser 2013)"
+      ],
+      "outputs": [
+        "heliocentric radial velocity 1017.0+/-2.7 km/s"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 200,
+          "end_line": 200,
+          "context": "Heliocentric radial velocity 1017.0+/-2.7 km/s from S5 catalogue; red arm 1700D"
+        },
+        {
+          "kind": "ecsv_cell",
+          "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+          "line": 20,
+          "column": "col_002",
+          "column_header": "Value",
+          "raw_value": "1017.0+/- 2.7"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Stellar atmospheric parameter determination via simultaneous blue (580V) + red (1700D) spectral fitting using rvspecfit with PHOENIX-2.0 templates. Global RBF interpolation + local linear N-d interpolation. Multiplicative polynomial for continuum normalization. Ensemble sampling (parallel tempering) for uncertainties. Results: Teff=9630+/-110 K, log g=4.23+/-0.03, [Fe/H]=0.29+/-0.08. Bimodal posterior but confirms MS A-type star (not BHB).",
+      "inputs": [
+        "reduced 580V blue spectrum",
+        "reduced 1700D red spectrum",
+        "PHOENIX-2.0 spectral library"
+      ],
+      "outputs": [
+        "Teff=9630+/-110 K",
+        "log g=4.23+/-0.03 dex",
+        "[Fe/H]=0.29+/-0.08 dex",
+        "spectral type: A-type MS"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 185,
+          "end_line": 198,
+          "context": "Simultaneous blue+red spectral fitting with rvspecfit, stellar parameter results"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-01",
+        "step-05"
+      ],
+      "step_type": "photometric_or_sed_modeling",
+      "summary": "SED modeling using MIST isochrones (v1.2) with isochrones software (v2.0.1). Multi-wavelength photometry from GALEX, Gaia DR2, SkyMapper DR1.1, DES DR1, 2MASS, AllWISE. Two models: Model P (photometric only) and Model SP (spectro-photometric, combining SED with spectroscopic priors on Teff, log g, [Fe/H] from step-05). Nested sampling with MultiNest. Model SP distance: log10(D_hel/1kpc)=0.936+/-0.015. Model SP mass: 2.35+0.06/-0.06 Msun.",
+      "inputs": [
+        "multi-wavelength photometry",
+        "MIST isochrones v1.2",
+        "spectroscopic priors: Teff, log g, [Fe/H]",
+        "SFD dust map E(B-V)"
+      ],
+      "outputs": [
+        "Model SP: mass=2.35+0.06/-0.06 Msun",
+        "Model SP: log10 age=7.72+0.25/-0.33 dex",
+        "Model SP: [Fe/H]=0.3+0.1/-0.1 dex",
+        "Model SP: m-M=14.68+0.07/-0.07 mag",
+        "Model SP: log10(D_hel/1kpc)=0.936+/-0.015"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 260,
+          "end_line": 283,
+          "context": "SED modeling with MIST isochrones, Model P and Model SP description, results"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [
+        "step-06"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Heliocentric distance determination. Spectro-photometric SED fitting (Model SP): log10(D_hel/1kpc)=0.936+/-0.015 (~8.6 kpc). When Galactic Centre origin is assumed in later steps, distance refines to D_hel,GC = 8884+/-11 pc. The GC-origin distance agrees perfectly with both photometric and spectro-photometric analyses.",
+      "inputs": [
+        "Model SP posterior: m-M=14.68+0.07/-0.07 mag",
+        "GC origin constraint from orbit integration (step-09)"
+      ],
+      "outputs": [
+        "Model SP: D_hel ~ 8.6 kpc",
+        "GC origin constraint: D_hel,GC = 8884+/-11 pc"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 282,
+          "end_line": 283,
+          "context": "Spectro-photometric distance log D_hel/1kpc = 0.936+/-0.015"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 340,
+          "end_line": 340,
+          "context": "GC origin constrains distance to D_hel=8884+/-11 pc"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [
+        "step-04",
+        "step-07"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Galactic rest frame velocity calculation. Combine Gaia DR2 proper motions, heliocentric RV, and distance posterior. V_GSR (no GC assumption) = 1755+55/-45 km/s. V_GSR,GC (with GC origin) = 1717.4+/-3.5 km/s. Current 3D velocity V_3D,now = 1687+39/-37 km/s (Model SP). Solar motion from Schonrich (2010).",
+      "inputs": [
+        "Gaia DR2 proper motions",
+        "RV = 1017.0+/-2.7 km/s",
+        "distance posterior",
+        "solar motion (Schonrich 2010)"
+      ],
+      "outputs": [
+        "V_GSR = 1755+55/-45 km/s",
+        "V_GSR,GC = 1717.4+/-3.5 km/s"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 304,
+          "end_line": 311,
+          "context": "V_3D=1470+166/-147 km/s (Model P); V_3D=1687+39/-37 km/s (Model SP)"
+        },
+        {
+          "kind": "ecsv_cell",
+          "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+          "line": 25,
+          "column": "col_002",
+          "column_header": "Value",
+          "raw_value": "1755_-45^+55"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": [
+        "step-08"
+      ],
+      "step_type": "galactic_potential_model",
+      "summary": "Adopt Milky Way gravitational potential from McMillan (2017). Use distance from Sun to GC R0=8.178 kpc (Gravity 2019), and solar velocity (U,V,W) = (11.1, 245, 7.25) km/s (Schonrich 2010, McMillan 2017). This potential is used for all subsequent orbit integrations and origin assessment.",
+      "inputs": [
+        "McMillan 2017 Galactic potential",
+        "R0=8.178 kpc (Gravity 2019)",
+        "solar velocity (Schonrich 2010)"
+      ],
+      "outputs": [
+        "Galactic potential model for orbit integration"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 309,
+          "end_line": 309,
+          "context": "we adopt the gravitational potential from McMillan17, distance to GC 8.178 kpc (Gravity2019), solar velocity (Schonrich2010, McMillan17)"
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "depends_on": [
+        "step-08",
+        "step-09"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Backward orbit integration in Milky Way gravitational potential (McMillan 2017). Sample uncertainties in RV, proper motion, and distance posterior. Integrate backwards until star intersects Galactic plane Z=0. Ejection point (Model SP): X_pl=-0.37+0.40/-0.39 kpc, Y_pl=-0.03+0.05/-0.04 kpc — unambiguously consistent with Galactic Centre. Flight time from GC: 4.801+/-0.009 Myr.",
+      "inputs": [
+        "McMillan 2017 Galactic potential",
+        "phase-space coordinates with uncertainties"
+      ],
+      "outputs": [
+        "ejection point X_pl, Y_pl",
+        "flight time = 4.801+/-0.009 Myr"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 306,
+          "end_line": 312,
+          "context": "Backward orbit integration, ejection point consistent with GC"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 340,
+          "end_line": 340,
+          "context": "travel time from the GC to the current position of 4.801+/-0.009 Myr"
+        }
+      ]
+    },
+    {
+      "id": "step-11",
+      "depends_on": [
+        "step-10"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Galactic Centre origin assessment. Assuming GC origin, eject star from centre of MW in McMillan 2017 potential. Forward model predicts observables as function of ejection velocity and travel time. Ejection velocity: V_ej,GC = 1798.6+/-3.1 km/s (outside SMBH sphere of influence). Bayes factor K=354 (Model SP) or K=81 (Model P) for GC vs random disk origin, constituting overwhelming evidence for GC origin. S5-HVS1 is the first HVS confidently associated with the GC.",
+      "inputs": [
+        "orbit integration results",
+        "disk mass distribution prior (exponential, scale 2.15 kpc)"
+      ],
+      "outputs": [
+        "V_ej,GC = 1798.6+/-3.1 km/s",
+        "Bayes factor K=354 for GC vs disk origin",
+        "predicted proper motions"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 338,
+          "end_line": 340,
+          "context": "Ejection speed 1798.6+/-3.1 km/s, travel time 4.801+/-0.009 Myr"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 314,
+          "end_line": 318,
+          "context": "Bayes factor K=354 for GC origin (Model SP), overwhelming evidence"
+        }
+      ]
+    },
+    {
+      "id": "step-12",
+      "depends_on": [
+        "step-08",
+        "step-11"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Escape/bound assessment: the heliocentric RV alone (1017 km/s) is sufficient to make the star unbound from the Galaxy. GSR velocity 1755+55/-45 km/s far exceeds the local escape velocity. The paper explicitly states S5-HVS1 is unbound and will escape the Milky Way.",
+      "inputs": [
+        "RV = 1017 km/s",
+        "V_GSR = 1755 km/s",
+        "Galactic escape velocity estimates"
+      ],
+      "outputs": [
+        "star is gravitationally unbound from the Milky Way"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 110,
+          "end_line": 110,
+          "context": "we present the discovery of a new nearby unbound HVS"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 127,
+          "end_line": 127,
+          "context": "The radial velocity of this star alone, irrespective of the distance, is enough to make the star unbound to the Galaxy"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "1907.11725:cand-001",
+        "paper_candidate_id": "S5-HVS1",
+        "gaia_source_id": "Gaia DR2 6513109241989477504",
+        "all": [
+          {
+            "value": "S5-HVS1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+                "start_line": 110,
+                "end_line": 110,
+                "context": "The star is named S5-HVS1 as it was found in the Southern Stellar Stream Spectroscopic Survey"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR2 6513109241989477504",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+                "line": 11,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "6513109241989477504"
+              }
+            ]
+          },
+          {
+            "value": "HE 2251-5127",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+                "start_line": 128,
+                "end_line": 128,
+                "context": "S5-HVS1 was previously photometrically identified as a candidate field BHB star by Christlieb2005 and given the designation HE 2251-5127"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "S5-HVS1 is the primary discovery of this paper: the fastest main-sequence hyper-velocity star known. The paper explicitly labels it as a hyper-velocity star (HVS) in the abstract and introduction, states it is unbound from the Galaxy, and demonstrates via orbit integration that it was ejected from the Galactic Centre at ~1800 km/s. Heliocentric RV of 1017 km/s alone exceeds Galactic escape velocity. The paper's title itself refers to a 'star ejected from the Milky Way'.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star",
+          "escaping_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper repeatedly and explicitly states S5-HVS1 is unbound from the Galaxy. Abstract calls it a hyper-velocity star. Line 110 states 'discovery of a new nearby unbound HVS'. Line 127 states 'radial velocity alone...is enough to make the star unbound'. Orbit integration unambiguously traces it to GC with overwhelming Bayes factor (K=354). This is among the highest-confidence HVS candidates in the literature.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+            "start_line": 80,
+            "end_line": 82,
+            "context": "Abstract: fastest Main Sequence hyper-velocity star (HVS)"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+            "start_line": 110,
+            "end_line": 110,
+            "context": "we present the discovery of a new nearby unbound HVS that can be unambiguously traced back to the Galactic Centre"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+            "start_line": 127,
+            "end_line": 127,
+            "context": "The radial velocity of this star alone, irrespective of the distance, is enough to make the star unbound to the Galaxy"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+            "start_line": 322,
+            "end_line": 323,
+            "context": "we can conclude that S5-HVS1 was ejected from the Galactic Centre. It is the first star with such a confident identification"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+            "start_line": 110,
+            "end_line": 110,
+            "context": "In this paper we present the discovery of a new nearby unbound HVS"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+            "start_line": 127,
+            "end_line": 128,
+            "context": "We label this star S5-HVS1"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "343.715345",
+            "value": "343.715345",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "right_ascension",
+            "description": "Gaia DR2 right ascension",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "Gaia DR2 uses ICRS",
+              "source_catalog": "Gaia DR2",
+              "data_release": "DR2",
+              "inference_basis": "",
+              "reference_entry_id": "",
+              "confidence": "",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+                  "start_line": 104,
+                  "end_line": 105,
+                  "context": "Gaia DR2 data release with ICRS reference frame"
+                }
+              ],
+              "description": "Gaia DR2 uses ICRS reference frame"
+            },
+            "epoch": {
+              "value": "J2015.5",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2015.5 (Gaia DR2)",
+              "source_catalog": "Gaia DR2",
+              "data_release": "DR2",
+              "inference_basis": "",
+              "reference_entry_id": "",
+              "confidence": "",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+                  "start_line": 104,
+                  "end_line": 105,
+                  "context": "Gaia DR2 reference epoch J2015.5"
+                }
+              ],
+              "description": "Gaia DR2 reference epoch J2015.5"
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+                "line": 9,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "343.715345"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "-51.195607",
+            "value": "-51.195607",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "declination",
+            "description": "Gaia DR2 declination",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "Gaia DR2 uses ICRS",
+              "source_catalog": "Gaia DR2",
+              "data_release": "DR2",
+              "inference_basis": "",
+              "reference_entry_id": "",
+              "confidence": "",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+                  "start_line": 104,
+                  "end_line": 105,
+                  "context": "Gaia DR2 data release with ICRS reference frame"
+                }
+              ],
+              "description": "Gaia DR2 uses ICRS reference frame"
+            },
+            "epoch": {
+              "value": "J2015.5",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2015.5 (Gaia DR2)",
+              "source_catalog": "Gaia DR2",
+              "data_release": "DR2",
+              "inference_basis": "",
+              "reference_entry_id": "",
+              "confidence": "",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+                  "start_line": 104,
+                  "end_line": 105,
+                  "context": "Gaia DR2 reference epoch J2015.5"
+                }
+              ],
+              "description": "Gaia DR2 reference epoch J2015.5"
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+                "line": 10,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "-51.195607"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "8884+/- 11",
+            "value": "8884",
+            "error": "11",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "pc",
+            "kind": "heliocentric_distance",
+            "description": "Heliocentric distance to S5-HVS1 assuming Galactic Centre origin. Constrained by requiring the orbit to pass through the GC. Spectro-photometric distance without GC prior is log10(D_hel/1kpc)=0.936+/-0.015 (~8.6 kpc).",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+                "line": 28,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "8884+/- 11"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ]
+          },
+          "parallax": {
+            "raw_value": "-0.042+/- 0.091",
+            "value": "-0.042",
+            "error": "0.091",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "mas",
+            "kind": "parallax",
+            "description": "Gaia DR2 parallax. Negative value; distance determination relies on SED fitting, not parallax.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+                "line": 14,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "-0.042+/- 0.091"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "35.328+/- 0.084",
+            "value": "35.328",
+            "error": "0.084",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "mas/yr",
+            "kind": "proper_motion_ra_cos_dec",
+            "description": "Gaia DR2 proper motion in RA * cos(Dec)",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+                "line": 12,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "35.328+/- 0.084"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "0.587+/- 0.125",
+            "value": "0.587",
+            "error": "0.125",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "mas/yr",
+            "kind": "proper_motion_dec",
+            "description": "Gaia DR2 proper motion in Dec",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+                "line": 13,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "0.587+/- 0.125"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "1017.0+/- 2.7",
+            "value": "1017.0",
+            "error": "2.7",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km/s",
+            "kind": "heliocentric_radial_velocity",
+            "description": "Heliocentric radial velocity from S5 survey 1700D red arm cross-correlation. Systematic error floor of 0.6 km/s included. Validated with repeated observations spanning ~8 months showing no RV variability.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+                "line": 20,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "1017.0+/- 2.7"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": {
+            "raw_value": "1755_-45^+55",
+            "value": "1755",
+            "error": "",
+            "lower_error": "45",
+            "upper_error": "55",
+            "unit": "km/s",
+            "kind": "galactic_rest_frame_velocity",
+            "description": "Galactic Standard of Rest (GSR) velocity without assuming GC origin. Derived from combining Gaia DR2 proper motions, heliocentric RV, and distance posterior. Solar motion from Schonrich (2010).",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+                "line": 25,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "1755_-45^+55"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "16.0211",
+          "value": "16.0211",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "mag",
+          "kind": "apparent_magnitude",
+          "description": "Gaia G-band magnitude from Gaia DR2",
+          "measurement_type": "magnitude",
+          "band": "Gaia G",
+          "system": "Vega",
+          "survey": "Gaia DR2",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+              "line": 17,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "16.0211"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "15.90",
+          "value": "15.90",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "mag",
+          "kind": "apparent_magnitude",
+          "description": "DES g-band magnitude. Full DES DR1 g,r,i,z = 15.90, 16.16, 16.40, 16.53 mag.",
+          "measurement_type": "magnitude",
+          "band": "DES g",
+          "system": "AB",
+          "survey": "DES DR1",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+              "line": 18,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "15.90,16.16,16.40,16.53",
+              "component_raw_value": "15.90"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "-0.0082+/- 0.0066",
+          "value": "-0.0082",
+          "error": "0.0066",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "mag",
+          "kind": "color",
+          "description": "Gaia BP-RP color from Gaia DR2",
+          "measurement_type": "color",
+          "band": "Gaia BP-RP",
+          "system": "Vega",
+          "survey": "Gaia DR2",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+              "line": 19,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "-0.0082+/- 0.0066"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "0.00721",
+          "value": "0.00721",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "mag",
+          "kind": "reddening",
+          "description": "SFD dust map E(B-V) reddening value. Used as prior in SED modeling.",
+          "measurement_type": "reddening",
+          "band": "",
+          "system": "",
+          "survey": "SFD",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+              "line": 16,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "0.00721"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "9630+/- 110",
+          "value": "9630",
+          "error": "110",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "K",
+          "kind": "effective_temperature",
+          "description": "Effective temperature from simultaneous blue+red arm spectral fitting with PHOENIX-2.0 templates. Bimodal posterior with modes at ~9500 K and ~9700 K.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+              "line": 21,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "9630+/- 110"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "log_g": {
+          "raw_value": "4.23+/- 0.03",
+          "value": "4.23",
+          "error": "0.03",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "dex",
+          "kind": "surface_gravity",
+          "description": "Surface gravity from spectral fitting. Confirms S5-HVS1 is a main-sequence star, not a BHB star (which would have log g < 3.5).",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+              "line": 22,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "4.23+/- 0.03"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "0.29+/- 0.08",
+          "value": "0.29",
+          "error": "0.08",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "dex",
+          "kind": "metallicity",
+          "description": "Iron abundance [Fe/H] from spectral fitting. High metallicity. Model SP from SED fitting gives [Fe/H]=0.3+0.1/-0.1.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+              "line": 23,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "0.29+/- 0.08"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "mass": {
+          "raw_value": "2.35^+0.06_-0.06",
+          "value": "2.35",
+          "error": "",
+          "lower_error": "0.06",
+          "upper_error": "0.06",
+          "unit": "Msun",
+          "kind": "stellar_mass",
+          "description": "Stellar mass from spectro-photometric SED fitting (Model SP) using MIST isochrones. Photometric-only (Model P) gives 1.90+0.25/-0.28 Msun.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1907.11725/catalog_tables/table-tab-sed_fitres.ecsv",
+              "line": 10,
+              "column": "col_003",
+              "column_header": "Value | Spectro-Photometric",
+              "raw_value": "2.35^+0.06_-0.06"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        },
+        "radius": null,
+        "age": {
+          "raw_value": "7.72^+0.25_-0.33",
+          "value": "7.72",
+          "error": "",
+          "lower_error": "0.33",
+          "upper_error": "0.25",
+          "unit": "dex",
+          "kind": "log_age",
+          "description": "Log10(age/yr) from Model SP SED fitting. Corresponds to age ~52 Myr. Model P gives 8.36+0.32/-0.46 dex (~230 Myr). Note: isochrone age significantly older than 4.8 Myr flight time from GC.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1907.11725/catalog_tables/table-tab-sed_fitres.ecsv",
+              "line": 11,
+              "column": "col_003",
+              "column_header": "Value | Spectro-Photometric",
+              "raw_value": "7.72^+0.25_-0.33"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        },
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "A-type Main Sequence",
+          "value": "A-type Main Sequence",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "spectral_type",
+          "description": "A-type main-sequence star based on Teff~9630 K, log g~4.23, and photometric colors. Not a BHB star (log g too high, colors inconsistent with BHB).",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+              "start_line": 198,
+              "end_line": 198,
+              "context": "the measured surface gravity of S5-HVS1 strongly suggests that the star is a Main sequence A-type star"
+            },
+            {
+              "kind": "text",
+              "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+              "start_line": 471,
+              "end_line": 471,
+              "context": "it is likely an A-type ~2.35 Msun Main Sequence metal-rich star"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [
+        {
+          "raw_value": "1.06284",
+          "value": "1.06284",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "ruwe",
+          "name": "Gaia RUWE",
+          "description": "Gaia DR2 re-normalised unit weight error. Value ~1.06 indicates no astrometric problems.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+              "line": 15,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "1.06284"
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ]
+        }
+      ],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": {
+          "raw_value": "4.801 +/- 0.009 Myr",
+          "value": "4.801",
+          "error": "0.009",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "Myr",
+          "kind": "flight_time",
+          "description": "Travel time from Galactic Centre to current position, assuming GC origin. Determined by ejecting star from GC in McMillan 2017 potential and matching observed phase-space coordinates.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+              "start_line": 340,
+              "end_line": 340,
+              "context": "total travel time from the GC to the current position of 4.801+/-0.009 Myr"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": {
+          "raw_value": "1798.6+/- 3.1",
+          "value": "1798.6",
+          "error": "3.1",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "km/s",
+          "kind": "ejection_velocity",
+          "description": "Ejection velocity from the Galactic Centre (outside SMBH sphere of influence, >1 pc). Actual ejection speed at closer distances to SMBH could be as high as ~8000 km/s.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1907.11725/catalog_tables/table-tab-hvspar.ecsv",
+              "line": 27,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "1798.6+/- 3.1"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        },
+        "travel_time": null,
+        "hypothesis_metrics": [
+          {
+            "raw_value": "K=354 (Model SP)",
+            "value": "354",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "bayes_factor",
+            "description": "Bayes factor for GC origin vs random disk origin using Model SP (spectro-photometric) distances. K=81 for Model P (photometric only). Constitutes overwhelming evidence for GC origin.",
+            "hypothesis": "GC origin vs disk origin",
+            "metric_type": "likelihood_ratio",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+                "start_line": 318,
+                "end_line": 318,
+                "context": "Bayes factor is K=81 when using photometric distances (Model P), and K=354 for the spectro-photometric distances (Model SP)"
+              }
+            ],
+            "method_refs": [
+              "step-11"
+            ]
+          }
+        ],
+        "other": []
+      },
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": []
+}

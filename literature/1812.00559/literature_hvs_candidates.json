@@ -1,0 +1,70 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:50:17",
+  "paper": {
+    "arxiv_id": "1812.00559",
+    "bibcode": null,
+    "title": "The origin of high velocity stars from Gaia and LAMOST",
+    "month": "2018-12",
+    "source_note_json": "notes/2018/2018-12/2018-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1812.00559",
+      "pdf": "https://arxiv.org/pdf/1812.00559"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1812.00559",
+    "audit_path": "literature/1812.00559/audit.json",
+    "catalog_review_path": "literature/1812.00559/catalog_review.json",
+    "catalog_extraction_path": "literature/1812.00559/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:50:17",
+    "extractor": "agent",
+    "summary": "本文研究高速星（HiVel stars），定义阈值为 v_gc > 0.85 v_esc（低于逃逸速度）。论文将24颗恒星分类为潮汐碎片（5颗）和盘逃逸星（19颗）。所有恒星均为银河系束缚星，不满足HVS候选体的银河系非束缚标准。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "Quick scan of paper abstract and title for HVS relevance assessment.",
+      "inputs": [
+        "arXiv abstract",
+        "Monthly literature notes"
+      ],
+      "outputs": [
+        "HVS relevance classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1812.00559/paper_abstract.txt",
+          "start_line": 5,
+          "end_line": 5,
+          "context": "Paper abstract"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "quick-scan-review",
+      "description": "本文利用Gaia DR2天体测量和LAMOST DR5光谱数据，定义高速星（HiVel stars）样本为 v_gc > 0.85 v_esc 的恒星，最终得到24颗高速星。大部分高速星为贫金属、α增丰。通过银河系势场中反向轨道积分，将高速星分类为：5颗来自瓦解矮星系的潮汐碎片，19颗来自恒星盘的逃逸星候选体。论文提供了这24颗恒星的天体测量参数和径向速度数据。关键点：v_gc > 0.85 v_esc 意味着恒星速度在逃逸速度的85%以上但低于逃逸速度，即论文本身将其定义为高速星而非超高速星（unbound）。",
+      "decision": "excluded",
+      "reason": "论文定义的HiVel stars样本（v_gc > 0.85 v_esc）速度低于银河系逃逸速度，所有24颗恒星仍受银河系引力束缚。论文明确将19颗恒星分类为'runaway-star candidates from stellar disk'，非超高速星。5颗来自瓦解矮星系潮汐碎片的恒星也不满足HVS候选体标准（来自吸积事件而非银河系中心弹射）。论文未声称任何目标可能脱离银河系。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1812.00559/paper_abstract.txt",
+          "start_line": 5,
+          "end_line": 5,
+          "context": "Paper abstract"
+        }
+      ]
+    }
+  ]
+}

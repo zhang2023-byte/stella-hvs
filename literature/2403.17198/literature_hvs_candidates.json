@@ -1,0 +1,111 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T17:45:57",
+  "paper": {
+    "arxiv_id": "2403.17198",
+    "bibcode": "2024ApJ...966..243P",
+    "title": "Runaway OB Stars in the Small Magellanic Cloud III. Updated Kinematics and Insights on Dynamical vs. Supernova Ejections",
+    "month": "2024-03",
+    "source_note_json": "notes/2024/2024-03/2024-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2403.17198",
+      "pdf": "https://arxiv.org/pdf/2403.17198"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2403.17198",
+    "audit_path": "literature/2403.17198/audit.json",
+    "catalog_review_path": "literature/2403.17198/catalog_review.json",
+    "catalog_extraction_path": "literature/2403.17198/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2403.17198/catalog_tables/table-tab-Table-1.ecsv",
+      "literature/2403.17198/catalog_tables/table-tab-Table-2.ecsv",
+      "literature/2403.17198/catalog_tables/table-tab-Table-3.ecsv",
+      "literature/2403.17198/catalog_tables/table-tab-Table-4.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T17:45:57",
+    "extractor": "agent",
+    "summary": "This paper studies runaway and walkaway OB/OBe stars in the Small Magellanic Cloud (SMC). All objects are discussed as ejected from their parent clusters within the SMC (DES/BSS mechanisms), not as candidates unbound from the Milky Way. No Galactic-unbound or escaping HVS candidates are presented."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-1",
+      "description": "SMC field OB and OBe stars with kinematic data (336 stars).",
+      "decision": "excluded",
+      "reason": "The paper presents these objects as runaway/walkaway stars ejected from clusters within the Small Magellanic Cloud, not as candidates possibly unbound from the Milky Way Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+          "start_line": 50,
+          "end_line": 57,
+          "context": "Abstract states the work concerns field OB and OBe stars in the Small Magellanic Cloud (SMC), not the Milky Way."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+          "start_line": 104,
+          "end_line": 112,
+          "context": "Method section describes transverse velocities calculated relative to local systemic field motion within the SMC."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+          "start_line": 142,
+          "end_line": 145,
+          "context": "Section defines runaways and walkaways as stars unbound from their clusters with v_perp >= 24 km/s, within the SMC context."
+        }
+      ]
+    },
+    {
+      "group_id": "table-2",
+      "description": "Subpopulation kinematics summary for SMC OB/OBe stars, HMXBs, EBs, and SB2s.",
+      "decision": "excluded",
+      "reason": "Aggregate kinematic statistics for SMC subpopulations. No individual objects are presented as Milky-Way-unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+          "start_line": 171,
+          "end_line": 199,
+          "context": "Table 2 caption and data present median transverse velocities for SMC subgroups, with no mention of Galactic escape."
+        }
+      ]
+    },
+    {
+      "group_id": "table-3",
+      "description": "Numbers and ratios of walkaway and runaway field OB stars in the SMC.",
+      "decision": "excluded",
+      "reason": "Statistical ratios of walkaways to runaways among SMC field stars. These are cluster-ejection population statistics, not Galactic-unbound candidate objects.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+          "start_line": 278,
+          "end_line": 297,
+          "context": "Table 3 presents DES/BSS runaway and walkaway ratios for SMC field stars, not Galactic HVS candidates."
+        }
+      ]
+    },
+    {
+      "group_id": "table-4",
+      "description": "Model runaway and walkaway frequencies for DES and BSS ejections in the SMC.",
+      "decision": "excluded",
+      "reason": "Model predictions for cluster ejection frequencies within the SMC. No individual objects or Galactic-unbound candidates are discussed.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+          "start_line": 299,
+          "end_line": 327,
+          "context": "Table 4 shows model frequencies of runaways and walkaways from cluster ejections in the SMC, with no connection to Milky Way escape."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:40:38",
+  "paper": {
+    "arxiv_id": "2603.14678",
+    "bibcode": "2026A&A...708A..39Z",
+    "title": "Revisiting candidate high-velocity stars associated with the Sagittarius dwarf spheroidal galaxy",
+    "month": "2026-03",
+    "source_note_json": "notes/2026/2026-03/2026-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2603.14678",
+      "pdf": "https://arxiv.org/pdf/2603.14678"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2603.14678",
+    "audit_path": "literature/2603.14678/audit.json",
+    "catalog_review_path": "literature/2603.14678/catalog_review.json",
+    "catalog_extraction_path": "literature/2603.14678/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T20:40:38",
+    "extractor": "agent",
+    "summary": "The paper identifies 95 high-velocity stars with close encounters to the Sgr dSph but explicitly concludes they are most likely ordinary Milky Way halo stars rather than genuine Galactic-unbound HVSs. Only one star exceeds v_GC > 600 km/s, yet its velocity lies below the local escape velocity curve. The paper states no unbound Sgr-origin HVSs are found."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Adopted Gaia DR3 astrometry and radial velocities, DESI DR1 MWS catalog radial velocities, and LAMOST DR12 LRS radial velocities.",
+      "inputs": ["Gaia DR3", "DESI DR1 MWS", "LAMOST DR12 LRS"],
+      "outputs": ["astrometric parameters", "radial velocities", "quality flags"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.14678/arxiv_source/aa57476-25.tex",
+          "start_line": 66,
+          "end_line": 90,
+          "context": "Data section describing Gaia DR3, DESI DR1, and LAMOST DR12 catalogs used for sample selection."
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": ["step-01"],
+      "step_type": "quality_filter",
+      "summary": "Applied astrometric quality cuts (RUWE, astrometric excess noise, goodness of fit, visibility periods) and parallax significance cuts. For RVS data, applied S/N and transit number cuts.",
+      "inputs": ["Gaia DR3 astrometric and RV quality parameters"],
+      "outputs": ["high-quality kinematic sample"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.14678/arxiv_source/aa57476-25.tex",
+          "start_line": 68,
+          "end_line": 80,
+          "context": "Quality criteria for Gaia DR3 astrometric and radial velocity measurements."
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": ["step-01", "step-02"],
+      "step_type": "cross_match",
+      "summary": "Cross-matched DESI DR1 MWS and LAMOST DR12 stars with Gaia DR3 astrometric parameters.",
+      "inputs": ["DESI DR1 MWS catalog", "LAMOST DR12 LRS catalog", "Gaia DR3 astrometry"],
+      "outputs": ["cross-matched 6D phase-space samples"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.14678/arxiv_source/aa57476-25.tex",
+          "start_line": 83,
+          "end_line": 90,
+          "context": "Cross-matching DESI and LAMOST data with Gaia DR3 astrometry."
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": ["step-03"],
+      "step_type": "distance_estimation",
+      "summary": "Used a Bayesian framework with the Bailer-Jones geometric distance prior and MCMC sampling (emcee) to estimate distances from parallaxes.",
+      "inputs": ["parallaxes", "covariance matrix of observables", "Bailer-Jones distance prior"],
+      "outputs": ["posterior distance samples"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.14678/arxiv_source/aa57476-25.tex",
+          "start_line": 94,
+          "end_line": 108,
+          "context": "Bayesian distance estimation using the Bailer-Jones geometric distance prior and MCMC."
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": ["step-04"],
+      "step_type": "velocity_calculation",
+      "summary": "Transformed observables to Galactocentric Cartesian coordinates and velocities, adopting solar position and velocity from the literature. Applied velocity cut v_GC > 300 km/s for sample selection and v_GC > 400 km/s for high-velocity stars.",
+      "inputs": ["distances", "proper motions", "radial velocities", "solar position and velocity"],
+      "outputs": ["galactocentric total velocities", "galactocentric positions"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.14678/arxiv_source/aa57476-25.tex",
+          "start_line": 81,
+          "end_line": 91,
+          "context": "Galactocentric coordinate transformation and velocity selection criteria."
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": ["step-05"],
+      "step_type": "orbit_integration",
+      "summary": "Backward-integrated 5000 Monte Carlo orbital realizations for each star in a time-dependent Galactic potential including MWPotential2014, the moving LMC, and the moving Sgr dSph, accounting for dynamical friction.",
+      "inputs": ["6D phase-space coordinates with uncertainties", "MWPotential2014", "LMC potential", "Sgr dSph potential"],
+      "outputs": ["orbital histories", "minimum approach distances to Sgr dSph", "flight times", "relative velocities at pericenter"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.14678/arxiv_source/aa57476-25.tex",
+          "start_line": 111,
+          "end_line": 122,
+          "context": "Orbit integration in a realistic Galactic potential with LMC and Sgr dSph."
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": ["step-05", "step-06"],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Compared galactocentric velocities with escape-velocity profiles from three Milky Way potential models. Only one star exceeds v_GC > 600 km/s, but its velocity lies below the local escape velocity curve.",
+      "inputs": ["galactocentric total velocities", "galactocentric radii", "escape velocity curves"],
+      "outputs": ["bound/unbound assessment"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.14678/arxiv_source/aa57476-25.tex",
+          "start_line": 109,
+          "end_line": 123,
+          "context": "Velocity-based HVS definition and comparison with escape velocity curves."
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": ["step-06", "step-07"],
+      "step_type": "origin_assessment",
+      "summary": "Tested three origin scenarios: Hills mechanism from Sgr dSph center, tidal stripping during Sgr disruption, and chance encounters of Milky Way halo stars. Concluded the observed kinematics and metallicities are consistent with halo stars, not Sgr-origin HVSs.",
+      "inputs": ["orbital parameters", "metallicities", "Hills mechanism simulations", "tidal shock model", "BV23 halo model"],
+      "outputs": ["origin classification: most likely Milky Way halo stars"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.14678/arxiv_source/aa57476-25.tex",
+          "start_line": 156,
+          "end_line": 280,
+          "context": "Modeling of three possible origins for Sgr high-velocity star candidates."
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "this-work-sgr-candidates",
+      "description": "95 high-velocity stars identified in this work that pass within 2.5 half-mass radii of the Sgr dSph (P_Sgr > 0.5), selected from Gaia DR3, DESI DR1, and LAMOST DR12.",
+      "decision": "excluded",
+      "reason": "The paper explicitly concludes these stars are most likely ordinary Milky Way halo stars rather than genuine Galactic-unbound HVSs. Only one star exceeds v_GC > 600 km/s, but its velocity lies below the local escape velocity curve, and the paper states no HVS originating from the Sgr dSph are identified.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.14678/arxiv_source/aa57476-25.tex",
+          "start_line": 117,
+          "end_line": 123,
+          "context": "Paper states only one star exceeds 600 km/s but lies below the escape velocity curve, and concludes no Sgr-origin HVSs are found."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2603.14678/arxiv_source/aa57476-25.tex",
+          "start_line": 308,
+          "end_line": 314,
+          "context": "Discussion and conclusions reiterating that candidates are most likely ordinary halo stars bound to the Galaxy."
+        }
+      ]
+    },
+    {
+      "group_id": "prior-literature-candidates",
+      "description": "Candidate high-velocity stars from previous studies (Li22 and Li23) whose orbits were traced back to the Sgr dSph, including two HVS candidates proposed by Li22 and two by Li23.",
+      "decision": "excluded",
+      "reason": "This paper reassesses prior candidates and concludes they are also most likely ordinary Milky Way halo stars rather than genuine Sgr-origin HVSs. The paper does not treat them as possibly unbound from the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.14678/arxiv_source/aa57476-25.tex",
+          "start_line": 58,
+          "end_line": 61,
+          "context": "Description of prior Li22 and Li23 candidates, including their proposed HVS candidates."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2603.14678/arxiv_source/aa57476-25.tex",
+          "start_line": 310,
+          "end_line": 314,
+          "context": "Conclusion that both this work's candidates and those in earlier studies are most likely halo stars."
+        }
+      ]
+    }
+  ]
+}

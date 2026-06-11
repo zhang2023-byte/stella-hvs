@@ -1,0 +1,366 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:39:07",
+  "paper": {
+    "arxiv_id": "1805.03194",
+    "title": "Old, Metal-Poor Extreme Velocity Stars in the Solar Neighborhood",
+    "month": "2018-05"
+  },
+  "review": {
+    "path": "literature/1805.03194/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083907",
+    "started_at": "2026-06-07T08:39:07",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1805.03194",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table1",
+      "internal_table_id": "table-table1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1805.03194/arxiv_source/tab1.tex",
+        "start_line": 1,
+        "end_line": 68,
+        "caption": "Extreme velocity star sample, sorted by decreasing orbital energy E",
+        "label": "table1"
+      },
+      "source_path": "literature/1805.03194/arxiv_source/tab1.tex",
+      "excerpt_path": "literature/1805.03194/catalog_sources/table-table1/excerpt.tex",
+      "sha256": "beffeaae73fd722d8f381f55764fad1c8dd8c2401d01d8a2d727f17dc580c60f",
+      "line_count": 68,
+      "error": ""
+    },
+    {
+      "id": "table-table2",
+      "internal_table_id": "table-table2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1805.03194/arxiv_source/tab2.tex",
+        "start_line": 1,
+        "end_line": 35,
+        "caption": "Extreme velocity star sample with known metallicity",
+        "label": "table2"
+      },
+      "source_path": "literature/1805.03194/arxiv_source/tab2.tex",
+      "excerpt_path": "literature/1805.03194/catalog_sources/table-table2/excerpt.tex",
+      "sha256": "2514e6c8b81e311a0388abc700c860de3cd47be5c5726140e4678110498f728a",
+      "line_count": 35,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table1",
+      "internal_table_id": "table-table1",
+      "status": "success",
+      "ecsv_path": "literature/1805.03194/catalog_tables/table-table1.ecsv",
+      "caption": "Extreme velocity star sample, sorted by decreasing orbital energy E",
+      "label": "table1",
+      "row_count": 31,
+      "column_count": 13,
+      "environment": "",
+      "header_rows": [
+        [
+          "Short name",
+          "GaiaDR2 source_id",
+          "\\ell",
+          "b",
+          "d_\\rm helio",
+          "r",
+          "v_\\rm total",
+          "v_r",
+          "\\vlos",
+          "E",
+          "-L_z",
+          "P_\\rm unb",
+          "Origin"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Short name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "GaiaDR2 source_id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\ell",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "b",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "d_\\rm helio",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "r",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_\\rm total",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "v_r",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\vlos",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "E",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "-L_z",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "P_\\rm unb",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "Origin",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfs54433u/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1805.03194/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfs54433u/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1805.03194/catalog_sources/table-table1/wrapped.tex",
+            "html": "literature/1805.03194/catalog_sources/table-table1/latexml.html",
+            "stdout": "literature/1805.03194/catalog_sources/table-table1/latexml.stdout.txt",
+            "stderr": "literature/1805.03194/catalog_sources/table-table1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "beffeaae73fd722d8f381f55764fad1c8dd8c2401d01d8a2d727f17dc580c60f"
+    },
+    {
+      "id": "table-table2",
+      "internal_table_id": "table-table2",
+      "status": "success",
+      "ecsv_path": "literature/1805.03194/catalog_tables/table-table2.ecsv",
+      "caption": "Extreme velocity star sample with known metallicity",
+      "label": "table2",
+      "row_count": 7,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Short name",
+          "[M/H] RAVE",
+          "[M/H] LAMOST",
+          "[Fe/H] HW2018",
+          "Origin"
+        ],
+        [
+          "",
+          "dex",
+          "dex",
+          "dex",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Short name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "[M/H] RAVE | dex",
+          "unit_text": "[M/H] RAVE",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "[M/H] LAMOST | dex",
+          "unit_text": "[M/H] LAMOST",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "[Fe/H] HW2018 | dex",
+          "unit_text": "[Fe/H] HW2018",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Origin",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6ltsyn7s/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1805.03194/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6ltsyn7s/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1805.03194/catalog_sources/table-table2/wrapped.tex",
+            "html": "literature/1805.03194/catalog_sources/table-table2/latexml.html",
+            "stdout": "literature/1805.03194/catalog_sources/table-table2/latexml.stdout.txt",
+            "stderr": "literature/1805.03194/catalog_sources/table-table2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2514e6c8b81e311a0388abc700c860de3cd47be5c5726140e4678110498f728a"
+    }
+  ]
+}

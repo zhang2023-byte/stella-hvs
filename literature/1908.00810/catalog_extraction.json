@@ -1,0 +1,372 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:35:05",
+  "paper": {
+    "arxiv_id": "1908.00810",
+    "title": "Kinematic study of the association Cyg OB3 with Gaia DR2",
+    "month": "2019-08"
+  },
+  "review": {
+    "path": "literature/1908.00810/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083505",
+    "started_at": "2026-06-07T08:35:05",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1908.00810",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1908.00810/arxiv_source/ms.tex",
+        "start_line": 139,
+        "end_line": 193,
+        "caption": "\\textit{Gaia} data for the 41 stars in our sample. (a) $G$ denotes the G-band magnitudes of the stars obtained from \\textit{Gaia} DR2. (b) pmra and pmdec represent the proper motions of the stars in RA and Dec.",
+        "label": "tab1"
+      },
+      "source_path": "literature/1908.00810/arxiv_source/ms.tex",
+      "excerpt_path": "literature/1908.00810/catalog_sources/table-tab1/excerpt.tex",
+      "sha256": "8990fd99cbed9b28965665f02c1073c06787a5ad99fd93b7afdd0380941cdf93",
+      "line_count": 55,
+      "error": ""
+    },
+    {
+      "id": "table-table_tab2",
+      "internal_table_id": "table-table_tab2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1908.00810/arxiv_source/ms.tex",
+        "start_line": 196,
+        "end_line": 249,
+        "caption": "Spectral types of the stars mentioned in the third column are obtained from {\\tt SIMBAD}. The distances, $r\\sub{exp}$, in the fourth column are the heliocentric distances to the stars calculated using exponential prior. \\vpec{} mentioned in the fifth column are the peculiar velocities of stars after removing the components of Solar motion and Galactic rotation. \\vrel{} are the relative velocities of individual stars with respect to the association. Radial velocities \\vr{} given in the last column are obtained from \\citet{kharchenko07}.",
+        "label": "table:tab2"
+      },
+      "source_path": "literature/1908.00810/arxiv_source/ms.tex",
+      "excerpt_path": "literature/1908.00810/catalog_sources/table-table_tab2/excerpt.tex",
+      "sha256": "454e9c0e19d0e6d6ca3d4feda23d7148e5baac213cc9ddd215b8cd79ae554744",
+      "line_count": 54,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "status": "success",
+      "ecsv_path": "literature/1908.00810/catalog_tables/table-tab1.ecsv",
+      "caption": "\\textit{Gaia} data for the 41 stars in our sample. (a) $G$ denotes the G-band magnitudes of the stars obtained from \\textit{Gaia} DR2. (b) pmra and pmdec represent the proper motions of the stars in RA and Dec.",
+      "label": "tab1",
+      "row_count": 41,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Nr.",
+          "Source",
+          "Source Id",
+          "RA",
+          "Dec.",
+          "G^a",
+          "Parallax",
+          "f",
+          "pmra b",
+          "pmdec b"
+        ],
+        [
+          "",
+          "",
+          "( Gaia DR2)",
+          "\\alpha",
+          "\\delta",
+          "Gmag",
+          "\\varpi",
+          "\\sigma_\\varpi/\\varpi",
+          "\\mu_\\alpha cos \\delta",
+          "\\mu_\\delta"
+        ],
+        [
+          "",
+          "",
+          "",
+          "(deg)",
+          "(deg)",
+          "",
+          "(mas)",
+          "",
+          "(mas y -1 )",
+          "(mas y -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Nr.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Source Id | ( Gaia DR2)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RA | \\alpha | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Dec. | \\delta | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "G^a | Gmag",
+          "unit_text": "Gmag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Parallax | \\varpi | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "f | \\sigma_\\varpi/\\varpi",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "pmra b | \\mu_\\alpha cos \\delta | (mas y -1 )",
+          "unit_text": "(mas y -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "pmdec b | \\mu_\\delta | (mas y -1 )",
+          "unit_text": "(mas y -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpe_r4blld/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1908.00810/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpe_r4blld/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1908.00810/catalog_sources/table-tab1/wrapped.tex",
+            "html": "literature/1908.00810/catalog_sources/table-tab1/latexml.html",
+            "stdout": "literature/1908.00810/catalog_sources/table-tab1/latexml.stdout.txt",
+            "stderr": "literature/1908.00810/catalog_sources/table-tab1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8990fd99cbed9b28965665f02c1073c06787a5ad99fd93b7afdd0380941cdf93"
+    },
+    {
+      "id": "table-table_tab2",
+      "internal_table_id": "table-table_tab2",
+      "status": "success",
+      "ecsv_path": "literature/1908.00810/catalog_tables/table-table_tab2.ecsv",
+      "caption": "Spectral types of the stars mentioned in the third column are obtained from {\\tt SIMBAD}. The distances, $r\\sub{exp}$, in the fourth column are the heliocentric distances to the stars calculated using exponential prior. \\vpec{} mentioned in the fifth column are the peculiar velocities of stars after removing the components of Solar motion and Galactic rotation. \\vrel{} are the relative velocities of individual stars with respect to the association. Radial velocities \\vr{} given in the last column are obtained from \\citet{kharchenko07}.",
+      "label": "table:tab2",
+      "row_count": 42,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Nr.",
+          "Source",
+          "Spectral type",
+          "r\\subexp",
+          "\\vpec",
+          "\\vrel",
+          "v\\subr"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Nr.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Spectral type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "r\\subexp",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\vpec",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\vrel",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v\\subr",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptbx2v2ja/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1908.00810/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptbx2v2ja/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1908.00810/catalog_sources/table-table_tab2/wrapped.tex",
+            "html": "literature/1908.00810/catalog_sources/table-table_tab2/latexml.html",
+            "stdout": "literature/1908.00810/catalog_sources/table-table_tab2/latexml.stdout.txt",
+            "stderr": "literature/1908.00810/catalog_sources/table-table_tab2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "454e9c0e19d0e6d6ca3d4feda23d7148e5baac213cc9ddd215b8cd79ae554744"
+    }
+  ]
+}

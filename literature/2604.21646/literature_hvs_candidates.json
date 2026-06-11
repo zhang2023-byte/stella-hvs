@@ -1,0 +1,1547 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T13:05:47",
+  "paper": {
+    "arxiv_id": "2604.21646",
+    "bibcode": "2026arXiv260421646D",
+    "title": "An Old, Low-mass, Metal-poor Hypervelocity Star Candidate Consistent with a Galactic Center Origin",
+    "month": "2026-04",
+    "source_note_json": "notes/2026/2026-04/2026-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2604.21646",
+      "pdf": "https://arxiv.org/pdf/2604.21646"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2604.21646",
+    "audit_path": "literature/2604.21646/audit.json",
+    "catalog_review_path": "literature/2604.21646/catalog_review.json",
+    "catalog_extraction_path": "literature/2604.21646/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+      "literature/2604.21646/catalog_tables/table-tab2.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-22T13:05:47",
+    "extractor": "agent",
+    "summary": "Extracted one HVS candidate, DESI-HVS1, explicitly presented by the paper as a possibly unbound hypervelocity star with a Galactic Center origin."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Adopted Gaia DR3 astrometry for DESI-HVS1.",
+      "inputs": [
+        "Gaia DR3"
+      ],
+      "outputs": [
+        "positions",
+        "proper motions",
+        "parallaxes"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 92,
+          "end_line": 93,
+          "context": "Introduction: DESI-HVS1 identified using Gaia DR3 astrometry"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Adopted Gaia DR3 and SDSS photometry for DESI-HVS1.",
+      "inputs": [
+        "Gaia DR3"
+      ],
+      "outputs": [
+        "photometry",
+        "spectra"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 92,
+          "end_line": 93,
+          "context": "Introduction: DESI-HVS1 identified using Gaia DR3 astrometry"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [],
+      "step_type": "quality_filter",
+      "summary": "Applied Gaia astrometric quality cuts (RUWE<1.4, sigma_pi/pi<0.2, pi-pi_zp>0) and DESI quality criteria (SUCCESS=True, RVS_WARN=0, FEH_ERR<0.2, RR_SPECTYPE=STAR).",
+      "inputs": [
+        "Gaia DR3"
+      ],
+      "outputs": [
+        "quality-validated target"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 92,
+          "end_line": 93,
+          "context": "Introduction: DESI-HVS1 identified using Gaia DR3 astrometry"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "input_catalog",
+      "summary": "Adopted Gaia DR3 photometry for DESI-HVS1.",
+      "inputs": [
+        "Gaia DR3"
+      ],
+      "outputs": [
+        "G-band magnitude",
+        "BP-RP color"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 92,
+          "end_line": 93,
+          "context": "Introduction: DESI-HVS1 identified using Gaia DR3 astrometry"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "input_catalog",
+      "summary": "Adopted SDSS photometry and SFD extinction for DESI-HVS1.",
+      "inputs": [
+        "SDSS",
+        "Schlegel1998"
+      ],
+      "outputs": [
+        "SDSS griz magnitudes",
+        "E(B-V)"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 259,
+          "end_line": 260,
+          "context": "SDSS photometry and dust reddening from Schlegel1998"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "input_catalog",
+      "summary": "Adopted DESI DR1 spectroscopy and pipeline outputs for DESI-HVS1.",
+      "inputs": [
+        "DESI DR1"
+      ],
+      "outputs": [
+        "spectrum",
+        "S/N",
+        "pipeline stellar parameters"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 92,
+          "end_line": 93,
+          "context": "Introduction: DESI-HVS1 identified using DESI DR1 spectroscopy"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [
+        "step-01",
+        "step-06"
+      ],
+      "step_type": "quality_filter",
+      "summary": "Applied Gaia astrometric quality cuts and DESI spectral quality criteria.",
+      "inputs": [
+        "Gaia DR3 astrometric parameters",
+        "DESI DR1 spectral parameters"
+      ],
+      "outputs": [
+        "quality-validated target"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 192,
+          "end_line": 195,
+          "context": "Gaia DR3 quality criteria"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 146,
+          "end_line": 147,
+          "context": "DESI DR1 quality criteria"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Improved heliocentric distance from Bayesian isochrone fitting with PARSEC models using SDSS photometry and spectroscopic constraints.",
+      "inputs": [
+        "Gaia DR3 parallax"
+      ],
+      "outputs": [
+        "improved distance 3.77 kpc"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 198,
+          "end_line": 210,
+          "context": "Bayesian parallax-based distance estimation"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Age and mass from Bayesian isochrone fitting with PARSEC models using SDSS photometry and spectroscopic constraints.",
+      "inputs": [
+        "Gaia DR3 parallax"
+      ],
+      "outputs": [
+        "age 14.1 Gyr",
+        "mass 0.76 M_sun"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 198,
+          "end_line": 210,
+          "context": "Bayesian parallax-based distance estimation"
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "depends_on": [
+        "step-06"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Galactocentric position computed from heliocentric distance, proper motions, and solar motion parameters via Monte Carlo sampling.",
+      "inputs": [
+        "DESI DR1 spectrum"
+      ],
+      "outputs": [
+        "Galactocentric position (X,Y,Z)",
+        "Galactocentric distance R"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 145,
+          "end_line": 147,
+          "context": "DESI DR1 radial velocity from RVSpecFit"
+        }
+      ]
+    },
+    {
+      "id": "step-11",
+      "depends_on": [
+        "step-06"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Galactocentric total velocity V_GSR computed from heliocentric distance, proper motions, radial velocity, and solar motion parameters via Monte Carlo sampling.",
+      "inputs": [
+        "DESI DR1 spectrum"
+      ],
+      "outputs": [
+        "Galactocentric total velocity V_GSR"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 145,
+          "end_line": 147,
+          "context": "DESI DR1 radial velocity from RVSpecFit"
+        }
+      ]
+    },
+    {
+      "id": "step-12",
+      "depends_on": [
+        "step-06"
+      ],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Atmospheric parameters derived with DESI Stellar Parameter Pipeline using RVSpecFit and FERRE.",
+      "inputs": [
+        "DESI DR1 spectrum"
+      ],
+      "outputs": [
+        "T_eff",
+        "log g",
+        "[Fe/H]",
+        "[alpha/Fe]",
+        "spectral type"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 145,
+          "end_line": 147,
+          "context": "DESI SPP stellar parameters"
+        }
+      ]
+    },
+    {
+      "id": "step-13",
+      "depends_on": [
+        "step-08",
+        "step-12"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Backward orbit integration for 1 Gyr with 0.1 Myr timestep under three Galactic potentials, sampling observational uncertainties with 5000 MC realizations.",
+      "inputs": [
+        "SDSS photometry",
+        "spectroscopic metallicity",
+        "parallax-based distance prior",
+        "PARSEC isochrones"
+      ],
+      "outputs": [
+        "closest approach to GC",
+        "flight time"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 256,
+          "end_line": 287,
+          "context": "PARSEC isochrone fitting for age and mass"
+        }
+      ]
+    },
+    {
+      "id": "step-14",
+      "depends_on": [
+        "step-08",
+        "step-12"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Assessed GC origin via Hills mechanism based on backward orbit geometry, perigalactic turning point, single midplane crossing, and dynamical consistency tests.",
+      "inputs": [
+        "SDSS photometry",
+        "spectroscopic metallicity",
+        "parallax-based distance prior",
+        "PARSEC isochrones"
+      ],
+      "outputs": [
+        "ejection velocity",
+        "travel time",
+        "P_cross",
+        "single_midplane_crossing probability"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 256,
+          "end_line": 287,
+          "context": "PARSEC isochrone fitting for age and mass"
+        }
+      ]
+    },
+    {
+      "id": "step-15",
+      "depends_on": [
+        "step-11",
+        "step-12"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Improved heliocentric distance derived from isochrone fitting posterior.",
+      "inputs": [
+        "isochrone fitting results"
+      ],
+      "outputs": [
+        "improved distance 3.77 kpc"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 285,
+          "end_line": 287,
+          "context": "Refined heliocentric distance from isochrone fitting"
+        }
+      ]
+    },
+    {
+      "id": "step-16",
+      "depends_on": [
+        "step-14",
+        "step-15"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Galactocentric total velocity V_GSR computed from heliocentric distance, proper motions, radial velocity, and solar motion parameters via Monte Carlo sampling.",
+      "inputs": [
+        "heliocentric distance",
+        "proper motions",
+        "radial velocity",
+        "solar motion"
+      ],
+      "outputs": [
+        "Galactocentric total velocity V_GSR"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 225,
+          "end_line": 238,
+          "context": "Galactocentric velocity calculation"
+        }
+      ]
+    },
+    {
+      "id": "step-17",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "Adopted galpy MWPotential2014, plus Ca20 and Wu25 models for robustness tests.",
+      "inputs": [
+        "MWPotential2014",
+        "Cautun2020",
+        "Wu2025"
+      ],
+      "outputs": [
+        "Galactic potential models"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 320,
+          "end_line": 324,
+          "context": "Galactic potential models for orbit integration"
+        }
+      ]
+    },
+    {
+      "id": "step-18",
+      "depends_on": [
+        "step-16",
+        "step-17"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Backward orbit integration for 1 Gyr with 0.1 Myr timestep under three Galactic potentials, sampling observational uncertainties with 5000 MC realizations.",
+      "inputs": [
+        "present-day position and velocity",
+        "Galactic potential model"
+      ],
+      "outputs": [
+        "closest approach to GC",
+        "ejection velocity",
+        "flight time",
+        "P_cross"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 320,
+          "end_line": 332,
+          "context": "Backward orbit integration and MC sampling"
+        }
+      ]
+    },
+    {
+      "id": "step-19",
+      "depends_on": [
+        "step-16",
+        "step-17"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Compared Galactocentric total velocity with local escape speed from empirical curve and potential models; estimated unbound probability P_ub ~50%.",
+      "inputs": [
+        "V_GSR",
+        "escape velocity curves"
+      ],
+      "outputs": [
+        "unbound probability ~50%"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 240,
+          "end_line": 241,
+          "context": "V_GSR marginally exceeds escape speed; P_ub above 50%"
+        }
+      ]
+    },
+    {
+      "id": "step-20",
+      "depends_on": [
+        "step-18",
+        "step-19"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Assessed GC origin via Hills mechanism based on backward orbit geometry, perigalactic turning point, single midplane crossing, and dynamical consistency tests.",
+      "inputs": [
+        "backward orbit",
+        "dynamical consistency tests"
+      ],
+      "outputs": [
+        "GC origin assessment"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 317,
+          "end_line": 357,
+          "context": "GC origin assessment and dynamical tests"
+        }
+      ]
+    },
+    {
+      "id": "step-21",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "reported_value_adoption",
+      "summary": "Adopted DESI spectrum signal-to-noise ratio from catalog metadata.",
+      "inputs": [
+        "DESI DR1 spectrum"
+      ],
+      "outputs": [
+        "signal-to-noise ratio"
+      ],
+      "source_refs": [
+        {
+          "kind": "ecsv_cell",
+          "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+          "line": 26,
+          "column": "col_002",
+          "column_header": "Value",
+          "raw_value": "51.5"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2604.21646:cand-001",
+        "paper_candidate_id": "DESI-HVS1",
+        "gaia_source_id": "Gaia DR3 1323614710521141120",
+        "all": [
+          {
+            "value": "DESI-HVS1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+                "start_line": 66,
+                "end_line": 71,
+                "context": "Abstract: discovery of DESI-HVS1"
+              },
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                "line": 9,
+                "column": "col_001",
+                "column_header": "Parameter",
+                "raw_value": "R.A. (J2000)"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 1323614710521141120",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                "line": 11,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "1323614710521141120"
+              }
+            ]
+          },
+          {
+            "value": "DESI DR1 target_id 39632956725136475",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                "line": 25,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "39632956725136475"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "DESI-HVS1 is explicitly presented throughout the paper as a hypervelocity star candidate. Its Galactocentric total velocity of ~523 km/s marginally exceeds the local escape speed, with an unbound probability of ~50%.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The paper consistently labels DESI-HVS1 as a hypervelocity star candidate and provides extensive kinematic and orbital evidence supporting possible unbound status.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+            "start_line": 66,
+            "end_line": 71,
+            "context": "Abstract: DESI-HVS1 as hypervelocity star candidate with V_GSR ~523 km/s and P_ub ~50%"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+            "start_line": 240,
+            "end_line": 241,
+            "context": "Section 2.2: total velocities marginally exceed escape speed, unbound probability above 50%"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+            "start_line": 92,
+            "end_line": 93,
+            "context": "Introduction: report the discovery of DESI-HVS1"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "16:07:59.05",
+            "value": "16:07:59.05",
+            "unit": "hourangle",
+            "coordinate_format": "sexagesimal_colon",
+            "reference_frame": {
+              "value": "unknown",
+              "inference_basis": "paper_reports_J2000_without_frame",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                  "line": 9,
+                  "column": "col_002",
+                  "column_header": "Value",
+                  "raw_value": "16:07:59.05"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2000.0",
+              "epoch_kind": "ambiguous",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                  "line": 9,
+                  "column": "col_002",
+                  "column_header": "Value",
+                  "raw_value": "16:07:59.05"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                "line": 9,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "16:07:59.05"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "+ 33:50:35.27",
+            "value": "+33:50:35.27",
+            "unit": "deg",
+            "coordinate_format": "sexagesimal_colon",
+            "reference_frame": {
+              "value": "unknown",
+              "inference_basis": "paper_reports_J2000_without_frame",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                  "line": 10,
+                  "column": "col_002",
+                  "column_header": "Value",
+                  "raw_value": "+ 33:50:35.27"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2000.0",
+              "epoch_kind": "ambiguous",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                  "line": 10,
+                  "column": "col_002",
+                  "column_header": "Value",
+                  "raw_value": "+ 33:50:35.27"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                "line": 10,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "+ 33:50:35.27"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "3.77^+0.39_-0.36",
+            "value": "3.77",
+            "lower_error": "0.39",
+            "upper_error": "0.36",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                "line": 19,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "3.77^+0.39_-0.36"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "parallax": {
+            "raw_value": "0.272+/- 0.051",
+            "value": "0.272",
+            "error": "0.051",
+            "unit": "mas",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                "line": 14,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "0.272+/- 0.051"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-18.545+/- 0.046",
+            "value": "-18.545",
+            "error": "0.046",
+            "unit": "mas yr-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                "line": 12,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "-18.545+/- 0.046"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "20.904+/- 0.056",
+            "value": "20.904",
+            "error": "0.056",
+            "unit": "mas yr-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                "line": 13,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "20.904+/- 0.056"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "-145.44+/- 0.81",
+            "value": "-145.44",
+            "error": "0.81",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                "line": 27,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "-145.44+/- 0.81"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "523.41^+46.17_-46.79",
+            "value": "523.41",
+            "lower_error": "46.17",
+            "upper_error": "46.79",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                "line": 33,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "523.41^+46.17_-46.79"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+                "start_line": 235,
+                "end_line": 237,
+                "context": "V_GSR computed from improved distance"
+              }
+            ],
+            "method_refs": [
+              "step-11"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "523.41^+46.17_-46.79",
+            "value": "523.41",
+            "lower_error": "46.17",
+            "upper_error": "46.79",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                "line": 33,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "523.41^+46.17_-46.79"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+                "start_line": 235,
+                "end_line": 237,
+                "context": "V_GSR computed from improved distance"
+              }
+            ],
+            "method_refs": [
+              "step-11"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "above 50%",
+            "value": "0.5",
+            "unit": "",
+            "description": "Paper reports unbound probability above 50% under MWPotential2014; abstract gives ~50%.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+                "start_line": 240,
+                "end_line": 241,
+                "context": "P_ub above 50% under MWPotential2014"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+                "start_line": 66,
+                "end_line": 71,
+                "context": "Abstract: P_ub ~ 50%"
+              }
+            ],
+            "method_refs": [
+              "step-19"
+            ]
+          },
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "16.800+/- 0.001",
+          "value": "16.800",
+          "error": "0.001",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 15,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "16.800+/- 0.001"
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ]
+        },
+        {
+          "raw_value": "0.718+/- 0.007",
+          "value": "0.718",
+          "error": "0.007",
+          "unit": "mag",
+          "measurement_type": "color",
+          "band": "BP-RP",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 16,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "0.718+/- 0.007"
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ]
+        },
+        {
+          "raw_value": "17.122+/- 0.004",
+          "value": "17.122",
+          "error": "0.004",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "g",
+          "system": "SDSS",
+          "survey": "SDSS",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 20,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "17.122+/- 0.004"
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ]
+        },
+        {
+          "raw_value": "16.794+/- 0.004",
+          "value": "16.794",
+          "error": "0.004",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "r",
+          "system": "SDSS",
+          "survey": "SDSS",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 21,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "16.794+/- 0.004"
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ]
+        },
+        {
+          "raw_value": "16.681+/- 0.005",
+          "value": "16.681",
+          "error": "0.005",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "i",
+          "system": "SDSS",
+          "survey": "SDSS",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 22,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "16.681+/- 0.005"
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ]
+        },
+        {
+          "raw_value": "16.643+/- 0.009",
+          "value": "16.643",
+          "error": "0.009",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "z",
+          "system": "SDSS",
+          "survey": "SDSS",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 23,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "16.643+/- 0.009"
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ]
+        },
+        {
+          "raw_value": "0.019",
+          "value": "0.019",
+          "unit": "mag",
+          "measurement_type": "extinction",
+          "band": "V",
+          "system": "SFD",
+          "survey": "SFD",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 24,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "0.019"
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "raw_value": "51.5",
+          "value": "51.5",
+          "unit": "",
+          "measurement_type": "signal_to_noise",
+          "survey": "DESI DR1",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 26,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "51.5"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        {
+          "raw_value": "51.5",
+          "value": "51.5",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "signal_to_noise",
+          "description": "Signal-to-noise ratio of the DESI spectrum.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 26,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "51.5"
+            }
+          ],
+          "method_refs": [
+            "step-21"
+          ],
+          "measurement_type": "signal_to_noise",
+          "spectral_type": "",
+          "line": "",
+          "instrument": "DESI",
+          "survey": "DESI DR1"
+        }
+      ],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "6198+/- 19",
+          "value": "6198",
+          "error": "19",
+          "unit": "K",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 28,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "6198+/- 19"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        "log_g": {
+          "raw_value": "4.77+/- 0.05",
+          "value": "4.77",
+          "error": "0.05",
+          "unit": "dex",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 29,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "4.77+/- 0.05"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        "metallicity": {
+          "raw_value": "-1.64+/- 0.03",
+          "value": "-1.64",
+          "error": "0.03",
+          "unit": "dex",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 30,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "-1.64+/- 0.03"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        "mass": {
+          "raw_value": "0.76^+0.03_-0.02",
+          "value": "0.76",
+          "lower_error": "0.03",
+          "upper_error": "0.02",
+          "unit": "M_sun",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 39,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "0.76^+0.03_-0.02"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        },
+        "radius": null,
+        "age": {
+          "raw_value": "14.1^+1.0_-1.5",
+          "value": "14.1",
+          "lower_error": "1.0",
+          "upper_error": "1.5",
+          "unit": "Gyr",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 38,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "14.1^+1.0_-1.5"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        },
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "F-type star",
+          "value": "F",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+              "start_line": 146,
+              "end_line": 147,
+              "context": "RVSpecFit classifies DESI-HVS1 as an F-type star"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        "other": []
+      },
+      "abundances": [
+        {
+          "raw_value": "0.51+/- 0.03",
+          "value": "0.51",
+          "error": "0.03",
+          "unit": "dex",
+          "element": "alpha/Fe",
+          "reference_element": "Fe",
+          "abundance_scale": "dex",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 31,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "0.51+/- 0.03"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        }
+      ],
+      "quality_flags": [
+        {
+          "raw_value": "1.01",
+          "value": "1.01",
+          "unit": "",
+          "name": "RUWE",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 17,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "1.01"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        }
+      ],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": {
+          "raw_value": "12.89^+0.92_-0.74",
+          "value": "12.89",
+          "lower_error": "0.92",
+          "upper_error": "0.74",
+          "unit": "Myr",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 37,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "12.89^+0.92_-0.74"
+            }
+          ],
+          "method_refs": [
+            "step-18"
+          ]
+        },
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": [
+          {
+            "raw_value": "0.40^+0.23_-0.11",
+            "value": "0.40",
+            "lower_error": "0.23",
+            "upper_error": "0.11",
+            "unit": "kpc",
+            "name": "r_closest",
+            "description": "Minimum Galactocentric distance attained during backward orbit integration (closest approach to GC).",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                "line": 35,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "0.40^+0.23_-0.11"
+              }
+            ],
+            "method_refs": [
+              "step-18"
+            ]
+          },
+          {
+            "raw_value": "682.35^+21.63_-34.66",
+            "value": "682.35",
+            "lower_error": "21.63",
+            "upper_error": "34.66",
+            "unit": "km s-1",
+            "name": "v_closest",
+            "description": "Galactocentric total velocity at closest approach to GC during backward orbit integration.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                "line": 36,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "682.35^+21.63_-34.66"
+              }
+            ],
+            "method_refs": [
+              "step-18"
+            ]
+          }
+        ]
+      },
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "Galactic Center",
+          "value": "Galactic Center",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+              "start_line": 317,
+              "end_line": 324,
+              "context": "GC origin inferred from backward orbit analysis"
+            }
+          ],
+          "method_refs": [
+            "step-20"
+          ]
+        },
+        "origin_classification": {
+          "raw_value": "Hills mechanism",
+          "value": "Hills mechanism",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+              "start_line": 320,
+              "end_line": 322,
+              "context": "Hills mechanism as the most plausible origin"
+            }
+          ],
+          "method_refs": [
+            "step-20"
+          ]
+        },
+        "ejection_velocity": {
+          "raw_value": "682.35^+21.63_-34.66",
+          "value": "682.35",
+          "lower_error": "21.63",
+          "upper_error": "34.66",
+          "unit": "km s-1",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 36,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "682.35^+21.63_-34.66"
+            }
+          ],
+          "method_refs": [
+            "step-20"
+          ]
+        },
+        "travel_time": {
+          "raw_value": "12.89^+0.92_-0.74",
+          "value": "12.89",
+          "lower_error": "0.92",
+          "upper_error": "0.74",
+          "unit": "Myr",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 37,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "12.89^+0.92_-0.74"
+            }
+          ],
+          "method_refs": [
+            "step-20"
+          ]
+        },
+        "hypothesis_metrics": [
+          {
+            "raw_value": "1.00",
+            "value": "1.00",
+            "unit": "",
+            "hypothesis": "single_midplane_crossing",
+            "metric_type": "probability",
+            "description": "Probability that the star undergoes a single crossing of the Galactic midplane (Bo15 model).",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+                "line": 34,
+                "column": "col_002",
+                "column_header": "Value",
+                "raw_value": "1.00"
+              }
+            ],
+            "method_refs": [
+              "step-20"
+            ]
+          }
+        ],
+        "other": []
+      },
+      "extra": [
+        {
+          "raw_value": "3.84^+0.96_-0.65",
+          "value": "3.84",
+          "lower_error": "0.96",
+          "upper_error": "0.65",
+          "unit": "kpc",
+          "name": "parallax_based_distance",
+          "description": "Heliocentric distance derived from Gaia DR3 parallax alone.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+              "line": 18,
+              "column": "col_002",
+              "column_header": "Value",
+              "raw_value": "3.84^+0.96_-0.65"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        }
+      ]
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "desi-hvs1-single-candidate",
+      "description": "The paper presents and analyzes a single object, DESI-HVS1, as a hypervelocity star candidate possibly unbound from the Milky Way.",
+      "decision": "included",
+      "reason": "The paper explicitly discusses DESI-HVS1 as a hypervelocity star candidate with a Galactocentric total velocity marginally exceeding the local escape speed and a GC origin.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 66,
+          "end_line": 71,
+          "context": "Abstract presenting DESI-HVS1 as an HVS candidate"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+          "start_line": 92,
+          "end_line": 93,
+          "context": "Introduction: report the discovery of DESI-HVS1"
+        }
+      ]
+    }
+  ]
+}

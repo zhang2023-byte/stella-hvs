@@ -1,0 +1,414 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2206.00417",
+    "title": "Milky Way archaeology using RR Lyrae and type II Cepheids II. High velocity RR Lyrae stars, and mass of the Milky Way",
+    "month": "2022-06",
+    "source_note_json": "notes/2022/2022-06/2022-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2206.00417",
+      "pdf": "https://arxiv.org/pdf/2206.00417"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2206.00417",
+    "audit_path": "literature/2206.00417/audit.json",
+    "source_dir": "literature/2206.00417/arxiv_source",
+    "tex_root": "literature/2206.00417/arxiv_source/high_vel.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-23T10:56:22",
+    "reviewer": "agent",
+    "summary": "This paper reports the discovery of nine high-velocity RR Lyrae candidates in the Milky Way halo and uses the high-velocity tail of the RR Lyrae distribution to estimate Galactic escape velocities and the Milky Way mass. The study draws on a combined dataset of 6187 RR Lyrae stars with 7D chemo-dynamical information from Gaia EDR3, PanSTARRS-1, SDSS DR15, and LAMOST DR6. Three internal data tables are present: (1) Table tab:Puls lists pulsation periods, light-curve amplitudes, RR Lyrae sub-types, and metallicities for the nine high-velocity candidates; (2) Table tab:HV-RR provides heliocentric distances, systemic velocities, unbound probabilities, Galactocentric velocity components, total Galactocentric velocities, Galactocentric radii, and their covariances for candidates with P_unb > 0.5; (3) Table tab:HV-RRastr contains Gaia EDR3 astrometric and photometric properties (coordinates, proper motions, parallaxes, RUWE, and Gaia magnitudes) for the same candidates. The paper does not describe additional external data repositories beyond the four already-noted URLs (VALD, galpy, Gaia mission, and Gaia DPAC consortium)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-Puls",
+      "kind": "latex_table",
+      "asset_type": "observational_data_table",
+      "role_in_paper": "Lists pulsation and chemical properties for the nine high-velocity RR Lyrae candidates",
+      "source_refs": [
+        {
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 254,
+          "end_line": 272,
+          "caption": "List of pulsation and chemical properties for high-velocity RR~Lyrae candidates found in our analysis. The first column lists our adopted object ID. Columns 2 and 3 provide the star's pulsation period $P$ and amplitude of the total light changes based on the CSS photometry. In the last two columns, we list the assumed RR~Lyrae sub-class and metallicity derived using the $\\Delta$S method. Similarly to Table~\\ref{tab:HV-RR} we marked variables with uncertain classification with an asterisk.",
+          "label": "tab:Puls"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Adopted object identifier for the high-velocity RR Lyrae candidate",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P | [day]",
+          "meaning": "Pulsation period of the RR Lyrae star",
+          "unit_text": "day",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Amp^V_\\rm CSS | [mag]",
+          "meaning": "Amplitude of total light variations in the V-band from Catalina Sky Survey photometry",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Type",
+          "meaning": "RR Lyrae sub-type classification (RRab for fundamental mode, RRc for first overtone)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H] | [dex]",
+          "meaning": "Metallicity derived using the delta-S method",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "List of pulsation and chemical properties for high-velocity RR~Lyrae candidates found in our analysis. The first column lists our adopted object ID. Columns 2 and 3 provide the star's pulsation period $P$ and amplitude of the total light changes based on the CSS photometry. In the last two columns, we list the assumed RR~Lyrae sub-class and metallicity derived using the $\\Delta$S method. Similarly to Table~\\ref{tab:HV-RR} we marked variables with uncertain classification with an asterisk.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-HV-RR",
+      "kind": "latex_table",
+      "asset_type": "observational_data_table",
+      "role_in_paper": "Lists likely unbound RR Lyrae variables with their heliocentric distances, systemic velocities, Galactocentric velocities and distances, and associated covariances",
+      "source_refs": [
+        {
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 506,
+          "end_line": 524,
+          "caption": "List of likely unbound RR Lyrae variables in our sample with $P_{\\rm unb} > 0.5$. The first two columns represent our adopted object ID and \\gaia~EDR3 ID. Columns 3, 4, 5, and 6 list the heliocentric distances and systemic velocities together with their assumed uncertainties, as estimated in \\citet{Prudil2021Orphan}. Column 8 contains estimated $P_{\\rm unb}$ of the RR~Lyrae stars being unbound fulfilling the condition in Eq. 13. The calculated Galactocentric velocities and their covariances are listed in columns 9, 10, 11, 12, and 13 starting with the angular velocity $v_{y}$ followed by the quadrature of the radial and vertical velocity, $\\sqrt{v_{x}^2 + v_{z}^2}$ both accompanied by their uncertainties and correlations. The last five columns (14, 15, 16, 17, and 18) represent the total Galactocentric velocity $v_{\\rm GC}$ and distance $R_{\\rm GC}$ followed be their covariances.",
+          "label": "tab:HV-RR"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Adopted object identifier for the high-velocity RR Lyrae candidate",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia-EDR3 ID",
+          "meaning": "Gaia EDR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d | [kpc]",
+          "meaning": "Heliocentric distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_d | [kpc]",
+          "meaning": "Uncertainty on the heliocentric distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_\\rm sys | [km s^-1]",
+          "meaning": "Systemic radial velocity corrected for radius variation",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_v_\\rm sys | [km s^-1]",
+          "meaning": "Uncertainty on the systemic radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm unb",
+          "meaning": "Probability that the RR Lyrae star is unbound based on the assumed Galactic potential",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V | [km s^-1]",
+          "meaning": "Galactocentric azimuthal (angular) velocity component v_y",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_V | [km s^-1]",
+          "meaning": "Uncertainty on the Galactocentric azimuthal velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sqrtU^2 + W^2 | [km s^-1]",
+          "meaning": "Quadrature of the Galactocentric radial and vertical velocity components",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_\\sqrtU^2 + W^2 | [km s^-1]",
+          "meaning": "Uncertainty on the quadrature of radial and vertical velocities",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\rho^V_\\sqrtU^2 + W^2",
+          "meaning": "Correlation coefficient between the azimuthal velocity V and the quadrature of radial and vertical velocities",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_\\rm GC | [km s^-1]",
+          "meaning": "Total Galactocentric velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_v_\\rm GC | [km s^-1]",
+          "meaning": "Uncertainty on the total Galactocentric velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R_\\rm GC | [kpc]",
+          "meaning": "Galactocentric distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_R_\\rm GC | [kpc]",
+          "meaning": "Uncertainty on the Galactocentric distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\rho^v_\\rm GC_R_\\rm GC",
+          "meaning": "Correlation coefficient between the total Galactocentric velocity and the Galactocentric distance",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "List of likely unbound RR Lyrae variables in our sample with $P_{\\rm unb} > 0.5$. The first two columns represent our adopted object ID and \\gaia~EDR3 ID. Columns 3, 4, 5, and 6 list the heliocentric distances and systemic velocities together with their assumed uncertainties, as estimated in \\citet{Prudil2021Orphan}. Column 8 contains estimated $P_{\\rm unb}$ of the RR~Lyrae stars being unbound fulfilling the condition in Eq. 13. The calculated Galactocentric velocities and their covariances are listed in columns 9, 10, 11, 12, and 13 starting with the angular velocity $v_{y}$ followed by the quadrature of the radial and vertical velocity, $\\sqrt{v_{x}^2 + v_{z}^2}$ both accompanied by their uncertainties and correlations. The last five columns (14, 15, 16, 17, and 18) represent the total Galactocentric velocity $v_{\\rm GC}$ and distance $R_{\\rm GC}$ followed be their covariances.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-HV-RRastr",
+      "kind": "latex_table",
+      "asset_type": "observational_data_table",
+      "role_in_paper": "Lists astrometric and photometric properties from the Gaia catalog for unbound RR Lyrae candidates",
+      "source_refs": [
+        {
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 533,
+          "end_line": 551,
+          "caption": "Table of unbound RR Lyrae candidates with $P_{\\rm unb} > 0.5$ and their astrometric and photometric properties from \\gaia~catalog. The first column represents our object ID with an asterisk marking variables uncertain classification as RR~Lyrae stars. Columns 2, 3, 4, 5, and 6 lists \\gaia~EDR3 ID, equatorial and Galactic coordinates. The proper motions in right ascension and declination, together with their errors, are listed in columns 7, 8, 9, and 10. Columns 11 and 12 contain parallax and its uncertainty. The last three columns (13, 14 and 15) represent re-normalized unit weight error (RUWE) and \\gaia~photometry in $G$-band and color $G_{\\rm BP} - G_{\\rm RP}$.",
+          "label": "tab:HV-RRastr"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Adopted object identifier for the high-velocity RR Lyrae candidate",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia-EDR3 ID",
+          "meaning": "Gaia EDR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\alpha | [deg]",
+          "meaning": "Right ascension in equatorial coordinates",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\delta | [deg]",
+          "meaning": "Declination in equatorial coordinates",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l | [deg]",
+          "meaning": "Galactic longitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b | [deg]",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha^\\ast | [mas yr^-1]",
+          "meaning": "Proper motion in right ascension direction",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_\\mu_\\alpha^\\ast | [mas yr^-1]",
+          "meaning": "Uncertainty on the proper motion in right ascension",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta | [mas yr^-1]",
+          "meaning": "Proper motion in declination direction",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_\\mu_\\delta | [mas yr^-1]",
+          "meaning": "Uncertainty on the proper motion in declination",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\varpi | [mas]",
+          "meaning": "Parallax",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_\\varpi | [mas]",
+          "meaning": "Uncertainty on the parallax",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RUWE",
+          "meaning": "Renormalized unit weight error from the Gaia astrometric solution",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G | [mag]",
+          "meaning": "Gaia G-band apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G_\\rm BP - G_\\rm RP | [mag]",
+          "meaning": "Gaia BP-RP color index",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table of unbound RR Lyrae candidates with $P_{\\rm unb} > 0.5$ and their astrometric and photometric properties from \\gaia~catalog. The first column represents our object ID with an asterisk marking variables uncertain classification as RR~Lyrae stars. Columns 2, 3, 4, 5, and 6 lists \\gaia~EDR3 ID, equatorial and Galactic coordinates. The proper motions in right ascension and declination, together with their errors, are listed in columns 7, 8, 9, and 10. Columns 11 and 12 contain parallax and its uncertainty. The last three columns (13, 14 and 15) represent re-normalized unit weight error (RUWE) and \\gaia~photometry in $G$-band and color $G_{\\rm BP} - G_{\\rm RP}$.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://vald.astro.uu.se/",
+      "local_path": "",
+      "description": "VALD (Vienna Atomic Line Database) provides atomic and molecular line lists used for spectral synthesis.",
+      "source_refs": [
+        {
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 175,
+          "end_line": 175,
+          "context": "\\begin{itemize} \n\\itemsep0em\n\\item{Using the \\texttt{iSpec} package \\citep{Blanco2014,Blanco2019iSpec} we synthesized a spectrum with a characteristic set of stellar properties for a halo type RR~Lyrae star \\citep[see, e.g.,][]{For2011chem,Sneden2017,Crestani2021}. We used the following stellar parameters: [Fe/H]$ = -1.5$\\,dex, $T_{\\rm eff} = 6600$\\,K, log\\,$g = 2.25$\\,dex, and microturbulence velocity $\\xi_{\\rm turb} = 3.5$\\,km\\,s$^{-1}$. For the spectral synthesis, we used a python wrapper implemented in the \\texttt{iSpec} module for the MOOG radiative transfer code \\citep[February 2017 version,][]{Sneden1973}, a line list from VALD\\footnote{\\url{http://vald.astro.uu.se/}}, the solar reference scale of \\citet{Asplund2009}, and ATLAS9 model atmospheres \\citep{Castelli2003}.}\n\\item{In the spectral synthesis, we focused on the four most prominent features in the low-resolution spectra of RR~Lyrae stars, the Balmer lines (H$\\alpha$, H$\\beta$, H$\\gamma$, H$\\delta$) and their close neighborhood (defined as the region around each Balmer profile $\\pm$100\\,\\AA).}\n\\item{Wavelengths for each spectrum were transformed from the vacuum to air wavelengths using the same prescription as for the SDSS \\citep{Ciddor1996}.}"
+        }
+      ],
+      "evidence": "The paper cites VALD as the source of the atomic line list used in the spectral synthesis of RR Lyrae stars with the iSpec package and MOOG radiative transfer code.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://github.com/jobovy/galpy",
+      "local_path": "",
+      "description": "galpy is a Python package for Galactic dynamics used in this work for orbit integration and estimating dynamical properties.",
+      "source_refs": [
+        {
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 203,
+          "end_line": 203,
+          "context": "\\subsection{Estimating of dynamical properties and analysis setup} \\label{subsec:SetupDyn} %\\texttt{MWPotential2014}\n\nTo find and examine the possible extreme velocity candidates among our study sample, we utilized the python package for Galactic dynamics, \\texttt{galpy v1.6}\\footnote{Available at \\url{http://github.com/jobovy/galpy}.}\\citep{Bovy2015}. In our setup, we assumed the distance between Sun and the Galactic center to be equal to R$_{\\odot} = 8.2$\\,kpc \\citep{Bland-Hawthorn2016}, and we placed the Solar system at Z$_{\\odot} = 20.8$\\,pc \\citep{Bennett2019}, thus slightly above the Galactic plane. For the Solar peculiar motion we used $\\left(U_{\\odot}, V_{\\odot},W_{\\odot} \\right) = \\left(11.1, 12.24, 7.25\\right)$\\kms~from \\citet{Schonrich2010}, and we set the rotation velocity to $230$\\kms \\citep{Eilers2019}. \n\nWith the purpose of examining the orbits and possible ejection mechanism of high-velocity RR~Lyrae stars, we took advantage of the composite MW potential implemented in the \\texttt{galpy} package (\\texttt{MWPotential2014}). The \\texttt{MWPotential2014} is a combination of three gravitational potentials representing the Galactic disk \\citep{Miyamoto1975}:"
+        }
+      ],
+      "evidence": "The paper explicitly states that galpy v1.6 was used to examine extreme velocity candidates and their orbits, with the MWPotential2014 composite Milky Way potential.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission homepage, providing astrometric, photometric, and radial-velocity data used in this work.",
+      "source_refs": [
+        {
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 464,
+          "end_line": 464,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia})"
+        }
+      ],
+      "evidence": "The acknowledgements state that the work made use of data from the ESA Gaia mission, with the URL provided in the text.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "Gaia Data Processing and Analysis Consortium (DPAC) homepage.",
+      "source_refs": [
+        {
+          "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+          "start_line": 464,
+          "end_line": 464,
+          "context": "processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium})"
+        }
+      ],
+      "evidence": "The acknowledgements credit the Gaia Data Processing and Analysis Consortium (DPAC) for processing the Gaia data, with the consortium URL provided.",
+      "comments": ""
+    }
+  ]
+}

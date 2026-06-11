@@ -1,0 +1,5055 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T09:04:54",
+  "paper": {
+    "arxiv_id": "2401.02017",
+    "bibcode": "2024AJ....167...76L",
+    "title": "The origin of High-velocity stars considering the impact of the Large Magellanic Cloud",
+    "month": "2024-01",
+    "source_note_json": "notes/2024/2024-01/2024-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2401.02017",
+      "pdf": "https://arxiv.org/pdf/2401.02017"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2401.02017",
+    "audit_path": "literature/2401.02017/audit.json",
+    "catalog_review_path": "literature/2401.02017/catalog_review.json",
+    "catalog_extraction_path": "literature/2401.02017/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2401.02017/catalog_tables/table-tab1.ecsv",
+      "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+      "literature/2401.02017/catalog_tables/table-tab2.ecsv",
+      "literature/2401.02017/catalog_tables/table-tab3.ecsv",
+      "literature/2401.02017/catalog_tables/table-tab5.ecsv",
+      "literature/2401.02017/catalog_tables/table-tab-catalog.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-22T09:04:54",
+    "extractor": "agent",
+    "summary": "Extracted 9 unbound high-velocity star candidates from Table 4, including 7 newly identified by this work and 2 previously reported by Marchetti et al. (2021) and Li et al. (2021). Excluded 57 bound runaway stars, 453 high-velocity halo stars, and Sgr dSph origin candidates that do not meet the P_ub > 0.5 unbound threshold."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Adopt astrometry from Gaia DR3 and cross-match with spectroscopic surveys (GALAH DR3, LAMOST DR10, RAVE DR6, APOGEE DR17, S5) for radial velocities.",
+      "inputs": [
+        "Gaia DR3"
+      ],
+      "outputs": [
+        "astrometry",
+        "source catalog"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 82,
+          "end_line": 83,
+          "context": "Observation sample description of Gaia DR3 and survey cross-matching"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "quality_filter",
+      "summary": "Apply quality cuts: RUWE < 1.4, parallax zero-point corrected, S/N > 10, remove variable stars, and select single stars using DSC-Combmod probability.",
+      "inputs": [
+        "Gaia DR3 astrometry"
+      ],
+      "outputs": [
+        "quality-filtered sample"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 82,
+          "end_line": 88,
+          "context": "Quality criteria and flag removal"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "cross_match",
+      "summary": "Cross-match Gaia DR3 with large-scale Galactic surveys to obtain spectroscopic radial velocities.",
+      "inputs": [
+        "Gaia DR3",
+        "GALAH DR3",
+        "LAMOST DR10",
+        "RAVE DR6",
+        "APOGEE DR17",
+        "S5"
+      ],
+      "outputs": [
+        "cross-matched radial velocities"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 82,
+          "end_line": 83,
+          "context": "Cross-matching with spectroscopic surveys"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "radial_velocity_measurement",
+      "summary": "Compute weighted mean radial velocity from multiple surveys and filter outliers relative to Gaia DR3 RV.",
+      "inputs": [
+        "survey radial velocities"
+      ],
+      "outputs": [
+        "weighted mean heliocentric radial velocity"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 84,
+          "end_line": 88,
+          "context": "Equation 1 and outlier filtering for radial velocity"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Bayesian distance estimation using a three-dimensional Gaussian likelihood and Bailer-Jones 2021 generalized Gamma prior, sampled with MCMC (emcee).",
+      "inputs": [
+        "parallax",
+        "proper motions"
+      ],
+      "outputs": [
+        "heliocentric distance"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 96,
+          "end_line": 101,
+          "context": "Bayesian distance estimation methodology"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-04",
+        "step-05"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Transform to 3D Galactocentric Cartesian velocities and positions using solar position and velocity, yielding total velocity v_GC and azimuthal velocity v_phi.",
+      "inputs": [
+        "distance",
+        "proper motions",
+        "radial velocity",
+        "solar parameters"
+      ],
+      "outputs": [
+        "Galactocentric total velocity v_GC",
+        "Galactocentric position",
+        "azimuthal velocity v_phi"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 103,
+          "end_line": 103,
+          "context": "Solar position and velocity adopted for Galactocentric transformation"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "Adopt Gala MilkyWayPotential for the MW (Hernquist bulge/nucleus, Miyamoto-Nagai disk, NFW halo) and Plummer potential for the LMC with dynamical friction.",
+      "inputs": [
+        "Gala MilkyWayPotential",
+        "LMC mass and scale parameters"
+      ],
+      "outputs": [
+        "combined MW+LMC gravitational potential"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 108,
+          "end_line": 108,
+          "context": "Milky Way and LMC potential models"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [
+        "step-06",
+        "step-07"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Backward orbit integration using galpy over 3 Gyr with 0.1 Myr time step, including 4000 Monte Carlo realizations per object.",
+      "inputs": [
+        "Galactocentric phase space",
+        "MW+LMC potential"
+      ],
+      "outputs": [
+        "backward-integrated trajectories",
+        "origin probabilities"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 108,
+          "end_line": 110,
+          "context": "Orbit integration parameters and MC realizations"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": [
+        "step-06",
+        "step-08"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Compute probability P_ub of exceeding the Galactic escape velocity curve from 4000 MC realizations. Classify as unbound if P_ub > 0.5.",
+      "inputs": [
+        "Galactocentric total velocity",
+        "escape velocity curve",
+        "backward trajectories"
+      ],
+      "outputs": [
+        "P_ub",
+        "unbound/bound classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 110,
+          "end_line": 112,
+          "context": "HiVels sample definition including 9 unbound candidates with P_ub greater than 0.5"
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "depends_on": [
+        "step-08",
+        "step-09"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Assess candidate origins by checking proximity to Galactic Center, Sgr dSph half-light radius, Galactic disk, and globular clusters, yielding P_disk and P_Sgr.",
+      "inputs": [
+        "backward trajectories",
+        "origin location catalogs"
+      ],
+      "outputs": [
+        "origin probabilities (P_Sgr, P_disk)",
+        "origin classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 110,
+          "end_line": 110,
+          "context": "Origin criteria for GC, Sgr dSph, and globular clusters"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2401.02017:cand-001",
+        "paper_candidate_id": "Gaia DR3 1309092223502856576",
+        "gaia_source_id": "Gaia DR3 1309092223502856576",
+        "all": [
+          {
+            "value": "Gaia DR3 1309092223502856576",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 15,
+                "column": "col_001",
+                "column_header": "Gaia DR3 source_id",
+                "raw_value": "1309092223502856576"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies Gaia DR3 1309092223502856576 as one of 9 unbound high-velocity star candidates with P_ub = 0.729.",
+        "paper_labels": [
+          "hvs_candidate",
+          "hyper_runaway_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The object is listed in Table 4, which the paper captions as 'Basic parameters for the 9 unbound candidates', and Section 3 explicitly states these are unbound candidates with P_ub > 0.5.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 148,
+            "end_line": 149,
+            "context": "Table 4 caption lists basic parameters for the 9 unbound candidates"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 112,
+            "end_line": 112,
+            "context": "Section 3 states 519 HiVels include 9 unbound candidates with P_ub greater than 0.5"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "257.4199",
+            "value": "257.4199",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 15,
+                "column": "col_002",
+                "column_header": "R.A. | (deg)",
+                "raw_value": "257.4199"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 295,
+                "end_line": 295,
+                "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 15,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "257.4199"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 15,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "29.9771"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 15,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "257.4199"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 15,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "29.9771"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "dec": {
+            "raw_value": "29.9771",
+            "value": "29.9771",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 15,
+                "column": "col_003",
+                "column_header": "Decl. | (deg)",
+                "raw_value": "29.9771"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 296,
+                "end_line": 296,
+                "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 15,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "257.4199"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 15,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "29.9771"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 15,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "257.4199"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 15,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "29.9771"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "distance": {
+            "raw_value": "16.12_-2.24^+3.00",
+            "value": "16.12",
+            "error": "",
+            "lower_error": "2.24",
+            "upper_error": "3.00",
+            "unit": "kpc",
+            "kind": "",
+            "description": "Heliocentric distance from Bayesian analysis with Bailer-Jones 2021 prior",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 15,
+                "column": "col_005",
+                "column_header": "d | (kpc)",
+                "raw_value": "16.12_-2.24^+3.00"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-487+/- 1",
+            "value": "-487",
+            "error": "1",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Weighted mean heliocentric radial velocity from cross-matched spectroscopic surveys",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 15,
+                "column": "col_004",
+                "column_header": "rv | (km s -1 )",
+                "raw_value": "-487+/- 1"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": {
+            "raw_value": "145_-112^+142",
+            "value": "145",
+            "error": "",
+            "lower_error": "112",
+            "upper_error": "142",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Azimuthal velocity in the Galactocentric frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 15,
+                "column": "col_009",
+                "column_header": "\\nu\\mathrm_\\phi | (km s -1 )",
+                "raw_value": "145_-112^+142"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "570_-70^+92",
+            "value": "570",
+            "error": "",
+            "lower_error": "70",
+            "upper_error": "92",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Galactocentric total velocity (space velocity relative to the Galactic center)",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 15,
+                "column": "col_006",
+                "column_header": "\\nu\\mathrm_GC | (km s -1 )",
+                "raw_value": "570_-70^+92"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "0.729",
+            "value": "0.729",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of exceeding the Galactic escape velocity curve",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 15,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.729"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "bound_status_metric": {
+            "raw_value": "0.729",
+            "value": "0.729",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Same as P_ub, used as bound/unbound status metric",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 15,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.729"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [
+          {
+            "raw_value": "0.002",
+            "value": "0.002",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of the stellar trajectory tracking back to the Galactic disk",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 15,
+                "column": "col_008",
+                "column_header": "P\\mathrm_disk",
+                "raw_value": "0.002"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "hypothesis": "Galactic disk origin",
+            "metric_type": "probability"
+          }
+        ],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.02017:cand-002",
+        "paper_candidate_id": "Gaia DR3 1204061267883975040",
+        "gaia_source_id": "Gaia DR3 1204061267883975040",
+        "all": [
+          {
+            "value": "Gaia DR3 1204061267883975040",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 16,
+                "column": "col_001",
+                "column_header": "Gaia DR3 source_id",
+                "raw_value": "1204061267883975040"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies Gaia DR3 1204061267883975040 as one of 9 unbound high-velocity star candidates with P_ub = 0.825.",
+        "paper_labels": [
+          "hvs_candidate",
+          "hyper_runaway_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The object is listed in Table 4, which the paper captions as 'Basic parameters for the 9 unbound candidates', and Section 3 explicitly states these are unbound candidates with P_ub > 0.5.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 148,
+            "end_line": 149,
+            "context": "Table 4 caption lists basic parameters for the 9 unbound candidates"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 112,
+            "end_line": 112,
+            "context": "Section 3 states 519 HiVels include 9 unbound candidates with P_ub greater than 0.5"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "238.1112",
+            "value": "238.1112",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 16,
+                "column": "col_002",
+                "column_header": "R.A. | (deg)",
+                "raw_value": "238.1112"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 295,
+                "end_line": 295,
+                "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 16,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "238.1112"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 16,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "20.1969"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 16,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "238.1112"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 16,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "20.1969"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "dec": {
+            "raw_value": "20.1969",
+            "value": "20.1969",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 16,
+                "column": "col_003",
+                "column_header": "Decl. | (deg)",
+                "raw_value": "20.1969"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 296,
+                "end_line": 296,
+                "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 16,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "238.1112"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 16,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "20.1969"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 16,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "238.1112"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 16,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "20.1969"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "distance": {
+            "raw_value": "10.36_-1.36^+1.77",
+            "value": "10.36",
+            "error": "",
+            "lower_error": "1.36",
+            "upper_error": "1.77",
+            "unit": "kpc",
+            "kind": "",
+            "description": "Heliocentric distance from Bayesian analysis with Bailer-Jones 2021 prior",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 16,
+                "column": "col_005",
+                "column_header": "d | (kpc)",
+                "raw_value": "10.36_-1.36^+1.77"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-263+/- 1",
+            "value": "-263",
+            "error": "1",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Weighted mean heliocentric radial velocity from cross-matched spectroscopic surveys",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 16,
+                "column": "col_004",
+                "column_header": "rv | (km s -1 )",
+                "raw_value": "-263+/- 1"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": {
+            "raw_value": "-186_-77^+185",
+            "value": "-186",
+            "error": "",
+            "lower_error": "77",
+            "upper_error": "185",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Azimuthal velocity in the Galactocentric frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 16,
+                "column": "col_009",
+                "column_header": "\\nu\\mathrm_\\phi | (km s -1 )",
+                "raw_value": "-186_-77^+185"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "652_-103^+149",
+            "value": "652",
+            "error": "",
+            "lower_error": "103",
+            "upper_error": "149",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Galactocentric total velocity (space velocity relative to the Galactic center)",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 16,
+                "column": "col_006",
+                "column_header": "\\nu\\mathrm_GC | (km s -1 )",
+                "raw_value": "652_-103^+149"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "0.825",
+            "value": "0.825",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of exceeding the Galactic escape velocity curve",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 16,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.825"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "bound_status_metric": {
+            "raw_value": "0.825",
+            "value": "0.825",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Same as P_ub, used as bound/unbound status metric",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 16,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.825"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [
+          {
+            "raw_value": "0.007",
+            "value": "0.007",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of the stellar trajectory tracking back to the Galactic disk",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 16,
+                "column": "col_008",
+                "column_header": "P\\mathrm_disk",
+                "raw_value": "0.007"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "hypothesis": "Galactic disk origin",
+            "metric_type": "probability"
+          }
+        ],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.02017:cand-003",
+        "paper_candidate_id": "Gaia DR3 1297316350890352000",
+        "gaia_source_id": "Gaia DR3 1297316350890352000",
+        "all": [
+          {
+            "value": "Gaia DR3 1297316350890352000",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 17,
+                "column": "col_001",
+                "column_header": "Gaia DR3 source_id",
+                "raw_value": "1297316350890352000"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies Gaia DR3 1297316350890352000 as one of 9 unbound high-velocity star candidates with P_ub = 0.505.",
+        "paper_labels": [
+          "hvs_candidate",
+          "hyper_runaway_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The object is listed in Table 4, which the paper captions as 'Basic parameters for the 9 unbound candidates', and Section 3 explicitly states these are unbound candidates with P_ub > 0.5.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 148,
+            "end_line": 149,
+            "context": "Table 4 caption lists basic parameters for the 9 unbound candidates"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 112,
+            "end_line": 112,
+            "context": "Section 3 states 519 HiVels include 9 unbound candidates with P_ub greater than 0.5"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "248.1776",
+            "value": "248.1776",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 17,
+                "column": "col_002",
+                "column_header": "R.A. | (deg)",
+                "raw_value": "248.1776"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 295,
+                "end_line": 295,
+                "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 17,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "248.1776"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 17,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "21.2721"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 17,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "248.1776"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 17,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "21.2721"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "dec": {
+            "raw_value": "21.2721",
+            "value": "21.2721",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 17,
+                "column": "col_003",
+                "column_header": "Decl. | (deg)",
+                "raw_value": "21.2721"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 296,
+                "end_line": 296,
+                "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 17,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "248.1776"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 17,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "21.2721"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 17,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "248.1776"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 17,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "21.2721"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "distance": {
+            "raw_value": "9.60_-1.05^+1.33",
+            "value": "9.60",
+            "error": "",
+            "lower_error": "1.05",
+            "upper_error": "1.33",
+            "unit": "kpc",
+            "kind": "",
+            "description": "Heliocentric distance from Bayesian analysis with Bailer-Jones 2021 prior",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 17,
+                "column": "col_005",
+                "column_header": "d | (kpc)",
+                "raw_value": "9.60_-1.05^+1.33"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-335+/- 1",
+            "value": "-335",
+            "error": "1",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Weighted mean heliocentric radial velocity from cross-matched spectroscopic surveys",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 17,
+                "column": "col_004",
+                "column_header": "rv | (km s -1 )",
+                "raw_value": "-335+/- 1"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": {
+            "raw_value": "-26_-80^+75",
+            "value": "-26",
+            "error": "",
+            "lower_error": "80",
+            "upper_error": "75",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Azimuthal velocity in the Galactocentric frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 17,
+                "column": "col_009",
+                "column_header": "\\nu\\mathrm_\\phi | (km s -1 )",
+                "raw_value": "-26_-80^+75"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "559_-72^+88",
+            "value": "559",
+            "error": "",
+            "lower_error": "72",
+            "upper_error": "88",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Galactocentric total velocity (space velocity relative to the Galactic center)",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 17,
+                "column": "col_006",
+                "column_header": "\\nu\\mathrm_GC | (km s -1 )",
+                "raw_value": "559_-72^+88"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "0.505",
+            "value": "0.505",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of exceeding the Galactic escape velocity curve",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 17,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.505"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "bound_status_metric": {
+            "raw_value": "0.505",
+            "value": "0.505",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Same as P_ub, used as bound/unbound status metric",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 17,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.505"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [
+          {
+            "raw_value": "0.045",
+            "value": "0.045",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of the stellar trajectory tracking back to the Galactic disk",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 17,
+                "column": "col_008",
+                "column_header": "P\\mathrm_disk",
+                "raw_value": "0.045"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "hypothesis": "Galactic disk origin",
+            "metric_type": "probability"
+          }
+        ],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.02017:cand-004",
+        "paper_candidate_id": "Gaia DR3 4263403134667526144",
+        "gaia_source_id": "Gaia DR3 4263403134667526144",
+        "all": [
+          {
+            "value": "Gaia DR3 4263403134667526144",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 18,
+                "column": "col_001",
+                "column_header": "Gaia DR3 source_id",
+                "raw_value": "4263403134667526144"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies Gaia DR3 4263403134667526144 as one of 9 unbound high-velocity star candidates with P_ub = 0.793.",
+        "paper_labels": [
+          "hvs_candidate",
+          "hyper_runaway_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The object is listed in Table 4, which the paper captions as 'Basic parameters for the 9 unbound candidates', and Section 3 explicitly states these are unbound candidates with P_ub > 0.5.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 148,
+            "end_line": 149,
+            "context": "Table 4 caption lists basic parameters for the 9 unbound candidates"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 112,
+            "end_line": 112,
+            "context": "Section 3 states 519 HiVels include 9 unbound candidates with P_ub greater than 0.5"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "292.1825",
+            "value": "292.1825",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 18,
+                "column": "col_002",
+                "column_header": "R.A. | (deg)",
+                "raw_value": "292.1825"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 295,
+                "end_line": 295,
+                "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 18,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "292.1825"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 18,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "-0.0883"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 18,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "292.1825"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 18,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "-0.0883"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "dec": {
+            "raw_value": "-0.0883",
+            "value": "-0.0883",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 18,
+                "column": "col_003",
+                "column_header": "Decl. | (deg)",
+                "raw_value": "-0.0883"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 296,
+                "end_line": 296,
+                "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 18,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "292.1825"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 18,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "-0.0883"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 18,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "292.1825"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 18,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "-0.0883"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "distance": {
+            "raw_value": "8.44_-1.04^+1.48",
+            "value": "8.44",
+            "error": "",
+            "lower_error": "1.04",
+            "upper_error": "1.48",
+            "unit": "kpc",
+            "kind": "",
+            "description": "Heliocentric distance from Bayesian analysis with Bailer-Jones 2021 prior",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 18,
+                "column": "col_005",
+                "column_header": "d | (kpc)",
+                "raw_value": "8.44_-1.04^+1.48"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-25+/- 2",
+            "value": "-25",
+            "error": "2",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Weighted mean heliocentric radial velocity from cross-matched spectroscopic surveys",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 18,
+                "column": "col_004",
+                "column_header": "rv | (km s -1 )",
+                "raw_value": "-25+/- 2"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": {
+            "raw_value": "276_-114^+176",
+            "value": "276",
+            "error": "",
+            "lower_error": "114",
+            "upper_error": "176",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Azimuthal velocity in the Galactocentric frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 18,
+                "column": "col_009",
+                "column_header": "\\nu\\mathrm_\\phi | (km s -1 )",
+                "raw_value": "276_-114^+176"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "694_-108^+142",
+            "value": "694",
+            "error": "",
+            "lower_error": "108",
+            "upper_error": "142",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Galactocentric total velocity (space velocity relative to the Galactic center)",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 18,
+                "column": "col_006",
+                "column_header": "\\nu\\mathrm_GC | (km s -1 )",
+                "raw_value": "694_-108^+142"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "0.793",
+            "value": "0.793",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of exceeding the Galactic escape velocity curve",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 18,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.793"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "bound_status_metric": {
+            "raw_value": "0.793",
+            "value": "0.793",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Same as P_ub, used as bound/unbound status metric",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 18,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.793"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [
+          {
+            "raw_value": "1",
+            "value": "1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of the stellar trajectory tracking back to the Galactic disk",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 18,
+                "column": "col_008",
+                "column_header": "P\\mathrm_disk",
+                "raw_value": "1"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "hypothesis": "Galactic disk origin",
+            "metric_type": "probability"
+          }
+        ],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.02017:cand-005",
+        "paper_candidate_id": "Gaia DR3 6098873935647575552",
+        "gaia_source_id": "Gaia DR3 6098873935647575552",
+        "all": [
+          {
+            "value": "Gaia DR3 6098873935647575552",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 19,
+                "column": "col_001",
+                "column_header": "Gaia DR3 source_id",
+                "raw_value": "6098873935647575552"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies Gaia DR3 6098873935647575552 as one of 9 unbound high-velocity star candidates with P_ub = 0.530.",
+        "paper_labels": [
+          "hvs_candidate",
+          "hyper_runaway_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The object is listed in Table 4, which the paper captions as 'Basic parameters for the 9 unbound candidates', and Section 3 explicitly states these are unbound candidates with P_ub > 0.5.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 148,
+            "end_line": 149,
+            "context": "Table 4 caption lists basic parameters for the 9 unbound candidates"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 112,
+            "end_line": 112,
+            "context": "Section 3 states 519 HiVels include 9 unbound candidates with P_ub greater than 0.5"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "220.6411",
+            "value": "220.6411",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 19,
+                "column": "col_002",
+                "column_header": "R.A. | (deg)",
+                "raw_value": "220.6411"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 295,
+                "end_line": 295,
+                "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 19,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "220.6411"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 19,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "-44.5675"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 19,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "220.6411"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 19,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "-44.5675"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "dec": {
+            "raw_value": "-44.5675",
+            "value": "-44.5675",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 19,
+                "column": "col_003",
+                "column_header": "Decl. | (deg)",
+                "raw_value": "-44.5675"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 296,
+                "end_line": 296,
+                "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 19,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "220.6411"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 19,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "-44.5675"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 19,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "220.6411"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 19,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "-44.5675"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "distance": {
+            "raw_value": "10.72_-1.43^+1.98",
+            "value": "10.72",
+            "error": "",
+            "lower_error": "1.43",
+            "upper_error": "1.98",
+            "unit": "kpc",
+            "kind": "",
+            "description": "Heliocentric distance from Bayesian analysis with Bailer-Jones 2021 prior",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 19,
+                "column": "col_005",
+                "column_header": "d | (kpc)",
+                "raw_value": "10.72_-1.43^+1.98"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "163+/- 1",
+            "value": "163",
+            "error": "1",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Weighted mean heliocentric radial velocity from cross-matched spectroscopic surveys",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 19,
+                "column": "col_004",
+                "column_header": "rv | (km s -1 )",
+                "raw_value": "163+/- 1"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": {
+            "raw_value": "345_-145^+200",
+            "value": "345",
+            "error": "",
+            "lower_error": "145",
+            "upper_error": "200",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Azimuthal velocity in the Galactocentric frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 19,
+                "column": "col_009",
+                "column_header": "\\nu\\mathrm_\\phi | (km s -1 )",
+                "raw_value": "345_-145^+200"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "582_-106^+147",
+            "value": "582",
+            "error": "",
+            "lower_error": "106",
+            "upper_error": "147",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Galactocentric total velocity (space velocity relative to the Galactic center)",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 19,
+                "column": "col_006",
+                "column_header": "\\nu\\mathrm_GC | (km s -1 )",
+                "raw_value": "582_-106^+147"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "0.530",
+            "value": "0.530",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of exceeding the Galactic escape velocity curve",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 19,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.530"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "bound_status_metric": {
+            "raw_value": "0.530",
+            "value": "0.530",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Same as P_ub, used as bound/unbound status metric",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 19,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.530"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [
+          {
+            "raw_value": "0.999",
+            "value": "0.999",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of the stellar trajectory tracking back to the Galactic disk",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 19,
+                "column": "col_008",
+                "column_header": "P\\mathrm_disk",
+                "raw_value": "0.999"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "hypothesis": "Galactic disk origin",
+            "metric_type": "probability"
+          }
+        ],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.02017:cand-006",
+        "paper_candidate_id": "Gaia DR3 6241679678390298880",
+        "gaia_source_id": "Gaia DR3 6241679678390298880",
+        "all": [
+          {
+            "value": "Gaia DR3 6241679678390298880",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 20,
+                "column": "col_001",
+                "column_header": "Gaia DR3 source_id",
+                "raw_value": "6241679678390298880"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies Gaia DR3 6241679678390298880 as one of 9 unbound high-velocity star candidates with P_ub = 0.549.",
+        "paper_labels": [
+          "hvs_candidate",
+          "hyper_runaway_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The object is listed in Table 4, which the paper captions as 'Basic parameters for the 9 unbound candidates', and Section 3 explicitly states these are unbound candidates with P_ub > 0.5.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 148,
+            "end_line": 149,
+            "context": "Table 4 caption lists basic parameters for the 9 unbound candidates"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 112,
+            "end_line": 112,
+            "context": "Section 3 states 519 HiVels include 9 unbound candidates with P_ub greater than 0.5"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "236.9944",
+            "value": "236.9944",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 20,
+                "column": "col_002",
+                "column_header": "R.A. | (deg)",
+                "raw_value": "236.9944"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 295,
+                "end_line": 295,
+                "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 20,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "236.9944"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 20,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "-20.5118"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 20,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "236.9944"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 20,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "-20.5118"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "dec": {
+            "raw_value": "-20.5118",
+            "value": "-20.5118",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 20,
+                "column": "col_003",
+                "column_header": "Decl. | (deg)",
+                "raw_value": "-20.5118"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 296,
+                "end_line": 296,
+                "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 20,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "236.9944"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 20,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "-20.5118"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 20,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "236.9944"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 20,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "-20.5118"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "distance": {
+            "raw_value": "10.90_-1.31^+1.61",
+            "value": "10.90",
+            "error": "",
+            "lower_error": "1.31",
+            "upper_error": "1.61",
+            "unit": "kpc",
+            "kind": "",
+            "description": "Heliocentric distance from Bayesian analysis with Bailer-Jones 2021 prior",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 20,
+                "column": "col_005",
+                "column_header": "d | (kpc)",
+                "raw_value": "10.90_-1.31^+1.61"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-305+/- 1",
+            "value": "-305",
+            "error": "1",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Weighted mean heliocentric radial velocity from cross-matched spectroscopic surveys",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 20,
+                "column": "col_004",
+                "column_header": "rv | (km s -1 )",
+                "raw_value": "-305+/- 1"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": {
+            "raw_value": "574_-144^+102",
+            "value": "574",
+            "error": "",
+            "lower_error": "144",
+            "upper_error": "102",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Azimuthal velocity in the Galactocentric frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 20,
+                "column": "col_009",
+                "column_header": "\\nu\\mathrm_\\phi | (km s -1 )",
+                "raw_value": "574_-144^+102"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "616_-103^+171",
+            "value": "616",
+            "error": "",
+            "lower_error": "103",
+            "upper_error": "171",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Galactocentric total velocity (space velocity relative to the Galactic center)",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 20,
+                "column": "col_006",
+                "column_header": "\\nu\\mathrm_GC | (km s -1 )",
+                "raw_value": "616_-103^+171"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "0.549",
+            "value": "0.549",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of exceeding the Galactic escape velocity curve",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 20,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.549"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "bound_status_metric": {
+            "raw_value": "0.549",
+            "value": "0.549",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Same as P_ub, used as bound/unbound status metric",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 20,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.549"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [
+          {
+            "raw_value": "0.043",
+            "value": "0.043",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of the stellar trajectory tracking back to the Galactic disk",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 20,
+                "column": "col_008",
+                "column_header": "P\\mathrm_disk",
+                "raw_value": "0.043"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "hypothesis": "Galactic disk origin",
+            "metric_type": "probability"
+          }
+        ],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.02017:cand-007",
+        "paper_candidate_id": "Gaia DR3 6235773131986833792",
+        "gaia_source_id": "Gaia DR3 6235773131986833792",
+        "all": [
+          {
+            "value": "Gaia DR3 6235773131986833792",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 21,
+                "column": "col_001",
+                "column_header": "Gaia DR3 source_id",
+                "raw_value": "6235773131986833792"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies Gaia DR3 6235773131986833792 as one of 9 unbound high-velocity star candidates with P_ub = 0.549.",
+        "paper_labels": [
+          "hvs_candidate",
+          "hyper_runaway_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The object is listed in Table 4, which the paper captions as 'Basic parameters for the 9 unbound candidates', and Section 3 explicitly states these are unbound candidates with P_ub > 0.5.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 148,
+            "end_line": 149,
+            "context": "Table 4 caption lists basic parameters for the 9 unbound candidates"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 112,
+            "end_line": 112,
+            "context": "Section 3 states 519 HiVels include 9 unbound candidates with P_ub greater than 0.5"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "239.3821",
+            "value": "239.3821",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 21,
+                "column": "col_002",
+                "column_header": "R.A. | (deg)",
+                "raw_value": "239.3821"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 295,
+                "end_line": 295,
+                "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 21,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "239.3821"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 21,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "-24.9635"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 21,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "239.3821"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 21,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "-24.9635"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "dec": {
+            "raw_value": "-24.9635",
+            "value": "-24.9635",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 21,
+                "column": "col_003",
+                "column_header": "Decl. | (deg)",
+                "raw_value": "-24.9635"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 296,
+                "end_line": 296,
+                "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 21,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "239.3821"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 21,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "-24.9635"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 21,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "239.3821"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 21,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "-24.9635"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "distance": {
+            "raw_value": "10.78_-1.55^+1.92",
+            "value": "10.78",
+            "error": "",
+            "lower_error": "1.55",
+            "upper_error": "1.92",
+            "unit": "kpc",
+            "kind": "",
+            "description": "Heliocentric distance from Bayesian analysis with Bailer-Jones 2021 prior",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 21,
+                "column": "col_005",
+                "column_header": "d | (kpc)",
+                "raw_value": "10.78_-1.55^+1.92"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-156+/- 1",
+            "value": "-156",
+            "error": "1",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Weighted mean heliocentric radial velocity from cross-matched spectroscopic surveys",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 21,
+                "column": "col_004",
+                "column_header": "rv | (km s -1 )",
+                "raw_value": "-156+/- 1"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": {
+            "raw_value": "592_-210^+163",
+            "value": "592",
+            "error": "",
+            "lower_error": "210",
+            "upper_error": "163",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Azimuthal velocity in the Galactocentric frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 21,
+                "column": "col_009",
+                "column_header": "\\nu\\mathrm_\\phi | (km s -1 )",
+                "raw_value": "592_-210^+163"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "620_-103^+140",
+            "value": "620",
+            "error": "",
+            "lower_error": "103",
+            "upper_error": "140",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Galactocentric total velocity (space velocity relative to the Galactic center)",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 21,
+                "column": "col_006",
+                "column_header": "\\nu\\mathrm_GC | (km s -1 )",
+                "raw_value": "620_-103^+140"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "0.549",
+            "value": "0.549",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of exceeding the Galactic escape velocity curve",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 21,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.549"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "bound_status_metric": {
+            "raw_value": "0.549",
+            "value": "0.549",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Same as P_ub, used as bound/unbound status metric",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 21,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.549"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [
+          {
+            "raw_value": "0.972",
+            "value": "0.972",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of the stellar trajectory tracking back to the Galactic disk",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 21,
+                "column": "col_008",
+                "column_header": "P\\mathrm_disk",
+                "raw_value": "0.972"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "hypothesis": "Galactic disk origin",
+            "metric_type": "probability"
+          }
+        ],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.02017:cand-008",
+        "paper_candidate_id": "Gaia DR3 1383279090527227264",
+        "gaia_source_id": "Gaia DR3 1383279090527227264",
+        "all": [
+          {
+            "value": "Gaia DR3 1383279090527227264",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 22,
+                "column": "col_001",
+                "column_header": "Gaia DR3 source_id",
+                "raw_value": "1383279090527227264"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies Gaia DR3 1383279090527227264 as one of 9 unbound high-velocity star candidates with P_ub = 0.967. This star was previously reported by Marchetti et al. (2021) and Li et al. (2021).",
+        "paper_labels": [
+          "hvs_candidate",
+          "hyper_runaway_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The object is listed in Table 4, which the paper captions as 'Basic parameters for the 9 unbound candidates', and Section 3 explicitly states these are unbound candidates with P_ub > 0.5.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 148,
+            "end_line": 149,
+            "context": "Table 4 caption lists basic parameters for the 9 unbound candidates"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 112,
+            "end_line": 112,
+            "context": "Section 3 states 519 HiVels include 9 unbound candidates with P_ub greater than 0.5"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 162,
+            "end_line": 165,
+            "context": "Table 4 note states last two rows are stars reported by Marchetti2021 and Li.Yinbi2021"
+          }
+        ],
+        "citation": {
+          "bibkey": "Marchetti2021",
+          "authors": [
+            "Marchetti, T."
+          ],
+          "year": "2021",
+          "title": "Gaia EDR3 in 6D: searching for unbound stars in the galaxy",
+          "doi": "10.1093/mnras/stab599",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.02017/arxiv_source/ljw.tex",
+              "start_line": 162,
+              "end_line": 165,
+              "context": "Table 4 note states last two rows are stars reported by Marchetti2021 and Li.Yinbi2021"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.02017/arxiv_source/ljw.bib",
+              "start_line": 437,
+              "end_line": 452,
+              "context": "Bibliography entry for Marchetti 2021 with title and DOI"
+            },
+            {
+              "kind": "text",
+              "path": "literature/2401.02017/arxiv_source/ljw.bib",
+              "start_line": 1,
+              "end_line": 17,
+              "context": "Bibliography entry for Li Yinbi 2021 with title and DOI"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "240.3373",
+            "value": "240.3373",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 22,
+                "column": "col_002",
+                "column_header": "R.A. | (deg)",
+                "raw_value": "240.3373"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 295,
+                "end_line": 295,
+                "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 22,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "240.3373"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 22,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "41.1668"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 22,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "240.3373"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 22,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "41.1668"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "dec": {
+            "raw_value": "41.1668",
+            "value": "41.1668",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 22,
+                "column": "col_003",
+                "column_header": "Decl. | (deg)",
+                "raw_value": "41.1668"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 296,
+                "end_line": 296,
+                "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 22,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "240.3373"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 22,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "41.1668"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 22,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "240.3373"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 22,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "41.1668"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "distance": {
+            "raw_value": "6.59_-0.52^+0.61",
+            "value": "6.59",
+            "error": "",
+            "lower_error": "0.52",
+            "upper_error": "0.61",
+            "unit": "kpc",
+            "kind": "",
+            "description": "Heliocentric distance from Bayesian analysis with Bailer-Jones 2021 prior",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 22,
+                "column": "col_005",
+                "column_header": "d | (kpc)",
+                "raw_value": "6.59_-0.52^+0.61"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-185+/- 1",
+            "value": "-185",
+            "error": "1",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Weighted mean heliocentric radial velocity from cross-matched spectroscopic surveys",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 22,
+                "column": "col_004",
+                "column_header": "rv | (km s -1 )",
+                "raw_value": "-185+/- 1"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": {
+            "raw_value": "-487_-37^+39",
+            "value": "-487",
+            "error": "",
+            "lower_error": "37",
+            "upper_error": "39",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Azimuthal velocity in the Galactocentric frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 22,
+                "column": "col_009",
+                "column_header": "\\nu\\mathrm_\\phi | (km s -1 )",
+                "raw_value": "-487_-37^+39"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "676_-68^+80",
+            "value": "676",
+            "error": "",
+            "lower_error": "68",
+            "upper_error": "80",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Galactocentric total velocity (space velocity relative to the Galactic center)",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 22,
+                "column": "col_006",
+                "column_header": "\\nu\\mathrm_GC | (km s -1 )",
+                "raw_value": "676_-68^+80"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "0.967",
+            "value": "0.967",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of exceeding the Galactic escape velocity curve",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 22,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.967"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "bound_status_metric": {
+            "raw_value": "0.967",
+            "value": "0.967",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Same as P_ub, used as bound/unbound status metric",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 22,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.967"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [
+          {
+            "raw_value": "1",
+            "value": "1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of the stellar trajectory tracking back to the Galactic disk",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 22,
+                "column": "col_008",
+                "column_header": "P\\mathrm_disk",
+                "raw_value": "1"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "hypothesis": "Galactic disk origin",
+            "metric_type": "probability"
+          }
+        ],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2401.02017:cand-009",
+        "paper_candidate_id": "Gaia DR3 1375165725506487424",
+        "gaia_source_id": "Gaia DR3 1375165725506487424",
+        "all": [
+          {
+            "value": "Gaia DR3 1375165725506487424",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 23,
+                "column": "col_001",
+                "column_header": "Gaia DR3 source_id",
+                "raw_value": "1375165725506487424"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies Gaia DR3 1375165725506487424 as one of 9 unbound high-velocity star candidates with P_ub = 0.546. This star was previously reported by Marchetti et al. (2021) and Li et al. (2021).",
+        "paper_labels": [
+          "hvs_candidate",
+          "hyper_runaway_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The object is listed in Table 4, which the paper captions as 'Basic parameters for the 9 unbound candidates', and Section 3 explicitly states these are unbound candidates with P_ub > 0.5.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 148,
+            "end_line": 149,
+            "context": "Table 4 caption lists basic parameters for the 9 unbound candidates"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 112,
+            "end_line": 112,
+            "context": "Section 3 states 519 HiVels include 9 unbound candidates with P_ub greater than 0.5"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 130,
+            "end_line": 131,
+            "context": "Section 4.1 describes 9 unbound stars including 8 new and 2 from prior literature"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2401.02017/arxiv_source/ljw.tex",
+            "start_line": 162,
+            "end_line": 165,
+            "context": "Table 4 note states last two rows are stars reported by Marchetti2021 and Li.Yinbi2021"
+          }
+        ],
+        "citation": {
+          "bibkey": "Marchetti2021",
+          "authors": [
+            "Marchetti, T."
+          ],
+          "year": "2021",
+          "title": "Gaia EDR3 in 6D: searching for unbound stars in the galaxy",
+          "doi": "10.1093/mnras/stab599",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.02017/arxiv_source/ljw.tex",
+              "start_line": 162,
+              "end_line": 165,
+              "context": "Table 4 note states last two rows are stars reported by Marchetti2021 and Li.Yinbi2021"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2401.02017/arxiv_source/ljw.bib",
+              "start_line": 437,
+              "end_line": 452,
+              "context": "Bibliography entry for Marchetti 2021 with title and DOI"
+            },
+            {
+              "kind": "text",
+              "path": "literature/2401.02017/arxiv_source/ljw.bib",
+              "start_line": 1,
+              "end_line": 17,
+              "context": "Bibliography entry for Li Yinbi 2021 with title and DOI"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "231.8486",
+            "value": "231.8486",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 23,
+                "column": "col_002",
+                "column_header": "R.A. | (deg)",
+                "raw_value": "231.8486"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 295,
+                "end_line": 295,
+                "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 23,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "231.8486"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 23,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "36.0344"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 23,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "231.8486"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 23,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "36.0344"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "dec": {
+            "raw_value": "36.0344",
+            "value": "36.0344",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 23,
+                "column": "col_003",
+                "column_header": "Decl. | (deg)",
+                "raw_value": "36.0344"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                "start_line": 296,
+                "end_line": 296,
+                "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 23,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "231.8486"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 23,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "36.0344"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016.0",
+              "source_catalog": "Gaia DR3",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 23,
+                  "column": "col_002",
+                  "column_header": "R.A. | (deg)",
+                  "raw_value": "231.8486"
+                },
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                  "line": 23,
+                  "column": "col_003",
+                  "column_header": "Decl. | (deg)",
+                  "raw_value": "36.0344"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 295,
+                  "end_line": 295,
+                  "context": "Catalog format table describes RAdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                },
+                {
+                  "kind": "text",
+                  "path": "literature/2401.02017/arxiv_source/ljw.tex",
+                  "start_line": 296,
+                  "end_line": 296,
+                  "context": "Catalog format table describes DEdeg as Gaia DR3 ICRS at Epoch=2016.0"
+                }
+              ]
+            }
+          },
+          "distance": {
+            "raw_value": "7.79_-0.70^+0.83",
+            "value": "7.79",
+            "error": "",
+            "lower_error": "0.70",
+            "upper_error": "0.83",
+            "unit": "kpc",
+            "kind": "",
+            "description": "Heliocentric distance from Bayesian analysis with Bailer-Jones 2021 prior",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 23,
+                "column": "col_005",
+                "column_header": "d | (kpc)",
+                "raw_value": "7.79_-0.70^+0.83"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-86+/- 1",
+            "value": "-86",
+            "error": "1",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Weighted mean heliocentric radial velocity from cross-matched spectroscopic surveys",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 23,
+                "column": "col_004",
+                "column_header": "rv | (km s -1 )",
+                "raw_value": "-86+/- 1"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": {
+            "raw_value": "-319_-26^+21",
+            "value": "-319",
+            "error": "",
+            "lower_error": "26",
+            "upper_error": "21",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Azimuthal velocity in the Galactocentric frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 23,
+                "column": "col_009",
+                "column_header": "\\nu\\mathrm_\\phi | (km s -1 )",
+                "raw_value": "-319_-26^+21"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "553_-65^+79",
+            "value": "553",
+            "error": "",
+            "lower_error": "65",
+            "upper_error": "79",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Galactocentric total velocity (space velocity relative to the Galactic center)",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 23,
+                "column": "col_006",
+                "column_header": "\\nu\\mathrm_GC | (km s -1 )",
+                "raw_value": "553_-65^+79"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": {
+            "raw_value": "0.546",
+            "value": "0.546",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of exceeding the Galactic escape velocity curve",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 23,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.546"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "bound_status_metric": {
+            "raw_value": "0.546",
+            "value": "0.546",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Same as P_ub, used as bound/unbound status metric",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 23,
+                "column": "col_007",
+                "column_header": "P\\mathrm_ub",
+                "raw_value": "0.546"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [
+          {
+            "raw_value": "1",
+            "value": "1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "probability",
+            "description": "Probability of the stellar trajectory tracking back to the Galactic disk",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+                "line": 23,
+                "column": "col_008",
+                "column_header": "P\\mathrm_disk",
+                "raw_value": "1"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "hypothesis": "Galactic disk origin",
+            "metric_type": "probability"
+          }
+        ],
+        "other": []
+      },
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "runaway-stars",
+      "description": "57 bound runaway stars with P_ub < 0.5 and P_disk > 0.5 identified in the 519 HiVels sample.",
+      "decision": "excluded",
+      "reason": "The paper classifies these as bound stars ejected from the Galactic disk, not as Galactic-unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 131,
+          "end_line": 131,
+          "context": "Section 4.1 states 57 bound HiVels are runaway stars"
+        }
+      ]
+    },
+    {
+      "group_id": "high-velocity-halo-stars",
+      "description": "453 high-velocity halo stars with P_ub < 0.5 from the 519 HiVels sample.",
+      "decision": "excluded",
+      "reason": "The paper classifies these as bound high-velocity halo stars that may form within the MW or have extragalactic origins, but they do not meet the P_ub > 0.5 unbound threshold.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 131,
+          "end_line": 131,
+          "context": "Section 4.1 states remaining 453 HiVels are high-velocity halo stars"
+        }
+      ]
+    },
+    {
+      "group_id": "sgr-dsph-candidates",
+      "description": "High-velocity stars in Table 5 with potential origin from the Sagittarius dwarf spheroidal galaxy.",
+      "decision": "excluded",
+      "reason": "These stars are discussed as Sgr dSph origin candidates but are not among the 9 unbound candidates with P_ub > 0.5 presented in Table 4. The paper does not present them as Galactic-unbound candidates in this work.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 202,
+          "end_line": 204,
+          "context": "Section 4.3 discusses Sgr dSph origin stars in Table 5"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,908 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:50:00",
+  "paper": {
+    "arxiv_id": "2012.09338",
+    "bibcode": "2021ApJ...907L..42H",
+    "title": "Discovery of a Candidate Hypervelocity Star Originating from the Sagittarius Dwarf Spheroidal Galaxy",
+    "month": "2020-12",
+    "source_note_json": "notes/2020/2020-12/2020-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2012.09338",
+      "pdf": "https://arxiv.org/pdf/2012.09338"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2012.09338",
+    "audit_path": "literature/2012.09338/audit.json",
+    "catalog_review_path": "literature/2012.09338/catalog_review.json",
+    "catalog_extraction_path": "literature/2012.09338/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-06-07T11:50:00",
+    "extractor": "agent",
+    "summary": "本文报道了一颗引人注目的超高速星(HVS)候选体J1443+1453的发现，该星可能起源于人马座矮椭球星系(Sgr dSph)。该星为一颗年老、极贫金属的低质量主序拐点星(年龄~14.0 Gyr, [Fe/H]=-2.23 dex)，在银河系静止系中的总速度为559.01^{+135.07}_{-87.40} km/s，日心距离2.90^{+0.72}_{-0.48} kpc。其速度超过了该位置的银河系逃逸速度，是一个有希望的HVS候选体。轨道积分显示J1443+1453的轨道在37.8 Myr前与人马座矮椭球星系的轨道在其最近一次近银心通过时近距离相交，相遇距离仅2.42 kpc。化学丰度也与人马座星流成员星或相关球状星团一致。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "从SEGUE光谱巡天数据中发现HVS候选体J1443+1453。通过SDSS/SEGUE光谱和Gaia DR2天体测量数据的交叉匹配选出该星。",
+      "inputs": ["SEGUE survey", "Gaia DR2", "SDSS photometry"],
+      "outputs": ["J1443+1453 selected as HVS candidate"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+          "start_line": 138,
+          "end_line": 143,
+          "context": "J1443+1453 spectroscopically observed by SEGUE; Gaia DR2 astrometry available"
+        }
+      ]
+    },
+    {
+      "id": "step-01b",
+      "depends_on": ["step-01"],
+      "step_type": "input_catalog",
+      "summary": "从Gaia DR2和SDSS巡天目录中获取J1443+1453的测光数据：Gaia G=16.072, BP-RP=0.627; SDSS g=16.321, r=16.066; E(B-V)=0.016。",
+      "inputs": ["Gaia DR2", "SDSS DR9"],
+      "outputs": ["Gaia G, BP-RP; SDSS g, r; E(B-V)"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+          "start_line": 70,
+          "end_line": 75,
+          "context": "Table 1: photometric data from Gaia DR2 and SDSS"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": ["step-01"],
+      "step_type": "astrometric_calibration",
+      "summary": "Gaia DR2天体测量数据处理：获取J1443+1453的天球坐标(RA, Dec)、视差和自行数据。视差零点修正-0.048 mas(Schönrich+2019)。",
+      "inputs": ["Gaia DR2"],
+      "outputs": ["RA=14:43:25.76, Dec=+14:53:36.3, parallax=0.348 mas, pm_ra=-46.914 mas/yr, pm_dec=-1.465 mas/yr"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+          "start_line": 146,
+          "end_line": 157,
+          "context": "Gaia DR2 astrometry, Bayesian distance estimation with density prior"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": ["step-02"],
+      "step_type": "distance_estimation",
+      "summary": "距离估算：利用贝叶斯方法从Gaia DR2视差推算距离，使用视差零点修正-0.048 mas和银河系密度先验(r_GC^{-3.39})。得到距离d=2.90^{+0.72}_{-0.48} kpc。",
+      "inputs": ["Gaia DR2 parallax", "Bayesian framework"],
+      "outputs": ["distance=2.90 kpc"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+          "start_line": 146,
+          "end_line": 157,
+          "context": "Bayesian distance from Gaia parallax with density prior"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": ["step-01"],
+      "step_type": "radial_velocity_measurement",
+      "summary": "SEGUE光谱视向速度测量：利用SEGUE SSPP流水线从两次光谱观测中测定日心视向速度HRV=194.25±1.97 km/s。",
+      "inputs": ["SEGUE spectra", "SSPP pipeline"],
+      "outputs": ["HRV=194.25 km/s"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+          "start_line": 138,
+          "end_line": 141,
+          "context": "SEGUE spectroscopy, SSPP pipeline, HRV=194.25 km/s"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": ["step-01"],
+      "step_type": "stellar_parameter_inference",
+      "summary": "恒星参数推导：利用SEGUE SSPP流水线测定Teff=6405 K, log g=3.64 dex, [Fe/H]=-2.23 dex, [α/Fe]=0.14 dex。利用贝叶斯方法和DSEP等龄线测定年龄14.0 Gyr和质量0.75 Msun。",
+      "inputs": ["SEGUE SSPP", "DSEP isochrones", "SDSS photometry"],
+      "outputs": ["Teff, log g, [Fe/H], [α/Fe], age, mass"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+          "start_line": 77,
+          "end_line": 84,
+          "context": "Table 1: stellar parameters"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+          "start_line": 193,
+          "end_line": 216,
+          "context": "Bayesian age and mass estimation with DSEP isochrones"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": ["step-02", "step-03"],
+      "step_type": "velocity_calculation",
+      "summary": "3D速度和位置计算：结合Gaia DR2坐标、自行、距离和SEGUE视向速度，采用R0=8.178 kpc、(U,V,W)⊙=(7.01,10.13,4.95) km/s、Vc=225 km/s等参数，通过蒙特卡洛模拟计算银心直角坐标系下的3D位置和速度，得V_GSR=559.01 km/s。",
+      "inputs": ["Gaia DR2 astrometry", "SEGUE RV", "Galactic parameters"],
+      "outputs": ["3D position (X,Y,Z), 3D velocity (V_X,V_Y,V_Z), V_GSR=559.01 km/s"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+          "start_line": 159,
+          "end_line": 168,
+          "context": "3D position and velocity calculation in Galactocentric coordinates"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": ["step-05"],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "逃逸速度评估：比较J1443+1453的总速度V_GSR=559.01 km/s与银心距7.3 kpc处的银河系逃逸速度曲线(Williams+2017, Bovy+2015, Huang+2016)，确认其速度超过逃逸速度。",
+      "inputs": ["V_GSR", "r_GC", "escape velocity curves"],
+      "outputs": ["V_GSR > escape speed at r_GC=7.3 kpc → unbound"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+          "start_line": 168,
+          "end_line": 170,
+          "context": "Velocity larger than escape speed → HVS candidate"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": ["step-05"],
+      "step_type": "orbit_integration",
+      "summary": "轨道积分分析：利用Gala包和MWPotential2014模型反向积分轨道，发现J1443+1453与Sgr dSph在37.8 Myr前近距离相交(2.42 kpc)，正好对应Sgr dSph最近一次近银心通过时间。",
+      "inputs": ["3D position/velocity", "MWPotential2014", "Sgr dSph orbit"],
+      "outputs": ["closest encounter: 2.42 kpc, 37.8 Myr ago"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+          "start_line": 222,
+          "end_line": 254,
+          "context": "Backward orbit analysis with Gala/MWPotential2014"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": ["step-07"],
+      "step_type": "origin_assessment",
+      "summary": "起源评估：轨道分析和化学丰度一致表明J1443+1453起源于Sgr dSph。可能通过潮汐剥离(Abadi+2009机制)或引力弹弓效应(Hills机制)被弹射。若为Hills机制，需要Sgr dSph中存在质量≥1.56×10^3 Msun的黑洞。",
+      "inputs": ["orbit analysis", "chemical abundances", "Hills mechanism"],
+      "outputs": ["Origin: Sgr dSph; ejection velocity ~690 km/s at closest approach"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+          "start_line": 264,
+          "end_line": 275,
+          "context": "Ejection mechanisms and origin discussion"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2012.09338:cand-001",
+        "paper_candidate_id": "J1443+1453",
+        "gaia_source_id": "Gaia DR2 1186023710910901760",
+        "all": [
+          {
+            "value": "J1443+1453",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 38,
+                "end_line": 38,
+                "context": "Abstract: HVS (J1443+1453) candidate"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR2 1186023710910901760",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 66,
+                "end_line": 66,
+                "context": "Table 1: Gaia DR2 source_id: 1186023710910901760"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "J1443+1453 is a hypervelocity star candidate with total Galactocentric velocity V_GSR=559.01 km/s exceeding the Galactic escape speed at its position (r_GC=7.3 kpc). Paper explicitly identifies it as 'HVS candidate' in title and text, and states velocity > escape speed.",
+        "paper_labels": ["hvs_candidate"],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly labels star as HVS candidate in title, abstract, and throughout text. Velocity (559 km/s) quantitatively exceeds published escape speed curves at r_GC=7.3 kpc. Orbit reconstruction and chemical abundances both support Sgr dSph origin.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+            "start_line": 16,
+            "end_line": 17,
+            "context": "Title: Discovery of A candidate Hypervelocity star"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+            "start_line": 38,
+            "end_line": 40,
+            "context": "Abstract: HVS candidate, total velocity 559 km/s, larger than escape speed"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+            "start_line": 168,
+            "end_line": 170,
+            "context": "V_GSR=559 km/s > escape speed → HVS candidate"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+            "start_line": 130,
+            "end_line": 130,
+            "context": "we report the discovery of a candidate HVS, J1443+1453"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "14:43:25.76",
+            "value": "14:43:25.76",
+            "unit": "hourangle",
+            "coordinate_format": "sexagesimal_colon",
+            "reference_frame": {
+              "value": "ICRS",
+              "inference_basis": "gaia_dr2_catalog_frame",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                  "start_line": 64,
+                  "end_line": 64,
+                  "context": "Table 1: Right Ascension (J2000): 14:43:25.76"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2000.0",
+              "epoch_kind": "reference_epoch",
+              "inference_basis": "gaia_dr2_reference_epoch",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                  "start_line": 64,
+                  "end_line": 64,
+                  "context": "Table 1: Coordinates (J2000)"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 64,
+                "end_line": 64,
+                "context": "Table 1: RA=14:43:25.76"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "dec": {
+            "raw_value": "+14:53:36.3",
+            "value": "+14:53:36.3",
+            "unit": "deg",
+            "coordinate_format": "sexagesimal_colon",
+            "reference_frame": {
+              "value": "ICRS",
+              "inference_basis": "gaia_dr2_catalog_frame",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                  "start_line": 65,
+                  "end_line": 65,
+                  "context": "Table 1: Declination (J2000): +14:53:36.3"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2000.0",
+              "epoch_kind": "reference_epoch",
+              "inference_basis": "gaia_dr2_reference_epoch",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                  "start_line": 65,
+                  "end_line": 65,
+                  "context": "Table 1: Declination (J2000)"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 65,
+                "end_line": 65,
+                "context": "Table 1: Dec=+14:53:36.3"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "parallax": {
+            "raw_value": "0.348 ± 0.065",
+            "value": "0.348",
+            "error": "0.065",
+            "unit": "mas",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 69,
+                "end_line": 69,
+                "context": "Table 1: Gaia DR2 Parallax: 0.348 ± 0.065 mas"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "distance": {
+            "raw_value": "2.90_-0.48^+0.72",
+            "value": "2.90",
+            "lower_error": "0.48",
+            "upper_error": "0.72",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 72,
+                "end_line": 72,
+                "context": "Table 1: Distance: 2.90_-0.48^+0.72 kpc"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-46.914 ± 0.121",
+            "value": "-46.914",
+            "error": "0.121",
+            "unit": "mas yr-1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 67,
+                "end_line": 67,
+                "context": "Table 1: Gaia DR2 Proper motion mu_alpha cos delta: -46.914 ± 0.121 mas/yr"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-1.465 ± 0.096",
+            "value": "-1.465",
+            "error": "0.096",
+            "unit": "mas yr-1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 68,
+                "end_line": 68,
+                "context": "Table 1: Gaia DR2 Proper motion mu_delta: -1.465 ± 0.096 mas/yr"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "radial_velocity": {
+            "raw_value": "194.25 ± 1.97",
+            "value": "194.25",
+            "error": "1.97",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 76,
+                "end_line": 76,
+                "context": "Table 1: Heliocentric radial velocity: 194.25 ± 1.97 km/s"
+              }
+            ],
+            "method_refs": ["step-03"]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": {
+            "raw_value": "-6.82_-0.22^+0.32",
+            "value": "-6.82",
+            "lower_error": "0.22",
+            "upper_error": "0.32",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 164,
+                "end_line": 164,
+                "context": "X=-6.82_-0.22^+0.32 kpc"
+              }
+            ],
+            "method_refs": ["step-05"]
+          },
+          "galactocentric_y": {
+            "raw_value": "0.32_-0.05^+0.08",
+            "value": "0.32",
+            "lower_error": "0.05",
+            "upper_error": "0.08",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 164,
+                "end_line": 164,
+                "context": "Y=0.32_-0.05^+0.08 kpc"
+              }
+            ],
+            "method_refs": ["step-05"]
+          },
+          "galactocentric_z": {
+            "raw_value": "2.57_-0.42^+0.60",
+            "value": "2.57",
+            "lower_error": "0.42",
+            "upper_error": "0.60",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 164,
+                "end_line": 164,
+                "context": "Z=2.57_-0.42^+0.60 kpc"
+              }
+            ],
+            "method_refs": ["step-05"]
+          },
+          "galactocentric_vx": {
+            "raw_value": "-292.29_-98.74^+60.34",
+            "value": "-292.29",
+            "lower_error": "98.74",
+            "upper_error": "60.34",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 164,
+                "end_line": 164,
+                "context": "V_X=-292.29_-98.74^+60.34 km/s"
+              }
+            ],
+            "method_refs": ["step-05"]
+          },
+          "galactocentric_vy": {
+            "raw_value": "-183.39_-111.42^+74.27",
+            "value": "-183.39",
+            "lower_error": "111.42",
+            "upper_error": "74.27",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 164,
+                "end_line": 164,
+                "context": "V_Y=-183.39_-111.42^+74.27 km/s"
+              }
+            ],
+            "method_refs": ["step-05"]
+          },
+          "galactocentric_vz": {
+            "raw_value": "439.80_-41.21^+67.45",
+            "value": "439.80",
+            "lower_error": "41.21",
+            "upper_error": "67.45",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 164,
+                "end_line": 164,
+                "context": "V_Z=439.80_-41.21^+67.45 km/s"
+              }
+            ],
+            "method_refs": ["step-05"]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "559.01_-87.40^+135.07",
+            "value": "559.01",
+            "lower_error": "87.40",
+            "upper_error": "135.07",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 82,
+                "end_line": 82,
+                "context": "Table 1: Total velocity V_GSR: 559.01_-87.40^+135.07 km/s"
+              }
+            ],
+            "method_refs": ["step-05"]
+          },
+          "total_velocity": {
+            "raw_value": "559.01_-87.40^+135.07",
+            "value": "559.01",
+            "lower_error": "87.40",
+            "upper_error": "135.07",
+            "unit": "km s-1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 168,
+                "end_line": 168,
+                "context": "V_GSR=559.01_-87.40^+135.07 km/s"
+              }
+            ],
+            "method_refs": ["step-05"]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity_ratio": {
+            "raw_value": ">1 at r_GC=7.3 kpc",
+            "value": ">1",
+            "unit": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+                "start_line": 169,
+                "end_line": 169,
+                "context": "velocity larger than escape speed at r_GC=7.3 kpc"
+              }
+            ],
+            "method_refs": ["step-06"]
+          }
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "16.072 ± 0.002",
+          "value": "16.072",
+          "error": "0.002",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Vega",
+          "survey": "Gaia DR2",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+              "start_line": 70,
+              "end_line": 70,
+              "context": "Table 1: Gaia DR2 G-band magnitude: 16.072 ± 0.002 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "raw_value": "0.627 ± 0.009",
+          "value": "0.627",
+          "error": "0.009",
+          "unit": "mag",
+          "measurement_type": "color",
+          "band": "GBP-GRP",
+          "system": "Vega",
+          "survey": "Gaia DR2",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+              "start_line": 71,
+              "end_line": 71,
+              "context": "Table 1: Gaia DR2 G_BP-G_RP: 0.627 ± 0.009 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "raw_value": "16.321 ± 0.004",
+          "value": "16.321",
+          "error": "0.004",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "g",
+          "system": "AB",
+          "survey": "SDSS",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+              "start_line": 73,
+              "end_line": 73,
+              "context": "Table 1: SDSS g-band magnitude: 16.321 ± 0.004 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "raw_value": "16.066 ± 0.004",
+          "value": "16.066",
+          "error": "0.004",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "r",
+          "system": "AB",
+          "survey": "SDSS",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+              "start_line": 74,
+              "end_line": 74,
+              "context": "Table 1: SDSS r-band magnitude: 16.066 ± 0.004 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "raw_value": "0.016",
+          "value": "0.016",
+          "unit": "mag",
+          "measurement_type": "reddening",
+          "band": "E(B-V)",
+          "system": "SFD",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+              "start_line": 75,
+              "end_line": 75,
+              "context": "Table 1: Colour excess E(B-V)_SFD: 0.016 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "raw_value": "SEGUE",
+          "value": "SEGUE",
+          "measurement_type": "other",
+          "instrument": "SDSS spectrograph",
+          "survey": "SEGUE",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+              "start_line": 138,
+              "end_line": 143,
+              "context": "SEGUE survey, SSPP pipeline, two observations"
+            }
+          ],
+          "method_refs": ["step-03"]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "6405 ± 130",
+          "value": "6405",
+          "error": "130",
+          "unit": "K",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+              "start_line": 77,
+              "end_line": 77,
+              "context": "Table 1: Teff: 6405 ± 130 K"
+            }
+          ],
+          "method_refs": ["step-04"]
+        },
+        "log_g": {
+          "raw_value": "3.64 ± 0.21",
+          "value": "3.64",
+          "error": "0.21",
+          "unit": "dex",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+              "start_line": 78,
+              "end_line": 78,
+              "context": "Table 1: log g: 3.64 ± 0.21 dex"
+            }
+          ],
+          "method_refs": ["step-04"]
+        },
+        "metallicity": {
+          "raw_value": "-2.23 ± 0.11",
+          "value": "-2.23",
+          "error": "0.11",
+          "unit": "dex",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+              "start_line": 79,
+              "end_line": 79,
+              "context": "Table 1: [Fe/H]: -2.23 ± 0.11 dex"
+            }
+          ],
+          "method_refs": ["step-04"]
+        },
+        "mass": {
+          "raw_value": "0.75_-0.01^+0.03",
+          "value": "0.75",
+          "lower_error": "0.01",
+          "upper_error": "0.03",
+          "unit": "Msun",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+              "start_line": 84,
+              "end_line": 84,
+              "context": "Table 1: Mass: 0.75_-0.01^+0.03 Msun"
+            }
+          ],
+          "method_refs": ["step-04"]
+        },
+        "age": {
+          "raw_value": "14.0_-2.0^+0.5",
+          "value": "14.0",
+          "lower_error": "2.0",
+          "upper_error": "0.5",
+          "unit": "Gyr",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+              "start_line": 83,
+              "end_line": 83,
+              "context": "Table 1: Age: 14.0_-2.0^+0.5 Gyr"
+            }
+          ],
+          "method_refs": ["step-04"]
+        }
+      },
+      "abundances": [
+        {
+          "raw_value": "0.14 ± 0.10",
+          "value": "0.14",
+          "error": "0.10",
+          "unit": "dex",
+          "element": "alpha",
+          "abundance_scale": "[alpha/Fe]",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+              "start_line": 80,
+              "end_line": 80,
+              "context": "Table 1: [alpha/Fe]: 0.14 ± 0.10 dex"
+            }
+          ],
+          "method_refs": ["step-04"]
+        }
+      ],
+      "quality_flags": [],
+      "orbit": {
+        "flight_time": {
+          "raw_value": "37.8_-6.0^+4.6",
+          "value": "37.8",
+          "lower_error": "6.0",
+          "upper_error": "4.6",
+          "unit": "Myr",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+              "start_line": 238,
+              "end_line": 238,
+              "context": "orbit intersects Sgr dSph 37.8_-6.0^+4.6 Myr ago"
+            }
+          ],
+          "method_refs": ["step-07"]
+        }
+      },
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "Sgr dSph",
+          "value": "Sgr dSph",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+              "start_line": 265,
+              "end_line": 271,
+              "context": "J1443+1453 originated from Sgr dSph via tidal stripping or Hills mechanism"
+            }
+          ],
+          "method_refs": ["step-08"]
+        },
+        "ejection_velocity": {
+          "raw_value": "689.69_-64.72^+103.53",
+          "value": "689.69",
+          "lower_error": "64.72",
+          "upper_error": "103.53",
+          "unit": "km s-1",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+              "start_line": 241,
+              "end_line": 241,
+              "context": "relative velocity 689.69_-64.72^+103.53 km/s at closest approach"
+            }
+          ],
+          "method_refs": ["step-08"]
+        },
+        "travel_time": {
+          "raw_value": "37.8_-6.0^+4.6",
+          "value": "37.8",
+          "lower_error": "6.0",
+          "upper_error": "4.6",
+          "unit": "Myr",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+              "start_line": 238,
+              "end_line": 238,
+              "context": "closest encounter 37.8 Myr ago"
+            }
+          ],
+          "method_refs": ["step-07"]
+        }
+      },
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": []
+}

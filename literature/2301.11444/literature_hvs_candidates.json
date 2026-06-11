@@ -1,0 +1,61 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:36:00",
+  "paper": {
+    "arxiv_id": "2301.11444",
+    "bibcode": "2024IAUS..361...82O",
+    "title": "Dynamical vs Supernova Acceleration of OB Stars in the Small Magellanic Cloud",
+    "month": "2023-01",
+    "source_note_json": "notes/2023/2023-01/2023-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2301.11444",
+      "pdf": "https://arxiv.org/pdf/2301.11444"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2301.11444",
+    "audit_path": "literature/2301.11444/audit.json",
+    "catalog_review_path": "literature/2301.11444/catalog_review.json",
+    "catalog_extraction_path": "literature/2301.11444/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:36:00",
+    "extractor": "agent",
+    "summary": "IAU Symp 361 conference proceedings paper. Uses the RIOTS4 spectroscopic survey sample and Gaia DR2/EDR3 proper motion data to study the escape mechanisms of OB stars in the Small Magellanic Cloud (SMC) field — the relative contributions of dynamical ejection (DES) and binary supernova ejection (BSS). The study finds that dynamical mechanisms dominate (factor 2-3), with a two-step acceleration process also present. The paper discusses runaway stars, i.e., massive OB stars escaping from their birth clusters, with velocities on the order of 30-100 km/s, far below the Galactic escape velocity. The paper never discusses Galactic escape velocity, hypervelocity stars (HVS), Galactic unbinding, or intergalactic escape. No HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2301.11444:group-01",
+      "description": "RIOTS4 SMC field OB star sample (304 stars with Gaia DR2 proper motions, 299 stars with EDR3 data). The authors group stars into OBe stars (tracers of BSS products) and non-OBe stars (tracers of DES products), compare velocity distributions and mass-velocity relations, and estimate the relative contributions of the two escape mechanisms. The sample also includes eclipsing binary (EB), double-lined spectroscopic binary (SB2), and high-mass X-ray binary (HMXB) subgroups.",
+      "decision": "rejected",
+      "reason": "The paper studies OB runaway stars within the SMC — they escape from their birth clusters but remain gravitationally bound to the SMC galaxy. Stellar velocities are proper motion velocities (median ~29 km/s), typical of cluster escape velocities, far below the escape velocity of any galaxy. The paper's keywords are 'runaway stars', not 'hypervelocity stars'. The paper never discusses Galactic escape velocity, hypervelocity stars (HVS), Galactic unbinding (Galactic-unbound), or intergalactic escape. Contains no HVS candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2301.11444/arxiv_source/Oey_IAUS361.tex",
+          "start_line": 74,
+          "end_line": 78,
+          "context": "Abstract: 'We use the RIOTS4 sample of SMC field OB stars to determine the origin of massive runaways in this low-metallicity galaxy...' — discusses runaway stars, not HVS."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2301.11444/arxiv_source/Oey_IAUS361.tex",
+          "start_line": 128,
+          "end_line": 153,
+          "context": "Section 3: velocity distributions show median velocity ~29 km/s for EDR3. DES produces faster ejections but all velocities are far below Galactic escape velocity (~500 km/s)."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2301.11444/arxiv_source/Oey_IAUS361.tex",
+          "start_line": 158,
+          "end_line": 159,
+          "context": "Results: 'on the order of 26% of the SMC OB population corresponds to DES products... ~9% are BSS products and perhaps an additional ~2% are two-step ejections.' — statistical analysis of cluster escapees, not HVS."
+        }
+      ]
+    }
+  ]
+}

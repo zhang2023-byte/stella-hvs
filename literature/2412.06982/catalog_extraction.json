@@ -1,0 +1,627 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:24",
+  "paper": {
+    "arxiv_id": "2412.06982",
+    "title": "Resolving the Young 2 Cygni Run-away Star into a Binary using iLocater",
+    "month": "2024-12"
+  },
+  "review": {
+    "path": "literature/2412.06982/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123924",
+    "started_at": "2026-05-17T12:39:24",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2412.06982",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-2cyg",
+      "internal_table_id": "table-tab-2cyg",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2412.06982/arxiv_source/main.tex",
+        "start_line": 157,
+        "end_line": 182,
+        "caption": "Observational properties of the 2 Cygni system. Gaia Early Data Release 3 (DR3) is from the \\cite{gaia_dr3_21}.",
+        "label": "tab:2cyg"
+      },
+      "source_path": "literature/2412.06982/arxiv_source/main.tex",
+      "excerpt_path": "literature/2412.06982/catalog_sources/table-tab-2cyg/excerpt.tex",
+      "sha256": "d4be40f839eb0fc055d8140a44ea6356ad504aad2670080295f2021287ac87d8",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-tab-literature",
+      "internal_table_id": "table-tab-literature",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2412.06982/arxiv_source/main.tex",
+        "start_line": 201,
+        "end_line": 225,
+        "caption": "Select literature references that mention 2~Cygni.",
+        "label": "tab:literature"
+      },
+      "source_path": "literature/2412.06982/arxiv_source/main.tex",
+      "excerpt_path": "literature/2412.06982/catalog_sources/table-tab-literature/excerpt.tex",
+      "sha256": "139a4f03a1d51e962f8ea780ec4d06af2211575c632b9d5d4cbe698fd4a1f316",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-tab-log",
+      "internal_table_id": "table-tab-log",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2412.06982/arxiv_source/main.tex",
+        "start_line": 279,
+        "end_line": 297,
+        "caption": "Observing log for AO measurements of 2~Cygni. iLocater's custom imaging channel senses light within a narrow range of wavelengths ($\\lambda=0.927-0.960 \\; \\mu$m). The number of frames ($N_{\\rm frames}$), integration time per frame ($\\Delta t_{\\rm int}$), and total integration time ($\\Delta t_{\\rm tot}$) are shown for each data set. Seeing measurements ($\\theta$) were made using the LBT DIMM system (within 25$^{\\circ}$ of target) and Keck MASS/DIMM system.",
+        "label": "tab:log"
+      },
+      "source_path": "literature/2412.06982/arxiv_source/main.tex",
+      "excerpt_path": "literature/2412.06982/catalog_sources/table-tab-log/excerpt.tex",
+      "sha256": "ae28a14702cfafca62185d58723ab78ff7e5bb77ef589f16d73e828544977438",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-photometry",
+      "internal_table_id": "table-tab-photometry",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2412.06982/arxiv_source/main.tex",
+        "start_line": 383,
+        "end_line": 398,
+        "caption": "Deblended photometry for the 2~Cygni components using NIRC2. $H$-band data is based on $H_{\\rm cont}$ measurements and $K_s$-band data is based on $K_{\\rm cont}$ measurements.",
+        "label": "tab:photometry"
+      },
+      "source_path": "literature/2412.06982/arxiv_source/main.tex",
+      "excerpt_path": "literature/2412.06982/catalog_sources/table-tab-photometry/excerpt.tex",
+      "sha256": "879a55ffbf29eaf1fae19686ccb8c7a9a5daa16ed1cbd6d5bafc212799583f8d",
+      "line_count": 16,
+      "error": ""
+    },
+    {
+      "id": "table-tab-astrometry",
+      "internal_table_id": "table-tab-astrometry",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2412.06982/arxiv_source/main.tex",
+        "start_line": 402,
+        "end_line": 419,
+        "caption": "2~Cygni astrometry showing angular separation ($\\rho$), position angle (PA) measured east of north, and magnitude difference in the iLocater filter. Uncertainty in angular separation for iLocater astrometry measurements is dominated by uncertainty in the plate scale; calibration of iLocater's north-east orientation with changing parallactic angle is on-going.",
+        "label": "tab:astrometry"
+      },
+      "source_path": "literature/2412.06982/arxiv_source/main.tex",
+      "excerpt_path": "literature/2412.06982/catalog_sources/table-tab-astrometry/excerpt.tex",
+      "sha256": "1b6209a47d6ea19bcba4d28a4aaca047ab33ee49e17f392ca7d99939d9fc60f5",
+      "line_count": 18,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-2cyg",
+      "internal_table_id": "table-tab-2cyg",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2412.06982/catalog_tables/table-tab-2cyg.ecsv",
+      "caption": "Observational properties of the 2 Cygni system. Gaia Early Data Release 3 (DR3) is from the \\cite{gaia_dr3_21}.",
+      "label": "tab:2cyg",
+      "row_count": 12,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value",
+          "Units",
+          "Reference"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Units",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Reference",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpaqn2294m/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.06982/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpaqn2294m/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.06982/catalog_sources/table-tab-2cyg/wrapped.tex",
+            "html": "literature/2412.06982/catalog_sources/table-tab-2cyg/latexml.html",
+            "stdout": "literature/2412.06982/catalog_sources/table-tab-2cyg/latexml.stdout.txt",
+            "stderr": "literature/2412.06982/catalog_sources/table-tab-2cyg/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d4be40f839eb0fc055d8140a44ea6356ad504aad2670080295f2021287ac87d8"
+    },
+    {
+      "id": "table-tab-literature",
+      "internal_table_id": "table-tab-literature",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2412.06982/catalog_tables/table-tab-literature.ecsv",
+      "caption": "Select literature references that mention 2~Cygni.",
+      "label": "tab:literature",
+      "row_count": 12,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Reference",
+          "Comments"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Reference",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Comments",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp51n_2nsl/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.06982/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp51n_2nsl/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.06982/catalog_sources/table-tab-literature/wrapped.tex",
+            "html": "literature/2412.06982/catalog_sources/table-tab-literature/latexml.html",
+            "stdout": "literature/2412.06982/catalog_sources/table-tab-literature/latexml.stdout.txt",
+            "stderr": "literature/2412.06982/catalog_sources/table-tab-literature/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "139a4f03a1d51e962f8ea780ec4d06af2211575c632b9d5d4cbe698fd4a1f316"
+    },
+    {
+      "id": "table-tab-log",
+      "internal_table_id": "table-tab-log",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2412.06982/catalog_tables/table-tab-log.ecsv",
+      "caption": "Observing log for AO measurements of 2~Cygni. iLocater's custom imaging channel senses light within a narrow range of wavelengths ($\\lambda=0.927-0.960 \\; \\mu$m). The number of frames ($N_{\\rm frames}$), integration time per frame ($\\Delta t_{\\rm int}$), and total integration time ($\\Delta t_{\\rm tot}$) are shown for each data set. Seeing measurements ($\\theta$) were made using the LBT DIMM system (within 25$^{\\circ}$ of target) and Keck MASS/DIMM system.",
+      "label": "tab:log",
+      "row_count": 5,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Date (UT)",
+          "Instrument",
+          "Filter",
+          "Mode",
+          "N_\\rm frames",
+          "\\Delta t_\\rm int [sec]",
+          "\\Delta t_\\rm tot [sec]",
+          "Airmass",
+          "\\theta [ \\arcsec ]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Date (UT)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Instrument",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Filter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Mode",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "N_\\rm frames",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\Delta t_\\rm int [sec]",
+          "unit_text": "\\Delta t_\\rm int [sec]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\Delta t_\\rm tot [sec]",
+          "unit_text": "\\Delta t_\\rm tot [sec]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Airmass",
+          "unit_text": "Airmass",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\theta [ \\arcsec ]",
+          "unit_text": "\\theta [ \\arcsec ]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpun7fwgrb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.06982/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpun7fwgrb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.06982/catalog_sources/table-tab-log/wrapped.tex",
+            "html": "literature/2412.06982/catalog_sources/table-tab-log/latexml.html",
+            "stdout": "literature/2412.06982/catalog_sources/table-tab-log/latexml.stdout.txt",
+            "stderr": "literature/2412.06982/catalog_sources/table-tab-log/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ae28a14702cfafca62185d58723ab78ff7e5bb77ef589f16d73e828544977438"
+    },
+    {
+      "id": "table-tab-photometry",
+      "internal_table_id": "table-tab-photometry",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2412.06982/catalog_tables/table-tab-photometry.ecsv",
+      "caption": "Deblended photometry for the 2~Cygni components using NIRC2. $H$-band data is based on $H_{\\rm cont}$ measurements and $K_s$-band data is based on $K_{\\rm cont}$ measurements.",
+      "label": "tab:photometry",
+      "row_count": 2,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "m_H",
+          "m_K_s",
+          "M_H",
+          "M_K_s",
+          "H-K_s"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "m_H",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "m_K_s",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "M_H",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "M_K_s",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "H-K_s",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0dv2ni83/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.06982/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0dv2ni83/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.06982/catalog_sources/table-tab-photometry/wrapped.tex",
+            "html": "literature/2412.06982/catalog_sources/table-tab-photometry/latexml.html",
+            "stdout": "literature/2412.06982/catalog_sources/table-tab-photometry/latexml.stdout.txt",
+            "stderr": "literature/2412.06982/catalog_sources/table-tab-photometry/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "879a55ffbf29eaf1fae19686ccb8c7a9a5daa16ed1cbd6d5bafc212799583f8d"
+    },
+    {
+      "id": "table-tab-astrometry",
+      "internal_table_id": "table-tab-astrometry",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2412.06982/catalog_tables/table-tab-astrometry.ecsv",
+      "caption": "2~Cygni astrometry showing angular separation ($\\rho$), position angle (PA) measured east of north, and magnitude difference in the iLocater filter. Uncertainty in angular separation for iLocater astrometry measurements is dominated by uncertainty in the plate scale; calibration of iLocater's north-east orientation with changing parallactic angle is on-going.",
+      "label": "tab:astrometry",
+      "row_count": 3,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Instrument",
+          "Epoch",
+          "\\rho [mas]",
+          "PA [ ∘ ]",
+          "\\Delta m"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Instrument",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Epoch",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\rho [mas]",
+          "unit_text": "\\rho [mas]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "PA [ ∘ ]",
+          "unit_text": "PA [ ∘ ]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\Delta m",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpkj6wy_a_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.06982/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpkj6wy_a_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.06982/catalog_sources/table-tab-astrometry/wrapped.tex",
+            "html": "literature/2412.06982/catalog_sources/table-tab-astrometry/latexml.html",
+            "stdout": "literature/2412.06982/catalog_sources/table-tab-astrometry/latexml.stdout.txt",
+            "stderr": "literature/2412.06982/catalog_sources/table-tab-astrometry/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "1b6209a47d6ea19bcba4d28a4aaca047ab33ee49e17f392ca7d99939d9fc60f5"
+    }
+  ]
+}

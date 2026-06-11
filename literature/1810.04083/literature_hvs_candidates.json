@@ -1,0 +1,774 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:42:17",
+  "paper": {
+    "arxiv_id": "1810.04083",
+    "bibcode": "2018AJ....156..265M",
+    "title": "A Runaway Giant in the Galactic Halo",
+    "month": "2018-10",
+    "source_note_json": "notes/2018/2018-10/2018-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1810.04083",
+      "pdf": "https://arxiv.org/pdf/1810.04083"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1810.04083",
+    "audit_path": "literature/1810.04083/audit.json",
+    "catalog_review_path": "literature/1810.04083/catalog_review.json",
+    "catalog_extraction_path": "literature/1810.04083/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1810.04083/catalog_tables/table-tab-physical.ecsv",
+      "literature/1810.04083/catalog_tables/table-tab-kinematics.ecsv",
+      "literature/1810.04083/catalog_tables/table-tab-red.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-06-07T10:42:17",
+    "extractor": "agent",
+    "summary": "J01020100-7122208: previously thought to be SMC runaway yellow supergiant, Gaia DR2 reveals it is in MW inner halo at ~8.9 kpc. G5-8 II bright giant, M~3.5 Msun, age~180 Myr, [Fe/H]=-0.5. Total Galactocentric velocity ~296 km/s, currently 6.4 kpc below plane. Highly radial orbit suggests ejection by MW central black hole. Bound to Galaxy — NOT a classical HVS, but a high-velocity runaway giant with possible GC origin."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR2: parallax=0.0728±0.0190 mas → d~8.9 kpc. Proper motions: mu_alpha*=8.647±0.036 mas/yr, mu_delta=-0.906±0.027 mas/yr. Previous spectroscopy (Neugent+2018): RV=301±2.4 km/s.",
+      "inputs": [
+        "Gaia DR2",
+        "MagE/Magellan"
+      ],
+      "outputs": [
+        "Astrometry and RV"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 57,
+          "end_line": 57,
+          "context": "Gaia DR2 parallax and distance"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 99,
+          "end_line": 99,
+          "context": "PM and RV values"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [],
+      "step_type": "distance_estimation",
+      "summary": "Gaia parallax with -0.03 mas systematic offset correction. Exponentially decreasing space density prior. Distance modulus 14.75 mag → d=8.9(+2.8/-1.8) kpc. 90% CI: 7.1-11.7 kpc.",
+      "inputs": [
+        "Gaia DR2 parallax"
+      ],
+      "outputs": [
+        "Distance"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 57,
+          "end_line": 57,
+          "context": "Distance 8.9+2.8/-1.8 kpc"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Spectral type G5-8 II. Teff=4800±100 K via PHOENIX models + photometry. log L/Lsun=2.70±0.20. M=3.5±0.5 Msun, R=32±8 Rsun. log g=2.0±0.2. [Fe/H]=-0.5 from Fe I lines. Age~180 Myr from MIST isochrones.",
+      "inputs": [
+        "MagE spectrum",
+        "PHOENIX",
+        "ATLAS9",
+        "MIST"
+      ],
+      "outputs": [
+        "Teff, luminosity, mass, radius, age, [Fe/H]"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 64,
+          "end_line": 90,
+          "context": "Sec 2: Physical properties"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 369,
+          "end_line": 387,
+          "context": "Tab. 3: Physical properties"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [],
+      "step_type": "radial_velocity_measurement",
+      "summary": "Heliocentric RV=301±2.4 km/s from MagE spectroscopy (Neugent+2018).",
+      "inputs": [
+        "MagE spectrum"
+      ],
+      "outputs": [
+        "Radial velocity"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 99,
+          "end_line": 99,
+          "context": "RV=301±2.4 km/s"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "Four models: Keplerian point mass, pseudo-isothermal sphere, Dauphole & Colin 1995 (Miyamoto-Nagai bulge+disk+halo), same + central MBH. R0=8.5 kpc, v_circ=220 km/s.",
+      "inputs": [
+        "Various potentials"
+      ],
+      "outputs": [
+        "Orbit models"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 108,
+          "end_line": 117,
+          "context": "Sec 3: Four orbit models"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-01",
+        "step-02",
+        "step-04",
+        "step-05"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Backward integration 500 Myr via Bulirsch-Stoer. Star passed through disk 22-27 Myr ago. Perigalacticon 130-780 pc, apogalacticon ~23 kpc. Inclination ~78 deg, eccentricity 0.93-0.99. Orbit almost purely radial (v_rad~293, v_tan~34 km/s).",
+      "inputs": [
+        "6D phase space",
+        "Potential models"
+      ],
+      "outputs": [
+        "Orbit parameters"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 108,
+          "end_line": 146,
+          "context": "Sec 3: Orbit integration results"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [
+        "step-06"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "For parallax between 8.9-9.5 kpc, star passes through GC → likely MBH ejection. Orbit is almost purely radial. Alternative: Type Ia SN survivor (speculative). Dynamical cluster ejection disfavored. NGC 362 origin ruled out.",
+      "inputs": [
+        "Orbit solutions"
+      ],
+      "outputs": [
+        "Origin: most likely GC MBH"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 149,
+          "end_line": 198,
+          "context": "Sec 4: Origins"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 159,
+          "end_line": 167,
+          "context": "Sec 4.1.1: MBH scenario"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [
+        "step-06",
+        "step-05"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Bound in realistic models: apogalacticon ~23 kpc. Total velocity ~296 km/s — does not exceed escape velocity. NOT a classical HVS. But velocity is high compared to typical halo stars.",
+      "inputs": [
+        "Velocity",
+        "Potential"
+      ],
+      "outputs": [
+        "Bound status"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 106,
+          "end_line": 106,
+          "context": "Total velocity ~296 km/s"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+          "start_line": 127,
+          "end_line": 128,
+          "context": "Apogalacticon ~23 kpc"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "1810.04083:cand-001",
+        "paper_candidate_id": "J01020100-7122208",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "J01020100-7122208",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+                "start_line": 55,
+                "end_line": 55,
+                "context": "J01020100-7122208 (UCAC2 1342515)"
+              }
+            ]
+          },
+          {
+            "value": "UCAC2 1342515",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+                "start_line": 55,
+                "end_line": 55,
+                "context": "UCAC2 1342515"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "J01020100-7122208: G5-8 II bright giant, M~3.5 Msun, Teff~4800 K, age~180 Myr, [Fe/H]~-0.5. d~8.9 kpc, v_los=301 km/s, total Galactocentric velocity ~296 km/s. Currently 6.4 kpc below plane. Passed through disk ~25 Myr ago. Likely ejected by MW central black hole. Bound — not classical HVS.",
+        "paper_labels": [
+          "high_velocity_star",
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "bound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "medium",
+        "confidence_reason": "Gaia DR2 reveals star is in MW halo. Physical parameters well-constrained. Orbit analysis suggests GC origin but depends on uncertain parallax. Star is bound — not a classical HVS. Included as high-velocity star with potential GC origin.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+            "start_line": 45,
+            "end_line": 48,
+            "context": "Abstract"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+            "start_line": 209,
+            "end_line": 219,
+            "context": "Sec 5: Summary"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+            "start_line": 55,
+            "end_line": 57,
+            "context": "Previously SMC runaway; Gaia reveals MW halo"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "8.9 (+2.8/-1.8)",
+            "value": "8.9",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "1.8",
+            "upper_error": "2.8",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+                "start_line": 57,
+                "end_line": 57,
+                "context": "Distance 8.9+2.8/-1.8 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          },
+          "parallax": {
+            "raw_value": "0.0728 ± 0.0190",
+            "value": "0.0728",
+            "unit": "mas",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+                "start_line": 57,
+                "end_line": 57,
+                "context": "Parallax 0.0728±0.0190 mas"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "8.647 ± 0.036",
+            "value": "8.647",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+                "start_line": 99,
+                "end_line": 99,
+                "context": "mu_alpha cos d=8.647±0.036"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.906 ± 0.027",
+            "value": "-0.906",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+                "start_line": 99,
+                "end_line": 99,
+                "context": "mu_delta=-0.906±0.027"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "301 ± 2.4",
+            "value": "301",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+                "start_line": 99,
+                "end_line": 99,
+                "context": "RV=301±2.4 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "296 ± 3",
+            "value": "296",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+                "start_line": 106,
+                "end_line": 106,
+                "context": "Total velocity ~296 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "301 ± 2.4",
+            "value": "301",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+                "start_line": 99,
+                "end_line": 99,
+                "context": "RV=301±2.4 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "4800 ± 100",
+          "value": "4800",
+          "unit": "K",
+          "error": "",
+          "lower_error": "100",
+          "upper_error": "100",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+              "start_line": 86,
+              "end_line": 86,
+              "context": "Teff=4800±100 K"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "log_g": {
+          "raw_value": "2.0 ± 0.2",
+          "value": "2.0",
+          "unit": "dex",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+              "start_line": 382,
+              "end_line": 382,
+              "context": "Tab. 3: log g=2.0±0.2"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "mass": {
+          "raw_value": "3.5 ± 0.5",
+          "value": "3.5",
+          "unit": "Msun",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+              "start_line": 381,
+              "end_line": 381,
+              "context": "Tab. 3: Mass=3.5±0.5 Msun"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "age": {
+          "raw_value": "180",
+          "value": "180",
+          "unit": "Myr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+              "start_line": 383,
+              "end_line": 383,
+              "context": "Tab. 3: Age=180 Myr (130-300 Myr)"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "radius": {
+          "raw_value": "32 ± 8",
+          "value": "32",
+          "unit": "Rsun",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+              "start_line": 380,
+              "end_line": 380,
+              "context": "Tab. 3: Radius=32±8 Rsun"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "metallicity": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "flight_time": {
+          "raw_value": "25",
+          "value": "25",
+          "unit": "Myr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+              "start_line": 127,
+              "end_line": 128,
+              "context": "Passed through disk 22-27 Myr ago"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "pericenter": {
+          "raw_value": "0.13-0.78",
+          "value": "0.455",
+          "unit": "kpc",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+              "start_line": 128,
+              "end_line": 128,
+              "context": "Perigalacticon 130-780 pc"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "apocenter": {
+          "raw_value": "23",
+          "value": "23",
+          "unit": "kpc",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+              "start_line": 129,
+              "end_line": 129,
+              "context": "Apogalacticon ~23 kpc"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "eccentricity": {
+          "raw_value": "0.93-0.99",
+          "value": "0.96",
+          "unit": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+              "start_line": 135,
+              "end_line": 135,
+              "context": "Eccentricity 0.93-0.99"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "zmax": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "Most likely ejected by Milky Way central black hole",
+          "value": "galactic_center",
+          "unit": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+              "start_line": 159,
+              "end_line": 167,
+              "context": "MBH encounter most likely origin"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "origin_classification": {
+          "raw_value": "Hills mechanism via MBH at Galactic Center",
+          "value": "hills_mechanism_gc",
+          "unit": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+              "start_line": 161,
+              "end_line": 162,
+              "context": "Hills mechanism via MBH"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "ejection_velocity": null,
+        "travel_time": {
+          "raw_value": "25",
+          "value": "25",
+          "unit": "Myr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+              "start_line": 127,
+              "end_line": 128,
+              "context": "Passed through disk 22-27 Myr ago"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "hypothesis_metrics": [
+          {
+            "raw_value": "Orbit passes through GC for d=8.9-9.5 kpc",
+            "value": "likely",
+            "unit": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "kind": "",
+            "description": "Rotation sense flips between 8.9-9.5 kpc",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+                "start_line": 163,
+                "end_line": 166,
+                "context": "Orbit must cross GC for some parallax"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ],
+            "hypothesis": "galactic_center_origin",
+            "metric_type": "classification"
+          }
+        ],
+        "other": []
+      },
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": []
+}

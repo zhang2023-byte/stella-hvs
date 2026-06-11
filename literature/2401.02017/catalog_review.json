@@ -1,0 +1,409 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2401.02017",
+    "title": "The origin of High-velocity stars considering the impact of the Large Magellanic Cloud",
+    "month": "2024-01",
+    "source_note_json": "notes/2024/2024-01/2024-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2401.02017",
+      "pdf": "https://arxiv.org/pdf/2401.02017"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2401.02017",
+    "audit_path": "literature/2401.02017/audit.json",
+    "source_dir": "literature/2401.02017/arxiv_source",
+    "tex_root": "literature/2401.02017/arxiv_source/ljw.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:33:58",
+    "reviewer": "agent",
+    "summary": "Six internal tables: classification criteria (tab1), 9 unbound candidate parameters (tab4), GC-origin star details (tab2), HVS3 parameters (tab3), Sgr-origin HiVels (tab5), and full catalog schema (tab:catalog). One primary external resource: the China-VO machine-readable catalog (doi:10.12149/101304). Generic Gaia mission acknowledgements omitted."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab1",
+      "kind": "latex_table",
+      "asset_type": "classification_scheme",
+      "role_in_paper": "Defines the classification criteria used to categorize the 519 high-velocity stars into hypervelocity stars (HVS), hyper-runaway stars (HRS), runaway stars (RS), and high-velocity halo stars based on unbound probability, disk tracking probability, azimuthal velocity, and MBH ejection origin.",
+      "source_refs": [
+        {
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 133,
+          "end_line": 145,
+          "caption": "The classification criteria of HiVels \\label{tab1}",
+          "label": "tab1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Class",
+          "meaning": "Classification category of the high-velocity star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P\\mathrm_ub",
+          "meaning": "Probability of exceeding the Galactic escape velocity curve",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P\\mathrm_disk",
+          "meaning": "Probability of the stellar trajectory tracking back to the Galactic disk",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\nu\\mathrm_\\phi",
+          "meaning": "Azimuthal velocity in the Galactocentric frame; used with an empirical demarcation line to distinguish disk stars from halo stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "MBH ejection origin",
+          "meaning": "Boolean indicator of whether the star is expected to originate from massive black hole ejection",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The classification criteria of HiVels \\label{tab1}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab4",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Lists the basic astrometric and kinematic parameters of the 9 unbound high-velocity star candidates identified in this work, including 7 newly identified stars and 2 previously reported by Marchetti et al. (2021) and Li et al. (2021).",
+      "source_refs": [
+        {
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 148,
+          "end_line": 166,
+          "caption": "Basic parameters for the 9 unbound candidates",
+          "label": "tab4"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR3 source_id",
+          "meaning": "Gaia DR3 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A. | (deg)",
+          "meaning": "Right ascension in the ICRS frame at Epoch=2016.0",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Decl. | (deg)",
+          "meaning": "Declination in the ICRS frame at Epoch=2016.0",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "rv | (km s^-1)",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d | (kpc)",
+          "meaning": "Heliocentric distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\nu\\mathrm_GC | (km s^-1)",
+          "meaning": "Galactocentric total velocity (space velocity relative to the Galactic center)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P\\mathrm_ub",
+          "meaning": "Probability of exceeding the Galactic escape velocity curve",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P\\mathrm_disk",
+          "meaning": "Probability of the stellar trajectory tracking back to the Galactic disk",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\nu\\mathrm_\\phi | (km s^-1)",
+          "meaning": "Azimuthal velocity in the Galactocentric frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Basic parameters for the 9 unbound candidates",
+      "comments": ""
+    },
+    {
+      "id": "table-tab2",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Provides detailed observational and kinematic parameters for the single high-velocity star whose backward-integrated trajectory passes within 1 kpc of the Galactic Center, discussing its possible origin.",
+      "source_refs": [
+        {
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 173,
+          "end_line": 192,
+          "caption": "Detailed information about the star with probable origin in the center of the Galaxy. \\label{tab2}",
+          "label": "tab2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name of the physical or observational parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "value",
+          "meaning": "Measured or derived value of the parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "unit",
+          "meaning": "Physical unit of the parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Detailed information about the star with probable origin in the center of the Galaxy. \\label{tab2}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab3",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Provides updated observational and astrometric parameters for HVS3 (a previously reported high-velocity star) recalculated using Gaia DR3 proper motions, to assess its trajectory relative to the LMC.",
+      "source_refs": [
+        {
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 206,
+          "end_line": 221,
+          "caption": "The related parameters of HVS3 \\label{tab3}",
+          "label": "tab3"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name of the physical or observational parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "value",
+          "meaning": "Measured or derived value of the parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "unit",
+          "meaning": "Physical unit of the parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The related parameters of HVS3 \\label{tab3}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab5",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Lists high-velocity stars with probable origin in the Sagittarius dwarf spheroidal galaxy (Sgr dSph), including kinematic parameters, photometry, and chemical abundances from cross-matched surveys.",
+      "source_refs": [
+        {
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 229,
+          "end_line": 248,
+          "caption": "HiVels originating from the Sgr dsph",
+          "label": "tab5"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR3 source_id | ...",
+          "meaning": "Gaia DR3 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "rv | (km s^-1)",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d | (kpc)",
+          "meaning": "Heliocentric distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\nu\\mathrm_GC | (km s^-1)",
+          "meaning": "Galactocentric total velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P\\mathrm_Sgr | ...",
+          "meaning": "Probability of the stellar trajectory tracking back to the Sagittarius dwarf spheroidal galaxy",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G-magnitude^a | mag",
+          "meaning": "Gaia G-band mean magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "BP-RP^a | mag",
+          "meaning": "Gaia BP-RP color index",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H] | dex",
+          "meaning": "Iron-to-hydrogen metallicity ratio from cross-matched spectroscopic survey",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[\\alpha/Fe] | dex",
+          "meaning": "Alpha-element-to-iron abundance ratio from cross-matched spectroscopic survey",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Reference | ...",
+          "meaning": "Literature reference for previously reported stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "HiVels originating from the Sgr dsph",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-catalog",
+      "kind": "latex_table",
+      "asset_type": "schema_description",
+      "role_in_paper": "Describes the column definitions, units, and semantic descriptions of the full machine-readable catalog of 519 high-velocity stars published in the online Journal and hosted on China-VO.",
+      "source_refs": [
+        {
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 285,
+          "end_line": 348,
+          "caption": "Catalog Format \\label{tab:catalog}",
+          "label": "tab:catalog"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Label",
+          "meaning": "Column name in the machine-readable catalog",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Unit",
+          "meaning": "Physical unit of the column",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Description",
+          "meaning": "Semantic description of the column content and data provenance",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Catalog Format \\label{tab:catalog}",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://nadc.china-vo.org/res/r101304/",
+      "local_path": "",
+      "description": "Full machine-readable catalog of 519 high-velocity stars hosted on the China-VO platform (National Astronomical Data Center).",
+      "source_refs": [
+        {
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 255,
+          "end_line": 255,
+          "context": "\\label{5}\n\n\\par In this study, we identify a total of 519 high-velocity stars (HiVels) through a cross-matching process between the \\textit{Gaia} DR3 and other Large-scale Galactic Surveys.  A catalog of the properties of these stars is available on China-VO: \\dataset[doi:10.12149/101304]{https://nadc.china-vo.org/res/r101304/}. These HiVels consist of 9 unbound candidates under the {\\tt\\string Gala} {\\tt\\string MilkyWayPotential}, 57 runaway stars (not the typical OB type runaway stars), and 453 high-velocity halo stars. In our sample, 78 HiVels have been reported by \\citet{Li.Yinbi2021}, a candidate HiVel originating from the Sgr dSph has been reported by \\citet{Lihf2022}, and 440 have been reported for the first time."
+        }
+      ],
+      "evidence": "\\label{5}\n\n\\par In this study, we identify a total of 519 high-velocity stars (HiVels) through a cross-matching process between the \\textit{Gaia} DR3 and other Large-scale Galactic Surveys.  A catalog of the properties of these stars is available on China-VO: \\dataset[doi:10.12149/101304]{https://nadc.china-vo.org/res/r101304/}. These HiVels consist of 9 unbound candidates under the {\\tt\\string Gala} {\\tt\\string MilkyWayPotential}, 57 runaway stars (not the typical OB type runaway stars), and 453 high-velocity halo stars. In our sample, 78 HiVels have been reported by \\citet{Li.Yinbi2021}, a candidate HiVel originating from the Sgr dSph has been reported by \\citet{Lihf2022}, and 440 have been reported for the first time.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "The full catalog table is also available in machine-readable format from the online Journal.",
+      "source_refs": [
+        {
+          "path": "literature/2401.02017/arxiv_source/ljw.tex",
+          "start_line": 280,
+          "end_line": 281,
+          "context": "Table \\ref{tab:catalog} describes the format of the full table for the 519 HiVels... It is available in a machine-readable format in the online Journal and in China-VO."
+        }
+      ],
+      "evidence": "Table \\ref{tab:catalog} describes the format of the full table for the 519 HiVels... It is available in a machine-readable format in the online Journal and in China-VO.",
+      "comments": ""
+    }
+  ]
+}

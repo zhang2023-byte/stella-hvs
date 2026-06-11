@@ -1,0 +1,1495 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:36:00",
+  "paper": {
+    "arxiv_id": "1911.12636",
+    "title": "High-resolution spectroscopy of the high velocity hot post-AGB star IRAS 18379-1707 (LS 5112)",
+    "month": "2019-11"
+  },
+  "review": {
+    "path": "literature/1911.12636/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083600",
+    "started_at": "2026-06-07T08:36:00",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1911.12636",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 11,
+      "work_count": 11,
+      "table_count": 11,
+      "success_count": 11,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 11,
+      "file_success_count": 11,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-param",
+      "internal_table_id": "table-param",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+        "start_line": 141,
+        "end_line": 172,
+        "caption": "Stellar and Dust Parameters of IRAS~18379--1707.",
+        "label": "param"
+      },
+      "source_path": "literature/1911.12636/arxiv_source/LS5112.tex",
+      "excerpt_path": "literature/1911.12636/catalog_sources/table-param/excerpt.tex",
+      "sha256": "4c58f69cae84273c6a5629378d081fad83cc33b07c2a54197ac02df633a97fb3",
+      "line_count": 32,
+      "error": ""
+    },
+    {
+      "id": "table-ISlines",
+      "internal_table_id": "table-ISlines",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+        "start_line": 334,
+        "end_line": 363,
+        "caption": "Absorption components of \\ion{Na}{I} D1 and D2, \\ion{Ca}{II} H and K lines in the spectrum of IRAS 18379-1707. $V_\\text{r}$ are the respective heliocentric radial velocities.",
+        "label": "ISlines"
+      },
+      "source_path": "literature/1911.12636/arxiv_source/LS5112.tex",
+      "excerpt_path": "literature/1911.12636/catalog_sources/table-ISlines/excerpt.tex",
+      "sha256": "a8105e8cd0e3922b82c2757fb40d6e91cc17646a4b8108ca7d3c6d374c3c161b",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-DIB",
+      "internal_table_id": "table-DIB",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+        "start_line": 394,
+        "end_line": 438,
+        "caption": "DIBs in the spectrum of IRAS~18379--1707.",
+        "label": "DIB"
+      },
+      "source_path": "literature/1911.12636/arxiv_source/LS5112.tex",
+      "excerpt_path": "literature/1911.12636/catalog_sources/table-DIB/excerpt.tex",
+      "sha256": "aea0d133374eccc0dece80d67b4c1b4af78cb8998f4e6edfb842e1e74f07d983",
+      "line_count": 45,
+      "error": ""
+    },
+    {
+      "id": "table-radvel",
+      "internal_table_id": "table-radvel",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+        "start_line": 518,
+        "end_line": 547,
+        "caption": "Radial velocities.",
+        "label": "tab:radvel"
+      },
+      "source_path": "literature/1911.12636/arxiv_source/LS5112.tex",
+      "excerpt_path": "literature/1911.12636/catalog_sources/table-radvel/excerpt.tex",
+      "sha256": "650e4d5dfa828a7d38cd0d31d539c66c54d7e4e7356ba3bd81729d9733fe98fa",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-abund",
+      "internal_table_id": "table-abund",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+        "start_line": 701,
+        "end_line": 730,
+        "caption": "Element abundances determined for IRAS~18379--1707 in $\\log \\varepsilon=12+\\log(n_\\text{X}/n_\\text{H})$ and [X/H]=$\\log(n_\\text{X}/n_\\text{H})-\\log(n_{\\text{X}\\odot}/n_{\\text{H}\\odot})$",
+        "label": "tab:abund"
+      },
+      "source_path": "literature/1911.12636/arxiv_source/LS5112.tex",
+      "excerpt_path": "literature/1911.12636/catalog_sources/table-abund/excerpt.tex",
+      "sha256": "c80e77a1624b3e6b4f550435053399441a10007647326958fb4f137e5cd8ec15",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-err",
+      "internal_table_id": "table-err",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+        "start_line": 940,
+        "end_line": 965,
+        "caption": "The derived parameters, their sensitivity to the model assumptions and final uncertainties.",
+        "label": "tab:err"
+      },
+      "source_path": "literature/1911.12636/arxiv_source/LS5112.tex",
+      "excerpt_path": "literature/1911.12636/catalog_sources/table-err/excerpt.tex",
+      "sha256": "97b828896406798e130e8a7012dc833b01d520573c48b428e83d1b9667ef14d1",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-vel",
+      "internal_table_id": "table-vel",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+        "start_line": 1115,
+        "end_line": 1147,
+        "caption": "Expansion velocities.",
+        "label": "tab:vel"
+      },
+      "source_path": "literature/1911.12636/arxiv_source/LS5112.tex",
+      "excerpt_path": "literature/1911.12636/catalog_sources/table-vel/excerpt.tex",
+      "sha256": "a0360ee99057e061eba2f54e30afddb0d7813a3766e172eff1f81ef1093d44e0",
+      "line_count": 33,
+      "error": ""
+    },
+    {
+      "id": "table-asas",
+      "internal_table_id": "table-asas",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+        "start_line": 1348,
+        "end_line": 1362,
+        "caption": "Summary of photometric observations of IRAS~18379--1707",
+        "label": "tab:asas"
+      },
+      "source_path": "literature/1911.12636/arxiv_source/LS5112.tex",
+      "excerpt_path": "literature/1911.12636/catalog_sources/table-asas/excerpt.tex",
+      "sha256": "722b48c7299b6970894cd8f4cf53538a331372b1ad1749061c350afdfb1f6315",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-emlines",
+      "internal_table_id": "table-emlines",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+        "start_line": 1651,
+        "end_line": 1750,
+        "caption": "Emission lines in the spectrum of IRAS~18379--1707.",
+        "label": "emlines"
+      },
+      "source_path": "literature/1911.12636/arxiv_source/LS5112.tex",
+      "excerpt_path": "literature/1911.12636/catalog_sources/table-emlines/excerpt.tex",
+      "sha256": "a6ae1219d75362303130fc0fcb356de60b5fcb3e61cb96e1c08c55618456b76a",
+      "line_count": 100,
+      "error": ""
+    },
+    {
+      "id": "table-abslines",
+      "internal_table_id": "table-abslines",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+        "start_line": 1754,
+        "end_line": 1821,
+        "caption": "Absorption lines used for measurement of the stellar radial velocity.",
+        "label": "tab:abslines"
+      },
+      "source_path": "literature/1911.12636/arxiv_source/LS5112.tex",
+      "excerpt_path": "literature/1911.12636/catalog_sources/table-abslines/excerpt.tex",
+      "sha256": "dd0ff97cd471d38879784894a24be0548ee241fa75bba60052a65e9f53c14b56",
+      "line_count": 68,
+      "error": ""
+    },
+    {
+      "id": "table-blueshifted",
+      "internal_table_id": "table-blueshifted",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+        "start_line": 1824,
+        "end_line": 1847,
+        "caption": "Absorption lines with extended blue wings.",
+        "label": "tab:blueshifted"
+      },
+      "source_path": "literature/1911.12636/arxiv_source/LS5112.tex",
+      "excerpt_path": "literature/1911.12636/catalog_sources/table-blueshifted/excerpt.tex",
+      "sha256": "00743e842293b87b61bd3ef43cc5407ecfd423759c4c17ca0d1428b9b9ef9ecc",
+      "line_count": 24,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-param",
+      "internal_table_id": "table-param",
+      "status": "success",
+      "ecsv_path": "literature/1911.12636/catalog_tables/table-param.ecsv",
+      "caption": "Stellar and Dust Parameters of IRAS~18379--1707.",
+      "label": "param",
+      "row_count": 14,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Quantity",
+          "Value",
+          "References"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Quantity",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "References",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpi96zx027/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1911.12636/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpi96zx027/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1911.12636/catalog_sources/table-param/wrapped.tex",
+            "html": "literature/1911.12636/catalog_sources/table-param/latexml.html",
+            "stdout": "literature/1911.12636/catalog_sources/table-param/latexml.stdout.txt",
+            "stderr": "literature/1911.12636/catalog_sources/table-param/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4c58f69cae84273c6a5629378d081fad83cc33b07c2a54197ac02df633a97fb3"
+    },
+    {
+      "id": "table-ISlines",
+      "internal_table_id": "table-ISlines",
+      "status": "success",
+      "ecsv_path": "literature/1911.12636/catalog_tables/table-ISlines.ecsv",
+      "caption": "Absorption components of \\ion{Na}{I} D1 and D2, \\ion{Ca}{II} H and K lines in the spectrum of IRAS 18379-1707. $V_\\text{r}$ are the respective heliocentric radial velocities.",
+      "label": "ISlines",
+      "row_count": 5,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "component",
+          "Na I D 2",
+          "",
+          "Na I D 1",
+          "",
+          "Ca II H",
+          "",
+          "Ca II K",
+          ""
+        ],
+        [
+          "",
+          "\\lambda_obs.",
+          "V_r",
+          "\\lambda_obs.",
+          "V_r",
+          "\\lambda_obs.",
+          "V_r",
+          "\\lambda_obs.",
+          "V_r"
+        ],
+        [
+          "",
+          "Å",
+          "km s^-1",
+          "Å",
+          "km s^-1",
+          "Å",
+          "km s^-1",
+          "Å",
+          "km s^-1"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "component",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Na I D 2 | \\lambda_obs. | Å",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "V_r | km s^-1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Na I D 1 | \\lambda_obs. | Å",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V_r | km s^-1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Ca II H | \\lambda_obs. | Å",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "V_r | km s^-1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Ca II K | \\lambda_obs. | Å",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "V_r | km s^-1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3t4_e1sn/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1911.12636/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3t4_e1sn/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1911.12636/catalog_sources/table-ISlines/wrapped.tex",
+            "html": "literature/1911.12636/catalog_sources/table-ISlines/latexml.html",
+            "stdout": "literature/1911.12636/catalog_sources/table-ISlines/latexml.stdout.txt",
+            "stderr": "literature/1911.12636/catalog_sources/table-ISlines/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a8105e8cd0e3922b82c2757fb40d6e91cc17646a4b8108ca7d3c6d374c3c161b"
+    },
+    {
+      "id": "table-DIB",
+      "internal_table_id": "table-DIB",
+      "status": "success",
+      "ecsv_path": "literature/1911.12636/catalog_tables/table-DIB.ecsv",
+      "caption": "DIBs in the spectrum of IRAS~18379--1707.",
+      "label": "DIB",
+      "row_count": 24,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\lambda_obs.",
+          "\\lambda_c",
+          "FWHM",
+          "EW",
+          "\\fracEWE(B-V)",
+          "E(B-V)",
+          "V_r"
+        ],
+        [
+          "Å",
+          "Å",
+          "Å",
+          "Å",
+          "Å/mag",
+          "mag",
+          "km s^-1"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\lambda_obs. | Å",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\lambda_c | Å",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "FWHM | Å",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "EW | Å",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\fracEWE(B-V) | Å/mag",
+          "unit_text": "Å/mag",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "E(B-V) | mag",
+          "unit_text": "mag",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "V_r | km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpc7cugt_j/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1911.12636/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpc7cugt_j/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1911.12636/catalog_sources/table-DIB/wrapped.tex",
+            "html": "literature/1911.12636/catalog_sources/table-DIB/latexml.html",
+            "stdout": "literature/1911.12636/catalog_sources/table-DIB/latexml.stdout.txt",
+            "stderr": "literature/1911.12636/catalog_sources/table-DIB/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "aea0d133374eccc0dece80d67b4c1b4af78cb8998f4e6edfb842e1e74f07d983"
+    },
+    {
+      "id": "table-radvel",
+      "internal_table_id": "table-radvel",
+      "status": "success",
+      "ecsv_path": "literature/1911.12636/catalog_tables/table-radvel.ecsv",
+      "caption": "Radial velocities.",
+      "label": "tab:radvel",
+      "row_count": 15,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpat5mi23r/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1911.12636/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpat5mi23r/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1911.12636/catalog_sources/table-radvel/wrapped.tex",
+            "html": "literature/1911.12636/catalog_sources/table-radvel/latexml.html",
+            "stdout": "literature/1911.12636/catalog_sources/table-radvel/latexml.stdout.txt",
+            "stderr": "literature/1911.12636/catalog_sources/table-radvel/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "650e4d5dfa828a7d38cd0d31d539c66c54d7e4e7356ba3bd81729d9733fe98fa"
+    },
+    {
+      "id": "table-abund",
+      "internal_table_id": "table-abund",
+      "status": "success",
+      "ecsv_path": "literature/1911.12636/catalog_tables/table-abund.ecsv",
+      "caption": "Element abundances determined for IRAS~18379--1707 in $\\log \\varepsilon=12+\\log(n_\\text{X}/n_\\text{H})$ and [X/H]=$\\log(n_\\text{X}/n_\\text{H})-\\log(n_{\\text{X}\\odot}/n_{\\text{H}\\odot})$",
+      "label": "tab:abund",
+      "row_count": 9,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "\\log\\varepsilon_\\odot",
+          "\\log\\varepsilon",
+          "[X/H]",
+          "\\sigma_x",
+          "\\sigma_\\overlinex",
+          "N"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\log\\varepsilon_\\odot",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\log\\varepsilon",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "[X/H]",
+          "unit_text": "[X/H]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_x",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\sigma_\\overlinex",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "N",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8r40wr97/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1911.12636/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8r40wr97/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1911.12636/catalog_sources/table-abund/wrapped.tex",
+            "html": "literature/1911.12636/catalog_sources/table-abund/latexml.html",
+            "stdout": "literature/1911.12636/catalog_sources/table-abund/latexml.stdout.txt",
+            "stderr": "literature/1911.12636/catalog_sources/table-abund/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c80e77a1624b3e6b4f550435053399441a10007647326958fb4f137e5cd8ec15"
+    },
+    {
+      "id": "table-err",
+      "internal_table_id": "table-err",
+      "status": "success",
+      "ecsv_path": "literature/1911.12636/catalog_tables/table-err.ecsv",
+      "caption": "The derived parameters, their sensitivity to the model assumptions and final uncertainties.",
+      "label": "tab:err",
+      "row_count": 11,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "\\partial x_i/\\partial T_\\rm eff",
+          "\\partial x_i/\\partial\\log g",
+          "\\partial x_i/\\partial\\xi",
+          "\\sigma_\\rm C",
+          "\\sigma_\\rm M",
+          "\\sigma_p",
+          "\\sigma_\\xi m",
+          "x_i",
+          "\\sigma_i",
+          "\\overline\\sigma_k"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\partial x_i/\\partial T_\\rm eff",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\partial x_i/\\partial\\log g",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\partial x_i/\\partial\\xi",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_\\rm C",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\sigma_\\rm M",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_p",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\sigma_\\xi m",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "x_i",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\sigma_i",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\overline\\sigma_k",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprfxw3bb2/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1911.12636/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprfxw3bb2/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1911.12636/catalog_sources/table-err/wrapped.tex",
+            "html": "literature/1911.12636/catalog_sources/table-err/latexml.html",
+            "stdout": "literature/1911.12636/catalog_sources/table-err/latexml.stdout.txt",
+            "stderr": "literature/1911.12636/catalog_sources/table-err/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "97b828896406798e130e8a7012dc833b01d520573c48b428e83d1b9667ef14d1"
+    },
+    {
+      "id": "table-vel",
+      "internal_table_id": "table-vel",
+      "status": "success",
+      "ecsv_path": "literature/1911.12636/catalog_tables/table-vel.ecsv",
+      "caption": "Expansion velocities.",
+      "label": "tab:vel",
+      "row_count": 10,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Identification",
+          "\\lambda_lab.",
+          "V_FWHM",
+          "V_exp"
+        ],
+        [
+          "",
+          "Å",
+          "km s^-1",
+          "km s^-1"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Identification",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\lambda_lab. | Å",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "V_FWHM | km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "V_exp | km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0fudi0jz/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1911.12636/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0fudi0jz/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1911.12636/catalog_sources/table-vel/wrapped.tex",
+            "html": "literature/1911.12636/catalog_sources/table-vel/latexml.html",
+            "stdout": "literature/1911.12636/catalog_sources/table-vel/latexml.stdout.txt",
+            "stderr": "literature/1911.12636/catalog_sources/table-vel/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a0360ee99057e061eba2f54e30afddb0d7813a3766e172eff1f81ef1093d44e0"
+    },
+    {
+      "id": "table-asas",
+      "internal_table_id": "table-asas",
+      "status": "success",
+      "ecsv_path": "literature/1911.12636/catalog_tables/table-asas.ecsv",
+      "caption": "Summary of photometric observations of IRAS~18379--1707",
+      "label": "tab:asas",
+      "row_count": 2,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Source",
+          "V , mag",
+          "SD , mag",
+          "N",
+          "\\sigma V , mag"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "V , mag",
+          "unit_text": "V , mag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "SD , mag",
+          "unit_text": "SD , mag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma V , mag",
+          "unit_text": "\\sigma V , mag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp33tj81ig/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1911.12636/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp33tj81ig/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1911.12636/catalog_sources/table-asas/wrapped.tex",
+            "html": "literature/1911.12636/catalog_sources/table-asas/latexml.html",
+            "stdout": "literature/1911.12636/catalog_sources/table-asas/latexml.stdout.txt",
+            "stderr": "literature/1911.12636/catalog_sources/table-asas/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "722b48c7299b6970894cd8f4cf53538a331372b1ad1749061c350afdfb1f6315"
+    },
+    {
+      "id": "table-emlines",
+      "internal_table_id": "table-emlines",
+      "status": "success",
+      "ecsv_path": "literature/1911.12636/catalog_tables/table-emlines.ecsv",
+      "caption": "Emission lines in the spectrum of IRAS~18379--1707.",
+      "label": "emlines",
+      "row_count": 72,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\lambda_obs.",
+          "\\lambda_lab.",
+          "Identification",
+          "EW",
+          "V_r"
+        ],
+        [
+          "Å",
+          "Å",
+          "",
+          "Å",
+          "km s^-1"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\lambda_obs. | Å",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\lambda_lab. | Å",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Identification",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "EW | Å",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V_r | km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa4swh9l_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1911.12636/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa4swh9l_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1911.12636/catalog_sources/table-emlines/wrapped.tex",
+            "html": "literature/1911.12636/catalog_sources/table-emlines/latexml.html",
+            "stdout": "literature/1911.12636/catalog_sources/table-emlines/latexml.stdout.txt",
+            "stderr": "literature/1911.12636/catalog_sources/table-emlines/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a6ae1219d75362303130fc0fcb356de60b5fcb3e61cb96e1c08c55618456b76a"
+    },
+    {
+      "id": "table-abslines",
+      "internal_table_id": "table-abslines",
+      "status": "success",
+      "ecsv_path": "literature/1911.12636/catalog_tables/table-abslines.ecsv",
+      "caption": "Absorption lines used for measurement of the stellar radial velocity.",
+      "label": "tab:abslines",
+      "row_count": 52,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "ion",
+          "\\lambda_\\rm lab",
+          "E_l",
+          "EW",
+          "V_\\rm r",
+          "\\sigma_V_\\rm r"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ion",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\lambda_\\rm lab",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "E_l",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "EW",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V_\\rm r",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\sigma_V_\\rm r",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp249zmieo/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1911.12636/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp249zmieo/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1911.12636/catalog_sources/table-abslines/wrapped.tex",
+            "html": "literature/1911.12636/catalog_sources/table-abslines/latexml.html",
+            "stdout": "literature/1911.12636/catalog_sources/table-abslines/latexml.stdout.txt",
+            "stderr": "literature/1911.12636/catalog_sources/table-abslines/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "dd0ff97cd471d38879784894a24be0548ee241fa75bba60052a65e9f53c14b56"
+    },
+    {
+      "id": "table-blueshifted",
+      "internal_table_id": "table-blueshifted",
+      "status": "success",
+      "ecsv_path": "literature/1911.12636/catalog_tables/table-blueshifted.ecsv",
+      "caption": "Absorption lines with extended blue wings.",
+      "label": "tab:blueshifted",
+      "row_count": 12,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "ion",
+          "\\lambda_\\rm lab",
+          "E_l",
+          "EW",
+          "V_\\rm r",
+          "\\sigma_V_\\rm r"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ion",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\lambda_\\rm lab",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "E_l",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "EW",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V_\\rm r",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\sigma_V_\\rm r",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpw781dwc2/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1911.12636/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpw781dwc2/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1911.12636/catalog_sources/table-blueshifted/wrapped.tex",
+            "html": "literature/1911.12636/catalog_sources/table-blueshifted/latexml.html",
+            "stdout": "literature/1911.12636/catalog_sources/table-blueshifted/latexml.stdout.txt",
+            "stderr": "literature/1911.12636/catalog_sources/table-blueshifted/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "00743e842293b87b61bd3ef43cc5407ecfd423759c4c17ca0d1428b9b9ef9ecc"
+    }
+  ]
+}

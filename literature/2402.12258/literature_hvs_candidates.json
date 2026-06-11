@@ -1,0 +1,80 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T17:11:29",
+  "paper": {
+    "arxiv_id": "2402.12258",
+    "bibcode": "2025MNRAS.537.1320F",
+    "title": "Low-mass Runaways from the Orion Nebula Cluster -- Kinematic Age Constraints on Star Cluster Formation",
+    "month": "2024-02",
+    "source_note_json": "notes/2024/2024-02/2024-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2402.12258",
+      "pdf": "https://arxiv.org/pdf/2402.12258"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2402.12258",
+    "audit_path": "literature/2402.12258/audit.json",
+    "catalog_review_path": "literature/2402.12258/catalog_review.json",
+    "catalog_extraction_path": "literature/2402.12258/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2402.12258/catalog_tables/table-targets_table.ecsv",
+      "literature/2402.12258/catalog_tables/table-results_table.ecsv",
+      "literature/2402.12258/catalog_tables/table-isochrone_table.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T17:11:29",
+    "extractor": "agent",
+    "summary": "This paper studies low-mass runaway stars ejected from the Orion Nebula Cluster (ONC). All objects discussed are candidate or confirmed cluster escapers/runaways with 2D and 3D traceback analysis to the ONC. The paper never discusses Galactic-unbound status, HVS candidacy, or escape from the Milky Way gravitational potential for any object. These are ordinary cluster runaways, not Galactic-unbound HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-targets_table",
+      "description": "27 candidate runaways from the ONC selected for spectroscopic follow-up with MAG2-MIKE, based on Gaia EDR3 astrometry and youth indicators.",
+      "decision": "excluded",
+      "reason": "These are candidate runaways from the Orion Nebula Cluster (ONC), selected based on 2D traceback analysis from Gaia astrometry and youth criteria. The paper discusses them as stars possibly ejected from the ONC, not as objects possibly unbound from the Milky Way gravitational potential. They are ordinary runaways / cluster escapers.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2402.12258/arxiv_source/mnras.tex",
+          "start_line": 73,
+          "end_line": 82,
+          "context": "Abstract establishing the paper's scope: spectroscopic follow-up of candidate runaways ejected from the Orion Nebula Cluster (ONC) based on Gaia astrometry."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2402.12258/arxiv_source/mnras.tex",
+          "start_line": 169,
+          "end_line": 170,
+          "context": "Table 1 caption: 'List of candidate runaways observed with MAG2-MIKE' with columns for 2D ejection velocity, 2D closest approach to the ONC, and optimal 3D traceback time, all relative to the ONC."
+        }
+      ]
+    },
+    {
+      "group_id": "table-results_table",
+      "description": "11 spectroscopically confirmed YSO runaways with measured radial velocities and 3D traceback results relative to the ONC.",
+      "decision": "excluded",
+      "reason": "These are spectroscopically confirmed young stellar object (YSO) runaways from the ONC, with 3D traceback analysis confirming their possible origin in the ONC. The paper discusses their ejection from the ONC and compares kinematic ejection ages with isochronal ages, but never discusses their Galactic binding status or presents them as possibly unbound from the Milky Way. They are cluster escapers, not Galactic-unbound HVS candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2402.12258/arxiv_source/mnras.tex",
+          "start_line": 391,
+          "end_line": 415,
+          "context": "Section 3.2 describing 3D traceback analysis to the ONC. The text discusses closest approach distances to the ONC and ejection timescales, filtering candidates based on consistency with originating within the ONC radius. No mention of Galactic escape or unbound status."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2402.12258/arxiv_source/mnras.tex",
+          "start_line": 382,
+          "end_line": 383,
+          "context": "Table 2 caption: 'Results of spectral and traceback analysis for targets with spectroscopic youth indicators' with columns for time since closest approach to the ONC and distance of closest approach to the ONC."
+        }
+      ]
+    }
+  ]
+}

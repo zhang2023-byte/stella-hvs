@@ -1,0 +1,537 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:39:43",
+  "paper": {
+    "arxiv_id": "1807.00427",
+    "title": "The high velocity stars in the Local Stellar Halo from Gaia and LAMOST",
+    "month": "2018-07"
+  },
+  "review": {
+    "path": "literature/1807.00427/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083943",
+    "started_at": "2026-06-07T08:39:43",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1807.00427",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-Table-1",
+      "internal_table_id": "table-Table-1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+        "start_line": 178,
+        "end_line": 195,
+        "caption": "Observed fraction of stars for the populations in the solar neighborhood, characteristic velocity dispersions (σ_U, σ_V, and σ_W) and the asymmetric drift (V_asym)",
+        "label": "Table 1"
+      },
+      "source_path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+      "excerpt_path": "literature/1807.00427/catalog_sources/table-Table-1/excerpt.tex",
+      "sha256": "a521e906336fee7962475632c171952e6c2e8bb02ca0391087148ae3648bd19a",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-Table-2",
+      "internal_table_id": "table-Table-2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+        "start_line": 251,
+        "end_line": 279,
+        "caption": "Atmospheric parameters and positions for the 16 HiVel stars.",
+        "label": "Table 2"
+      },
+      "source_path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+      "excerpt_path": "literature/1807.00427/catalog_sources/table-Table-2/excerpt.tex",
+      "sha256": "d774c858675bd362815b8caf8980ec956a04e13e3e4ea39a5fd87921d5034c8a",
+      "line_count": 29,
+      "error": ""
+    },
+    {
+      "id": "table-003",
+      "internal_table_id": "table-003",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+        "start_line": 281,
+        "end_line": 308,
+        "caption": "Spatial positions and Velocities of 16 HiVel stars",
+        "label": ""
+      },
+      "source_path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+      "excerpt_path": "literature/1807.00427/catalog_sources/table-003/excerpt.tex",
+      "sha256": "19643f07c0e3f1d64ad4043b736a9a9fda9666b6d274ee7c4a59d884f5272128",
+      "line_count": 28,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-Table-1",
+      "internal_table_id": "table-Table-1",
+      "status": "success",
+      "ecsv_path": "literature/1807.00427/catalog_tables/table-Table-1.ecsv",
+      "caption": "Observed fraction of stars for the populations in the solar neighborhood, characteristic velocity dispersions (σ_U, σ_V, and σ_W) and the asymmetric drift (V_asym)",
+      "label": "Table 1",
+      "row_count": 3,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "X",
+          "\\sigma_U",
+          "\\sigma_V",
+          "\\sigma_W",
+          "V_asym"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "[km/s]",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "X",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma_U",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\sigma_V",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_W | [km/s]",
+          "unit_text": "[km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V_asym",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7kypjz9s/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1807.00427/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7kypjz9s/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1807.00427/catalog_sources/table-Table-1/wrapped.tex",
+            "html": "literature/1807.00427/catalog_sources/table-Table-1/latexml.html",
+            "stdout": "literature/1807.00427/catalog_sources/table-Table-1/latexml.stdout.txt",
+            "stderr": "literature/1807.00427/catalog_sources/table-Table-1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a521e906336fee7962475632c171952e6c2e8bb02ca0391087148ae3648bd19a"
+    },
+    {
+      "id": "table-Table-2",
+      "internal_table_id": "table-Table-2",
+      "status": "success",
+      "ecsv_path": "literature/1807.00427/catalog_tables/table-Table-2.ecsv",
+      "caption": "Atmospheric parameters and positions for the 16 HiVel stars.",
+      "label": "Table 2",
+      "row_count": 17,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Notation",
+          "source-id",
+          "l",
+          "b",
+          "\\mu_\\alpha cos(\\delta)",
+          "\\mu_\\delta",
+          "RV ⊙",
+          "T eff",
+          "log(g)",
+          "[Fe/H]",
+          "[ \\alpha /Fe]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Notation",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "source-id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "l",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "b",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\alpha cos(\\delta)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_\\delta",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "RV ⊙",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "T eff",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "log(g)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "[Fe/H]",
+          "unit_text": "[Fe/H]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "[ \\alpha /Fe]",
+          "unit_text": "[ \\alpha /Fe]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpj22t7b34/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1807.00427/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpj22t7b34/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1807.00427/catalog_sources/table-Table-2/wrapped.tex",
+            "html": "literature/1807.00427/catalog_sources/table-Table-2/latexml.html",
+            "stdout": "literature/1807.00427/catalog_sources/table-Table-2/latexml.stdout.txt",
+            "stderr": "literature/1807.00427/catalog_sources/table-Table-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d774c858675bd362815b8caf8980ec956a04e13e3e4ea39a5fd87921d5034c8a"
+    },
+    {
+      "id": "table-003",
+      "internal_table_id": "table-003",
+      "status": "success",
+      "ecsv_path": "literature/1807.00427/catalog_tables/table-003.ecsv",
+      "caption": "Spatial positions and Velocities of 16 HiVel stars",
+      "label": "",
+      "row_count": 17,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Notation",
+          "x",
+          "y",
+          "z",
+          "U",
+          "V",
+          "W",
+          "V gsr",
+          "D ⊙",
+          "e",
+          "Z max"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Notation",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "x",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "y",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "z",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "U",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "W",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "V gsr",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "D ⊙",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "e",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Z max",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpj5h4xbja/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1807.00427/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpj5h4xbja/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1807.00427/catalog_sources/table-003/wrapped.tex",
+            "html": "literature/1807.00427/catalog_sources/table-003/latexml.html",
+            "stdout": "literature/1807.00427/catalog_sources/table-003/latexml.stdout.txt",
+            "stderr": "literature/1807.00427/catalog_sources/table-003/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "19643f07c0e3f1d64ad4043b736a9a9fda9666b6d274ee7c4a59d884f5272128"
+    }
+  ]
+}

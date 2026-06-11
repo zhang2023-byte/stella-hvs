@@ -1,0 +1,901 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:35:26",
+  "paper": {
+    "arxiv_id": "1909.12359",
+    "title": "Lyman-$\\alpha$ Observations of High Radial Velocity Low-Mass Stars Ross 1044 and Ross 825",
+    "month": "2019-09"
+  },
+  "review": {
+    "path": "literature/1909.12359/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083526",
+    "started_at": "2026-06-07T08:35:26",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1909.12359",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 6,
+      "work_count": 6,
+      "table_count": 6,
+      "success_count": 6,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 6,
+      "file_success_count": 6,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-target-sample",
+      "internal_table_id": "table-tab-target-sample",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1909.12359/arxiv_source/accepted1.tex",
+        "start_line": 58,
+        "end_line": 72,
+        "caption": "Target Sample",
+        "label": ""
+      },
+      "source_path": "literature/1909.12359/arxiv_source/accepted1.tex",
+      "excerpt_path": "literature/1909.12359/catalog_sources/table-tab-target-sample/excerpt.tex",
+      "sha256": "b2f8cc4f5efe6e4a0ba38dd5d7f6193da63b804f18438361d9a787967a37da44",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-tab-hst-obs",
+      "internal_table_id": "table-tab-hst-obs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1909.12359/arxiv_source/accepted1.tex",
+        "start_line": 104,
+        "end_line": 113,
+        "caption": "HST/STIS Observations",
+        "label": ""
+      },
+      "source_path": "literature/1909.12359/arxiv_source/accepted1.tex",
+      "excerpt_path": "literature/1909.12359/catalog_sources/table-tab-hst-obs/excerpt.tex",
+      "sha256": "a60d69a04cafda5622a16f043bd2bdd45074aaf82390ec49f5390db0cced986b",
+      "line_count": 10,
+      "error": ""
+    },
+    {
+      "id": "table-tab-emcee-params",
+      "internal_table_id": "table-tab-emcee-params",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1909.12359/arxiv_source/accepted1.tex",
+        "start_line": 127,
+        "end_line": 144,
+        "caption": "{\\tt\\string emcee} Best Fit Model Parameters",
+        "label": ""
+      },
+      "source_path": "literature/1909.12359/arxiv_source/accepted1.tex",
+      "excerpt_path": "literature/1909.12359/catalog_sources/table-tab-emcee-params/excerpt.tex",
+      "sha256": "c6a19bc82323b6886b49fd76ccb34ba19194d04795d757c1eeb5b775191b02d7",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-tab-galex-nuv",
+      "internal_table_id": "table-tab-galex-nuv",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1909.12359/arxiv_source/accepted1.tex",
+        "start_line": 205,
+        "end_line": 224,
+        "caption": "{\\it GALEX} NUV and \\lya\\ Fluxes for M Dwarfs and Young K Dwarfs",
+        "label": ""
+      },
+      "source_path": "literature/1909.12359/arxiv_source/accepted1.tex",
+      "excerpt_path": "literature/1909.12359/catalog_sources/table-tab-galex-nuv/excerpt.tex",
+      "sha256": "615b6d8282214f47dd06bc9d4fb0a03d5b49ddba40442e309ef0ed346f968589",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-galex-fuv",
+      "internal_table_id": "table-tab-galex-fuv",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1909.12359/arxiv_source/accepted1.tex",
+        "start_line": 231,
+        "end_line": 251,
+        "caption": "{\\it GALEX} FUV and \\lya\\ Fluxes for K and M Dwarfs",
+        "label": ""
+      },
+      "source_path": "literature/1909.12359/arxiv_source/accepted1.tex",
+      "excerpt_path": "literature/1909.12359/catalog_sources/table-tab-galex-fuv/excerpt.tex",
+      "sha256": "d12a1ccbcee6b734525608aaa12fca8b5071a12b0af0143811783b26b0727cfc",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-tab-all-lya-props",
+      "internal_table_id": "table-tab-all-lya-props",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1909.12359/arxiv_source/accepted1.tex",
+        "start_line": 260,
+        "end_line": 333,
+        "caption": "Properties of All Stars with Intrinsic \\lya\\ Fluxes",
+        "label": ""
+      },
+      "source_path": "literature/1909.12359/arxiv_source/accepted1.tex",
+      "excerpt_path": "literature/1909.12359/catalog_sources/table-tab-all-lya-props/excerpt.tex",
+      "sha256": "e3d6c48aab56e68fbbe8fb14f54ce662b0f4e7ac72c51a999ece39781ea1dd42",
+      "line_count": 74,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-target-sample",
+      "internal_table_id": "table-tab-target-sample",
+      "status": "success",
+      "ecsv_path": "literature/1909.12359/catalog_tables/table-tab-target-sample.ecsv",
+      "caption": "Target Sample",
+      "label": "",
+      "row_count": 7,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Property",
+          "Ross 825",
+          "Ref.",
+          "Ross 1044",
+          "Ref.",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Property",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Ross 825",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Ref.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Ross 1044",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Ref.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp53bb1wj3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1909.12359/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp53bb1wj3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1909.12359/catalog_sources/table-tab-target-sample/wrapped.tex",
+            "html": "literature/1909.12359/catalog_sources/table-tab-target-sample/latexml.html",
+            "stdout": "literature/1909.12359/catalog_sources/table-tab-target-sample/latexml.stdout.txt",
+            "stderr": "literature/1909.12359/catalog_sources/table-tab-target-sample/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b2f8cc4f5efe6e4a0ba38dd5d7f6193da63b804f18438361d9a787967a37da44"
+    },
+    {
+      "id": "table-tab-hst-obs",
+      "internal_table_id": "table-tab-hst-obs",
+      "status": "success",
+      "ecsv_path": "literature/1909.12359/catalog_tables/table-tab-hst-obs.ecsv",
+      "caption": "HST/STIS Observations",
+      "label": "",
+      "row_count": 2,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "Obs. Dates",
+          "Exposure Time"
+        ],
+        [
+          "",
+          "UTC",
+          "(s)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Obs. Dates | UTC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Exposure Time | (s)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzaz94gld/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1909.12359/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzaz94gld/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1909.12359/catalog_sources/table-tab-hst-obs/wrapped.tex",
+            "html": "literature/1909.12359/catalog_sources/table-tab-hst-obs/latexml.html",
+            "stdout": "literature/1909.12359/catalog_sources/table-tab-hst-obs/latexml.stdout.txt",
+            "stderr": "literature/1909.12359/catalog_sources/table-tab-hst-obs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a60d69a04cafda5622a16f043bd2bdd45074aaf82390ec49f5390db0cced986b"
+    },
+    {
+      "id": "table-tab-emcee-params",
+      "internal_table_id": "table-tab-emcee-params",
+      "status": "success",
+      "ecsv_path": "literature/1909.12359/catalog_tables/table-tab-emcee-params.ecsv",
+      "caption": "{\\tt\\string emcee} Best Fit Model Parameters",
+      "label": "",
+      "row_count": 6,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "Ross 1044",
+          "",
+          "Ross 825",
+          ""
+        ],
+        [
+          "Model Parameter",
+          "Prior",
+          "Value",
+          "Prior",
+          "Value"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Model Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Ross 1044 | Prior",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Ross 825 | Prior",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjb8y8ezu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1909.12359/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjb8y8ezu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1909.12359/catalog_sources/table-tab-emcee-params/wrapped.tex",
+            "html": "literature/1909.12359/catalog_sources/table-tab-emcee-params/latexml.html",
+            "stdout": "literature/1909.12359/catalog_sources/table-tab-emcee-params/latexml.stdout.txt",
+            "stderr": "literature/1909.12359/catalog_sources/table-tab-emcee-params/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c6a19bc82323b6886b49fd76ccb34ba19194d04795d757c1eeb5b775191b02d7"
+    },
+    {
+      "id": "table-tab-galex-nuv",
+      "internal_table_id": "table-tab-galex-nuv",
+      "status": "success",
+      "ecsv_path": "literature/1909.12359/catalog_tables/table-tab-galex-nuv.ecsv",
+      "caption": "{\\it GALEX} NUV and \\lya\\ Fluxes for M Dwarfs and Young K Dwarfs",
+      "label": "",
+      "row_count": 11,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "Spectral",
+          "Age",
+          "plx a a Parallaxes from Gaia ( gaia16 ; gaia18 ) , with the exception of Ross 1044 ( finch16 ) .",
+          "\\lya",
+          "NUV"
+        ],
+        [
+          "",
+          "Type",
+          "(Gyr)",
+          "(mas)",
+          "(erg cm -2 s -1 )",
+          "(mag)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Spectral | Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Age | (Gyr)",
+          "unit_text": "(Gyr)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "plx a a Parallaxes from Gaia ( gaia16 ; gaia18 ) , with the exception of Ross 1044 ( finch16 ) . | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\lya | (erg cm -2 s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "NUV | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0txgldsl/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1909.12359/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0txgldsl/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1909.12359/catalog_sources/table-tab-galex-nuv/wrapped.tex",
+            "html": "literature/1909.12359/catalog_sources/table-tab-galex-nuv/latexml.html",
+            "stdout": "literature/1909.12359/catalog_sources/table-tab-galex-nuv/latexml.stdout.txt",
+            "stderr": "literature/1909.12359/catalog_sources/table-tab-galex-nuv/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "615b6d8282214f47dd06bc9d4fb0a03d5b49ddba40442e309ef0ed346f968589"
+    },
+    {
+      "id": "table-tab-galex-fuv",
+      "internal_table_id": "table-tab-galex-fuv",
+      "status": "success",
+      "ecsv_path": "literature/1909.12359/catalog_tables/table-tab-galex-fuv.ecsv",
+      "caption": "{\\it GALEX} FUV and \\lya\\ Fluxes for K and M Dwarfs",
+      "label": "",
+      "row_count": 13,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "Spectral",
+          "Age",
+          "plx",
+          "\\lya",
+          "FUV"
+        ],
+        [
+          "",
+          "Type",
+          "(Gyr)",
+          "(mas)",
+          "(erg cm -2 s -1 )",
+          "(mag)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Spectral | Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Age | (Gyr)",
+          "unit_text": "(Gyr)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "plx | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\lya | (erg cm -2 s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "FUV | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz4_t4n3n/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1909.12359/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz4_t4n3n/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1909.12359/catalog_sources/table-tab-galex-fuv/wrapped.tex",
+            "html": "literature/1909.12359/catalog_sources/table-tab-galex-fuv/latexml.html",
+            "stdout": "literature/1909.12359/catalog_sources/table-tab-galex-fuv/latexml.stdout.txt",
+            "stderr": "literature/1909.12359/catalog_sources/table-tab-galex-fuv/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d12a1ccbcee6b734525608aaa12fca8b5071a12b0af0143811783b26b0727cfc"
+    },
+    {
+      "id": "table-tab-all-lya-props",
+      "internal_table_id": "table-tab-all-lya-props",
+      "status": "success",
+      "ecsv_path": "literature/1909.12359/catalog_tables/table-tab-all-lya-props.ecsv",
+      "caption": "Properties of All Stars with Intrinsic \\lya\\ Fluxes",
+      "label": "",
+      "row_count": 62,
+      "column_count": 14,
+      "environment": "",
+      "header_rows": [
+        [
+          "R.A.",
+          "Dec.",
+          "Other",
+          "Spectral",
+          "ref",
+          "T_\\rm eff",
+          "ref",
+          "Radius",
+          "ref",
+          "plx a a All parallaxes come from Gaia ( gaia16 ; gaia18 ) with the following exceptions: Procyon, \\alpha Cen A, \\alpha Cen B, and HR 4657 ( van07 ) , and Ross 1044 ( finch16 ) .",
+          "\\lya",
+          "ref",
+          "Age",
+          "ref"
+        ],
+        [
+          "( \\arcdeg )",
+          "( \\arcdeg )",
+          "Name",
+          "Type",
+          "",
+          "(K)",
+          "",
+          "R_\\odot",
+          "",
+          "(mas)",
+          "(erg cm -2 s -1 )",
+          "",
+          "(Gyr)",
+          ""
+        ],
+        [
+          "New",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "R.A. | ( \\arcdeg ) | New",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Dec. | ( \\arcdeg )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Other | Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Spectral | Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "ref",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "T_\\rm eff | (K)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "ref",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Radius | R_\\odot",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "ref",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "plx a a All parallaxes come from Gaia ( gaia16 ; gaia18 ) with the following exceptions: Procyon, \\alpha Cen A, \\alpha Cen B, and HR 4657 ( van07 ) , and Ross 1044 ( finch16 ) . | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\lya | (erg cm -2 s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "ref",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "Age | (Gyr)",
+          "unit_text": "(Gyr)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "ref",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8kjjk9ow/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1909.12359/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8kjjk9ow/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1909.12359/catalog_sources/table-tab-all-lya-props/wrapped.tex",
+            "html": "literature/1909.12359/catalog_sources/table-tab-all-lya-props/latexml.html",
+            "stdout": "literature/1909.12359/catalog_sources/table-tab-all-lya-props/latexml.stdout.txt",
+            "stderr": "literature/1909.12359/catalog_sources/table-tab-all-lya-props/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e3d6c48aab56e68fbbe8fb14f54ce662b0f4e7ac72c51a999ece39781ea1dd42"
+    }
+  ]
+}

@@ -1,0 +1,310 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2010.01452",
+    "title": "Gaia DR 2 data and the evolutionary status of eight high velocity hot post-AGB candidates",
+    "month": "2020-10",
+    "source_note_json": "notes/2020/2020-10/2020-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2010.01452",
+      "pdf": "https://arxiv.org/pdf/2010.01452"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2010.01452",
+    "audit_path": "literature/2010.01452/audit.json",
+    "source_dir": "literature/2010.01452/arxiv_source",
+    "tex_root": "literature/2010.01452/arxiv_source/partha-aoki-arxiv.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:00:00",
+    "reviewer": "agent",
+    "summary": "本文利用 Gaia DR2 数据分析了 8 颗高速热 post-AGB 候选星（LS 3593、LSE 148、LS 5107、HD 172324、HD 214539、LS 3099、LS IV -12 111、LS III +52 24）的运动学性质和演化状态。论文包含三个内部表格：Table 1 给出 8 颗星的 SIMBAD/Gaia DR2 观测数据（银道坐标、视差、视向速度、测光、光谱型）；Table 2 给出距离、红化、绝对星等、光度和恒星大气参数（Teff、log g、[Fe/H]）；Table 3 给出 Gaia DR2 自行和银道系运动学速度分量。论文未提供可下载的机器可读数据文件，无 CDS/VizieR 数据链接。Gaia DR2 和 SIMBAD 为公共数据库引用，非本文特有数据产品。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-obj",
+      "kind": "latex_table",
+      "asset_type": "observational_data",
+      "role_in_paper": "列出 8 颗高速热 post-AGB 候选星的基本观测数据：银道坐标（l, b）、Gaia DR2 视差、视向速度（Vr）、Gaia G 星等、V 星等、B-V 颜色和光谱型。数据来源于 SIMBAD 和 Gaia DR2，是后续距离计算和演化状态分析的基础。",
+      "source_refs": [
+        {
+          "path": "literature/2010.01452/arxiv_source/partha-aoki-arxiv.tex",
+          "start_line": 384,
+          "end_line": 404,
+          "caption": "Objects",
+          "label": "tab:obj"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "恒星名称（LS/LSE/HD 编号）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l",
+          "meaning": "银经（Galactic longitude）",
+          "unit_text": "degree",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b",
+          "meaning": "银纬（Galactic latitude）",
+          "unit_text": "degree",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Parallax(p)",
+          "meaning": "Gaia DR2 视差及其误差；冒号表示视差不显著（<3σ）",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Vr",
+          "meaning": "日心视向速度及其误差",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia G 波段视星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V",
+          "meaning": "Johnson V 波段视星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "B-V",
+          "meaning": "Johnson B-V 颜色指数",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "spectral type",
+          "meaning": "光谱分类（MK光谱型）；Iab/Ib 为超巨星，Iae 为发射线超巨星",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Note",
+          "meaning": "备注：其他名称（如 V452 Sct, V534 Lyr）和 IRAS 源标记",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 列出了 8 颗星的观测数据。LS IV-12 111 和 LS III +52 24 的视差标注冒号（不显著），在后续分析中未使用其距离。数据来源标注为 SIMBAD 和 Gaia DR2。",
+      "comments": "LS 5107 占两行（第二行为 IRAS source 备注）；LS IV-12 111 和 LS III +52 24 视差误差较大，仅用于下限制。"
+    },
+    {
+      "id": "table-tab-obj2",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "给出由 Gaia DR2 视差导出的距离、星际红化（E(B-V) 来自尘埃图和光谱型）、绝对星等（MV, Mg）、光度（log L/Lsun），以及来自文献的恒星大气参数（Teff, log g, [Fe/H]）。是判断恒星演化状态（post-AGB vs post-HB）的核心数据表。",
+      "source_refs": [
+        {
+          "path": "literature/2010.01452/arxiv_source/partha-aoki-arxiv.tex",
+          "start_line": 407,
+          "end_line": 429,
+          "caption": "Distance and stellar parameters",
+          "label": "tab:obj2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "恒星名称",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Distance(D)",
+          "meaning": "由 Gaia DR2 视差导出的距离及其误差；LS IV-12 111 和 LS III +52 24 为下限（视差不显著）",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "E(B-V)",
+          "meaning": "从尘埃图（Schlegel+1998 等）获得的色余",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "E(B-V)sp",
+          "meaning": "从观测 (B-V) 和光谱型内禀 (B-V) 计算的色余；与尘埃图差异指示拱星红化",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "MV",
+          "meaning": "绝对 V 星等（经距离模数和消光改正）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mg",
+          "meaning": "绝对 Gaia G 星等（经距离模数和消光改正）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log L/Lsun",
+          "meaning": "光度（太阳单位对数），由 Mbol 导出；使用 Allen's Astrophysical Quantities 的 bolometric correction",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Teff",
+          "meaning": "有效温度（来自文献光谱分析）",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log g",
+          "meaning": "表面重力（对数，cgs单位），来自文献光谱分析",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]",
+          "meaning": "金属丰度（相对太阳），来自文献高分辨率光谱分析",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "references",
+          "meaning": "恒星参数引用来源编号：1=Venn+1998, 2=Mello+2012, 3=Klochkova+2018, 4=Kodaira+1984, 5=Przybylski+1969",
+          "unit_text": "",
+          "source_of_definition": "table note",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 2 列出了导出参数和文献恒星参数。6 颗星有准确视差从而得出可靠距离（1.4-2.7 kpc），而非此前文献中估计的~6 kpc。LS IV-12 111 和 LS III +52 24 仅给出下限。IRAS 源的 E(B-V)sp 比尘埃图 E(B-V) 大 0.09-0.32 mag，表明存在拱星红化。",
+      "comments": "Table note 列出了 5 个参考文献编号；LS 3099 的 Mg 无数据（标注 ...）；LS 5107 无 Teff 文献值，采用光谱型估算。"
+    },
+    {
+      "id": "table-tab-kinematics",
+      "kind": "latex_table",
+      "asset_type": "kinematic_data",
+      "role_in_paper": "给出 Gaia DR2 自行（μα, μδ 及其误差）和由此计算的银道系三维速度分量（VR 径向、Vφ 旋转、VZ 垂直）及其误差。用于判断恒星的运动学归属（银晕/厚盘/薄盘），支持低质量晕族 post-AGB 星的结论。",
+      "source_refs": [
+        {
+          "path": "literature/2010.01452/arxiv_source/partha-aoki-arxiv.tex",
+          "start_line": 431,
+          "end_line": 450,
+          "caption": "Kinamatics data",
+          "label": "tab:kinematics"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "恒星名称",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μα",
+          "meaning": "赤经方向自行（已乘 cosδ）",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ(μα)",
+          "meaning": "赤经方向自行误差",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μδ",
+          "meaning": "赤纬方向自行",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ(μδ)",
+          "meaning": "赤纬方向自行误差",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "VR",
+          "meaning": "银道坐标系径向速度分量（Galactocentric radial velocity）",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ(VR)",
+          "meaning": "银道径向速度误差",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Vφ",
+          "meaning": "银道坐标系旋转速度分量（Galactocentric rotational velocity）；正值表示与银河系旋转方向一致",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ(Vφ)",
+          "meaning": "银道旋转速度误差",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "VZ",
+          "meaning": "银道坐标系垂直速度分量（Galactocentric vertical velocity）；正值指向北银极",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ(VZ)",
+          "meaning": "银道垂直速度误差",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 3 列出 Gaia DR2 自行和导出的银道速度。除 LS 5107 外所有恒星均不跟随银河系旋转（VR 显著非零），表明它们属于晕族或高速厚盘星。LS 5107 的 Vφ ≈ 229 km/s 接近太阳附近旋转速度，可能属于薄盘。LSE 148 和 HD 214539 相对太阳的速度极大，属于银晕。LS IV-12 111 和 LS III +52 24 仅有自行（无径向速度导出的三维运动学），因视差不可靠。",
+      "comments": "表标题 'Kinamatics' 为原文拼写错误；LS IV-12 111 和 LS III +52 24 的 VR/Vφ/VZ 列为空（视差不可靠）。采用 McMillan(2017) 的 R0=8.2 kpc 和 Schönrich+(2010) 的太阳运动。"
+    }
+  ],
+  "external_resources": []
+}

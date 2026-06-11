@@ -1,0 +1,300 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2003.03539",
+    "title": "A high-resolution spectroscopic study of two new Na- and Al-rich field giants -- likely globular cluster escapees in the Galactic halo",
+    "month": "2020-03",
+    "source_note_json": "notes/2020/2020-03/2020-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2003.03539",
+      "pdf": "https://arxiv.org/pdf/2003.03539"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2003.03539",
+    "audit_path": "literature/2003.03539/audit.json",
+    "source_dir": "literature/2003.03539/arxiv_source",
+    "tex_root": "literature/2003.03539/arxiv_source/gce.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:08:26",
+    "reviewer": "agent",
+    "summary": "The paper presents high-resolution spectroscopic abundances for two metal-poor halo giants (SDSS J064655.6+411620.5 and SDSS J193712.01+502455.5) identified as likely globular cluster escapees based on Na/Al enrichment and C/O/Mg depletion patterns. Three internal LaTeX tables are present: one observation log (Table 1) with target coordinates, exposure details, SNR, radial velocities, and stellar parameters; and two abundance tables (Tables 2 and 3) listing elemental abundances for each program star. One external resource is cited: an online tool for C abundance evolutionary corrections (http://vplacco.pythonanywhere.com/). No machine-readable data files are distributed with the arXiv source. Comparison data from the SAGA database and Carretta et al. GC surveys are referenced but no concrete download URLs are provided."
+  },
+  "internal_tables": [
+    {
+      "id": "table-001",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Presents observational details and derived stellar atmospheric parameters for the two program stars (SDSS J064655.6+411620.5 and SDSS J193712.01+502455.5). Referenced in Section 2 as Table 1.",
+      "source_refs": [
+        {
+          "path": "literature/2003.03539/arxiv_source/gce.tex",
+          "start_line": 538,
+          "end_line": 552,
+          "caption": "Observational Details for our Program Stars",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "SDSS object designation for the program star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA",
+          "meaning": "Right Ascension (J2000) in sexagesimal format (HH MM SS.s)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DEC",
+          "meaning": "Declination (J2000) in sexagesimal format (±DD MM SS.s)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Exposure (secs)",
+          "meaning": "Total exposure time in seconds",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Frames",
+          "meaning": "Number of co-added spectroscopic frames",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SNR",
+          "meaning": "Signal-to-noise ratio of the combined spectrum",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V (mag)",
+          "meaning": "Apparent V-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Radial Vel. (km s^-1)",
+          "meaning": "Heliocentric radial velocity measured via cross-correlation with a synthetic template spectrum",
+          "unit_text": "km/s",
+          "source_of_definition": "table header; Section 2 text describes RV measurement method",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_eff (K)",
+          "meaning": "Adopted effective temperature derived from photometric calibrations, excitation balance of Fe I lines, and H-alpha profile fitting",
+          "unit_text": "K",
+          "source_of_definition": "table header; Section 2 describes Teff determination methods",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(g) (cgs)",
+          "meaning": "Adopted surface gravity derived from ionization balance of Fe I/Fe II, Gaia parallaxes, and Mg I line wing fitting",
+          "unit_text": "dex (cgs)",
+          "source_of_definition": "table header; Section 2 describes log(g) determination methods",
+          "confidence": 1.0
+        },
+        {
+          "name": "ξ",
+          "meaning": "Microturbulent velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header; Section 2 mentions microturbulent velocity as a derived stellar parameter",
+          "confidence": 0.9
+        },
+        {
+          "name": "[Fe/H]",
+          "meaning": "Iron abundance relative to solar, [Fe/H] = log(N_Fe/N_H) - log(N_Fe/N_H)⊙",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table constructed from \\begin{table}...\\end{table} at lines 538-552 of gce.tex. Caption: 'Observational Details for our Program Stars'. Referenced in Section 2: 'Details of the observations, along with the signal-to-noise ratios and V magnitudes, for these two stars are listed in Table 1.' and 'The adopted values of the stellar parameters for both stars are shown in Table 1.'",
+      "comments": "Single table with two data rows (one per program star). LaTeX format uses tabular with 12 columns separated by vertical bars."
+    },
+    {
+      "id": "table-002",
+      "kind": "latex_table",
+      "asset_type": "abundance_table",
+      "role_in_paper": "Presents measured elemental abundances for the first program star SDSS J064655.6+411620.5. Referenced in Section 3 as Table 2: 'The complete abundance tables for SDSS J0646+4116 and SDSS J1937+5024 are provided in Tables 2 and 3 respectively.'",
+      "source_refs": [
+        {
+          "path": "literature/2003.03539/arxiv_source/gce.tex",
+          "start_line": 554,
+          "end_line": 583,
+          "caption": "Elemental Abundances for SDSS J064655.6+411620.5",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Element name (e.g., Li, C, O, Na, Mg, Al, Ca, Sc, Ti, Cr, Mn, Co, Ni, Zn, Sr, Ba)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Species",
+          "meaning": "Ionization state used for abundance determination (I = neutral, II = singly ionized; CH and CN indicate molecular band measurements)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Solar",
+          "meaning": "Solar photospheric abundance A⊙(X) = log ε⊙(X) adopted from Asplund et al. (2009)",
+          "unit_text": "dex",
+          "source_of_definition": "table header; Section 2 states 'Solar abundances for the individual elements are taken from Asplund et al. (2009)'",
+          "confidence": 1.0
+        },
+        {
+          "name": "lines",
+          "meaning": "Number of spectral absorption lines used for the abundance measurement",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A(X)",
+          "meaning": "Absolute elemental abundance on the scale log ε(X) = log(N_X/N_H) + 12",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[X/H]",
+          "meaning": "Element abundance relative to solar: [X/H] = A(X) - A⊙(X)",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[X/Fe]",
+          "meaning": "Element abundance relative to iron: [X/Fe] = [X/H] - [Fe/H]",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ*",
+          "meaning": "Standard deviation (1-σ uncertainty) of the abundance measurement",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table constructed from \\begin{table}...\\end{table} at lines 554-583 of gce.tex. Caption: 'Elemental Abundances for SDSS J064655.6+411620.5'. Referenced at line 384: 'The complete abundance tables for SDSS J0646+4116 and SDSS J1937+5024 are provided in Tables 2 and 3 respectively.' Columns span 8 fields per row. Some elements have two rows (Ti, Cr) showing both neutral and singly-ionized measurements.",
+      "comments": "Li and C (via CH band) have no [X/H] or [X/Fe] values shown (indicated by ...). O has only an upper limit. Abundances incorporate NLTE corrections where available."
+    },
+    {
+      "id": "table-003",
+      "kind": "latex_table",
+      "asset_type": "abundance_table",
+      "role_in_paper": "Presents measured elemental abundances for the second program star SDSS J193712.01+502455.5. Referenced in Section 3 as Table 3: 'The complete abundance tables for SDSS J0646+4116 and SDSS J1937+5024 are provided in Tables 2 and 3 respectively.'",
+      "source_refs": [
+        {
+          "path": "literature/2003.03539/arxiv_source/gce.tex",
+          "start_line": 585,
+          "end_line": 616,
+          "caption": "Elemental Abundances for SDSS J193712.01+502455.5",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Element name (e.g., Li, C, N, O, Na, Mg, Al, Ca, Sc, Ti, Cr, Mn, Co, Ni, Zn, Sr, Ba)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Species",
+          "meaning": "Ionization state used for abundance determination (I = neutral, II = singly ionized; CH and CN indicate molecular band measurements)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Solar",
+          "meaning": "Solar photospheric abundance A⊙(X) = log ε⊙(X) adopted from Asplund et al. (2009)",
+          "unit_text": "dex",
+          "source_of_definition": "table header; Section 2 states 'Solar abundances for the individual elements are taken from Asplund et al. (2009)'",
+          "confidence": 1.0
+        },
+        {
+          "name": "lines",
+          "meaning": "Number of spectral absorption lines used for the abundance measurement",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A(X)",
+          "meaning": "Absolute elemental abundance on the scale log ε(X) = log(N_X/N_H) + 12",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[X/H]",
+          "meaning": "Element abundance relative to solar: [X/H] = A(X) - A⊙(X)",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[X/Fe]",
+          "meaning": "Element abundance relative to iron: [X/Fe] = [X/H] - [Fe/H]",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ*",
+          "meaning": "Standard deviation (1-σ uncertainty) of the abundance measurement",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table constructed from \\begin{table}...\\end{table} at lines 585-616 of gce.tex. Caption: 'Elemental Abundances for SDSS J193712.01+502455.5'. Referenced at line 384: 'The complete abundance tables for SDSS J0646+4116 and SDSS J1937+5024 are provided in Tables 2 and 3 respectively.' Columns span 8 fields per row. Some elements have two rows (Ti, Cr) showing both neutral and singly-ionized measurements.",
+      "comments": "N abundance is an upper limit ([N/Fe] < +0.42). Li and C (via CH band) have no [X/H] or [X/Fe] values shown. Abundances incorporate NLTE corrections where available."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://vplacco.pythonanywhere.com/",
+      "local_path": "",
+      "description": "Online tool for computing carbon abundance corrections associated with the evolutionary state of a star (the Placco et al. 2014 CEMP correction). Used to correct the measured C abundances for both program stars: corrections of +0.01 dex and +0.50 dex were applied to SDSS J0646+4116 and SDSS J1937+5024, respectively.",
+      "source_refs": [
+        {
+          "path": "literature/2003.03539/arxiv_source/gce.tex",
+          "start_line": 319,
+          "end_line": 319,
+          "context": "Corrections to the C abundances associated with the evolutionary state for each star (Placco et al. 2014) have also been computed (http://vplacco.pythonanywhere.com/), and found to be +0.01 dex and +0.50 dex for J0646+4116 and J1937+5024, respectively."
+        }
+      ],
+      "evidence": "URL appears as a LaTeX footnote at line 319 of gce.tex: \\footnote{http://vplacco.pythonanywhere.com/}. The surrounding text states the corrections were computed using the Placco et al. (2014) method.",
+      "comments": "This is the only concrete external data-asset URL given in the paper. No other machine-readable data files, catalog downloads, or data-availability URLs are provided."
+    }
+  ]
+}

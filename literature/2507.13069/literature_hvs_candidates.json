@@ -1,0 +1,84 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T19:48:18",
+  "paper": {
+    "arxiv_id": "2507.13069",
+    "bibcode": "2025JApA...46...77H",
+    "title": "A kinematic and structural study of young open clusters in the Milky Way Galaxy using Gaia DR3 catalogue",
+    "month": "2025-07",
+    "source_note_json": "notes/2025/2025-07/2025-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2507.13069",
+      "pdf": "https://arxiv.org/pdf/2507.13069"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2507.13069",
+    "audit_path": "literature/2507.13069/audit.json",
+    "catalog_review_path": "literature/2507.13069/catalog_review.json",
+    "catalog_extraction_path": "literature/2507.13069/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2507.13069/catalog_tables/table-table-GMM.ecsv",
+      "literature/2507.13069/catalog_tables/table-table_isofit.ecsv",
+      "literature/2507.13069/catalog_tables/table-table_sp_vel.ecsv",
+      "literature/2507.13069/catalog_tables/table-table_obfdisp.ecsv",
+      "literature/2507.13069/catalog_tables/table-table_obf.ecsv",
+      "literature/2507.13069/catalog_tables/table-table_apx.ecsv",
+      "literature/2507.13069/catalog_tables/table-Table-Compare.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T19:48:18",
+    "extractor": "agent",
+    "summary": "The paper studies 14 young open clusters and identifies high-PM massive stars as possible walkaway stars, but it does not present any object as possibly unbound from the Milky Way / Galactic potential. All candidate-like objects discussed are cluster escapers or runaways, not Galactic-unbound HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "high-pm-massive-stars",
+      "description": "BA-type stars with relatively large proper motion identified in five clusters (Alessi Teutsch 5, ASCC 16, ASCC 21, IC 2395, and NGC 6405), labelled by the paper as possible walkaway stars.",
+      "decision": "excluded",
+      "reason": "The paper describes these stars as possible walkaway stars that might move out of the cluster in the future. It does not present them as possibly unbound from the Milky Way / Galactic potential. They are cluster escapers/runaways, not Galactic-unbound HVS candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.13069/arxiv_source/main.tex",
+          "start_line": 490,
+          "end_line": 493,
+          "context": "Paper discussion of high-PM massive stars as possible walkaway stars: 'These are potential candidates to escape the cluster potential... We suggest that these stars can be possible walkaway stars, which might move out of the cluster in the future.'"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2507.13069/arxiv_source/main.tex",
+          "start_line": 547,
+          "end_line": 550,
+          "context": "Conclusion summary: 'We have found possible walkaway stars in 5 clusters (Alessi Teutsch 5, ASCC 16, ASCC 21, IC 2395, and NGC 6405). The highest relative velocity (3.3 km s^-1) is found for a 13 M_sun B-type star in Alessi Teutsch 5.'"
+        }
+      ]
+    },
+    {
+      "group_id": "cluster-member-tables",
+      "description": "All internal tables listing cluster members, velocities, and spectral types for the 14 open clusters studied in the paper.",
+      "decision": "excluded",
+      "reason": "The tables report cluster-level kinematics and member properties. No individual object in these tables is presented by the paper as a candidate to be unbound from the Milky Way.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.13069/arxiv_source/main.tex",
+          "start_line": 295,
+          "end_line": 324,
+          "context": "Table GMM listing cluster proper-motion parameters and member counts."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2507.13069/arxiv_source/main.tex",
+          "start_line": 369,
+          "end_line": 398,
+          "context": "Table table_sp_vel listing radial and space velocities for clusters. No individual unbound candidates are identified."
+        }
+      ]
+    }
+  ]
+}

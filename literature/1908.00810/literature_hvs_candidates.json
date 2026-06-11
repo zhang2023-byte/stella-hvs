@@ -1,0 +1,81 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:03:00",
+  "paper": {
+    "arxiv_id": "1908.00810",
+    "bibcode": "2020MNRAS.495.1491R",
+    "title": "Kinematic study of the association Cyg OB3 with Gaia DR2",
+    "month": "2019-08",
+    "source_note_json": "notes/2019/2019-08/2019-08.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1908.00810",
+      "pdf": "https://arxiv.org/pdf/1908.00810"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1908.00810",
+    "audit_path": "literature/1908.00810/audit.json",
+    "catalog_review_path": "literature/1908.00810/catalog_review.json",
+    "catalog_extraction_path": "literature/1908.00810/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1908.00810/catalog_tables/table-table_tab2.ecsv",
+      "literature/1908.00810/catalog_tables/table-tab1.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:03:00",
+    "extractor": "agent",
+    "summary": "本文利用Gaia DR2天体测量数据研究Cyg OB3星协中41颗O/B型恒星的运动学性质。样本星距离~2.0±0.3 kpc，剔除银河系自转和太阳运动后的平均本动速度仅~22 km/s。确认了已知逃逸星HD 227018具有较高本动速度(v_pec≈52 km/s)，并研究了黑洞X射线双星Cyg X-1与星协的关联。论文中所有恒星速度均处于数十km/s量级，远低于银河系逃逸速度(~550 km/s)，属正常星协运动学和星协逃逸星研究范畴。无超高速星(HVS)候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "Quick scan of paper abstract and content for HVS relevance assessment. 41 O/B stars in Cyg OB3 association, mean peculiar velocity ~22 km/s, one runaway at ~52 km/s. All velocities orders of magnitude below HVS thresholds.",
+      "inputs": [
+        "arXiv abstract",
+        "Paper full text",
+        "Catalog review"
+      ],
+      "outputs": [
+        "HVS relevance classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1908.00810/arxiv_source/ms.tex",
+          "start_line": 75,
+          "end_line": 77,
+          "context": "Paper abstract: mean peculiar velocity ~22 km/s, one runaway star HD 227018"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "quick-scan-review",
+      "description": "本文研究Cyg OB3星协中41颗O/B型恒星的运动学性质和空间分布。Table tab1列出Gaia DR2天体测量数据（坐标、G星等、视差、自行），Table tab:tab2列出导出运动学量（光谱型、指数先验距离、本动速度v_pec、相对星协速度v_rel、视向速度v_r）。HD 227018是本动速度最高的恒星(v_pec=52.2 km/s, v_rel=42.4 km/s)，被确认为逃逸星；HD 227757具有v_rel=43.8 km/s的相对速度异常；Cyg X-1(HD 226868)的v_pec=22.2 km/s与星协运动一致。论文关注的是星协内部运动学和星协成员身份确认，恒星速度均在正常OB星协逃逸星范围内。",
+      "decision": "excluded",
+      "reason": "所有41颗恒星的本动速度均在22-52 km/s范围内，远低于银河系逃逸速度(~550 km/s)和超高速星的典型速度阈值(>300-500 km/s)。HD 227018虽被确认为逃逸星（脱离星协引力束缚），但其v_pec=52.2 km/s仅为OB星协逃逸星速度规模，仍深陷银河系引力势阱中。论文未涉及任何超高速星(HVS)或银河系非束缚星的研究，属于OB星协运动学/逃逸星研究的常规范畴。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1908.00810/arxiv_source/ms.tex",
+          "start_line": 75,
+          "end_line": 77,
+          "context": "Paper abstract: 'The mean peculiar velocity of the sample...is ~22 km/s' — normal stellar association kinematics"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1908.00810/arxiv_source/ms.tex",
+          "start_line": 247,
+          "end_line": 248,
+          "context": "Table tab:tab2 caption: v_pec peculiar velocities, v_rel relative velocities — all in tens of km/s"
+        }
+      ]
+    }
+  ]
+}

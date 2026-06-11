@@ -1,0 +1,4957 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:07:24",
+  "paper": {
+    "arxiv_id": "1804.10179",
+    "bibcode": "2018MNRAS.479.2789B",
+    "title": "Revisiting hypervelocity stars after Gaia DR2",
+    "month": "2018-04",
+    "source_note_json": "notes/2018/2018-04/2018-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1804.10179",
+      "pdf": "https://arxiv.org/pdf/1804.10179"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1804.10179",
+    "audit_path": "literature/1804.10179/audit.json",
+    "catalog_review_path": "literature/1804.10179/catalog_review.json",
+    "catalog_extraction_path": "literature/1804.10179/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1804.10179/catalog_tables/table-tab-candidates.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-06-07T10:14:10",
+    "extractor": "agent",
+    "summary": "41 hypervelocity candidates with P_bound<0.5 after Gaia DR2. 30 individually named in Tab. 1 + 11 unnamed 'and others' from HVS Survey. Composition: 38 B/A dwarfs, 1 subdwarf O (US708), 1 F9 dwarf (Li10), 1 white dwarf (GD 492). All candidates were introduced by prior papers; this paper reassesses their bound status with Gaia DR2 astrometry. Per-star astrometry is in the Open Fast Stars Catalog (OFSC), not tabulated here."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Open Fast Stars Catalog (524 candidates) automatically queried Gaia DR2. 514 with photometry, 501 with astrometry. Compiled historical data: spectral types, radial velocities, photometry from discovery papers.",
+      "inputs": [
+        "Gaia DR2",
+        "SDSS",
+        "LAMOST",
+        "PPMXL",
+        "SIMBAD"
+      ],
+      "outputs": [
+        "524 candidates with Gaia DR2 astrometry and photometry"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 181,
+          "end_line": 182,
+          "context": "OFSC: 524 candidates, 514 Gaia photometry, 501 Gaia astrometry"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 285,
+          "end_line": 312,
+          "context": "Appendix: OFSC automatically queries Gaia, extinction from Green+2018"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Bayesian distance inference: Gamma(3, L) prior with spatially-varying L from Bailer-Jones+2018. Photometric distances use Gaussian prior. Gaia parallax offset -0.029 mas applied.",
+      "inputs": [
+        "Gaia DR2 parallaxes",
+        "Distance prior",
+        "Photometric distances"
+      ],
+      "outputs": [
+        "Heliocentric distance distributions"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 303,
+          "end_line": 305,
+          "context": "Appendix: Gamma(3,L) prior, Bailer-Jones+2018 scale-length"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 309,
+          "end_line": 309,
+          "context": "Parallax offset -0.029 mas from Lindegren+2018"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Galactocentric rest-frame velocity v_grf via Johnson & Soderblom (1987). Solar: R0=8.27±0.29 kpc, Vc=238±9 km/s, (U,V,W)=(11.1,12.24,7.25) km/s.",
+      "inputs": [
+        "Gaia astrometry",
+        "Distances",
+        "Radial velocities",
+        "Galactic parameters"
+      ],
+      "outputs": [
+        "v_grf for each candidate"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 290,
+          "end_line": 301,
+          "context": "Appendix: Johnson & Soderblom (1987) transformation, solar/Galactic params"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "Escape velocity: v_esc(r)=v_esc_sun (r/R_sun)^(-α/2). Williams+2017: α=0.37(+0.09/-0.09), v_esc_sun=521.26(+45.79/-30.23) km/s.",
+      "inputs": [
+        "Williams+2017 escape velocity curve"
+      ],
+      "outputs": [
+        "v_esc(r) profile"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 291,
+          "end_line": 294,
+          "context": "Appendix: Williams+2017 escape velocity parametrization"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-02",
+        "step-03",
+        "step-04"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "MC: 10^4 emcee samples from multivariate normal + distance prior. P_bound = fraction with v_grf < v_esc(r). Posterior Beta(N_b+1/2, N-N_b+1/2). Missing components → upper limit. 41 with P_bound<0.5.",
+      "inputs": [
+        "MC velocity samples",
+        "Escape velocity profile"
+      ],
+      "outputs": [
+        "P_bound with 1σ CI",
+        "41 candidates with P_bound<0.5"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 303,
+          "end_line": 305,
+          "context": "Appendix: 10^4 emcee samples, Beta posterior"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 181,
+          "end_line": 182,
+          "context": "41 candidates with P_bound<0.5, 428 >0.99 bound"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 315,
+          "end_line": 315,
+          "context": "159 in graveyard: bound in all 10^4 samples"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-001",
+        "paper_candidate_id": "HVS1",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS1: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_discovery_2005",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon",
+            "Kurtz"
+          ],
+          "year": "2005",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-002",
+        "paper_candidate_id": "HVS4",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS4",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS4: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_discovery_2005",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon",
+            "Kurtz"
+          ],
+          "year": "2005",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-003",
+        "paper_candidate_id": "HVS5",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS5",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS5: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_discovery_2005",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon",
+            "Kurtz"
+          ],
+          "year": "2005",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-004",
+        "paper_candidate_id": "HVS6",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS6",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS6: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_discovery_2005",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon",
+            "Kurtz"
+          ],
+          "year": "2005",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-005",
+        "paper_candidate_id": "HVS7",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS7",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS7: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_discovery_2005",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon",
+            "Kurtz"
+          ],
+          "year": "2005",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-006",
+        "paper_candidate_id": "HVS8",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS8",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS8: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_hypervelocity_2007",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon",
+            "Kurtz",
+            "Bromley"
+          ],
+          "year": "2007",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-007",
+        "paper_candidate_id": "HVS9",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS9",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS9: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_hypervelocity_2007",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon",
+            "Kurtz",
+            "Bromley"
+          ],
+          "year": "2007",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-008",
+        "paper_candidate_id": "HVS10",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS10",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS10: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_hypervelocity_2007",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon",
+            "Kurtz",
+            "Bromley"
+          ],
+          "year": "2007",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-009",
+        "paper_candidate_id": "HVS12",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS12",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS12: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_mmt_2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-010",
+        "paper_candidate_id": "HVS13",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS13",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS13: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_mmt_2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-011",
+        "paper_candidate_id": "HVS14",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS14",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS14: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_mmt_2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-012",
+        "paper_candidate_id": "HVS15",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS15",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS15: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_mmt_2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-013",
+        "paper_candidate_id": "HVS16",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS16",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS16: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_mmt_2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-014",
+        "paper_candidate_id": "HVS17",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS17",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS17: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_mmt_2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-015",
+        "paper_candidate_id": "HVS18",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS18",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS18: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_mmt_2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-016",
+        "paper_candidate_id": "HVS19",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS19",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS19: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_mmt_2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-017",
+        "paper_candidate_id": "HVS20",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS20",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS20: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_mmt_2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-018",
+        "paper_candidate_id": "HVS21",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS21",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS21: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_mmt_2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-019",
+        "paper_candidate_id": "HVS22",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS22",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS22: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_mmt_2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-020",
+        "paper_candidate_id": "HVS23",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS23",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS23: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_mmt_2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-021",
+        "paper_candidate_id": "HVS24",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HVS24",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf (early-type)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HVS24: B/A dwarf (early-type), confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 9. Late B-type hypervelocity star in Galactic halo. Discovered via radial velocity survey.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "brown_mmt_2014",
+          "authors": [
+            "Brown",
+            "Geller",
+            "Kenyon"
+          ],
+          "year": "2014",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-022",
+        "paper_candidate_id": "US708",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "US708",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes subdwarf O"
+              }
+            ]
+          },
+          {
+            "value": "HVS2",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: US708 (a.k.a. HVS2) from Hirsch et al. (2005)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "US708: subdwarf O, confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 10. Helium subdwarf O star. Likely low-mass donor ejected by thermonuclear SN Ia. Fastest known HVS.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "hirsch_us_2005",
+          "authors": [
+            "Hirsch",
+            "Heber",
+            "O'Toole",
+            "Bresolin"
+          ],
+          "year": "2005",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-023",
+        "paper_candidate_id": "HE 0437-5439",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HE 0437-5439",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf"
+              }
+            ]
+          },
+          {
+            "value": "HVS3",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: HE 0437-5439 (a.k.a. HVS3) from Edelmann et al. (2005)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HE 0437-5439: B/A dwarf, confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 11. 8 M_sun star thought ejected from the LMC. Located near LMC on sky.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "edelmann_he_2005",
+          "authors": [
+            "Edelmann",
+            "Napiwotzki",
+            "Heber",
+            "Christlieb",
+            "Reimers"
+          ],
+          "year": "2005",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-024",
+        "paper_candidate_id": "HD 271791",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "HD 271791",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "HD 271791: B/A dwarf, confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 12. Close HVS at d_hel=21±4 kpc. Had previously measured proper motions.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "heber_b-type_2008",
+          "authors": [
+            "Heber",
+            "Edelmann",
+            "Napiwotzki",
+            "Altmann",
+            "Scholz"
+          ],
+          "year": "2008",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-025",
+        "paper_candidate_id": "SDSS J013655.91+242546.0",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "SDSS J013655.91+242546.0",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "SDSS J013655.91+242546.0: B/A dwarf, confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 13. HVS candidate from SDSS spectroscopy.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "tillich_hypermuchfuss_2009",
+          "authors": [
+            "Tillich"
+          ],
+          "year": "2009",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-026",
+        "paper_candidate_id": "LAMOST-HVS1",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LAMOST-HVS1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "LAMOST-HVS1: B/A dwarf, confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 14. Late B-type star discovered via LAMOST spectroscopy.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "zheng_first_2014",
+          "authors": [
+            "Zheng"
+          ],
+          "year": "2014",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-027",
+        "paper_candidate_id": "LAMOST-HVS2",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LAMOST-HVS2",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "LAMOST-HVS2: B/A dwarf, confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 14. Late B-type star discovered via LAMOST spectroscopy.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "huang_discovery_2017",
+          "authors": [
+            "Huang"
+          ],
+          "year": "2017",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-028",
+        "paper_candidate_id": "LAMOST-HVS3",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LAMOST-HVS3",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes B/A dwarf"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "LAMOST-HVS3: B/A dwarf, confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 14. Late B-type star discovered via LAMOST spectroscopy.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "huang_discovery_2017",
+          "authors": [
+            "Huang"
+          ],
+          "year": "2017",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-029",
+        "paper_candidate_id": "Li10",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "Li10",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes F9 dwarf"
+              }
+            ]
+          },
+          {
+            "value": "LAMOST J115209.12+120258.0",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 237,
+                "end_line": 241,
+                "context": "Li10 = LAMOST J115209.12+120258.0, late-type HVS candidate"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Li10: F9 dwarf, confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 15. Only confirmed late-type hypervelocity star. v_grf=643±93 km/s. Pericentric radius 3.3±0.2 kpc rules out Hills mechanism. SOAR/Goodman: v_r=234±5 km/s. Disc crossing ~15 Myr ago.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "li_19_2015",
+          "authors": [
+            "Li"
+          ],
+          "year": "2015",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "234",
+            "value": "234",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "5",
+            "upper_error": "5",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 241,
+                "end_line": 241,
+                "context": "SOAR/Goodman: v_r=234±5 km/s (barycentric)"
+              }
+            ],
+            "method_refs": []
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "643",
+            "value": "643",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "93",
+            "upper_error": "93",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 237,
+                "end_line": 237,
+                "context": "v_grf=643±93 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "spectral_type": {
+          "raw_value": "F9",
+          "value": "F9",
+          "unit": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 237,
+              "end_line": 237,
+              "context": "Li10 is an F9 dwarf"
+            }
+          ],
+          "method_refs": []
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "Not from Galactic centre. Pericentric radius 3.3 kpc. Possible disc origin ~15 Myr ago.",
+          "value": "disc runaway",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 237,
+              "end_line": 239,
+              "context": "Pericentric radius 3.3±0.2 kpc. Not Hills. Disc crossing ~15 Myr."
+            }
+          ],
+          "method_refs": [],
+          "error": ""
+        },
+        "origin_classification": {
+          "raw_value": "Possible runaway from star cluster or supernova kick",
+          "value": "runaway",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 237,
+              "end_line": 238,
+              "context": "Possibly dynamically ejected from cluster or kicked by SN"
+            }
+          ],
+          "method_refs": []
+        },
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1804.10179:cand-030",
+        "paper_candidate_id": "GD 492",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "GD 492",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: Candidates with P_bound<0.5 listed by survey/paper with names"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 185,
+                "end_line": 185,
+                "context": "Tab. 1: 41 candidates with P_bound<0.5, includes white dwarf"
+              }
+            ]
+          },
+          {
+            "value": "LP 40-365",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 187,
+                "end_line": 201,
+                "context": "Tab. 1: GD 492 (white dwarf) from Vennes et al. (2017)"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "GD 492: white dwarf, confirmed with P_bound<0.5 after Gaia DR2 by Boubert et al. (2018). Originally introduced by 16. Closest HVS to Sun (d_hel=632±14 pc). Partially burnt remnant of subluminous SN Ia. Low-mass WD with intermediate-element-rich atmosphere.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper computes P_bound<0.5 using Gaia DR2 astrometry with Monte Carlo sampling of Milky Way escape velocity profile. Individual per-star astrometry is in the Open Fast Stars Catalog (https://faststars.space), not tabulated in the paper.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "41 candidates with P_bound<0.5 after Gaia DR2"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 185,
+            "end_line": 185,
+            "context": "Tab. 1: list of 41 candidates by survey"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 303,
+            "end_line": 305,
+            "context": "Appendix: MC sampling, P_bound via Beta(1/2,1/2) interval"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.10179/arxiv_source/paper.tex",
+            "start_line": 181,
+            "end_line": 182,
+            "context": "Paper re-evaluates 524 previously-known candidates using Gaia DR2"
+          }
+        ],
+        "citation": {
+          "bibkey": "vennes_unusual_2017",
+          "authors": [
+            "Vennes",
+            "Nemeth",
+            "Kawka",
+            "Thorstensen",
+            "Khalack",
+            "Ferrario",
+            "Alper"
+          ],
+          "year": "2017",
+          "title": "",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 187,
+              "end_line": 201,
+              "context": "Tab. 1: discovery survey/paper citation for candidate"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.bbl",
+              "start_line": 1,
+              "end_line": 329,
+              "context": "Full bibliography of Boubert et al. (2018) paper.bbl"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "632",
+            "value": "632",
+            "unit": "pc",
+            "error": "",
+            "lower_error": "14",
+            "upper_error": "14",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.10179/arxiv_source/paper.tex",
+                "start_line": 232,
+                "end_line": 232,
+                "context": "GD 492: d_hel=632±14 pc, closest HVS to Sun"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": {
+          "raw_value": "Partially burnt remnant of subluminous SN Ia",
+          "value": "sn iax survivor",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.10179/arxiv_source/paper.tex",
+              "start_line": 232,
+              "end_line": 232,
+              "context": "GD 492 is partially burnt remnant of subluminous SN Ia"
+            }
+          ],
+          "method_refs": []
+        },
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "hvs_survey_unnamed",
+      "description": "11 unnamed 'and others' from Hypervelocity Star Survey (Brown 2005, 2007, 2014). Early-type B/A dwarfs with P_bound<0.5 after Gaia DR2. Individual identifiers only available in the Open Fast Stars Catalog (https://faststars.space).",
+      "decision": "deferred_to_external_catalog",
+      "reason": "Named only as 'and others' in Table 1. Individual identifiers and per-star data reside in the external OFSC, not in the paper.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 193,
+          "end_line": 193,
+          "context": "HVS Survey: 32 stars, HVS1,4-10,12-24 and others"
+        }
+      ]
+    },
+    {
+      "group_id": "graveyard_stars",
+      "description": "159 previously-claimed hypervelocity candidates confirmed as bound in all 10^4 MC samples, placed in OFSC 'graveyard'. 428 have P_bound>0.99. Mostly late-type FGKM stars ruled out by Gaia DR2.",
+      "decision": "confirmed_bound",
+      "reason": "These stars are confirmed bound to the Milky Way by Gaia DR2. 428 ruled out at >99% confidence, 159 bound in every single MC sample.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 315,
+          "end_line": 315,
+          "context": "159 candidates in OFSC graveyard: bound in all 10^4 samples"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 181,
+          "end_line": 182,
+          "context": "428 with P_bound>0.99 ruled out"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:55:00",
+  "paper": {
+    "arxiv_id": "2107.13559",
+    "bibcode": "2021MNRAS.507.5732K",
+    "title": "Supernovae Producing Unbound Binaries and Triples",
+    "month": "2021-07",
+    "source_note_json": "notes/2021/2021-07/2021-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2107.13559",
+      "pdf": "https://arxiv.org/pdf/2107.13559"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2107.13559",
+    "audit_path": "literature/2107.13559/audit.json",
+    "catalog_review_path": "literature/2107.13559/catalog_review.json",
+    "catalog_extraction_path": "literature/2107.13559/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:55:00",
+    "extractor": "agent",
+    "summary": "论文利用Gaia EDR3自行数据搜索10个超新星遗迹（SNR）中的非束缚双星/三星系统。论文中'unbound binaries'指超新星爆发后双星被瓦解（伴星被弹射为速逃星），非指恒星从银河系逃逸。论文确认的唯一案例HD 37424（G180.0-01.7）为超新星瓦解双星产生的速逃星，其速度远低于银河系逃逸速度。论文主要统计了超新星后双星瓦解比例，未声称任何恒星为超高速星（HVS）或银河系非束缚天体。论文中的runaway stars为经典速逃星（~100-300 km/s），无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文研究超新星瓦解双星产生的速逃星（runaway stars），其速度量级远低于银河系逃逸速度。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper abstract and title"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2107.13559/arxiv_source",
+          "start_line": 0,
+          "end_line": 0,
+          "context": "Title: Supernovae Producing Unbound Binaries and Triples"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "snr-unbound-binary-companions",
+      "description": "论文在10个超新星遗迹（SNR）中通过Gaia EDR3自行数据搜索非束缚双星伴侣。确认的唯一案例为HD 37424（G180.0-01.7中的PSR J0538+2817的速逃伴星）。论文还讨论了其他SNR中的候选体，但均被排除为假阳性。论文统计了超新星后的双星存活比例：72%不产生双星、13.9%产生束缚双星、12.5%产生非束缚双星。",
+      "decision": "excluded",
+      "reason": "论文中'unbound binary'的概念指超新星爆发后双星系统被瓦解（binary disruption），伴星被弹射为速逃星（runaway star），非指恒星脱离银河系引力束缚（unbound from the Galaxy）。典型超新星弹射速度约100-300 km/s，远低于银河系逃逸速度（局部约500-600 km/s）。论文摘要和正文未将任何恒星归类为超高速星（HVS）或银河系非束缚天体。HD 37424是经典速逃星案例，非HVS候选体。"
+    }
+  ]
+}

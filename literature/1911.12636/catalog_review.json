@@ -1,0 +1,739 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1911.12636",
+    "title": "High-resolution spectroscopy of the high velocity hot post-AGB star IRAS 18379-1707 (LS 5112)",
+    "month": "2019-11",
+    "source_note_json": "notes/2019/2019-11/2019-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1911.12636",
+      "pdf": "https://arxiv.org/pdf/1911.12636"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1911.12636",
+    "audit_path": "literature/1911.12636/audit.json",
+    "source_dir": "literature/1911.12636/arxiv_source",
+    "tex_root": "literature/1911.12636/arxiv_source/LS5112.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:19:37",
+    "reviewer": "agent",
+    "summary": "本文利用FEROS高分辨率光谱(R~48,000)对热post-AGB候选体IRAS 18379-1707 (LS 5112)进行了详尽的非LTE分析，首次给出了3700-9200 Å波段内吸收线与发射线的完整证认，测定了大气参数(Teff=18000 K, log g=2.25)和8种元素的化学丰度，并发现该星是一颗高速星(Vr=-124 km/s)。论文包含11个内部表格：1个恒星与尘埃参数汇总表、1个星际吸收线分量表、1个漫散星际带(DIB)测量表、1个径向速度汇总表、1个元素丰度表、1个误差分析参数敏感度表、1个膨胀速度表、1个测光观测汇总表、1个发射线完整星表(longtable)、1个径向速度测量所用吸收线表、1个蓝移吸收线表。外部资源：完整归一化光谱在图示于 http://lnfm1.sai.msu.ru/~davnv/ls5112；NIST原子光谱数据库和SIMBAD为通用方法论引用，非本文特有数据产品；Gaia DR2数据为公开巡天数据。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-param",
+      "kind": "latex_table",
+      "asset_type": "parameter_summary",
+      "role_in_paper": "汇总文献中已有的IRAS 18379-1707恒星和尘埃参数：天球坐标、银道坐标、Gaia DR2视差和距离、光谱类型、有效温度和表面重力估算值、多波段星等、色余E(B-V)和尘埃温度。用于提供本文高分辨率光谱分析前已知的物理背景。",
+      "source_refs": [
+        {
+          "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+          "start_line": 141,
+          "end_line": 172,
+          "caption": "Stellar and Dust Parameters of IRAS~18379--1707.",
+          "label": "param"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Quantity",
+          "meaning": "物理量名称：Position, Gal. coord., Parallaxes, Distance, Spectral type, Teff, log g, Magnitude, E(B-V), T_dust",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "物理量的数值及误差",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "References",
+          "meaning": "数据来源的参考文献缩写（SIMBAD, G18, BJ18, SS71, V98, P00, GP04, C09, GP03, B-AGdC16, R98, GL97, 2MASS）",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table param列出：坐标(J2000): α=18:40:48.62 δ=-17:04:38.33 (SIMBAD); 银道坐标: l=16.50 b=-5.42 (SIMBAD); 视差: 0.2593±0.0648 mas (Gaia DR2); 距离: 3497 kpc (Bailer-Jones+2018); 光谱型: OB+e, B2.5Ia, B1IIIpe; Teff: 19000, 24000 K (Gauba & Parthasarathy 2004, Cerrigone+2009); log g: 2.5±0.5 (Gauba & Parthasarathy 2003); 多波段星等: FUV=14.980, NUV=14.599, U=11.94, B=12.38, V=11.93, JHK, JHKs均列出; E(B-V)=0.71 (GP04); T_dust=140 K (GP04), 120/590 K (C09). 参考文献来源清晰标注于表下方。",
+      "comments": ""
+    },
+    {
+      "id": "table-ISlines",
+      "kind": "latex_table",
+      "asset_type": "measurement_table",
+      "role_in_paper": "列出Na I D1/D2 和 Ca II H/K 四条星际吸收线的5组速度分量的观测波长和日心视向速度，用于区分星际介质吸收与恒星光球吸收，确定ISM沿视线方向的多分量速度结构。",
+      "source_refs": [
+        {
+          "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+          "start_line": 334,
+          "end_line": 363,
+          "caption": "Absorption components of \\ion{Na}{I} D1 and D2, \\ion{Ca}{II} H and K lines in the spectrum of IRAS 18379-1707. $V_\\text{r}$ are the respective heliocentric radial velocities.",
+          "label": "ISlines"
+        }
+      ],
+      "columns": [
+        {
+          "name": "component",
+          "meaning": "吸收分量编号（1到5）",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "lambda_obs(NaI D2)",
+          "meaning": "Na I D2线(5889.951 Å)的观测波长(Å)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_r(NaI D2)",
+          "meaning": "Na I D2线的日心视向速度(km/s)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "lambda_obs(NaI D1)",
+          "meaning": "Na I D1线(5895.924 Å)的观测波长(Å)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_r(NaI D1)",
+          "meaning": "Na I D1线的日心视向速度(km/s)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "lambda_obs(CaII H)",
+          "meaning": "Ca II H线(3968.469 Å)的观测波长(Å)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_r(CaII H)",
+          "meaning": "Ca II H线的日心视向速度(km/s)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "lambda_obs(CaII K)",
+          "meaning": "Ca II K线(3933.663 Å)的观测波长(Å)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_r(CaII K)",
+          "meaning": "Ca II K线的日心视向速度(km/s)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table ISlines包含5个吸收分量：分量1的Vr约-7至-10 km/s (本地ISM)，分量2的Vr约+23至+25 km/s，分量3仅出现在Na I线(Vr约+39 km/s)，分量4的Vr约+60至+61 km/s，分量5的Vr约+97至+100 km/s。Ca II H/K对分量3无检测。KI线Vr≈-7.9 km/s，与分量1一致，确认为星际起源。Smoker+2004在Ca II K和H中检测到V_LSR~-137 km/s的吸收特征，本文光谱中也存在该分量，很可能为星际起源。",
+      "comments": ""
+    },
+    {
+      "id": "table-DIB",
+      "kind": "latex_table",
+      "asset_type": "measurement_table",
+      "role_in_paper": "列出24条漫散星际带(DIBs)的观测波长、参考波长(Hobbs+2008)、半峰全宽(FWHM)、等值宽度(EW)、EW/E(B-V)比值(Luna+2008)和视向速度，用于确认这些吸收特征的星际起源，并通过8条DIBs估算E(B-V)=0.61±0.08 mag，与Gauba & Parthasarathy测得的0.71 mag一致。",
+      "source_refs": [
+        {
+          "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+          "start_line": 394,
+          "end_line": 438,
+          "caption": "DIBs in the spectrum of IRAS~18379--1707.",
+          "label": "DIB"
+        }
+      ],
+      "columns": [
+        {
+          "name": "lambda_obs",
+          "meaning": "DIB的观测波长(Å)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "lambda_c",
+          "meaning": "DIB中心波长(Hobbs+2008参考值)(Å)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "FWHM",
+          "meaning": "DIB的半峰全宽(Å)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW",
+          "meaning": "DIB的等值宽度(Å)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW/E(B-V)",
+          "meaning": "DIB等值宽度与色余之比(Å/mag, Luna+2008校准)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "E(B-V)",
+          "meaning": "由DIB估算的色余E(B-V)(mag)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_r",
+          "meaning": "DIB的日心视向速度(km/s)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table DIB包含24条DIBs(波长4964-7224 Å)。DIBs径向速度大多数接近Na I/Ca II分量1(本地ISM)或分量2，证实其星际起源。6284, 6993, 7224 Å三条DIBs受大气吸收严重影响，在测量前已进行大气校正。5849.81 Å的DIB异常强(EW/E(B-V)比值对应E(B-V)=1.30 mag)，被排除在E(B-V)均值计算之外。其余8条DIBs给出的均值E(B-V)=0.61±0.08 mag。径向速度约有三分之二为负值，与Na I分量1的Vr≈-10 km/s一致。",
+      "comments": ""
+    },
+    {
+      "id": "table-radvel",
+      "kind": "latex_table",
+      "asset_type": "measurement_summary",
+      "role_in_paper": "汇总51条选定吸收线按离子种类的加权平均视向速度，给出恒星系统速度Vr=-124.0 km/s。同时列出存在蓝移的低激发离子(Ne I, Mg II, Si II, S II)的独立测量，表明这些'冷'离子线形成于外流气体中。",
+      "source_refs": [
+        {
+          "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+          "start_line": 518,
+          "end_line": 547,
+          "caption": "Radial velocities.",
+          "label": "tab:radvel"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Ion",
+          "meaning": "离子种类标识",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "E(sigma_E)",
+          "meaning": "该离子所用谱线的平均低能级激发电势(eV)及标准差",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V+124",
+          "meaning": "平均视向速度+124 km/s(相对系统速度的偏移)(km/s)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_Vbar",
+          "meaning": "均值的标准误差(km/s)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_V",
+          "meaning": "单线测量的标准偏差(km/s)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N",
+          "meaning": "用于平均的谱线数量",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table radvel上半部分列出7种离子(He I, C II, N II, O II, Si III, Al III, S III)各N条线的平均激发电势E、平均Vr(相对-124 km/s的偏移)、均值标准误差σ和标准差σ_V。全部51条线加权平均得到Vr=-124.0±0.4 km/s。下半部分列出蓝移离子：Ne I(-10.0 km/s, 4线), Mg II(-13.4 km/s, 1线), Si II(-19.5 km/s, 2线), S II(-8.2 km/s, 4线)。这些低激发离子(E_l<17 eV)的蓝移表明其形成于恒星外流区域。",
+      "comments": ""
+    },
+    {
+      "id": "table-abund",
+      "kind": "latex_table",
+      "asset_type": "chemical_abundance_table",
+      "role_in_paper": "列出IRAS 18379-1707的8种元素(C, N, O, Ne, Mg, Al, Si, S)和Fe的化学丰度，以对数形式(log ε=12+log(nX/nH))和相对太阳值([X/H])给出，附标准偏差和标准误差。这是本文的核心数据产出，首次给出该星的高分辨率丰度分析，揭示其为金属亏损([M/H]≈-0.6)的后AGB星，且C+N+O相对S元素过丰，表明第三次挖掘上翻过程已将He燃烧产物带至表面。",
+      "source_refs": [
+        {
+          "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+          "start_line": 701,
+          "end_line": 730,
+          "caption": "Element abundances determined for IRAS~18379--1707 in $\\log \\varepsilon=12+\\log(n_\\text{X}/n_\\text{H})$ and [X/H]=$\\log(n_\\text{X}/n_\\text{H})-\\log(n_{\\text{X}\\odot}/n_{\\text{H}\\odot})$",
+          "label": "tab:abund"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Element",
+          "meaning": "元素符号(隐含于行标签, C, N, O, Ne, Mg, Al, Si, S, Fe)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log_eps_sun",
+          "meaning": "太阳光球元素丰度(log ε = 12+log(nX/nH))，取自Asplund+2009",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log_eps",
+          "meaning": "IRAS 18379-1707的元素丰度对数值",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[X/H]",
+          "meaning": "相对太阳丰度的对数差值[X/H]=log(nX/nH)-log(nX,⊙/nH,⊙)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_x",
+          "meaning": "单线测量的标准偏差",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_xbar",
+          "meaning": "均值的标准误差(σ_x/√N)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N",
+          "meaning": "用于平均的谱线数量",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table abund给出：C: log ε=7.76, [C/H]=-0.67 (2线); N: log ε=7.41, [N/H]=-0.42 (7线); O: log ε=8.59, [O/H]=-0.10 (34线); Ne*: log ε=8.39, [Ne/H]=+0.55 (8线, 蓝翼延伸, 可能偏差); Mg*: log ε=7.30, [Mg/H]=-0.30 (1线, 蓝翼延伸); Al: log ε=5.56, [Al/H]=-0.89 (2线); Si: log ε=7.10, [Si/H]=-0.41 (4线); S: log ε=6.39, [S/H]=-0.73 (2线); Fe: <7.5, [Fe/H]<0 (上限)。*标注的Ne和Mg使用有蓝翼延伸的谱线测量，可能偏差。太阳丰度参考Asplund+2009。",
+      "comments": ""
+    },
+    {
+      "id": "table-err",
+      "kind": "latex_table",
+      "asset_type": "error_budget_table",
+      "role_in_paper": "列出导出参数(Teff, log g, ξ, 及各元素丰度)的误差预算，包括参数交叉敏感度(偏导数∂xi/∂xj)和各种模型假设不确定性(连续谱放置σC、模型网格金属丰度σM、湍流压力项σp、微湍流速度不确定性σξm)，最终给出总不确定度σ_k。",
+      "source_refs": [
+        {
+          "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+          "start_line": 940,
+          "end_line": 965,
+          "caption": "The derived parameters, their sensitivity to the model assumptions and final uncertainties.",
+          "label": "tab:err"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "导出参数名称(Teff, log g, ξ, 及各元素丰度的log ε)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "dx/dTeff",
+          "meaning": "参数对有效温度Teff的偏导数",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "dx/dlog_g",
+          "meaning": "参数对表面重力log g的偏导数",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "dx/dxi",
+          "meaning": "参数对微湍流速度ξ的偏导数",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_C",
+          "meaning": "连续谱放置不确定性",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_M",
+          "meaning": "模型网格金属丰度不确定性(Z=0.2 vs 0.5)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_p",
+          "meaning": "湍流压力项不确定性",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_xim",
+          "meaning": "微湍流速度不确定性(σξ=3 km/s)引入的误差",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "x_i",
+          "meaning": "导出参数的最佳估值",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_i",
+          "meaning": "导出参数的拟合误差",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_k",
+          "meaning": "导出参数的总不确定度(各误差源的平方和开根)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table err为3(恒星参数)+8(元素丰度)=11行，分3个部分：前3行为恒星大气参数Teff, log g, ξ的误差分析；后8行为各元素丰度的误差分析。列包括：偏导数∂xi/∂Teff, ∂xi/∂log g, ∂xi/∂ξ（反映参数交叉敏感度）；4种系统误差源σC, σM, σp, σξm；导出值xi及其拟合误差σi；总不确定度σ_k。例如Teff的总不确定度σ_k=1000 K (拟合300 K + 连续谱540 K + 模型网格400 K + 湍流压160 K + 微湍流270 K)。",
+      "comments": ""
+    },
+    {
+      "id": "table-vel",
+      "kind": "latex_table",
+      "asset_type": "measurement_table",
+      "role_in_paper": "列出10条禁线发射线的半峰全宽速度(V_FWHM)和膨胀速度(V_exp)，用于估计环绕该post-AGB星的低激发星云膨胀特性。膨胀速度V_exp由V_exp = 1/2(V_FWHM²-V_instr²)^(1/2)计算，仪器展宽V_instr=6 km/s。",
+      "source_refs": [
+        {
+          "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+          "start_line": 1115,
+          "end_line": 1147,
+          "caption": "Expansion velocities.",
+          "label": "tab:vel"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Identification",
+          "meaning": "谱线证认: [离子](多重线编号)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "lambda_lab",
+          "meaning": "实验室参考波长(Å)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_FWHM",
+          "meaning": "半峰全宽对应的速度(km/s)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_exp",
+          "meaning": "扣除仪器展宽后的星云膨胀速度(km/s)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table vel包含10条禁线：[Fe II](7F) 4287: V_exp=11.68 km/s; [N I](1F) 5198,5200: V_exp=15.28, 12.53 km/s; [O I](1F) 6300,6364: V_exp=9.96, 9.13 km/s; [N II](1F) 6548: V_exp=14.13 km/s; [S II](2F) 6731: V_exp=12.52 km/s; [Ni II](2F) 7378: V_exp=14.15 km/s; [Cr II](3F) 8000: V_exp=16.40 km/s; [C I](3F) 8727: V_exp=8.77 km/s。膨胀速度范围约9-16 km/s，表明星云缓慢膨胀。[N II] 6584线因与C II 6583吸收线混合而未使用。",
+      "comments": ""
+    },
+    {
+      "id": "table-asas",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "汇总ASAS-3和ASAS-SN两个巡天项目对IRAS 18379-1707的V波段测光监测数据：平均星等、标准偏差(SD)、观测点数和平均测量精度(σV)。用于描述该星的测光变幅(ΔV≤0.2 mag)和快变特性，但未找到可靠周期。",
+      "source_refs": [
+        {
+          "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+          "start_line": 1348,
+          "end_line": 1362,
+          "caption": "Summary of photometric observations of IRAS~18379--1707",
+          "label": "tab:asas"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Source",
+          "meaning": "巡天数据来源: ASAS-3或ASAS-SN",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_mag",
+          "meaning": "V波段平均星等(mag)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SD_mag",
+          "meaning": "V波段星等的标准偏差(mag)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N",
+          "meaning": "观测点总数",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_V_mag",
+          "meaning": "平均测量精度(mag)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table asas列出ASAS-3(2001年2月至2009年10月)和ASAS-SN(2015年3月至2018年9月)的V波段测光结果。ASAS-3: V=12.01 mag, SD=0.11 mag, N=460, σV=0.041 mag; ASAS-SN: V=12.00 mag, SD=0.08 mag, N=720, σV=0.013 mag。两个巡天的平均星等一致, SD表明光变幅度≤0.2 mag(peak-to-peak)。使用Period04搜索未找到可靠周期。",
+      "comments": ""
+    },
+    {
+      "id": "table-emlines",
+      "kind": "latex_table",
+      "asset_type": "line_catalog",
+      "role_in_paper": "列出IRAS 18379-1707光谱中证认的全部发射线(氢氦线除外)，包含观测波长、实验室波长、离子标识、等值宽度(EW)和日心视向速度。这是本文最大最重要的数据产物，首次完整发表了该星3700-9200 Å波段的发射线证认。氢和氦谱线因具有复杂的多分量P-Cygni轮廓而单独讨论，未纳入此表。",
+      "source_refs": [
+        {
+          "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+          "start_line": 1651,
+          "end_line": 1750,
+          "caption": "Emission lines in the spectrum of IRAS~18379--1707.",
+          "label": "emlines"
+        }
+      ],
+      "columns": [
+        {
+          "name": "lambda_obs",
+          "meaning": "观测波长(Å)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "lambda_lab",
+          "meaning": "实验室参考波长(Å)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Identification",
+          "meaning": "谱线证认: 离子种类和多重线编号",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW",
+          "meaning": "发射线等值宽度(Å)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_r",
+          "meaning": "日心视向速度(km/s)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table emlines (longtable跨页)包含约70+条发射线，波长范围3854-9218 Å。包括：Si II(多重线1, 2, 4, 5, 7)多条；[Fe II](多重线4F, 6F, 7F, 13F, 18F, 19F, 20F, 21F)；O I(多重线3, 5, 20, 21, 22, 24, 25, 26)；[O I](1F, 3F)；N I(多重线1, 3, 7)；[N I](1F)；[N II](1F)；Na I(1)；Mg II(1, 7, 8)；Fe III(5)；[Ni II](2F)；[S II](2F)；C II(3)；[Cr II](1F, 3F)；[C I](3F)。最强发射线为O I λ8446 (EW=2.452 Å)和Mg II λ9218 (EW=1.310 Å)。视向速度大多在-117至-139 km/s范围内，平均约-130.9 km/s。",
+      "comments": ""
+    },
+    {
+      "id": "table-abslines",
+      "kind": "latex_table",
+      "asset_type": "line_catalog",
+      "role_in_paper": "列出用于测定恒星视向速度的51条光球吸收线的完整信息：离子标识、实验室波长、低能级激发电势、等值宽度(mÅ)、日心视向速度及其误差。这些谱线经过严格筛选，排除了有明显轮廓畸变(如He I强的P-Cygni特征)和蓝移的低激发线。",
+      "source_refs": [
+        {
+          "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+          "start_line": 1754,
+          "end_line": 1821,
+          "caption": "Absorption lines used for measurement of the stellar radial velocity.",
+          "label": "tab:abslines"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ion",
+          "meaning": "离子种类标识",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "lambda_lab",
+          "meaning": "实验室参考波长(Å)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "E_l",
+          "meaning": "谱线低能级激发电势(eV)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW",
+          "meaning": "等值宽度(mÅ)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_r",
+          "meaning": "日心视向速度(km/s)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_Vr",
+          "meaning": "视向速度测量的标准误差(km/s)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table abslines包含51条吸收线，来自：He I(5线, EW=66-169 mÅ), C II(2线, 可能受污染), N II(6线), O II(29线, 主线种), S III(1线), Si III(6线), Al III(2线)。谱线波长范围3867-5740 Å，低能级E_l从15.6 eV (Al III)到28.5 eV (O II)。视向速度范围约-119至-131 km/s，平均-124.0±0.4 km/s。测量方法：用高斯函数同时拟合观测谱和理论谱(SYNSPEC生成)的线心位置。C II线标记为可能混合线(^b)。",
+      "comments": ""
+    },
+    {
+      "id": "table-blueshifted",
+      "kind": "latex_table",
+      "asset_type": "line_catalog",
+      "role_in_paper": "列出11条具有扩展蓝翼的吸收线(来自Si II, Mg II, S II, Ne I)，这些低激发离子(E_l=8.9-16.8 eV)的蓝移超出恒星静止系速度约5-23 km/s，表明它们形成于恒星外流大气而非静态光球。这与参考星62 Ori中相同离子无此异常形成对比。",
+      "source_refs": [
+        {
+          "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+          "start_line": 1824,
+          "end_line": 1847,
+          "caption": "Absorption lines with extended blue wings.",
+          "label": "tab:blueshifted"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ion",
+          "meaning": "离子种类标识",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "lambda_lab",
+          "meaning": "实验室参考波长(Å)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "E_l",
+          "meaning": "谱线低能级激发电势(eV)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW",
+          "meaning": "等值宽度(mÅ)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_r",
+          "meaning": "日心视向速度(km/s)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_Vr",
+          "meaning": "视向速度测量的标准误差(km/s)",
+          "unit_text": "",
+          "source_of_definition": "paper table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table blueshifted包含11条线：Si II λ4128,4130 (E_l=9.8 eV, Vr≈-142, -145 km/s); Mg II λ4481 (E_l=8.9 eV, Vr≈-137 km/s); S II λ5640,5647,5660 (E_l=13.7-14.1 eV, Vr≈-125至-140 km/s); Ne I λ5852,6334,6402,7032 (E_l=16.6-16.8 eV, Vr≈-129至-144 km/s)。蓝移幅度约8-21 km/s，超过恒星系统速度(-124 km/s)。Si II和Ne I线蓝移最大。这些线未被用于恒星参数和丰度测量。",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-ls5112-spectrum",
+      "kind": "spectral_data_hosted",
+      "url": "http://lnfm1.sai.msu.ru/~davnv/ls5112",
+      "local_path": "",
+      "description": "IRAS 18379-1707在3700-9200 Å波段的完整连续谱归一化高分辨率光谱(FEROS, R~48,000)，以图形格式托管于Sternberg Astronomical Institute服务器。本文中所有谱线测量(吸收线、发射线、DIBs)均基于此光谱。",
+      "source_refs": [
+        {
+          "path": "literature/1911.12636/arxiv_source/LS5112.tex",
+          "start_line": 207,
+          "end_line": 211,
+          "context": "The complete continuum-normalised spectrum of IRAS~18379--1707 in the spectral ranges 3700--9200 \\AA\\ is presented at \\url{http://lnfm1.sai.msu.ru/~davnv/ls5112}."
+        }
+      ],
+      "evidence": "论文Section 3中明确写明：'The complete continuum-normalised spectrum of IRAS~18379--1707 in the spectral ranges 3700--9200 Å is presented at http://lnfm1.sai.msu.ru/~davnv/ls5112.'",
+      "comments": "该URL为本文唯一明确给出的论文特有数据访问链接。NIST原子光谱数据库(https://www.nist.gov/pml/atomic-spectra-database)和SIMBAD(http://simbad.u-strasbg.fr/simbad/)为通用方法论/数据库引用，按照审查边界规则予以省略，不列为外部数据资源。"
+    }
+  ]
+}

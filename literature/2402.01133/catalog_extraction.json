@@ -1,0 +1,648 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:38:55",
+  "paper": {
+    "arxiv_id": "2402.01133",
+    "title": "Where do they come from? Identification of globular cluster escaped stars",
+    "month": "2024-02"
+  },
+  "review": {
+    "path": "literature/2402.01133/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123855",
+    "started_at": "2026-05-17T12:38:55",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2402.01133",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-Tabel-GC-parameters",
+      "internal_table_id": "table-Tabel-GC-parameters",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+        "start_line": 158,
+        "end_line": 183,
+        "caption": "Kinematic parameters of six GCs studied in this work.",
+        "label": "Tabel:GC parameters"
+      },
+      "source_path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+      "excerpt_path": "literature/2402.01133/catalog_sources/table-Tabel-GC-parameters/excerpt.tex",
+      "sha256": "435987308a938da5076fa8fd9971e90efd99a37839f6064a917b9e73b8687568",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-Tabel-GC-iso",
+      "internal_table_id": "table-Tabel-GC-iso",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+        "start_line": 188,
+        "end_line": 213,
+        "caption": "Parameters of the GC used to generate the isochrones and ZAHBs.",
+        "label": "Tabel:GC iso"
+      },
+      "source_path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+      "excerpt_path": "literature/2402.01133/catalog_sources/table-Tabel-GC-iso/excerpt.tex",
+      "sha256": "bcdc0d68b50f276701c980d24387789f20fdb4dd371a92d0232939f3fcbb7829",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-Tabel-GC-star-pair",
+      "internal_table_id": "table-Tabel-GC-star-pair",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+        "start_line": 344,
+        "end_line": 406,
+        "caption": "N-rich stars and potential GC origin from Method \\uppercase\\expandafter{\\romannumeral1}. The columns list the Gaia EDR3 star ID and cluster name, the confidence measured from full action distribution combining the metallicity, and the merger events. Entries in bold are the five most probable associations",
+        "label": "Tabel: GC-star pair"
+      },
+      "source_path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+      "excerpt_path": "literature/2402.01133/catalog_sources/table-Tabel-GC-star-pair/excerpt.tex",
+      "sha256": "adeddefbdea6381ef49057df378735393192aac81069b8794512ee0b9ae005dd",
+      "line_count": 63,
+      "error": ""
+    },
+    {
+      "id": "table-Table-extra-tidal-stars",
+      "internal_table_id": "table-Table-extra-tidal-stars",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+        "start_line": 431,
+        "end_line": 476,
+        "caption": "Identified extra-tidal stars from Method \\uppercase \\expandafter{\\romannumeral2}.",
+        "label": "Table: extra-tidal stars"
+      },
+      "source_path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+      "excerpt_path": "literature/2402.01133/catalog_sources/table-Table-extra-tidal-stars/excerpt.tex",
+      "sha256": "9f4303732686920120517019684d2d71440d22ed371dacbe99cc5fb15abdd6f3",
+      "line_count": 46,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-Tabel-GC-parameters",
+      "internal_table_id": "table-Tabel-GC-parameters",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2402.01133/catalog_tables/table-Tabel-GC-parameters.ecsv",
+      "caption": "Kinematic parameters of six GCs studied in this work.",
+      "label": "Tabel:GC parameters",
+      "row_count": 6,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "RA",
+          "DEC",
+          "r_t^a",
+          "r_J^b",
+          "\\mu_\\alphacos\\delta",
+          "\\mu_\\delta",
+          "\\sigma_\\mu_\\alpha",
+          "\\sigma_\\mu_\\delta",
+          "\\rho"
+        ],
+        [
+          "",
+          "[deg]",
+          "[deg]",
+          "[ ′ ]",
+          "[ ′ ]",
+          "[mas yr -1 ]",
+          "[mas yr -1 ]",
+          "[mas yr -1 ]",
+          "[mas yr -1 ]",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "DEC | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "r_t^a | [ ′ ]",
+          "unit_text": "[ ′ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "r_J^b | [ ′ ]",
+          "unit_text": "[ ′ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_\\alphacos\\delta | [mas yr -1 ]",
+          "unit_text": "[mas yr -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_\\delta | [mas yr -1 ]",
+          "unit_text": "[mas yr -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\sigma_\\mu_\\alpha | [mas yr -1 ]",
+          "unit_text": "[mas yr -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_\\mu_\\delta | [mas yr -1 ]",
+          "unit_text": "[mas yr -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\rho",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpx9kn7hj8/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2402.01133/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpx9kn7hj8/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2402.01133/catalog_sources/table-Tabel-GC-parameters/wrapped.tex",
+            "html": "literature/2402.01133/catalog_sources/table-Tabel-GC-parameters/latexml.html",
+            "stdout": "literature/2402.01133/catalog_sources/table-Tabel-GC-parameters/latexml.stdout.txt",
+            "stderr": "literature/2402.01133/catalog_sources/table-Tabel-GC-parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "435987308a938da5076fa8fd9971e90efd99a37839f6064a917b9e73b8687568"
+    },
+    {
+      "id": "table-Tabel-GC-iso",
+      "internal_table_id": "table-Tabel-GC-iso",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2402.01133/catalog_tables/table-Tabel-GC-iso.ecsv",
+      "caption": "Parameters of the GC used to generate the isochrones and ZAHBs.",
+      "label": "Tabel:GC iso",
+      "row_count": 6,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "Age 1",
+          "[Fe/H] 2",
+          "Distance 3",
+          "[ \\alpha /Fe]",
+          "E(B-V) 2",
+          "Initial Mass on HB (IMHB)"
+        ],
+        [
+          "",
+          "[Gyr]",
+          "[dex]",
+          "[Kpc]",
+          "",
+          "[mag]",
+          "[M ⊙ ]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Age 1 | [Gyr]",
+          "unit_text": "[Gyr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "[Fe/H] 2 | [dex]",
+          "unit_text": "[Fe/H] 2",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Distance 3 | [Kpc]",
+          "unit_text": "[Kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "[ \\alpha /Fe]",
+          "unit_text": "[ \\alpha /Fe]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "E(B-V) 2 | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Initial Mass on HB (IMHB) | [M ⊙ ]",
+          "unit_text": "Initial Mass on HB (IMHB)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfxofo9yj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2402.01133/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfxofo9yj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2402.01133/catalog_sources/table-Tabel-GC-iso/wrapped.tex",
+            "html": "literature/2402.01133/catalog_sources/table-Tabel-GC-iso/latexml.html",
+            "stdout": "literature/2402.01133/catalog_sources/table-Tabel-GC-iso/latexml.stdout.txt",
+            "stderr": "literature/2402.01133/catalog_sources/table-Tabel-GC-iso/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "bcdc0d68b50f276701c980d24387789f20fdb4dd371a92d0232939f3fcbb7829"
+    },
+    {
+      "id": "table-Tabel-GC-star-pair",
+      "internal_table_id": "table-Tabel-GC-star-pair",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2402.01133/catalog_tables/table-Tabel-GC-star-pair.ecsv",
+      "caption": "N-rich stars and potential GC origin from Method \\uppercase\\expandafter{\\romannumeral1}. The columns list the Gaia EDR3 star ID and cluster name, the confidence measured from full action distribution combining the metallicity, and the merger events. Entries in bold are the five most probable associations",
+      "label": "Tabel: GC-star pair",
+      "row_count": 30,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2dky3e7m/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2402.01133/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2dky3e7m/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2402.01133/catalog_sources/table-Tabel-GC-star-pair/wrapped.tex",
+            "html": "literature/2402.01133/catalog_sources/table-Tabel-GC-star-pair/latexml.html",
+            "stdout": "literature/2402.01133/catalog_sources/table-Tabel-GC-star-pair/latexml.stdout.txt",
+            "stderr": "literature/2402.01133/catalog_sources/table-Tabel-GC-star-pair/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "adeddefbdea6381ef49057df378735393192aac81069b8794512ee0b9ae005dd"
+    },
+    {
+      "id": "table-Table-extra-tidal-stars",
+      "internal_table_id": "table-Table-extra-tidal-stars",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2402.01133/catalog_tables/table-Table-extra-tidal-stars.ecsv",
+      "caption": "Identified extra-tidal stars from Method \\uppercase \\expandafter{\\romannumeral2}.",
+      "label": "Table: extra-tidal stars",
+      "row_count": 27,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia EDR3 ID",
+          "GC",
+          "RV",
+          "[Fe/H]",
+          "Spectral source",
+          "Gaia EDR3 ID",
+          "GC",
+          "RV",
+          "[Fe/H]",
+          "Spectral source"
+        ],
+        [
+          "",
+          "",
+          "[km \\cdot s -1 ]",
+          "dex",
+          "",
+          "",
+          "[km \\cdot s -1 ]",
+          "dex",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia EDR3 ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "GC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "RV | [km \\cdot s -1 ]",
+          "unit_text": "[km \\cdot s -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "[Fe/H] | dex",
+          "unit_text": "[Fe/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Spectral source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Gaia EDR3 ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "GC | [km \\cdot s -1 ]",
+          "unit_text": "[km \\cdot s -1 ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "RV | dex",
+          "unit_text": "dex",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "[Fe/H]",
+          "unit_text": "[Fe/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Spectral source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgeo2q61_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2402.01133/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgeo2q61_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2402.01133/catalog_sources/table-Table-extra-tidal-stars/wrapped.tex",
+            "html": "literature/2402.01133/catalog_sources/table-Table-extra-tidal-stars/latexml.html",
+            "stdout": "literature/2402.01133/catalog_sources/table-Table-extra-tidal-stars/latexml.stdout.txt",
+            "stderr": "literature/2402.01133/catalog_sources/table-Table-extra-tidal-stars/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9f4303732686920120517019684d2d71440d22ed371dacbe99cc5fb15abdd6f3"
+    }
+  ]
+}

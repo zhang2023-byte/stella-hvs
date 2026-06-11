@@ -1,0 +1,1254 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:41",
+  "paper": {
+    "arxiv_id": "2407.04479",
+    "title": "A spectroscopic and kinematic survey of fast hot subdwarfs",
+    "month": "2024-07"
+  },
+  "review": {
+    "path": "literature/2407.04479/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123941",
+    "started_at": "2026-05-17T12:39:41",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2407.04479",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 9,
+      "work_count": 9,
+      "table_count": 9,
+      "success_count": 9,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 9,
+      "file_success_count": 9,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-runs",
+      "internal_table_id": "table-tab-runs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+        "start_line": 104,
+        "end_line": 132,
+        "caption": "Summary of the follow-up observations in the course of the MUCHFUSS project.",
+        "label": "tab:runs"
+      },
+      "source_path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+      "excerpt_path": "literature/2407.04479/catalog_sources/table-tab-runs/excerpt.tex",
+      "sha256": "5b9a30641fadd86f16715751a4ddd488064b77975fb7876d48f50fc4a8f2a488",
+      "line_count": 29,
+      "error": ""
+    },
+    {
+      "id": "table-tab-spec",
+      "internal_table_id": "table-tab-spec",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+        "start_line": 294,
+        "end_line": 375,
+        "caption": "\\label{tab:spec} Classifications and spectroscopic parameters. Spectral types are defined in section \\ref{sec:spec_class}. Effective temperature, surface gravity, and helium abundance are listed with their 1$\\sigma$ uncertainties. The mean radial velocity and its standard deviation, the $\\log{p}$ value to indicate radial velocity variability, and the number of spectra used are listed as well. The last column lists the category as defined in Sect. \\ref{sec:radial_velocity}.",
+        "label": "tab:spec"
+      },
+      "source_path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+      "excerpt_path": "literature/2407.04479/catalog_sources/table-tab-spec/excerpt.tex",
+      "sha256": "99539ff2a0d7347814f206e5e878a1459dec374d00e85baa4c479f4c7edbd4d7",
+      "line_count": 82,
+      "error": ""
+    },
+    {
+      "id": "table-tab-sdistance",
+      "internal_table_id": "table-tab-sdistance",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+        "start_line": 459,
+        "end_line": 528,
+        "caption": "Results of the SED analysis: Angular diameter $\\Theta$, interstellar reddening parameter $E(44-55)$, and spectroscopic distance $d_{\\rm spec}$.",
+        "label": "tab:sdistance"
+      },
+      "source_path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+      "excerpt_path": "literature/2407.04479/catalog_sources/table-tab-sdistance/excerpt.tex",
+      "sha256": "a85e40d97f7471b9ef07d5df65fd51014ce1759aa28f3d11842c254fe192325d",
+      "line_count": 70,
+      "error": ""
+    },
+    {
+      "id": "table-tab-spec_par",
+      "internal_table_id": "table-tab-spec_par",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+        "start_line": 542,
+        "end_line": 559,
+        "caption": "Comparison of spectroscopic vs. parallax $\\varpi$ based distances. The inversion accounts for asymmetry and zero point offset (Lindegren et al. \\cite{lindegren20}).",
+        "label": "tab:spec_par"
+      },
+      "source_path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+      "excerpt_path": "literature/2407.04479/catalog_sources/table-tab-spec_par/excerpt.tex",
+      "sha256": "c91819dd52e2bff34ba5975712bc7e3500fc2e7576acae3c5ec0f812f42a40bd",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-tab-kinematic",
+      "internal_table_id": "table-tab-kinematic",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+        "start_line": 623,
+        "end_line": 692,
+        "caption": "\\label{tab:kinematic} Kinematic parameters of the fast star candidates.",
+        "label": "tab:kinematic"
+      },
+      "source_path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+      "excerpt_path": "literature/2407.04479/catalog_sources/table-tab-kinematic/excerpt.tex",
+      "sha256": "a7d271b35f91b8e04c342da2966c7fa6f82106edf349d193ad9247754968875d",
+      "line_count": 70,
+      "error": ""
+    },
+    {
+      "id": "table-tab-crossing",
+      "internal_table_id": "table-tab-crossing",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+        "start_line": 695,
+        "end_line": 764,
+        "caption": "\\label{tab:crossing} Parameters of the fast star candidates at the last Galactic disc passage.",
+        "label": "tab:crossing"
+      },
+      "source_path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+      "excerpt_path": "literature/2407.04479/catalog_sources/table-tab-crossing/excerpt.tex",
+      "sha256": "31e1988a664bb4e87e9fc80e0975f9620477c7429cebec224d9320c2e2be0670",
+      "line_count": 70,
+      "error": ""
+    },
+    {
+      "id": "table-tab-astro",
+      "internal_table_id": "table-tab-astro",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+        "start_line": 1277,
+        "end_line": 1345,
+        "caption": "\\label{tab:astro} Astrometric parameters.",
+        "label": "tab:astro"
+      },
+      "source_path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+      "excerpt_path": "literature/2407.04479/catalog_sources/table-tab-astro/excerpt.tex",
+      "sha256": "1df96e812efaa697353f7e24bcdd4c0ed2dfaf4339de7dfe3afe7757c2597f98",
+      "line_count": 69,
+      "error": ""
+    },
+    {
+      "id": "table-tab-spec_overview",
+      "internal_table_id": "table-tab-spec_overview",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+        "start_line": 1349,
+        "end_line": 1417,
+        "caption": "\\label{tab:spec_overview} Spectroscopic data overview.",
+        "label": "tab:spec_overview"
+      },
+      "source_path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+      "excerpt_path": "literature/2407.04479/catalog_sources/table-tab-spec_overview/excerpt.tex",
+      "sha256": "565406339c601e8c6a9f873a37a35504ee3a3325bfc1bcd72a685cd1cc9a61f3",
+      "line_count": 69,
+      "error": ""
+    },
+    {
+      "id": "table-tab-photo_surveys",
+      "internal_table_id": "table-tab-photo_surveys",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+        "start_line": 1423,
+        "end_line": 1450,
+        "caption": "\\label{tab:photo_surveys} Photometric surveys used for the SED analysis",
+        "label": "tab:photo_surveys"
+      },
+      "source_path": "literature/2407.04479/arxiv_source/fastsds_final.tex",
+      "excerpt_path": "literature/2407.04479/catalog_sources/table-tab-photo_surveys/excerpt.tex",
+      "sha256": "c02cc87c1937b5734e32544e3fc6fe05d4f4a3827ce591f350fb2c38b2b7b16f",
+      "line_count": 28,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-runs",
+      "internal_table_id": "table-tab-runs",
+      "status": "success",
+      "ecsv_path": "literature/2407.04479/catalog_tables/table-tab-runs.ecsv",
+      "caption": "Summary of the follow-up observations in the course of the MUCHFUSS project.",
+      "label": "tab:runs",
+      "row_count": 11,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Date",
+          "Nights",
+          "Telescope & Instrument",
+          "Resolution [ \\lambda / \\Delta\\lambda ]",
+          "Coverage [Å]",
+          "Observer"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Date",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Nights",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Telescope & Instrument",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Resolution [ \\lambda / \\Delta\\lambda ]",
+          "unit_text": "Resolution [ \\lambda / \\Delta\\lambda ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Coverage [Å]",
+          "unit_text": "Coverage [Å]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Observer",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsayecuo_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.04479/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsayecuo_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.04479/catalog_sources/table-tab-runs/wrapped.tex",
+            "html": "literature/2407.04479/catalog_sources/table-tab-runs/latexml.html",
+            "stdout": "literature/2407.04479/catalog_sources/table-tab-runs/latexml.stdout.txt",
+            "stderr": "literature/2407.04479/catalog_sources/table-tab-runs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5b9a30641fadd86f16715751a4ddd488064b77975fb7876d48f50fc4a8f2a488"
+    },
+    {
+      "id": "table-tab-spec",
+      "internal_table_id": "table-tab-spec",
+      "status": "success",
+      "ecsv_path": "literature/2407.04479/catalog_tables/table-tab-spec.ecsv",
+      "caption": "\\label{tab:spec} Classifications and spectroscopic parameters. Spectral types are defined in section \\ref{sec:spec_class}. Effective temperature, surface gravity, and helium abundance are listed with their 1$\\sigma$ uncertainties. The mean radial velocity and its standard deviation, the $\\log{p}$ value to indicate radial velocity variability, and the number of spectra used are listed as well. The last column lists the category as defined in Sect. \\ref{sec:radial_velocity}.",
+      "label": "tab:spec",
+      "row_count": 53,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "Class",
+          "T_\\rm eff",
+          "\\logg",
+          "\\logn(He/H)",
+          "RV average",
+          "\\logp",
+          "N spec",
+          "category"
+        ],
+        [
+          "",
+          "",
+          "[K]",
+          "",
+          "",
+          "\\rm[km s^-1]",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Class",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "T_\\rm eff | [K]",
+          "unit_text": "[K]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\logg",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\logn(He/H)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "RV average | \\rm[km s^-1]",
+          "unit_text": "\\rm[km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\logp",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "N spec",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "category",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7flxsosm/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.04479/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7flxsosm/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.04479/catalog_sources/table-tab-spec/wrapped.tex",
+            "html": "literature/2407.04479/catalog_sources/table-tab-spec/latexml.html",
+            "stdout": "literature/2407.04479/catalog_sources/table-tab-spec/latexml.stdout.txt",
+            "stderr": "literature/2407.04479/catalog_sources/table-tab-spec/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "99539ff2a0d7347814f206e5e878a1459dec374d00e85baa4c479f4c7edbd4d7"
+    },
+    {
+      "id": "table-tab-sdistance",
+      "internal_table_id": "table-tab-sdistance",
+      "status": "success",
+      "ecsv_path": "literature/2407.04479/catalog_tables/table-tab-sdistance.ecsv",
+      "caption": "Results of the SED analysis: Angular diameter $\\Theta$, interstellar reddening parameter $E(44-55)$, and spectroscopic distance $d_{\\rm spec}$.",
+      "label": "tab:sdistance",
+      "row_count": 53,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "SDSS star",
+          "\\log(\\Theta)",
+          "E(44-55)",
+          "d_\\rm spec"
+        ],
+        [
+          "",
+          "[rad]",
+          "[mag]",
+          "[kpc]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "SDSS star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\log(\\Theta) | [rad]",
+          "unit_text": "[rad]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "E(44-55) | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "d_\\rm spec | [kpc]",
+          "unit_text": "[kpc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpidzlu4lx/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.04479/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpidzlu4lx/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.04479/catalog_sources/table-tab-sdistance/wrapped.tex",
+            "html": "literature/2407.04479/catalog_sources/table-tab-sdistance/latexml.html",
+            "stdout": "literature/2407.04479/catalog_sources/table-tab-sdistance/latexml.stdout.txt",
+            "stderr": "literature/2407.04479/catalog_sources/table-tab-sdistance/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a85e40d97f7471b9ef07d5df65fd51014ce1759aa28f3d11842c254fe192325d"
+    },
+    {
+      "id": "table-tab-spec_par",
+      "internal_table_id": "table-tab-spec_par",
+      "status": "success",
+      "ecsv_path": "literature/2407.04479/catalog_tables/table-tab-spec_par.ecsv",
+      "caption": "Comparison of spectroscopic vs. parallax $\\varpi$ based distances. The inversion accounts for asymmetry and zero point offset (Lindegren et al. \\cite{lindegren20}).",
+      "label": "tab:spec_par",
+      "row_count": 4,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "d_spec (kpc)",
+          "d_\\varpi (kpc)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "d_spec (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "d_\\varpi (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8n43ofg7/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.04479/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8n43ofg7/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.04479/catalog_sources/table-tab-spec_par/wrapped.tex",
+            "html": "literature/2407.04479/catalog_sources/table-tab-spec_par/latexml.html",
+            "stdout": "literature/2407.04479/catalog_sources/table-tab-spec_par/latexml.stdout.txt",
+            "stderr": "literature/2407.04479/catalog_sources/table-tab-spec_par/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c91819dd52e2bff34ba5975712bc7e3500fc2e7576acae3c5ec0f812f42a40bd"
+    },
+    {
+      "id": "table-tab-kinematic",
+      "internal_table_id": "table-tab-kinematic",
+      "status": "success",
+      "ecsv_path": "literature/2407.04479/catalog_tables/table-tab-kinematic.ecsv",
+      "caption": "\\label{tab:kinematic} Kinematic parameters of the fast star candidates.",
+      "label": "tab:kinematic",
+      "row_count": 53,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "X",
+          "Y",
+          "Z",
+          "U",
+          "V",
+          "W",
+          "v_\\rm grf"
+        ],
+        [
+          "",
+          "\\rm[kpc]",
+          "\\rm[kpc]",
+          "\\rm[kpc]",
+          "\\rm[km s^-1]",
+          "\\rm[km s^-1]",
+          "\\rm[km s^-1]",
+          "\\rm[km s^-1]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "X | \\rm[kpc]",
+          "unit_text": "\\rm[kpc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Y | \\rm[kpc]",
+          "unit_text": "\\rm[kpc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Z | \\rm[kpc]",
+          "unit_text": "\\rm[kpc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "U | \\rm[km s^-1]",
+          "unit_text": "\\rm[km s^-1]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V | \\rm[km s^-1]",
+          "unit_text": "\\rm[km s^-1]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "W | \\rm[km s^-1]",
+          "unit_text": "\\rm[km s^-1]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "v_\\rm grf | \\rm[km s^-1]",
+          "unit_text": "\\rm[km s^-1]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmph6hsaf00/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.04479/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmph6hsaf00/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.04479/catalog_sources/table-tab-kinematic/wrapped.tex",
+            "html": "literature/2407.04479/catalog_sources/table-tab-kinematic/latexml.html",
+            "stdout": "literature/2407.04479/catalog_sources/table-tab-kinematic/latexml.stdout.txt",
+            "stderr": "literature/2407.04479/catalog_sources/table-tab-kinematic/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a7d271b35f91b8e04c342da2966c7fa6f82106edf349d193ad9247754968875d"
+    },
+    {
+      "id": "table-tab-crossing",
+      "internal_table_id": "table-tab-crossing",
+      "status": "success",
+      "ecsv_path": "literature/2407.04479/catalog_tables/table-tab-crossing.ecsv",
+      "caption": "\\label{tab:crossing} Parameters of the fast star candidates at the last Galactic disc passage.",
+      "label": "tab:crossing",
+      "row_count": 53,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "X_\\rm disc",
+          "Y_\\rm disc",
+          "R_\\rm disc",
+          "v_\\rm ej",
+          "t_\\rm disc",
+          "e",
+          "L_\\rm Z"
+        ],
+        [
+          "",
+          "\\rm[kpc]",
+          "\\rm[kpc]",
+          "\\rm[kpc]",
+          "\\rm[km s^-1]",
+          "[Myr]",
+          "",
+          "\\rm[10^3 kpc km s^-1]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "X_\\rm disc | \\rm[kpc]",
+          "unit_text": "\\rm[kpc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Y_\\rm disc | \\rm[kpc]",
+          "unit_text": "\\rm[kpc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "R_\\rm disc | \\rm[kpc]",
+          "unit_text": "\\rm[kpc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "v_\\rm ej | \\rm[km s^-1]",
+          "unit_text": "\\rm[km s^-1]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "t_\\rm disc | [Myr]",
+          "unit_text": "[Myr]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "e",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "L_\\rm Z | \\rm[10^3 kpc km s^-1]",
+          "unit_text": "\\rm[10^3 kpc km s^-1]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptf5t36lb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.04479/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptf5t36lb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.04479/catalog_sources/table-tab-crossing/wrapped.tex",
+            "html": "literature/2407.04479/catalog_sources/table-tab-crossing/latexml.html",
+            "stdout": "literature/2407.04479/catalog_sources/table-tab-crossing/latexml.stdout.txt",
+            "stderr": "literature/2407.04479/catalog_sources/table-tab-crossing/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "31e1988a664bb4e87e9fc80e0975f9620477c7429cebec224d9320c2e2be0670"
+    },
+    {
+      "id": "table-tab-astro",
+      "internal_table_id": "table-tab-astro",
+      "status": "success",
+      "ecsv_path": "literature/2407.04479/catalog_tables/table-tab-astro.ecsv",
+      "caption": "\\label{tab:astro} Astrometric parameters.",
+      "label": "tab:astro",
+      "row_count": 53,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "Gaia DR3 ID",
+          "\\varpi",
+          "\\mu_\\rm\\alpha\\cos\\delta",
+          "\\mu_\\rm\\delta"
+        ],
+        [
+          "",
+          "",
+          "[mas]",
+          "[mas/yr]",
+          "[mas/yr]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR3 ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\varpi | [mas]",
+          "unit_text": "[mas]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\rm\\alpha\\cos\\delta | [mas/yr]",
+          "unit_text": "[mas/yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\rm\\delta | [mas/yr]",
+          "unit_text": "[mas/yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpulw_ga7q/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.04479/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpulw_ga7q/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.04479/catalog_sources/table-tab-astro/wrapped.tex",
+            "html": "literature/2407.04479/catalog_sources/table-tab-astro/latexml.html",
+            "stdout": "literature/2407.04479/catalog_sources/table-tab-astro/latexml.stdout.txt",
+            "stderr": "literature/2407.04479/catalog_sources/table-tab-astro/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "1df96e812efaa697353f7e24bcdd4c0ed2dfaf4339de7dfe3afe7757c2597f98"
+    },
+    {
+      "id": "table-tab-spec_overview",
+      "internal_table_id": "table-tab-spec_overview",
+      "status": "success",
+      "ecsv_path": "literature/2407.04479/catalog_tables/table-tab-spec_overview.ecsv",
+      "caption": "\\label{tab:spec_overview} Spectroscopic data overview.",
+      "label": "tab:spec_overview",
+      "row_count": 53,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "SDSS",
+          "BOSS",
+          "ISIS",
+          "LAMOST",
+          "XSHO",
+          "FORS1",
+          "EFOSC2",
+          "DBSP",
+          "TWIN",
+          "LRIS"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "SDSS",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "BOSS",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "ISIS",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "LAMOST",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "XSHO",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "FORS1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "EFOSC2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "DBSP",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "TWIN",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "LRIS",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6gigtyyb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.04479/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6gigtyyb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.04479/catalog_sources/table-tab-spec_overview/wrapped.tex",
+            "html": "literature/2407.04479/catalog_sources/table-tab-spec_overview/latexml.html",
+            "stdout": "literature/2407.04479/catalog_sources/table-tab-spec_overview/latexml.stdout.txt",
+            "stderr": "literature/2407.04479/catalog_sources/table-tab-spec_overview/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "565406339c601e8c6a9f873a37a35504ee3a3325bfc1bcd72a685cd1cc9a61f3"
+    },
+    {
+      "id": "table-tab-photo_surveys",
+      "internal_table_id": "table-tab-photo_surveys",
+      "status": "success",
+      "ecsv_path": "literature/2407.04479/catalog_tables/table-tab-photo_surveys.ecsv",
+      "caption": "\\label{tab:photo_surveys} Photometric surveys used for the SED analysis",
+      "label": "tab:photo_surveys",
+      "row_count": 15,
+      "column_count": 1,
+      "environment": "",
+      "header_rows": [
+        [
+          "UV :"
+        ],
+        [
+          "Revised catalog of GALEX UV sources: Bianchi et al. ( )"
+        ],
+        [
+          "Optical :"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "UV : | Revised catalog of GALEX UV sources: Bianchi et al. ( ) | Optical :",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "pandoc",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmps4546rvy/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.04479/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmps4546rvy/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.04479/catalog_sources/table-tab-photo_surveys/wrapped.tex",
+            "html": "literature/2407.04479/catalog_sources/table-tab-photo_surveys/latexml.html",
+            "stdout": "literature/2407.04479/catalog_sources/table-tab-photo_surveys/latexml.stdout.txt",
+            "stderr": "literature/2407.04479/catalog_sources/table-tab-photo_surveys/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplq_on18t/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplq_on18t/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.04479/catalog_sources/table-tab-photo_surveys/wrapped.tex",
+            "html": "literature/2407.04479/catalog_sources/table-tab-photo_surveys/pandoc.html",
+            "stdout": "literature/2407.04479/catalog_sources/table-tab-photo_surveys/pandoc.stdout.txt",
+            "stderr": "literature/2407.04479/catalog_sources/table-tab-photo_surveys/pandoc.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c02cc87c1937b5734e32544e3fc6fe05d4f4a3827ce591f350fb2c38b2b7b16f"
+    }
+  ]
+}

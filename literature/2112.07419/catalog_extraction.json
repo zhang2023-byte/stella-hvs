@@ -1,0 +1,885 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:48:41",
+  "paper": {
+    "arxiv_id": "2112.07419",
+    "title": "Stars in the Local Galactic Thick Disk and Halo in Gaia EDR3: A catalogue of Half a Million Local Main-sequence Stars with Photometric Metallicities",
+    "month": "2021-12"
+  },
+  "review": {
+    "path": "literature/2112.07419/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084841",
+    "started_at": "2026-06-07T08:48:41",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2112.07419",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 6,
+      "work_count": 6,
+      "table_count": 6,
+      "success_count": 6,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 6,
+      "file_success_count": 6,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-tab1",
+      "internal_table_id": "table-tab-tab1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2112.07419/arxiv_source/ms.tex",
+        "start_line": 158,
+        "end_line": 183,
+        "caption": "Coefficients of the polynomials of the form: $H_{G} = c_0 + c_1(\\grp) + c_2(\\grp)^2 + c_3(\\grp)^3$ used as boundaries for the selection of halo main-sequence stars in the RPM diagram.",
+        "label": "tab:tab1"
+      },
+      "source_path": "literature/2112.07419/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2112.07419/catalog_sources/table-tab-tab1/excerpt.tex",
+      "sha256": "d584cebc51bf06b9049556655a32bc776cb027fc6607c275c1dc1dff284f5848",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-tab-tab2",
+      "internal_table_id": "table-tab-tab2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2112.07419/arxiv_source/ms.tex",
+        "start_line": 224,
+        "end_line": 240,
+        "caption": "Metallicity boundaries for stellar subtypes.",
+        "label": "tab:tab2"
+      },
+      "source_path": "literature/2112.07419/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2112.07419/catalog_sources/table-tab-tab2/excerpt.tex",
+      "sha256": "756208bda8f5fee28dc41b077fdffbd305df7d4e218c6c9fa58440163b072678",
+      "line_count": 17,
+      "error": ""
+    },
+    {
+      "id": "table-tab-tab3",
+      "internal_table_id": "table-tab-tab3",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2112.07419/arxiv_source/ms.tex",
+        "start_line": 335,
+        "end_line": 363,
+        "caption": "Coefficients of the polynomials for the finalised photometric metallicity grid.",
+        "label": "tab:tab3"
+      },
+      "source_path": "literature/2112.07419/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2112.07419/catalog_sources/table-tab-tab3/excerpt.tex",
+      "sha256": "eb23c4a3cfd64a9dd828583efa19bc133b86c982a0f0faac0d61b3e40d5a9bb5",
+      "line_count": 29,
+      "error": ""
+    },
+    {
+      "id": "table-tab-tab4",
+      "internal_table_id": "table-tab-tab4",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2112.07419/arxiv_source/ms.tex",
+        "start_line": 448,
+        "end_line": 478,
+        "caption": "Star Counts for stars in the Local Halo.",
+        "label": "tab:tab4"
+      },
+      "source_path": "literature/2112.07419/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2112.07419/catalog_sources/table-tab-tab4/excerpt.tex",
+      "sha256": "ec3f3c81bad1afbd004bba380a9123e6af3f8f8abed951c8e060c2adb29cea24",
+      "line_count": 31,
+      "error": ""
+    },
+    {
+      "id": "table-tab-tab5",
+      "internal_table_id": "table-tab-tab5",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2112.07419/arxiv_source/ms.tex",
+        "start_line": 498,
+        "end_line": 524,
+        "caption": "Columns in the catalogue",
+        "label": "tab:tab5"
+      },
+      "source_path": "literature/2112.07419/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2112.07419/catalog_sources/table-tab-tab5/excerpt.tex",
+      "sha256": "dce7d946ff45edf3da61d72d9dff81ef4c1136d7e9f2607201ae289a570553ce",
+      "line_count": 27,
+      "error": ""
+    },
+    {
+      "id": "table-tab-tab6",
+      "internal_table_id": "table-tab-tab6",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2112.07419/arxiv_source/ms.tex",
+        "start_line": 526,
+        "end_line": 551,
+        "caption": "The Catalogue of Candidates in the Galactic Thick Disk and Halo in Gaia EDR3",
+        "label": "tab:tab6"
+      },
+      "source_path": "literature/2112.07419/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2112.07419/catalog_sources/table-tab-tab6/excerpt.tex",
+      "sha256": "08e67290694708bea042e46f80ba74d82d7eb695bbd33cd9c90394a388ea551a",
+      "line_count": 26,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-tab1",
+      "internal_table_id": "table-tab-tab1",
+      "status": "success",
+      "ecsv_path": "literature/2112.07419/catalog_tables/table-tab-tab1.ecsv",
+      "caption": "Coefficients of the polynomials of the form: $H_{G} = c_0 + c_1(\\grp) + c_2(\\grp)^2 + c_3(\\grp)^3$ used as boundaries for the selection of halo main-sequence stars in the RPM diagram.",
+      "label": "tab:tab1",
+      "row_count": 12,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Zone",
+          "colour",
+          "c_0",
+          "c_1",
+          "c_2",
+          "c_3"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Zone",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "colour",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "c_0",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "c_1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "c_2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "c_3",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpg9yhp6no/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2112.07419/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpg9yhp6no/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2112.07419/catalog_sources/table-tab-tab1/wrapped.tex",
+            "html": "literature/2112.07419/catalog_sources/table-tab-tab1/latexml.html",
+            "stdout": "literature/2112.07419/catalog_sources/table-tab-tab1/latexml.stdout.txt",
+            "stderr": "literature/2112.07419/catalog_sources/table-tab-tab1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d584cebc51bf06b9049556655a32bc776cb027fc6607c275c1dc1dff284f5848"
+    },
+    {
+      "id": "table-tab-tab2",
+      "internal_table_id": "table-tab-tab2",
+      "status": "success",
+      "ecsv_path": "literature/2112.07419/catalog_tables/table-tab-tab2.ecsv",
+      "caption": "Metallicity boundaries for stellar subtypes.",
+      "label": "tab:tab2",
+      "row_count": 4,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Subtype",
+          "[Fe/H]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Subtype",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "[Fe/H]",
+          "unit_text": "[Fe/H]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmput71bio6/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2112.07419/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmput71bio6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2112.07419/catalog_sources/table-tab-tab2/wrapped.tex",
+            "html": "literature/2112.07419/catalog_sources/table-tab-tab2/latexml.html",
+            "stdout": "literature/2112.07419/catalog_sources/table-tab-tab2/latexml.stdout.txt",
+            "stderr": "literature/2112.07419/catalog_sources/table-tab-tab2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "756208bda8f5fee28dc41b077fdffbd305df7d4e218c6c9fa58440163b072678"
+    },
+    {
+      "id": "table-tab-tab3",
+      "internal_table_id": "table-tab-tab3",
+      "status": "success",
+      "ecsv_path": "literature/2112.07419/catalog_tables/table-tab-tab3.ecsv",
+      "caption": "Coefficients of the polynomials for the finalised photometric metallicity grid.",
+      "label": "tab:tab3",
+      "row_count": 16,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp839ow6gf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2112.07419/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp839ow6gf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2112.07419/catalog_sources/table-tab-tab3/wrapped.tex",
+            "html": "literature/2112.07419/catalog_sources/table-tab-tab3/latexml.html",
+            "stdout": "literature/2112.07419/catalog_sources/table-tab-tab3/latexml.stdout.txt",
+            "stderr": "literature/2112.07419/catalog_sources/table-tab-tab3/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "eb23c4a3cfd64a9dd828583efa19bc133b86c982a0f0faac0d61b3e40d5a9bb5"
+    },
+    {
+      "id": "table-tab-tab4",
+      "internal_table_id": "table-tab-tab4",
+      "status": "success",
+      "ecsv_path": "literature/2112.07419/catalog_tables/table-tab-tab4.ecsv",
+      "caption": "Star Counts for stars in the Local Halo.",
+      "label": "tab:tab4",
+      "row_count": 3,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Group",
+          "Counts for intermediate-mass Stars ( N_AFG )",
+          "",
+          "",
+          "Counts for Low-mass Stars ( N_KM )",
+          "",
+          "",
+          "N_KM/N_tot",
+          "",
+          ""
+        ],
+        [
+          "Group",
+          "100 pc",
+          "300 pc",
+          "500 pc",
+          "100 pc",
+          "300 pc",
+          "500 pc",
+          "100 pc",
+          "300 pc",
+          "500 pc"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Group | Group",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Counts for intermediate-mass Stars ( N_AFG ) | 100 pc",
+          "unit_text": "Counts for intermediate-mass Stars ( N_AFG )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "300 pc",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "500 pc",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Counts for Low-mass Stars ( N_KM ) | 100 pc",
+          "unit_text": "Counts for Low-mass Stars ( N_KM )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "300 pc",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "500 pc",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "N_KM/N_tot | 100 pc",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "300 pc",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "500 pc",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa6ztjuez/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2112.07419/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa6ztjuez/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2112.07419/catalog_sources/table-tab-tab4/wrapped.tex",
+            "html": "literature/2112.07419/catalog_sources/table-tab-tab4/latexml.html",
+            "stdout": "literature/2112.07419/catalog_sources/table-tab-tab4/latexml.stdout.txt",
+            "stderr": "literature/2112.07419/catalog_sources/table-tab-tab4/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ec3f3c81bad1afbd004bba380a9123e6af3f8f8abed951c8e060c2adb29cea24"
+    },
+    {
+      "id": "table-tab-tab5",
+      "internal_table_id": "table-tab-tab5",
+      "status": "success",
+      "ecsv_path": "literature/2112.07419/catalog_tables/table-tab-tab5.ecsv",
+      "caption": "Columns in the catalogue",
+      "label": "tab:tab5",
+      "row_count": 13,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Header",
+          "Description"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Header",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Description",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz1prf7fa/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2112.07419/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz1prf7fa/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2112.07419/catalog_sources/table-tab-tab5/wrapped.tex",
+            "html": "literature/2112.07419/catalog_sources/table-tab-tab5/latexml.html",
+            "stdout": "literature/2112.07419/catalog_sources/table-tab-tab5/latexml.stdout.txt",
+            "stderr": "literature/2112.07419/catalog_sources/table-tab-tab5/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "dce7d946ff45edf3da61d72d9dff81ef4c1136d7e9f2607201ae289a570553ce"
+    },
+    {
+      "id": "table-tab-tab6",
+      "internal_table_id": "table-tab-tab6",
+      "status": "success",
+      "ecsv_path": "literature/2112.07419/catalog_tables/table-tab-tab6.ecsv",
+      "caption": "The Catalogue of Candidates in the Galactic Thick Disk and Halo in Gaia EDR3",
+      "label": "tab:tab6",
+      "row_count": 12,
+      "column_count": 13,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\textttsource_id",
+          "R.A.",
+          "Dec.",
+          "\\pi",
+          "\\sigma_\\pi",
+          "\\mu_\\alpha",
+          "\\mu_\\delta",
+          "G",
+          "\\grp",
+          "E(\\grp)",
+          "A_G",
+          "\\mathrm[Fe/H]_KNN",
+          "\\mathrm[Fe/H]_grid"
+        ],
+        [
+          "",
+          "(deg)",
+          "(deg)",
+          "(mas)",
+          "(mas)",
+          "(\\masyr)",
+          "(\\masyr)",
+          "(mag)",
+          "(mag)",
+          "",
+          "(mag)",
+          "(dex)",
+          "(dex)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\textttsource_id",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R.A. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\pi | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_\\pi | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_\\alpha | (\\masyr)",
+          "unit_text": "(\\masyr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_\\delta | (\\masyr)",
+          "unit_text": "(\\masyr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "G | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\grp | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "E(\\grp)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "A_G | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\mathrm[Fe/H]_KNN | (dex)",
+          "unit_text": "\\mathrm[Fe/H]_KNN",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "\\mathrm[Fe/H]_grid | (dex)",
+          "unit_text": "\\mathrm[Fe/H]_grid",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\alpha",
+        "unresolved LaTeX macro preserved: \\delta",
+        "unresolved LaTeX macro preserved: \\footnotesizeA",
+        "unresolved LaTeX macro preserved: \\grp",
+        "unresolved LaTeX macro preserved: \\masyr",
+        "unresolved LaTeX macro preserved: \\mathrm",
+        "unresolved LaTeX macro preserved: \\mu",
+        "unresolved LaTeX macro preserved: \\multicolumn",
+        "unresolved LaTeX macro preserved: \\pi",
+        "unresolved LaTeX macro preserved: \\sigma",
+        "unresolved LaTeX macro preserved: \\textttsource"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_oao_ydh/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2112.07419/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_oao_ydh/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2112.07419/catalog_sources/table-tab-tab6/wrapped.tex",
+            "html": "literature/2112.07419/catalog_sources/table-tab-tab6/latexml.html",
+            "stdout": "literature/2112.07419/catalog_sources/table-tab-tab6/latexml.stdout.txt",
+            "stderr": "literature/2112.07419/catalog_sources/table-tab-tab6/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpen3rxihr/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpen3rxihr/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2112.07419/catalog_sources/table-tab-tab6/wrapped.tex",
+            "html": "literature/2112.07419/catalog_sources/table-tab-tab6/pandoc.html",
+            "stdout": "literature/2112.07419/catalog_sources/table-tab-tab6/pandoc.stdout.txt",
+            "stderr": "literature/2112.07419/catalog_sources/table-tab-tab6/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "08e67290694708bea042e46f80ba74d82d7eb695bbd33cd9c90394a388ea551a"
+    }
+  ]
+}

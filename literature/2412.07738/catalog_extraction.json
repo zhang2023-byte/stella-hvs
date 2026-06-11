@@ -1,0 +1,546 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:22",
+  "paper": {
+    "arxiv_id": "2412.07738",
+    "title": "Runaway O and Be stars found using Gaia DR3, new stellar bow shocks and search for binaries",
+    "month": "2024-12"
+  },
+  "review": {
+    "path": "literature/2412.07738/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123922",
+    "started_at": "2026-05-17T12:39:22",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2412.07738",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-Tab-Review",
+      "internal_table_id": "table-Tab-Review",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+        "start_line": 92,
+        "end_line": 125,
+        "caption": "Main characteristics of works on all-sky searches of runaways among O, B, Be and young stars in the Milky Way, except for two references of the LMC and SMC.",
+        "label": "Tab:Review"
+      },
+      "source_path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+      "excerpt_path": "literature/2412.07738/catalog_sources/table-Tab-Review/excerpt.tex",
+      "sha256": "5ae7fb8456bd624ffbebe3b6d106bf0c56f963cf619454350728f53ddf397f36",
+      "line_count": 34,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-FitsAfterClippingField",
+      "internal_table_id": "table-Tab-FitsAfterClippingField",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+        "start_line": 190,
+        "end_line": 213,
+        "caption": "Means and standard deviations of the velocity distributions for the field stars. Adapted from \\cite{MCC2023}.",
+        "label": "Tab:FitsAfterClippingField"
+      },
+      "source_path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+      "excerpt_path": "literature/2412.07738/catalog_sources/table-Tab-FitsAfterClippingField/excerpt.tex",
+      "sha256": "ad8c2761faca48410e93b5175bcd9e4567b4790755f5d0338ab419e442034116",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-FitsAfterClippingRun",
+      "internal_table_id": "table-Tab-FitsAfterClippingRun",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+        "start_line": 216,
+        "end_line": 239,
+        "caption": "Means and standard deviations of the velocity distributions for the runaway stars. Adapted from \\cite{MCC2023}.",
+        "label": "Tab:FitsAfterClippingRun"
+      },
+      "source_path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+      "excerpt_path": "literature/2412.07738/catalog_sources/table-Tab-FitsAfterClippingRun/excerpt.tex",
+      "sha256": "dcdfdb0d0ce1a9229435a8fa204e82c101459453b045263b09c54a43d920ae28",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-SpectralType",
+      "internal_table_id": "table-Tab-SpectralType",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+        "start_line": 286,
+        "end_line": 310,
+        "caption": "Field and runaway stars as a function of spectral type. Adapted from \\cite{MCC2023}.",
+        "label": "Tab:SpectralType"
+      },
+      "source_path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+      "excerpt_path": "literature/2412.07738/catalog_sources/table-Tab-SpectralType/excerpt.tex",
+      "sha256": "51fa0289c9e633f95488db5853843910c04724369cf4151bd64642c0a3d940ee",
+      "line_count": 25,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-Tab-Review",
+      "internal_table_id": "table-Tab-Review",
+      "status": "success",
+      "ecsv_path": "literature/2412.07738/catalog_tables/table-Tab-Review.ecsv",
+      "caption": "Main characteristics of works on all-sky searches of runaways among O, B, Be and young stars in the Milky Way, except for two references of the LMC and SMC.",
+      "label": "Tab:Review",
+      "row_count": 11,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Sample",
+          "Method",
+          "Threshold",
+          "Runaways",
+          "References"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Sample",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Method",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Threshold",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Runaways",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "References",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3s3152a2/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.07738/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3s3152a2/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.07738/catalog_sources/table-Tab-Review/wrapped.tex",
+            "html": "literature/2412.07738/catalog_sources/table-Tab-Review/latexml.html",
+            "stdout": "literature/2412.07738/catalog_sources/table-Tab-Review/latexml.stdout.txt",
+            "stderr": "literature/2412.07738/catalog_sources/table-Tab-Review/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5ae7fb8456bd624ffbebe3b6d106bf0c56f963cf619454350728f53ddf397f36"
+    },
+    {
+      "id": "table-Tab-FitsAfterClippingField",
+      "internal_table_id": "table-Tab-FitsAfterClippingField",
+      "status": "success",
+      "ecsv_path": "literature/2412.07738/catalog_tables/table-Tab-FitsAfterClippingField.ecsv",
+      "caption": "Means and standard deviations of the velocity distributions for the field stars. Adapted from \\cite{MCC2023}.",
+      "label": "Tab:FitsAfterClippingField",
+      "row_count": 3,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Catalog",
+          "Stars",
+          "Field Stars",
+          "\\mathbf\\mu_V_TAN^GF +/-",
+          "\\mathbf\\sigma_V_TAN^GF",
+          "\\mathbf\\mu_W_RSR^GF +/-",
+          "\\mathbf\\sigma_W_RSR^GF"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Catalog",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Stars",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Field Stars",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mathbf\\mu_V_TAN^GF +/-",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mathbf\\sigma_V_TAN^GF",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mathbf\\mu_W_RSR^GF +/-",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mathbf\\sigma_W_RSR^GF",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5swl4ic9/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.07738/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5swl4ic9/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.07738/catalog_sources/table-Tab-FitsAfterClippingField/wrapped.tex",
+            "html": "literature/2412.07738/catalog_sources/table-Tab-FitsAfterClippingField/latexml.html",
+            "stdout": "literature/2412.07738/catalog_sources/table-Tab-FitsAfterClippingField/latexml.stdout.txt",
+            "stderr": "literature/2412.07738/catalog_sources/table-Tab-FitsAfterClippingField/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ad8c2761faca48410e93b5175bcd9e4567b4790755f5d0338ab419e442034116"
+    },
+    {
+      "id": "table-Tab-FitsAfterClippingRun",
+      "internal_table_id": "table-Tab-FitsAfterClippingRun",
+      "status": "success",
+      "ecsv_path": "literature/2412.07738/catalog_tables/table-Tab-FitsAfterClippingRun.ecsv",
+      "caption": "Means and standard deviations of the velocity distributions for the runaway stars. Adapted from \\cite{MCC2023}.",
+      "label": "Tab:FitsAfterClippingRun",
+      "row_count": 3,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Catalog",
+          "Stars",
+          "Runaway Stars",
+          "\\mathbf\\mu_V_TAN +/-",
+          "\\mathbf\\sigma_V_TAN",
+          "\\mathbf\\mu_W_RSR +/-",
+          "\\mathbf\\sigma_W_RSR"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Catalog",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Stars",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Runaway Stars",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mathbf\\mu_V_TAN +/-",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mathbf\\sigma_V_TAN",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mathbf\\mu_W_RSR +/-",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mathbf\\sigma_W_RSR",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwsmu5cwr/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.07738/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwsmu5cwr/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.07738/catalog_sources/table-Tab-FitsAfterClippingRun/wrapped.tex",
+            "html": "literature/2412.07738/catalog_sources/table-Tab-FitsAfterClippingRun/latexml.html",
+            "stdout": "literature/2412.07738/catalog_sources/table-Tab-FitsAfterClippingRun/latexml.stdout.txt",
+            "stderr": "literature/2412.07738/catalog_sources/table-Tab-FitsAfterClippingRun/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "dcdfdb0d0ce1a9229435a8fa204e82c101459453b045263b09c54a43d920ae28"
+    },
+    {
+      "id": "table-Tab-SpectralType",
+      "internal_table_id": "table-Tab-SpectralType",
+      "status": "success",
+      "ecsv_path": "literature/2412.07738/catalog_tables/table-Tab-SpectralType.ecsv",
+      "caption": "Field and runaway stars as a function of spectral type. Adapted from \\cite{MCC2023}.",
+      "label": "Tab:SpectralType",
+      "row_count": 4,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Spectral Type",
+          "Stars",
+          "Runaway Stars",
+          ""
+        ],
+        [
+          "",
+          "",
+          "———————–",
+          ""
+        ],
+        [
+          "",
+          "#",
+          "#",
+          "%"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Spectral Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Stars | #",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Runaway Stars | ———————– | #",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "%",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprn9z4nub/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.07738/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprn9z4nub/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.07738/catalog_sources/table-Tab-SpectralType/wrapped.tex",
+            "html": "literature/2412.07738/catalog_sources/table-Tab-SpectralType/latexml.html",
+            "stdout": "literature/2412.07738/catalog_sources/table-Tab-SpectralType/latexml.stdout.txt",
+            "stderr": "literature/2412.07738/catalog_sources/table-Tab-SpectralType/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "51fa0289c9e633f95488db5853843910c04724369cf4151bd64642c0a3d940ee"
+    }
+  ]
+}

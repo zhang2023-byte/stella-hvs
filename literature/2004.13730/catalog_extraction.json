@@ -1,0 +1,1147 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T11:30:47",
+  "paper": {
+    "arxiv_id": "2004.13730",
+    "title": "Runaway and walkaway stars from the ONC with Gaia DR2",
+    "month": "2020-04"
+  },
+  "review": {
+    "path": "literature/2004.13730/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "needs_review"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T113047",
+    "started_at": "2026-06-07T11:30:47",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2004.13730",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 9,
+      "work_count": 9,
+      "table_count": 9,
+      "success_count": 9,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 9,
+      "file_success_count": 9,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-ONC_para",
+      "internal_table_id": "table-tab-ONC_para",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+        "start_line": 154,
+        "end_line": 171,
+        "caption": "ONC centre parameters used in the analysis; [1]~\\citet{RN264}",
+        "label": "tab:ONC_para"
+      },
+      "source_path": "literature/2004.13730/arxiv_source/Main_document.tex",
+      "excerpt_path": "literature/2004.13730/catalog_sources/table-tab-ONC_para/excerpt.tex",
+      "sha256": "4eee1a43f2f1315e67ade29fc1c9f2c54d4495f09800199fc4c04d8f30a47d6b",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-tab-Bin_frac",
+      "internal_table_id": "table-tab-Bin_frac",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+        "start_line": 292,
+        "end_line": 307,
+        "caption": "Binary fractions in the $N$-body simulations. Column 1 shows the mass range based on the mass of the primary star; Column 2 shows the binary fraction $f_{\\text{bin}}$.",
+        "label": "tab:Bin_frac"
+      },
+      "source_path": "literature/2004.13730/arxiv_source/Main_document.tex",
+      "excerpt_path": "literature/2004.13730/catalog_sources/table-tab-Bin_frac/excerpt.tex",
+      "sha256": "0d304ba8b52ff33407bbee208a8ab21de1762ccbc9d228f3badc8a7f7e672fca",
+      "line_count": 16,
+      "error": ""
+    },
+    {
+      "id": "table-tab-Bin_sep",
+      "internal_table_id": "table-tab-Bin_sep",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+        "start_line": 309,
+        "end_line": 323,
+        "caption": "Mean binary separations in the $N$-body simulations. Column 1 shows the mass range based on the mass of the primary star; Column 2 shows the mean binary separation $\\bar{a}$; Column 3 represents the variance $\\sigma_{\\textrm{log}\\,\\bar{a}}$ of the log-normal fit to the binary separation distributions.",
+        "label": "tab:Bin_sep"
+      },
+      "source_path": "literature/2004.13730/arxiv_source/Main_document.tex",
+      "excerpt_path": "literature/2004.13730/catalog_sources/table-tab-Bin_sep/excerpt.tex",
+      "sha256": "40a9be09511f49d33c370a5ff5f9324ec139e8b27f51636918b44a45fb454338",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-tab-RW_WW_pred",
+      "internal_table_id": "table-tab-RW_WW_pred",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+        "start_line": 371,
+        "end_line": 397,
+        "caption": "Ejected RW and WW stars from $N$-body simulations at all distances and within the search radius of 100 pc at different times during the simulations. We show the averages from all 20 simulations and maxima in a single simulation. [] indicates the number of RW/WW stars within 100 pc. We count ejected binary systems as one star when calculating averages and maxima. The uncertainties in our averages are the standard deviations.",
+        "label": "tab:RW_WW_pred"
+      },
+      "source_path": "literature/2004.13730/arxiv_source/Main_document.tex",
+      "excerpt_path": "literature/2004.13730/catalog_sources/table-tab-RW_WW_pred/excerpt.tex",
+      "sha256": "e8884ac8da176181d2c5b65f6b64d8a8b48515026283380e9a493d7d5832bf4d",
+      "line_count": 27,
+      "error": ""
+    },
+    {
+      "id": "table-tab-RWC_2D",
+      "internal_table_id": "table-tab-RWC_2D",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+        "start_line": 425,
+        "end_line": 469,
+        "caption": "RW star 2D candidates sorted by decreasing 2D-velocity. Column 2+3: velocity in ONC rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2015ApJ...807...27C}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7--9: from literature sources - $^{1}$\\citet{1988AJ.....95.1744V}, $^{2}$\\citet{1997AJ....113.1733H}, $^{3}$\\citet{1999MSS...C05....0H}, $^{4}$\\citet{2000AJ....119.3026R}, $^{5}$\\citet{2016ApJ...818...59D}, $^{6}$\\citet{1995A&AS..110..367N}.",
+        "label": "tab:RWC_2D"
+      },
+      "source_path": "literature/2004.13730/arxiv_source/Main_document.tex",
+      "excerpt_path": "literature/2004.13730/catalog_sources/table-tab-RWC_2D/excerpt.tex",
+      "sha256": "f404c7a96ceb7af0fcf6dcdb13eff165d16c65eca3d8a9b98d4c5e6daedd34e7",
+      "line_count": 45,
+      "error": ""
+    },
+    {
+      "id": "table-tab-WWC_2D",
+      "internal_table_id": "table-tab-WWC_2D",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+        "start_line": 471,
+        "end_line": 539,
+        "caption": "WW star 2D candidates. Column 2+3: velocity in ONC rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2015ApJ...807...27C}, $^{c}$\\citet{2006AstL...32..759G},$^{d}$\\citet{2018AJ....156...84K}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7--9: from literature sources - $^{1}$\\citet{1988AJ.....95.1744V}, $^{2}$\\citet{1997AJ....113.1733H}, $^{3}$\\citet{1999MSS...C05....0H}, $^{4}$ \\citet{2000AJ....119.3026R}, $^{5}$\\citet{RN218}, $^{6}$\\citet{RN263}, $^{7}$\\citet{2012ApJ...748...14D}, $^{8}$\\citet{2012ApJ...752...59H}, $^{9}$\\citet{2013ApJ...764..114H}, $^{10}$\\citet{2016ApJ...818...59D}, $^{11}$\\citet{2011ApJS..193...24S}, $^{12}$\\citet{2010AN....331..349H}.",
+        "label": "tab:WWC_2D"
+      },
+      "source_path": "literature/2004.13730/arxiv_source/Main_document.tex",
+      "excerpt_path": "literature/2004.13730/catalog_sources/table-tab-WWC_2D/excerpt.tex",
+      "sha256": "ec4f8898797d30206c3791b6fa47128127cc256f7567bd69974cde579d8a5fab",
+      "line_count": 69,
+      "error": ""
+    },
+    {
+      "id": "table-tab-RWC_2D_excluded",
+      "internal_table_id": "table-tab-RWC_2D_excluded",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+        "start_line": 696,
+        "end_line": 729,
+        "caption": "Excluded RW and WW star 2D-candidates. Column 2+3: velocity in ONC rest frame [rf]; Column 3: RV sources -- $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2015ApJ...807...27C}, $^{c}$\\citet{2006AstL...32..759G}; Column 4: Reason for exclusion; Column 5--7: from literature sources -- $^{1}$\\citet{2016ApJ...818...59D}, $^{2}$\\citet{1999MSS...C05....0H}, $^{3}$\\citet{1995A&AS..110..367N}, $^{4}$\\citet{1988mcts.book.....H}, $^{5}$\\citet{RN263}.",
+        "label": "tab:RWC_2D_excluded"
+      },
+      "source_path": "literature/2004.13730/arxiv_source/Main_document.tex",
+      "excerpt_path": "literature/2004.13730/catalog_sources/table-tab-RWC_2D_excluded/excerpt.tex",
+      "sha256": "051b676882dbc2b692d8e376ef39a61a853d7d68446ea210c3d17581e4db9ce3",
+      "line_count": 34,
+      "error": ""
+    },
+    {
+      "id": "table-tab-2D_cand_varying_RV",
+      "internal_table_id": "table-tab-2D_cand_varying_RV",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+        "start_line": 735,
+        "end_line": 751,
+        "caption": "Slow 2D-candidates with multiple, varying RV measurements; Column 2: velocity in ONC rest frame [rf]; Column 3: RV sources of varying measurements - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2015ApJ...807...27C}, $^{c}$\\citet{2018AJ....156...84K}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7--9: from literature sources - $^{1}$\\citet{1997AJ....113.1733H}, $^{2}$\\citet{2016ApJ...818...59D}.",
+        "label": "tab:2D_cand_varying_RV"
+      },
+      "source_path": "literature/2004.13730/arxiv_source/Main_document.tex",
+      "excerpt_path": "literature/2004.13730/catalog_sources/table-tab-2D_cand_varying_RV/excerpt.tex",
+      "sha256": "57d416454143c17baf91ef5ace46c005767e1206570866488d849a1f73084f1a",
+      "line_count": 17,
+      "error": ""
+    },
+    {
+      "id": "table-tab-Visitors_list",
+      "internal_table_id": "table-tab-Visitors_list",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+        "start_line": 758,
+        "end_line": 816,
+        "caption": "Past visitors to the ONC. Column 2+3: velocity in ONC rest frame [rf]; Column 3: RV sources -- $^{a}$\\textit{Gaia} DR2; Column 4: age from PARSEC isochrones \\citep{RN225}; Column 5--7: from literature sources -- $^{1}$\\citet{2016ApJ...818...59D}.",
+        "label": "tab:Visitors_list"
+      },
+      "source_path": "literature/2004.13730/arxiv_source/Main_document.tex",
+      "excerpt_path": "literature/2004.13730/catalog_sources/table-tab-Visitors_list/excerpt.tex",
+      "sha256": "a57e9cfac6a1ca8e36a9a63caed38833c339d78ba83eb42a1a40fb14d2568312",
+      "line_count": 59,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-ONC_para",
+      "internal_table_id": "table-tab-ONC_para",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2004.13730/catalog_tables/table-tab-ONC_para.ecsv",
+      "caption": "ONC centre parameters used in the analysis; [1]~\\citet{RN264}",
+      "label": "tab:ONC_para",
+      "row_count": 2,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Right ascension [RA] (ICRS) \\alpha_0",
+          "5h 35m 16s [1]"
+        ],
+        [
+          "Declination [Dec] (ICRS) \\delta_0",
+          "-05 \\degree 23 ^\\prime 40 ′′ [1]"
+        ],
+        [
+          "Proper motion RA \\mu_\\alpha^\\star,0 (mas yr -1 )",
+          "1.51 +/- 0.11 [1]"
+        ],
+        [
+          "Proper motion Dec \\mu_\\delta_0 (mas yr -1 )",
+          "0.50 +/- 0.12 [1]"
+        ],
+        [
+          "RV ( km s -1 )",
+          "21.8 +/- 6.6 [1]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Right ascension [RA] (ICRS) \\alpha_0 | Declination [Dec] (ICRS) \\delta_0 | Proper motion RA \\mu_\\alpha^\\star,0 (mas yr -1 ) | Proper motion Dec \\mu_\\delta_0 (mas yr -1 ) | RV ( km s -1 )",
+          "unit_text": "Right ascension [RA] (ICRS) \\alpha_0",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "5h 35m 16s [1] | -05 \\degree 23 ^\\prime 40 ′′ [1] | 1.51 +/- 0.11 [1] | 0.50 +/- 0.12 [1] | 21.8 +/- 6.6 [1]",
+          "unit_text": "5h 35m 16s [1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpalh8l0x3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2004.13730/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpalh8l0x3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2004.13730/catalog_sources/table-tab-ONC_para/wrapped.tex",
+            "html": "literature/2004.13730/catalog_sources/table-tab-ONC_para/latexml.html",
+            "stdout": "literature/2004.13730/catalog_sources/table-tab-ONC_para/latexml.stdout.txt",
+            "stderr": "literature/2004.13730/catalog_sources/table-tab-ONC_para/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4eee1a43f2f1315e67ade29fc1c9f2c54d4495f09800199fc4c04d8f30a47d6b"
+    },
+    {
+      "id": "table-tab-Bin_frac",
+      "internal_table_id": "table-tab-Bin_frac",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2004.13730/catalog_tables/table-tab-Bin_frac.ecsv",
+      "caption": "Binary fractions in the $N$-body simulations. Column 1 shows the mass range based on the mass of the primary star; Column 2 shows the binary fraction $f_{\\text{bin}}$.",
+      "label": "tab:Bin_frac",
+      "row_count": 5,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "m_p [M _\\sun ]",
+          "f_bin",
+          "Source"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "m_p [M _\\sun ]",
+          "unit_text": "m_p [M _\\sun ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "f_bin",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmz5nps1z/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2004.13730/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmz5nps1z/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2004.13730/catalog_sources/table-tab-Bin_frac/wrapped.tex",
+            "html": "literature/2004.13730/catalog_sources/table-tab-Bin_frac/latexml.html",
+            "stdout": "literature/2004.13730/catalog_sources/table-tab-Bin_frac/latexml.stdout.txt",
+            "stderr": "literature/2004.13730/catalog_sources/table-tab-Bin_frac/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0d304ba8b52ff33407bbee208a8ab21de1762ccbc9d228f3badc8a7f7e672fca"
+    },
+    {
+      "id": "table-tab-Bin_sep",
+      "internal_table_id": "table-tab-Bin_sep",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2004.13730/catalog_tables/table-tab-Bin_sep.ecsv",
+      "caption": "Mean binary separations in the $N$-body simulations. Column 1 shows the mass range based on the mass of the primary star; Column 2 shows the mean binary separation $\\bar{a}$; Column 3 represents the variance $\\sigma_{\\textrm{log}\\,\\bar{a}}$ of the log-normal fit to the binary separation distributions.",
+      "label": "tab:Bin_sep",
+      "row_count": 4,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "m_p [M _\\sun ]",
+          "\\bara [au]",
+          "\\sigma_log \\bara",
+          "Source"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "m_p [M _\\sun ]",
+          "unit_text": "m_p [M _\\sun ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\bara [au]",
+          "unit_text": "\\bara [au]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma_log \\bara",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz8d9_h06/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2004.13730/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz8d9_h06/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2004.13730/catalog_sources/table-tab-Bin_sep/wrapped.tex",
+            "html": "literature/2004.13730/catalog_sources/table-tab-Bin_sep/latexml.html",
+            "stdout": "literature/2004.13730/catalog_sources/table-tab-Bin_sep/latexml.stdout.txt",
+            "stderr": "literature/2004.13730/catalog_sources/table-tab-Bin_sep/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "40a9be09511f49d33c370a5ff5f9324ec139e8b27f51636918b44a45fb454338"
+    },
+    {
+      "id": "table-tab-RW_WW_pred",
+      "internal_table_id": "table-tab-RW_WW_pred",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2004.13730/catalog_tables/table-tab-RW_WW_pred.ecsv",
+      "caption": "Ejected RW and WW stars from $N$-body simulations at all distances and within the search radius of 100 pc at different times during the simulations. We show the averages from all 20 simulations and maxima in a single simulation. [] indicates the number of RW/WW stars within 100 pc. We count ejected binary systems as one star when calculating averages and maxima. The uncertainties in our averages are the standard deviations.",
+      "label": "tab:RW_WW_pred",
+      "row_count": 15,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Mass m (M _\\sun )",
+          "RW average / maximum",
+          "WW average / maximum"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Mass m (M _\\sun )",
+          "unit_text": "Mass m (M _\\sun )",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RW average / maximum",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "WW average / maximum",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxaf2zqnj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2004.13730/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxaf2zqnj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2004.13730/catalog_sources/table-tab-RW_WW_pred/wrapped.tex",
+            "html": "literature/2004.13730/catalog_sources/table-tab-RW_WW_pred/latexml.html",
+            "stdout": "literature/2004.13730/catalog_sources/table-tab-RW_WW_pred/latexml.stdout.txt",
+            "stderr": "literature/2004.13730/catalog_sources/table-tab-RW_WW_pred/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e8884ac8da176181d2c5b65f6b64d8a8b48515026283380e9a493d7d5832bf4d"
+    },
+    {
+      "id": "table-tab-RWC_2D",
+      "internal_table_id": "table-tab-RWC_2D",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2004.13730/catalog_tables/table-tab-RWC_2D.ecsv",
+      "caption": "RW star 2D candidates sorted by decreasing 2D-velocity. Column 2+3: velocity in ONC rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2015ApJ...807...27C}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7--9: from literature sources - $^{1}$\\citet{1988AJ.....95.1744V}, $^{2}$\\citet{1997AJ....113.1733H}, $^{3}$\\citet{1999MSS...C05....0H}, $^{4}$\\citet{2000AJ....119.3026R}, $^{5}$\\citet{2016ApJ...818...59D}, $^{6}$\\citet{1995A&AS..110..367N}.",
+      "label": "tab:RWC_2D",
+      "row_count": 34,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_3yg6ere/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2004.13730/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_3yg6ere/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2004.13730/catalog_sources/table-tab-RWC_2D/wrapped.tex",
+            "html": "literature/2004.13730/catalog_sources/table-tab-RWC_2D/latexml.html",
+            "stdout": "literature/2004.13730/catalog_sources/table-tab-RWC_2D/latexml.stdout.txt",
+            "stderr": "literature/2004.13730/catalog_sources/table-tab-RWC_2D/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f404c7a96ceb7af0fcf6dcdb13eff165d16c65eca3d8a9b98d4c5e6daedd34e7"
+    },
+    {
+      "id": "table-tab-WWC_2D",
+      "internal_table_id": "table-tab-WWC_2D",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2004.13730/catalog_tables/table-tab-WWC_2D.ecsv",
+      "caption": "WW star 2D candidates. Column 2+3: velocity in ONC rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2015ApJ...807...27C}, $^{c}$\\citet{2006AstL...32..759G},$^{d}$\\citet{2018AJ....156...84K}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7--9: from literature sources - $^{1}$\\citet{1988AJ.....95.1744V}, $^{2}$\\citet{1997AJ....113.1733H}, $^{3}$\\citet{1999MSS...C05....0H}, $^{4}$ \\citet{2000AJ....119.3026R}, $^{5}$\\citet{RN218}, $^{6}$\\citet{RN263}, $^{7}$\\citet{2012ApJ...748...14D}, $^{8}$\\citet{2012ApJ...752...59H}, $^{9}$\\citet{2013ApJ...764..114H}, $^{10}$\\citet{2016ApJ...818...59D}, $^{11}$\\citet{2011ApJS..193...24S}, $^{12}$\\citet{2010AN....331..349H}.",
+      "label": "tab:WWC_2D",
+      "row_count": 57,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmkacnclq/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2004.13730/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmkacnclq/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2004.13730/catalog_sources/table-tab-WWC_2D/wrapped.tex",
+            "html": "literature/2004.13730/catalog_sources/table-tab-WWC_2D/latexml.html",
+            "stdout": "literature/2004.13730/catalog_sources/table-tab-WWC_2D/latexml.stdout.txt",
+            "stderr": "literature/2004.13730/catalog_sources/table-tab-WWC_2D/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ec4f8898797d30206c3791b6fa47128127cc256f7567bd69974cde579d8a5fab"
+    },
+    {
+      "id": "table-tab-RWC_2D_excluded",
+      "internal_table_id": "table-tab-RWC_2D_excluded",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2004.13730/catalog_tables/table-tab-RWC_2D_excluded.ecsv",
+      "caption": "Excluded RW and WW star 2D-candidates. Column 2+3: velocity in ONC rest frame [rf]; Column 3: RV sources -- $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2015ApJ...807...27C}, $^{c}$\\citet{2006AstL...32..759G}; Column 4: Reason for exclusion; Column 5--7: from literature sources -- $^{1}$\\citet{2016ApJ...818...59D}, $^{2}$\\citet{1999MSS...C05....0H}, $^{3}$\\citet{1995A&AS..110..367N}, $^{4}$\\citet{1988mcts.book.....H}, $^{5}$\\citet{RN263}.",
+      "label": "tab:RWC_2D_excluded",
+      "row_count": 21,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjdt1em_n/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2004.13730/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjdt1em_n/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2004.13730/catalog_sources/table-tab-RWC_2D_excluded/wrapped.tex",
+            "html": "literature/2004.13730/catalog_sources/table-tab-RWC_2D_excluded/latexml.html",
+            "stdout": "literature/2004.13730/catalog_sources/table-tab-RWC_2D_excluded/latexml.stdout.txt",
+            "stderr": "literature/2004.13730/catalog_sources/table-tab-RWC_2D_excluded/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "051b676882dbc2b692d8e376ef39a61a853d7d68446ea210c3d17581e4db9ce3"
+    },
+    {
+      "id": "table-tab-2D_cand_varying_RV",
+      "internal_table_id": "table-tab-2D_cand_varying_RV",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2004.13730/catalog_tables/table-tab-2D_cand_varying_RV.ecsv",
+      "caption": "Slow 2D-candidates with multiple, varying RV measurements; Column 2: velocity in ONC rest frame [rf]; Column 3: RV sources of varying measurements - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2015ApJ...807...27C}, $^{c}$\\citet{2018AJ....156...84K}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7--9: from literature sources - $^{1}$\\citet{1997AJ....113.1733H}, $^{2}$\\citet{2016ApJ...818...59D}.",
+      "label": "tab:2D_cand_varying_RV",
+      "row_count": 4,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR2 source-id",
+          "2D-velocity rf",
+          "Radial velocity rf",
+          "3D-cand.",
+          "Flight time",
+          "Iso. age",
+          "Age",
+          "Mass",
+          "Spectral type"
+        ],
+        [
+          "",
+          "(km s -1 )",
+          "(km s -1 )",
+          "",
+          "(Myr)",
+          "(Myr)",
+          "(Myr)",
+          "(M _\\sun )",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR2 source-id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "2D-velocity rf | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Radial velocity rf | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "3D-cand.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Flight time | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Iso. age | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Age | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Mass | (M _\\sun )",
+          "unit_text": "Mass",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Spectral type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpkwafp53e/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2004.13730/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpkwafp53e/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2004.13730/catalog_sources/table-tab-2D_cand_varying_RV/wrapped.tex",
+            "html": "literature/2004.13730/catalog_sources/table-tab-2D_cand_varying_RV/latexml.html",
+            "stdout": "literature/2004.13730/catalog_sources/table-tab-2D_cand_varying_RV/latexml.stdout.txt",
+            "stderr": "literature/2004.13730/catalog_sources/table-tab-2D_cand_varying_RV/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "57d416454143c17baf91ef5ace46c005767e1206570866488d849a1f73084f1a"
+    },
+    {
+      "id": "table-tab-Visitors_list",
+      "internal_table_id": "table-tab-Visitors_list",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2004.13730/catalog_tables/table-tab-Visitors_list.ecsv",
+      "caption": "Past visitors to the ONC. Column 2+3: velocity in ONC rest frame [rf]; Column 3: RV sources -- $^{a}$\\textit{Gaia} DR2; Column 4: age from PARSEC isochrones \\citep{RN225}; Column 5--7: from literature sources -- $^{1}$\\citet{2016ApJ...818...59D}.",
+      "label": "tab:Visitors_list",
+      "row_count": 46,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa27f9p5d/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2004.13730/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa27f9p5d/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2004.13730/catalog_sources/table-tab-Visitors_list/wrapped.tex",
+            "html": "literature/2004.13730/catalog_sources/table-tab-Visitors_list/latexml.html",
+            "stdout": "literature/2004.13730/catalog_sources/table-tab-Visitors_list/latexml.stdout.txt",
+            "stderr": "literature/2004.13730/catalog_sources/table-tab-Visitors_list/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a57e9cfac6a1ca8e36a9a63caed38833c339d78ba83eb42a1a40fb14d2568312"
+    }
+  ]
+}

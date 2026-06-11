@@ -1,0 +1,116 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:34:00",
+  "paper": {
+    "arxiv_id": "2010.10964",
+    "bibcode": "2021MNRAS.500.3213L",
+    "title": "2D kinematics of massive stars near the Galactic Center",
+    "month": "2020-10",
+    "source_note_json": "notes/2020/2020-10/2020-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2010.10964",
+      "pdf": "https://arxiv.org/pdf/2010.10964"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2010.10964",
+    "audit_path": "literature/2010.10964/audit.json",
+    "catalog_review_path": "literature/2010.10964/catalog_review.json",
+    "catalog_extraction_path": "literature/2010.10964/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2010.10964/catalog_tables/table-tab-log.ecsv",
+      "literature/2010.10964/catalog_tables/table-tab-ref.ecsv",
+      "literature/2010.10964/catalog_tables/table-tab-confirm.ecsv",
+      "literature/2010.10964/catalog_tables/table-tab-arches.ecsv",
+      "literature/2010.10964/catalog_tables/table-tab-candidate.ecsv",
+      "literature/2010.10964/catalog_tables/table-tab-photcat.ecsv",
+      "literature/2010.10964/catalog_tables/table-tab-photzp.ecsv",
+      "literature/2010.10964/catalog_tables/table-tab-pmcat.ecsv",
+      "literature/2010.10964/catalog_tables/table-tab-mslist.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:34:00",
+    "extractor": "agent",
+    "summary": "本文利用HST两期高精度自行数据，对银河系中心区域大质量恒星进行2D运动学分析。论文识别了6颗已确认大质量逃逸候选体（Table 3，可能起源于Sgr A*、Arches或Quintuplet）和14行候选逃逸体（Table 5）。但这些'逃逸候选体'（escaping candidates）是指从本地星团（Arches、Quintuplet）或Sgr A*被动力学弹射的恒星，属于星团逃逸星/速逃星（runaway stars），而非银河系非束缚超高速星。论文摘要明确指出：'finding no clear excess of high-velocity escaping stars'，并在引言中将HVS定义为速度超过银河系逃逸速度的恒星。因此无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文研究GC区域大质量恒星的2D运动学，识别本地逃逸候选体（cluster escapees/runaways），但明确声明未发现超高速星（HVS）过量。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (GALCEN.ACCEPTED.v3.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+          "start_line": 33,
+          "end_line": 34,
+          "context": "Title: 2D kinematics of massive stars near the Galactic Center"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+          "start_line": 85,
+          "end_line": 108,
+          "context": "Abstract: finding no clear excess of high-velocity escaping stars; PM analysis for origin scenarios"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "confirmed-escapers",
+      "description": "6颗已确认大质量逃逸候选体（Table 3: tab-confirm），通过三项筛选条件（PM方向角|θ|<10°、最近距离小于起源天体影响半径、飞行时间在起源天体年龄内且通过1000次MC模拟）：3颗可能起源于Sgr A*（#17180, #20255, #20612）、2颗可能起源于Arches（#2061, #1398622）、1颗可能起源于Quintuplet（#15593）。光谱类型包括WC、WN、O、B超巨星。",
+      "decision": "excluded",
+      "reason": "论文中的'逃逸候选体'（escaping candidates）指从本地星团（Arches、Quintuplet）或Sgr A*区域被动力学弹射的恒星，属于速逃星（runaway stars）或星团逃逸星。这些恒星可能逃离了其出生星团，但仍位于银河系中心区域，受银河系引力束缚。论文摘要明确声明'finding no clear excess of high-velocity escaping stars'，将HVS（超高速星）定义为速度超过银河系逃逸速度的恒星，并指出其样本中未发现此类天体。Table 3和Table 5的'逃逸'是指本地起源天体的逃逸，而非银河系逃逸。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+          "start_line": 85,
+          "end_line": 108,
+          "context": "Abstract: no clear excess of high-velocity escaping stars"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+          "start_line": 143,
+          "end_line": 156,
+          "context": "Introduction: HVSs defined as having velocities greater than Galactic escape velocity, Hills mechanism; MSs as runaway stars from clusters"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+          "start_line": 1349,
+          "end_line": 1383,
+          "context": "Table 3 caption: confirmed MSs selected as escaping candidates, possible origins from Sgr A*/Arches/Quintuplet"
+        }
+      ]
+    },
+    {
+      "group_id": "candidate-escapers",
+      "description": "14行候选逃逸体（Table 5: tab-candidate），通过相同筛选条件但尚未光谱确认的大质量星：5颗可能起源于Sgr A*、6颗可能起源于Arches、3颗可能起源于Quintuplet。#427662同时通过Sgr A*、Arches和Quintuplet的条件；#1187124同时通过Sgr A*和Quintuplet。",
+      "decision": "excluded",
+      "reason": "同confirmed-escapers组。这些候选体是本地星团/Sgr A*的逃逸候选体（cluster escapees / runaway candidates），而非银河系非束缚HVS。论文的核心目标是利用2D运动学约束大质量恒星的起源场景（星团瓦解、潮汐尾、Hills机制等），寻找HVS是其中的一个科学动机，但论文明确声明未发现HVS过量。这些'逃逸'候选体即使被确认，也只表明它们从本地星团逃逸，不意味着从银河系逃逸。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+          "start_line": 1778,
+          "end_line": 1815,
+          "context": "Table 5 caption: candidate MSs selected as likely escapers; 14 rows with possible origins from Sgr A*/Arches/Quintuplet"
+        }
+      ]
+    }
+  ]
+}

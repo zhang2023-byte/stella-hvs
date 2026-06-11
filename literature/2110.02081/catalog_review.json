@@ -1,0 +1,379 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2110.02081",
+    "title": "Proper motions of OB stars in the far Carina Arm",
+    "month": "2021-10",
+    "source_note_json": "notes/2021/2021-10/2021-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2110.02081",
+      "pdf": "https://arxiv.org/pdf/2110.02081"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2110.02081",
+    "audit_path": "literature/2110.02081/audit.json",
+    "source_dir": "literature/2110.02081/arxiv_source",
+    "tex_root": "literature/2110.02081/arxiv_source/carina_arm.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:05:51",
+    "reviewer": "agent",
+    "summary": "Paper presents proper motion analysis of 4199 OB stars in the far Carina Arm using Gaia EDR3. Contains 5 internal LaTeX tables: (1) runaway statistics by star type, (2) extreme proper motion objects, (3) simulation false-positive statistics, (4) candidate ejections from NGC 3603 and Westerlund 2, (5) a data dictionary for the 49-column supplementary FITS catalog. One external resource: the FITS catalog of 4199 stars supplied as supplementary material."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-vtrel_stats",
+      "kind": "latex_table",
+      "asset_type": "summary_statistics",
+      "role_in_paper": "Compares percentages and counts of O, B, and emission-line stars selected as outliers via two methods: (i) relative proper motion magnitude |mu_rel| and (ii) relative tangential velocity v_t,rel thresholds (>30, >25, >20 km/s). Provides the primary runaway candidate statistics for the far-arm sample.",
+      "source_refs": [
+        {
+          "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+          "start_line": 319,
+          "end_line": 356,
+          "caption": "Percentages and numbers of O, B and emission line stars selected for (i) outlying relative proper motion, $|\\mu_{rel}|$ fronm 4109 stars, or for (ii) exceeding relative tangential velocity ($v_{t,rel}$) thresholds out of 3549 stars. In both cases some trimming of the original sample of 4199 stars has been applied to deal with stars that may not belong to the far Carina arm (see text). Under each star type, N, the relevant total number of stars of that type in the core sample is given, while n is the number per type selected. The errors on the percentages are Poisson errors. The second row of percentages, given in brackets for $v_{t,rel} > 20$ km s$^{-1}$, have been reduced to allow for a potential contamination of 15\\%.",
+          "label": "tab:vtrel_stats"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star type",
+          "meaning": "Spectral classification group: O stars, B stars, or emission-line stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "O (N, %, n)",
+          "meaning": "For O stars: total number N in trimmed sample, percentage selected as outliers with Poisson error, and count n selected",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "B (N, %, n)",
+          "meaning": "For B stars: total number N in trimmed sample, percentage selected as outliers with Poisson error, and count n selected",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "emission (N, %, n)",
+          "meaning": "For emission-line stars: total number N in trimmed sample, percentage selected as outliers with Poisson error, and count n selected",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Table 1 in the paper; Section 5.2 discusses selection of high relative proper motion stars and tangential velocity thresholds. The first part uses 4109 stars (trimmed from 4199) for proper motion selection; the second part uses 3549 stars for tangential velocity selection, with contamination estimate of ~15% at v_t,rel > 20 km/s.",
+      "comments": "Two-part table: (i) relative proper motion selection from N=824 O, 2915 B, 370 emission stars; (ii) relative tangential velocity from N=733 O, 2512 B, 304 emission stars. Bracketed values for v_t,rel > 20 km/s account for ~15% contamination."
+    },
+    {
+      "id": "table-tab-extreme",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Lists the 5 objects with the most extreme relative proper motions (|mu_rel|) and highest relative tangential velocities (v_t,rel > 100 km/s) in the far Carina Arm sample. Only stars with good parallaxes (pi/sigma > 5) and reliable SED fits (chi^2 < 7.82) are included.",
+      "source_refs": [
+        {
+          "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+          "start_line": 362,
+          "end_line": 388,
+          "caption": "Data on the objects with extreme relative proper motions ($|\\mu_{rel}|$) and the highest relative tangential velocities ($v_{t,rel} > 100$~km s$^{-1}$). Only stars with good parallaxes ($\\pi/\\sigma > 5$) and trustworthy SED fits ($\\chi^2 < 7.82$) are included. The cited bounds on $D_{2.0}$ correspond to the 16th and 84th percentiles of the EDSD inference. The lower bound is used to compute the lower limit on $v_{t,rel}$ given in brackets.",
+          "label": "tab:extreme"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cat. #",
+          "meaning": "Shortened catalog identifier in the form #M-NNNNN from the VPHAS-OBM-NNNNN naming scheme",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "l (deg)",
+          "meaning": "Galactic longitude in degrees",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "b (deg)",
+          "meaning": "Galactic latitude in degrees",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "log(T_eff / K)",
+          "meaning": "Logarithm of effective temperature estimated from photometric SED fitting",
+          "unit_text": "log(K)",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "chi^2",
+          "meaning": "Reduced chi-squared of the photometric SED fit",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Parallax pi",
+          "meaning": "Gaia EDR3 parallax in milliarcseconds",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "pi/sigma",
+          "meaning": "Ratio of parallax to parallax error (significance)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "distance (min-max)",
+          "meaning": "Inferred heliocentric distance D_2.0 from EDSD method, with 16th-84th percentile range",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "|mu_rel|",
+          "meaning": "Magnitude of proper motion relative to the far-arm median, with error",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "v_t,rel (min)",
+          "meaning": "Relative tangential velocity computed from D_2.0 and |mu_rel|, with lower limit (using the 16th-percentile distance) in brackets",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Table 2 in Section 5.2. The five stars listed are: #1-04845 (B, v_t ~377 km/s), #1-04364 (B, ~317 km/s), #1-03794 (B, ~218 km/s), #1-00543 (O, ~138 km/s), #2-15427 (O, ~114 km/s). The first two are likely runaways from Westerlund 2.",
+      "comments": "The v_t,rel value in brackets is the minimum obtained using the lower distance bound (16th percentile of EDSD posterior)."
+    },
+    {
+      "id": "table-tab-stats",
+      "kind": "latex_table",
+      "asset_type": "simulation_results",
+      "role_in_paper": "Presents statistics from Monte Carlo simulations that quantify how the number of chance (false-positive) runaway candidates varies with different search constraints: impact parameter p, relative proper motion threshold |mu_rel|, and time-of-flight limit Delta t. Used to calibrate the runaway search method.",
+      "source_refs": [
+        {
+          "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+          "start_line": 462,
+          "end_line": 499,
+          "caption": "Statistics from simulation on how the number of chance candidates changes with changing simulation constraints.",
+          "label": "tab:stats"
+        }
+      ],
+      "columns": [
+        {
+          "name": "p (arcmin)",
+          "meaning": "Upper limit on impact parameter in arcminutes",
+          "unit_text": "arcmin",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "|mu_rel| (mas yr^-1)",
+          "meaning": "Lower limit on relative proper motion magnitude",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Delta t (Myr)",
+          "meaning": "Upper limit on time of flight from origin",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "mean",
+          "meaning": "Mean number of chance runaway candidates per simulated grid position",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "P_95%",
+          "meaning": "95th percentile of the candidate count distribution per grid position",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Table 3 in Section 6.1. Simulations run over 200,000 trials on a uniform grid within the central 20 sq.deg of the survey region, with proper motions randomly shuffled to estimate false-positive rates. Results shown for the full region (283 < l < 293, -2 < b < 0) and a sub-region near NGC 3603.",
+      "comments": "The table spans two sky regions: full 10x2 sq.deg and the NGC 3603 sub-region (289 < l < 292, -1.4 < b < -0.2). For the standard constraints (p<1 arcmin, |mu_rel|>0.6 mas/yr, Delta_t<4 Myr), mean false-positive rate is 1.3 (P_95%=4) for the full region."
+    },
+    {
+      "id": "table-tab-n3603_wd2",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Central data table of the paper listing all candidate OB-star ejections from NGC 3603 (15 candidates + 3 near-misses) and Westerlund 2 (13 candidates + 4 near-misses), identified via the trajectory impact-parameter method. Ordered by estimated time of flight Delta t. Forms the evidence base for the paper's conclusions about recent runaway production in these two massive young clusters.",
+      "source_refs": [
+        {
+          "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+          "start_line": 560,
+          "end_line": 619,
+          "caption": "Data on candidate OB-star ejections from (a) NGC 3603, (b) Westerlund 2 . In each section, they are ordered by estimated time of flight, $\\Delta t$. For NGC 3603 ($D_{2.0} = 6.91$ kpc), the minimum relative proper motion $|\\mu_{rel}|$ required of ejection candidates is 0.6~mas yr$^{-1}$. This was increased to 0.9~mas yr$^{-1}$ for Westerlund 2 ($D_{2.0} = 4.41$ kpc), in view of its lower distance. The last few rows at the foot of each section identify 'near miss' objects of potential interest (see text). The errors on $\\Delta t$ include contributions from the uncertainty in $|\\mu_{rel}|$ and a generous fixed error of 1.0~arcmin in $|{\\bf r}|$ that acknowledges our ignorance of the exact point of ejection within either cluster. The final column indicates whether the object was already identified previously as a likely runaway by either D18 (Westerlund 2) or by D19 (NGC 3603).",
+          "label": "tab:n3603_wd2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "cat #",
+          "meaning": "Shortened catalog identifier (#M-NNNNN) from the VPHAS-OBM-NNNNN scheme",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Gaia EDR3 ID",
+          "meaning": "Gaia Early Data Release 3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "l, b (degrees)",
+          "meaning": "Galactic longitude and latitude in degrees",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "|r| (arcmin)",
+          "meaning": "On-sky angular separation between the star and the adopted cluster centre",
+          "unit_text": "arcmin",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "p (arcmin)",
+          "meaning": "Trajectory impact parameter with respect to the cluster centre, with error",
+          "unit_text": "arcmin",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "|mu_rel| (mas yr^-1)",
+          "meaning": "Magnitude of relative proper motion with respect to the cluster median, with error",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Delta t (Myr)",
+          "meaning": "Estimated time of flight since ejection from the cluster, with error including contributions from |mu_rel| uncertainty and a fixed 1.0 arcmin error in |r|",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "D_2.0 (range) (kpc)",
+          "meaning": "Heliocentric distance from EDSD method with 16th-84th percentile range",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "type",
+          "meaning": "Spectral type classification: O star, B star, or EM (emission-line star)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "prev. identified",
+          "meaning": "Flag (Y) indicating the object was previously identified as a likely runaway by Drew et al. 2018 (Westerlund 2) or Drew et al. 2019 (NGC 3603)",
+          "unit_text": "",
+          "source_of_definition": "table header/caption",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Table 4 in Section 6.2. NGC 3603 candidates found using p<2 arcmin, Delta_t<4 Myr, |mu_rel|>0.6 mas/yr (v_t>20.6 km/s at 7.27 kpc). Westerlund 2 candidates use |mu_rel|>0.9 mas/yr (v_t~20 km/s at 4.44 kpc). The near-miss rows (bottom of each half) have p>1 arcmin or Delta_t>2 Myr. Most ejections cluster strongly at 0.5-0.9 Myr.",
+      "comments": "Two-part table: (a) NGC 3603 with 15 main candidates and 3 near-misses; (b) Westerlund 2 with 13 main candidates and 4 near-misses. The near-miss threshold is p>1 arcmin or Delta_t>2 Myr. B-star candidates #1-04364 and #1-04845 are the fastest runaways (|mu_rel| ~14-15 mas/yr) and may be Westerlund 2 ejections."
+    },
+    {
+      "id": "table-tab-TableAp",
+      "kind": "latex_table",
+      "asset_type": "data_dictionary",
+      "role_in_paper": "Describes all 49 columns in the supplementary FITS catalog of 4199 far Carina Arm OB stars. Serves as the ReadMe/documentation for the paper's primary data product, listing column number, name, units, and a brief description for each parameter.",
+      "source_refs": [
+        {
+          "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+          "start_line": 1021,
+          "end_line": 1194,
+          "caption": "List of columns available in the catalogue, together with the units and brief description of the column content.",
+          "label": "tab:TableAp"
+        }
+      ],
+      "columns": [
+        {
+          "name": "No",
+          "meaning": "Sequential column number (1-49)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Column",
+          "meaning": "Column name as it appears in the FITS table header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Units",
+          "meaning": "Physical units of the column quantity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Description",
+          "meaning": "Brief description of the column content and derivation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Appendix Table A1. The 49 columns include: identifiers (ID, RA, DEC, GAL_LONG, GAL_LAT), VPHAS+ photometry (u,g,r,i with errors), 2MASS photometry (J,H,K with errors), SED-fit stellar parameters (logTeff, A0, Rv with uncertainties, chi2), emission-line flag (EM_star), Gaia EDR3 astrometry (EDR3Name, Plx, pmRA, pmDE with errors and correlations, RUWE, Gmag), EDSD distances (D_2.0 with 5th/95th percentiles), and derived Galactic proper motions (pml, pmb with errors).",
+      "comments": "This is a longtable spanning ~170 lines of LaTeX source. Many Gaia EDR3 columns present in the raw archive were commented out (lines 1068-1119, 1131-1152), leaving the 49 columns actually delivered."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "fits-catalog-supplementary",
+      "kind": "fits_catalog",
+      "url": "",
+      "local_path": "",
+      "description": "FITS-formatted catalog of 4199 far Carina Arm OB stars with 49 columns of data. Includes VPHAS+ and 2MASS photometry, SED-fit stellar parameters (logTeff, A0, Rv, chi2), Gaia EDR3 astrometry (parallax, proper motions, RUWE), EDSD-inferred distances D_2.0 with percentile bounds, and Galactic-coordinate proper motions. The catalog combines an extended version of the Mohr-Smith et al. (2017) Carina OB-star catalog with Gaia EDR3 cross-matches for the region 282 < l < 294 deg, -3 < b < +1 deg.",
+      "source_refs": [
+        {
+          "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+          "start_line": 136,
+          "end_line": 137,
+          "context": "A list of them all is supplied in machine readable form in supplementary materials. For each object, photometric magnitudes are given along with estimates of key stellar parameters deduced from VPHAS+ and 2MASS photometry, along with distances and Galactic-coordinate proper motions obtained from Gaia EDR3 astrometry. Details on the parameters provided are given in Appendix A."
+        },
+        {
+          "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+          "start_line": 734,
+          "end_line": 735,
+          "context": "The main data product associated with this paper is directly available as a fits table supplied as supplementary material. Its contents are outlined in Appendix A."
+        }
+      ],
+      "evidence": "Mentioned in Section 2 (line 137) as 'machine readable form in supplementary materials' and in the Data Availability section (line 735) as 'a fits table supplied as supplementary material'. The 49-column structure is fully documented in Appendix Table A1 (tab:TableAp).",
+      "comments": "No direct download URL is given in the paper. The FITS file is available through MNRAS supplementary materials (journal website). The catalog includes 930 O-star candidates and 3269 B-star candidates after quality cuts."
+    }
+  ]
+}

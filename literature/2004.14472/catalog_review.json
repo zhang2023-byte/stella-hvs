@@ -1,0 +1,341 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2004.14472",
+    "title": "HST astrometry in the Orion Nebula Cluster: census of low-mass runaways",
+    "month": "2020-04",
+    "source_note_json": "notes/2020/2020-04/2020-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2004.14472",
+      "pdf": "https://arxiv.org/pdf/2004.14472"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2004.14472",
+    "audit_path": "literature/2004.14472/audit.json",
+    "source_dir": "literature/2004.14472/arxiv_source",
+    "tex_root": "literature/2004.14472/arxiv_source/ms.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:10:00",
+    "reviewer": "agent",
+    "summary": "本文利用HST ACS/WFC两个历元（2004-2005年第一历元，2015年第二历元）的观测数据，推导了猎户座星云星团（ONC）内2,454个天体的高精度相对自行，星等范围14.2<m_F775W<24.7，覆盖约550 arcmin²区域，探测质量范围约0.4 M_⊙至0.02 M_⊙。论文包含5个内部表格：(1) table-tab-catal——自行星表的列描述表（即Table 1的列说明，完整星表以机器可读格式提供），含ID、自行分量及误差、χ²、拟合优度、星等、历元跨度、数据点数、参考坐标等17列；(2) table-tab-ivd_plat——7个不同空间/星等子样本的内部速度弥散度（σ_v,x和σ_v,y），用于检验IVD对位置和质量的依赖；(3) table-tab-ivd_all——本文与其他5项研究（van Altena+1988、Jones & Walker 1988、Dzib+2017、Kuhn+2019、Kim+2019）的IVD比较；(4) table-tab-run_oricat——本文HST自行数据中识别的4个低质量候选逃逸星（含ID、星等、坐标、总自行、矢量角、碰撞参数），其中3个为Da Rio+2012 ONC成员表中的天体；(5) table-tab-run_gaia——Gaia DR2数据中识别的5个可能从ONC逃逸的恒星（含坐标、视差、星等、自行、矢量角等），包括Orion BN天体。外部资源方面：论文的SIMBAD脚注、Gaia/DPAC致谢URL均为通用数据库致谢，按规范不列为基础数据资产。Table 1以机器可读格式提供但论文未给出具体下载URL。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-catal",
+      "kind": "latex_table",
+      "asset_type": "candidate_table",
+      "role_in_paper": "本文的核心数据产品——ONC自行星表的列描述。完整星表包含2,454个天体的相对自行测量及辅助参数，以机器可读格式提供（Table 1）。该表列出17列数据字段的名称、单位和说明，包括：Robberto+2013源编号、加权自行分量(μx, μy)及其误差、归一化χ²、拟合优度概率Q、F775W星等、历元最大时间跨度、两历元数据点数、删除数据点数、最大残差、参考架像素坐标(X,Y)、J2000赤道坐标(RA, Dec)、可靠性标记。后续所有分析（IVD计算、逃逸星识别）均基于此星表。",
+      "source_refs": [
+        {
+          "path": "literature/2004.14472/arxiv_source/ms.tex",
+          "start_line": 467,
+          "end_line": 502,
+          "caption": "Proper Motion Catalog",
+          "label": "tab:catal"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Unit",
+          "meaning": "该列数据的单位（如mas yr⁻¹、mag、pix、deg等）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Label",
+          "meaning": "数据列标签名（如ID, pmx, pmy, e_pmx, e_pmy, cx, cy, qx, qy, F775W, ep_e, n1, n2, n_del, max_res, X, Y, RAdeg, DEdeg, flag）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Explanations",
+          "meaning": "各列含义说明：ID—Robberto+2013编号；pmx/pmy—X/Y方向加权自行；e_pmx/e_pmy—自行误差；cx/cy—归一化χ²；qx/qy—拟合优度概率Q；F775W—初步星等；ep_e—历元最大时间跨度；n1/n2—第一/二历元数据点数；n_del—删除数据点数；max_res—自行拟合最大残差；X/Y—参考架像素坐标（X方向与RA相反）；RAdeg/DEdeg—J2000赤经赤纬；flag—可靠性标记",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1是一个deluxetable*格式的列描述表，共3列（Unit, Label, Explanations），列出17行描述完整自行星表中各字段。表注说明X坐标方向与RA相反。表评论注明完整星表以机器可读格式提供。本文1,379个高精度自行源（每历元≥2数据点且自行误差<0.4 mas yr⁻¹）用于后续分析。自行最高精度达0.11 mas yr⁻¹（18.0<m_F775W<21.0 mag）。",
+      "comments": "此为列描述表而非数据表本身。完整星表数据以机器可读格式在期刊网站提供，论文LaTeX源码中未嵌入数据行。星表包含快速运动源（μ≥5 mas yr⁻¹共141个，其中26个可能不可靠）、外部交叉验证标记等质量控制信息。"
+    },
+    {
+      "id": "table-tab-ivd_plat",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "展示ONC内部速度弥散度（IVD）在不同空间区域和星等范围内的测量结果。将1,197个符合椭圆选择标准（μ_x中心+0.04, μ_y中心+0.08 mas yr⁻¹，半长轴9.0和6.3 mas yr⁻¹）的源按距Trapezium距离（r<3.'45核心区 vs. r>3.'45外围区）和星等（m_F775W<20.0 vs. >20.0，对应约>0.1 M_⊙和<0.1 M_⊙）分为7个子样本。用于检验IVD是否依赖于恒星位置和质量。",
+      "source_refs": [
+        {
+          "path": "literature/2004.14472/arxiv_source/ms.tex",
+          "start_line": 618,
+          "end_line": 643,
+          "caption": "Samples of Internal Velocity Dispersion in mas yr⁻¹",
+          "label": "tab:ivd_plat"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Sample #",
+          "meaning": "子样本编号（1-7），对应不同空间区域和星等范围组合",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Area^a",
+          "meaning": "空间区域定义：All=全部、r<3.'45=核心区、r>3.'45=外围区、East=RA>83.°75以东区域",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Magnitude range",
+          "meaning": "F775W星等范围筛选条件：All=全部、<20.0=亮端（较高质量恒星）、>20.0=暗端（极低质量恒星/褐矮星）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ_v,x",
+          "meaning": "X方向（RA方向）的1D内部速度弥散度及形式误差",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ_v,y",
+          "meaning": "Y方向（Dec方向）的1D内部速度弥散度及形式误差",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_stars",
+          "meaning": "该子样本包含的恒星数目",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "全局ONC IVD估计：σ_v,x=0.94±0.02, σ_v,y=1.25±0.03 mas yr⁻¹（Sample 1, 1197颗星）。IVD对空间位置和星等无显著依赖——核心区(Sample 2-3)与外围区(Sample 4-5)的σ_v,x分别为0.84-0.91和0.91-1.01 mas yr⁻¹。Y方向弥散度始终系统性地大于X方向（约1.3-1.5倍），与文献一致。唯一例外是Sample 5（外围暗端）的σ_v,x=1.01，可能由于decl.<-5.°45区域暗源数目异常多。",
+      "comments": "IVD计算采用Jones & Walker(1988)标准公式，形式误差采用van der Marel & Anderson(2010)方法（考虑个体自行测量误差）。系统性误差尚未量化。本文假设椭圆选择标准内的所有源均为ONC成员，因ONC位于银心反方向且背景星光被分子云遮挡。"
+    },
+    {
+      "id": "table-tab-ivd_all",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "汇总并比较本文与文献中ONC内部速度弥散度的所有可用测量结果。列出6项研究（van Altena+1988、Jones & Walker 1988、Dzib+2017、Kuhn+2019、Kim+2019及本文）的IVD值、空间覆盖范围和恒星数量，为评估不同方法、不同仪器（HST、Gaia DR2、射电干涉）所得IVD的一致性提供综合对比。",
+      "source_refs": [
+        {
+          "path": "literature/2004.14472/arxiv_source/ms.tex",
+          "start_line": 646,
+          "end_line": 669,
+          "caption": "Internal Velocity Dispersion in mas yr⁻¹",
+          "label": "tab:ivd_all"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Source",
+          "meaning": "IVD测量来源（参考文献）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ_v,x",
+          "meaning": "X方向1D内部速度弥散度及误差",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ_v,y",
+          "meaning": "Y方向1D内部速度弥散度及误差",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spatial extent",
+          "meaning": "该测量覆盖的空间范围",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_stars",
+          "meaning": "用于计算IVD的恒星数量",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "本文核心区估计σ_v,x=0.89±0.03, σ_v,y=1.21±0.04 mas yr⁻¹（397颗星，r<3.'45），与Jones & Walker(1988)的0.91/1.18（693颗星）最为接近。van Altena+1988的σ_v,y=0.83最低（仅49颗亮星V<12.5）。Kuhn+2019 (Gaia DR2)的σ_v,x=0.73明显偏低，可能与Gaia DR2在ONC区域RA方向自行误差较大有关。Kim+2019与本文使用同批HST观测但IVD系统偏低约7%——作者分析认为Kim+2019的自行误差分布异常（更大的自行误差→更低的计算IVD）。",
+      "comments": "表注说明：(a) van Altena样本仅V<12.5亮星，内秉运动学可能不同；(b) Dzib+2017来自射电干涉观测，空间覆盖很小；(c) Kuhn+2019数据需应用5°位置角旋转；(d) 本文值限于Trapezium核心区约3.'45半径内。所有研究的σ_v,y系统性地大于σ_v,x，可能与Orion A分子云中年轻星族的南北向运动流污染有关。"
+    },
+    {
+      "id": "table-tab-run_oricat",
+      "kind": "latex_table",
+      "asset_type": "candidate_table",
+      "role_in_paper": "列出本文HST自行数据中识别的低质量候选逃逸星。通过矢量角方法（自行方向与自Trapezium向外方向之间的夹角），从141个快速运动源（μ≥5 mas yr⁻¹，σ_μ<0.4 mas yr⁻¹）和与Da Rio+2012 ONC成员表交叉匹配的819个天体中筛选。最终选出3个最可靠的候选逃逸星（#6177、#7495、#7863，质量0.11-0.35 M_⊙）及1个额外候选体（#7320，精度略低于阈值但矢量角极小）。这是本文对ONC低质量逃逸星的核心贡献。",
+      "source_refs": [
+        {
+          "path": "literature/2004.14472/arxiv_source/ms.tex",
+          "start_line": 874,
+          "end_line": 893,
+          "caption": "",
+          "label": "tab:run_oricat"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Ident",
+          "meaning": "恒星标识号（来自本文自行星表的ID编号）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "F775W",
+          "meaning": "HST ACS/WFC F775W滤光片星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "X",
+          "meaning": "相对Trapezium的X方向（RA方向）偏移角距离",
+          "unit_text": "arcmin",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Y",
+          "meaning": "相对Trapezium的Y方向（Dec方向）偏移角距离",
+          "unit_text": "arcmin",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Total PM",
+          "meaning": "总自行的大小（sqrt(μx²+μy²)）",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Angle",
+          "meaning": "矢量角——自行矢量与自Trapezium向外位置矢量之间的夹角。Θ≈0°表示自行方向背离Trapezium（逃逸候选），Θ≈180°表示朝向Trapezium",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "碰撞参数——外推至Trapezium的最接近角距离。越小表示运动轨迹越接近Trapezium",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "3个主要候选体：#6177（F775W=17.6, μ_tot=6.81 mas yr⁻¹, Θ=-2.3°, d=12″）、#7495（F775W=21.7, μ_tot=9.79 mas yr⁻¹, Θ=-5.6°, d=33″）、#7863（F775W=22.1, μ_tot=7.74 mas yr⁻¹, Θ=-2.0°, d=33″）。#7320为额外候选（F775W=23.4, μ_tot=13.50 mas yr⁻¹, Θ=-1.0°, d=18″），但不在Da Rio+2012成员表中。所有矢量角均<6°，碰撞参数<33″。总自行等效切向速度13.3-19.2 km s⁻¹（d=400 pc）。",
+      "comments": "#7320的自行误差略超0.4 mas yr⁻¹阈值，但矢量角极小（-1.0°），在最终逃逸星普查中被省略。所有候选体均在Da Rio+2012 ONC成员表中（#7320除外），质量为0.11-0.35 M_⊙。作者承认识别结果有歧义——若Da Rio+2012成员判据结合本文自行，快速运动源可能被归类为背景天体。"
+    },
+    {
+      "id": "table-tab-run_gaia",
+      "kind": "latex_table",
+      "asset_type": "candidate_table",
+      "role_in_paper": "列出Gaia DR2数据中识别的可能从ONC逃逸的恒星。通过选择Trapezium周围20′内总自行>4 mas yr⁻¹且误差<0.55 mas yr⁻¹的DR2恒星，经视差筛选（ϖ=2.50±1σ mas范围，对应约400 pc）后得到4个候选体，另加入未在Gaia中观测到的Orion BN天体。该表为McBride & Kounkel(2019)候选逃逸星列表提供补充和交叉验证。",
+      "source_refs": [
+        {
+          "path": "literature/2004.14472/arxiv_source/ms.tex",
+          "start_line": 1015,
+          "end_line": 1036,
+          "caption": "",
+          "label": "tab:run_gaia"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Ident",
+          "meaning": "候选体编号（1-5）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA (DR2)",
+          "meaning": "Gaia DR2赤经（J2000历元）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec (DR2)",
+          "meaning": "Gaia DR2赤纬（J2000历元）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ϖ",
+          "meaning": "Gaia DR2视差及误差（用于ONC成员距离筛选）",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia G波段星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "X",
+          "meaning": "相对Trapezium的X方向角距离",
+          "unit_text": "arcmin",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Y",
+          "meaning": "相对Trapezium的Y方向角距离",
+          "unit_text": "arcmin",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Total PM",
+          "meaning": "总自行大小",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Angle",
+          "meaning": "矢量角",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "碰撞参数",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "4个Gaia候选体：#1=JW 45=Parenago 1540（G=10.82, ϖ=2.495±0.043 mas, μ_tot=5.24 mas yr⁻¹, Θ=-3.3°）——已确认的前主序双线光谱双星，Marschall & Mathieu(1988)最先提出其为Trapezium逃逸星；#2和#3为McBride & Kounkel(2019)确认的Trapezium源，相距17.″7但自行差异~10σ_μ故非物理双星；#4为McBride & Kounkel(2019)候选体；#5=Orion BN天体（G和ϖ无数据，基于VLA射电观测参数，μ_tot=13.50 mas yr⁻¹）。",
+      "comments": "#5 Orion BN天体未被HST或Gaia探测到，其参数来自Rodríguez+2017 VLA观测。BN天体是已知的ONC区域逃逸体但可能属于Orion Kleinmann-Low星云中的多体系统。本文在最终逃逸星普查中未计入#5。候选体#1是本文在Gaia DR2中新识别的逃逸星（未被McBride & Kounkel 2019列出）。"
+    }
+  ],
+  "external_resources": []
+}

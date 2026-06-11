@@ -1,0 +1,523 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:47:42",
+  "paper": {
+    "arxiv_id": "2109.01511",
+    "title": "Identification of additional young nearby runaway stars based on Gaia data release 2 observations and the lithium test",
+    "month": "2021-09"
+  },
+  "review": {
+    "path": "literature/2109.01511/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084742",
+    "started_at": "2026-06-07T08:47:42",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2109.01511",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-specbinmass",
+      "internal_table_id": "table-specbinmass",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2109.01511/arxiv_source/bischoff.tex",
+        "start_line": 94,
+        "end_line": 120,
+        "caption": "The spectroscopic binary stars within our target sample. We list their mass ratio $M_{2}/M_{1}$, if available, and the corresponding reference.",
+        "label": "specbinmass"
+      },
+      "source_path": "literature/2109.01511/arxiv_source/bischoff.tex",
+      "excerpt_path": "literature/2109.01511/catalog_sources/table-specbinmass/excerpt.tex",
+      "sha256": "8839ed325676df59f824aeb5bf2a60a3387db70aca817a64d1c50d1e3199c2a6",
+      "line_count": 27,
+      "error": ""
+    },
+    {
+      "id": "table-abundance",
+      "internal_table_id": "table-abundance",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2109.01511/arxiv_source/bischoff.tex",
+        "start_line": 142,
+        "end_line": 170,
+        "caption": "The classified dwarf stars with their identification numbers as shown in Figure\\,\\ref{fig:HRD}\\hspace{-2mm}, with their effective temperatures $T_{\\text{eff}}$ from \\textit{Gaia}\\,DR2 and the measured equivalent widths of the Li\\,(6708\\,\\AA) line $EW_{\\text{Li}}$. We list only targets with significant lithium detection. The abundances $\\log_{10}(N_{\\text{Li}})$ based on \\cite{soderblom} are given in the last column.",
+        "label": "abundance"
+      },
+      "source_path": "literature/2109.01511/arxiv_source/bischoff.tex",
+      "excerpt_path": "literature/2109.01511/catalog_sources/table-abundance/excerpt.tex",
+      "sha256": "d81f18a1e930c62e57b30aa93ff92f5bab22dcab654d7de39ad6cb3eda563268",
+      "line_count": 29,
+      "error": ""
+    },
+    {
+      "id": "table-clearname",
+      "internal_table_id": "table-clearname",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2109.01511/arxiv_source/bischoff.tex",
+        "start_line": 206,
+        "end_line": 252,
+        "caption": "Our dwarf stars with their identification numbers as shown in Figure\\,\\ref{fig:zwerge}\\hspace{-2mm}, Figure\\,\\ref{fig:metal} and Figure\\,\\ref{fig:Li}\\hspace{-2mm}, listed with their SpT derived from their $T_{\\text{eff}}$ using the SpT-$\\log(T_{\\text{eff}})$-relation from \\cite{damiani}, their distances $d$ according to \\cite{bailerjones}, the measured equivalent width of the Hydrogen Balmer line $EW_{\\text{H}\\alpha}$ (all in absorption) and the measured equivalent width of Li\\,(6708\\,\\AA) $EW_{\\text{Li}}$. Furthermore, we list the estimated age derived from the position in the HRD, as well as the age according to the lithium test from this work and the age from \\cite{tetzlaff}.",
+        "label": "clearname"
+      },
+      "source_path": "literature/2109.01511/arxiv_source/bischoff.tex",
+      "excerpt_path": "literature/2109.01511/catalog_sources/table-clearname/excerpt.tex",
+      "sha256": "345ddb862abce3d7cf7f990a3b63f3537a43d37a4c011d9191b0a8da8cb7822d",
+      "line_count": 47,
+      "error": ""
+    },
+    {
+      "id": "table-RV",
+      "internal_table_id": "table-RV",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2109.01511/arxiv_source/bischoff.tex",
+        "start_line": 286,
+        "end_line": 306,
+        "caption": "Radial velocity measurements for the spectroscopic binaries as derived from the Ca\\,(6718\\,\\AA) line and given with their Barycentric Julian Date (BJD).",
+        "label": "RV"
+      },
+      "source_path": "literature/2109.01511/arxiv_source/bischoff.tex",
+      "excerpt_path": "literature/2109.01511/catalog_sources/table-RV/excerpt.tex",
+      "sha256": "e924036cf18976e4d7177121aa20cec87c82bfc5e0ee1fd4dddcb31feb36ca65",
+      "line_count": 21,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-specbinmass",
+      "internal_table_id": "table-specbinmass",
+      "status": "success",
+      "ecsv_path": "literature/2109.01511/catalog_tables/table-specbinmass.ecsv",
+      "caption": "The spectroscopic binary stars within our target sample. We list their mass ratio $M_{2}/M_{1}$, if available, and the corresponding reference.",
+      "label": "specbinmass",
+      "row_count": 8,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Target",
+          "M_2/M_1",
+          "ref."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Target",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "M_2/M_1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "ref.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpy_hvqc_s/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2109.01511/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpy_hvqc_s/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2109.01511/catalog_sources/table-specbinmass/wrapped.tex",
+            "html": "literature/2109.01511/catalog_sources/table-specbinmass/latexml.html",
+            "stdout": "literature/2109.01511/catalog_sources/table-specbinmass/latexml.stdout.txt",
+            "stderr": "literature/2109.01511/catalog_sources/table-specbinmass/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8839ed325676df59f824aeb5bf2a60a3387db70aca817a64d1c50d1e3199c2a6"
+    },
+    {
+      "id": "table-abundance",
+      "internal_table_id": "table-abundance",
+      "status": "success",
+      "ecsv_path": "literature/2109.01511/catalog_tables/table-abundance.ecsv",
+      "caption": "The classified dwarf stars with their identification numbers as shown in Figure\\,\\ref{fig:HRD}\\hspace{-2mm}, with their effective temperatures $T_{\\text{eff}}$ from \\textit{Gaia}\\,DR2 and the measured equivalent widths of the Li\\,(6708\\,\\AA) line $EW_{\\text{Li}}$. We list only targets with significant lithium detection. The abundances $\\log_{10}(N_{\\text{Li}})$ based on \\cite{soderblom} are given in the last column.",
+      "label": "abundance",
+      "row_count": 16,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "id. nr.",
+          "Target",
+          "T_eff [K]",
+          "EW_Li [mÅ]",
+          "\\log(N_Li)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "id. nr.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Target",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "T_eff [K]",
+          "unit_text": "T_eff [K]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "EW_Li [mÅ]",
+          "unit_text": "EW_Li [mÅ]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\log(N_Li)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnrgxrzwp/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2109.01511/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnrgxrzwp/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2109.01511/catalog_sources/table-abundance/wrapped.tex",
+            "html": "literature/2109.01511/catalog_sources/table-abundance/latexml.html",
+            "stdout": "literature/2109.01511/catalog_sources/table-abundance/latexml.stdout.txt",
+            "stderr": "literature/2109.01511/catalog_sources/table-abundance/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d81f18a1e930c62e57b30aa93ff92f5bab22dcab654d7de39ad6cb3eda563268"
+    },
+    {
+      "id": "table-clearname",
+      "internal_table_id": "table-clearname",
+      "status": "success",
+      "ecsv_path": "literature/2109.01511/catalog_tables/table-clearname.ecsv",
+      "caption": "Our dwarf stars with their identification numbers as shown in Figure\\,\\ref{fig:zwerge}\\hspace{-2mm}, Figure\\,\\ref{fig:metal} and Figure\\,\\ref{fig:Li}\\hspace{-2mm}, listed with their SpT derived from their $T_{\\text{eff}}$ using the SpT-$\\log(T_{\\text{eff}})$-relation from \\cite{damiani}, their distances $d$ according to \\cite{bailerjones}, the measured equivalent width of the Hydrogen Balmer line $EW_{\\text{H}\\alpha}$ (all in absorption) and the measured equivalent width of Li\\,(6708\\,\\AA) $EW_{\\text{Li}}$. Furthermore, we list the estimated age derived from the position in the HRD, as well as the age according to the lithium test from this work and the age from \\cite{tetzlaff}.",
+      "label": "clearname",
+      "row_count": 28,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "id. nr.",
+          "Target",
+          "SpT",
+          "d [pc]",
+          "EW_H\\alpha [mÅ]",
+          "EW_Li [mÅ]",
+          "age (HRD) [Myr]",
+          "age ( EW_Li ) [Myr]",
+          "age [Myr]"
+        ],
+        [
+          "",
+          "",
+          "\\ast",
+          "Bailer-Jones",
+          "\\ast",
+          "\\ast",
+          "\\ast",
+          "\\ast",
+          "Tetzlaff"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "id. nr.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Target",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "SpT | \\ast",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "d [pc] | Bailer-Jones",
+          "unit_text": "d [pc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "EW_H\\alpha [mÅ] | \\ast",
+          "unit_text": "EW_H\\alpha [mÅ]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "EW_Li [mÅ] | \\ast",
+          "unit_text": "EW_Li [mÅ]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "age (HRD) [Myr] | \\ast",
+          "unit_text": "age (HRD) [Myr]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "age ( EW_Li ) [Myr] | \\ast",
+          "unit_text": "age ( EW_Li ) [Myr]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "age [Myr] | Tetzlaff",
+          "unit_text": "age [Myr]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9zwwg8se/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2109.01511/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9zwwg8se/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2109.01511/catalog_sources/table-clearname/wrapped.tex",
+            "html": "literature/2109.01511/catalog_sources/table-clearname/latexml.html",
+            "stdout": "literature/2109.01511/catalog_sources/table-clearname/latexml.stdout.txt",
+            "stderr": "literature/2109.01511/catalog_sources/table-clearname/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "345ddb862abce3d7cf7f990a3b63f3537a43d37a4c011d9191b0a8da8cb7822d"
+    },
+    {
+      "id": "table-RV",
+      "internal_table_id": "table-RV",
+      "status": "success",
+      "ecsv_path": "literature/2109.01511/catalog_tables/table-RV.ecsv",
+      "caption": "Radial velocity measurements for the spectroscopic binaries as derived from the Ca\\,(6718\\,\\AA) line and given with their Barycentric Julian Date (BJD).",
+      "label": "RV",
+      "row_count": 8,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Target",
+          "BJD",
+          "RV_1 [km/s]",
+          "RV_2 [km/s]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Target",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "BJD",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "RV_1 [km/s]",
+          "unit_text": "RV_1 [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RV_2 [km/s]",
+          "unit_text": "RV_2 [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzmoyqwhw/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2109.01511/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzmoyqwhw/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2109.01511/catalog_sources/table-RV/wrapped.tex",
+            "html": "literature/2109.01511/catalog_sources/table-RV/latexml.html",
+            "stdout": "literature/2109.01511/catalog_sources/table-RV/latexml.stdout.txt",
+            "stderr": "literature/2109.01511/catalog_sources/table-RV/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e924036cf18976e4d7177121aa20cec87c82bfc5e0ee1fd4dddcb31feb36ca65"
+    }
+  ]
+}

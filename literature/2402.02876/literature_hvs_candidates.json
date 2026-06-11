@@ -1,0 +1,645 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T09:09:49",
+  "paper": {
+    "arxiv_id": "2402.02876",
+    "bibcode": "2024A&A...684A..91B",
+    "title": "High-speed stars. II. An unbound star, young stars, bulge metal-poor stars, and Aurora candidates",
+    "month": "2024-02",
+    "source_note_json": "notes/2024/2024-02/2024-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2402.02876",
+      "pdf": "https://arxiv.org/pdf/2402.02876"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2402.02876",
+    "audit_path": "literature/2402.02876/audit.json",
+    "catalog_review_path": "literature/2402.02876/catalog_review.json",
+    "catalog_extraction_path": "literature/2402.02876/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2402.02876/catalog_tables/table-masses.ecsv",
+      "literature/2402.02876/catalog_tables/table-cabun.ecsv",
+      "literature/2402.02876/catalog_tables/table-tablenam.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-22T09:09:49",
+    "extractor": "agent",
+    "summary": "One candidate (GHS143) explicitly discussed as unbound from the Milky Way. Young stars, bulge metal-poor stars, Aurora candidates, and previously indicated unbound stars from Paper I are excluded."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "step_type": "input_catalog",
+      "summary": "Selection of stars with extreme transverse velocities from the Gaia DR3 catalogue",
+      "depends_on": []
+    },
+    {
+      "id": "step-02",
+      "step_type": "sample_selection",
+      "summary": "High transverse velocity cut |V_T| > 500 km/s applied to Gaia DR3 stars",
+      "depends_on": [
+        "step-01"
+      ]
+    },
+    {
+      "id": "step-03",
+      "step_type": "radial_velocity_measurement",
+      "summary": "Radial velocities from Gaia DR3 RVS; FORS2 spectroscopic follow-up at ESO VLT for stars without Gaia DR3 RVs",
+      "depends_on": [
+        "step-01",
+        "step-02"
+      ]
+    },
+    {
+      "id": "step-04",
+      "step_type": "astrometric_calibration",
+      "summary": "Gaia DR3 coordinates, proper motions, and parallaxes corrected for zero-point following Lindegren+21",
+      "depends_on": [
+        "step-01"
+      ]
+    },
+    {
+      "id": "step-05",
+      "step_type": "distance_estimation",
+      "summary": "Distances obtained by inverting Gaia DR3 parallaxes after zero-point correction",
+      "depends_on": [
+        "step-04"
+      ]
+    },
+    {
+      "id": "step-06",
+      "step_type": "velocity_calculation",
+      "summary": "Galactocentric space velocities computed with galpy using Schonrich+10 solar motions, 8 kpc solar distance, and 220 km/s circular velocity",
+      "depends_on": [
+        "step-04",
+        "step-05",
+        "step-03"
+      ]
+    },
+    {
+      "id": "step-07",
+      "step_type": "galactic_potential_model",
+      "summary": "MWPotential2014 from Bovy+15 used as default Galactic potential in galpy",
+      "depends_on": []
+    },
+    {
+      "id": "step-08",
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Bound/unbound status assessed by comparing total galactocentric space velocity with local escape velocity; 1000 random realisations of input parameters used to evaluate uncertainties",
+      "depends_on": [
+        "step-06",
+        "step-07"
+      ]
+    },
+    {
+      "id": "step-09",
+      "step_type": "orbit_integration",
+      "summary": "Backwards orbit integration with galpy to search for past associations with Milky Way satellites and globular clusters",
+      "depends_on": [
+        "step-06",
+        "step-07"
+      ]
+    },
+    {
+      "id": "step-10",
+      "step_type": "origin_assessment",
+      "summary": "Assessment of possible ejection mechanisms and progenitor systems based on orbit integration and stellar properties",
+      "depends_on": [
+        "step-09"
+      ]
+    },
+    {
+      "id": "step-11",
+      "step_type": "stellar_parameter_inference",
+      "summary": "Stellar masses, ages, and metallicities derived from PARSEC isochrone fitting using Gaia photometry and spectroscopic abundances",
+      "depends_on": [
+        "step-01",
+        "step-03"
+      ]
+    },
+    {
+      "id": "step-12",
+      "step_type": "reported_value_adoption",
+      "summary": "Quality metrics RUWE and parallax_over_error reported directly from Gaia DR3 catalog values",
+      "depends_on": [
+        "step-04"
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2402.02876:cand-001",
+        "paper_candidate_id": "GHS143",
+        "gaia_source_id": "Gaia DR3 6632370485122299776",
+        "all": [
+          {
+            "value": "GHS143",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+                "start_line": 538,
+                "end_line": 538,
+                "context": "Subsection title identifying the star as an unbound star"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 6632370485122299776",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+                "start_line": 543,
+                "end_line": 543,
+                "context": "Gaia DR3 source identifier for GHS143"
+              },
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2402.02876/catalog_tables/table-tablenam.ecsv",
+                "line": 151,
+                "column": "col_002",
+                "column_header": "Gaia DR3 id",
+                "raw_value": "6632370485122299776"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "GHS143 is explicitly discussed as an unbound star with a total galactocentric space velocity of ~1440 km/s, nearly three times the local escape velocity. The paper classifies it as a hyper-velocity star and the only unbound object in the sample.",
+        "paper_labels": [
+          "unbound_star",
+          "hyper_runaway_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The paper contains multiple explicit statements that GHS143 is unbound, including a dedicated subsection, precise kinematic values, and comparison with escape velocity.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+            "start_line": 119,
+            "end_line": 122,
+            "context": "Abstract stating GHS143 has a total speed of about 1440 km/s, almost three times the local escape velocity, strongly implying it is unbound"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+            "start_line": 446,
+            "end_line": 446,
+            "context": "Results section stating GHS143 results unbound to the Milky Way with a total galactocentric space velocity of 1439.8 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+            "start_line": 538,
+            "end_line": 543,
+            "context": "Dedicated subsection 'GHS143 an unbound star' with detailed kinematics and bound status"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+            "start_line": 538,
+            "end_line": 543,
+            "context": "Paper first identifies GHS143 as unbound in this work; no prior literature citation for its unbound status"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": {
+            "raw_value": "535",
+            "value": "535",
+            "error": "149",
+            "unit": "km/s",
+            "description": "Galactocentric Cartesian velocity component X",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+                "start_line": 543,
+                "end_line": 543,
+                "context": "Velocity components v_X,Y,Z for GHS143"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "-1318",
+            "value": "-1318",
+            "error": "408",
+            "unit": "km/s",
+            "description": "Galactocentric Cartesian velocity component Y",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+                "start_line": 543,
+                "end_line": 543,
+                "context": "Velocity components v_X,Y,Z for GHS143"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "222",
+            "value": "222",
+            "error": "59",
+            "unit": "km/s",
+            "description": "Galactocentric Cartesian velocity component Z",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+                "start_line": 543,
+                "end_line": 543,
+                "context": "Velocity components v_X,Y,Z for GHS143"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "1439.8",
+            "value": "1439.8",
+            "unit": "km/s",
+            "description": "Total galactocentric space velocity",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+                "start_line": 446,
+                "end_line": 446,
+                "context": "Total galactocentric space velocity of 1439.8 km/s"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+                "start_line": 541,
+                "end_line": 541,
+                "context": "Approximate total galactocentric space velocity of ~1440 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": {
+            "raw_value": "521.7",
+            "value": "521.7",
+            "unit": "km/s",
+            "description": "Local escape velocity at the position of GHS143",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+                "start_line": 541,
+                "end_line": 541,
+                "context": "Local escape velocity of 521.7 km/s used for bound/unbound comparison"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "escape_velocity_ratio": null,
+          "escape_margin": {
+            "raw_value": "918",
+            "value": "918",
+            "unit": "km/s",
+            "description": "Difference between total space velocity and local escape velocity",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+                "start_line": 543,
+                "end_line": 543,
+                "context": "Difference between space velocity and local escape velocity is 918 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": {
+          "raw_value": "–1.74",
+          "value": "-1.74",
+          "unit": "dex",
+          "description": "Iron-to-hydrogen abundance ratio from isochrone fitting",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2402.02876/catalog_tables/table-masses.ecsv",
+              "line": 23,
+              "column": "col_004",
+              "column_header": "[Fe/H] | dex",
+              "raw_value": "–1.74"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        },
+        "mass": {
+          "raw_value": "3.1 – 3.8",
+          "value": "",
+          "unit": "M_sun",
+          "description": "Stellar mass from PARSEC isochrone fitting (range)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2402.02876/catalog_tables/table-masses.ecsv",
+              "line": 23,
+              "column": "col_002",
+              "column_header": "Mass | M \\sun",
+              "raw_value": "3.1 – 3.8"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        },
+        "radius": null,
+        "age": {
+          "raw_value": "156 – 279",
+          "value": "",
+          "unit": "Ma",
+          "description": "Stellar age from PARSEC isochrone fitting (range)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2402.02876/catalog_tables/table-masses.ecsv",
+              "line": 23,
+              "column": "col_003",
+              "column_header": "Age | Ma",
+              "raw_value": "156 – 279"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        }
+      },
+      "abundances": [
+        {
+          "raw_value": "–1.74",
+          "value": "-1.74",
+          "unit": "dex",
+          "element": "Fe",
+          "reference_element": "H",
+          "description": "[Fe/H] from spectroscopic analysis",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2402.02876/catalog_tables/table-masses.ecsv",
+              "line": 23,
+              "column": "col_004",
+              "column_header": "[Fe/H] | dex",
+              "raw_value": "–1.74"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        }
+      ],
+      "quality_flags": [
+        {
+          "raw_value": "1.33",
+          "value": "1.33",
+          "unit": "",
+          "name": "RUWE",
+          "description": "Renormalised unit weight error from Gaia DR3 astrometry",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+              "start_line": 543,
+              "end_line": 543,
+              "context": "RUWE value for GHS143"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        },
+        {
+          "raw_value": "2.7",
+          "value": "2.7",
+          "unit": "",
+          "name": "parallax_over_error",
+          "description": "Parallax divided by its formal error from Gaia DR3",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+              "start_line": 543,
+              "end_line": 543,
+              "context": "parallax_over_error value for GHS143"
+            }
+          ],
+          "method_refs": [
+            "step-12"
+          ]
+        }
+      ],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "raw_value": "227",
+          "value": "227",
+          "unit": "km/s",
+          "name": "min_velocity_difference",
+          "description": "Minimum difference between space velocity and local escape velocity over 1000 random realisations of input parameters",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+              "start_line": 543,
+              "end_line": 543,
+              "context": "Minimum velocity difference from Monte Carlo realisations"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        {
+          "raw_value": "465",
+          "value": "465",
+          "unit": "km/s",
+          "name": "velocity_difference_std",
+          "description": "Standard deviation of the difference between space velocity and local escape velocity over 1000 random realisations",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+              "start_line": 543,
+              "end_line": 543,
+              "context": "Standard deviation of velocity difference from Monte Carlo realisations"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        {
+          "raw_value": "438",
+          "value": "438",
+          "unit": "km/s",
+          "name": "total_velocity_uncertainty",
+          "description": "Total uncertainty on the galactocentric space velocity",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+              "start_line": 543,
+              "end_line": 543,
+              "context": "Total uncertainty on space velocity for GHS143"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      ]
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "young-stars",
+      "description": "Ten young high-speed stars with estimated ages from 300 Ma to 2.5 Ga and masses in excess of 1.3 M_sun, identified from the colour-magnitude diagram.",
+      "decision": "excluded",
+      "reason": "The paper discusses young stars as a chemically and kinematically interesting population but does not present them as possibly unbound from the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 944,
+          "end_line": 948,
+          "context": "Four sets of stars highlighted by the paper, including young stars as group (ii)"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 987,
+          "end_line": 991,
+          "context": "Young stars subsection describing their ages and masses"
+        }
+      ]
+    },
+    {
+      "group_id": "bulge-metal-poor-stars",
+      "description": "Metal-poor bulge stars (SpiteF), a population confined to the inner Galaxy with metallicities around -1.7 dex.",
+      "decision": "excluded",
+      "reason": "The SpiteF stars are discussed as a kinematic population likely resulting from a recent accretion event, but they are not presented as possibly unbound from the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 944,
+          "end_line": 948,
+          "context": "Four sets of stars highlighted by the paper, including metal-poor bulge stars as group (iii)"
+        }
+      ]
+    },
+    {
+      "group_id": "aurora-candidates",
+      "description": "102 candidate stars of the Aurora population, a proposed ancient halo population predating the Galactic disc.",
+      "decision": "excluded",
+      "reason": "The Aurora candidates are discussed as a possible early halo population but are not presented as possibly unbound from the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 944,
+          "end_line": 948,
+          "context": "Four sets of stars highlighted by the paper, including Aurora candidates as group (iv)"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 1438,
+          "end_line": 1439,
+          "context": "Halo stars and Aurora candidates subsection"
+        }
+      ]
+    },
+    {
+      "group_id": "paper-I-revised-candidates",
+      "description": "Stars GHS22, GHS33, GHS37, GHS58, GHS64 from Paper I that were previously indicated as unbound.",
+      "decision": "excluded",
+      "reason": "These stars were indicated as unbound in Paper I but are explicitly found to be bound in the present analysis due to zero-point corrected parallaxes.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 446,
+          "end_line": 446,
+          "context": "Stars from Paper I previously indicated as unbound are now found to be bound"
+        }
+      ]
+    }
+  ]
+}

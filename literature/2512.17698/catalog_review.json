@@ -1,0 +1,621 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2512.17698",
+    "title": "A VLA search for compact radio sources in the explosive molecular outflows DR 21 and G5.89",
+    "month": "2025-12",
+    "source_note_json": "notes/2025/2025-12/2025-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2512.17698",
+      "pdf": "https://arxiv.org/pdf/2512.17698"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2512.17698",
+    "audit_path": "literature/2512.17698/audit.json",
+    "source_dir": "literature/2512.17698/arxiv_source",
+    "tex_root": "literature/2512.17698/arxiv_source/mnras_main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:33:58",
+    "reviewer": "agent",
+    "summary": "Six internal tables: VLA observation log and image properties (tab:obs), compact radio sources in DR21 with combined-epoch fluxes (tab:crsM), multiwavelength counterparts of compact radio sources (tab:count), arc-shaped structure flux densities and parabola-fit parameters (tab:par_fit), compact radio sources in G5.89 (tab:crsGf), and appendix table with individual-epoch LSB/USB fluxes for DR21 sources (tab:crsA). External resources: VLA data-reduction pipeline, confitti GitHub/PyPI repositories and notebooks, and lmfit documentation."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-obs",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Summarises the VLA observing configuration and image properties for DR21 and G5.89, including dates, sub-bands, synthesized beam shapes, and rms noise levels.",
+      "source_refs": [
+        {
+          "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+          "start_line": 186,
+          "end_line": 220,
+          "caption": "VLA observations and image properties.",
+          "label": "tab:obs"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Target",
+          "meaning": "Target source (DR21 or G5.89)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Date | (07/2023)",
+          "meaning": "Observation date in July 2023",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Sub- | band",
+          "meaning": "Frequency sub-band (FB=full band, LSB=lower side band, USB=upper side band)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Synthesized beam | (\\theta_\\rm maj.\\times\\theta_\\rm min.; P.A.)",
+          "meaning": "Synthesized beam major axis, minor axis, and position angle",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "rms noise | (\\muJy bm^-1)",
+          "meaning": "Root-mean-square noise level measured near the image centre",
+          "unit_text": "uJy bm^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "VLA observations and image properties.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-crsM",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Catalogues 13 compact radio sources detected in DR21, reporting positions, integrated and peak flux densities, spectral indices, epoch-resolved fluxes, and variability fractions.",
+      "source_refs": [
+        {
+          "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+          "start_line": 318,
+          "end_line": 359,
+          "caption": "Compact radio sources in \\dr.",
+          "label": "tab:crsM"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\#",
+          "meaning": "Source identifier number",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A. | 20^\\rm h39^\\rm m[^\\rm s]",
+          "meaning": "Right ascension offset from 20h39m",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec. | 42^\\circ19'['']",
+          "meaning": "Declination offset from 42d19'",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\nu,\\rm int\\supa | (\\muJy)",
+          "meaning": "Integrated flux density in the combined-epoch image",
+          "unit_text": "uJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\nu,\\rm peak\\supa | (\\muJy bm^-1)",
+          "meaning": "Peak flux density in the combined-epoch image",
+          "unit_text": "uJy bm^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\alpha",
+          "meaning": "Radio spectral index between LSB and USB",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\nu,\\rm int,1 | (\\muJy)",
+          "meaning": "Integrated flux density in epoch 1",
+          "unit_text": "uJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\nu,\\rm peak,1 | (\\muJy bm^-1)",
+          "meaning": "Peak flux density in epoch 1",
+          "unit_text": "uJy bm^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\nu,\\rm int,2 | (\\muJy)",
+          "meaning": "Integrated flux density in epoch 2",
+          "unit_text": "uJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\nu,\\rm peak,2 | (\\muJy bm^-1)",
+          "meaning": "Peak flux density in epoch 2",
+          "unit_text": "uJy bm^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Var. | (%)",
+          "meaning": "Percent flux variability between the two epochs",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Compact radio sources in \\dr.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-count",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Lists multiwavelength counterparts (infrared and X-ray) for compact radio sources in DR21, together with source classifications, references, and radio luminosities.",
+      "source_refs": [
+        {
+          "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+          "start_line": 385,
+          "end_line": 408,
+          "caption": "Counterparts to compact radio sources of \\dr.",
+          "label": "tab:count"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Source \\#",
+          "meaning": "Source identifier number",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Infrared",
+          "meaning": "Infrared counterpart designation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "X-rays",
+          "meaning": "X-ray counterpart designation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "L_X [erg s^-1]\\supa",
+          "meaning": "X-ray luminosity",
+          "unit_text": "erg s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Type",
+          "meaning": "Source classification (e.g. YSO)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ref.",
+          "meaning": "Literature reference for the counterpart",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "L_R\\supb [erg s^-1 Hz^-1]",
+          "meaning": "Radio luminosity",
+          "unit_text": "erg s^-1 Hz^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Counterparts to compact radio sources of \\dr.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-par_fit",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Reports the flux densities and best-fit parabola parameters for nine arc-shaped radio structures in DR21, used to identify the ionising sources of the wind-driven shells.",
+      "source_refs": [
+        {
+          "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+          "start_line": 476,
+          "end_line": 504,
+          "caption": "Arc-shaped structure flux densities and parameters of the best parabola fit for each arc of \\dr.",
+          "label": "tab:par_fit"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Arc identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\nu, \\rm int\\supa | mJy",
+          "meaning": "Integrated flux density of the arc",
+          "unit_text": "mJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\nu,\\rm peak\\supa | mJy beam^-1",
+          "meaning": "Peak flux density of the arc",
+          "unit_text": "mJy bm^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "x_f\\supb | 20^\\rm h39^\\rm m[^\\rm s]",
+          "meaning": "Right ascension of the parabola focus",
+          "unit_text": "s offset from 20h39m",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "y_f\\supb | 42^\\circ19'['']",
+          "meaning": "Declination of the parabola focus",
+          "unit_text": "arcsec offset from 42d19'",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_0\\supc | ['']",
+          "meaning": "Distance between the focus and the parabola apex",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\theta \\supd | [^\\circ]",
+          "meaning": "Orientation angle of the parabola measured from north to east",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Arc-shaped structure flux densities and parameters of the best parabola fit for each arc of \\dr.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-crsGf",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Catalogues two compact radio sources detected near G5.89, reporting positions, peak and integrated flux densities, and LSB/USB spectral indices.",
+      "source_refs": [
+        {
+          "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+          "start_line": 510,
+          "end_line": 536,
+          "caption": "Compact radio sources in \\gf.",
+          "label": "tab:crsGf"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\#",
+          "meaning": "Source identifier number",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A. | 18^\\rm h00^\\rm m[^\\rm s]",
+          "meaning": "Right ascension offset from 18h00m",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec. | -24^\\circ04'['']",
+          "meaning": "Declination offset from -24d04'",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm peak\\supa | (\\muJy bm^-1)",
+          "meaning": "Peak flux density in the full-baseline image",
+          "unit_text": "uJy bm^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm int | (\\muJy)",
+          "meaning": "Integrated flux density in the >300klambda image",
+          "unit_text": "uJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm peak | (\\muJy bm^-1)",
+          "meaning": "Peak flux density in the >300klambda image",
+          "unit_text": "uJy bm^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm peak,LSB | (\\muJy bm^-1)",
+          "meaning": "Peak flux density in the LSB image",
+          "unit_text": "uJy bm^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm peak,USB | (\\muJy bm^-1)",
+          "meaning": "Peak flux density in the USB image",
+          "unit_text": "uJy bm^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\alpha\\supb",
+          "meaning": "Radio spectral index between LSB and USB",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Compact radio sources in \\gf.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-crsA",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Appendix table providing additional epoch-resolved and band-resolved flux densities for the 13 compact radio sources in DR21, complementing the main-text summary.",
+      "source_refs": [
+        {
+          "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+          "start_line": 866,
+          "end_line": 909,
+          "caption": "Compact radio sources in \\dr.",
+          "label": "tab:crsA"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\#",
+          "meaning": "Source identifier number",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A. | 20^\\rm h39^\\rm m[^\\rm s]",
+          "meaning": "Right ascension offset from 20h39m",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec. | 42^\\circ19'['']",
+          "meaning": "Declination offset from 42d19'",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm int, LSB | (\\muJy)",
+          "meaning": "Integrated flux density in LSB combined epochs",
+          "unit_text": "uJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm peak,LSB | (\\muJy bm^-1)",
+          "meaning": "Peak flux density in LSB combined epochs",
+          "unit_text": "uJy bm^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm int, USB | (\\muJy)",
+          "meaning": "Integrated flux density in USB combined epochs",
+          "unit_text": "uJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm peak,USB | (\\muJy bm^-1)",
+          "meaning": "Peak flux density in USB combined epochs",
+          "unit_text": "uJy bm^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm int,1, LSB | (\\muJy)",
+          "meaning": "Integrated flux density in LSB epoch 1",
+          "unit_text": "uJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm peak,1,LSB | (\\muJy bm^-1)",
+          "meaning": "Peak flux density in LSB epoch 1",
+          "unit_text": "uJy bm^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm int,1, USB | (\\muJy)",
+          "meaning": "Integrated flux density in USB epoch 1",
+          "unit_text": "uJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm peak,1,USB | (\\muJy bm^-1)",
+          "meaning": "Peak flux density in USB epoch 1",
+          "unit_text": "uJy bm^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\alpha_1",
+          "meaning": "Spectral index between LSB and USB in epoch 1",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm int,2, LSB | (\\muJy)",
+          "meaning": "Integrated flux density in LSB epoch 2",
+          "unit_text": "uJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm peak,2,LSB | (\\muJy bm^-1)",
+          "meaning": "Peak flux density in LSB epoch 2",
+          "unit_text": "uJy bm^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm int,2, USB | (\\muJy)",
+          "meaning": "Integrated flux density in USB epoch 2",
+          "unit_text": "uJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm peak,2,USB | (\\muJy bm^-1)",
+          "meaning": "Peak flux density in USB epoch 2",
+          "unit_text": "uJy bm^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\alpha_2",
+          "meaning": "Spectral index between LSB and USB in epoch 2",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Compact radio sources in \\dr.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://science.nrao.edu/facilities/vla/data-processing/pipeline",
+      "local_path": "",
+      "description": "VLA automated data-reduction pipeline used for calibration and imaging of the radio interferometric observations.",
+      "source_refs": [
+        {
+          "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+          "start_line": 174,
+          "end_line": 174,
+          "context": "Applications \\citep[CASA, ][]{casa2022}. The pipeline includes flagging \nof flawed data and obtaining gain and phase calibration\\footnote{NRAO \ngives a detailed description of the pipeline data editing and calibration at \\url{https://science.nrao.edu/facilities/vla/data-processing/pipeline}.}.\n\nFor \\dr\\ after data calibration, a series of images were done in CASA using the task {\\it tclean}. First, the FB of the two sessions were combined and imaged together, which allowed the most sensitive image to extended radio sources (see Fig.~\\ref{fig:streams}). Second, the two combined sessions and each session were imaged using baselines above 300\\,k$\\lambda$, allowing to filter out radio sources with sizes larger than 0\\rlap{.}$''$69. Each \\dr session was imaged in Stokes V, and they were divided into two sub-bands; the lower-side band (LSB) and the upper-side band (USB) images were obtained to cover the frequency ranges from 12 to 15 GHz and from 15 to 18\\,GHz, respectively. In all cases, \\dr\\ images were constructed using square pixels with a size of 0\\rlap{.}$''$02, image size of 2700 pixels per side, and a uniform weighting scheme."
+        }
+      ],
+      "evidence": "Applications \\citep[CASA, ][]{casa2022}. The pipeline includes flagging \nof flawed data and obtaining gain and phase calibration\\footnote{NRAO \ngives a detailed description of the pipeline data editing and calibration at \\url{https://science.nrao.edu/facilities/vla/data-processing/pipeline}.}.\n\nFor \\dr\\ after data calibration, a series of images were done in CASA using the task {\\it tclean}. First, the FB of the two sessions were combined and imaged together, which allowed the most sensitive image to extended radio sources (see Fig.~\\ref{fig:streams}). Second, the two combined sessions and each session were imaged using baselines above 300\\,k$\\lambda$, allowing to filter out radio sources with sizes larger than 0\\rlap{.}$''$69. Each \\dr session was imaged in Stokes V, and they were divided into two sub-bands; the lower-side band (LSB) and the upper-side band (USB) images were obtained to cover the frequency ranges from 12 to 15 GHz and from 15 to 18\\,GHz, respectively. In all cases, \\dr\\ images were constructed using square pixels with a size of 0\\rlap{.}$''$02, image size of 2700 pixels per side, and a uniform weighting scheme.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://github.com/div-B-equals-0/confitti",
+      "local_path": "",
+      "description": "GitHub repository for confitti, the Python package used to fit conic sections (parabolas) to the observed arc-shaped radio structures.",
+      "source_refs": [
+        {
+          "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+          "start_line": 450,
+          "end_line": 450,
+          "context": "The process consists of two steps. \nFirst, the arc is traced with a series of points  \nmanually defined following the trace of the maximum intensity contours until reaching 3-$\\sigma$ or finding other structures. Second, the selected points are fitted using a custom Python routine \\footnote{Developed by W. Henney; the code is available at \\url{https://github.com/div-B-equals-0/confitti}.} to derive a parabola.\nThis routine is described in Appendix \\ref{app:pap} and employs a two-step approach: first, it performs a numerical minimization to derive the best-fit curve. Then, it carries out a Markov Chain Monte Carlo (MCMC) analysis to derive the uncertainties in the curve parameters. The best-fit parameters derived for each arc are presented in Table~\\ref{tab:par_fit}, and a detailed view of the fit is shown in Figure~\\ref{fig:arcs}."
+        }
+      ],
+      "evidence": "The process consists of two steps. \nFirst, the arc is traced with a series of points  \nmanually defined following the trace of the maximum intensity contours until reaching 3-$\\sigma$ or finding other structures. Second, the selected points are fitted using a custom Python routine \\footnote{Developed by W. Henney; the code is available at \\url{https://github.com/div-B-equals-0/confitti}.} to derive a parabola.\nThis routine is described in Appendix \\ref{app:pap} and employs a two-step approach: first, it performs a numerical minimization to derive the best-fit curve. Then, it carries out a Markov Chain Monte Carlo (MCMC) analysis to derive the uncertainties in the curve parameters. The best-fit parameters derived for each arc are presented in Table~\\ref{tab:par_fit}, and a detailed view of the fit is shown in Figure~\\ref{fig:arcs}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-009",
+      "kind": "external_url",
+      "url": "https://pypi.org/project/confitti",
+      "local_path": "",
+      "description": "Python Package Index entry for confitti, used for conic-section fitting of radio arcs.",
+      "source_refs": [
+        {
+          "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+          "start_line": 923,
+          "end_line": 923,
+          "context": "This is implemented in the \\textsc{confitti} python library,\nwhich is freely available from the Python Package Index\\footnote{%\n  \\url{https://pypi.org/project/confitti} or \\texttt{pip install confitti}}\nor from GitHub.\\footnote{%\n  \\url{https://github.com/div-B-equals-0/confitti}}"
+        }
+      ],
+      "evidence": "This is implemented in the \\textsc{confitti} python library,\nwhich is freely available from the Python Package Index\\footnote{%\n  \\url{https://pypi.org/project/confitti} or \\texttt{pip install confitti}}\nor from GitHub.\\footnote{%\n  \\url{https://github.com/div-B-equals-0/confitti}}",
+      "comments": ""
+    },
+    {
+      "id": "resource-011",
+      "kind": "external_url",
+      "url": "https://lmfit.github.io/lmfit-py",
+      "local_path": "",
+      "description": "Documentation for the lmfit Python package used for non-linear least-squares minimisation in the analysis.",
+      "source_refs": [
+        {
+          "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+          "start_line": 1013,
+          "end_line": 1013,
+          "context": "\\textsc{scipy} \\citep{Virtanen:2020a}\nand \\textsc{lmfit} \\citep{matt_newville_2024_12785036} Python libraries.\n% \\footnote{\\url{https://lmfit.github.io/lmfit-py}}\nThe initial guess for the parameters is as follows:\n\\begin{enumerate}"
+        }
+      ],
+      "evidence": "\\textsc{scipy} \\citep{Virtanen:2020a}\nand \\textsc{lmfit} \\citep{matt_newville_2024_12785036} Python libraries.\n% \\footnote{\\url{https://lmfit.github.io/lmfit-py}}\nThe initial guess for the parameters is as follows:\n\\begin{enumerate}",
+      "comments": ""
+    },
+    {
+      "id": "resource-012",
+      "kind": "external_url",
+      "url": "https://github.com/div-B-equals-0/confitti/tree/main/notebooks",
+      "local_path": "",
+      "description": "GitHub repository for confitti, the Python package used to fit conic sections (parabolas) to the observed arc-shaped radio structures.",
+      "source_refs": [
+        {
+          "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+          "start_line": 1036,
+          "end_line": 1036,
+          "context": "and for plotting the fitted curves.\nAll features are demonstrated in example jupyter notebooks.\\footnote{%\n  \\url{https://github.com/div-B-equals-0/confitti/tree/main/notebooks}\n}"
+        }
+      ],
+      "evidence": "and for plotting the fitted curves.\nAll features are demonstrated in example jupyter notebooks.\\footnote{%\n  \\url{https://github.com/div-B-equals-0/confitti/tree/main/notebooks}\n}",
+      "comments": ""
+    }
+  ]
+}

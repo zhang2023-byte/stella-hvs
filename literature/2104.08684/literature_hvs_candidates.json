@@ -1,0 +1,84 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:45:00",
+  "paper": {
+    "arxiv_id": "2104.08684",
+    "bibcode": "2021ApJ...912L..30Z",
+    "title": "The GALAH Survey: No chemical evidence of an extragalactic origin for the Nyx stream",
+    "month": "2021-04",
+    "source_note_json": "notes/2021/2021-04/2021-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2104.08684",
+      "pdf": "https://arxiv.org/pdf/2104.08684"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2104.08684",
+    "audit_path": "literature/2104.08684/audit.json",
+    "catalog_review_path": "literature/2104.08684/catalog_review.json",
+    "catalog_extraction_path": "literature/2104.08684/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:45:00",
+    "extractor": "agent",
+    "summary": "本文利用GALAH DR3、APOGEE DR16巡天的元素丰度数据，检验Nyx星流是否为吸积矮星系遗迹。通过比较Nyx候选星与厚盘星及已知矮星系的α元素丰度模式，发现Nyx星的化学丰度与银河系厚盘一致，排除了其来自矮星系的可能。论文结论为Nyx是银河系厚盘的高速成分（a high-velocity component of the Milky Way's thick disk），而非吸积星流。论文不涉及个别恒星的HVS候选体识别，未提供恒星速度测定或非束缚性分析。全篇仅含5幅统计图，无内部数据表。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文研究Nyx星流的化学性质以判断其起源（厚盘 vs 矮星系），不涉及个别恒星的超高速星/非束缚星识别。标题明确表示'No chemical evidence of an extragalactic origin'，结论为Nyx是银河系厚盘的高速成分。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (Nyx.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2104.08684/arxiv_source/Nyx.tex",
+          "start_line": 69,
+          "end_line": 69,
+          "context": "Title: The GALAH Survey: No chemical evidence of an extragalactic origin for the Nyx stream"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2104.08684/arxiv_source/Nyx.tex",
+          "start_line": 163,
+          "end_line": 165,
+          "context": "Abstract: Nyx stream is most probably a high-velocity component of the Milky Way's thick disk"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "nyx-stream",
+      "description": "Nyx星流是由Necib et al. (2020)在Gaia数据中发现的一个运动学子结构，最初被提出为吸积矮星系遗迹——一个在银盘平面内运动的星流。本文利用GALAH和APOGEE巡天的元素丰度数据重新检验Nyx的起源。",
+      "decision": "excluded",
+      "reason": "Nyx是一个恒星群体/星流而非个别HVS候选体。本文通过化学丰度分析得出结论：Nyx星流是银河系厚盘的高速成分（a high-velocity component of the Milky Way's thick disk），而非吸积矮星系的遗迹。论文关注的是星流群体的化学性质以判断其起源（银河系内 vs 河外），不涉及个别恒星的超高速星识别或银河系逃逸速度分析。论文无内部数据表，无恒星级别候选体。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2104.08684/arxiv_source/Nyx.tex",
+          "start_line": 163,
+          "end_line": 165,
+          "context": "Abstract: Nyx is most probably a high-velocity component of the Milky Way's thick disk"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2104.08684/arxiv_source/Nyx.tex",
+          "start_line": 172,
+          "end_line": 179,
+          "context": "Introduction: stellar streams as fossil records of accretion events"
+        }
+      ]
+    }
+  ]
+}

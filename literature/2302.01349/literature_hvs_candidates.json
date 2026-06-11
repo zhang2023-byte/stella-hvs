@@ -1,0 +1,69 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:23:38",
+  "paper": {
+    "arxiv_id": "2302.01349",
+    "bibcode": "2023A&A...672A..22B",
+    "title": "The IACOB project VIII. Searching for empirical signatures of binarity in fast-rotating O-type stars",
+    "month": "2023-02",
+    "source_note_json": "notes/2023/2023-02/2023-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2302.01349",
+      "pdf": "https://arxiv.org/pdf/2302.01349"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2302.01349",
+    "audit_path": "literature/2302.01349/audit.json",
+    "catalog_review_path": "literature/2302.01349/catalog_review.json",
+    "catalog_extraction_path": "literature/2302.01349/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2302.01349/catalog_tables/table-table-b_fast.ecsv",
+      "literature/2302.01349/catalog_tables/table-table-fast_stat.ecsv",
+      "literature/2302.01349/catalog_tables/table-table-sb1_fast.ecsv",
+      "literature/2302.01349/catalog_tables/table-table-sample.ecsv",
+      "literature/2302.01349/catalog_tables/table-table-phys_parameters.ecsv",
+      "literature/2302.01349/catalog_tables/table-table-info_imaging.ecsv",
+      "literature/2302.01349/catalog_tables/table-tab-app-eb-ev.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:30:00",
+    "extractor": "agent",
+    "summary": "This paper studies the binarity and runaway status of 54 Galactic O-type stars with fast rotation (v sin i > 200 km/s). Using Gaia EDR3 proper motion data to compute tangential velocities (v_t,lsr), stars with v_t,lsr > 30 km/s are classified as 'runaway stars', and those > 50 km/s as 'extreme runaways'. The paper finds that ~33-50% of fast-rotating stars are runaways, far higher than the 20-30% for slow rotators. However, all stellar space velocities are well below the Galactic escape velocity (~400-600 km/s). The paper never discusses any 'unbound', 'hypervelocity', 'HVS', or 'Galactic escape' content. Conclusion: This paper identified no Galactic-unbound HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2302.01349:group-01",
+      "description": "Runaway stars among 54 Galactic fast-rotating O-type stars. The paper uses Gaia EDR3 proper motion data to compute tangential velocity v_t,lsr, marking stars with v_t,lsr > 30 km/s as 'runaway' (Table b_fast, col. 10 'Runaway?'). Of these, 26 are confirmed as runaways (including Gaia data + literature), with some having v_t,lsr > 50 km/s ('extreme runaways'). The paper primarily focuses on the connection between these stars' runaway status and binary evolution, not on Galactic-unbound status.",
+      "decision": "rejected",
+      "reason": "All stars have tangential velocities v_t,lsr of only 30-50+ km/s, far below the Galactic escape velocity (~400-600 km/s). The paper never discusses whether any star might be unbound from the Galaxy (Galactic-unbound), nor do terms like 'unbound', 'escape velocity', 'hypervelocity', or 'HVS' appear. These stars are all ordinary runaway stars within the Galaxy, having acquired modest velocities through binary supernova explosions or cluster dynamical ejection, insufficient to escape the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+          "start_line": 470,
+          "end_line": 475,
+          "context": "Runaway definition: stars ejected with velocities higher than 30 km/s. 'Some of the stars are ejected with velocities higher than 30 km/s. Those are called runaway stars.'"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+          "start_line": 488,
+          "end_line": 494,
+          "context": "Statistics: 14/41 (34.1%) of fast rotators have tangential velocities above runaway threshold of 30 km/s. 7/41 (17.1%) have v_t,lsr in 20-30 km/s range ('possible runaways')."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+          "start_line": 1034,
+          "end_line": 1037,
+          "context": "Conclusions: 'we have detected several fast-rotating runaways with significant high tangential velocity, that is, v_t,lsr > 50 km/s'. Even these 'extreme runaways' are far from Galactic escape velocity."
+        }
+      ]
+    }
+  ]
+}

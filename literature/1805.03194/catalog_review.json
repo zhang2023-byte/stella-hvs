@@ -1,0 +1,347 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1805.03194",
+    "title": "Old, Metal-Poor Extreme Velocity Stars in the Solar Neighborhood",
+    "month": "2018-05",
+    "source_note_json": "notes/2018/2018-05/2018-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1805.03194",
+      "pdf": "https://arxiv.org/pdf/1805.03194"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1805.03194",
+    "audit_path": "literature/1805.03194/audit.json",
+    "source_dir": "literature/1805.03194/arxiv_source",
+    "tex_root": "literature/1805.03194/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T08:06:00",
+    "reviewer": "agent",
+    "summary": "Paper reports the discovery of 30 old, metal-poor stars with extreme space velocities (≳480 km/s) selected from the Gaia DR2 archive, based on high-precision parallax (ϖ/δϖ > 10), large tangential velocity (v_tan > 300 km/s), and measured line-of-sight velocity. The sample is a subset of 1743 kinematically pre-selected stars. Using Gaia DR2 6D phase-space coordinates and the MWPotential2014 Galactic potential model, the authors compute 1000 Monte Carlo orbits per star and find: (1) one or two stars (Gaia-T-ES29, possibly Gaia-T-ES24) are consistent with Galactic Center ejection; (2) three stars (Gaia-T-ES12, 21, 22) may have been ejected from the LMC, with Gaia-T-ES22 having P(d_LMC < 5 kpc) = 0.27; (3) the remainder have undetermined halo origin. Dust-corrected CMD analysis with PARSEC isochrones indicates the stars are old (>1 Gyr) and metal-poor (−1.5 < [Fe/H] < −1.0), unlike previously known young blue hypervelocity stars. Metallicity from RAVE DR5, LAMOST DR3, and Hawkins et al. (2018) confirms [M/H] ≲ −0.9 for 7 stars. The high local space density of this population relative to plausible ejection rates (SN Ia in globular clusters, IMBH-binary interactions) implies the stars are likely bound to the Milky Way, requiring a local escape speed of v_esc ~ 600 km/s and a virial mass M_200 ~ 1.4×10¹² M_⊙. The paper includes 2 internal tables: (1) Table 1 (table1) — the primary catalog of 30 extreme velocity stars with Gaia DR2 astrometry, derived orbital parameters, and origin classification (30 data rows × 13 columns); (2) Table 2 (table2) — supplementary metallicity table for the 7 stars with spectroscopic metallicity from RAVE DR5, LAMOST DR3, and Hawkins et al. (2018) (7 data rows × 5 columns). External data resources include Gaia DR2 (primary astrometric/photometric source), RAVE DR5, LAMOST DR3, and the SIMBAD/VizieR databases. ADQL queries for reproducing the sample selection from the Gaia archive are provided in the Appendix as code listings."
+  },
+  "internal_tables": [
+    {
+      "id": "table-table1",
+      "kind": "latex_table",
+      "asset_type": "object_measurement_table",
+      "role_in_paper": "Primary catalog table presenting the 30 newly discovered extreme velocity stars, sorted by decreasing orbital energy E in the MWPotential2014 Galactic potential. Lists Gaia DR2 source identifiers, Galactic coordinates, heliocentric and Galactocentric distances, total Galactocentric rest-frame velocity and its radial component, line-of-sight velocity, orbital energy, angular momentum, probability of being unbound, and origin classification. This is the core data product of the paper from which all kinematic, orbital, and population analyses are derived. Stars are assigned short names Gaia-T-ES1 through Gaia-T-ES30.",
+      "source_refs": [
+        {
+          "path": "literature/1805.03194/arxiv_source/tab1.tex",
+          "start_line": 1,
+          "end_line": 68,
+          "caption": "Extreme velocity star sample, sorted by decreasing orbital energy E",
+          "label": "table1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Short name",
+          "meaning": "Short identifier assigned to each star, ordered by decreasing orbital energy: Gaia-T-ES1 through Gaia-T-ES30, where ES stands for Extreme velocity Star.",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "GaiaDR2 source_id",
+          "meaning": "Unique Gaia DR2 source identifier (64-bit integer). Used to cross-match with the Gaia DR2 archive and other surveys.",
+          "unit_text": "",
+          "source_of_definition": "column header / Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "ℓ",
+          "meaning": "Galactic longitude in degrees. Ranges from 61° to 332° across the sample, reflecting the all-sky distribution.",
+          "unit_text": "deg",
+          "source_of_definition": "column header / Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "b",
+          "meaning": "Galactic latitude in degrees. Ranges from −55° to +67°. The asymmetric distribution partly reflects the Gaia scanning law selection effect.",
+          "unit_text": "deg",
+          "source_of_definition": "column header / Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_helio",
+          "meaning": "Heliocentric distance derived as 1/ϖ (inverse parallax), with 1σ uncertainty. Ranges from 0.89 ± 0.04 kpc to 7.54 ± 0.70 kpc. Because of the high-precision parallax cut (ϖ/δϖ > 10), distance errors are ≤10%.",
+          "unit_text": "kpc",
+          "source_of_definition": "column header / Gaia DR2 parallax",
+          "confidence": 1.0
+        },
+        {
+          "name": "r",
+          "meaning": "Galactocentric radius assuming R_0 = 8 kpc. Values range from 6.2 to 11.1 kpc, indicating the sample is in the Solar neighborhood (within ~4 kpc of the Sun).",
+          "unit_text": "kpc",
+          "source_of_definition": "column header / derived from Gaia DR2 coordinates",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_total",
+          "meaning": "Total velocity in the Galactocentric rest frame, combining tangential velocity (corrected for solar reflex motion) and line-of-sight velocity. All 30 stars have v_total ≥ 481 km/s, with a maximum of 598 km/s for Gaia-T-ES1. The fractional error is 4–12%.",
+          "unit_text": "km/s",
+          "source_of_definition": "column header / derived from Gaia DR2 astrometry and RVS",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_r",
+          "meaning": "Galactocentric radial velocity component (positive = outward). Values range from −572.7 to +568.9 km/s. Roughly equal numbers of stars with positive and negative v_r, consistent with a bound population.",
+          "unit_text": "km/s",
+          "source_of_definition": "column header / derived from Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_los",
+          "meaning": "Heliocentric line-of-sight velocity from Gaia DR2 Radial Velocity Spectrometer (RVS). Values range from −343.9 to +434.1 km/s. For Gaia-T-ES1, v_los = 1.7 km/s, showing this star's extreme velocity is almost entirely in the tangential plane.",
+          "unit_text": "km/s",
+          "source_of_definition": "column header / Gaia DR2 RVS",
+          "confidence": 1.0
+        },
+        {
+          "name": "E",
+          "meaning": "Orbital energy in the MWPotential2014 potential model (Bovy 2015). Stars with E > 0 are formally unbound. Values range from +53,273 to −3,203 km² s⁻². The 30 stars were selected to satisfy E > −0.1 v₀² = −4,840 km² s⁻².",
+          "unit_text": "km² s⁻²",
+          "source_of_definition": "column header / derived from orbital integration in MWPotential2014",
+          "confidence": 1.0
+        },
+        {
+          "name": "−L_z",
+          "meaning": "Negative of the z-component of the angular momentum vector. Negative values indicate prograde orbits. Values range from −3,578 to +1,219 kpc km/s. Used to characterize the orbital angular momentum of each star.",
+          "unit_text": "kpc km/s",
+          "source_of_definition": "column header / derived from Gaia DR2 phase-space coordinates",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_unb",
+          "meaning": "Probability that the star is gravitationally unbound, derived from 1,000 Monte Carlo orbit realizations sampling the error distribution of the observed 6D phase-space coordinates. Values range from 0.44 to 1.00. Stars with P_unb ≥ 0.95 (Gaia-T-ES1, 2, 3, 8) are highly likely to be unbound in MWPotential2014.",
+          "unit_text": "",
+          "source_of_definition": "column header / Section 2 (Monte Carlo orbital analysis)",
+          "confidence": 1.0
+        },
+        {
+          "name": "Origin",
+          "meaning": "Classification of likely origin based on backward orbit integration: 'MWCenter' (Galactic Center ejection; Gaia-T-ES29, P(r<0.25 kpc)=0.55; Gaia-T-ES24, P(r<0.25 kpc)=0.08), 'LMC' (LMC origin; Gaia-T-ES22, P(d_LMC<5 kpc)=0.27), 'LMC?' (tentative LMC origin; Gaia-T-ES12 with P(d_LMC<15 kpc)=0.02; Gaia-T-ES21 with P(d_LMC<15 kpc)=0.06), 'stream?' (possible stream members based on similar orbital properties; Gaia-T-ES14 and 15), and '−' (undetermined origin). The origin classifications are discussed in Section 3.3.",
+          "unit_text": "",
+          "source_of_definition": "table comments / Section 3.3",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The sample is listed in Table table1, where stars are listed in descending order of their total energy E in this potential, with the i-th star in the table named Gaia-T-ESi (i=1,...,30). The total velocity v_total for these stars as a function of Galactocentric radius r is shown in Figure 1.",
+      "comments": "30 data rows × 13 columns. Table printed using deluxetable* environment (double-column width). Stars are ordered by decreasing orbital energy E, from Gaia-T-ES1 (E = +53,273 km² s⁻², most energetic) to Gaia-T-ES30 (E = −3,203 km² s⁻², most bound). The table spans the full sample from the kinematically selected 1743 stars that are unbound or marginally bound in MWPotential2014. All 30 stars lie within ~8 kpc of the Sun. Six stars (Gaia-T-ES5,6,7,10,11,15) have high-quality astrometry per Marchetti et al. (2018) criteria. Origin classifications are based on probabilities derived from Monte Carlo orbit integration assuming a static MWPotential2014 potential."
+    },
+    {
+      "id": "table-table2",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Supplementary metallicity table presenting the spectroscopic metallicities for the 7 out of 30 extreme velocity stars that have existing measurements in public spectroscopic surveys (RAVE DR5, LAMOST DR3) or from targeted follow-up (Hawkins et al. 2018). Confirms that all measured stars are metal-poor ([M/H] ≲ −0.9), supporting the CMD-based conclusion that the sample is dominated by old, metal-poor halo/globular-cluster-like stars. The metallicities are used to strengthen the argument that the extreme velocity stars are not disk or Galactic Center populations, and that the LMC candidate Gaia-T-ES22 has [M/H] = −1.308 ± 0.301 consistent with low-metallicity LMC globular clusters.",
+      "source_refs": [
+        {
+          "path": "literature/1805.03194/arxiv_source/tab2.tex",
+          "start_line": 1,
+          "end_line": 35,
+          "caption": "Extreme velocity star sample with known metallicity",
+          "label": "table2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Short name",
+          "meaning": "Short identifier matching Table 1. Seven stars: Gaia-T-ES3, ES5, ES8, ES10, ES13, ES22, ES27.",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[M/H]_RAVE",
+          "meaning": "Spectroscopic metallicity from RAVE Data Release 5 (Kunder et al. 2017). Available for Gaia-T-ES3 (−1.37 ± 0.18), ES5 (−1.80 ± 0.14), and ES8 (−2.33 ± 0.16). The most metal-poor star in the sample is Gaia-T-ES8 with [M/H] ~ −2.3.",
+          "unit_text": "dex",
+          "source_of_definition": "column header / RAVE DR5 / table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "[M/H]_LAMOST",
+          "meaning": "Spectroscopic metallicity from LAMOST Data Release 3 (Cui et al. 2012; Zhao et al. 2012). Available for Gaia-T-ES3 (−1.139 ± 0.194), ES13 (−0.957 ± 0.214), ES22 (−1.308 ± 0.301), and ES27 (−1.425 ± 0.228). Cross-matched using gaia_tools.",
+          "unit_text": "dex",
+          "source_of_definition": "column header / LAMOST DR3 / table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]_HW2018",
+          "meaning": "Spectroscopic iron abundance from Hawkins et al. (2018, ApJ, 866, 121), who obtained high-resolution (R~31,500) APO/ARCES spectroscopy. Available for Gaia-T-ES10: [Fe/H] = −1.72 ± 0.16. The only star with iron-peak-specific abundance in this table.",
+          "unit_text": "dex",
+          "source_of_definition": "column header / Hawkins et al. 2018 / table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "Origin",
+          "meaning": "Origin classification from Table 1, included for reference: Gaia-T-ES22 is the LMC candidate, the other six have undetermined origin ('−').",
+          "unit_text": "",
+          "source_of_definition": "column header / table comments",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Spectroscopic metallicity from RAVE Data Release 5 and/or LAMOST Data Release 3 is available for six stars in our sample, and another star (Gaia-T-ES10) was recently observed by Hawkins et al. (2018) (see Table table2). These seven stars show low metallicity of [M/H] ≲ −0.9, which reinforces our argument that most of our sample stars are old and metal-poor.",
+      "comments": "7 data rows × 5 columns. Table uses deluxetable environment. '...' indicates no measurement available from that survey. Gaia-T-ES3 has both RAVE and LAMOST measurements: [M/H]_RAVE = −1.37 ± 0.18 vs. [M/H]_LAMOST = −1.139 ± 0.194 — broadly consistent within 1–2σ. The metallicities collectively support the conclusion that all measured stars are metal-poor (−2.33 ≤ [M/H] ≤ −0.96), consistent with the CMD-inferred range of −1.5 < [Fe/H] < −1.0. RAVE provides [M/H] while LAMOST provides [M/H]; Hawkins et al. (2018) provides [Fe/H]. These different metallicity indicators are noted as broadly comparable."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission Data Release 2 (DR2) archive. Primary data source providing: 6D astrometric data (positions, parallaxes, proper motions), line-of-sight velocities from the Radial Velocity Spectrometer (RVS) for 7.2 million stars, and G, GBP, GRP photometry. The 30 extreme velocity stars were selected from 1743 candidates with ϖ/δϖ > 10, v_tan > 300 km/s, and measured v_los. All astrometric parameters in Table 1 are sourced from Gaia DR2. The ADQL queries for reproducing the sample selection are provided in the Appendix.",
+      "source_refs": [
+        {
+          "path": "literature/1805.03194/arxiv_source/main.tex",
+          "start_line": 153,
+          "end_line": 202,
+          "context": "The Gaia-DR2 archive, in providing accurate proper motions for >100 million stars and radial velocities for a subset of over 7 million of them, permits a kinematic selection of 30 stars with high space velocity (Section 2)."
+        }
+      ],
+      "evidence": "We first identified 1743 candidate stars from the Gaia-DR2 archive that have: (i) high-precision parallax (ϖ/δϖ > 10)... (ii) measured v_los; and (iii) v_tan > 300 km/s.",
+      "comments": "Gaia DR2 is the sole source of astrometric and kinematic data for the sample. The Gaia RVS line-of-sight velocities are validated against LAMOST and RAVE measurements for overlapping stars (Table 2). R_0 = 8 kpc and solar motion (U_⊙, V_⊙, W_⊙) = (11.1, 232.24, 7.25) km/s from Schönrich et al. (2010) are assumed for the transformation to Galactocentric coordinates. The selection is biased toward the Gaia scanning-law-favored high-ecliptic-latitude regions (Appendix B)."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.rave-survey.org",
+      "local_path": "",
+      "description": "RAVE (RAdial Velocity Experiment) Data Release 5 (Kunder et al. 2017). Provides spectroscopic [M/H] metallicities for 3 of the 30 extreme velocity stars: Gaia-T-ES3 (−1.37 ± 0.18), ES5 (−1.80 ± 0.14), and ES8 (−2.33 ± 0.16). RAVE metallicities are listed in Table 2 and are used to confirm the metal-poor nature of the sample.",
+      "source_refs": [
+        {
+          "path": "literature/1805.03194/arxiv_source/main.tex",
+          "start_line": 308,
+          "end_line": 314,
+          "context": "Spectroscopic metallicity from RAVE Data Release 5 (Kunder et al. 2017) and/or LAMOST Data Release 3 is available for six stars in our sample."
+        }
+      ],
+      "evidence": "[M/H]_RAVE is obtained from RAVE Data Release 5 (see Table 2 comments). These seven stars show low metallicity of [M/H] ≲ −0.9.",
+      "comments": "RAVE is a medium-resolution (R~7,500) spectroscopic survey of the Southern sky, providing radial velocities and stellar parameters for ~450,000 stars in DR5. The RAVE metallicity scale is [M/H] (overall metallicity), slightly different from LAMOST [M/H] and Hawkins et al. [Fe/H]."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "",
+      "local_path": "",
+      "description": "LAMOST (Large Sky Area Multi-Object Fiber Spectroscopic Telescope) Data Release 3 (Cui et al. 2012; Zhao et al. 2012). Provides spectroscopic [M/H] metallicities for 4 of the 30 extreme velocity stars: Gaia-T-ES3, ES13, ES22, and ES27. Gaia-T-ES22 (the most likely LMC candidate) has [M/H] = −1.308 ± 0.301, consistent with low-metallicity LMC globular clusters. Cross-matching with Gaia DR2 was performed using the gaia_tools package.",
+      "source_refs": [
+        {
+          "path": "literature/1805.03194/arxiv_source/main.tex",
+          "start_line": 308,
+          "end_line": 314,
+          "context": "We used gaia_tools (https://github.com/jobovy/gaia_tools) to crossmatch LAMOST data with Gaia data."
+        }
+      ],
+      "evidence": "[M/H]_LAMOST is obtained from LAMOST Data Release 3. The metallicity of Gaia-T-ES22 [M/H] = −1.308 ± 0.301 corresponds to the low-metallicity tail of metallicity distribution of the LMC's inner stellar disk.",
+      "comments": "LAMOST is a low-to-medium resolution (R~1,800) spectroscopic survey of the Northern sky. The LAMOST metallicity for Gaia-T-ES22 is used in Section 4.1 to argue consistency with LMC globular cluster metallicities (NGC 1898, NGC 1928, NGC 2019; Olsen 1998, Mackey 2004, Grocholski 2006, Johnson 2006)."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Hawkins et al. (2018, ApJ, 866, 121) — arXiv:1806.07907. High-resolution (R~31,500) APO/ARCES spectroscopic follow-up of extreme-velocity star candidates from Marchetti et al. (2018). Provides [Fe/H] = −1.72 ± 0.16 for Gaia-T-ES10 (the same star as their Gaia DR2 2233912206910720000). Their full chemical abundance analysis for 22 elements confirms this star is a metal-poor giant chemically indistinguishable from typical halo stars.",
+      "source_refs": [
+        {
+          "path": "literature/1805.03194/arxiv_source/main.tex",
+          "start_line": 312,
+          "end_line": 314,
+          "context": "Another star (Gaia-T-ES10) was recently observed by Hawkins et al. (2018) (see Table 2)."
+        }
+      ],
+      "evidence": "For Gaia-T-ES10, Hawkins et al. (2018) obtained spectroscopic metallicity [Fe/H]_HW2018.",
+      "comments": "Gaia-T-ES10 = Gaia DR2 2233912206910720000. Hawkins et al. (2018) is also in the stella_hvs literature catalog (arXiv:1806.07907). Their analysis includes atmospheric parameters (Teff=5070±7 K, log g=1.30±0.26) and [X/Fe] for 22 species. This star is also reported in Marchetti et al. (2018)."
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Bovy (2015, ApJS, 216, 29) — MWPotential2014. A three-component axisymmetric Galactic potential model (bulge + disk + NFW dark matter halo with virial mass M_200 = 0.8×10¹² M_⊙, scale radius a=16 kpc, and virial radius r_200 = 245 kpc) implemented in the galpy package. Used for: (1) evaluating orbital energy E to select the 30 extreme velocity stars; (2) computing 1,000 Monte Carlo orbits per star backward in time for origin determination; (3) computing P_unb (probability of being unbound); and (4) estimating the escape velocity v_esc ~ 600 km/s implied if the stars are bound. The escape velocity curve for this potential is shown as the blue dashed line in Figure 1.",
+      "source_refs": [
+        {
+          "path": "literature/1805.03194/arxiv_source/main.tex",
+          "start_line": 197,
+          "end_line": 201,
+          "context": "We assume a gravitational potential model for the MW, MWPotential2014 (Bovy 2015), and evaluate the orbital energy E for each star."
+        }
+      ],
+      "evidence": "We assume a gravitational potential model for the MW, MWPotential2014 (Bovy 2015), and evaluate the orbital energy E for each star. We use the as-observed 6D coordinates of each star and select 30 stars that are unbound (E>0) or marginally bound (E > −0.1 v₀² = −4840 km² s⁻²) in this potential.",
+      "comments": "The authors note that if a more massive halo were used (M_200 ~ 1.4×10¹² M_⊙, as implied by the data), all 30 stars would be bound. The orbit of the LMC is also integrated in MWPotential2014 as a test particle. The authors note that adopting a slightly different potential can affect origin classifications (e.g., Gaia-T-ES7 is classified as GC-ejected by Marchetti et al. 2018 but not in this work). The Agama software package (Vasiliev 2018) is also used for orbit calculations."
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Marchetti et al. (2018, MNRAS, submitted) — arXiv:1804.10607. Independent study selecting high-velocity stars from Gaia DR2 using more conservative astrometric quality criteria but allowing larger formal errors on parallax/proper motion. Six of the 30 extreme velocity stars in this paper (Gaia-T-ES5,6,7,10,11,15) are also reported in Marchetti et al. Eight stars (Gaia-T-ES17,18,22,23,24,26,27,29) have high-quality astrometry per their criteria but were not reported by them. The remaining 16 stars have lower-quality astrometric solutions per their criteria. This comparison validates the robustness of the sample.",
+      "source_refs": [
+        {
+          "path": "literature/1805.03194/arxiv_source/main.tex",
+          "start_line": 213,
+          "end_line": 224,
+          "context": "Six stars in our final catalog (Gaia-T-ES5,6,7,10,11,15) have high-quality astrometric data and are reported in Marchetti et al. (2018). Eight stars (Gaia-T-ES17,18,22,23,24,26,27,29) have high-quality astrometric data but are not reported in Marchetti et al. (2018)."
+        }
+      ],
+      "evidence": "Six stars in our final catalog have high-quality astrometric data and are reported in Marchetti et al. (2018).",
+      "comments": "Marchetti et al. (2018) used a different potential model for the MW and adopted different quality criteria. Their unbound probability values P_ub are cited in the discussion of individual stars. Gaia-T-ES7 was classified as GC-ejected by Marchetti et al. but has P(r<0.25 kpc) ~ 0 in this work's potential model, illustrating the model-dependence of origin inference."
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "ADS/SIMBAD and VizieR databases at the Strasbourg Astronomical Data Center. Mentioned in the acknowledgments. SIMBAD lists 39 objects associated with this paper (per ADS metadata: SIMBAD:39). NED lists 1 object (per ADS: NED:1). These databases provide standardized object identifiers and cross-references for the 30 extreme velocity stars.",
+      "source_refs": [
+        {
+          "path": "literature/1805.03194/arxiv_source/main.tex",
+          "start_line": 593,
+          "end_line": 598,
+          "context": "This research has also made use of NASA's Astrophysics Data System Bibliographic Services; the arXiv pre-print server operated by Cornell University; the SIMBAD and VizieR databases hosted by the Strasbourg Astronomical Data Center."
+        }
+      ],
+      "evidence": "This research has also made use of the SIMBAD and VizieR databases hosted by the Strasbourg Astronomical Data Center.",
+      "comments": "SIMBAD and VizieR are standard astronomical data services. The ADS metadata record indicates SIMBAD:39 and NED:1 data links. The acknowledgments list these as used services but no specific VizieR catalog links are provided in the paper."
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "https://github.com/jobovy/mwdust",
+      "local_path": "",
+      "description": "mwdust Python package (Bovy et al. 2016) providing 3D dust extinction maps for the Milky Way. The 'combined' 3D dust model is used to compute A_V^model and A_I^model for dust-correcting Gaia G, GBP, GRP photometry of the 30 extreme velocity stars. The dust correction procedure (Appendix A) uses relationships from Evans et al. (2018) to transform between Gaia and Johnson-Cousins photometric systems, deriving A_G ≃ 0.8 A_V. Stars with A_G > 0.3 mag are excluded from the CMD (Figure 2) due to uncertainty in the dust correction.",
+      "source_refs": [
+        {
+          "path": "literature/1805.03194/arxiv_source/main.tex",
+          "start_line": 271,
+          "end_line": 276,
+          "context": "Colors (GBP−GRP) and absolute magnitudes M_G have been corrected, assuming the 'combined' 3D dust model by Bovy et al. (2016, mwdust). Available at https://github.com/jobovy/mwdust."
+        }
+      ],
+      "evidence": "Colors and absolute magnitudes have been corrected, assuming the 'combined' 3D dust model by Bovy et al. (2016, mwdust).",
+      "comments": "The authors confirm that using the alternative 2D dust extinction model from Schlegel et al. (1998) recalibrated by Schlafly & Finkbeiner (2011) does not alter the main conclusion that the sample stars are old and metal-poor. Gaia's native A_G values are not used as they appear to overcorrect colors and magnitudes for lower-luminosity giants."
+    },
+    {
+      "id": "resource-009",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "PARSEC isochrones (Bressan et al. 2012, MNRAS, 427, 127) — stellar evolutionary models providing theoretical color-magnitude diagrams for populations with ages 0.01–10 Gyr at four metallicities (1/30 solar to solar). Superimposed on the dust-corrected Gaia CMD in Figure 2 to characterize the stellar population of the extreme velocity sample. The comparison reveals that most stars lie on the red giant branch or red clump of metal-poor (−1.5 < [Fe/H] < −1.0), old (>1 Gyr) isochrones, distinguishing them from young massive hypervelocity stars.",
+      "source_refs": [
+        {
+          "path": "literature/1805.03194/arxiv_source/main.tex",
+          "start_line": 291,
+          "end_line": 298,
+          "context": "Figure 2 shows these extreme velocity stars superimposed on PARSEC isochrones (Bressan et al. 2012) for stellar populations with age 0.01–10 Gyr, and four different metallicities from 1/30 solar to solar metallicity."
+        }
+      ],
+      "evidence": "The isochrones suggest that the colors of the red giant branch and red clump stars are redder for higher metallicity, and thus the relatively blue colors of our sample stars are best explained if most of the extreme velocity stars are relatively old and metal poor with −1.5 < [Fe/H] < −1.0.",
+      "comments": "The PARSEC isochrones are the primary tool for inferring stellar population properties from Gaia photometry. Gaia-T-ES14 is independently confirmed as an old (~10 Gyr) star through its RR Lyrae classification in Gaia DR2."
+    }
+  ]
+}

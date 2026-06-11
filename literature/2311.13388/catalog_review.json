@@ -1,0 +1,145 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2311.13388",
+    "title": "The photospheres of the hottest fastest stars in the Galaxy",
+    "month": "2023-11",
+    "source_note_json": "notes/2023/2023-11/2023-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2311.13388",
+      "pdf": "https://arxiv.org/pdf/2311.13388"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2311.13388",
+    "audit_path": "literature/2311.13388/audit.json",
+    "source_dir": "literature/2311.13388/arxiv_source",
+    "tex_root": "literature/2311.13388/arxiv_source/aa.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:52:13",
+    "reviewer": "agent",
+    "summary": "本文对三颗超高速恒星的NLTE模型大气分析。仅有一个内部表格(tab:resultsall)列出三颗星的物理参数。外部资源包括NIST原子光谱数据库、Kentucky原子谱线数据库、Montreal白矮星冷却模型、TMAD工具，以及Gaia/SIMBAD/VizieR/NASA ADS等天文数据服务。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-resultsall",
+      "kind": "latex_table",
+      "asset_type": "stellar_parameters",
+      "role_in_paper": "汇总三颗目标星(J0546+0836, J0927-6335, J1332-3541)的大气参数和物理参数，是论文的核心结果表。",
+      "source_refs": [
+        {
+          "path": "literature/2311.13388/arxiv_source/aa.tex",
+          "start_line": 239,
+          "end_line": 282,
+          "caption": "Atmospheric properties and other parameters of our program stars. \\tablefootmark{a}",
+          "label": "tab:resultsall"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "参数名称",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J0546+0836",
+          "meaning": "[WC]--PG1159 过渡型恒星 J0546+0836 的参数值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J0927-6335",
+          "meaning": "PG1159 型白矮星 J0927-6335 的参数值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J1332-3541",
+          "meaning": "DAO 型白矮星 J1332-3541 的参数值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Atmospheric properties and other parameters of our program stars. \\tablefootmark{a}",
+      "comments": "表格数据源自本文的NLTE光谱拟合和SED拟合分析，是论文的原创数据产出。"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://www.nist.gov/pml/atomic-spectra-database",
+      "local_path": "",
+      "description": "NIST原子光谱数据库，用于 O III 和 O IV 谱线的线强度参考和谱线识别。",
+      "source_refs": [
+        {
+          "path": "literature/2311.13388/arxiv_source/aa.tex",
+          "start_line": 173,
+          "end_line": 173,
+          "context": "They are singlets between sublevels with principal quantum number n=3 and are both marked with large line intensities in the NIST atomic database."
+        }
+      ],
+      "evidence": "NIST atomic database used for O III line intensity verification.",
+      "comments": "基础原子物理参考数据库。"
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://linelist.pa.uky.edu/atomic/",
+      "local_path": "",
+      "description": "University of Kentucky 原子谱线数据库，用于检验 C III 5130Å 谱线的振子强度数据是否可用。",
+      "source_refs": [
+        {
+          "path": "literature/2311.13388/arxiv_source/aa.tex",
+          "start_line": 305,
+          "end_line": 305,
+          "context": "there are no oscillator strengths listed in the NIST and Kentucky databases"
+        }
+      ],
+      "evidence": "Kentucky atomic line database consulted for C III oscillator strengths.",
+      "comments": "用于验证谱线原子数据的可靠性。"
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://www.astro.umontreal.ca/~bergeron/CoolingModels/",
+      "local_path": "",
+      "description": "Montreal White Dwarf Group 的含氦大气 CO 核白矮星理论冷却序列，用于 J0927-6335 的质量、半径和光度插值。",
+      "source_refs": [
+        {
+          "path": "literature/2311.13388/arxiv_source/aa.tex",
+          "start_line": 332,
+          "end_line": 332,
+          "context": "we used theoretical cooling sequences for He-rich atmosphere CO-core WDs of the Montreal White Dwarf Group"
+        }
+      ],
+      "evidence": "Montreal WD cooling tracks used for J0927-6335 stellar parameter derivation.",
+      "comments": "直接使用的演化模型数据。"
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "http://astro.uni-tuebingen.de/~TMAD",
+      "local_path": "",
+      "description": "Tübingen Model-Atmosphere Database (TMAD) 工具，德国天体物理虚拟天文台项目的一部分，用于本文的大气模型计算。",
+      "source_refs": [
+        {
+          "path": "literature/2311.13388/arxiv_source/aa.tex",
+          "start_line": 384,
+          "end_line": 384,
+          "context": "The TMAD tool used for this paper was constructed as part of the activities of the German Astrophysical Virtual Observatory."
+        }
+      ],
+      "evidence": "TMAD tool used in this paper.",
+      "comments": "论文使用的大气模型计算工具，在致谢中提及。"
+    }
+  ]
+}

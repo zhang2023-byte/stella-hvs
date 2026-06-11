@@ -1,0 +1,395 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:38:56",
+  "paper": {
+    "arxiv_id": "2403.13993",
+    "title": "Is the RSGC4 (Alicante 8) cluster a real star cluster?: Peculiar radial velocities of red supergiant stars",
+    "month": "2024-03"
+  },
+  "review": {
+    "path": "literature/2403.13993/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123856",
+    "started_at": "2026-05-17T12:38:56",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2403.13993",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-kinematics",
+      "internal_table_id": "table-kinematics",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2403.13993/arxiv_source/ms.tex",
+        "start_line": 308,
+        "end_line": 386,
+        "caption": "The observation log, radial velocities of observed RSG candidates and proper motions from $Gaia$ DR3\\label{kinematics}",
+        "label": "kinematics"
+      },
+      "source_path": "literature/2403.13993/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2403.13993/catalog_sources/table-kinematics/excerpt.tex",
+      "sha256": "11ff73403f1c3e14d8036bd1a16ba8adb8b790634a8f1e0dea074b1edc4dc7e0",
+      "line_count": 79,
+      "error": ""
+    },
+    {
+      "id": "table-photo",
+      "internal_table_id": "table-photo",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2403.13993/arxiv_source/ms.tex",
+        "start_line": 502,
+        "end_line": 553,
+        "caption": "The photometry and color information of RSG candidates in six RSGCs\\label{photo}",
+        "label": "photo"
+      },
+      "source_path": "literature/2403.13993/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2403.13993/catalog_sources/table-photo/excerpt.tex",
+      "sha256": "97643871e4e190e39f15eb3404cf8bc8750f9219ce7ae47e761e89922a39b048",
+      "line_count": 52,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-kinematics",
+      "internal_table_id": "table-kinematics",
+      "status": "success",
+      "ecsv_path": "literature/2403.13993/catalog_tables/table-kinematics.ecsv",
+      "caption": "The observation log, radial velocities of observed RSG candidates and proper motions from $Gaia$ DR3\\label{kinematics}",
+      "label": "kinematics",
+      "row_count": 49,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzfro_m2x/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2403.13993/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzfro_m2x/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2403.13993/catalog_sources/table-kinematics/wrapped.tex",
+            "html": "literature/2403.13993/catalog_sources/table-kinematics/latexml.html",
+            "stdout": "literature/2403.13993/catalog_sources/table-kinematics/latexml.stdout.txt",
+            "stderr": "literature/2403.13993/catalog_sources/table-kinematics/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "11ff73403f1c3e14d8036bd1a16ba8adb8b790634a8f1e0dea074b1edc4dc7e0"
+    },
+    {
+      "id": "table-photo",
+      "internal_table_id": "table-photo",
+      "status": "success",
+      "ecsv_path": "literature/2403.13993/catalog_tables/table-photo.ecsv",
+      "caption": "The photometry and color information of RSG candidates in six RSGCs\\label{photo}",
+      "label": "photo",
+      "row_count": 29,
+      "column_count": 15,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp52iro5eg/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2403.13993/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp52iro5eg/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2403.13993/catalog_sources/table-photo/wrapped.tex",
+            "html": "literature/2403.13993/catalog_sources/table-photo/latexml.html",
+            "stdout": "literature/2403.13993/catalog_sources/table-photo/latexml.stdout.txt",
+            "stderr": "literature/2403.13993/catalog_sources/table-photo/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "97643871e4e190e39f15eb3404cf8bc8750f9219ce7ae47e761e89922a39b048"
+    }
+  ]
+}

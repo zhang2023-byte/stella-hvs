@@ -1,0 +1,405 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2501.12478",
+    "title": "Kinematics of High-Velocity Stars Utilizing LAMOST and Gaia DR3 Archives within 100 kpc",
+    "month": "2025-01",
+    "source_note_json": "notes/2025/2025-01/2025-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2501.12478",
+      "pdf": "https://arxiv.org/pdf/2501.12478"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2501.12478",
+    "audit_path": "literature/2501.12478/audit.json",
+    "source_dir": "literature/2501.12478/arxiv_source",
+    "tex_root": "literature/2501.12478/arxiv_source/Final_version.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:34:14",
+    "reviewer": "agent",
+    "summary": "Paper analyzes kinematics of three Programs of high-velocity stars (HiVels) using LAMOST DR7 and Gaia DR3 within 100 kpc. Internal tables include fundamental parameters of 1197 HiVels (Programs I, II, III), velocity ellipsoid parameters and convergent points, velocity dispersion ratios, and Oort rotation constants. External resources point to LAMOST DR7, Gaia DR3 archive, and VizieR catalogs for the three HiVel programs. Tables t1, 007, and tspsig are LaTeX template artifacts without scientific content."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab1",
+      "kind": "latex_table",
+      "asset_type": "source_catalog",
+      "role_in_paper": "Fundamental parameters of 1197 HiVel stars from three Programs (I: 591 stars, II: 87 stars, III: 519 stars) compiled from literature catalogs.",
+      "source_refs": [
+        {
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 298,
+          "end_line": 346,
+          "caption": "The fundamental parameters of the three Programs I, II, and III of HiVels adopted by \\cite{2021ApJS..252....3L,2023AJ....166...12L}, and \\cite{2024AJ....167...76L}, respectively.",
+          "label": "tab1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "No.",
+          "meaning": "Running index within each Program",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia DR3 ID",
+          "meaning": "Gaia Data Release 3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ra.",
+          "meaning": "Right ascension (J2000)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec.",
+          "meaning": "Declination (J2000)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_r",
+          "meaning": "Heliocentric radial velocity with uncertainty",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The fundamental parameters of the three Programs I, II, and III of HiVels adopted by \\cite{2021ApJS..252....3L,2023AJ....166...12L}, and \\cite{2024AJ....167...76L}, respectively.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab2",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Velocity Ellipsoid Parameters (VEPs) and Convergent Points (CPs) computed for the three HiVel Programs.",
+      "source_refs": [
+        {
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 525,
+          "end_line": 590,
+          "caption": "VEPs and CPs of the three Program HiVels calculated by us.",
+          "label": "tab2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameters",
+          "meaning": "Kinematic parameter name (spatial velocities, velocity dispersions, direction cosines, solar elements, convergent point)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Program I",
+          "meaning": "Parameter value for Program I (591 HiVels, 0.10-15.40 kpc)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "VEPs and CPs of the three Program HiVels calculated by us.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab3",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Ratios of velocity dispersions (sigma_2/sigma_1, sigma_3/sigma_1) and solar velocities for three HiVel Programs compared with disk and halo components from literature.",
+      "source_refs": [
+        {
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 594,
+          "end_line": 620,
+          "caption": "Ratios of velocity dispersions and the solar velocities for our three program HiVels and other components of the disks with different authors.",
+          "label": "tab3"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Type",
+          "meaning": "Stellar population or program identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_sun",
+          "meaning": "Solar velocity relative to the stellar group",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_2/sigma_1",
+          "meaning": "Ratio of second to first principal velocity dispersion",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_3/sigma_1",
+          "meaning": "Ratio of third to first principal velocity dispersion",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "References",
+          "meaning": "Literature reference for comparison values",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Ratios of velocity dispersions and the solar velocities for our three program HiVels and other components of the disks with different authors.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab4",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Oort rotation constants (A, B), angular velocity, and rotational velocity computed from three HiVel Programs using radial velocity data.",
+      "source_refs": [
+        {
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 647,
+          "end_line": 665,
+          "caption": "Velocity dispersion and rotation constants for three program HiVels under study.",
+          "label": "tab4"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Program",
+          "meaning": "HiVel program identifier and distance range",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_2/sigma_1",
+          "meaning": "Ratio of velocity dispersions used in Oort B calculation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A",
+          "meaning": "First Oort constant (shear)",
+          "unit_text": "km/s/kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "B",
+          "meaning": "Second Oort constant (vorticity)",
+          "unit_text": "km/s/kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "|A-B|",
+          "meaning": "Angular velocity of Galactic rotation",
+          "unit_text": "km/s/kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_o",
+          "meaning": "Circular rotational velocity at solar radius",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Velocity dispersion and rotation constants for three program HiVels under study.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab5",
+      "kind": "latex_table",
+      "asset_type": "reference_compilation",
+      "role_in_paper": "Comparison of Oort constants and rotation parameters from this work with literature values using different methods and tracers.",
+      "source_refs": [
+        {
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 669,
+          "end_line": 693,
+          "caption": "Velocity dispersion and rotation constants for three program HiVels under study.",
+          "label": "tab5"
+        }
+      ],
+      "columns": [
+        {
+          "name": "A",
+          "meaning": "First Oort constant (shear)",
+          "unit_text": "km/s/kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "B",
+          "meaning": "Second Oort constant (vorticity)",
+          "unit_text": "km/s/kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "|A-B|",
+          "meaning": "Angular velocity of Galactic rotation",
+          "unit_text": "km/s/kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Methods",
+          "meaning": "Method used (radial velocity or proper motions)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "References",
+          "meaning": "Literature reference",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Velocity dispersion and rotation constants for three program HiVels under study.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://dr7.lamost.org/",
+      "local_path": "",
+      "description": "LAMOST Data Release 7 spectral archive.",
+      "source_refs": [
+        {
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 271,
+          "end_line": 271,
+          "context": "\\label{sec2}\n\nLarge Sky Area Multi-Object Fiber Spectroscopic Telescope (LAMOST), also named the “Guo Shou Jing” Telescope \\citep{2012RAA....12.1197C} is a 4-m Schmidt spectroscopic survey telescope specifically developed to study four thousand targets per exposure in a field of view roughly 5$^{o}$ in diameter \\citep{2012RAA....12.1197C,2012RAA....12.1243L,2014IAUS..298.....F}. LAMOST spectra have a resolution of $\\sim$1800 with a wavelength range of 3800–9100 $\\AA$. In March 2020, 10,608,416 spectra in DR7\\footnote{\\url{http://dr7.lamost.org/}} \\citep{2020ApJ...889..117L} were made accessible by LAMOST.\n\nThe third major data release from the European Space Agency's (ESA) Gaia mission, which aspires to provide the most precise three-dimensional map of the Milky Way, is called Gaia Data Release 3 (hereafter DR3) \\citep{2023A&A...674A...1G}. Gaia is an astrometry expedition that was launched in 2013 to determine the locations, distances, movements, and other characteristics of over one billion stars and other celestial objects. Released on June 13, 2022, DR3 represents a major update to the earlier Gaia data releases (DR1 and DR2)."
+        }
+      ],
+      "evidence": "\\label{sec2}\n\nLarge Sky Area Multi-Object Fiber Spectroscopic Telescope (LAMOST), also named the “Guo Shou Jing” Telescope \\citep{2012RAA....12.1197C} is a 4-m Schmidt spectroscopic survey telescope specifically developed to study four thousand targets per exposure in a field of view roughly 5$^{o}$ in diameter \\citep{2012RAA....12.1197C,2012RAA....12.1243L,2014IAUS..298.....F}. LAMOST spectra have a resolution of $\\sim$1800 with a wavelength range of 3800–9100 $\\AA$. In March 2020, 10,608,416 spectra in DR7\\footnote{\\url{http://dr7.lamost.org/}} \\citep{2020ApJ...889..117L} were made accessible by LAMOST.\n\nThe third major data release from the European Space Agency's (ESA) Gaia mission, which aspires to provide the most precise three-dimensional map of the Milky Way, is called Gaia Data Release 3 (hereafter DR3) \\citep{2023A&A...674A...1G}. Gaia is an astrometry expedition that was launched in 2013 to determine the locations, distances, movements, and other characteristics of over one billion stars and other celestial objects. Released on June 13, 2022, DR3 represents a major update to the earlier Gaia data releases (DR1 and DR2).",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://archives.esac.esa.int/gaia",
+      "local_path": "",
+      "description": "Gaia DR3 data archive at ESAC.",
+      "source_refs": [
+        {
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 715,
+          "end_line": 715,
+          "context": "\\acknowledgements\n% Do not leave a blank line here! <---------------------->\nWe sincerely thank the anonymous referee for their valuable suggestions, which have significantly improved the quality of this paper. This work presents results from the European Space Agency space mission Gaia. Gaia data are being processed by the Gaia Data Processing and Analysis Consortium (DPAC). Funding for the DPAC is provided by national institutions, in particular, the institutions participating in the Gaia MultiLateral Agreement (MLA). The Gaia mission website is \\url{https://www.cosmos.esa.int/gaia}. The Gaia archive website is \\url{https://archives.esac.esa.int/gaia}. The author extend their appreciation to the Deanship of Scientific Research at Northern Border University, Arar, KSA for funding this research work through the project number \"NBU-FFR-2025-237-03”.\n\nGuoshoujing Telescope (Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences.\\\\"
+        }
+      ],
+      "evidence": "\\acknowledgements\n% Do not leave a blank line here! <---------------------->\nWe sincerely thank the anonymous referee for their valuable suggestions, which have significantly improved the quality of this paper. This work presents results from the European Space Agency space mission Gaia. Gaia data are being processed by the Gaia Data Processing and Analysis Consortium (DPAC). Funding for the DPAC is provided by national institutions, in particular, the institutions participating in the Gaia MultiLateral Agreement (MLA). The Gaia mission website is \\url{https://www.cosmos.esa.int/gaia}. The Gaia archive website is \\url{https://archives.esac.esa.int/gaia}. The author extend their appreciation to the Deanship of Scientific Research at Northern Border University, Arar, KSA for funding this research work through the project number \"NBU-FFR-2025-237-03”.\n\nGuoshoujing Telescope (Large Sky Area Multi-Object Fiber Spectroscopic Telescope LAMOST) is a National Major Scientific Project built by the Chinese Academy of Sciences. Funding for the project has been provided by the National Development and Reform Commission. LAMOST is operated and managed by the National Astronomical Observatories, Chinese Academy of Sciences.\\\\",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/ApJS/252/3",
+      "local_path": "",
+      "description": "VizieR catalog for Program I HiVels (Li et al. 2021, ApJS 252, 3).",
+      "source_refs": [
+        {
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 723,
+          "end_line": 723,
+          "context": "\\begin{itemize}  \n\\setlength{\\itemsep}{0pt plus 1pt}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/ApJS/252/3}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/166/12}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/167/76}"
+        }
+      ],
+      "evidence": "\\begin{itemize}  \n\\setlength{\\itemsep}{0pt plus 1pt}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/ApJS/252/3}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/166/12}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/167/76}",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/166/12",
+      "local_path": "",
+      "description": "VizieR catalog for Program II HiVels (Li et al. 2023, AJ 166, 12).",
+      "source_refs": [
+        {
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 724,
+          "end_line": 724,
+          "context": "\\setlength{\\itemsep}{0pt plus 1pt}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/ApJS/252/3}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/166/12}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/167/76}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR-3?-source=I/355/gaiadr3&-out.max=50&-out.form=HTML%20Table&-out.add=_r&-out.add=_RAJ,_DEJ&-sort=_r&-oc.form=sexa}"
+        }
+      ],
+      "evidence": "\\setlength{\\itemsep}{0pt plus 1pt}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/ApJS/252/3}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/166/12}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/167/76}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR-3?-source=I/355/gaiadr3&-out.max=50&-out.form=HTML%20Table&-out.add=_r&-out.add=_RAJ,_DEJ&-sort=_r&-oc.form=sexa}",
+      "comments": ""
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/167/76",
+      "local_path": "",
+      "description": "VizieR catalog for Program III HiVels (Li et al. 2024, AJ 167, 76).",
+      "source_refs": [
+        {
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 725,
+          "end_line": 725,
+          "context": "\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/ApJS/252/3}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/166/12}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/167/76}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR-3?-source=I/355/gaiadr3&-out.max=50&-out.form=HTML%20Table&-out.add=_r&-out.add=_RAJ,_DEJ&-sort=_r&-oc.form=sexa}"
+        }
+      ],
+      "evidence": "\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/ApJS/252/3}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/166/12}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/167/76}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR-3?-source=I/355/gaiadr3&-out.max=50&-out.form=HTML%20Table&-out.add=_r&-out.add=_RAJ,_DEJ&-sort=_r&-oc.form=sexa}",
+      "comments": ""
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "https://vizier.cds.unistra.fr/viz-bin/VizieR-3?-source=I/355/gaiadr3&-out.max=50&-out.form=HTML%20Table&-out.add=_r&-out.add=_RAJ",
+      "local_path": "",
+      "description": "VizieR query interface for Gaia DR3 catalog cross-matching.",
+      "source_refs": [
+        {
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 726,
+          "end_line": 726,
+          "context": "\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/166/12}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/167/76}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR-3?-source=I/355/gaiadr3&-out.max=50&-out.form=HTML%20Table&-out.add=_r&-out.add=_RAJ,_DEJ&-sort=_r&-oc.form=sexa}\n\n\\end{itemize}"
+        }
+      ],
+      "evidence": "\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/166/12}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/167/76}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR-3?-source=I/355/gaiadr3&-out.max=50&-out.form=HTML%20Table&-out.add=_r&-out.add=_RAJ,_DEJ&-sort=_r&-oc.form=sexa}\n\n\\end{itemize}",
+      "comments": ""
+    },
+    {
+      "id": "resource-009",
+      "kind": "external_url",
+      "url": "https://vizier.cds.unistra.fr/viz-bin/VizieR-3?-source=I/355/gaiadr3&-out.max=50&-out.form=HTML%20Table&-out.add=_r&-out.add=_RAJ,_DEJ&-sort=_r&-oc.form=sexa",
+      "local_path": "",
+      "description": "VizieR query interface for Gaia DR3 catalog cross-matching.",
+      "source_refs": [
+        {
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 726,
+          "end_line": 726,
+          "context": "\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/166/12}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/167/76}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR-3?-source=I/355/gaiadr3&-out.max=50&-out.form=HTML%20Table&-out.add=_r&-out.add=_RAJ,_DEJ&-sort=_r&-oc.form=sexa}\n\n\\end{itemize}"
+        }
+      ],
+      "evidence": "\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/166/12}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=J/AJ/167/76}\n\\item \\url{https://vizier.cds.unistra.fr/viz-bin/VizieR-3?-source=I/355/gaiadr3&-out.max=50&-out.form=HTML%20Table&-out.add=_r&-out.add=_RAJ,_DEJ&-sort=_r&-oc.form=sexa}\n\n\\end{itemize}",
+      "comments": ""
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T17:52:55",
+  "paper": {
+    "arxiv_id": "2406.01420",
+    "bibcode": "2024A&A...689A.157S",
+    "title": "An absence of binary companions to Wolf-Rayet stars in the Small Magellanic Cloud: implications for mass loss and black hole masses at low metallicity",
+    "month": "2024-06",
+    "source_note_json": "notes/2024/2024-06/2024-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2406.01420",
+      "pdf": "https://arxiv.org/pdf/2406.01420"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2406.01420",
+    "audit_path": "literature/2406.01420/audit.json",
+    "catalog_review_path": "literature/2406.01420/catalog_review.json",
+    "catalog_extraction_path": "literature/2406.01420/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2406.01420/catalog_tables/table-tab-lines.ecsv",
+      "literature/2406.01420/catalog_tables/table-tab-summary_data.ecsv",
+      "literature/2406.01420/catalog_tables/table-tab-mini_mfin.ecsv",
+      "literature/2406.01420/catalog_tables/table-tab-ab1_data.ecsv",
+      "literature/2406.01420/catalog_tables/table-tab-ab2_data.ecsv",
+      "literature/2406.01420/catalog_tables/table-tab-ab4_data.ecsv",
+      "literature/2406.01420/catalog_tables/table-tab-ab9_data.ecsv",
+      "literature/2406.01420/catalog_tables/table-tab-ab10_data.ecsv",
+      "literature/2406.01420/catalog_tables/table-tab-ab11_data.ecsv",
+      "literature/2406.01420/catalog_tables/table-tab-ab12_data.ecsv",
+      "literature/2406.01420/catalog_tables/table-tab-ogle.ecsv",
+      "literature/2406.01420/catalog_tables/table-tab-integrated_pdetect.ecsv",
+      "literature/2406.01420/catalog_tables/table-tab-integrated_pdetect_ecc.ecsv",
+      "literature/2406.01420/catalog_tables/table-tab-integrated_pdetect_f03.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T17:52:55",
+    "extractor": "agent",
+    "summary": "This paper studies Wolf-Rayet stars in the Small Magellanic Cloud (SMC), not the Milky Way. While SMC AB1 and SMC AB11 are identified as runaway stars with relative velocities of ~80 km/s, the paper treats them as runaway stars within the SMC (likely post-supernova runaways), not as Galactic-unbound or escaping candidates. No objects are discussed as possibly unbound from the Milky Way."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "smc-wr-stars",
+      "description": "The seven apparently single Wolf-Rayet stars in the Small Magellanic Cloud studied in this paper.",
+      "decision": "excluded",
+      "reason": "These objects are located in the Small Magellanic Cloud (~62 kpc away), not in the Milky Way. The paper does not present them as possibly unbound from the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 44,
+          "end_line": 60,
+          "context": "Abstract describing the study of seven apparently single WR stars in the SMC."
+        }
+      ]
+    },
+    {
+      "group_id": "smc-runaways-ab1-ab11",
+      "description": "SMC AB1 and SMC AB11, identified by the paper as runaway stars with relative velocities of ~68-91 km/s in the line of sight and ~78-107 km/s transverse.",
+      "decision": "excluded",
+      "reason": "The paper identifies these as runaway stars within the SMC (likely post-supernova runaways), but does not discuss them as possibly unbound from the Milky Way Galactic potential. They are ordinary runaways, not HVS or Galactic-unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 415,
+          "end_line": 422,
+          "context": "Paper identifies SMC AB11 and SMC AB1 as runaway stars based on radial velocity and proper motion differences from their surroundings."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2406.01420/arxiv_source/main.tex",
+          "start_line": 607,
+          "end_line": 607,
+          "context": "Conclusions restating that SMC AB1 and SMC AB11 appear to be runaway stars with relative line-of-sight velocities of ~80 km/s."
+        }
+      ]
+    }
+  ]
+}

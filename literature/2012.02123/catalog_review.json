@@ -1,0 +1,448 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2012.02123",
+    "title": "Gaia EDR3 in 6D: Searching for unbound stars in the Galaxy",
+    "month": "2020-12",
+    "source_note_json": "notes/2020/2020-12/2020-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2012.02123",
+      "pdf": "https://arxiv.org/pdf/2012.02123"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2012.02123",
+    "audit_path": "literature/2012.02123/audit.json",
+    "source_dir": "literature/2012.02123/arxiv_source",
+    "tex_root": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/GaiaEDR3_highV.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T21:55:34",
+    "reviewer": "agent",
+    "summary": "Paper releases a FITS catalogue of distances and total velocities for ~7 million Gaia EDR3 stars with DR2 radial velocities. Contains 6 LaTeX tables: 2 method tables (quality cuts, potential parameters), 2 sample catalogs (17 and 12 high-velocity candidates), 1 derived orbit table, and 1 catalogue schema table. External resource: FITS catalogue download at author's website."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-cuts",
+      "kind": "latex_table",
+      "asset_type": "method_table",
+      "role_in_paper": "Documents the quality cuts applied to select a clean subset of high velocity stars from the full Gaia EDR3+DR2 sample, showing the number of stars surviving each cut.",
+      "source_refs": [
+        {
+          "path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/GaiaEDR3_highV.tex",
+          "start_line": 169,
+          "end_line": 188,
+          "caption": "Summary of the cuts employed to select a clean subset of high velocity stars. The column $N_\\mathrm{stars}$ denotes the number of stars in {\\Gaia} EDR3 surviving each cut. The bulk of the analysis of this paper relies on the sample of 6969738 stars with precise astrometry from {\\Gaia} EDR3 and radial velocities from {\\Gaia} DR2.",
+          "label": "tab:cuts"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cut",
+          "meaning": "Description of the quality cut applied",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_stars",
+          "meaning": "Number of stars in Gaia EDR3 surviving the cut",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Summary of the cuts employed to select a clean subset of high velocity stars. The column $N_\\mathrm{stars}$ denotes the number of stars in {\\Gaia} EDR3 surviving each cut. The bulk of the analysis of this paper relies on the sample of 6969738 stars with precise astrometry from {\\Gaia} EDR3 and radial velocities from {\\Gaia} DR2.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-pot_params",
+      "kind": "latex_table",
+      "asset_type": "method_table",
+      "role_in_paper": "Lists the characteristic mass and scale parameters of the gala MilkyWayPotential components (bulge, nucleus, disk, halo) used for orbit integration.",
+      "source_refs": [
+        {
+          "path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/GaiaEDR3_highV.tex",
+          "start_line": 215,
+          "end_line": 234,
+          "caption": "Characteristic scale parameters used in the \\textsc{gala} potential \\textsc{MilkyWayPotential} \\citep{bovy15, gala}.",
+          "label": "tab:pot_params"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Component",
+          "meaning": "Galactic component (Bulge, Nucleus, Disk, Halo) of the MilkyWayPotential",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Parameters",
+          "meaning": "Mass and scale radius/height parameters for each Galactic component",
+          "unit_text": "M_sun, kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Characteristic scale parameters used in the \\textsc{gala} potential \\textsc{MilkyWayPotential} \\citep{bovy15, gala}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-candidates",
+      "kind": "latex_table",
+      "asset_type": "sample_catalog",
+      "role_in_paper": "Presents observed and derived properties for the clean sample of 17 high velocity stars with Pub > 0.8 of being unbound from the Milky Way. This is the primary result table of the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/tab_candidates_0.8.tex",
+          "start_line": 2,
+          "end_line": 70,
+          "caption": "Observed and derived properties for the clean sample of 17 high velocity stars with a probability $P_\\mathrm{ub} > 0.8$ of being unbound from the Milky Way. Quantities derived from the orbital integration are reported in Table \\ref{tab:candidates_orb}. Stars are ordered by decreasing values of $P_\\mathrm{ub}$.",
+          "label": "tab:candidates"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia EDR3 ID",
+          "meaning": "Gaia EDR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(RA, Dec.)",
+          "meaning": "Right ascension and declination (ICRS) of the star",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(l, b)",
+          "meaning": "Galactic longitude and latitude of the star",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "varpi",
+          "meaning": "Gaia EDR3 parallax with uncertainty",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_alpha*",
+          "meaning": "Gaia EDR3 proper motion in right ascension (cos(delta) corrected) with uncertainty",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_delta",
+          "meaning": "Gaia EDR3 proper motion in declination with uncertainty",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_rad",
+          "meaning": "Gaia DR2 radial velocity with uncertainty",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia EDR3 G-band mean magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "Median distance estimate derived by inverting MC parallax samples, with 16th and 84th percentile uncertainties",
+          "unit_text": "pc",
+          "source_of_definition": "text",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_GC",
+          "meaning": "Median spherical Galactocentric radius, with 16th and 84th percentile uncertainties",
+          "unit_text": "pc",
+          "source_of_definition": "text",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_GC",
+          "meaning": "Median total velocity in the Galactocentric rest-frame, with 16th and 84th percentile uncertainties",
+          "unit_text": "km s^-1",
+          "source_of_definition": "text",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_MW",
+          "meaning": "Probability that the star originated from the Milky Way disk (fraction of MC realizations with r_min < 25 kpc)",
+          "unit_text": "",
+          "source_of_definition": "text",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_ub",
+          "meaning": "Probability that the star is unbound from the Milky Way (fraction of MC realizations with v_GC > escape speed at the star's position)",
+          "unit_text": "",
+          "source_of_definition": "text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Observed and derived properties for the clean sample of 17 high velocity stars with a probability $P_\\mathrm{ub} > 0.8$ of being unbound from the Milky Way. Quantities derived from the orbital integration are reported in Table \\ref{tab:candidates_orb}. Stars are ordered by decreasing values of $P_\\mathrm{ub}$.",
+      "comments": "Stars are split into 11 Galactic (P_MW > 0.5) and 6 extragalactic (P_MW < 0.5) stars."
+    },
+    {
+      "id": "table-tab-candidates_orb",
+      "kind": "latex_table",
+      "asset_type": "derived_data_table",
+      "role_in_paper": "Presents orbital parameters (Galactocentric cylindrical coordinates, energy, minimum crossing radius, ejection velocity, flight time) derived from backward orbit integration for the 17 candidates with Pub > 0.8.",
+      "source_refs": [
+        {
+          "path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/tab_candidates_0.8_orb.tex",
+          "start_line": 1,
+          "end_line": 71,
+          "caption": "Galactocentric cylindrical coordinates $(R_\\mathrm{GC}, z_\\mathrm{GC})$, energy per unit mass $E$, minimum crossing radius $r_\\mathrm{min}$, ejection velocity $v_\\mathrm{ej}$, and flight time $t_\\mathrm{F}$ for the clean sample of 17 stars with $P_\\mathrm{ub} > 0.8$. Stars are ordered as in Table \\ref{tab:candidates}.",
+          "label": "tab:candidates_orb"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia EDR3 ID",
+          "meaning": "Gaia EDR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R_GC",
+          "meaning": "Median Galactocentric cylindrical radius, with 16th and 84th percentile uncertainties",
+          "unit_text": "pc",
+          "source_of_definition": "text",
+          "confidence": 1.0
+        },
+        {
+          "name": "z_GC",
+          "meaning": "Median Galactocentric height above the disk plane, with 16th and 84th percentile uncertainties",
+          "unit_text": "pc",
+          "source_of_definition": "text",
+          "confidence": 1.0
+        },
+        {
+          "name": "E",
+          "meaning": "Median orbital energy per unit mass, with 16th and 84th percentile uncertainties; E > 0 indicates unbound orbit",
+          "unit_text": "kpc^2 Myr^-2",
+          "source_of_definition": "text",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_min",
+          "meaning": "Median minimum crossing radius (distance from Galactic Centre at disk crossing), with 16th and 84th percentile uncertainties; defined only for Galactic stars",
+          "unit_text": "pc",
+          "source_of_definition": "text",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_ej",
+          "meaning": "Median ejection velocity (total velocity at disk crossing), with 16th and 84th percentile uncertainties; defined only for Galactic stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "text",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_F",
+          "meaning": "Median flight time (time between disk crossing and current observation), with 16th and 84th percentile uncertainties; defined only for Galactic stars",
+          "unit_text": "Myr",
+          "source_of_definition": "text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Galactocentric cylindrical coordinates $(R_\\mathrm{GC}, z_\\mathrm{GC})$, energy per unit mass $E$, minimum crossing radius $r_\\mathrm{min}$, ejection velocity $v_\\mathrm{ej}$, and flight time $t_\\mathrm{F}$ for the clean sample of 17 stars with $P_\\mathrm{ub} > 0.8$. Stars are ordered as in Table \\ref{tab:candidates}.",
+      "comments": "Extragalactic stars have no r_min, v_ej, or t_F values since they never cross the Galactic disk."
+    },
+    {
+      "id": "table-tab-candidates_zp",
+      "kind": "latex_table",
+      "asset_type": "sample_catalog",
+      "role_in_paper": "Presents observed and derived properties for 12 high velocity stars with Pub > 0.5 when including the Gaia EDR3 parallax zero point correction, serving as a comparison to the main candidate table.",
+      "source_refs": [
+        {
+          "path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/tab_candidates_0.8_zp.tex",
+          "start_line": 2,
+          "end_line": 62,
+          "caption": "Observed and derived properties for the clean sample of 12 high velocity stars with a probability $P_\\mathrm{ub} > 0.5$ of being unbound from the Milky Way, computed including the estimate of the parallax zero point $\\varpi_\\mathrm{zp}$. Stars are ordered by decreasing values of $P_\\mathrm{ub}$.",
+          "label": "tab:candidates_zp"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia EDR3 ID",
+          "meaning": "Gaia EDR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(RA, Dec.)",
+          "meaning": "Right ascension and declination (ICRS) of the star",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(l, b)",
+          "meaning": "Galactic longitude and latitude of the star",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "varpi - varpi_zp",
+          "meaning": "Gaia EDR3 parallax minus the estimated parallax zero point, with uncertainty",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_alpha*",
+          "meaning": "Gaia EDR3 proper motion in right ascension (cos(delta) corrected) with uncertainty",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_delta",
+          "meaning": "Gaia EDR3 proper motion in declination with uncertainty",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_rad",
+          "meaning": "Gaia DR2 radial velocity with uncertainty",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia EDR3 G-band mean magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "Median distance estimate (after zero point correction), with 16th and 84th percentile uncertainties",
+          "unit_text": "pc",
+          "source_of_definition": "text",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_GC",
+          "meaning": "Median spherical Galactocentric radius, with 16th and 84th percentile uncertainties",
+          "unit_text": "pc",
+          "source_of_definition": "text",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_GC",
+          "meaning": "Median total velocity in the Galactocentric rest-frame, with 16th and 84th percentile uncertainties",
+          "unit_text": "km s^-1",
+          "source_of_definition": "text",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_MW",
+          "meaning": "Probability that the star originated from the Milky Way disk",
+          "unit_text": "",
+          "source_of_definition": "text",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_ub",
+          "meaning": "Probability that the star is unbound from the Milky Way",
+          "unit_text": "",
+          "source_of_definition": "text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Observed and derived properties for the clean sample of 12 high velocity stars with a probability $P_\\mathrm{ub} > 0.5$ of being unbound from the Milky Way, computed including the estimate of the parallax zero point $\\varpi_\\mathrm{zp}$. Stars are ordered by decreasing values of $P_\\mathrm{ub}$.",
+      "comments": "7 Galactic and 5 extragalactic stars. Only 3 have Pub > 0.8. 5 stars are in common with Table 3 (tab:candidates)."
+    },
+    {
+      "id": "table-tab-catalogue",
+      "kind": "latex_table",
+      "asset_type": "catalogue_schema",
+      "role_in_paper": "Documents the 60 columns of the released FITS catalogue containing derived distances and velocities for ~7 million Gaia EDR3 stars with DR2 radial velocities.",
+      "source_refs": [
+        {
+          "path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/tab_catalogue.tex",
+          "start_line": 1,
+          "end_line": 94,
+          "caption": "Description of the columns of the catalogue with distances and velocities. Entries labelled $^1$ are taken directly from the {\\Gaia} EDR3 catalogue, while entries labelled $^2$ are derived in this paper. We refer the interested reader to Section \\ref{sec:method} for details on how these quantities are computed. For the entries labelled $^2$, the quoted values correspond to the median of the distribution, with lower and upper uncertainties computed, respectively, from the $16$th and the $84$th percentile. Column 60 is present only in the version of the catalogue which includes the effect of the parallax zero point.",
+          "label": "tab:catalogue"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Column",
+          "meaning": "Column number in the FITS catalogue (1-60)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Units",
+          "meaning": "Physical units of the column value",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Name",
+          "meaning": "Column name as given in the FITS file header",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Description",
+          "meaning": "Description of the column content, with superscript 1 for Gaia-sourced values and 2 for values derived in this paper",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Description of the columns of the catalogue with distances and velocities. Entries labelled $^1$ are taken directly from the {\\Gaia} EDR3 catalogue, while entries labelled $^2$ are derived in this paper. We refer the interested reader to Section \\ref{sec:method} for details on how these quantities are computed. For the entries labelled $^2$, the quoted values correspond to the median of the distribution, with lower and upper uncertainties computed, respectively, from the $16$th and the $84$th percentile. Column 60 is present only in the version of the catalogue which includes the effect of the parallax zero point.",
+      "comments": "Columns 1-19 are Gaia-sourced; columns 20-59 are derived (distances, positions, velocities, Pub); column 60 (parallax_zp) only in zero-point-corrected version."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://sites.google.com/view/tmarchetti/research",
+      "local_path": "",
+      "description": "Author's website hosting the FITS catalogue with derived distances and total velocities for ~7 million Gaia EDR3 stars with DR2 radial velocities. Two versions available: standard catalogue and version including parallax zero point correction.",
+      "source_refs": [
+        {
+          "path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/GaiaEDR3_highV.tex",
+          "start_line": 400,
+          "end_line": 400,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission {\\Gaia}, publicly available at the {\\Gaia} archive. The catalogues derived in this work can be downloaded \\href{https://sites.google.com/view/tmarchetti/research}{here}."
+        }
+      ],
+      "evidence": "Data Availability section: 'The catalogues derived in this work can be downloaded here: https://sites.google.com/view/tmarchetti/research'. Also referenced in abstract footnote and Section 3.",
+      "comments": "This URL appears multiple times in the paper (abstract footnote, Section 3, Data Availability section, Appendix B). The catalogue is a FITS file."
+    }
+  ]
+}

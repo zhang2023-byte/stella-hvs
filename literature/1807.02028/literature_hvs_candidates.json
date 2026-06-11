@@ -1,0 +1,54 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:22:00",
+  "paper": {
+    "arxiv_id": "1807.02028",
+    "bibcode": "2018ApJ...862L..11C",
+    "title": "In-Situ Star Formation in the Outskirts of the Large Magellanic Cloud: Gaia DR2 Confirmation",
+    "month": "2018-07",
+    "source_note_json": "notes/2018/2018-07/2018-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1807.02028",
+      "pdf": "https://arxiv.org/pdf/1807.02028"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1807.02028",
+    "audit_path": "literature/1807.02028/audit.json",
+    "catalog_review_path": "literature/1807.02028/catalog_review.json",
+    "catalog_extraction_path": "literature/1807.02028/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:22:00",
+    "extractor": "agent",
+    "summary": "No HVS candidates found. This paper explores Gaia DR2 proper motions of six young main-sequence stars in the outskirts of the Large Magellanic Cloud (LMC), originally reported by Moni Bidin et al. (2017). These stars are located 7-13 degrees from the LMC center in regions with very low HI content. Gaia DR2 confirms that four stars formed in situ in the LMC periphery, while two were likely expelled from inner LMC regions. All stars are LMC members, not Milky Way stars. The paper is entirely about LMC star formation and internal dynamics. Full paper text reviewed — zero mentions of hypervelocity, HVS, unbound stars, Galactic escape velocity, or Milky Way kinematics."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "lmc-young-stars-6",
+      "description": "Six young main-sequence stars in the LMC outskirts (7-13 degrees from LMC center) from Moni Bidin et al. (2017). Gaia DR2 proper motions used to determine if they formed in situ or were dynamically expelled from inner LMC.",
+      "decision": "excluded",
+      "reason": "Not HVS candidates. These are LMC member stars, not Milky Way stars. Two stars show kinematics consistent with being expelled from inner LMC via dynamical interactions, but this is internal LMC dynamics at sub-escape speeds within the LMC potential. No claims of hypervelocity, unbound status from the Milky Way, or Galactic escape. The paper's focus is on star formation in the LMC periphery.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1807.02028/arxiv_source/ms.tex",
+          "start_line": 1,
+          "end_line": 1,
+          "context": "Title: In-Situ Star Formation in the Outskirts of the Large Magellanic Cloud: Gaia DR2 Confirmation"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1807.02028/arxiv_abs.html",
+          "start_line": 1,
+          "end_line": 1,
+          "context": "Abstract: We explore the Gaia DR2 proper motions of six young, main-sequence stars, members of the Large Magellanic Cloud (LMC)...Gaia DR2 proper motions confirm that four stars formed locally, in situ, while two are consistent with being expelled via dynamical interactions from inner, more gas-rich regions of the LMC."
+        }
+      ]
+    }
+  ]
+}

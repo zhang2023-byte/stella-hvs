@@ -1,0 +1,586 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:34:53",
+  "paper": {
+    "arxiv_id": "1907.09298",
+    "title": "Searching for correlations in GAIA DR2 unbound star trajectories",
+    "month": "2019-07"
+  },
+  "review": {
+    "path": "literature/1907.09298/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083453",
+    "started_at": "2026-06-07T08:34:53",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1907.09298",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-mwpot",
+      "internal_table_id": "table-tab-mwpot",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+        "start_line": 275,
+        "end_line": 294,
+        "caption": "Milky Way potential parameters.",
+        "label": "tab:mwpot"
+      },
+      "source_path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+      "excerpt_path": "literature/1907.09298/catalog_sources/table-tab-mwpot/excerpt.tex",
+      "sha256": "ba3994783e5a665ebc5785324840f9ab762b4a260fc023baa4f5302687a95f03",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-gc_id",
+      "internal_table_id": "table-tab-gc_id",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+        "start_line": 671,
+        "end_line": 690,
+        "caption": "Globular clusters identifiers.",
+        "label": "tab:gc_id"
+      },
+      "source_path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+      "excerpt_path": "literature/1907.09298/catalog_sources/table-tab-gc_id/excerpt.tex",
+      "sha256": "d97a9b050abc53cc7581a3613a3abe38e179ab9f50ed8898155197ed8083be1d",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-gal_id",
+      "internal_table_id": "table-tab-gal_id",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+        "start_line": 692,
+        "end_line": 782,
+        "caption": "Nearby galaxy identifiers and detailed references (complementing those given in section~\\ref{sec:gc_gal}) for position, size and other useful measurements. All systems are identified as dwarf galaxies, excluded Andromeda, Large Magellanic Cloud (LMC), Small Magellanic Cloud (SMC) and objects of ambiguous nature denoted by an asterisk (*).",
+        "label": "tab:gal_id"
+      },
+      "source_path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+      "excerpt_path": "literature/1907.09298/catalog_sources/table-tab-gal_id/excerpt.tex",
+      "sha256": "20b1e93ff764ee4010380319282bb994f137a41d28cde334e5b8a26d7e70c581",
+      "line_count": 91,
+      "error": ""
+    },
+    {
+      "id": "table-tab-sag",
+      "internal_table_id": "table-tab-sag",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+        "start_line": 784,
+        "end_line": 806,
+        "caption": "Sagittarius dSph phase-space and size data. Rows correspond to right-ascension $\\alpha$ and declination $\\delta$ (ICRS at epoch J2000.0), distance modulus $\\mu$, proper motions in right-ascension direction $\\mu_{\\alpha*} = \\mu_{\\alpha}\\cos{\\delta}$ and in declination direction $\\mu_{\\delta}$, radial velocity along the line-of-sight $V_{r}$ and half-light radius measured along the major axis $r_h$.",
+        "label": "tab:sag"
+      },
+      "source_path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+      "excerpt_path": "literature/1907.09298/catalog_sources/table-tab-sag/excerpt.tex",
+      "sha256": "a3c8286516bd6085eb095e60b49a3ccc84bd05ab7476b0aa9c295fec95ed52a4",
+      "line_count": 23,
+      "error": ""
+    },
+    {
+      "id": "table-tab-hvs",
+      "internal_table_id": "table-tab-hvs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+        "start_line": 809,
+        "end_line": 848,
+        "caption": "HVS compatible with having scattered with compact objects within Sagittarius dSph. Columns correspond to \\textit{Gaia} DR2 source identifier, RA and declination, parallax, proper motion in RA direction $\\mu_{\\alpha*}=\\mu_{\\alpha*}\\cos(\\delta)$, proper motion in declination direction, proper motions correlation coefficient, radial velocity and heliocentric distance derived in \\citet{2018MNRAS.tmp.2466M}, heliocentric distance derived in \\citet{2019A&A...628A..94A} and probability of being unbound from the Milky Way potential. The unbound probability relies on \\citet{2018MNRAS.tmp.2466M} distances. Reference epoch for astrometric quantities is J2015.5. While here we report the full source identifier, in the main text we only refer to the first 8 digits. The first two stars are discussed in section~\\ref{sec:results}, the others in appendix~\\ref{sec:altercuts}",
+        "label": "tab:hvs"
+      },
+      "source_path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+      "excerpt_path": "literature/1907.09298/catalog_sources/table-tab-hvs/excerpt.tex",
+      "sha256": "061c0ac5078039a6a283cebbc7d44717b88988cc3dd9a70d1a7377d113d325ea",
+      "line_count": 40,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-mwpot",
+      "internal_table_id": "table-tab-mwpot",
+      "status": "success",
+      "ecsv_path": "literature/1907.09298/catalog_tables/table-tab-mwpot.ecsv",
+      "caption": "Milky Way potential parameters.",
+      "label": "tab:mwpot",
+      "row_count": 9,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Component",
+          "Potential",
+          "Parameters"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Component",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Potential",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Parameters",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpntbiawmq/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1907.09298/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpntbiawmq/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1907.09298/catalog_sources/table-tab-mwpot/wrapped.tex",
+            "html": "literature/1907.09298/catalog_sources/table-tab-mwpot/latexml.html",
+            "stdout": "literature/1907.09298/catalog_sources/table-tab-mwpot/latexml.stdout.txt",
+            "stderr": "literature/1907.09298/catalog_sources/table-tab-mwpot/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ba3994783e5a665ebc5785324840f9ab762b4a260fc023baa4f5302687a95f03"
+    },
+    {
+      "id": "table-tab-gc_id",
+      "internal_table_id": "table-tab-gc_id",
+      "status": "success",
+      "ecsv_path": "literature/1907.09298/catalog_tables/table-tab-gc_id.ecsv",
+      "caption": "Globular clusters identifiers.",
+      "label": "tab:gc_id",
+      "row_count": 11,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0__j3e9q/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1907.09298/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0__j3e9q/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1907.09298/catalog_sources/table-tab-gc_id/wrapped.tex",
+            "html": "literature/1907.09298/catalog_sources/table-tab-gc_id/latexml.html",
+            "stdout": "literature/1907.09298/catalog_sources/table-tab-gc_id/latexml.stdout.txt",
+            "stderr": "literature/1907.09298/catalog_sources/table-tab-gc_id/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d97a9b050abc53cc7581a3613a3abe38e179ab9f50ed8898155197ed8083be1d"
+    },
+    {
+      "id": "table-tab-gal_id",
+      "internal_table_id": "table-tab-gal_id",
+      "status": "success",
+      "ecsv_path": "literature/1907.09298/catalog_tables/table-tab-gal_id.ecsv",
+      "caption": "Nearby galaxy identifiers and detailed references (complementing those given in section~\\ref{sec:gc_gal}) for position, size and other useful measurements. All systems are identified as dwarf galaxies, excluded Andromeda, Large Magellanic Cloud (LMC), Small Magellanic Cloud (SMC) and objects of ambiguous nature denoted by an asterisk (*).",
+      "label": "tab:gal_id",
+      "row_count": 35,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqpmuvqt7/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1907.09298/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqpmuvqt7/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1907.09298/catalog_sources/table-tab-gal_id/wrapped.tex",
+            "html": "literature/1907.09298/catalog_sources/table-tab-gal_id/latexml.html",
+            "stdout": "literature/1907.09298/catalog_sources/table-tab-gal_id/latexml.stdout.txt",
+            "stderr": "literature/1907.09298/catalog_sources/table-tab-gal_id/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "20b1e93ff764ee4010380319282bb994f137a41d28cde334e5b8a26d7e70c581"
+    },
+    {
+      "id": "table-tab-sag",
+      "internal_table_id": "table-tab-sag",
+      "status": "success",
+      "ecsv_path": "literature/1907.09298/catalog_tables/table-tab-sag.ecsv",
+      "caption": "Sagittarius dSph phase-space and size data. Rows correspond to right-ascension $\\alpha$ and declination $\\delta$ (ICRS at epoch J2000.0), distance modulus $\\mu$, proper motions in right-ascension direction $\\mu_{\\alpha*} = \\mu_{\\alpha}\\cos{\\delta}$ and in declination direction $\\mu_{\\delta}$, radial velocity along the line-of-sight $V_{r}$ and half-light radius measured along the major axis $r_h$.",
+      "label": "tab:sag",
+      "row_count": 5,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\alpha [deg]",
+          "283.8313"
+        ],
+        [
+          "\\delta [deg]",
+          "-30.4606"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\alpha [deg] | \\delta [deg]",
+          "unit_text": "\\alpha [deg]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "283.8313 | -30.4606",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2bkse_a4/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1907.09298/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2bkse_a4/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1907.09298/catalog_sources/table-tab-sag/wrapped.tex",
+            "html": "literature/1907.09298/catalog_sources/table-tab-sag/latexml.html",
+            "stdout": "literature/1907.09298/catalog_sources/table-tab-sag/latexml.stdout.txt",
+            "stderr": "literature/1907.09298/catalog_sources/table-tab-sag/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a3c8286516bd6085eb095e60b49a3ccc84bd05ab7476b0aa9c295fec95ed52a4"
+    },
+    {
+      "id": "table-tab-hvs",
+      "internal_table_id": "table-tab-hvs",
+      "status": "success",
+      "ecsv_path": "literature/1907.09298/catalog_tables/table-tab-hvs.ecsv",
+      "caption": "HVS compatible with having scattered with compact objects within Sagittarius dSph. Columns correspond to \\textit{Gaia} DR2 source identifier, RA and declination, parallax, proper motion in RA direction $\\mu_{\\alpha*}=\\mu_{\\alpha*}\\cos(\\delta)$, proper motion in declination direction, proper motions correlation coefficient, radial velocity and heliocentric distance derived in \\citet{2018MNRAS.tmp.2466M}, heliocentric distance derived in \\citet{2019A&A...628A..94A} and probability of being unbound from the Milky Way potential. The unbound probability relies on \\citet{2018MNRAS.tmp.2466M} distances. Reference epoch for astrometric quantities is J2015.5. While here we report the full source identifier, in the main text we only refer to the first 8 digits. The first two stars are discussed in section~\\ref{sec:results}, the others in appendix~\\ref{sec:altercuts}",
+      "label": "tab:hvs",
+      "row_count": 5,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "source",
+          "( \\alpha , \\delta )",
+          "\\varpi",
+          "\\mu_\\alpha*",
+          "\\mu_\\delta",
+          "c_\\mu_\\alpha*\\mu_\\delta",
+          "V_r",
+          "d_\\rm Marchetti",
+          "d_\\rm Anders",
+          "P_\\rm ub"
+        ],
+        [
+          "",
+          "[deg]",
+          "[mas]",
+          "[mas/yr]",
+          "[mas/yr]",
+          "",
+          "[km/s]",
+          "[kpc]",
+          "[kpc]",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "source",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "( \\alpha , \\delta ) | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\varpi | [mas]",
+          "unit_text": "[mas]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\alpha* | [mas/yr]",
+          "unit_text": "[mas/yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\delta | [mas/yr]",
+          "unit_text": "[mas/yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "c_\\mu_\\alpha*\\mu_\\delta",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "V_r | [km/s]",
+          "unit_text": "[km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "d_\\rm Marchetti | [kpc]",
+          "unit_text": "[kpc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "d_\\rm Anders | [kpc]",
+          "unit_text": "[kpc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "P_\\rm ub",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp77vop8lw/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1907.09298/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp77vop8lw/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1907.09298/catalog_sources/table-tab-hvs/wrapped.tex",
+            "html": "literature/1907.09298/catalog_sources/table-tab-hvs/latexml.html",
+            "stdout": "literature/1907.09298/catalog_sources/table-tab-hvs/latexml.stdout.txt",
+            "stderr": "literature/1907.09298/catalog_sources/table-tab-hvs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "061c0ac5078039a6a283cebbc7d44717b88988cc3dd9a70d1a7377d113d325ea"
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2012.09879",
+    "title": "Double trouble: Gaia reveals (proto)-planetary systems that may experience more than one dense star-forming environment",
+    "month": "2020-12",
+    "source_note_json": "notes/2020/2020-12/2020-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2012.09879",
+      "pdf": "https://arxiv.org/pdf/2012.09879"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2012.09879",
+    "audit_path": "literature/2012.09879/audit.json",
+    "source_dir": "literature/2012.09879/arxiv_source",
+    "tex_root": "literature/2012.09879/arxiv_source/Main_document.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:35:00",
+    "reviewer": "agent",
+    "summary": "该MNRAS Letter基于Gaia DR2数据和Schoettler (2020MNRAS.495.3104S)的运动学分析，搜索猎户座星云星团（ONC）周围被抛射、来访或经过的年轻恒星周围的星周盘（circumstellar disc）证据。共发现5颗可能带有星周盘的恒星（Table 1）：3颗近期从ONC抛射的恒星（1颗速逃星RW、2颗慢速逃逸星WW），均显示红外超量（IR excess）的盘证据；1颗未来访客（future visitor）正以约19 km/s速度接近ONC且显示紫外超量；1颗老年访客（约18 Myr）已穿越ONC高密度区且保留微弱紫外超量。此外，Appendix中Table 2列出了9颗在文献盘巡天中无盘证据的被抛射恒星。论文含两张LaTeX表格：Table 1（tab:Cand_disc）列出5颗可能带盘恒星及其运动学与恒星参数；Table 2（tab:cand_nondisc）列出9颗无盘证据的被抛射恒星。致谢中提及Gaia、DPAC、SIMBAD等为通用致谢，非结构化数据资产。Data Availability声明原始数据来自Gaia archive，衍生数据可向通讯作者合理请求获取。未发现外部URL数据资源。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-Cand_disc",
+      "kind": "latex_table",
+      "asset_type": "results_catalog",
+      "role_in_paper": "列出5颗位于ONC附近且文献中有星周盘证据的恒星——包含3颗从ONC抛射的年轻恒星和2颗访客恒星（1颗未来访客、1颗老年穿越访客），是整篇论文的核心结果表，直接支撑'行星系统可能经历多个高密度恒星形成环境'的主要论点。",
+      "source_refs": [
+        {
+          "path": "literature/2012.09879/arxiv_source/Main_document.tex",
+          "start_line": 157,
+          "end_line": 176,
+          "caption": "Stars around the ONC possibly with a circumstellar disc. Column 2+3: velocity in ONC rest frame [rf] from Schoettler+2020; Column 4: status identifier -- ONC ejected, future or past visitor; Column 5--7: from literature sources; Column 8: Disc information from literature sources.",
+          "label": "tab:Cand_disc"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "Gaia DR2 源标识符（19位数字），用于在Gaia星表中唯一标识该恒星，可通过Gaia archive查询完整的自行、视差和天体测量数据",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "2D-velocity rf",
+          "meaning": "ONC静止参考系中的二维空间速度（切向速度，不含视向速度分量），来自Schoettler et al. (2020MNRAS.495.3104S)的运动学分析",
+          "unit_text": "km/s",
+          "source_of_definition": "table header and caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "Radial velocity rf",
+          "meaning": "ONC静止参考系中的视向速度，来源标注：a=Gaia DR2原始视向速度、b=Cottle et al. (2015)补充视向速度、c=Kounkel et al. (2018)补充视向速度",
+          "unit_text": "km/s",
+          "source_of_definition": "table header, caption footnotes",
+          "confidence": 1.0
+        },
+        {
+          "name": "Status identifier",
+          "meaning": "恒星相对ONC的运动学状态分类：ONC ejected（从ONC抛射）、Future visitor（未来将穿越ONC）、Past visitor（已穿越ONC）",
+          "unit_text": "",
+          "source_of_definition": "table header and caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "Age",
+          "meaning": "恒星年龄（来自文献汇总），通过光谱类型和演化轨迹估计；来源标注：1=van Altena et al. (1988)、2=Hillenbrand (1997)、3=Hillenbrand et al. (2013)、4=Da Rio et al. (2016)",
+          "unit_text": "Myr",
+          "source_of_definition": "table header and caption footnotes",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mass",
+          "meaning": "恒星质量（来自文献汇总），由光谱类型或演化模型推导",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "恒星光谱类型（来自文献汇总），来源标注：1=van Altena et al. (1988)、2=Hillenbrand (1997)",
+          "unit_text": "",
+          "source_of_definition": "table header and caption footnotes",
+          "confidence": 1.0
+        },
+        {
+          "name": "Disc information",
+          "meaning": "星周盘证据来源：5=Hillenbrand et al. (1998, NIR IR-excess)、6=Rebull et al. (2000, UV-excess)、7=Rebull et al. (2006, mid-IR colour index)、8=Fűrész et al. (2008, Hα accretion)、9=Sicilia-Aguilar et al. (2005, Hα profiles)",
+          "unit_text": "",
+          "source_of_definition": "table header and caption footnotes",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 4 Results: 'In Table 1, we present our ejected candidates with a disc. We find three recently ejected young stars from the ONC (1 RW and 2 WW stars) with some evidence of a disc...' 论文第180-198行详细讨论了表中每颗恒星的盘证据：BD-05 1307的IR超量0.21 mag（满足Hillenbrand下限0.10 mag）、Brun 259的IR超量0.19 mag（但Hα窄线表明为WTTS）、Par 1799的中红外颜色指数>1 mag（Rebull准则）等。",
+      "comments": "5颗候选体中仅Par 1799完全满足严格的盘识别阈值（Rebull et al. mid-IR >1 mag）。2颗星（BD-05 1307, Brun 259）满足Hillenbrand较低的IR超量下限（0.10 mag）但未达保守上限（0.30 mag）。未来访客3209637203559481728（2MASS J05350504-0432334）为光谱双星（高RUWE），其距离不确定性（377 pc +57/-44）意味着可能完全错过ONC。"
+    },
+    {
+      "id": "table-tab-cand_nondisc",
+      "kind": "latex_table",
+      "asset_type": "supplementary_catalog",
+      "role_in_paper": "附录表，列出在文献星周盘巡天中被检索但未显示盘证据的9颗从ONC抛射的高速恒星。作为Table 1的对照样本，展示大多数被抛射恒星（即使出现在盘巡天文献中）并无盘证据，从而引证其主结论'被抛射恒星中保留星周盘是罕见现象'。",
+      "source_refs": [
+        {
+          "path": "literature/2012.09879/arxiv_source/Main_document.tex",
+          "start_line": 276,
+          "end_line": 299,
+          "caption": "Stars ejected from the ONC without a circumstellar disc. Column 2+3: velocity in ONC rest frame [rf] from Schoettler+2020; Column 4: status identifier -- ONC ejected, future or past visitor; Column 5--6: from literature sources; Column 7: Disc information from literature sources.",
+          "label": "tab:cand_nondisc"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "Gaia DR2 源标识符（19位数字），用于在Gaia星表中唯一标识该恒星",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "2D-velocity rf",
+          "meaning": "ONC静止参考系中的二维空间速度（切向速度），来自Schoettler et al. (2020MNRAS.495.3104S)的运动学分析",
+          "unit_text": "km/s",
+          "source_of_definition": "table header and caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "Radial velocity rf",
+          "meaning": "ONC静止参考系中的视向速度，来源标注：a=Gaia DR2原始视向速度、b=Cottle et al. (2015)补充视向速度、c=Kounkel et al. (2018)补充视向速度",
+          "unit_text": "km/s",
+          "source_of_definition": "table header, caption footnotes",
+          "confidence": 1.0
+        },
+        {
+          "name": "Status identifier",
+          "meaning": "恒星相对ONC的运动学状态分类：表中所有恒星均为'ONC ejected'（从ONC抛射），与Table 1不同，此表不含访客类别",
+          "unit_text": "",
+          "source_of_definition": "table header and caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "Age",
+          "meaning": "恒星年龄（来自文献汇总）：来源标注——3=Hillenbrand et al. (2013)、4=Da Rio et al. (2012, X-ray selected sample)、5=Da Rio et al. (2016)",
+          "unit_text": "Myr",
+          "source_of_definition": "table header and caption footnotes",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mass",
+          "meaning": "恒星质量（来自文献汇总），由光谱类型或演化模型推导",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Disc information source",
+          "meaning": "该恒星在哪些星周盘巡天文献中被检索但未发现盘证据：6=Hillenbrand et al. (1998)、7=Rebull et al. (2000)、8=Rebull et al. (2006)、9=Fűrész et al. (2008)、10=Furlan et al. (2013)。表中无星周盘证据，故仅列出检索来源",
+          "unit_text": "",
+          "source_of_definition": "table header and caption footnotes",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 5 Discussion and Conclusion: 'We find further ejected candidates that feature in papers searching for discs, but that do not show excess emission. These stars are shown in Table 2 in Appendix A for information.' 论文第197行注释提到Brun 193出现在Rebull (2000)中但未显示UV超量。表中9颗恒星的2D速度范围为3.0-18.1 km/s，均被归类为ONC ejected，年龄范围0.1-6.2 Myr，质量范围0.3-3.8 M_sun。",
+      "comments": "表中全部9颗星均出现在Rebull et al. (2000)的UV超量巡天中(flag [7])，其中4颗还出现在Rebull et al. (2006)的中红外巡天中(flag [8])，但均未显示盘指标。部分恒星（如Gaia DR2 3209529112120792320, 年龄6.2 Myr）显著老于ONC平均年龄（~2.5 Myr），进一步确认其非ONC原生起源。"
+    }
+  ],
+  "external_resources": []
+}

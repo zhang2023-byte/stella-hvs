@@ -1,0 +1,46 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2007.03350",
+    "title": "A proto-helium white dwarf stripped by a substellar companion via common-envelope ejection. Uncovering the true nature of a candidate hypervelocity B-type star",
+    "month": "2020-07",
+    "source_note_json": "notes/2020/2020-07/2020-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2007.03350",
+      "pdf": "https://arxiv.org/pdf/2007.03350"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2007.03350",
+    "audit_path": "literature/2007.03350/audit.json",
+    "source_dir": "literature/2007.03350/arxiv_source",
+    "tex_root": "literature/2007.03350/arxiv_source/paper.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T11:24:00",
+    "reviewer": "agent",
+    "summary": "该论文重新审视了SDSS J160429.12+100002.2，此前该天体被光谱分类为蓝水平分支(BHB)星。若采用BHB星典型光度，其Gaia EDR3自行和视向速度暗示其银心静止系速度将超过本地逃逸速度，从而被归类为超高速星(HVS)。然而，基于新的高分辨率光谱观测，作者发现该天体实际上是一颗短周期(P≈3.4 h)单线光谱双星，光学可见成分为B型星(Teff=15840±160 K, log g=4.86±0.04)，光度低于典型BHB星，因此系统距离更近，其银河轨道实际上是束缚的。可见成分被解释为一颗原初氦白矮星，其薄氢包层被亚恒星伴星通过公共包层抛射过程剥离。论文无内部LaTeX数据表——所有数据(丰度表、恒星参数、轨道参数)均以内联tabular形式在正文中呈现，不作为独立表格。外部资源：完全归算的ESI和ISIS光谱可通过CDS获取(ftp://cdsarc.u-strasbg.fr)。论文未引入任何新的HVS候选体，反而否定了一个先前的HVS候选体。"
+  },
+  "internal_tables": [],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://cdsarc.u-strasbg.fr/viz-bin/cat/J/A+A/650/A102",
+      "local_path": "",
+      "description": "CDS数据存档：论文的完全归算和波长校准的ESI和ISIS光谱。通过anonymous ftp至cdsarc.u-strasbg.fr (130.79.128.5)或上述URL获取。",
+      "source_refs": [
+        {
+          "path": "literature/2007.03350/arxiv_source/paper.tex",
+          "start_line": 50,
+          "end_line": 51,
+          "context": "Title page thanks footnote: 'The fully reduced and wavelength calibrated ESI and ISIS spectra are only available at the CDS via anonymous ftp to cdsarc.u-strasbg.fr (130.79.128.5) or via http://cdsarc.u-strasbg.fr/viz-bin/cat/J/A+A/650/A102'"
+        }
+      ],
+      "evidence": "论文标题页脚注(thanks)中给出的CDS数据存档URL。包含Keck/ESI和WHT/ISIS光谱的完全归算数据。",
+      "comments": "CDS存档的标准数据DOI链接。光谱数据本身是该论文的核心数据产物。"
+    }
+  ]
+}

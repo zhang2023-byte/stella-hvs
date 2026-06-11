@@ -1,0 +1,281 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:36:34",
+  "paper": {
+    "arxiv_id": "2011.08862",
+    "bibcode": "2021A&A...645A.108R",
+    "title": "Runaway blue main-sequence stars at high Galactic latitudes. Target selection with Gaia and spectroscopic identification",
+    "month": "2020-11",
+    "source_note_json": "notes/2020/2020-11/2020-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2011.08862",
+      "pdf": "https://arxiv.org/pdf/2011.08862"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2011.08862",
+    "audit_path": "literature/2011.08862/audit.json",
+    "catalog_review_path": "literature/2011.08862/catalog_review.json",
+    "catalog_extraction_path": "literature/2011.08862/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-06-07T11:36:34",
+    "extractor": "agent",
+    "summary": "本文利用Gaia DR2天体测量和测光数据选取高银纬早型蓝星，通过低分辨率光谱跟踪观测识别出12颗MS逃逸星候选体。对12颗候选体进行银河系轨道积分后，仅2207-4329具有非零银河系逃逸概率P_esc=0.4，弹射速度V_ej=802 km/s，超过HVS 5的640 km/s，论文明确将其列为可能银河系非束缚的超逃逸星(hyper-runaway)候选体。其余11颗候选体P_esc=0.0（银河系束缚）。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "从Gaia DR2选取高银纬(|b|>=15°)蓝星样本(G_BP - G_RP <= 0.05)，要求视差精度、RUWE、信噪比等质量筛选，同时要求切向速度v_tan > 150 km/s。初始选取约2300颗星，随后获得其中48颗星的NTT/EFOSC2低分辨率(R~400)光谱。",
+      "inputs": [
+        "Gaia DR2 astrometry and photometry"
+      ],
+      "outputs": [
+        "2300 Gaia blue candidates",
+        "48 NTT/EFOSC2 spectra"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+          "start_line": 63,
+          "end_line": 77,
+          "context": "Abstract: selected ~2300 Gaia sources; obtained low-resolution spectra for 48 stars."
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "stellar_parameter_inference",
+      "summary": "对48颗星进行光谱拟合：利用ADS和Atlas12/SYNTHE模型网格，通过χ²拟合确定T_eff, log g, v_rad。同时进行SED拟合和消光校正。系统误差：T_eff约4%, log g约0.1 dex。",
+      "inputs": [
+        "NTT/EFOSC2 low-resolution spectra",
+        "ADS and Atlas12/SYNTHE model grids"
+      ],
+      "outputs": [
+        "T_eff, log g, v_rad, E(44-55) for 48 stars"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+          "start_line": 306,
+          "end_line": 318,
+          "context": "Spectroscopic fitting method: chi-squared comparison with model grids."
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "通过比对Gaia视差距离(1/varpi, 零点校正, Bailer-Jones)与分光距离D(SpT)区分MS/BHB候选体。MS假设下通过Ekstrom+2012轨迹插值获得质量/半径/光度；BHB假设下采用M=0.5±0.1 M_sun。12颗星在MS假设下达到1σ一致性。",
+      "inputs": [
+        "Gaia DR2 parallaxes",
+        "Spectrophotometric distances"
+      ],
+      "outputs": [
+        "12 MS candidates",
+        "27 BHB candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+          "start_line": 346,
+          "end_line": 369,
+          "context": "Distance-driven classification: 12 unique MS candidates via 1-sigma agreement."
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "使用galpy在Irrgang+2013 Model I银河系势场中对12颗MS候选体进行轨道积分。蒙特卡洛抽样10000组初始条件。太阳位置R_sun=8.4 kpc, v_0=242 km/s, 本地逃逸速度614.4 km/s。计算v_rf, P_esc, e, L_Z, R_peri/apo, Z_max, R(Z=0), V_ej, tau_flight。",
+      "inputs": [
+        "Gaia DR2 astrometry",
+        "Spectrophotometric distances",
+        "Radial velocities",
+        "Irrgang+2013 Model I Galactic potential (galpy)"
+      ],
+      "outputs": [
+        "Orbital parameters for 12 MS candidates (Table t:orbit)"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+          "start_line": 521,
+          "end_line": 528,
+          "context": "Orbit simulation: galpy with Irrgang+2013 Model I; 10000 MC initial conditions."
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-04"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "基于轨道积分评估银河系逃逸概率：P_esc为(v_rf - v_esc)>0的初始条件比例。仅2207-4329具有非零逃逸概率P_esc=0.4；其余候选体P_esc=0.0。2207-4329的V_ej=802 km/s，若确认为MS星将成为已知最快的超逃逸星。",
+      "inputs": [
+        "Galactocentric rest-frame velocity v_rf",
+        "Galactic escape velocity v_esc"
+      ],
+      "outputs": [
+        "Escape probabilities P_esc for 12 candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+          "start_line": 570,
+          "end_line": 584,
+          "context": "All but one bound; 2207-4329 P_esc=0.4; would be fastest hyper-runaway if confirmed MS."
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2011.08862:cand-001",
+        "paper_candidate_id": "2207-4329",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "2207-4329",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+                "start_line": 421,
+                "end_line": 421,
+                "context": "Table t:spec line 2207-4329: MS candidate with short name 2207-4329."
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "论文12颗MS逃逸星候选体中唯一可能银河系非束缚的候选体。P_esc=0.4，弹射速度V_ej=802 km/s。论文明确讨论其可能成为已知最快的hyper-runaway star，弹射速度超过HVS 5 (640 km/s)。若MS性质被高分辨率光谱确认，将是极端超逃逸星候选体。",
+        "paper_labels": [
+          "runaway_candidate",
+          "hyper_runaway_candidate",
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "论文明确将2207-4329识别为具有非零银河系逃逸概率(P_esc=0.4)的候选体，并明确讨论其可能成为已知最快的hyper-runaway star。论文文本明确声明其为'possibly unbound'。",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+            "start_line": 570,
+            "end_line": 584,
+            "context": "2207-4329 has P_esc=0.4; the only exception among MS candidates. If confirmed MS, fastest hyper-runaway star, exceeding HVS 5."
+          },
+          {
+            "kind": "text",
+            "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+            "start_line": 633,
+            "end_line": 636,
+            "context": "2207-4329 by far the fastest at 802 km/s; prominent among Galactic disc runaways with largest ejection velocities."
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+          "start_line": 641,
+          "end_line": 642,
+          "context": "Conclusions: presented selection of bright early-type MS candidates; propose 12 stars as MS candidates."
+          }
+        ]
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {},
+      "extra": [],
+      "core": {
+        "observed_phase_space": {},
+        "derived_kinematics": {},
+        "bound_assessment": {}
+      }
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "ms-runaway-11",
+      "description": "除2207-4329外的11颗MS逃逸星候选体：0037-6154, 0205-5938, 0259-1705, 1900-7033, 1939-1640, 2034-1108, 2034-5307, 2054-2526, 2207-2645, 2259-4931, 2307-3157。论文通过分光距离与视差距离比对识别为MS候选体，轨道积分显示逃逸概率P_esc=0.0（银河系束缚）。其中2259-4931(V_ej=541 km/s)和2307-3157(V_ej=469 km/s)的弹射速度超过经典逃逸星机制上限，但论文仍确认其处于银河系束缚状态。",
+      "decision": "excluded",
+      "reason": "论文轨道积分结果显示这11颗星的银河系逃逸概率P_esc=0.0，明确处于银河系束缚状态。虽然其中2259-4931和2307-3157的弹射速度超过经典逃逸机制上限(>450 km/s)，但论文并未声称它们为银河系非束缚候选体。按照Stella的HVS候选体边界定义，仅将论文明确讨论为可能非束缚(P_esc>0)的天体纳入候选体。这些银河系束缚的极端逃逸星属于hyper-runaway范畴但非HVS/unbound候选体。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+          "start_line": 570,
+          "end_line": 572,
+          "context": "All but one candidate are bound to the Milky Way's potential, since they have v_rf on average two times smaller than v_esc."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+          "start_line": 532,
+          "end_line": 560,
+          "context": "Table t:orbit: orbital parameters for 12 MS candidates showing P_esc=0.0 for 11 stars."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+          "start_line": 633,
+          "end_line": 636,
+          "context": "Three candidates exceed 450 km/s ejection velocity, challenging classical scenarios; 2207-4329 farthest."
+        }
+      ]
+    },
+    {
+      "group_id": "bhb-candidates",
+      "description": "27颗蓝水平分支(BHB)星候选体+2颗后BHB热演化星（1621-8350, 1944-4628）。分光距离与视差距离在BHB假设下达到一致性，被分类为年老低质量晕族星。运动学呈现晕族逆行特征（Toomre图中大负向V分量）。",
+      "decision": "excluded",
+      "reason": "BHB星候选体属于银河系晕族年老恒星。论文虽指出其具有高速运动学特征，但明确将其分类为BHB晕族星，未进行银河系逃逸概率评估，也未将其识别为HVS候选体。BHB星的高速度源自晕族随机运动而非弹射机制。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+          "start_line": 472,
+          "end_line": 517,
+          "context": "Table t:bhb_physical: 27 BHB candidates + 2 post-EHB candidates."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+          "start_line": 573,
+          "end_line": 575,
+          "context": "BHB stars have mostly retrograde motions, belong to halo population."
+        }
+      ]
+    }
+  ]
+}

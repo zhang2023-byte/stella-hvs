@@ -1,0 +1,392 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2502.20266",
+    "title": "Discovery of WINERED-HVS1: A metal-rich hyper-velocity star candidate ejected from the Galactic center",
+    "month": "2025-02",
+    "source_note_json": "notes/2025/2025-02/2025-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2502.20266",
+      "pdf": "https://arxiv.org/pdf/2502.20266"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2502.20266",
+    "audit_path": "literature/2502.20266/audit.json",
+    "source_dir": "literature/2502.20266/arxiv_source",
+    "tex_root": "literature/2502.20266/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:34:15",
+    "reviewer": "agent",
+    "summary": "Paper reports discovery of WINERED-HVS1, a metal-rich hyper-velocity star candidate ejected from the Galactic center. Internal tables include spectroscopic abundances (MB99 and VALD3 line lists), four HVS search methods comparison, notation glossary, and catalog tables of chemical/kinematic properties for HVS candidates. External resource points to a Zenodo chemical abundance catalog used for cross-matching. Gaia acknowledgements are generic and removed."
+  },
+  "internal_tables": [
+    {
+      "id": "table-table-stellar_abn_all_res",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Spectroscopic stellar parameters and chemical abundances of WINERED-HVS1 derived with the MB99 line list, using differential analysis against Gaia FGK benchmark stars.",
+      "source_refs": [
+        {
+          "path": "literature/2502.20266/arxiv_source/main.tex",
+          "start_line": 968,
+          "end_line": 998,
+          "caption": "\\revise{Spectroscopic results of \\targetstar }",
+          "label": "table:stellar_abn_all_res"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Stellar parameter or chemical species identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Best-fit value with uncertainty",
+          "unit_text": "",
+          "source_of_definition": "table cell",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\revise{Spectroscopic results of \\targetstar }",
+      "comments": ""
+    },
+    {
+      "id": "table-table-stellar_abn_all_res_VALD3",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Chemical abundances of WINERED-HVS1 measured with the VALD3 line list for comparison with MB99 results.",
+      "source_refs": [
+        {
+          "path": "literature/2502.20266/arxiv_source/main.tex",
+          "start_line": 2398,
+          "end_line": 2419,
+          "caption": "\\revise{Chemical abundances of \\targetstar measured with the VALD3 line list~\\citep{Ryabchikova2015} }",
+          "label": "table:stellar_abn_all_res_VALD3"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Chemical species identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[X/H]",
+          "meaning": "Absolute abundance relative to hydrogen",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[X/Fe]",
+          "meaning": "Abundance ratio relative to iron",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_lines",
+          "meaning": "Number of spectral lines used for the abundance measurement",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\revise{Chemical abundances of \\targetstar measured with the VALD3 line list~\\citep{Ryabchikova2015} }",
+      "comments": ""
+    },
+    {
+      "id": "table-table-4methods",
+      "kind": "latex_table",
+      "asset_type": "methodology_description",
+      "role_in_paper": "Summary of four kinematic search methods (A-D) for HVS candidates, differing in Galactic potential model and Solar position assumptions.",
+      "source_refs": [
+        {
+          "path": "literature/2502.20266/arxiv_source/tabA_4methods.tex",
+          "start_line": 2,
+          "end_line": 37,
+          "caption": "Four methods to kinematically search for HVS candidates \\label{table:4methods}",
+          "label": "table:4methods"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Search method",
+          "meaning": "Method identifier (A=fiducial, B-D=variants)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Potential model",
+          "meaning": "Assumed Galactic gravitational potential (axisymmetric vs. barred)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Assumed (R0, V_sun)",
+          "meaning": "Whether Solar position and velocity are fixed or varied",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Four methods to kinematically search for HVS candidates \\label{table:4methods}",
+      "comments": ""
+    },
+    {
+      "id": "table-table-notation",
+      "kind": "latex_table",
+      "asset_type": "methodology_description",
+      "role_in_paper": "Glossary of symbols and notation used throughout the paper for astrometric, photometric, and chemical quantities.",
+      "source_refs": [
+        {
+          "path": "literature/2502.20266/arxiv_source/table_appendix_notation.tex",
+          "start_line": 2,
+          "end_line": 48,
+          "caption": "Notations in this paper \\label{table:notation}",
+          "label": "table:notation"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Quantity",
+          "meaning": "Mathematical symbol or variable name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Meaning",
+          "meaning": "Definition and description of the quantity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Notations in this paper \\label{table:notation}",
+      "comments": ""
+    },
+    {
+      "id": "table-table-chemistry",
+      "kind": "latex_table",
+      "asset_type": "source_catalog",
+      "role_in_paper": "Chemical properties of HVS candidates including spectroscopic and Gaia XP-derived metallicities and alpha-abundances.",
+      "source_refs": [
+        {
+          "path": "literature/2502.20266/arxiv_source/table_chemistry_v6.tex",
+          "start_line": 2,
+          "end_line": 107,
+          "caption": "Chemical properties of our HVS candidates \\label{table:chemistry}",
+          "label": "table:chemistry"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "HVS candidate identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DR3 source_id",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]_spec",
+          "meaning": "Spectroscopic iron abundance",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Mg/Fe]_spec",
+          "meaning": "Spectroscopic magnesium-to-iron abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Si/Fe]_spec",
+          "meaning": "Spectroscopic silicon-to-iron abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Ca/Fe]_spec",
+          "meaning": "Spectroscopic calcium-to-iron abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Ti/Fe]_spec",
+          "meaning": "Spectroscopic titanium-to-iron abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Al/Fe]_spec",
+          "meaning": "Spectroscopic aluminum-to-iron abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[alpha/Fe]_spec",
+          "meaning": "Spectroscopic alpha-element abundance relative to iron",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[M/H]_XP",
+          "meaning": "Metallicity from Gaia XP spectrophotometry",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[alpha/M]_XP",
+          "meaning": "Alpha-abundance from Gaia XP spectrophotometry",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Chemical properties of our HVS candidates \\label{table:chemistry}",
+      "comments": ""
+    },
+    {
+      "id": "table-table-kinematics",
+      "kind": "latex_table",
+      "asset_type": "source_catalog",
+      "role_in_paper": "Kinematic properties of HVS candidates including Galactocentric positions, velocities, ejection parameters, and orbital classifications.",
+      "source_refs": [
+        {
+          "path": "literature/2502.20266/arxiv_source/table_kinematics_v6.tex",
+          "start_line": 2,
+          "end_line": 102,
+          "caption": "Kinematical properties of our HVS candidates \\label{table:kinematics}",
+          "label": "table:kinematics"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "HVS candidate identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DR3 source_id",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(f_50, f_200)",
+          "meaning": "Orbital classification flags at 50 pc and 200 pc pericenter thresholds",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_ej",
+          "meaning": "Estimated Galactic ejection radius",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_ej",
+          "meaning": "Ejection velocity from Galactic potential",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "tau",
+          "meaning": "Flight time since ejection",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(x,y,z)",
+          "meaning": "Galactocentric Cartesian coordinates",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(r,R)",
+          "meaning": "Galactocentric spherical and cylindrical radii",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(v_x,v_y,v_z)",
+          "meaning": "Galactocentric Cartesian velocity components",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(v_r,v_R,v_phi)",
+          "meaning": "Galactocentric velocity components in cylindrical coordinates",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v",
+          "meaning": "Total Galactic rest-frame speed",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Kinematical properties of our HVS candidates \\label{table:kinematics}",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://zenodo.org/records/10902172",
+      "local_path": "",
+      "description": "Zenodo-hosted chemical abundance catalog by Hattori et al. (2025) used for cross-matching HVS candidate chemistry.",
+      "source_refs": [
+        {
+          "path": "literature/2502.20266/arxiv_source/main.tex",
+          "start_line": 476,
+          "end_line": 476,
+          "context": "we cross-match the sample with \nthe chemical abundance catalog \n(\\url{https://zenodo.org/records/10902172}) \nin  \n\\cite{Hattori2025ApJ...980...90H}."
+        }
+      ],
+      "evidence": "we cross-match the sample with \nthe chemical abundance catalog \n(\\url{https://zenodo.org/records/10902172}) \nin  \n\\cite{Hattori2025ApJ...980...90H}.",
+      "comments": ""
+    }
+  ]
+}

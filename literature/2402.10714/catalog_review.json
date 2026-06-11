@@ -1,0 +1,490 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2402.10714",
+    "title": "Hypervelocity star candidates from Gaia DR2 and DR3 proper motions and parallaxes",
+    "month": "2024-02",
+    "source_note_json": "notes/2024/2024-02/2024-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2402.10714",
+      "pdf": "https://arxiv.org/pdf/2402.10714"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2402.10714",
+    "audit_path": "literature/2402.10714/audit.json",
+    "source_dir": "literature/2402.10714/arxiv_source",
+    "tex_root": "literature/2402.10714/arxiv_source/hvsDR2DR3_arXiv.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T12:43:57",
+    "reviewer": "agent",
+    "summary": "This paper selects and characterises hypervelocity-star candidates from Gaia DR2 and DR3 using proper motions and parallaxes, with a focus on 72 nearest extreme candidates. Internal assets comprise a schema-description table of quality criteria, a primary object catalog of the 72 candidates with astrometry and computed velocities, and a companion observation-log-style table with next-neighbour and IPD diagnostics. External resources include the IRSA Finder Chart, the Gaia science-performance page, an ASAS-SN variable-star entry, a Gaia technical note on RUWE, and a CDS data-availability statement. Generic database acknowledgements and citation-helper macros have been removed."
+  },
+  "internal_tables": [
+    {
+      "id": "table-Tab_quali",
+      "kind": "latex_table",
+      "asset_type": "schema_description",
+      "role_in_paper": "Documents the DR3 quality flags, astrometric parameters, and critical thresholds used to vet the 72 nearest extreme HVS candidates, serving as a reproducibility checklist.",
+      "source_refs": [
+        {
+          "path": "literature/2402.10714/arxiv_source/hvsDR2DR3_arXiv.tex",
+          "start_line": 1644,
+          "end_line": 1680,
+          "caption": "DR3 quality flags and parameters used for HVS candidates, in particular for the 72 nearest extreme candidates studied in Sect.~\\ref{Sect_nearextrHVS}",
+          "label": "Tab_quali"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Quantity/ | criterion",
+          "meaning": "Quantity or selection criterion name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DR3 column",
+          "meaning": "Corresponding Gaia DR3 database column name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Critical values | (? among 72)",
+          "meaning": "Critical value or range applied to the candidate sample, with the count among the 72 candidates in parentheses",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Remark",
+          "meaning": "Remark on the criterion (e.g. high/low priority, section reference)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "DR3 quality flags and parameters used for HVS candidates, in particular for the 72 nearest extreme candidates studied in Sect.~\\ref{Sect_nearextrHVS}",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab_72dr3",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Primary catalog of the 72 nearest extreme HVS candidates selected from Gaia DR3, listing basic astrometry, photometry, proper motions, quality indicators, and computed tangential velocities.",
+      "source_refs": [
+        {
+          "path": "literature/2402.10714/arxiv_source/hvsDR2DR3_arXiv.tex",
+          "start_line": 2250,
+          "end_line": 2338,
+          "caption": "Basic DR3 data on 72 nearest extreme HVS candidates with high ($RPlx$$>$5) and low (3$<$$RPlx$$<$5) priority, sorted by $G$ magnitude",
+          "label": "Tab_72dr3"
+        }
+      ],
+      "columns": [
+        {
+          "name": "No.",
+          "meaning": "Running number in the candidate list",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia DR3",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G | [mag]",
+          "meaning": "Gaia G-band apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Nper",
+          "meaning": "Number of visibility periods used in the astrometric solution",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Plx | [mas]",
+          "meaning": "Parallax",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RPlx",
+          "meaning": "Parallax over error (significance)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pmRA | [mas/yr]",
+          "meaning": "Proper motion in right ascension (cos-dec corrected)",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pmDE | [mas/yr]",
+          "meaning": "Proper motion in declination",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "gofAL",
+          "meaning": "Astrometric goodness-of-fit in the along-scan direction",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "epsi | [mas]",
+          "meaning": "Astrometric excess noise",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sepsi",
+          "meaning": "Significance of the astrometric excess noise",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "amax | [mas]",
+          "meaning": "Semi-major axis of the astrometric error ellipse",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "IPDgofha",
+          "meaning": "IPD goodness-of-fit in the along-scan direction",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RUWE",
+          "meaning": "Renormalised unit weight error",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G_abs | [mag]",
+          "meaning": "Absolute G magnitude derived from parallax",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G-RP | [mag]",
+          "meaning": "Gaia G-RP colour index",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV | [km/s]",
+          "meaning": "Heliocentric radial velocity (where available)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vtan | [km/s]",
+          "meaning": "Heliocentric tangential velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vtan_g | [km/s]",
+          "meaning": "Galactocentric tangential velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Basic DR3 data on 72 nearest extreme HVS candidates with high ($RPlx$$>$5) and low (3$<$$RPlx$$<$5) priority, sorted by $G$ magnitude",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab_72nnflg",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Companion table to Tab_72dr3 providing next-neighbour search results, IPD parameters, duplication and solution flags, and local-plus-global parameter comparison ratios for each of the 72 HVS candidates.",
+      "source_refs": [
+        {
+          "path": "literature/2402.10714/arxiv_source/hvsDR2DR3_arXiv.tex",
+          "start_line": 2345,
+          "end_line": 2434,
+          "caption": "DR3 next neighbours, IPD parameters, flags, and results from local$+$global parameter comparison of 72 HVS candidates",
+          "label": "Tab_72nnflg"
+        }
+      ],
+      "columns": [
+        {
+          "name": "No.",
+          "meaning": "Running number",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G | [mag]",
+          "meaning": "Gaia G-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gnn | [mag]",
+          "meaning": "G magnitude of the closest next neighbour",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "dnn | [arc | sec]",
+          "meaning": "Angular separation to the closest next neighbour",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "n5as",
+          "meaning": "Number of DR3 sources within 5 arcsec",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "IPD | fmp",
+          "meaning": "IPD fraction of multi-peak",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "IPD | fow",
+          "meaning": "IPD fraction of odd windows",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Sol | ved",
+          "meaning": "Astrometric solution type (number of parameters solved)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dup",
+          "meaning": "Duplicated source flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Nper | l\\Delta g\\Delta",
+          "meaning": "Visibility periods used, with local and global delta flags",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "e_Plx | lR gR",
+          "meaning": "Parallax error, local and global rank ratios",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "e_pmRA | lR gR",
+          "meaning": "Proper motion RA error, local and global rank ratios",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "e_pmDE | lR gR",
+          "meaning": "Proper motion Dec error, local and global rank ratios",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "gofAL | lR gR",
+          "meaning": "Astrometric gofAL, local and global rank ratios",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "epsi | lR gR",
+          "meaning": "Astrometric excess noise, local and global rank ratios",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "sepsi | lR gR",
+          "meaning": "Significance of excess noise, local and global rank ratios",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "amax | lR gR",
+          "meaning": "Semi-major axis of error ellipse, local and global rank ratios",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "IPDgofha | lR gR",
+          "meaning": "IPD gofAL, local and global rank ratios",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "RUWE | lR gR",
+          "meaning": "RUWE, local and global rank ratios",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "RPlx",
+          "meaning": "Parallax over error",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "DR3 next neighbours, IPD parameters, flags, and results from local$+$global parameter comparison of 72 HVS candidates",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://irsa.ipac.caltech.edu/applications/finderchart/",
+      "local_path": "",
+      "description": "IRSA Finder Chart tool used for visual inspection of multi-epoch imaging data to rule out high-proper-motion false positives.",
+      "source_refs": [
+        {
+          "path": "literature/2402.10714/arxiv_source/hvsDR2DR3_arXiv.tex",
+          "start_line": 525,
+          "end_line": 525,
+          "context": "and are not shown here. Together, these 14 stars, which in a visual \ninspection of available multi-epoch imaging \ndata\\footnote{https://irsa.ipac.caltech.edu/applications/finderchart/} \ndid also not display any HPM, represent half of their sample.\nThe problem of selecting false {\\it Gaia} HPM stars in crowded"
+        }
+      ],
+      "evidence": "and are not shown here. Together, these 14 stars, which in a visual \ninspection of available multi-epoch imaging \ndata\\footnote{https://irsa.ipac.caltech.edu/applications/finderchart/} \ndid also not display any HPM, represent half of their sample.\nThe problem of selecting false {\\it Gaia} HPM stars in crowded",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/science-performance",
+      "local_path": "",
+      "description": "Gaia science performance documentation page describing expected astrometric completeness and precision in crowded regions.",
+      "source_refs": [
+        {
+          "path": "literature/2402.10714/arxiv_source/hvsDR2DR3_arXiv.tex",
+          "start_line": 878,
+          "end_line": 878,
+          "context": "According to the expected {\\it Gaia} science\nperformance\\footnote{https://www.cosmos.esa.int/web/gaia/science-performance},\nnot all stars down to the limiting magnitude\nof $G$$\\approx$20\\,mag can be measured in crowded regions, when the"
+        }
+      ],
+      "evidence": "According to the expected {\\it Gaia} science\nperformance\\footnote{https://www.cosmos.esa.int/web/gaia/science-performance},\nnot all stars down to the limiting magnitude\nof $G$$\\approx$20\\,mag can be measured in crowded regions, when the",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://asas-sn.osu.edu/variables/107503",
+      "local_path": "",
+      "description": "ASAS-SN variable-star database entry for a candidate showing 0.5-day periodicity, used to identify a probable RR Lyrae contaminant.",
+      "source_refs": [
+        {
+          "path": "literature/2402.10714/arxiv_source/hvsDR2DR3_arXiv.tex",
+          "start_line": 1298,
+          "end_line": 1298,
+          "context": "\\citepads[ASAS-SN;][]{2018MNRAS.477.3145J} % Jayasinghe+others ASAS-SN v. stars\ncatalogue of variable stars provides a period of about \n0.5 days\\footnote{https://asas-sn.osu.edu/variables/107503}.\nIts variability was also mentioned and classified in DR2, according to which\nit belongs to the class of fundamental-mode RR Lyrae stars, but not in DR3."
+        }
+      ],
+      "evidence": "\\citepads[ASAS-SN;][]{2018MNRAS.477.3145J} % Jayasinghe+others ASAS-SN v. stars\ncatalogue of variable stars provides a period of about \n0.5 days\\footnote{https://asas-sn.osu.edu/variables/107503}.\nIts variability was also mentioned and classified in DR2, according to which\nit belongs to the class of fundamental-mode RR Lyrae stars, but not in DR3.",
+      "comments": ""
+    },
+    {
+      "id": "resource-009",
+      "kind": "external_url",
+      "url": "http://www.rssd.esa.int/doc",
+      "local_path": "",
+      "description": "Gaia technical note GAIA-C3-TN-LU-LL-124 by Lennart Lindegren, referenced for the RUWE critical value recommended for DR2.",
+      "source_refs": [
+        {
+          "path": "literature/2402.10714/arxiv_source/hvsDR2DR3_arXiv.tex",
+          "start_line": 1955,
+          "end_line": 1955,
+          "context": "much smaller than 1.4, the critical value recommended for DR2 \nby Lennart Lindegren in the {\\it Gaia} technical note \nGAIA-C3-TN-LU-LL-124\\footnote{http://www.rssd.esa.int/doc\\_fetch.php?id=3757412}\nin 2018."
+        }
+      ],
+      "evidence": "much smaller than 1.4, the critical value recommended for DR2 \nby Lennart Lindegren in the {\\it Gaia} technical note \nGAIA-C3-TN-LU-LL-124\\footnote{http://www.rssd.esa.int/doc\\_fetch.php?id=3757412}\nin 2018.",
+      "comments": ""
+    },
+    {
+      "id": "resource-010",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "The paper states that the combined data from Tables Tab_72dr3 and Tab_72nnflg will be made available in electronic form at the CDS.",
+      "source_refs": [
+        {
+          "path": "literature/2402.10714/arxiv_source/hvsDR2DR3_arXiv.tex",
+          "start_line": 2336,
+          "end_line": 2336,
+          "context": "\\tablefoot{\\fontsize{6.4pt}{0.90\\baselineskip}\\selectfont\nThe data in Tables~\\ref{Tab_72dr3} and \\ref{Tab_72nnflg} will be \ncombined and made available in electronic form at the CDS.\n}\n\\end{table*}"
+        }
+      ],
+      "evidence": "\\tablefoot{\\fontsize{6.4pt}{0.90\\baselineskip}\\selectfont\nThe data in Tables~\\ref{Tab_72dr3} and \\ref{Tab_72nnflg} will be \ncombined and made available in electronic form at the CDS.\n}\n\\end{table*}",
+      "comments": ""
+    },
+    {
+      "id": "resource-011",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Duplicate mention of CDS data availability for the combined candidate tables.",
+      "source_refs": [
+        {
+          "path": "literature/2402.10714/arxiv_source/hvsDR2DR3_arXiv.tex",
+          "start_line": 2432,
+          "end_line": 2432,
+          "context": "\\tablefoot{\\fontsize{6.4pt}{0.90\\baselineskip}\\selectfont\nThe data in Tables~\\ref{Tab_72dr3} and \\ref{Tab_72nnflg} will be\ncombined and made available in electronic form at the CDS.\n}\n\\end{table*}"
+        }
+      ],
+      "evidence": "\\tablefoot{\\fontsize{6.4pt}{0.90\\baselineskip}\\selectfont\nThe data in Tables~\\ref{Tab_72dr3} and \\ref{Tab_72nnflg} will be\ncombined and made available in electronic form at the CDS.\n}\n\\end{table*}",
+      "comments": ""
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:21:04",
+  "paper": {
+    "arxiv_id": "2602.02666",
+    "bibcode": "2026ApJ...999L..34H",
+    "title": "IRS 9: The Case for a Dynamically-Ejected Star from the Galactic Center",
+    "month": "2026-02",
+    "source_note_json": "notes/2026/2026-02/2026-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2602.02666",
+      "pdf": "https://arxiv.org/pdf/2602.02666"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2602.02666",
+    "audit_path": "literature/2602.02666/audit.json",
+    "catalog_review_path": "literature/2602.02666/catalog_review.json",
+    "catalog_extraction_path": "literature/2602.02666/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2602.02666/catalog_tables/table-tab-pm_cat.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T20:21:04",
+    "extractor": "agent",
+    "summary": "The paper presents proper-motion measurements for 23 SiO masers near SgrA* and finds that only IRS 9 is locally unbound from the GC at its projected radius. However, orbit integrations show IRS 9 is bound to the GC at larger radii (r_peri >= 0.10 pc, r_apo >= 5.25 pc). The paper does not present any object as a candidate to escape the Milky Way potential. The other 22 masers, including previously proposed high-velocity sources SiO-16, SiO-21, and SiO-25, have updated 3D velocities below their local escape velocities."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-pm_cat",
+      "description": "23 SiO masers near SgrA* with HST proper motions and updated 3D velocities, including four previously reported as locally unbound (IRS 9, SiO-16, SiO-21, SiO-25).",
+      "decision": "excluded",
+      "reason": "The paper finds only IRS 9 is locally unbound from the GC at its projected radius (v_3d = 370.4 +/- 1.2 km/s vs v_esc,max = 331.1 +/- 6.5 km/s), but orbit integrations show IRS 9 is bound to the GC at larger radii with r_peri >= 0.100 +/- 0.005 pc and r_apo >= 5.25 +/- 0.18 pc. The paper does not present any of the masers, including IRS 9, as candidates to escape the Milky Way potential. The remaining 22 masers have v_3d < v_esc,max, including the previously proposed high-velocity sources SiO-16, SiO-21, and SiO-25.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.02666/arxiv_source/ms.tex",
+          "start_line": 303,
+          "end_line": 312,
+          "context": "Only IRS 9 has v_3d significantly above v_esc,max; the remaining masers are below their escape velocities"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2602.02666/arxiv_source/ms.tex",
+          "start_line": 353,
+          "end_line": 360,
+          "context": "IRS 9 is locally unbound but not necessarily destined to escape the GC; it is bound at larger radii"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2602.02666/arxiv_source/ms.tex",
+          "start_line": 709,
+          "end_line": 713,
+          "context": "Conclusions: only IRS 9 exhibits v_3d > v_esc,max, indicating it is locally unbound; none of the other masers meet the criteria"
+        }
+      ]
+    }
+  ]
+}

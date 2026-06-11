@@ -1,0 +1,110 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:20:06",
+  "paper": {
+    "arxiv_id": "1912.10125",
+    "bibcode": "",
+    "title": "Unlocking Galactic Wolf-Rayet stars with Gaia DR2 I: Distances and absolute magnitudes",
+    "month": "2019-12",
+    "source_note_json": "",
+    "links": {
+      "abs": "https://arxiv.org/abs/1912.10125",
+      "pdf": "https://arxiv.org/pdf/1912.10125"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1912.10125",
+    "audit_path": "literature/1912.10125/audit.json",
+    "catalog_review_path": "",
+    "catalog_extraction_path": "literature/1912.10125/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:20:06",
+    "extractor": "agent",
+    "summary": "本文利用Gaia DR2视差和贝叶斯方法获得383颗银河系Wolf-Rayet (WR)星的距离和绝对星等。主要科学产出为WR星的绝对星等定标和Gaia颜色-星等图。论文利用HII区标高识别了31颗离银道面较远(|z|≥156 pc)的WR星作为'potential runaways'，但这是基于统计标高偏离的runaway判别，论文未声称任何WR星为银河系非束缚超高速星(HVS)，也未进行轨道积分或逃逸概率计算。论文主题为WR星距离/光度定标，与HVS/非束缚星候选体无关。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR2 astrometry for 383 Galactic WR stars. Cross-matched with Galactic WR catalog.",
+      "inputs": [
+        "Gaia DR2",
+        "Galactic WR catalog"
+      ],
+      "outputs": [
+        "383 WR stars with Gaia astrometry"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Sec 1-2"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Bayesian distance estimation using HII region and dust extinction priors.",
+      "inputs": [
+        "Gaia DR2 parallaxes",
+        "HII region distances",
+        "Extinction maps"
+      ],
+      "outputs": [
+        "Distances to 383 WR stars"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Sec 3-4"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "wr-runaways-zheight",
+      "description": "31颗WR星被识别为基于HII区标高的'potential runaways' (|z|≥156 pc, 3σ偏离)。论文未进行轨道积分，未计算逃逸速度或非束缚概率，也未声称任何星为银河系非束缚超高速星。这些是经典的银盘逃逸星(runaway)判别，不满足HVS候选体标准。",
+      "decision": "excluded",
+      "reason": "论文仅基于标高偏离识别可能的runaway星，未评估银河系束缚状态。HVS候选体提取要求论文明确将天体视为可能非束缚于银河系。本论文不涉及HVS/非束缚星科学，runaway判别不等于HVS候选。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Paper abstract and discussion of potential runaways"
+        }
+      ]
+    },
+    {
+      "group_id": "all-383-wr-stars",
+      "description": "全部383颗银河系WR星的距离和绝对星等样本。论文主题为WR星天体物理参数定标，非HVS搜寻。",
+      "decision": "excluded",
+      "reason": "论文不涉及HVS科学。WR星的距离和光度定标与银河系非束缚星候选体提取无关。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Paper abstract"
+        }
+      ]
+    }
+  ]
+}

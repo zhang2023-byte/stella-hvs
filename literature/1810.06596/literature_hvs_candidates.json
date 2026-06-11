@@ -1,0 +1,108 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:35:00",
+  "paper": {
+    "arxiv_id": "1810.06596",
+    "bibcode": "2018ApJ...867L...8O",
+    "title": "Resolved Kinematics of Runaway and Field OB Stars in the Small Magellanic Cloud",
+    "month": "2018-10",
+    "source_note_json": "notes/2018/2018-10/2018-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1810.06596",
+      "pdf": "https://arxiv.org/pdf/1810.06596"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1810.06596",
+    "audit_path": "literature/1810.06596/audit.json",
+    "catalog_review_path": "literature/1810.06596/catalog_review.json",
+    "catalog_extraction_path": "literature/1810.06596/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1810.06596/catalog_tables/table-t_master.ecsv",
+      "literature/1810.06596/catalog_tables/table-t_binaries.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:35:00",
+    "extractor": "agent",
+    "summary": "本文研究小麦哲伦云（SMC）中逃逸OB星的动力学，利用Gaia DR2自行数据分析了RIOTS4巡天中的315颗场OB星。论文识别出大量SMC内部的非束缚逃逸星（约半数样本），并比较了不同双星族群（EB、SB2、HMXB）的运动学特征。但所有目标均为SMC成员星，其逃逸状态是相对于SMC引力势而言的，与银河系HVS/非束缚星无关。论文未涉及银河系逃逸速度或银河系HVS候选体。Table 1提供了全部315颗星的运动学数据，但仅限于SMC局部坐标系。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR2: 从RIOTS4场OB星样本（397颗）中匹配得到328颗Gaia DR2天体，经质量筛选保留315颗星。位置匹配<3 arcsec，星等匹配|G-V|<0.3。",
+      "inputs": [
+        "Gaia DR2",
+        "RIOTS4 (Lamb+2016)"
+      ],
+      "outputs": [
+        "315颗SMC场OB星的Gaia DR2自行数据"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.06596/arxiv_source/Oey.tex",
+          "start_line": 333,
+          "end_line": 347,
+          "context": "Sec 2: Gaia DR2 matching, 328 matches → 315 after quality cuts"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "sample_selection",
+      "summary": "对SMC Bar和Wing区域分别扣除系统运动后计算残余横向速度v_tot和局部速度v_loc,tot。识别非束缚逃逸星（v_tot > 典型速度弥散）。EB、SB2、HMXB子样本分别作为动力学弹射和超新星加速逃逸星的示踪体。",
+      "inputs": [
+        "Gaia DR2 PMs",
+        "SMC系统运动(Piatek+2008)",
+        "OGLE-III EB星表",
+        "Haberl & Sturm HMXB星表"
+      ],
+      "outputs": [
+        "304颗星的残余速度及子群分类",
+        "Table 1: 运动学数据表",
+        "Table 2: 子群统计"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.06596/arxiv_source/Oey.tex",
+          "start_line": 426,
+          "end_line": 569,
+          "context": "Sec 3: velocity distributions, binary populations, runaway statistics"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "smc_runaway_ob",
+      "description": "SMC场OB逃逸星：315颗（经质量筛选后304颗）RIOTS4场OB星。包括16颗EB、10颗SB2、15颗HMXB及未分类场星。论文识别约半数样本为非束缚逃逸星（v_tot > 44 km/s中值）。",
+      "decision": "not_relevant",
+      "reason": "所有目标均为小麦哲伦云（SMC）成员星，非银河系恒星。逃逸/非束缚状态是相对于SMC引力势定义的（v_tot为相对SMC系统运动的残余速度），与银河系HVS无关。论文未涉及银河系逃逸速度、银心静止系速度或银河系非束缚判定。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.06596/arxiv_source/Oey.tex",
+          "start_line": 178,
+          "end_line": 199,
+          "context": "Abstract: SMC field OB stars, runaway kinematics in SMC, Wing vs Bar"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.06596/arxiv_source/Oey.tex",
+          "start_line": 375,
+          "end_line": 424,
+          "context": "Table 1 (t_master): Kinematic data for 315 SMC field OB stars"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:10",
+  "paper": {
+    "arxiv_id": "2407.08578",
+    "title": "Discovery of a Hypervelocity L Subdwarf at the Star/Brown Dwarf Mass Limit",
+    "month": "2024-07"
+  },
+  "review": {
+    "path": "literature/2407.08578/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123910",
+    "started_at": "2026-05-17T12:39:10",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2407.08578",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-source",
+      "internal_table_id": "table-tab-source",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.08578/arxiv_source/speedl.tex",
+        "start_line": 263,
+        "end_line": 313,
+        "caption": "Properties of J1249+3621 \\label{tab:source}",
+        "label": "tab:source"
+      },
+      "source_path": "literature/2407.08578/arxiv_source/speedl.tex",
+      "excerpt_path": "literature/2407.08578/catalog_sources/table-tab-source/excerpt.tex",
+      "sha256": "596e82a03440633c78e4ca171fcf5d79affb604fb1c50433103cd354444f0807",
+      "line_count": 51,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-source",
+      "internal_table_id": "table-tab-source",
+      "status": "success",
+      "ecsv_path": "literature/2407.08578/catalog_tables/table-tab-source.ecsv",
+      "caption": "Properties of J1249+3621 \\label{tab:source}",
+      "label": "tab:source",
+      "row_count": 24,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Property",
+          "Value",
+          "Reference"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Property",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Reference",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp12o_eea2/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.08578/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp12o_eea2/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.08578/catalog_sources/table-tab-source/wrapped.tex",
+            "html": "literature/2407.08578/catalog_sources/table-tab-source/latexml.html",
+            "stdout": "literature/2407.08578/catalog_sources/table-tab-source/latexml.stdout.txt",
+            "stderr": "literature/2407.08578/catalog_sources/table-tab-source/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "596e82a03440633c78e4ca171fcf5d79affb604fb1c50433103cd354444f0807"
+    }
+  ]
+}

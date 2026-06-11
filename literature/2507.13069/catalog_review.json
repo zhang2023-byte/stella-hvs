@@ -1,0 +1,673 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2507.13069",
+    "title": "A kinematic and structural study of young open clusters in the Milky Way Galaxy using Gaia DR3 catalogue",
+    "month": "2025-07",
+    "source_note_json": "notes/2025/2025-07/2025-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2507.13069",
+      "pdf": "https://arxiv.org/pdf/2507.13069"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2507.13069",
+    "audit_path": "literature/2507.13069/audit.json",
+    "source_dir": "literature/2507.13069/arxiv_source",
+    "tex_root": "literature/2507.13069/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:33:58",
+    "reviewer": "agent",
+    "summary": "Seven internal tables: GMM cluster proper-motion parameters (table:GMM), isochrone-fitting results from least-squares and MCMC (table_isofit), radial-velocity and space-velocity estimates (table_sp_vel), transverse-velocity dispersion by spectral type (table_obfdisp), spectral-type counts and M/K ratios (table_obf), literature cluster parameters from Cantat-Gaudin (table_apx), and comparison with previous studies (Table:Compare). Two external resources: the GaiaTools cluster-fitting code on GitHub and the CMD isochrone web interface."
+  },
+  "internal_tables": [
+    {
+      "id": "table-table-GMM",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Lists the mean proper-motion components and membership counts for 14 open clusters derived from Gaussian mixture model (GMM) analysis of Gaia DR3 astrometry.",
+      "source_refs": [
+        {
+          "path": "literature/2507.13069/arxiv_source/main.tex",
+          "start_line": 295,
+          "end_line": 324,
+          "caption": "\\textit{Cluster parameters obtained for each cluster using GMM. Columns 2-3 are the two components of PM along with their errors. $N_{star}$ represents the number of sources with probability $\\ge$90$\\%$}",
+          "label": "table:GMM"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster name",
+          "meaning": "Cluster name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pmra | (mas yr^-1)",
+          "meaning": "Mean proper motion in right ascension direction",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pmdec | (mas yr^-1)",
+          "meaning": "Mean proper motion in declination direction",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_star",
+          "meaning": "Number of member stars with membership probability >= 90%",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\textit{Cluster parameters obtained for each cluster using GMM. Columns 2-3 are the two components of PM along with their errors. $N_{star}$ represents the number of sources with probability $\\ge$90$\\%$}",
+      "comments": ""
+    },
+    {
+      "id": "table-table_isofit",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Presents isochrone-fitting results for 14 open clusters using both least-squares minimization and MCMC, yielding distance, age, metallicity, and extinction estimates.",
+      "source_refs": [
+        {
+          "path": "literature/2507.13069/arxiv_source/main.tex",
+          "start_line": 327,
+          "end_line": 358,
+          "caption": "\\textit{Isochrone fitting results from least-square minimization and MCMC. D, $log_{10}(age)$, [M/H], and $A_G$ are the distance, $log_{10}(age)$, metallicity, and extinction in G mag, respectively, for least-square minimization and MCMC.}",
+          "label": "table_isofit"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster name",
+          "meaning": "Cluster name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Least-square minimization | D | (pc)",
+          "meaning": "Heliocentric distance from least-squares minimization",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "MCMC | log_10 (age) | (dex)",
+          "meaning": "Logarithm of age from least-squares minimization",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[M/H] | (dex)",
+          "meaning": "Metallicity from least-squares minimization",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_G | (mag)",
+          "meaning": "Extinction in G-band from least-squares minimization",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D | (pc)",
+          "meaning": "Heliocentric distance from MCMC",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log_10(age) | (dex)",
+          "meaning": "Logarithm of age from MCMC",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[M/H] | (dex)",
+          "meaning": "Metallicity from MCMC",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_G | (mag)",
+          "meaning": "Extinction in G-band from MCMC",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\textit{Isochrone fitting results from least-square minimization and MCMC. D, $log_{10}(age)$, [M/H], and $A_G$ are the distance, $log_{10}(age)$, metallicity, and extinction in G mag, respectively, for least-square minimization and MCMC.}",
+      "comments": ""
+    },
+    {
+      "id": "table-table_sp_vel",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Summarises radial-velocity and transverse-velocity statistics for 14 open clusters, and combines them into total space velocities using Gaia DR3 data.",
+      "source_refs": [
+        {
+          "path": "literature/2507.13069/arxiv_source/main.tex",
+          "start_line": 369,
+          "end_line": 398,
+          "caption": "\\textit{Radial velocity and space velocity estimation for the clusters. $N_{RV}$ represents the number of stars in a cluster with radial velocity information available in the \\textit{Gaia} DR3. Columns 3--6 represent the Radial velocity mean and its dispersion, standard error, and measurement error, respectively. $N_{star}$ is the number of cluster members. Columns 8--10 are the Transverse velocity mean and its dispersion and standard error, respectively. Columns 11 and 12 represent the space velocity and its error.}",
+          "label": "table_sp_vel"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster name",
+          "meaning": "Cluster name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_RV",
+          "meaning": "Number of stars with radial velocity in Gaia DR3",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_mean | (km s^-1)",
+          "meaning": "Mean radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_disp | (km s^-1)",
+          "meaning": "Radial velocity dispersion",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_std_er | (km s^-1)",
+          "meaning": "Standard error of the mean radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_er | (km s^-1)",
+          "meaning": "Typical radial velocity measurement error",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_star",
+          "meaning": "Number of cluster members",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Tvel_mean | (km s^-1)",
+          "meaning": "Mean transverse velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Tvel_disp | (km s^-1)",
+          "meaning": "Transverse velocity dispersion",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Tvel_std_er | (km s^-1)",
+          "meaning": "Standard error of the mean transverse velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Space_V | (km s^-1)",
+          "meaning": "Total space velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Space_V_er | (km s^-1)",
+          "meaning": "Space velocity uncertainty",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\textit{Radial velocity and space velocity estimation for the clusters. $N_{RV}$ represents the number of stars in a cluster with radial velocity information available in the \\textit{Gaia} DR3. Columns 3--6 represent the Radial velocity mean and its dispersion, standard error, and measurement error, respectively. $N_{star}$ is the number of cluster members. Columns 8--10 are the Transverse velocity mean and its dispersion and standard error, respectively. Columns 11 and 12 represent the space velocity and its error.}",
+      "comments": ""
+    },
+    {
+      "id": "table-table_obfdisp",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Reports the mean mass and transverse-velocity dispersion for four coarse spectral-type bins (BA, FG, K, M) in each cluster, used to assess dynamical mass segregation.",
+      "source_refs": [
+        {
+          "path": "literature/2507.13069/arxiv_source/main.tex",
+          "start_line": 400,
+          "end_line": 429,
+          "caption": "\\textit{Transverse velocity and its dispersion for each spectral type. Columns 2--5 represent the mean mass of each spectral type, and columns 6--9 represent the dispersion in transverse velocity along with their errors for the mentioned group of spectral types.}",
+          "label": "table_obfdisp"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster name",
+          "meaning": "Cluster name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mass_BA | (M_\\odot)",
+          "meaning": "Mean mass of BA-type stars",
+          "unit_text": "Msun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mass_FG | (M_\\odot)",
+          "meaning": "Mean mass of FG-type stars",
+          "unit_text": "Msun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mass_K | (M_\\odot)",
+          "meaning": "Mean mass of K-type stars",
+          "unit_text": "Msun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mass_M | (M_\\odot)",
+          "meaning": "Mean mass of M-type stars",
+          "unit_text": "Msun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "BA_Tvel_disp | (km s^-1)",
+          "meaning": "Transverse velocity dispersion of BA-type stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "FG_Tvel_disp | (km s^-1)",
+          "meaning": "Transverse velocity dispersion of FG-type stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K_Tvel_disp | (km s^-1)",
+          "meaning": "Transverse velocity dispersion of K-type stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_Tvel_disp | (km s^-1)",
+          "meaning": "Transverse velocity dispersion of M-type stars",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\textit{Transverse velocity and its dispersion for each spectral type. Columns 2--5 represent the mean mass of each spectral type, and columns 6--9 represent the dispersion in transverse velocity along with their errors for the mentioned group of spectral types.}",
+      "comments": ""
+    },
+    {
+      "id": "table-table_obf",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Counts the number of cluster members in each spectral-type bin (B, A, F, G, K, M) and reports the observed and theoretical M/K star ratios for 14 open clusters.",
+      "source_refs": [
+        {
+          "path": "literature/2507.13069/arxiv_source/main.tex",
+          "start_line": 431,
+          "end_line": 459,
+          "caption": "\\textit{Spectral type classification of cluster members. Columns 2--7 represent the number of sources belonging to each spectral type for the corresponding clusters mentioned in column 1. Columns 8 and 9 represent the mass range of the cluster, with Mass\\_min representing minimum mass and Mass\\_max representing maximum mass in solar mass ($M_\\odot$). Column 10 represents the observed ratio of M-type stars to the K-type stars in corresponding clusters, which are the lower bound values. Columns 11 and 12 represent expected M/K ratios from Salpeter \\citep{Salpeter1955} and Kroupa \\citep{Kroupa2001}, respectively. }",
+          "label": "table_obf"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster name",
+          "meaning": "Cluster name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "B",
+          "meaning": "Number of B-type member stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A",
+          "meaning": "Number of A-type member stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "F",
+          "meaning": "Number of F-type member stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Number of G-type member stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K",
+          "meaning": "Number of K-type member stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M",
+          "meaning": "Number of M-type member stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mass_min | (M_\\odot)",
+          "meaning": "Minimum stellar mass in the cluster",
+          "unit_text": "Msun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mass_max | (M_\\odot)",
+          "meaning": "Maximum stellar mass in the cluster",
+          "unit_text": "Msun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M/K",
+          "meaning": "Observed lower-bound ratio of M-type to K-type stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M/K Salpeter",
+          "meaning": "Expected M/K ratio from a Salpeter initial mass function",
+          "unit_text": "M/K Salpeter",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M/K Kroupa",
+          "meaning": "Expected M/K ratio from a Kroupa initial mass function",
+          "unit_text": "M/K Kroupa",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\textit{Spectral type classification of cluster members. Columns 2--7 represent the number of sources belonging to each spectral type for the corresponding clusters mentioned in column 1. Columns 8 and 9 represent the mass range of the cluster, with Mass\\_min representing minimum mass and Mass\\_max representing maximum mass in solar mass ($M_\\odot$). Column 10 represents the observed ratio of M-type stars to the K-type stars in corresponding clusters, which are the lower bound values. Columns 11 and 12 represent expected M/K ratios from Salpeter \\citep{Salpeter1955} and Kroupa \\citep{Kroupa2001}, respectively. }",
+      "comments": ""
+    },
+    {
+      "id": "table-table_apx",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Appendix table compiling literature cluster parameters from the Cantat-Gaudin catalogue for comparison with the new measurements.",
+      "source_refs": [
+        {
+          "path": "literature/2507.13069/arxiv_source/main.tex",
+          "start_line": 574,
+          "end_line": 608,
+          "caption": "\\textit{Cluster parameters obtained from literature survey \\cite{CG}. Column 2 and 3 represent the coordinates of the corresponding cluster, RA and Dec, respectively. Columns 4 and 5 represent the PM along RA and Dec, respectively. D is the distance to the cluster, r50 is the radius containing half of the cluster members, Rmax is the r50$\\times$2 in arcminutes, and the last column represents the $log_{10}(age)$.}",
+          "label": "table_apx"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster name",
+          "meaning": "Cluster name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A.^* | (deg)",
+          "meaning": "Right ascension from Cantat-Gaudin catalogue",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec.^* | (deg)",
+          "meaning": "Declination from Cantat-Gaudin catalogue",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pmra^* | (mas yr^-1)",
+          "meaning": "Proper motion in right ascension from Cantat-Gaudin catalogue",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pmdec^* | (mas yr^-1)",
+          "meaning": "Proper motion in declination from Cantat-Gaudin catalogue",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D^* | (kpc)",
+          "meaning": "Heliocentric distance from Cantat-Gaudin catalogue",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r50^* | (deg)",
+          "meaning": "Radius containing half of the cluster members",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Rmax | (arcmin)",
+          "meaning": "r50 multiplied by 2, expressed in arcminutes",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r50\\times2 | (deg)",
+          "meaning": "r50 multiplied by 2, expressed in degrees",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log_10(age)^*",
+          "meaning": "Logarithm of age from Cantat-Gaudin catalogue",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\textit{Cluster parameters obtained from literature survey \\cite{CG}. Column 2 and 3 represent the coordinates of the corresponding cluster, RA and Dec, respectively. Columns 4 and 5 represent the PM along RA and Dec, respectively. D is the distance to the cluster, r50 is the radius containing half of the cluster members, Rmax is the r50$\\times$2 in arcminutes, and the last column represents the $log_{10}(age)$.}",
+      "comments": ""
+    },
+    {
+      "id": "table-Table-Compare",
+      "kind": "latex_table",
+      "asset_type": "comparison_table",
+      "role_in_paper": "Compares the number of members, distances, and ages derived in this work with values from Cantat-Gaudin, Kharchenko, and Dias catalogues for 14 open clusters.",
+      "source_refs": [
+        {
+          "path": "literature/2507.13069/arxiv_source/main.tex",
+          "start_line": 613,
+          "end_line": 642,
+          "caption": "\\textit{Comparison of cluster parameters with previous studies such as \\cite{CG, Kharchenko2016, Dias2021}}",
+          "label": "Table:Compare"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster name",
+          "meaning": "Cluster name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\multicolumn3c|N_star | This study",
+          "meaning": "Number of member stars from this study",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D(pc) | Cantat -Gaudin",
+          "meaning": "Number of member stars from Cantat-Gaudin catalogue",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\multicolumn4clog_10(age) (dex) | Dias",
+          "meaning": "Number of member stars from Dias catalogue",
+          "unit_text": "\\multicolumn4clog_10(age) (dex)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "This study",
+          "meaning": "Distance from this study",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Cantat-Gaudin",
+          "meaning": "Distance from Cantat-Gaudin catalogue",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Kharchenko",
+          "meaning": "Distance from Kharchenko catalogue",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dias",
+          "meaning": "Distance from Dias catalogue",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "This study",
+          "meaning": "Logarithm of age from this study",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Cantat-Gaudin",
+          "meaning": "Logarithm of age from Cantat-Gaudin catalogue",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Kharchenko",
+          "meaning": "Logarithm of age from Kharchenko catalogue",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dias",
+          "meaning": "Logarithm of age from Dias catalogue",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\textit{Comparison of cluster parameters with previous studies such as \\cite{CG, Kharchenko2016, Dias2021}}",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://github.com/GalacticDynamics-Oxford/GaiaTools/blob/master/run_fit.py",
+      "local_path": "",
+      "description": "GaiaTools cluster-fitting code (run_fit.py) used in this work for Gaussian mixture model membership analysis and isochrone fitting.",
+      "source_refs": [
+        {
+          "path": "literature/2507.13069/arxiv_source/main.tex",
+          "start_line": 115,
+          "end_line": 115,
+          "context": "\\subsection{\\textbf{Identification of cluster members using GMM}} \\label{sec:GMM}\nThe crucial part of the study was to identify the cluster members. We have used the Gaussian Mixture Model (GMM) algorithm, \\cite{E.Vasiliev}, for the probabilistic identification of the cluster members. The Python algorithm for GMM is available on GitHub, \\href{https://github.com/GalacticDynamics-Oxford/GaiaTools/blob/master/run_fit.py}{GaiaTools}.\n\nWe used the PM information obtained from \\textit{Gaia} DR3 for the sources that pass through the filtering conditions mentioned in Section \\ref{sec:fltr} to identify the cluster members using GMM. The GMM assumes several Gaussian distributions to each data group within the given data. Initial conditions such as PM and velocity dispersion information obtained from the literature surveys were used to initiate the algorithm to find the best-fit Gaussian parameter using the expectation-maximization algorithm. Gaussian distribution is assumed for cluster members and field stars, and the best-fit parameters are used to find the membership probability of the individual sources."
+        }
+      ],
+      "evidence": "\\subsection{\\textbf{Identification of cluster members using GMM}} \\label{sec:GMM}\nThe crucial part of the study was to identify the cluster members. We have used the Gaussian Mixture Model (GMM) algorithm, \\cite{E.Vasiliev}, for the probabilistic identification of the cluster members. The Python algorithm for GMM is available on GitHub, \\href{https://github.com/GalacticDynamics-Oxford/GaiaTools/blob/master/run_fit.py}{GaiaTools}.\n\nWe used the PM information obtained from \\textit{Gaia} DR3 for the sources that pass through the filtering conditions mentioned in Section \\ref{sec:fltr} to identify the cluster members using GMM. The GMM assumes several Gaussian distributions to each data group within the given data. Initial conditions such as PM and velocity dispersion information obtained from the literature surveys were used to initiate the algorithm to find the best-fit Gaussian parameter using the expectation-maximization algorithm. Gaussian distribution is assumed for cluster members and field stars, and the best-fit parameters are used to find the membership probability of the individual sources.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://stev.oapd.inaf.it/cgi-bin/cmd",
+      "local_path": "",
+      "description": "CMD stellar evolution tracks and isochrone web interface used to derive cluster distances, ages, metallicities, and extinctions.",
+      "source_refs": [
+        {
+          "path": "literature/2507.13069/arxiv_source/main.tex",
+          "start_line": 137,
+          "end_line": 137,
+          "context": "\\subsection{\\textbf{Isochrone fitting}} \\label{sec:iso_fit}\n \nThe \\textit{Gaia} colour-magnitude diagram (CMD) of the clusters can be compared with isochrones to find the cluster parameters such as age, distance, metallicity, and extinction. For that, we used the PARSEC isochrone models \\citep{Bressan, Chen2014, Chen2015}. The required isochrone models were downloaded from the CMD \\href{http://stev.oapd.inaf.it/cgi-bin/cmd}{3.7} web interface. The ranges for $log_{10}(age)$ are set between 6.0 and 8.0 with a time step of 0.01 and metallicity ([$M/H$]) between $-$0.2  to 0.2  with a time step of 0.02. We used a combination of least-square minimization and the Markov Chain Monte Carlo (MCMC) method to fit the isochrone to the cluster CMDs, as described below. \n\n\\subsubsection{\\textbf{Least-square minimization technique}} \\label{sec:chi sqr mini}"
+        }
+      ],
+      "evidence": "\\subsection{\\textbf{Isochrone fitting}} \\label{sec:iso_fit}\n \nThe \\textit{Gaia} colour-magnitude diagram (CMD) of the clusters can be compared with isochrones to find the cluster parameters such as age, distance, metallicity, and extinction. For that, we used the PARSEC isochrone models \\citep{Bressan, Chen2014, Chen2015}. The required isochrone models were downloaded from the CMD \\href{http://stev.oapd.inaf.it/cgi-bin/cmd}{3.7} web interface. The ranges for $log_{10}(age)$ are set between 6.0 and 8.0 with a time step of 0.01 and metallicity ([$M/H$]) between $-$0.2  to 0.2  with a time step of 0.02. We used a combination of least-square minimization and the Markov Chain Monte Carlo (MCMC) method to fit the isochrone to the cluster CMDs, as described below. \n\n\\subsubsection{\\textbf{Least-square minimization technique}} \\label{sec:chi sqr mini}",
+      "comments": ""
+    }
+  ]
+}

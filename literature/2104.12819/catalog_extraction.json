@@ -1,0 +1,222 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:46:24",
+  "paper": {
+    "arxiv_id": "2104.12819",
+    "title": "Extreme adaptive optics astrometry of R136. Searching for high proper motion stars",
+    "month": "2021-04"
+  },
+  "review": {
+    "path": "literature/2104.12819/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084624",
+    "started_at": "2026-06-07T08:46:24",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2104.12819",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table-infoRun",
+      "internal_table_id": "table-table-infoRun",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2104.12819/arxiv_source/40668corr.tex",
+        "start_line": 251,
+        "end_line": 277,
+        "caption": "Magnitudes and PMs of the HOMAs and the five brightest sources in the core of R136. H95 and K21 are the identification of these sources from Hunter et al. (1995) and Khorrami et al (2021), respectively. K$_{2018}$, K$_{2015}$, H, and J are the magnitudes in the SPHERE/IRDIS filters \\citep{khorrami2017,khorrami2021}. I, V, and U are the magnitudes in the HST F814W, F555W, and F336W filters \\citep{hunter95}. $\\mu_{x}$ and $\\mu_{y}$ are the 2D PMs estimated from their position shift within 3.06 years in the left and right data.",
+        "label": "table:infoRun"
+      },
+      "source_path": "literature/2104.12819/arxiv_source/40668corr.tex",
+      "excerpt_path": "literature/2104.12819/catalog_sources/table-table-infoRun/excerpt.tex",
+      "sha256": "20265d402eda70e4f668fe656aa2b233ba9f5ea3679a969776c9450624496dec",
+      "line_count": 27,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table-infoRun",
+      "internal_table_id": "table-table-infoRun",
+      "status": "success",
+      "ecsv_path": "literature/2104.12819/catalog_tables/table-table-infoRun.ecsv",
+      "caption": "Magnitudes and PMs of the HOMAs and the five brightest sources in the core of R136. H95 and K21 are the identification of these sources from Hunter et al. (1995) and Khorrami et al (2021), respectively. K$_{2018}$, K$_{2015}$, H, and J are the magnitudes in the SPHERE/IRDIS filters \\citep{khorrami2017,khorrami2021}. I, V, and U are the magnitudes in the HST F814W, F555W, and F336W filters \\citep{hunter95}. $\\mu_{x}$ and $\\mu_{y}$ are the 2D PMs estimated from their position shift within 3.06 years in the left and right data.",
+      "label": "table:infoRun",
+      "row_count": 8,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "K 2018 , K 2015",
+          "H",
+          "J",
+          "I",
+          "V",
+          "U",
+          "\\mu_x [mas/yr]",
+          "\\mu_y [mas/yr]",
+          "\\mu_x [mas/yr]",
+          "\\mu_y [mas/yr]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "K 2018 , K 2015",
+          "unit_text": "K 2018 , K 2015",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "H",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "J",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "I",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "U",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\mu_x [mas/yr]",
+          "unit_text": "\\mu_x [mas/yr]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\mu_y [mas/yr]",
+          "unit_text": "\\mu_y [mas/yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\mu_x [mas/yr]",
+          "unit_text": "\\mu_x [mas/yr]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\mu_y [mas/yr]",
+          "unit_text": "\\mu_y [mas/yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7xi5gfuz/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2104.12819/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7xi5gfuz/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2104.12819/catalog_sources/table-table-infoRun/wrapped.tex",
+            "html": "literature/2104.12819/catalog_sources/table-table-infoRun/latexml.html",
+            "stdout": "literature/2104.12819/catalog_sources/table-table-infoRun/latexml.stdout.txt",
+            "stderr": "literature/2104.12819/catalog_sources/table-table-infoRun/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "20265d402eda70e4f668fe656aa2b233ba9f5ea3679a969776c9450624496dec"
+    }
+  ]
+}

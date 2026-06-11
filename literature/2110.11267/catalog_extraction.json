@@ -1,0 +1,589 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:48:01",
+  "paper": {
+    "arxiv_id": "2110.11267",
+    "title": "HD144941: The most extreme helium-strong star",
+    "month": "2021-10"
+  },
+  "review": {
+    "path": "literature/2110.11267/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084801",
+    "started_at": "2026-06-07T08:48:01",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2110.11267",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-FOR2log_results",
+      "internal_table_id": "table-tab-FOR2log_results",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+        "start_line": 139,
+        "end_line": 164,
+        "caption": "FORS2 Observing log and average longitudinal magnetic field ($\\langle B_z\\rangle$) values.",
+        "label": "tab:FOR2log_results"
+      },
+      "source_path": "literature/2110.11267/arxiv_source/HD144941.tex",
+      "excerpt_path": "literature/2110.11267/catalog_sources/table-tab-FOR2log_results/excerpt.tex",
+      "sha256": "4dd1ab61f5f523c9d2113785fe8b08983e9680cd2ccb80bc71eaccdcbb9f53da",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-tab-parameters",
+      "internal_table_id": "table-tab-parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+        "start_line": 250,
+        "end_line": 291,
+        "caption": "Parameters and elemental abundances of HD144941.",
+        "label": "tab:parameters"
+      },
+      "source_path": "literature/2110.11267/arxiv_source/HD144941.tex",
+      "excerpt_path": "literature/2110.11267/catalog_sources/table-tab-parameters/excerpt.tex",
+      "sha256": "7060198f021e0ee028a5de849df3313858d636d670436e01f859344b2a44eb19",
+      "line_count": 42,
+      "error": ""
+    },
+    {
+      "id": "table-tab-abundances_lines_nlte",
+      "internal_table_id": "table-tab-abundances_lines_nlte",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+        "start_line": 581,
+        "end_line": 653,
+        "caption": "Line-by-line abundances from the non-LTE analysis of HD144941. Abundances $\\log n_X$ (normalised to $\\sum n_X$\\,=\\,1). \\label{tab:abundances_lines_nlte}",
+        "label": "tab:abundances_lines_nlte"
+      },
+      "source_path": "literature/2110.11267/arxiv_source/HD144941.tex",
+      "excerpt_path": "literature/2110.11267/catalog_sources/table-tab-abundances_lines_nlte/excerpt.tex",
+      "sha256": "3045357bd18b475258708f5e7715322735aec0fad9049a1c57428e401d2086db",
+      "line_count": 73,
+      "error": ""
+    },
+    {
+      "id": "table-004",
+      "internal_table_id": "table-004",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2110.11267/arxiv_source/HD144941.tex",
+        "start_line": 655,
+        "end_line": 737,
+        "caption": "(cont.)",
+        "label": ""
+      },
+      "source_path": "literature/2110.11267/arxiv_source/HD144941.tex",
+      "excerpt_path": "literature/2110.11267/catalog_sources/table-004/excerpt.tex",
+      "sha256": "19a78ddbb95bb21c7494f37f5e016c65c31dddff72ca400656bd07c3ad4a6d92",
+      "line_count": 83,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-FOR2log_results",
+      "internal_table_id": "table-tab-FOR2log_results",
+      "status": "success",
+      "ecsv_path": "literature/2110.11267/catalog_tables/table-tab-FOR2log_results.ecsv",
+      "caption": "FORS2 Observing log and average longitudinal magnetic field ($\\langle B_z\\rangle$) values.",
+      "label": "tab:FOR2log_results",
+      "row_count": 10,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Date",
+          "JD -",
+          "No. of",
+          "Exposure",
+          "S/N at",
+          "\\bz (G)",
+          "\\nz (G)",
+          "\\bz (G)",
+          "\\nz (G)"
+        ],
+        [
+          "YYYY-MM-DD",
+          "2450000",
+          "frames",
+          "time (s)",
+          "4950 Å",
+          "Hydrogen",
+          "",
+          "All",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Date | YYYY-MM-DD",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "JD - | 2450000",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "No. of | frames",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Exposure | time (s)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "S/N at | 4950 Å",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\bz (G) | Hydrogen",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\nz (G)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\bz (G) | All",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\nz (G)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1_phl5bf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2110.11267/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1_phl5bf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2110.11267/catalog_sources/table-tab-FOR2log_results/wrapped.tex",
+            "html": "literature/2110.11267/catalog_sources/table-tab-FOR2log_results/latexml.html",
+            "stdout": "literature/2110.11267/catalog_sources/table-tab-FOR2log_results/latexml.stdout.txt",
+            "stderr": "literature/2110.11267/catalog_sources/table-tab-FOR2log_results/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4dd1ab61f5f523c9d2113785fe8b08983e9680cd2ccb80bc71eaccdcbb9f53da"
+    },
+    {
+      "id": "table-tab-parameters",
+      "internal_table_id": "table-tab-parameters",
+      "status": "success",
+      "ecsv_path": "literature/2110.11267/catalog_tables/table-tab-parameters.ecsv",
+      "caption": "Parameters and elemental abundances of HD144941.",
+      "label": "tab:parameters",
+      "row_count": 21,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Atmospheric parameters:",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Atmospheric parameters:",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqz_x6p3z/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2110.11267/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqz_x6p3z/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2110.11267/catalog_sources/table-tab-parameters/wrapped.tex",
+            "html": "literature/2110.11267/catalog_sources/table-tab-parameters/latexml.html",
+            "stdout": "literature/2110.11267/catalog_sources/table-tab-parameters/latexml.stdout.txt",
+            "stderr": "literature/2110.11267/catalog_sources/table-tab-parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7060198f021e0ee028a5de849df3313858d636d670436e01f859344b2a44eb19"
+    },
+    {
+      "id": "table-tab-abundances_lines_nlte",
+      "internal_table_id": "table-tab-abundances_lines_nlte",
+      "status": "success",
+      "ecsv_path": "literature/2110.11267/catalog_tables/table-tab-abundances_lines_nlte.ecsv",
+      "caption": "Line-by-line abundances from the non-LTE analysis of HD144941. Abundances $\\log n_X$ (normalised to $\\sum n_X$\\,=\\,1). \\label{tab:abundances_lines_nlte}",
+      "label": "tab:abundances_lines_nlte",
+      "row_count": 58,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Line",
+          "\\lambda (Å)",
+          "\\chi (eV)",
+          "\\log gf",
+          "Accu.",
+          "Source",
+          "\\log n_X"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Line",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\lambda (Å)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\chi (eV)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\log gf",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Accu.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\log n_X",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa0lmqwvd/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2110.11267/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa0lmqwvd/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2110.11267/catalog_sources/table-tab-abundances_lines_nlte/wrapped.tex",
+            "html": "literature/2110.11267/catalog_sources/table-tab-abundances_lines_nlte/latexml.html",
+            "stdout": "literature/2110.11267/catalog_sources/table-tab-abundances_lines_nlte/latexml.stdout.txt",
+            "stderr": "literature/2110.11267/catalog_sources/table-tab-abundances_lines_nlte/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3045357bd18b475258708f5e7715322735aec0fad9049a1c57428e401d2086db"
+    },
+    {
+      "id": "table-004",
+      "internal_table_id": "table-004",
+      "status": "success",
+      "ecsv_path": "literature/2110.11267/catalog_tables/table-004.ecsv",
+      "caption": "(cont.)",
+      "label": "",
+      "row_count": 49,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Line",
+          "\\lambda (Å)",
+          "\\chi (eV)",
+          "\\log gf",
+          "Accu.",
+          "Source",
+          "\\log n_X"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Line",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\lambda (Å)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\chi (eV)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\log gf",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Accu.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\log n_X",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp61b53aea/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2110.11267/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp61b53aea/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2110.11267/catalog_sources/table-004/wrapped.tex",
+            "html": "literature/2110.11267/catalog_sources/table-004/latexml.html",
+            "stdout": "literature/2110.11267/catalog_sources/table-004/latexml.stdout.txt",
+            "stderr": "literature/2110.11267/catalog_sources/table-004/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "19a78ddbb95bb21c7494f37f5e016c65c31dddff72ca400656bd07c3ad4a6d92"
+    }
+  ]
+}

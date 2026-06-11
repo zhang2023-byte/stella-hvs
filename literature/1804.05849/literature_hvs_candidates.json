@@ -1,0 +1,63 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:17:00",
+  "paper": {
+    "arxiv_id": "1804.05849",
+    "bibcode": "2018MNRAS.477.5261B",
+    "title": "On the kinematics of a runaway Be star population",
+    "month": "2018-04",
+    "source_note_json": "notes/2018/2018-04/2018-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1804.05849",
+      "pdf": "https://arxiv.org/pdf/1804.05849"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1804.05849",
+    "audit_path": "literature/1804.05849/audit.json",
+    "catalog_review_path": "literature/1804.05849/catalog_review.json",
+    "catalog_extraction_path": "literature/1804.05849/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1804.05849/catalog_tables/table-tab-runaway.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:17:00",
+    "extractor": "agent",
+    "summary": "No HVS candidates found. This paper tests whether classical Be stars originate from mass-transfer binaries by measuring the fraction of runaway Be stars. Using a catalog of 632 Be stars with TGAS (Gaia DR1) 6D kinematics and a Bayesian mixture model, they find ~13.1% are runaways with posterior runaway velocities v_run up to ~130 km/s. These are disk runaway stars with peculiar velocities relative to the Milky Way thin disk, not hypervelocity stars. The paper is entirely about bound Galactic disk populations. Full paper text reviewed — zero mentions of hypervelocity, HVS, unbound stars, or Galactic escape velocity. The term 'runaway' here refers to stars with peculiar velocities >40 km/s relative to their local standard of rest, which is far below the ~500+ km/s needed for Galactic escape."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "be-star-runaways",
+      "description": "40 high-probability runaway Be stars identified by the Bayesian mixture model, listed in Table tab:runaway. These are Be stars with P_run > 50% and posterior runaway velocities v_run from 18 to 130 km/s. The sample includes 632 Be stars assembled from Berger & Gies (2001), the BeSS database, and LAMOST DR2, cross-matched with TGAS for parallaxes and proper motions.",
+      "decision": "excluded",
+      "reason": "Not HVS candidates. These are runaway stars in the Milky Way disk with peculiar velocities (v_run < 130 km/s) far below Galactic escape velocity (~500+ km/s). The paper defines 'runaway' in the classical sense (peculiar velocity > 40 km/s from Blaauw 1961) to test the post-mass-transfer origin of Be stars. All stars are bound to the Galaxy. The Bayesian model explicitly uses a thin disk velocity dispersion prior. Full paper text reviewed — no claims of hypervelocity, unbound status, or Galactic escape. The paper's central question is whether Be stars originate from binary mass transfer, not whether any stars are escaping the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.05849/arxiv.txt",
+          "start_line": 13,
+          "end_line": 16,
+          "context": "Accounting for observational biases, we calculate that if all classical Be stars originated through mass transfer in binaries, then 17.5% of the Be stars in our catalogue should be runaways."
+        },
+        {
+          "kind": "text",
+          "path": "literature/1804.05849/arxiv.txt",
+          "start_line": 21,
+          "end_line": 22,
+          "context": "We find that 13.1^{+2.6}_{-2.4}% of the Be stars in our catalogue are runaways, and identify a subset of 40 high-probability runaways."
+        },
+        {
+          "kind": "text",
+          "path": "literature/1804.05849/arxiv.txt",
+          "start_line": 148,
+          "end_line": 160,
+          "context": "We assemble the largest catalogue of Be stars with full six-dimensional kinematics... The fraction of runaways among the Be stars is unknown, the fraction of runaway B stars has long been established to be ~2.5% for stars of type B0-0.5... Runaways fractions are calculated observationally by classifying any star with a peculiar velocity greater than 40 km/s to be a runaway star."
+        }
+      ]
+    }
+  ]
+}

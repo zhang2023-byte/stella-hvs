@@ -1,0 +1,87 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2305.04025",
+    "title": "Diverse Chemo-Dynamical Properties of Nitrogen-Rich Stars Identified From Low-Resolution Spectra",
+    "month": "2023-05",
+    "source_note_json": "notes/2023/2023-05/2023-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2305.04025",
+      "pdf": "https://arxiv.org/pdf/2305.04025"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2305.04025",
+    "audit_path": "literature/2305.04025/audit.json",
+    "source_dir": "literature/2305.04025/arxiv_source",
+    "tex_root": "literature/2305.04025/arxiv_source/ms.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:34:45",
+    "reviewer": "agent",
+    "summary": "Paper identifies 138 N-rich giant stars from SDSS and LAMOST low-resolution spectra (metallicity range -3.0 < [Fe/H] < 0.0) and analyzes their chemo-dynamical properties. One LaTeX table (Table 1) lists the 138 N-rich star IDs. No machine-readable data URLs or data-availability statements found in the paper. No external data resources beyond generic survey acknowledgements (SDSS, LAMOST, Gaia)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab1",
+      "kind": "latex_table",
+      "asset_type": "object_table",
+      "role_in_paper": "Lists the 138 N-rich stars (NRP) identified from SDSS and LAMOST low-resolution spectra, serving as the primary sample for chemo-dynamical analysis. These stars are used to study the origins of GC second-generation stars in the Galactic halo.",
+      "source_refs": [
+        {
+          "path": "literature/2305.04025/arxiv_source/tab1.tex",
+          "start_line": 1,
+          "end_line": 59,
+          "caption": "List of IDs for N-rich Stars",
+          "label": "tab1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID (col 1)",
+          "meaning": "Survey identifier of N-rich star, either SDSS J... or LAMOST J... format",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ID (col 2)",
+          "meaning": "Survey identifier of N-rich star, either SDSS J... or LAMOST J... format (continued from col 1 for compact 3-column layout)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ID (col 3)",
+          "meaning": "Survey identifier of N-rich star, either SDSS J... or LAMOST J... format (continued from col 2 for compact 3-column layout)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 provides the IDs of 138 N-rich stars as stated in Section 2 (line 416-417): 'As a result, a total number of 138 N-rich stars are available for further analysis. Table 1 provides the IDs of stars that are classified as N-rich stars in our study.' The tabular has 3 columns with identical header 'ID' — the 3-column layout is for compact display only; all entries are semantically equivalent star identifiers.",
+      "comments": "The 138 N-rich stars are split across 3 columns purely for compact formatting. The IDs are survey designations: SDSS JHHMMSS.ss+DDMMSS.s for SDSS stars and LAMOST JHHMMSS.ss+DDMMSS.s for LAMOST stars. The N-rich selection criterion is [N/Fe] >= +0.5 and 2-sigma above the mean [N/Fe] trend at given [Fe/H]."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://jkas.kas.org",
+      "local_path": "",
+      "description": "JKAS journal template website URL found in LaTeX source comments — not a data resource from the paper content. The paper is published in JKAS (2023JKAS...56...59K).",
+      "source_refs": [
+        {
+          "path": "literature/2305.04025/arxiv_source/ms.tex",
+          "start_line": 4,
+          "end_line": 4,
+          "context": "% Journal of the Korean Astronomical Society (JKAS)\n% LaTeX 2e template for articles (version 2018/11/22)\n% Questions? Comments? Bug reports? Visit: http://jkas.kas.org"
+        }
+      ],
+      "evidence": "URL appears in LaTeX template comment header, not in the paper body.",
+      "comments": "This URL is from the JKAS LaTeX template boilerplate, not a data resource cited in the paper. No machine-readable data URLs, data-availability statements, or external data repositories were found in the paper. The paper relies on SDSS, LAMOST, and Gaia EDR3 survey data (generic acknowledgements, not recorded as external resources per guidelines)."
+    }
+  ]
+}

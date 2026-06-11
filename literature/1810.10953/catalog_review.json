@@ -1,0 +1,46 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1810.10953",
+    "title": "The Gaia photometric calibration and results on Galactic runaways",
+    "month": "2018-10",
+    "source_note_json": "notes/2018/2018-10/2018-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1810.10953",
+      "pdf": "https://arxiv.org/pdf/1810.10953"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1810.10953",
+    "audit_path": "literature/1810.10953/audit.json",
+    "source_dir": "literature/1810.10953/arxiv_source",
+    "tex_root": "literature/1810.10953/arxiv_source/Ma__z.Apell__nizJ_2.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T00:05:00",
+    "reviewer": "agent",
+    "summary": "本文为SEA 11会议短文（proceedings），概述两个Gaia相关课题：(1) Gaia DR2 G/GBP/GRP测光波段的新定标，基于122颗星的HST/STIS复合光谱库推导了灵敏度曲线和零点，发现G波段需星等依赖改正（8 mmag弥散），GBP在G=10.87处有不连续，GRP在极红端定标尚需改进；(2) 利用Gaia DR1 TGAS自行数据从GOSC O星和BA超巨星样本中检测Galactic runaway stars，通过拟合自行-银经关系修正后寻找离群点，共识别76颗runaway，其中17–19颗为首次发现，部分目标在WISE中红外图像中可见弓形激波。本文无内部数据表（仅含5幅图：G波段改正前后对比、GRP灵敏度曲线、银纬/银经自行分布、WISE弓形激波图像），详细数据（76颗runaway星表）发表于主期刊论文 Maíz Apellániz et al. (2018, A&A 616, A149)。本文引用的外部数据资源仅有GOSC（Galactic O-Star Catalog, http://gosc.cab.inta-csic.es）作为输入星表。"
+  },
+  "internal_tables": [],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://gosc.cab.inta-csic.es",
+      "local_path": "",
+      "description": "Galactic O-Star Catalog (GOSC)：银河系O型星星表，提供O星和BA超巨星的坐标、光谱分类等基础数据。本文使用GOSC作为输入星表，从中选取两个样本进行runaway star检测：(a) GOSSS光谱分类确认为O型的对象，(b) 其他Simbad O星和BA超巨星。",
+      "source_refs": [
+        {
+          "path": "literature/1810.10953/arxiv_source/Ma__z.Apell__nizJ_2.tex",
+          "start_line": 188,
+          "end_line": 188,
+          "context": "We used the Galactic O-Star Catalog (GOSC,\n\\url{http://gosc.cab.inta-csic.es}, \\cite{Maizetal04b,Maizetal12,Maizetal17c,Sotaetal08}) to select two samples:\n(a) objects with a Galactic O-Star Spectroscopic Survey (GOSSS, \\cite{Maizetal11,Maizetal16,Sotaetal11a,Sotaetal14}) spectral \nclassifications as O and (b) other Simbad O stars and BA supergiants for which we obtained a GOSSS spectrum, had reliable"
+        }
+      ],
+      "evidence": "We used the Galactic O-Star Catalog (GOSC, \\url{http://gosc.cab.inta-csic.es}) to select two samples: (a) objects with a Galactic O-Star Spectroscopic Survey (GOSSS) spectral classifications as O and (b) other Simbad O stars and BA supergiants.",
+      "comments": "GOSC作为本文runaway搜索的输入星表（数据来源），非本文产出的数据产品。本文产出的76颗runaway星表详见主期刊论文 Maíz Apellániz et al. (2018, A&A 616, A149)。"
+    }
+  ]
+}

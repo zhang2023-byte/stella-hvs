@@ -1,0 +1,111 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:20:08",
+  "paper": {
+    "arxiv_id": "1912.12679",
+    "bibcode": "",
+    "title": "The tale of the tail -- disentangling the high transverse velocity stars in Gaia DR2",
+    "month": "2019-12",
+    "source_note_json": "",
+    "links": {
+      "abs": "https://arxiv.org/abs/1912.12679",
+      "pdf": "https://arxiv.org/pdf/1912.12679"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1912.12679",
+    "audit_path": "literature/1912.12679/audit.json",
+    "catalog_review_path": "literature/1912.12679/catalog_review.json",
+    "catalog_extraction_path": "literature/1912.12679/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1912.12679/catalog_tables/table-tab_param.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:20:08",
+    "extractor": "agent",
+    "summary": "本文利用Gaia DR2高横向速度恒星样本，通过更新Besançon/Galaxia模型研究银河系星晕和厚盘的运动学性质。主要发现包括：(1)高横向速度恒星在赫罗图上呈现双序列，指示本地星晕在1 kpc内的分叉；(2)运动学定义的厚盘对高速度尾的贡献约13%；(3)发现具有厚盘化学组成的逆行恒星群。论文是星族运动学建模研究，识别和讨论的是统计星族而非个别HVS候选体。未涉及银河系非束缚超高速星的搜寻或候选体识别。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR2 high transverse velocity star sample (within 1 kpc). LAMOST DR5 chemistry for subset. APOGEE DR14 for comparison.",
+      "inputs": [
+        "Gaia DR2",
+        "LAMOST DR5",
+        "APOGEE DR14"
+      ],
+      "outputs": [
+        "High-V_T sample with chemistry"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1912.12679/arxiv_source/main.tex",
+          "start_line": 1,
+          "end_line": 100,
+          "context": "Sec 1-2"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "sample_selection",
+      "summary": "Besançon/Galaxia population synthesis model updated with latest halo results and Schönrich+2012 thick-disk kinematics.",
+      "inputs": [
+        "Population synthesis model"
+      ],
+      "outputs": [
+        "Model fit to Gaia data"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1912.12679/arxiv_source/main.tex",
+          "start_line": 1,
+          "end_line": 100,
+          "context": "Sec 3-4"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "high-vt-stars",
+      "description": "Gaia DR2中高横向速度恒星样本(太阳邻域1 kpc内)。本文分析这些恒星的整体运动学分布、赫罗图双序列结构和化学性质，属于星族统计研究。论文未将任何单颗星识别为HVS候选体或评估其银河系束缚状态。",
+      "decision": "excluded",
+      "reason": "本文是星族运动学建模研究，处理的是统计样本而非个别候选体。论文不涉及银河系非束缚星(HVS)的搜寻、识别或候选体提出。'high transverse velocity'指高自行恒星(星晕成员)，不等同于银河系非束缚超高速星。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1912.12679/arxiv_source/main.tex",
+          "start_line": 106,
+          "end_line": 108,
+          "context": "Paper abstract"
+        }
+      ]
+    },
+    {
+      "group_id": "retrograde-thick-disc-stars",
+      "description": "具有厚盘化学组成但逆行轨道的恒星子群。论文认为这些星来自加热或吸积过程。",
+      "decision": "excluded",
+      "reason": "论文讨论的是星族起源(加热vs吸积)，未涉及银河系束缚状态评估。逆行轨道不等于非束缚。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1912.12679/arxiv_source/main.tex",
+          "start_line": 1,
+          "end_line": 100,
+          "context": "Sec 5"
+        }
+      ]
+    }
+  ]
+}

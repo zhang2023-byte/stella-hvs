@@ -1,0 +1,301 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:55:51",
+  "paper": {
+    "arxiv_id": "2301.03311",
+    "title": "Unbound stars hold the key to young star cluster history",
+    "month": "2023-01"
+  },
+  "review": {
+    "path": "literature/2301.03311/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225551",
+    "started_at": "2026-05-22T22:55:51",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2301.03311",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-cluster_parameters",
+      "internal_table_id": "table-tab-cluster_parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.03311/arxiv_source/main_new.tex",
+        "start_line": 185,
+        "end_line": 204,
+        "caption": "Initial cluster parameters for the simulation campaign using mass-radius dependencies.",
+        "label": "tab:cluster_parameters"
+      },
+      "source_path": "literature/2301.03311/arxiv_source/main_new.tex",
+      "excerpt_path": "literature/2301.03311/catalog_sources/table-tab-cluster_parameters/excerpt.tex",
+      "sha256": "01279a2d0222e4e8b1b7b4577a4ea9a5a0f44b4506e6bf47e6e4bddbe6567777",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-subgroups",
+      "internal_table_id": "table-tab-subgroups",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.03311/arxiv_source/main_new.tex",
+        "start_line": 597,
+        "end_line": 617,
+        "caption": "Information about the subclusters identified in this work (ID: 1,2) and the groups from \\cite{kerr_etal2021} (ID: H, I).",
+        "label": "tab:subgroups"
+      },
+      "source_path": "literature/2301.03311/arxiv_source/main_new.tex",
+      "excerpt_path": "literature/2301.03311/catalog_sources/table-tab-subgroups/excerpt.tex",
+      "sha256": "8647b0358adcfa2017a3b09858a4cc6a858cf1f62d6e5e43d57f3c0b5368e2cd",
+      "line_count": 21,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-cluster_parameters",
+      "internal_table_id": "table-tab-cluster_parameters",
+      "status": "success",
+      "ecsv_path": "literature/2301.03311/catalog_tables/table-tab-cluster_parameters.ecsv",
+      "caption": "Initial cluster parameters for the simulation campaign using mass-radius dependencies.",
+      "label": "tab:cluster_parameters",
+      "row_count": 3,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "N",
+          "N sim",
+          "M c [M ⊙ ]",
+          "r hm [pc]",
+          "M t [M ⊙ ]",
+          "t emb [Myr]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "N sim",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "M c [M ⊙ ]",
+          "unit_text": "M c [M ⊙ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "r hm [pc]",
+          "unit_text": "r hm [pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "M t [M ⊙ ]",
+          "unit_text": "M t [M ⊙ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "t emb [Myr]",
+          "unit_text": "t emb [Myr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp50f0buss/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.03311/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp50f0buss/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.03311/catalog_sources/table-tab-cluster_parameters/wrapped.tex",
+            "html": "literature/2301.03311/catalog_sources/table-tab-cluster_parameters/latexml.html",
+            "stdout": "literature/2301.03311/catalog_sources/table-tab-cluster_parameters/latexml.stdout.txt",
+            "stderr": "literature/2301.03311/catalog_sources/table-tab-cluster_parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "01279a2d0222e4e8b1b7b4577a4ea9a5a0f44b4506e6bf47e6e4bddbe6567777"
+    },
+    {
+      "id": "table-tab-subgroups",
+      "internal_table_id": "table-tab-subgroups",
+      "status": "success",
+      "ecsv_path": "literature/2301.03311/catalog_tables/table-tab-subgroups.ecsv",
+      "caption": "Information about the subclusters identified in this work (ID: 1,2) and the groups from \\cite{kerr_etal2021} (ID: H, I).",
+      "label": "tab:subgroups",
+      "row_count": 4,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "N",
+          "RA",
+          "Dec",
+          "t_K",
+          "r hm"
+        ],
+        [
+          "",
+          "",
+          "[deg]",
+          "[deg]",
+          "[Myr]",
+          "[pc]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "RA | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Dec | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "t_K | [Myr]",
+          "unit_text": "[Myr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "r hm | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsp3plrj8/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.03311/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsp3plrj8/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.03311/catalog_sources/table-tab-subgroups/wrapped.tex",
+            "html": "literature/2301.03311/catalog_sources/table-tab-subgroups/latexml.html",
+            "stdout": "literature/2301.03311/catalog_sources/table-tab-subgroups/latexml.stdout.txt",
+            "stderr": "literature/2301.03311/catalog_sources/table-tab-subgroups/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8647b0358adcfa2017a3b09858a4cc6a858cf1f62d6e5e43d57f3c0b5368e2cd"
+    }
+  ]
+}

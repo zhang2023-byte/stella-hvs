@@ -1,0 +1,592 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2010.10964",
+    "title": "2D kinematics of massive stars near the Galactic Center",
+    "month": "2020-10",
+    "source_note_json": "notes/2020/2020-10/2020-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2010.10964",
+      "pdf": "https://arxiv.org/pdf/2010.10964"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2010.10964",
+    "audit_path": "literature/2010.10964/audit.json",
+    "source_dir": "literature/2010.10964/arxiv_source",
+    "tex_root": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:45:00",
+    "reviewer": "agent",
+    "summary": "本文利用哈勃空间望远镜（HST）两期（GO-12915和GO-13771）ACS/WFC与WFC3/IR数据，对银河系中心区域大质量恒星的自行进行了高精度2D运动学分析。论文包含9个内部表格：1个观测日志表、1个参考天体自行表（Sgr A*、Arches、Quintuplet）、1个已确认大质量逃逸候选体表（6颗星）、1个Arches星团可能成员表（10颗星）、1个大质量恒星逃逸候选体表（14行，部分恒星对应多个起源）、1个测光星表列描述表、1个测光零点表、1个自行星表列描述表、1个已确认/候选/非大质量恒星总表（以机器可读格式随文发表）。论文宣称其天体测量-测光星表已公开发布，但LaTeX源码中未提供显式数据链接。外部数据资源为空：STScI PSF库、几何畸变改正、零点页面和Simbad数据库均为方法论引用/致谢，并非本文独特的数据产品。HST原始数据可通过MAST获取（GO-12915, GO-13771），但论文未给出显式URL。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-log",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "列出本文使用的所有HST观测数据：GO编号、观测日期、仪器/相机、滤光片以及每次曝光的积分时间。这是后续测光和自行测量的原始数据来源。",
+      "source_refs": [
+        {
+          "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+          "start_line": 221,
+          "end_line": 239,
+          "caption": "List of observations used in this paper.",
+          "label": "tab:log"
+        }
+      ],
+      "columns": [
+        {
+          "name": "GO",
+          "meaning": "HST观测提案编号（GO-12915或GO-13771）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Date",
+          "meaning": "观测日期（月、年）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Instrument/Camera",
+          "meaning": "HST仪器和相机：WFC3/IR或ACS/WFC",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Filter",
+          "meaning": "滤光片名称：F139M（近红外）或F850LP（光学）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N × Exp. Time",
+          "meaning": "图像数量及单次曝光时间",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1记录了GO-12915（2012年10月）和GO-13771（2015年8月）两期观测，每期包含WFC3/IR F139M和ACS/WFC F850LP数据。",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-ref",
+      "kind": "latex_table",
+      "asset_type": "reference_values",
+      "role_in_paper": "提供Sgr A*、Arches星团和Quintuplet星团的绝对坐标和绝对自行参考值，作为后续大质量恒星运动学分析（相对运动、逃逸候选体筛选、潮汐尾搜索）的基准。",
+      "source_refs": [
+        {
+          "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+          "start_line": 1004,
+          "end_line": 1027,
+          "caption": "Position and PMs of Sgr A*, the Arches and the Quintuplet.",
+          "label": "tab:ref"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "参考天体名称：Sgr A*（银河系中心超大质量黑洞）、Arches星团、Quintuplet星团",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A. | deg",
+          "meaning": "赤经（J2000历元）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec. | deg",
+          "meaning": "赤纬（J2000历元）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(μα cosδ, μδ) | mas yr⁻¹",
+          "meaning": "赤道坐标系下的自行分量（赤经方向自行×cosδ，赤纬方向自行）",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(μl cos b, μb) | mas yr⁻¹",
+          "meaning": "银道坐标系下的自行分量（银经方向自行×cos b，银纬方向自行）",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 2给出了Sgr A*、Arches和Quintuplet在赤道坐标系和银道坐标系下的位置和自行。Sgr A*自行来自Reid et al.(2020)；Arches和Quintuplet位置来自Simbad，自行来自Libralato et al.(2020)。",
+      "comments": "Notes: Sgr A* PMs from Reid et al. (2020); Arches and Quintuplet positions from Simbad, PMs from Libralato et al. (2020)."
+    },
+    {
+      "id": "table-tab-confirm",
+      "kind": "latex_table",
+      "asset_type": "candidate_table",
+      "role_in_paper": "列出经光谱证认的大质量恒星中满足逃逸候选体三项筛选条件（PM方向角|θ|<10°、最近距离小于起源天体影响半径、最接近时间在起源天体年龄内且通过1000次蒙特卡洛模拟）的6颗恒星，是本文发现的可信高速逃逸星。",
+      "source_refs": [
+        {
+          "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+          "start_line": 1349,
+          "end_line": 1383,
+          "caption": "Overview of the confirmed MSs selected as escaping candidates.",
+          "label": "tab:confirm"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "大质量恒星在本文星表中的内部编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ΔPM | mas yr⁻¹",
+          "meaning": "恒星相对起源天体（Sgr A*、Arches或Quintuplet）的绝对自行差值，即已减去起源天体自行",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "θ | deg",
+          "meaning": "相对PM矢量与恒星到起源天体方向之间的位置角；θ=0°表示恒星正径向远离起源天体",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flight time | Myr",
+          "meaning": "从最接近点到当前位置的飞行时间（以百万年为单位）",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Possible origin",
+          "meaning": "可能的起源天体：Sgr A*、Arches或Quintuplet",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "List",
+          "meaning": "该恒星在本文大质量恒星样本中的分类：Primary（Dong+2011已证认Paschen-α发射体）、Secondary（Dong+2011候选Paschen-α发射体）、Other（其他来源）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral Type",
+          "meaning": "光谱类型：WC=Carbon-type Wolf-Rayet；WN=Nitrogen-type Wolf-Rayet；O=O型超巨星；B=B型超巨星；Ia+=极端超巨星",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 3包含6颗已确认大质量逃逸候选体：3颗可能起源于Sgr A*（#17180, #20255, #20612）、2颗可能起源于Arches（#2061, #1398622）、1颗可能起源于Quintuplet（#15593）。ΔPM为相对起源天体的自行差异。",
+      "comments": "Notes: ΔPM is relative to origin source; θ is PM position angle; 6 confirmed MSs: 3 from Sgr A*, 2 from Arches, 1 from Quintuplet. WC=Carbon-type WR; WN=Nitrogen-type WR; O=O supergiant."
+    },
+    {
+      "id": "table-tab-arches",
+      "kind": "latex_table",
+      "asset_type": "member_list",
+      "role_in_paper": "列出本文自行测量与Clark et al.(2018)光谱成员判定一致、很可能属于Arches星团的10颗大质量恒星成员，为Arches星团成员运动学分析提供样本。",
+      "source_refs": [
+        {
+          "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+          "start_line": 1577,
+          "end_line": 1608,
+          "caption": "List of confirmed massive stars likely members of the Arches cluster.",
+          "label": "tab:arches"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "大质量恒星在本文星表中的内部编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "List",
+          "meaning": "该恒星在本文样本中的分类：Other（来自Dong+2011以外的其他文献来源）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral Type",
+          "meaning": "光谱类型：WN=Nitrogen-type Wolf-Rayet（WN8-9h为富氢晚型WN）；O=O型超巨星；Ia/Ia+为超巨星/极端超巨星光度级",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 4列出了10颗恒星的ID、样本来源（均为Other，即Dong+2011以外的其他来源）和光谱类型。全部包含在Clark et al.(2018)的Arches大质量恒星列表中。4颗恒星仅用单期图像测量自行。",
+      "comments": "Notes: 10 stars from the 'Other' list, all included in Clark et al. (2018) Arches massive stars list. Stars #1412379, 1412383, 1412386, 1412470 measured with one image per epoch."
+    },
+    {
+      "id": "table-tab-candidate",
+      "kind": "latex_table",
+      "asset_type": "candidate_table",
+      "role_in_paper": "列出所有通过逃逸候选体筛选条件（|θ|<10°、距离和飞行时间约束、1000次蒙特卡洛模拟）的大质量恒星候选体。这些恒星可能是从Sgr A*、Arches或Quintuplet被动力学弹射出的逃逸星，但需要视向速度和距离信息进一步确认。",
+      "source_refs": [
+        {
+          "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+          "start_line": 1778,
+          "end_line": 1815,
+          "caption": "Overview of the candidate MSs selected as likely escapers.",
+          "label": "tab:candidate"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "大质量恒星在本文星表中的内部编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ΔPM | mas yr⁻¹",
+          "meaning": "恒星相对起源天体的绝对自行差值",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "θ | deg",
+          "meaning": "相对PM矢量与恒星到起源天体方向之间的位置角",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flight time | Myr",
+          "meaning": "从最接近点到当前位置的飞行时间",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Possible origin",
+          "meaning": "可能的起源天体：Sgr A*、Arches或Quintuplet",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "List",
+          "meaning": "该恒星在本文样本中的分类：Primary、Secondary或Other",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 5包含14行候选体：5颗可能起源于Sgr A*、6颗可能起源于Arches、3颗可能起源于Quintuplet。#427662同时通过Sgr A*、Arches和Quintuplet的筛选条件；#1187124同时通过Sgr A*和Quintuplet的筛选条件。",
+      "comments": "Notes: 14 rows (some stars appear for multiple origins). Star #427662 passed criteria for Sgr A*, Arches, and Quintuplet. Star #1187124 passed for Sgr A* and Quintuplet."
+    },
+    {
+      "id": "table-tab-photcat",
+      "kind": "latex_table",
+      "asset_type": "column_description",
+      "role_in_paper": "描述本文公开发布的WFC3/IR F139M测光星表的9列数据格式。以GO-12915数据为例展示前10行，所有其他测光星表（不同仪器/历元）具有相同的列结构。VEGA星等减去零点（Table tab:photzp）可转换为仪器星等。",
+      "source_refs": [
+        {
+          "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+          "start_line": 2209,
+          "end_line": 2251,
+          "caption": "First 10 lines of the WFC3/IR F139M photometric catalog based on the GO-12915 data.",
+          "label": "tab:photcat"
+        }
+      ],
+      "columns": [
+        {
+          "name": "VEGA mag",
+          "meaning": "VEGA星等系统下的仪器星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "rms mag",
+          "meaning": "星等的均方根误差；仅单次测量恒星设为9.99 mag",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "QFIT",
+          "meaning": "PSF拟合质量参数（值越接近1拟合越好）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "o",
+          "meaning": "拟合半径内来自邻近星的流量比例（用于识别受邻近星污染的测量）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RADXS",
+          "meaning": "拟合半径外实际流量与PSF预期流量的超出/不足（用于识别有亮邻近星的天体）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "nf",
+          "meaning": "恒星被探测到的单次曝光图像数量",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "nu",
+          "meaning": "用于计算光度量的测量数量",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Local sky",
+          "meaning": "局部天空背景值（计数）",
+          "unit_text": "counts",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Local-sky rms",
+          "meaning": "局部天空背景的均方根误差（计数）",
+          "unit_text": "counts",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 6展示了测光星表的前10行数据，包含VEGA星等、星等RMS、QFIT拟合质量、邻居流量比例o、RADXS等质量控制参数以及局部天空背景信息。星表按自行星表中的顺序排列。",
+      "comments": "VEGA mag can be converted to instrumental mag by subtracting zero-points in tab:photzp. Stars with rms=9.99 measured in only one image. Saturated stars have rms, QFIT, o, RADXS, nf, nu = 0. All other photometric catalogs have same column structure."
+    },
+    {
+      "id": "table-tab-photzp",
+      "kind": "latex_table",
+      "asset_type": "calibration_parameters",
+      "role_in_paper": "提供将本文仪器测光校准到VEGA星等飞行系统所需的零点值。每个GO提案的每个仪器/滤光片组合各有一个零点，共4个值。",
+      "source_refs": [
+        {
+          "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+          "start_line": 2253,
+          "end_line": 2271,
+          "caption": "Adopted zero-points used to calibrate our instrumental photometry into the VEGA-mag flight system.",
+          "label": "tab:photzp"
+        }
+      ],
+      "columns": [
+        {
+          "name": "GO",
+          "meaning": "HST观测提案编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Instrument/Camera",
+          "meaning": "HST仪器和相机",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Filter",
+          "meaning": "滤光片名称",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Zero-point",
+          "meaning": "测光零点值（VEGA星等系统下，1秒曝光对应的仪器零点）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 7列出了GO-12915和GO-13771在WFC3/IR F139M和ACS/WFC F850LP下的测光零点。VEGA星等减去相应零点得到仪器星等（1秒曝光）。",
+      "comments": "Zero-points for 2 GO programs × 2 instruments/filters each."
+    },
+    {
+      "id": "table-tab-pmcat",
+      "kind": "latex_table",
+      "asset_type": "column_description",
+      "role_in_paper": "描述本文公开发布的WFC3/IR自行星表的12列数据格式。以WFC3/IR数据为例展示前10行。自行通过比较两期（GO-12915和GO-13771）观测的位置差和时间基线得到。X/Y像素坐标（比例尺50 mas/pixel）为两期位置的平均值。",
+      "source_refs": [
+        {
+          "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+          "start_line": 2274,
+          "end_line": 2310,
+          "caption": "First 10 lines of the WFC3/IR PM catalog.",
+          "label": "tab:pmcat"
+        }
+      ],
+      "columns": [
+        {
+          "name": "R.A. | deg",
+          "meaning": "赤经（J2000历元）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec. | deg",
+          "meaning": "赤纬（J2000历元）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "X | pixel",
+          "meaning": "像素坐标X（两期位置的平均值，比例尺50 mas/pixel）",
+          "unit_text": "pixel",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Y | pixel",
+          "meaning": "像素坐标Y（两期位置的平均值）",
+          "unit_text": "pixel",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μα cosδ | mas yr⁻¹",
+          "meaning": "赤经方向自行（已乘cosδ）",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σμα cosδ | mas yr⁻¹",
+          "meaning": "赤经方向自行误差；99.99表示仅单历次测量",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μδ | mas yr⁻¹",
+          "meaning": "赤纬方向自行",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σμδ | mas yr⁻¹",
+          "meaning": "赤纬方向自行误差；99.99表示仅单历次测量",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Δtime | yr",
+          "meaning": "第一和第二历次图像平均时间之间的时间基线",
+          "unit_text": "yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "n₁",
+          "meaning": "第一历次中用于计算平均位置的图像数量",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "n₂",
+          "meaning": "第二历次中用于计算平均位置的图像数量",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ID",
+          "meaning": "恒星在星表中的内部编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 8展示了自行星表前10行数据。自行误差=99.99 mas/yr表示该恒星仅有一个历次的测量。两期的时间基线约2.82年。n₁和n₂分别为第一和第二历次中用于计算平均位置的图像数量。",
+      "comments": "X/Y positions are average of first- and second-epoch positions, pixel scale 50 mas/pixel. PM errors = 99.99 mas/yr for stars measured in only one epoch. Δtime is average temporal baseline. n₁/n₂ = number of measurements in epoch 1/2."
+    },
+    {
+      "id": "table-tab-mslist",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "本文分析的全部已确认大质量恒星、候选大质量恒星和非大质量天体的总表。提供每颗星的天球坐标、内部ID、样本来源分类和原始文献中的替代ID。该表以机器可读格式随MNRAS论文发表。",
+      "source_refs": [
+        {
+          "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+          "start_line": 2320,
+          "end_line": 2361,
+          "caption": "First 10 lines of the list of confirmed MSs, candidate MSs and non-massive objects analyzed in Sect. MS.",
+          "label": "tab:mslist"
+        }
+      ],
+      "columns": [
+        {
+          "name": "R.A. | deg",
+          "meaning": "赤经（J2000历元）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec. | deg",
+          "meaning": "赤纬（J2000历元）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ID",
+          "meaning": "恒星在本文星表中的内部编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "List",
+          "meaning": "样本来源分类：Primary=Dong+2011已确认Paschen-α发射体；Secondary=Dong+2011候选Paschen-α发射体；Other=其他文献来源",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Alternative ID",
+          "meaning": "该恒星在原始文献列表中的替代ID编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 9是附录中的总表，列出每颗大质量恒星的坐标（R.A./Dec.）、内部ID、样本所属列表（Primary/Secondary/Other）和替代ID。Primary和Secondary分别对应Dong et al.(2011)的已确认和候选Paschen-α发射体；Other来自其他文献来源。替代ID中以'C'开头者来自Clark et al.(2018)。",
+      "comments": "Notes: 'Primary' and 'Secondary' from Dong et al. (2011) Paschen-α emitter lists; 'Other' from other sources. Alternative IDs starting with 'C' from Clark et al. (2018). Spectral types in referenced papers."
+    }
+  ],
+  "external_resources": []
+}

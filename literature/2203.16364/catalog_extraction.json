@@ -1,0 +1,787 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-23T11:39:05",
+  "paper": {
+    "arxiv_id": "2203.16364",
+    "title": "The Chemical Composition of Extreme-Velocity Stars",
+    "month": "2022-03"
+  },
+  "review": {
+    "path": "literature/2203.16364/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260523T113905",
+    "started_at": "2026-05-23T11:39:05",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2203.16364",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": true
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-obs_log",
+      "internal_table_id": "table-obs_log",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2203.16364/arxiv_source/hvs.tex",
+        "start_line": 191,
+        "end_line": 219,
+        "caption": "Log of Observations\\\\label{obs_log}",
+        "label": "obs_log"
+      },
+      "source_path": "literature/2203.16364/arxiv_source/hvs.tex",
+      "excerpt_path": "literature/2203.16364/catalog_sources/table-obs_log/excerpt.tex",
+      "sha256": "0c571bdca758b16885ab2591a87ebff88ddaafdc5df442f3a6553753c0ee8f91",
+      "line_count": 29,
+      "error": ""
+    },
+    {
+      "id": "table-measured_ews",
+      "internal_table_id": "table-measured_ews",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2203.16364/arxiv_source/hvs.tex",
+        "start_line": 1022,
+        "end_line": 1044,
+        "caption": "Atomic data, Equivalent Widths and line Abundances. Full version online.\\\\label{measured_ews}",
+        "label": "measured_ews"
+      },
+      "source_path": "literature/2203.16364/arxiv_source/hvs.tex",
+      "excerpt_path": "literature/2203.16364/catalog_sources/table-measured_ews/excerpt.tex",
+      "sha256": "56a35eaaa8a3d0894b3d7d96b3bf146b4626b155ec21edfd0490df0377b8f862",
+      "line_count": 23,
+      "error": ""
+    },
+    {
+      "id": "table-stellar_params",
+      "internal_table_id": "table-stellar_params",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2203.16364/arxiv_source/hvs.tex",
+        "start_line": 1047,
+        "end_line": 1184,
+        "caption": "Stellar Properties and Adopted Parameters\\\\label{stellar_params}",
+        "label": "stellar_params"
+      },
+      "source_path": "literature/2203.16364/arxiv_source/hvs.tex",
+      "excerpt_path": "literature/2203.16364/catalog_sources/table-stellar_params/excerpt.tex",
+      "sha256": "63cf37bf2351a83662bc579616fb1c492f556ff67cd9bc96986ef0de8666eb66",
+      "line_count": 138,
+      "error": ""
+    },
+    {
+      "id": "table-chem_abundances_tbl",
+      "internal_table_id": "table-chem_abundances_tbl",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2203.16364/arxiv_source/hvs.tex",
+        "start_line": 1189,
+        "end_line": 1292,
+        "caption": "Chemical Abundances\\\\label{chem_abundances_tbl}",
+        "label": "chem_abundances_tbl"
+      },
+      "source_path": "literature/2203.16364/arxiv_source/hvs.tex",
+      "excerpt_path": "literature/2203.16364/catalog_sources/table-chem_abundances_tbl/excerpt.tex",
+      "sha256": "9614c98ad40cd0ed773cdfba8e935a88893b8d22c206484579d6c298007ffd52",
+      "line_count": 104,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-obs_log",
+      "internal_table_id": "table-obs_log",
+      "status": "success",
+      "ecsv_path": "literature/2203.16364/catalog_tables/table-obs_log.ecsv",
+      "caption": "Log of Observations\\\\label{obs_log}",
+      "label": "obs_log",
+      "row_count": 15,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Source ID",
+          "R.A.",
+          "Decl.",
+          "UT Date",
+          "Start",
+          "Slit",
+          "Exposure",
+          "S/N",
+          "S/N",
+          "Instrument"
+        ],
+        [
+          "EDR3",
+          "(h:m:s)",
+          "(d:m:s)",
+          "",
+          "",
+          "Width",
+          "Time (s)",
+          "4500 \\rm\\AA",
+          "6500 \\rm\\AA",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Source ID | EDR3",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R.A. | (h:m:s)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Decl. | (d:m:s)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "UT Date",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Start",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Slit | Width",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Exposure | Time (s)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "S/N | 4500 \\rm\\AA",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "S/N | 6500 \\rm\\AA",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Instrument",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvfj4pmnd/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2203.16364/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvfj4pmnd/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2203.16364/catalog_sources/table-obs_log/wrapped.tex",
+            "html": "literature/2203.16364/catalog_sources/table-obs_log/latexml.html",
+            "stdout": "literature/2203.16364/catalog_sources/table-obs_log/latexml.stdout.txt",
+            "stderr": "literature/2203.16364/catalog_sources/table-obs_log/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0c571bdca758b16885ab2591a87ebff88ddaafdc5df442f3a6553753c0ee8f91"
+    },
+    {
+      "id": "table-measured_ews",
+      "internal_table_id": "table-measured_ews",
+      "status": "success",
+      "ecsv_path": "literature/2203.16364/catalog_tables/table-measured_ews.ecsv",
+      "caption": "Atomic data, Equivalent Widths and line Abundances. Full version online.\\\\label{measured_ews}",
+      "label": "measured_ews",
+      "row_count": 11,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia EDR3 Source ID",
+          "Wavelength",
+          "Species",
+          "Excitation Potential",
+          "log( gf )",
+          "EW",
+          "\\log_\\epsilon(\\rmX)"
+        ],
+        [
+          "",
+          "(Å)",
+          "",
+          "(eV)",
+          "",
+          "(mÅ)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia EDR3 Source ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Wavelength | (Å)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Species",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Excitation Potential | (eV)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "log( gf )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "EW | (mÅ)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\log_\\epsilon(\\rmX)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptuvb3t7x/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2203.16364/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptuvb3t7x/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2203.16364/catalog_sources/table-measured_ews/wrapped.tex",
+            "html": "literature/2203.16364/catalog_sources/table-measured_ews/latexml.html",
+            "stdout": "literature/2203.16364/catalog_sources/table-measured_ews/latexml.stdout.txt",
+            "stderr": "literature/2203.16364/catalog_sources/table-measured_ews/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "56a35eaaa8a3d0894b3d7d96b3bf146b4626b155ec21edfd0490df0377b8f862"
+    },
+    {
+      "id": "table-stellar_params",
+      "internal_table_id": "table-stellar_params",
+      "status": "success",
+      "ecsv_path": "literature/2203.16364/catalog_tables/table-stellar_params.ecsv",
+      "caption": "Stellar Properties and Adopted Parameters\\\\label{stellar_params}",
+      "label": "stellar_params",
+      "row_count": 105,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp3_1j1no/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2203.16364/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp3_1j1no/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2203.16364/catalog_sources/table-stellar_params/wrapped.tex",
+            "html": "literature/2203.16364/catalog_sources/table-stellar_params/latexml.html",
+            "stdout": "literature/2203.16364/catalog_sources/table-stellar_params/latexml.stdout.txt",
+            "stderr": "literature/2203.16364/catalog_sources/table-stellar_params/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "63cf37bf2351a83662bc579616fb1c492f556ff67cd9bc96986ef0de8666eb66"
+    },
+    {
+      "id": "table-chem_abundances_tbl",
+      "internal_table_id": "table-chem_abundances_tbl",
+      "status": "success",
+      "ecsv_path": "literature/2203.16364/catalog_tables/table-chem_abundances_tbl.ecsv",
+      "caption": "Chemical Abundances\\\\label{chem_abundances_tbl}",
+      "label": "chem_abundances_tbl",
+      "row_count": 81,
+      "column_count": 21,
+      "environment": "",
+      "header_rows": [
+        [
+          "Species",
+          "n",
+          "log( \\epsilon_X )",
+          "[X/Fe]",
+          "\\sigma_[X/Fe]",
+          "n",
+          "log( \\epsilon_X )",
+          "[X/Fe]",
+          "\\sigma_[X/Fe]",
+          "n",
+          "log( \\epsilon_X )",
+          "[X/Fe]",
+          "\\sigma_[X/Fe]",
+          "n",
+          "log( \\epsilon_X )",
+          "[X/Fe]",
+          "\\sigma_[X/Fe]",
+          "n",
+          "log( \\epsilon_X )",
+          "[X/Fe]",
+          "\\sigma_[X/Fe]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Species",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "n",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "log( \\epsilon_X )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "[X/Fe]",
+          "unit_text": "[X/Fe]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_[X/Fe]",
+          "unit_text": "\\sigma_[X/Fe]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "n",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "log( \\epsilon_X )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "[X/Fe]",
+          "unit_text": "[X/Fe]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_[X/Fe]",
+          "unit_text": "\\sigma_[X/Fe]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "n",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "log( \\epsilon_X )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "[X/Fe]",
+          "unit_text": "[X/Fe]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "\\sigma_[X/Fe]",
+          "unit_text": "\\sigma_[X/Fe]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "n",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "log( \\epsilon_X )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "[X/Fe]",
+          "unit_text": "[X/Fe]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "\\sigma_[X/Fe]",
+          "unit_text": "\\sigma_[X/Fe]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "n",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "log( \\epsilon_X )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_020",
+          "original_header": "[X/Fe]",
+          "unit_text": "[X/Fe]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_021",
+          "original_header": "\\sigma_[X/Fe]",
+          "unit_text": "\\sigma_[X/Fe]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvjml7uzq/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2203.16364/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvjml7uzq/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2203.16364/catalog_sources/table-chem_abundances_tbl/wrapped.tex",
+            "html": "literature/2203.16364/catalog_sources/table-chem_abundances_tbl/latexml.html",
+            "stdout": "literature/2203.16364/catalog_sources/table-chem_abundances_tbl/latexml.stdout.txt",
+            "stderr": "literature/2203.16364/catalog_sources/table-chem_abundances_tbl/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9614c98ad40cd0ed773cdfba8e935a88893b8d22c206484579d6c298007ffd52"
+    }
+  ]
+}

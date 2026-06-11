@@ -1,0 +1,66 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T17:48:39",
+  "paper": {
+    "arxiv_id": "2404.12523",
+    "bibcode": "2024A&A...687A.101A",
+    "title": "The longevity of the oldest open clusters: Structural parameters of NGC 188, NGC 2420, NGC 2425, NGC 2682, NGC 6791, NGC 6819",
+    "month": "2024-04",
+    "source_note_json": "notes/2024/2024-04/2024-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2404.12523",
+      "pdf": "https://arxiv.org/pdf/2404.12523"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2404.12523",
+    "audit_path": "literature/2404.12523/audit.json",
+    "catalog_review_path": "literature/2404.12523/catalog_review.json",
+    "catalog_extraction_path": "literature/2404.12523/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2404.12523/catalog_tables/table-tab-initialparameter.ecsv",
+      "literature/2404.12523/catalog_tables/table-tab-limepy_king.ecsv",
+      "literature/2404.12523/catalog_tables/table-tab-limepymodels.ecsv",
+      "literature/2404.12523/catalog_tables/table-tab-spesmodels.ecsv",
+      "literature/2404.12523/catalog_tables/table-tab-percentiles.ecsv",
+      "literature/2404.12523/catalog_tables/table-tab-othercalcs.ecsv",
+      "literature/2404.12523/catalog_tables/table-tab-test_prob.ecsv",
+      "literature/2404.12523/catalog_tables/table-tab-spesmodels_bootstrap.ecsv",
+      "literature/2404.12523/catalog_tables/table-tab-limepy_wilson.ecsv",
+      "literature/2404.12523/catalog_tables/table-tab-percentiles-2.ecsv",
+      "literature/2404.12523/catalog_tables/table-tab-othercalcs-2.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T17:48:39",
+    "extractor": "agent",
+    "summary": "This paper studies the structural parameters and dynamical evolution of six old open clusters. The 'potential escapers' and 'unbound' stars discussed are cluster escapers (stars leaving the open cluster system), not Galactic-unbound HVS candidates. The paper does not present any object as possibly unbound from the Milky Way."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "potential-escapers-from-clusters",
+      "description": "Stars identified as 'potential escapers' or energetically unbound from the open clusters (NGC 188, NGC 2420, NGC 2425, NGC 2682, NGC 6791, NGC 6819) based on SPES model fits.",
+      "decision": "excluded",
+      "reason": "The paper discusses these stars as escaping from the open clusters themselves (cluster escapers), not as candidates for being unbound from the Milky Way / Galactic potential. The 'unbound' status refers to unbinding from the cluster gravitational potential, not the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 88,
+          "end_line": 90,
+          "context": "Abstract states 'about 20% of their members have enough energy to leave the systems or are already unbound', referring to leaving the open cluster systems."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2404.12523/arxiv_source/longevity_occ_arxiv.tex",
+          "start_line": 508,
+          "end_line": 508,
+          "context": "Conclusions describe potential escapers as 'stars with enough energy to leave the system or already out of it', where 'the system' refers to the open cluster."
+        }
+      ]
+    }
+  ]
+}

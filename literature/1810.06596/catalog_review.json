@@ -1,0 +1,330 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1810.06596",
+    "title": "Resolved Kinematics of Runaway and Field OB Stars in the Small Magellanic Cloud",
+    "month": "2018-10",
+    "source_note_json": "",
+    "links": {
+      "abs": "https://arxiv.org/abs/1810.06596",
+      "pdf": "https://arxiv.org/pdf/1810.06596"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1810.06596",
+    "audit_path": "literature/1810.06596/audit.json",
+    "source_dir": "literature/1810.06596/arxiv_source",
+    "tex_root": "literature/1810.06596/arxiv_source/Oey.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T07:47:00",
+    "reviewer": "agent",
+    "summary": "Paper presents a kinematic study of runaway and field OB stars in the Small Magellanic Cloud using Gaia DR2 proper motions of the RIOTS4 field OB star sample (315 stars after quality cuts from an initial 397). The paper includes 2 internal tables: (1) Table 1 (t_master, deluxetable*) lists kinematic data for all 315 field OB stars with 14 columns: ID, Subgroup classification flags (EB, SB2, HMXB, Bar/Wing/boundary), total transverse velocity v_tot, local transverse velocity v_loc,tot, quality flags, radial velocity, and four velocity components in RA and Dec (regular and local) with their errors. Only a 10-row excerpt is shown in the manuscript; the full table is available online (ApJ). (2) Table 2 (t_binaries, deluxetable*) summarizes population kinematics statistics (count, velocity dispersions, medians, means) for five stellar categories: Unclassified field stars, Eclipsing Binaries (EB), Double-lined Spectroscopic Binaries (SB2), High-Mass X-ray Binaries (HMXB), and Total. Key results include: the SMC Wing is kinematically distinct from the Bar with a 3-D velocity of 64 km/s toward the LMC; unbound runaways comprise about half the sample; HMXBs show lower velocity dispersion than dynamically ejected binaries, consistent with less energetic supernova kicks; fast runaways are dominated by dynamical rather than supernova ejections. Eight external resources identified: Gaia DR2, RIOTS4 survey (Lamb et al. 2016 T1,T2,T3), OGLE-III EB catalog, Haberl & Sturm HMXB catalog, Massey (2002) UBVR photometric survey, ApJ online Table 1, SIMBAD, and VizieR/CDS."
+  },
+  "internal_tables": [
+    {
+      "id": "table-t_master",
+      "kind": "latex_table",
+      "asset_type": "reference_table",
+      "role_in_paper": "Primary data table listing kinematic measurements for all 315 RIOTS4 field OB stars in the SMC. Includes Gaia DR2 proper motions, residual transverse velocities, radial velocities, subgroup classifications, and quality indicators. This is the core observational dataset of the paper.",
+      "source_refs": [
+        {
+          "path": "literature/1810.06596/arxiv_source/Oey.tex",
+          "start_line": 375,
+          "end_line": 424,
+          "caption": "Kinematic Data for RIOTS4 Field OB Stars",
+          "label": "t_master"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Star identifier from the Massey (2002) UBVR photometric survey of the SMC",
+          "unit_text": "",
+          "source_of_definition": "table header / table note b",
+          "confidence": 1.0
+        },
+        {
+          "name": "Subgroup",
+          "meaning": "Classification flags: 'E'=eclipsing binary (from OGLE-III), 'S'=SB2 double-lined spectroscopic binary, 'X'=HMXB high-mass X-ray binary, 'B'=Bar region star, 'W'=Wing region star, 'D'=boundary star, 'm'=multi-epoch spectroscopic sample",
+          "unit_text": "",
+          "source_of_definition": "table note c",
+          "confidence": 1.0
+        },
+        {
+          "name": "vtot",
+          "meaning": "Total residual transverse velocity relative to SMC systemic motion (and Wing systemic motion for Wing stars), computed from Gaia DR2 proper motions",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / table note d",
+          "confidence": 1.0
+        },
+        {
+          "name": "vloctot",
+          "meaning": "Local residual transverse velocity computed relative to the local velocity field within a 5 arcmin (90 pc) radius using Gaia PMs of Massey (2002) OB stars",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / table note d / Section 3.2 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "Quality",
+          "meaning": "Quality flags: first value 'a' indicates ~10% asymmetry criterion in RA vs Dec (PSF asymmetry from OGLE-III images); second value = number of stars within 1 arcsec; third value = number of stars within 1.5 arcsec (crowding indicator)",
+          "unit_text": "",
+          "source_of_definition": "table note e",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "Residual radial velocity relative to SMC systemic motion (and Wing systemic motion for Wing stars). '...' indicates no RV measurement available. Errors typically 10 km/s.",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / table note d",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_RA",
+          "meaning": "Transverse velocity in RA computed from proper motion, without geometric or systemic velocity corrections (non-residual PM velocity)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / table note f",
+          "confidence": 1.0
+        },
+        {
+          "name": "err (v_RA)",
+          "meaning": "Measurement error for v_RA (formal Gaia DR2 error, not including systematic errors)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / table note g",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_Dec",
+          "meaning": "Transverse velocity in Dec computed from proper motion, without geometric or systemic velocity corrections (non-residual PM velocity)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / table note f",
+          "confidence": 1.0
+        },
+        {
+          "name": "err (v_Dec)",
+          "meaning": "Measurement error for v_Dec (formal Gaia DR2 error, not including systematic errors)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / table note g",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_loc,RA",
+          "meaning": "Local residual transverse velocity in RA, computed relative to the local velocity field (see vloctot)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / table note f",
+          "confidence": 1.0
+        },
+        {
+          "name": "err (v_loc,RA)",
+          "meaning": "Measurement error for v_loc,RA (formal Gaia DR2 error, not including systematic errors)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / table note g",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_loc,Dec",
+          "meaning": "Local residual transverse velocity in Dec, computed relative to the local velocity field (see vloctot)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / table note f",
+          "confidence": 1.0
+        },
+        {
+          "name": "err (v_loc,Dec)",
+          "meaning": "Measurement error for v_loc,Dec (formal Gaia DR2 error, not including systematic errors)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / table note g",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 lists the total residual transverse velocities vtot and RV, along with non-residual PMs for our field OB stars. We also give locally determined transverse velocities (see Section 3.2). Stars in the Wing region are indicated, and their residual values are corrected for the Wing peculiar motions in PM and RV. Table 1 is available in its entirety on-line.",
+      "comments": "Only a 10-row excerpt is shown in the manuscript. The full table contains data for all 304 stars (after excluding 11 boundary stars). NB: the galaxy background/systemic velocity is not subtracted from v_RA and v_Dec columns. The vtot is the total residual transverse velocity sqrt(v_RA_res^2 + v_Dec_res^2). Column count: 14 including ID."
+    },
+    {
+      "id": "table-t_binaries",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Summary statistics table comparing the kinematics of different binary populations (EB, SB2, HMXB) and unclassified field stars. Provides counts, velocity dispersions (sigma), medians, and means for both global and local velocity frames. Used to evaluate ejection mechanisms (dynamical vs supernova).",
+      "source_refs": [
+        {
+          "path": "literature/1810.06596/arxiv_source/Oey.tex",
+          "start_line": 612,
+          "end_line": 643,
+          "caption": "Kinematics of Binary SMC Field OB Stars",
+          "label": "t_binaries"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Statistic",
+          "meaning": "Row label for each kinematic statistic: Number (count), sigma_perp (standard deviation of transverse velocity from median), sigma_alpha (RA velocity dispersion), sigma_delta (Dec velocity dispersion), median(v_perp), mean(v_alpha), mean(v_delta), sigma_loc_perp, sigma_loc_alpha, sigma_loc_delta, median(v_loc_perp), mean(v_loc_alpha), mean(v_loc_delta)",
+          "unit_text": "",
+          "source_of_definition": "table header (leftmost column, unlabeled)",
+          "confidence": 1.0
+        },
+        {
+          "name": "Unclassified",
+          "meaning": "Kinematic statistics for the 267 unclassified (non-EB, non-SB2, non-HMXB) field OB stars. Includes any unidentified binaries.",
+          "unit_text": "",
+          "source_of_definition": "column header / table note a",
+          "confidence": 1.0
+        },
+        {
+          "name": "EB",
+          "meaning": "Kinematic statistics for the 16 eclipsing binary systems identified from the OGLE-III SMC catalog (Pawlak et al. 2016). Tracers of dynamically ejected runaways.",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SB2",
+          "meaning": "Kinematic statistics for the 10 double-lined spectroscopic binary systems. Tracers of dynamically ejected runaways. 4 stars identified as both EB and SB2.",
+          "unit_text": "",
+          "source_of_definition": "column header / table note b",
+          "confidence": 1.0
+        },
+        {
+          "name": "HMXB",
+          "meaning": "Kinematic statistics for the 15 high-mass X-ray binary systems compiled by Haberl & Sturm (2016). Tracers of runaways accelerated by supernova kicks.",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Total",
+          "meaning": "Kinematic statistics for all 304 field OB stars combined (after excluding boundary stars).",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "In Table 2, we list the numbers of stars in each population, along with the mean and median vtot and standard deviations sigma for each binary population. The median GAIA errors in v_alpha, v_delta, and vtot for the sample are 22, 17, and 28 km/s, with standard deviations on the errors of 5, 3, and 6 km/s, respectively; thus the errors are more than a factor of 2 below the respective observed sigma_alpha, sigma_delta, and sigma_perp. Therefore, these standard deviations reflect actual velocity dispersions convolved with the substantial errors.",
+      "comments": "13 rows x 6 columns (including the leftmost statistic label column). Key result: HMXBs show systematically lower velocity dispersions (sigma_perp = 23 km/s) compared to EB (42 km/s), SB2 (45 km/s), and Unclassified (43 km/s), consistent with less energetic SN kicks. Values for sigma are standard deviations from the median (not from the mean)."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "",
+      "local_path": "",
+      "description": "ESA Gaia mission, Data Release 2 (DR2). Primary data source for proper motions of all 315 RIOTS4 field OB stars. Provides mu_alpha, mu_delta, and their errors used to compute transverse velocities. Gaia DR2 source_id matching was performed with 3 arcsec position match and |G-V| < 0.3 magnitude criterion, yielding 328 initial matches before quality cuts.",
+      "source_refs": [
+        {
+          "path": "literature/1810.06596/arxiv_source/Oey.tex",
+          "start_line": 333,
+          "end_line": 336,
+          "context": "We identify the RIOTS4 stars in the GAIA DR2 catalog by specifying a position match within 3 arcsec and magnitude match |G-V|<0.3, yielding 328 matches."
+        }
+      ],
+      "evidence": "We use GAIA DR2 proper motions of the RIOTS4 field OB stars in the Small Magellanic Cloud to study the kinematics of runaway stars. The GAIA DR2 provides high-precise proper motion measurements.",
+      "comments": "Gaia DR2 is the fundamental astrometric dataset for this paper. The median Gaia errors in v_alpha, v_delta, and vtot are 22, 17, and 28 km/s. Gaia DR2 catalog accessed via the ESA Gaia archive."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "",
+      "local_path": "",
+      "description": "Lamb et al. (2016) ApJ, 817, 113 - The RIOTS4 survey paper. Provides the field OB star sample definition (Tables 1 and 2: 374 UBVR-selected stars + 23 UV-selected O stars = 397 total), spectroscopic observations from Magellan/IMACS and MIKE, and systemic radial velocities from multi-epoch monitoring (Table 3). This is the parent catalog for the current study.",
+      "source_refs": [
+        {
+          "path": "literature/1810.06596/arxiv_source/Oey.tex",
+          "start_line": 313,
+          "end_line": 331,
+          "context": "The RIOTS4 field star sample is defined from Oey et al. (2004)... The two subsamples are given in Tables 1 and 2, respectively, of Lamb et al. (2016). Spectroscopic observations... systemic RVs reported in Table 3 of Lamb et al. (2016)."
+        }
+      ],
+      "evidence": "The two subsamples are given in Tables 1 and 2, respectively, of Lamb et al. (2016) [T1, T2]. systemic RVs reported in Table 3 of Lamb et al. (2016) [T3].",
+      "comments": "RIOTS4 = Runaways and Isolated O-Type Star Spectroscopic Survey of the SMC. Provides the original photometric selection, spectral classifications, and multi-epoch RV monitoring data that underpin this kinematic study."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "",
+      "local_path": "",
+      "description": "Pawlak et al. (2016) AcA, 66, 421 - OGLE-III eclipsing binary catalog for the SMC. Used to identify eclipsing binaries (EBs) among the RIOTS4 sample as tracers of non-compact, dynamically ejected binary systems. 295 of 315 stars are covered by the OGLE-III survey (easternmost Wing excluded).",
+      "source_refs": [
+        {
+          "path": "literature/1810.06596/arxiv_source/Oey.tex",
+          "start_line": 511,
+          "end_line": 513,
+          "context": "non-compact binaries also can be identified as eclipsing binaries (EBs), which are given in the OGLE-III EB catalog for the SMC (Pawlak et al. 2016)."
+        }
+      ],
+      "evidence": "non-compact binaries also can be identified as eclipsing binaries (EBs), which are given in the OGLE-III EB catalog for the SMC (Pawlak et al. 2016). Of the 315 stars, only 295 are covered by the OGLE-III survey.",
+      "comments": "16 EBs identified in the sample. OGLE-III images also used to evaluate PSF asymmetry and crowding that can affect Gaia astrometry quality."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "",
+      "local_path": "",
+      "description": "Haberl & Sturm (2016) A&A, 586, A81 - Compilation of High-Mass X-ray Binaries (HMXBs) in the SMC. Used to identify HMXBs among the RIOTS4 sample as tracers of runaways produced by the supernova kick mechanism. 15 HMXBs identified in the sample.",
+      "source_refs": [
+        {
+          "path": "literature/1810.06596/arxiv_source/Oey.tex",
+          "start_line": 515,
+          "end_line": 516,
+          "context": "it is also possible to identify binaries with a compact remnant as high-mass X-ray binaries (HMXBs), which are compiled by Haberl & Sturm (2016)."
+        }
+      ],
+      "evidence": "it is also possible to identify binaries with a compact remnant as high-mass X-ray binaries (HMXBs), which are compiled by Haberl & Sturm (2016).",
+      "comments": "15 HMXBs identified in the sample. HMXBs show lower velocity dispersion (sigma_perp=23 km/s) compared to non-compact binaries, consistent with less energetic SN kicks that failed to unbind the components."
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "",
+      "local_path": "",
+      "description": "Massey (2002) ApJS, 141, 81 - UBVR photometric survey of the SMC. The parent photometric catalog from which the RIOTS4 field OB star sample was selected using Q_UBR <= -0.84 and B <= 15.21 criteria. Also used to compute local velocity fields by identifying OB stars within 5 arcmin (90 pc) of each target.",
+      "source_refs": [
+        {
+          "path": "literature/1810.06596/arxiv_source/Oey.tex",
+          "start_line": 314,
+          "end_line": 315,
+          "context": "used the UBVR photometric survey of the SMC by Massey (2002) to identify OB-star candidates based on having reddening-free parameter Q_UBR <= -0.84 and B <= 15.21."
+        }
+      ],
+      "evidence": "The RIOTS4 field star sample is defined from Oey et al. (2004), who used the UBVR photometric survey of the SMC by Massey (2002) to identify OB-star candidates... We use the GAIA PMs of stars from the Massey (2002) catalog of OB stars within a 5 arcmin radius of the target star to obtain the mean local velocity of the young population.",
+      "comments": "The Massey (2002) catalog serves a dual role: (1) parent photometric catalog for the RIOTS4 sample selection, and (2) reference catalog for computing local velocity fields (v_loc quantities). Star IDs in Table t_master are from this catalog."
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "",
+      "local_path": "",
+      "description": "ApJ Letters online version of this paper. Hosts the full machine-readable Table 1 (t_master) with kinematic data for all 304 field OB stars. Only a 10-row excerpt is printed in the manuscript.",
+      "source_refs": [
+        {
+          "path": "literature/1810.06596/arxiv_source/Oey.tex",
+          "start_line": 408,
+          "end_line": 408,
+          "context": "Table 1 is available in its entirety on-line."
+        }
+      ],
+      "evidence": "Table 1 is available in its entirety on-line.",
+      "comments": "The full Table 1 contains kinematic data for all 304 stars (after excluding 11 boundary stars). This machine-readable table is the most important data product of the paper and is available through the ApJ journal website and likely through CDS/VizieR."
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "https://simbad.harvard.edu/simbad/",
+      "local_path": "",
+      "description": "SIMBAD astronomical database at CDS, Strasbourg. A standard resource for cross-referencing stellar identifications and properties, though not explicitly cited in the paper text.",
+      "source_refs": [],
+      "evidence": "SIMBAD is the standard astronomical database used for stellar cross-identification and is implicitly relied upon for the broader astronomical context of SMC OB stars.",
+      "comments": "SIMBAD is acknowledged as a standard astronomical resource. The paper's star IDs from Massey (2002) can be cross-referenced in SIMBAD."
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "https://cdsweb.u-strasbg.fr/",
+      "local_path": "",
+      "description": "VizieR catalogue access tool and CDS, Strasbourg. Likely host for the machine-readable version of Table 1 and associated data products from this paper.",
+      "source_refs": [],
+      "evidence": "Standard practice for ApJ Letters papers is to deposit machine-readable tables at CDS/VizieR. The paper's full Table 1 is expected to be available through VizieR.",
+      "comments": "The full machine-readable Table 1 is expected to be archived at CDS/VizieR as standard practice for ApJ. Not explicitly cited in the paper but standard for the field."
+    }
+  ]
+}

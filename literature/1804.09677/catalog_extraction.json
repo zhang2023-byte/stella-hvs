@@ -1,0 +1,175 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:31:36",
+  "paper": {
+    "arxiv_id": "1804.09677",
+    "title": "Anatomy of the hyper-runaway star LP 40-365 with Gaia",
+    "month": "2018-04"
+  },
+  "review": {
+    "path": "literature/1804.09677/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083136",
+    "started_at": "2026-06-07T08:31:36",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1804.09677",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-t-phys",
+      "internal_table_id": "table-t-phys",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+        "start_line": 132,
+        "end_line": 147,
+        "caption": "Physical parameters of LP 40-365. The nominal values of d, R and M correspond to the median of the distributions, and the 1σ uncertainty. The 5–95 per cent range is also given below.",
+        "label": "t:phys"
+      },
+      "source_path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+      "excerpt_path": "literature/1804.09677/catalog_sources/table-t-phys/excerpt.tex",
+      "sha256": "03967d692237f67f98cd3b97013ec4b35c1729daa7468fe2088ab134b6b1d9f8",
+      "line_count": 16,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-t-phys",
+      "internal_table_id": "table-t-phys",
+      "status": "success",
+      "ecsv_path": "literature/1804.09677/catalog_tables/table-t-phys.ecsv",
+      "caption": "Physical parameters of LP 40-365. The nominal values of d, R and M correspond to the median of the distributions, and the 1σ uncertainty. The 5–95 per cent range is also given below.",
+      "label": "t:phys",
+      "row_count": 3,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "T_\\rm eff^1",
+          "\\logg^1",
+          "d",
+          "R",
+          "M",
+          "L"
+        ],
+        [
+          "(K)",
+          "(cgs)",
+          "(pc)",
+          "(R _\\sun )",
+          "(M _\\sun )",
+          "(L _\\sun )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "T_\\rm eff^1 | (K)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\logg^1 | (cgs)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "d | (pc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "R | (R _\\sun )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "M | (M _\\sun )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "L | (L _\\sun )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7_frcio3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.09677/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7_frcio3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.09677/catalog_sources/table-t-phys/wrapped.tex",
+            "html": "literature/1804.09677/catalog_sources/table-t-phys/latexml.html",
+            "stdout": "literature/1804.09677/catalog_sources/table-t-phys/latexml.stdout.txt",
+            "stderr": "literature/1804.09677/catalog_sources/table-t-phys/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "03967d692237f67f98cd3b97013ec4b35c1729daa7468fe2088ab134b6b1d9f8"
+    }
+  ]
+}

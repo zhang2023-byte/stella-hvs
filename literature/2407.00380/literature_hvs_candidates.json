@@ -1,0 +1,71 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T17:56:08",
+  "paper": {
+    "arxiv_id": "2407.00380",
+    "bibcode": "2024MNRAS.532.2920V",
+    "title": "Particle acceleration at the bow shock of runaway star LS 2355: non-thermal radio emission but no $\\gamma$-ray counterpart",
+    "month": "2024-06",
+    "source_note_json": "notes/2024/2024-06/2024-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2407.00380",
+      "pdf": "https://arxiv.org/pdf/2407.00380"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2407.00380",
+    "audit_path": "literature/2407.00380/audit.json",
+    "catalog_review_path": "literature/2407.00380/catalog_review.json",
+    "catalog_extraction_path": "literature/2407.00380/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2407.00380/catalog_tables/table-tab-surveys.ecsv",
+      "literature/2407.00380/catalog_tables/table-tab-input.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T17:56:08",
+    "extractor": "agent",
+    "summary": "The paper studies the bow shock of LS 2355, a runaway massive star, but does not present it as a Galactic-unbound or HVS candidate. The paper derives a stellar velocity v* = 7.0 +/- 2.5 km/s relative to the local ISM and focuses on the non-thermal radio emission from the bow shock. No bound/unbound assessment or escape-velocity comparison is performed, and no objects are discussed as possibly escaping the Milky Way."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "ls-2355-runaway",
+      "description": "The runaway massive star LS 2355 (HD 99897 / HIP 56021 / Gaia DR3 5333860240705973888) and its bow shock, the sole stellar object studied in the paper.",
+      "decision": "excluded",
+      "reason": "The paper consistently describes LS 2355 as a runaway massive star ejected from its birth location, but it never assesses whether the star could escape the Milky Way or presents it as a hyper-velocity-star / Galactic-escape candidate. The derived velocity (v* = 7.0 +/- 2.5 km/s relative to the local ISM) is only marginally supersonic and is discussed in the context of bow-shock modelling, not escape from the Galactic potential.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.00380/arxiv_source/main.tex",
+          "start_line": 117,
+          "end_line": 117,
+          "context": "Paper title identifies LS 2355 as a runaway star, not an HVS or unbound candidate"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2407.00380/arxiv_source/main.tex",
+          "start_line": 145,
+          "end_line": 148,
+          "context": "Abstract discusses the bow shock driven by LS 2355 and its updated proper motion and velocity; no mention of Galactic escape or unbound status"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2407.00380/arxiv_source/main.tex",
+          "start_line": 156,
+          "end_line": 161,
+          "context": "Introduction describes runaway massive stars as ejected from birth locations via dynamical interactions or supernova of a binary companion; no claim that LS 2355 is unbound from the Galaxy"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2407.00380/arxiv_source/main.tex",
+          "start_line": 272,
+          "end_line": 276,
+          "context": "Gaia-derived stellar velocity v* = 7.0 +/- 2.5 km/s is presented as an updated proper-motion measurement for bow-shock modelling; no bound/unbound assessment is made"
+        }
+      ]
+    }
+  ]
+}

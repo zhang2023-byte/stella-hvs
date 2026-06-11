@@ -1,0 +1,326 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:38:58",
+  "paper": {
+    "arxiv_id": "2404.07731",
+    "title": "High speed stars: III. Detailed abundances and binary nature of the extreme speed star GHS143",
+    "month": "2024-04"
+  },
+  "review": {
+    "path": "literature/2404.07731/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123858",
+    "started_at": "2026-05-17T12:38:58",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2404.07731",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-abbo",
+      "internal_table_id": "table-tab-abbo",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+        "start_line": 593,
+        "end_line": 641,
+        "caption": "Abundances.",
+        "label": "tab:abbo"
+      },
+      "source_path": "literature/2404.07731/arxiv_source/49485corr.tex",
+      "excerpt_path": "literature/2404.07731/catalog_sources/table-tab-abbo/excerpt.tex",
+      "sha256": "6abd0c8a02cbce873b460a03f20ba2911182553577c1196ddf6207f54b5c2437",
+      "line_count": 49,
+      "error": ""
+    },
+    {
+      "id": "table-tab-sist",
+      "internal_table_id": "table-tab-sist",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+        "start_line": 646,
+        "end_line": 693,
+        "caption": "Uncertanties on [X/Fe].",
+        "label": "tab:sist"
+      },
+      "source_path": "literature/2404.07731/arxiv_source/49485corr.tex",
+      "excerpt_path": "literature/2404.07731/catalog_sources/table-tab-sist/excerpt.tex",
+      "sha256": "6bcd92941bb2b471ca1a1649e7cf3bb53eb03f451bc5fa805a840e9f3d3ff518",
+      "line_count": 48,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-abbo",
+      "internal_table_id": "table-tab-abbo",
+      "status": "success",
+      "ecsv_path": "literature/2404.07731/catalog_tables/table-tab-abbo.ecsv",
+      "caption": "Abundances.",
+      "label": "tab:abbo",
+      "row_count": 38,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Element",
+          "Nlin",
+          "\\rm A(X)\\odot",
+          "A(X)",
+          "[X/H]",
+          "\\sigma",
+          "[X/Fe]",
+          "\\sigma",
+          "Cor(NLTE)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Element",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Nlin",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\rm A(X)\\odot",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "A(X)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "[X/H]",
+          "unit_text": "[X/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\sigma",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "[X/Fe]",
+          "unit_text": "[X/Fe]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\sigma",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Cor(NLTE)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9ymyzrw9/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2404.07731/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9ymyzrw9/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2404.07731/catalog_sources/table-tab-abbo/wrapped.tex",
+            "html": "literature/2404.07731/catalog_sources/table-tab-abbo/latexml.html",
+            "stdout": "literature/2404.07731/catalog_sources/table-tab-abbo/latexml.stdout.txt",
+            "stderr": "literature/2404.07731/catalog_sources/table-tab-abbo/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6abd0c8a02cbce873b460a03f20ba2911182553577c1196ddf6207f54b5c2437"
+    },
+    {
+      "id": "table-tab-sist",
+      "internal_table_id": "table-tab-sist",
+      "status": "success",
+      "ecsv_path": "literature/2404.07731/catalog_tables/table-tab-sist.ecsv",
+      "caption": "Uncertanties on [X/Fe].",
+      "label": "tab:sist",
+      "row_count": 37,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Ellement",
+          "[X/H]",
+          "Nlines",
+          "T_eff",
+          "logg",
+          "\\xi"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Ellement",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "[X/H]",
+          "unit_text": "[X/H]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Nlines",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "T_eff",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "logg",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\xi",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpg1tkb2n_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2404.07731/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpg1tkb2n_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2404.07731/catalog_sources/table-tab-sist/wrapped.tex",
+            "html": "literature/2404.07731/catalog_sources/table-tab-sist/latexml.html",
+            "stdout": "literature/2404.07731/catalog_sources/table-tab-sist/latexml.stdout.txt",
+            "stderr": "literature/2404.07731/catalog_sources/table-tab-sist/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6bcd92941bb2b471ca1a1649e7cf3bb53eb03f451bc5fa805a840e9f3d3ff518"
+    }
+  ]
+}

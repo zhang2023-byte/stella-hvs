@@ -1,0 +1,145 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:58:50",
+  "paper": {
+    "arxiv_id": "2311.13388",
+    "title": "The photospheres of the hottest fastest stars in the Galaxy",
+    "month": "2023-11"
+  },
+  "review": {
+    "path": "literature/2311.13388/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225850",
+    "started_at": "2026-05-22T22:58:50",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2311.13388",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-resultsall",
+      "internal_table_id": "table-tab-resultsall",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2311.13388/arxiv_source/aa.tex",
+        "start_line": 239,
+        "end_line": 282,
+        "caption": "Atmospheric properties and other parameters of our program stars. \\tablefootmark{a}",
+        "label": "tab:resultsall"
+      },
+      "source_path": "literature/2311.13388/arxiv_source/aa.tex",
+      "excerpt_path": "literature/2311.13388/catalog_sources/table-tab-resultsall/excerpt.tex",
+      "sha256": "673b9cc9a36a091da8d42284870c5786cb8832a1506505435c3c9e4fc0a2d85c",
+      "line_count": 44,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-resultsall",
+      "internal_table_id": "table-tab-resultsall",
+      "status": "success",
+      "ecsv_path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+      "caption": "Atmospheric properties and other parameters of our program stars. \\tablefootmark{a}",
+      "label": "tab:resultsall",
+      "row_count": 13,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "\\jn",
+          "\\jnz",
+          "\\jnd"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\jn",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\jnz",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\jnd",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpajyzbo7v/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2311.13388/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpajyzbo7v/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2311.13388/catalog_sources/table-tab-resultsall/wrapped.tex",
+            "html": "literature/2311.13388/catalog_sources/table-tab-resultsall/latexml.html",
+            "stdout": "literature/2311.13388/catalog_sources/table-tab-resultsall/latexml.stdout.txt",
+            "stderr": "literature/2311.13388/catalog_sources/table-tab-resultsall/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "673b9cc9a36a091da8d42284870c5786cb8832a1506505435c3c9e4fc0a2d85c"
+    }
+  ]
+}

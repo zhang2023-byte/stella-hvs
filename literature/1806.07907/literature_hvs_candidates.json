@@ -1,0 +1,162 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:24:00",
+  "paper": {
+    "arxiv_id": "1806.07907",
+
+    "title": "The Fastest Travel Together: Chemical Tagging of the Fastest Stars in Gaia DR2 to the Stellar Halo",
+    "month": "2018-06",
+    "source_note_json": "",
+    "links": {
+      "abs": "https://arxiv.org/abs/1806.07907",
+      "pdf": "https://arxiv.org/pdf/1806.07907"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1806.07907",
+    "audit_path": "",
+    "catalog_review_path": "literature/1806.07907/catalog_review.json",
+    "catalog_extraction_path": "literature/1806.07907/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:24:00",
+    "extractor": "agent",
+    "summary": "No Galactic-unbound HVS candidates. Paper performs high-resolution spectroscopic follow-up of five 'hypervelocity' star candidates from Marchetti et al. (2018) that were estimated to have >50% probability of being unbound from the Milky Way (total Galactic rest-frame velocities 500-600 km/s). The paper derives chemical abundances for 22 species and concludes all stars are metal-poor giants (-2 <= [Fe/H] <= -1 dex) chemically indistinguishable from typical halo stars. Authors explicitly conclude these stars are 'simply the high-velocity tail of the stellar halo' and 'rule out more exotic origins'. The paper effectively argues AGAINST unbound status for its targets. An additional 4 stars from survey cross-matches show similar halo-like properties."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "Select 5 late-type HVS candidates from Marchetti et al. (2018) Table 1: stars with total Galactic rest-frame velocity >450 km/s, >50% unbound probability, accessible from APO in May 2018.",
+      "inputs": ["Marchetti et al. (2018) HVS candidate catalog"],
+      "outputs": ["5 candidate stars (Gaia DR2 source IDs listed in Table 1)"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+          "start_line": 231,
+          "end_line": 234,
+          "context": "Selection from Marchetti2018: 28 extreme-velocity stars with >50% unbound probability. Selected 5 accessible from APO."
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": ["step-01"],
+      "step_type": "radial_velocity_measurement",
+      "summary": "High-resolution (R~31500) spectroscopy with ARCES on APO 3.5m. RV measured via cross-correlation with Arcturus template. Confirmed Gaia DR2 RVs to within ~1 km/s.",
+      "inputs": ["APO/ARCES spectra"],
+      "outputs": ["RVs confirmed; median offset <1 km/s from Gaia DR2"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+          "start_line": 288,
+          "end_line": 291,
+          "context": "APO follow-up: R~31500, ARCES, RV via cross-correlation."
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": ["step-02"],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Derive Teff, log g, [Fe/H], vmicro using BACCHUS with MARCS atmospheres and Fe ionization-excitation equilibrium (LTE). Photometric Teff also from Gaia DR2.",
+      "inputs": ["ARCES spectra", "MARCS model atmospheres", "Gaia DR2 photometry"],
+      "outputs": ["All 5 stars are metal-poor giants: -2 <= [Fe/H] <= -1 dex"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+          "start_line": 337,
+          "end_line": 341,
+          "context": "BACCHUS analysis: MARCS, Fe ionization-excitation equilibrium."
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": ["step-03"],
+      "step_type": "candidate_classification",
+      "summary": "Derive chemical abundances for 22 species (alpha, odd-Z, Fe-peak, neutron-capture). Compare with Galactic disc, halo, and LMC populations. Conclude stars are chemically indistinguishable from halo stars.",
+      "inputs": ["Chemical abundances for 22 species", "Literature comparison samples"],
+      "outputs": ["Halo origin: all stars match typical halo chemistry. Rule out GC, LMC, disc origins."],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+          "start_line": 433,
+          "end_line": 517,
+          "context": "Chemical abundance analysis for alpha, odd-Z, Fe-peak, neutron-capture elements. Compare to disc, halo, LMC."
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": ["step-04"],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Paper concludes that despite >50% unbound probability from Marchetti2018 kinematics, chemical tagging shows halo origin. Stars are 'simply just typical bound halo stars which are at the high speed tail of the velocity distribution of the stellar halo' (line 517). Authors argue the Milky Way escape velocity is higher than previously estimated.",
+      "inputs": ["Chemical abundances", "Marchetti2018 unbound probabilities"],
+      "outputs": ["Conclusion: stars are bound halo stars, not unbound HVS"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+          "start_line": 499,
+          "end_line": 530,
+          "context": "Discussion: origins, are stars really unbound? Summary: 'bound halo stars at the tail of velocity distribution'."
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "apo_followup_candidates",
+      "description": "5 candidate extreme-velocity stars from Marchetti et al. (2018) Table 1, observed with APO/ARCES. All have total Galactic rest-frame velocities 500-600 km/s and Marchetti et al. estimated unbound probabilities >50% (Pub=0.56-0.76). Gaia DR2 source IDs: 1508756353921427328, 1364548016594914560, 4593398670455374592, 4248140165233284352, 2233912206910720000.",
+      "decision": "excluded",
+      "reason": "The paper itself concludes these stars are bound to the Galaxy. Despite Marchetti et al. (2018) estimating >50% unbound probability, this paper's chemical analysis shows all 5 stars are metal-poor halo giants chemically indistinguishable from typical bound halo stars. Authors explicitly state: 'these stars are simply just typical bound halo stars which are at the high speed tail of the velocity distribution of the stellar halo' (line 517-518), and 'effectively rule out more exotic origins such as from the Galactic centre or the Large Magellanic Cloud' (line 188). The paper argues the Milky Way escape velocity is higher than previously estimated. Since the paper's own conclusion is that these objects are bound, they are excluded per Stella inclusion rules.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+          "start_line": 185,
+          "end_line": 188,
+          "context": "Abstract: 'We conclude that these stars are simply the high-velocity tail of the stellar halo and effectively rule out more exotic origins'"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+          "start_line": 244,
+          "end_line": 274,
+          "context": "Table 1: 5 candidates with Gaia DR2 IDs, RVs, Vtot, Pub values."
+        },
+        {
+          "kind": "text",
+          "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+          "start_line": 512,
+          "end_line": 530,
+          "context": "'Are these Stars Really Unbound?' section and Summary: bound halo conclusion."
+        }
+      ]
+    },
+    {
+      "group_id": "survey_crossmatch_candidates",
+      "description": "4 additional extreme-velocity stars from Marchetti et al. (2018) found in public spectroscopic surveys: APOGEE (Gaia DR2 1268023196461923712), RAVE (Gaia DR2 6639557580310606976, 5212817273334550016, 4916199478888664320).",
+      "decision": "excluded",
+      "reason": "These stars have published stellar parameters from APOGEE, RAVE, and LAMOST that also show them to be metal-poor giant stars (-1.8 < [Fe/H] < -1.5 dex), consistent with the halo origin conclusion. Paper does not claim unbound status for these stars; they are part of the same bound halo population as the APO targets.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+          "start_line": 294,
+          "end_line": 332,
+          "context": "Survey cross-match: 4 stars in APOGEE/LAMOST/RAVE, all metal-poor giants."
+        }
+      ]
+    }
+  ]
+}

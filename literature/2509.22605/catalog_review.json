@@ -1,0 +1,286 @@
+{
+    "schema_version": "stella.article_data_assets.review.v1",
+    "paper": {
+        "arxiv_id": "2509.22605",
+        "title": "High Proper Motion Discoveries from the UKIRT Hemisphere Survey",
+        "month": "2025-09",
+        "source_note_json": "notes/2025/2025-09/2025-09.json",
+        "links": {
+            "abs": "https://arxiv.org/abs/2509.22605",
+            "pdf": "https://arxiv.org/pdf/2509.22605"
+        }
+    },
+    "source": {
+        "paper_dir": "literature/2509.22605",
+        "audit_path": "literature/2509.22605/audit.json",
+        "source_dir": "literature/2509.22605/arxiv_source",
+        "tex_root": "literature/2509.22605/arxiv_source/main.tex",
+        "source_available": true
+    },
+    "review": {
+        "status": "reviewed",
+        "reviewed_at": "2026-05-17T12:34:28",
+        "reviewer": "agent",
+        "summary": "Auto-filled review: 4 internal table(s), 4 external resource(s)."
+    },
+    "internal_tables": [
+        {
+            "id": "table-tab-props",
+            "kind": "latex_table",
+            "asset_type": "model_fit_table",
+            "role_in_paper": "UHS High Proper Motion Discovery Properties",
+            "source_refs": [
+                {
+                    "path": "literature/2509.22605/arxiv_source/main.tex",
+                    "start_line": 183,
+                    "end_line": 265,
+                    "caption": "UHS High Proper Motion Discovery Properties",
+                    "label": "tab:props"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Column Label",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Description",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Example",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Units",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "UHS High Proper Motion Discovery Properties",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-sds",
+            "kind": "latex_table",
+            "asset_type": "data_table",
+            "role_in_paper": "Median Gaia Absolute Magnitudes of M-type Subdwarfs",
+            "source_refs": [
+                {
+                    "path": "literature/2509.22605/arxiv_source/main.tex",
+                    "start_line": 308,
+                    "end_line": 327,
+                    "caption": "Median Gaia Absolute Magnitudes of M-type Subdwarfs",
+                    "label": "tab:sds"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Spectral | Type",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadM_\\rm G | (mag)",
+                    "meaning": "Gaia G-band magnitude",
+                    "unit_text": "(mag)",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadM_\\rm BP | (mag)",
+                    "meaning": "Gaia BP magnitude",
+                    "unit_text": "(mag)",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadM_\\rm RP | (mag)",
+                    "meaning": "Gaia RP magnitude",
+                    "unit_text": "(mag)",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "N",
+                    "meaning": "Number of objects or count",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Median Gaia Absolute Magnitudes of M-type Subdwarfs",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-g_spt",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Spectral Type Estimates for Gaia Sources",
+            "source_refs": [
+                {
+                    "path": "literature/2509.22605/arxiv_source/main.tex",
+                    "start_line": 329,
+                    "end_line": 383,
+                    "caption": "Spectral Type Estimates for Gaia Sources",
+                    "label": "tab:g_spt"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "UHS | Name",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Spectral | \\colheadType\\tablenotemark*",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "UHS | Name",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Spectral | \\colheadType\\tablenotemark*",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Spectral Type Estimates for Gaia Sources",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-ng_spt",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Properties of Non-Gaia Sources",
+            "source_refs": [
+                {
+                    "path": "literature/2509.22605/arxiv_source/main.tex",
+                    "start_line": 413,
+                    "end_line": 458,
+                    "caption": "Properties of Non-Gaia Sources",
+                    "label": "tab:ng_spt"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "UHS | Name",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Spectral | Type",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadd\\tablenotemarka | (pc)",
+                    "meaning": "Column from table header",
+                    "unit_text": "pc",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadV_\\rm tan\\tablenotemarka | \\colhead(km s^-1)",
+                    "meaning": "Column from table header",
+                    "unit_text": "km s^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Properties of Non-Gaia Sources",
+            "comments": ""
+        }
+    ],
+    "external_resources": [
+        {
+            "id": "resource-001",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2509.22605/arxiv_source/main.tex",
+                    "start_line": 237,
+                    "end_line": 237,
+                    "context": "Note & Note\\tablenotemark{b} & \\dots & \\dots \\\\\n\\enddata\n\\tablecomments{This table is available in its entirety in a machine-readable form in the online journal.}\n\\tablenotetext{a}{BYW Discoverer Codes:\nA = Nikolaj Stevnbak Andersen,"
+                }
+            ],
+            "evidence": "Note & Note\\tablenotemark{b} & \\dots & \\dots \\\\\n\\enddata\n\\tablecomments{This table is available in its entirety in a machine-readable form in the online journal.}\n\\tablenotetext{a}{BYW Discoverer Codes:\nA = Nikolaj Stevnbak Andersen,",
+            "comments": ""
+        },
+        {
+            "id": "resource-002",
+            "kind": "external_url",
+            "url": "https://github.com/aburgasser/kastredux",
+            "local_path": "",
+            "description": "GitHub repository or code release referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2509.22605/arxiv_source/main.tex",
+                    "start_line": 270,
+                    "end_line": 270,
+                    "context": "\\label{sec:obs}\n\\subsection{Lick/KAST}\nWe obtained follow-up optical spectra for UHS J1803+1516 and UHS J1855+4054 with the KAST double spectrograph \\citep{miller1994} on the 3 m Shane Telescope located at the Lick Observatory on Mount Hamilton, California. Data were acquired on July 27th, 2025. Observations were carried out with the 0.5\\arcsec\\ slit for J1803+1516 and 1.5\\arcsec\\ slit for J1855+4054. The 600/7500 red grating was used, which provided resolutions of $\\lambda / \\Delta\\lambda \\approx 1800$ over the 6300-9000 \\r{A} wavelength rage. For both targets, the total exposure time was 1800 seconds. Data were reduced using the \\texttt{kastredux}\\footnote{https://github.com/aburgasser/kastredux} package. \n\n\\section{Analysis}"
+                }
+            ],
+            "evidence": "\\label{sec:obs}\n\\subsection{Lick/KAST}\nWe obtained follow-up optical spectra for UHS J1803+1516 and UHS J1855+4054 with the KAST double spectrograph \\citep{miller1994} on the 3 m Shane Telescope located at the Lick Observatory on Mount Hamilton, California. Data were acquired on July 27th, 2025. Observations were carried out with the 0.5\\arcsec\\ slit for J1803+1516 and 1.5\\arcsec\\ slit for J1855+4054. The 600/7500 red grating was used, which provided resolutions of $\\lambda / \\Delta\\lambda \\approx 1800$ over the 6300-9000 \\r{A} wavelength rage. For both targets, the total exposure time was 1800 seconds. Data were reduced using the \\texttt{kastredux}\\footnote{https://github.com/aburgasser/kastredux} package. \n\n\\section{Analysis}",
+            "comments": ""
+        },
+        {
+            "id": "resource-003",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2509.22605/arxiv_source/main.tex",
+                    "start_line": 469,
+                    "end_line": 469,
+                    "context": "This publication makes use of data products from the UKIRT Hemisphere Survey, which is a joint project of the United States Naval Observatory, the University of Hawaii Institute for Astronomy, the Cambridge University Cambridge Astronomy Survey Unit, and the University of Edinburgh Wide-Field Astronomy Unit (WFAU). The WFAU gratefully acknowledges support for this work from the Science and Technology Facilities Council (STFC) through ST/T002956/1 and previous grants. SD acknowledges support from a UK STFC grant (ST/X000982/1).\n\nThis research made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n\nThe Pan-STARRS1 Surveys (PS1) and the PS1 public science archive have been made possible through contributions by the Institute for Astronomy, the University of Hawaii, the Pan-STARRS Project Office, the Max-Planck Society and its participating institutes, the Max Planck Institute for Astronomy, Heidelberg and the Max Planck Institute for Extraterrestrial Physics, Garching, The Johns Hopkins University, Durham University, the University of Edinburgh, the Queen's University Belfast, the Harvard-Smithsonian Center for Astrophysics, the Las Cumbres Observatory Global Telescope Network Incorporated, the National Central University of Taiwan, the Space Telescope Science Institute, the National Aeronautics and Space Administration under Grant No. NNX08AR22G issued through the Planetary Science Division of the NASA Science Mission Directorate, the National Science Foundation Grant No. AST–1238877, the University of Maryland, Eotvos Lorand University (ELTE), the Los Alamos National Laboratory, and the Gordon and Betty Moore Foundation."
+                }
+            ],
+            "evidence": "This publication makes use of data products from the UKIRT Hemisphere Survey, which is a joint project of the United States Naval Observatory, the University of Hawaii Institute for Astronomy, the Cambridge University Cambridge Astronomy Survey Unit, and the University of Edinburgh Wide-Field Astronomy Unit (WFAU). The WFAU gratefully acknowledges support for this work from the Science and Technology Facilities Council (STFC) through ST/T002956/1 and previous grants. SD acknowledges support from a UK STFC grant (ST/X000982/1).\n\nThis research made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n\nThe Pan-STARRS1 Surveys (PS1) and the PS1 public science archive have been made possible through contributions by the Institute for Astronomy, the University of Hawaii, the Pan-STARRS Project Office, the Max-Planck Society and its participating institutes, the Max Planck Institute for Astronomy, Heidelberg and the Max Planck Institute for Extraterrestrial Physics, Garching, The Johns Hopkins University, Durham University, the University of Edinburgh, the Queen's University Belfast, the Harvard-Smithsonian Center for Astrophysics, the Las Cumbres Observatory Global Telescope Network Incorporated, the National Central University of Taiwan, the Space Telescope Science Institute, the National Aeronautics and Space Administration under Grant No. NNX08AR22G issued through the Planetary Science Division of the NASA Science Mission Directorate, the National Science Foundation Grant No. AST–1238877, the University of Maryland, Eotvos Lorand University (ELTE), the Los Alamos National Laboratory, and the Gordon and Betty Moore Foundation.",
+            "comments": ""
+        },
+        {
+            "id": "resource-004",
+            "kind": "local_machine_readable_file",
+            "url": "",
+            "local_path": "literature/2509.22605/arxiv_source/Table1.mrt",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [],
+            "evidence": "",
+            "comments": "Discovered local machine-readable file with suffix .mrt."
+        }
+    ]
+}

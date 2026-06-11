@@ -1,0 +1,70 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:50:17",
+  "paper": {
+    "arxiv_id": "1812.00198",
+    "bibcode": null,
+    "title": "The Origins of Young Stars in the Direction of the Leading Arm of the Magellanic Stream: Abundances, Kinematics, and Orbits",
+    "month": "2018-12",
+    "source_note_json": "notes/2018/2018-12/2018-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1812.00198",
+      "pdf": "https://arxiv.org/pdf/1812.00198"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1812.00198",
+    "audit_path": "literature/1812.00198/audit.json",
+    "catalog_review_path": "literature/1812.00198/catalog_review.json",
+    "catalog_extraction_path": "literature/1812.00198/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:50:17",
+    "extractor": "agent",
+    "summary": "本文研究Magellanic Stream方向的年轻B型盘逃逸星。论文结论为这些恒星是银河系盘逃逸星，非Magellanic Stream成员，也非银河系超高速星候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "Quick scan of paper abstract and title for HVS relevance assessment.",
+      "inputs": [
+        "arXiv abstract",
+        "Monthly literature notes"
+      ],
+      "outputs": [
+        "HVS relevance classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1812.00198/paper_abstract.txt",
+          "start_line": 5,
+          "end_line": 5,
+          "context": "Paper abstract"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "quick-scan-review",
+      "description": "本文通过Magellan/MIKE高分辨率光谱和Gaia DR2自行数据，研究Magellanic Stream Leading Arm方向的15颗年轻B型星。测定恒星参数、丰度和运动学轨道，发现多数恒星具有显著轨道角动量，与Magellanic Stream极轨不一致。4颗高轨道能量星具有盘逃逸起源，出生地在距离银心12-25 kpc处。论文包含丰度表和轨道参数。这些为银河系盘逃逸星（runaway stars），非超高速星。",
+      "decision": "excluded",
+      "reason": "论文研究对象为15颗年轻B型盘逃逸星。论文明确结论为这些恒星具有银河系盘逃逸起源（disk runaway origin），非银河系超高速星候选体。逃逸星不等于超高速星——论文未声称任何目标可能脱离银河系引力束缚。最高轨道能量恒星有不确定起源但年龄小于盘穿越时间。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1812.00198/paper_abstract.txt",
+          "start_line": 5,
+          "end_line": 5,
+          "context": "Paper abstract"
+        }
+      ]
+    }
+  ]
+}

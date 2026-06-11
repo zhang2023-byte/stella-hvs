@@ -1,0 +1,97 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2004.12622",
+    "title": "The K supergiant runaway star HD 137071",
+    "month": "2020-04",
+    "source_note_json": "notes/2020/2020-04/2020-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2004.12622",
+      "pdf": "https://arxiv.org/pdf/2004.12622"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2004.12622",
+    "audit_path": "literature/2004.12622/audit.json",
+    "source_dir": "literature/2004.12622/arxiv_source",
+    "tex_root": "literature/2004.12622/arxiv_source/HD137071.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T11:32:15",
+    "reviewer": "agent",
+    "summary": "The paper presents a detailed study of the K4II supergiant HD 137071, establishing it as a runaway star. One internal LaTeX table provides basic data (coordinates, proper motions, radial velocity, spectral type, luminosity class, distance). The star's spatial velocity is 54.1 km/s with respect to LSR, which classifies it as a runaway but NOT as an unbound hypervelocity star. The paper focuses on the star's origin (binary supernova ejection ~32 Myr ago) and does not claim Galactic escape. No machine-readable data files are distributed."
+  },
+  "internal_tables": [
+    {
+      "id": "table-basicpars",
+      "kind": "latex_table",
+      "asset_type": "",
+      "role_in_paper": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.12622/arxiv_source/HD137071.tex",
+          "start_line": 87,
+          "end_line": 108,
+          "caption": "Basic data of HD~137071",
+          "label": "basicpars"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\alpha (2000)",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "15:22:37.37",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Basic data of HD~137071",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://gravpot.utinam.cnrs.fr/",
+      "local_path": "",
+      "description": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.12622/arxiv_source/HD137071.tex",
+          "start_line": 179,
+          "end_line": 179,
+          "context": "The runaway nature of HD~137071 is revealed solely by its position and kinematics in combination with its youth. The current peculiar velocity with respect to the local standard of rest is $54.1$~km~s$^{-1}$, largely in the directions parallel to the galactic plane, with a very small vertical component ($2.1$~km~s$^{-1}$) at present. Unlike the case of the more massive galactic M-type supergiant runaways mentioned in the introduction, no arc-like structure tracing a bow shock is identified in the proximities of HD~137071 that would result from the interaction of its stellar wind with the interstellar medium, and that we would have expected to appear in infrared images of the WISE All-Sky Atlas if present. This may be due both to the weaker winds from red supergiants descending from B-type stars, as well as to the highly rarified interstellar gas at its distance from the galactic plane. Unlike most runaway stars known, the proper motion and radial velocity of HD~137071 indicate that it is moving toward the galactic plane, rather than away from it. Given its youth and the considerable distance to the galactic plane, this most likely indicates that HD~137071 is making its first return toward the galactic plane after having been born in its proximity and been subsequently ejected.\n\nTo explore the past trajectory of HD~137071 we have used the GRAVPOT16 web utility\\footnote{https://gravpot.utinam.cnrs.fr/}, based on the Besan\\c{c}on Galaxy model \\citep{Robin12} as described in the PhD Thesis of J.G. Fern\\'andez-Trincado (2017) and leaving as default parameters those in \\citet{Helmi18}. The reconstruction of the galactic orbit of HD~137071 under this potential indicates that the star reached its largest distance from the galactic plane only 2~Myr ago, as indicated by the very small value of the component of the velocity perpendicular to the galactic plane. Tracing the trajectory further back in time, HD~137071 would have been on the galactic plane $31.5\\pm 0.5$~Myr ago. At that point, the components of the velocity with respect to its local standard of rest were $U = 20.6$~km~s$^{-1}$ (away from the galactic center), $V = -32.9$~km~s$^{-1}$ (in the direction opposite to galactic rotation), and $W = 28.6$~km~s$^{-1}$ (toward the North galactic pole). Each of those quantities is twice or more higher than the velocity dispersion of the extreme Population~I in the corresponding coordinate, and imply a spatial velocity of $48.2$~km~s$^{-1}$ with respect to the local standard of rest at the time of the galactic plane crossing. Assuming that the birthplace of HD~137071 lies approximately at the location of its intersection with the galactic plane $31.5$~Myr ago, and that it has no peculiar motion with respect to the galactic circular rotation, its present location should be in the direction of galactic longitude $l \\sim 93^\\circ$, at a distance of $\\sim 1.4$~kpc from the Sun. The open cluster NGC~7086 lies at that approximate distance \\citep{Cantat18} about one degree away, but at an estimated age of $100$~Myr \\citep{Rosvick06} it can be ruled out as the birthplace of HD~137071. No other candidate clusters or aggregates are known in the region. Our results remain essentially unchanged using the galactic potential of \\citet{Mcmillan17}, which sets the galactic plane crossing at the slightly later time of 30~Myr ago.\n\nOn the other hand, any age within the possible range discussed in Section~\\ref{physpar} implies that HD~137071 was already in existence at the time of the galactic plane crossing, then as a B2V main sequence star on its way to becoming a red supergiant about 30~Myr later. Taken at face value, even the lower limit to the age derived in Section~\\ref{physpar} would situate the birthplace of HD~137071 on the opposite side of the galactic plane, at least 100~pc from it, and up to $\\sim 400$~pc if the precursor were a longer-lived fast rotator. Those are rather large values when compared with the scale height of the thin disk traced by the extreme Population~I, and lead us to favor an interpretation in which the precursor of HD~137071 would have been instead born near the galactic plane, becoming a runaway only after having spent several Myr on the main sequence. Such a lag, perhaps reaching as many as $\\sim 20$~Myr, between the formation of HD~137071 and its ejection as a runaway tends to favor the supernova disruption mechanism rather than the dynamical interaction one as the cause of its runaway nature. Ejection of most stars ending up as runaways is expected to take place in the initial relaxation phases of the dense, moderately massive clusters that simulations suggest as the preferred scenario for dynamical ejection \\citep{Fujii11}. As a consequence, we would have expected the time since ejection from the cluster to be very similar to the age of the star, which does not seem to be the case for HD~137071."
+        }
+      ],
+      "evidence": "The runaway nature of HD~137071 is revealed solely by its position and kinematics in combination with its youth. The current peculiar velocity with respect to the local standard of rest is $54.1$~km~s$^{-1}$, largely in the directions parallel to the galactic plane, with a very small vertical component ($2.1$~km~s$^{-1}$) at present. Unlike the case of the more massive galactic M-type supergiant runaways mentioned in the introduction, no arc-like structure tracing a bow shock is identified in the proximities of HD~137071 that would result from the interaction of its stellar wind with the interstellar medium, and that we would have expected to appear in infrared images of the WISE All-Sky Atlas if present. This may be due both to the weaker winds from red supergiants descending from B-type stars, as well as to the highly rarified interstellar gas at its distance from the galactic plane. Unlike most runaway stars known, the proper motion and radial velocity of HD~137071 indicate that it is moving toward the galactic plane, rather than away from it. Given its youth and the considerable distance to the galactic plane, this most likely indicates that HD~137071 is making its first return toward the galactic plane after having been born in its proximity and been subsequently ejected.\n\nTo explore the past trajectory of HD~137071 we have used the GRAVPOT16 web utility\\footnote{https://gravpot.utinam.cnrs.fr/}, based on the Besan\\c{c}on Galaxy model \\citep{Robin12} as described in the PhD Thesis of J.G. Fern\\'andez-Trincado (2017) and leaving as default parameters those in \\citet{Helmi18}. The reconstruction of the galactic orbit of HD~137071 under this potential indicates that the star reached its largest distance from the galactic plane only 2~Myr ago, as indicated by the very small value of the component of the velocity perpendicular to the galactic plane. Tracing the trajectory further back in time, HD~137071 would have been on the galactic plane $31.5\\pm 0.5$~Myr ago. At that point, the components of the velocity with respect to its local standard of rest were $U = 20.6$~km~s$^{-1}$ (away from the galactic center), $V = -32.9$~km~s$^{-1}$ (in the direction opposite to galactic rotation), and $W = 28.6$~km~s$^{-1}$ (toward the North galactic pole). Each of those quantities is twice or more higher than the velocity dispersion of the extreme Population~I in the corresponding coordinate, and imply a spatial velocity of $48.2$~km~s$^{-1}$ with respect to the local standard of rest at the time of the galactic plane crossing. Assuming that the birthplace of HD~137071 lies approximately at the location of its intersection with the galactic plane $31.5$~Myr ago, and that it has no peculiar motion with respect to the galactic circular rotation, its present location should be in the direction of galactic longitude $l \\sim 93^\\circ$, at a distance of $\\sim 1.4$~kpc from the Sun. The open cluster NGC~7086 lies at that approximate distance \\citep{Cantat18} about one degree away, but at an estimated age of $100$~Myr \\citep{Rosvick06} it can be ruled out as the birthplace of HD~137071. No other candidate clusters or aggregates are known in the region. Our results remain essentially unchanged using the galactic potential of \\citet{Mcmillan17}, which sets the galactic plane crossing at the slightly later time of 30~Myr ago.\n\nOn the other hand, any age within the possible range discussed in Section~\\ref{physpar} implies that HD~137071 was already in existence at the time of the galactic plane crossing, then as a B2V main sequence star on its way to becoming a red supergiant about 30~Myr later. Taken at face value, even the lower limit to the age derived in Section~\\ref{physpar} would situate the birthplace of HD~137071 on the opposite side of the galactic plane, at least 100~pc from it, and up to $\\sim 400$~pc if the precursor were a longer-lived fast rotator. Those are rather large values when compared with the scale height of the thin disk traced by the extreme Population~I, and lead us to favor an interpretation in which the precursor of HD~137071 would have been instead born near the galactic plane, becoming a runaway only after having spent several Myr on the main sequence. Such a lag, perhaps reaching as many as $\\sim 20$~Myr, between the formation of HD~137071 and its ejection as a runaway tends to favor the supernova disruption mechanism rather than the dynamical interaction one as the cause of its runaway nature. Ejection of most stars ending up as runaways is expected to take place in the initial relaxation phases of the dense, moderately massive clusters that simulations suggest as the preferred scenario for dynamical ejection \\citep{Fujii11}. As a consequence, we would have expected the time since ejection from the cluster to be very similar to the age of the star, which does not seem to be the case for HD~137071.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.12622/arxiv_source/HD137071.tex",
+          "start_line": 191,
+          "end_line": 191,
+          "context": "\\begin{acknowledgements}\n\nIt is always a pleasure to thank the hospitality of all the staff at Calar Alto Observatory, and particularly David Galad\\'\\i\\ on this occasion for his support with our observations. This work was supported by the MINECO (Spanish Ministry of Economy) through grant RTI2018-095076-B-C21 (MINECO/FEDER, UE). The Two Micron All Sky Survey (2MASS) is a joint project of the University of Massachusetts and the Infrared Processing and Analysis Center/California Institute of Technology, funded by the National Aeronautics and Space Administration and the National Science Foundation. This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n\n\\end{acknowledgements}"
+        }
+      ],
+      "evidence": "\\begin{acknowledgements}\n\nIt is always a pleasure to thank the hospitality of all the staff at Calar Alto Observatory, and particularly David Galad\\'\\i\\ on this occasion for his support with our observations. This work was supported by the MINECO (Spanish Ministry of Economy) through grant RTI2018-095076-B-C21 (MINECO/FEDER, UE). The Two Micron All Sky Survey (2MASS) is a joint project of the University of Massachusetts and the Infrared Processing and Analysis Center/California Institute of Technology, funded by the National Aeronautics and Space Administration and the National Science Foundation. This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n\n\\end{acknowledgements}",
+      "comments": ""
+    }
+  ]
+}

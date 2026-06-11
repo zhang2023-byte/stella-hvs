@@ -1,0 +1,153 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2306.11663",
+    "title": "Not so fast, not so furious: just magnetic",
+    "month": "2023-06",
+    "source_note_json": "notes/2023/2023-06/2023-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2306.11663",
+      "pdf": "https://arxiv.org/pdf/2306.11663"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2306.11663",
+    "audit_path": "literature/2306.11663/audit.json",
+    "source_dir": "literature/2306.11663/arxiv_source",
+    "tex_root": "literature/2306.11663/arxiv_source/NFNF.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:37:53",
+    "reviewer": "agent",
+    "summary": "Paper reports new FORS2/ESO VLT and ESPaDOnS/CFHT spectropolarimetric observations of the magnetic white dwarf WD 0810-353. One internal table (Table 1: observing log) with 10 columns covering 6 observation epochs. Raw data available at ESO archive and CADC. No machine-readable tables, supplementary data files, or code repositories were published alongside the paper. External resources: VOSA SED tool (footnote), CADC/ESO data archives."
+  },
+  "internal_tables": [
+    {
+      "id": "table-Tab_Log",
+      "kind": "latex_table",
+      "asset_type": "observing_log",
+      "role_in_paper": "Documents all spectropolarimetric observations used in the analysis, including archival data from Bagnulo & Landstreet (2020) and new data from this work.",
+      "source_refs": [
+        {
+          "path": "literature/2306.11663/arxiv_source/NFNF.tex",
+          "start_line": 104,
+          "end_line": 121,
+          "caption": "\\label{Tab_Log} Log of the spectropolarimetric observations of WD\\,0810-353.",
+          "label": "Tab_Log"
+        }
+      ],
+      "columns": [
+        {
+          "name": "DATE | yyyy-dd-mm",
+          "meaning": "Date of observation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "UT | hh:mm",
+          "meaning": "Universal Time at start of observation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Exp | (s)",
+          "meaning": "Total exposure time in seconds",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S/N | per \\AA",
+          "meaning": "Signal-to-noise ratio per angstrom",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Instrument",
+          "meaning": "Name of the spectropolarimetric instrument (FORS2 or ESPaDOnS)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Grism",
+          "meaning": "Grism or grating setting used",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral | range (\\AA)",
+          "meaning": "Wavelength coverage of the observation",
+          "unit_text": "Å",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R",
+          "meaning": "Spectral resolving power (λ/Δλ)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Reference",
+          "meaning": "Publication reference for the observation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Color code | in Fig.~\\refNew_spectra",
+          "meaning": "Color used to plot this spectrum in Figure New_spectra",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\label{Tab_Log} Log of the spectropolarimetric observations of WD\\,0810-353.",
+      "comments": "6 rows of data (4 archival from BagLan20 + 2 new from this work). Manually typed into LaTeX source; no external machine-readable file provided."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://svo2.cab.inta-csic.es/theory/vosa/",
+      "local_path": "",
+      "description": "VOSA (Virtual Observatory SED Analyzer) web tool used by Jimenez-Esteban et al. (2018) to classify the target as non-DA via SED fitting.",
+      "source_refs": [
+        {
+          "path": "literature/2306.11663/arxiv_source/NFNF.tex",
+          "start_line": 83,
+          "end_line": 83,
+          "context": "\\citet{Jimenez-Esteban2018} classified this object as a non-DA, based on VOSA\\footnote{http://svo2.cab.inta-csic.es/theory/vosa/} WD model spectra fits to the SED"
+        }
+      ],
+      "evidence": "\\citet{Jimenez-Esteban2018} classified this object as a non-DA, based on VOSA\\footnote{http://svo2.cab.inta-csic.es/theory/vosa/} WD model spectra fits to the SED using synthetic J-PAS photometry derived from the Gaia spectra.",
+      "comments": "Reference to third-party tool, not data produced by this paper."
+    },
+    {
+      "id": "resource-002",
+      "kind": "data_repository",
+      "url": "https://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/en/",
+      "local_path": "",
+      "description": "Canadian Astronomical Data Centre (CADC) archive where raw ESPaDOnS/CFHT data are available. Raw FORS2/VLT data also available at ESO archive (archive.eso.org, program ID 110.25A1.001).",
+      "source_refs": [
+        {
+          "path": "literature/2306.11663/arxiv_source/NFNF.tex",
+          "start_line": 179,
+          "end_line": 179,
+          "context": "All raw data and calibrations of FORS2 and ESPaDOnS data are available at the observatory archives: ESO archive at {\\tt archive.eso.org} and the Canadian Astronomical Data Centre at {\\tt https://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/en/}."
+        }
+      ],
+      "evidence": "All raw data and calibrations of FORS2 and ESPaDOnS data are available at the observatory archives: ESO archive at {\\tt archive.eso.org} and the Canadian Astronomical Data Centre at {\\tt https://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/en/}.",
+      "comments": "General archive URLs; specific datasets not identified by DOI or query parameters. ESPaDOnS data at CADC, FORS2 data at ESO archive (program ID 110.25A1.001)."
+    }
+  ]
+}

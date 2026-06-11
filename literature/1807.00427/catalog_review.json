@@ -1,0 +1,317 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1807.00427",
+    "title": "The high velocity stars in the Local Stellar Halo from Gaia and LAMOST",
+    "month": "2018-07",
+    "source_note_json": "notes/2018/2018-07/2018-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1807.00427",
+      "pdf": "https://arxiv.org/pdf/1807.00427"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1807.00427",
+    "audit_path": "literature/1807.00427/audit.json",
+    "source_dir": "literature/1807.00427/arxiv_source",
+    "tex_root": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T08:00:30",
+    "reviewer": "agent",
+    "summary": "Paper cross-matches Gaia DR1 (TGAS) astrometry with LAMOST DR4 spectroscopy (~230,000 common stars) to study the kinematics and chemistry of local halo stars. From 436 kinematically-identified halo stars (|V-V_LSR| > 220 km/s), 16 high-velocity (HiVel) stars are selected with V_gsr > 300 km/s. Chemical abundances ([Fe/H], [α/Fe]) and backwards orbit integrations in a Galactic potential are used to investigate origins. Three internal tables: (1) Table 1 — reference population parameters (observed fractions, velocity dispersions σ_U/σ_V/σ_W, asymmetric drift) for thin/thick disk and halo from Bensby+2003; (2) Table 2 — primary catalog of 16 HiVel stars with Gaia DR1 source-id, Galactic coordinates, proper motions, heliocentric radial velocities, atmospheric parameters (Teff, log g, [Fe/H], [α/Fe]); (3) Table 3 — derived Galactocentric Cartesian positions (x, y, z), velocity components (U, V, W), Galactocentric rest-frame velocity V_gsr, heliocentric distance D_sun, orbital eccentricity e, and maximum height above the plane Z_max for the 16 HiVel stars. No machine-readable data tables are provided in the arXiv source. The data are drawn from public surveys (Gaia DR1/TGAS and LAMOST DR4). External resource URLs in the acknowledgments only reference the Gaia and DPAC websites — no CDS/VizieR data links detected."
+  },
+  "internal_tables": [
+    {
+      "id": "table-Table-1",
+      "kind": "latex_table",
+      "asset_type": "reference_table",
+      "role_in_paper": "Reference table reproducing the observed fraction of stars (X), characteristic velocity dispersions (σ_U, σ_V, σ_W), and asymmetric drift (V_asym) for the thin disk, thick disk, and halo populations in the solar neighborhood, from Bensby et al. (2003). Used as input to a Gaussian population model (Eq. 4-5) to estimate thick-disk contamination probability (TD/H) in the kinematically-selected halo sample.",
+      "source_refs": [
+        {
+          "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+          "start_line": 178,
+          "end_line": 195,
+          "caption": "Observed fraction of stars for the populations in the solar neighborhood, characteristic velocity dispersions (σ_U, σ_V, and σ_W) and the asymmetric drift (V_asym)",
+          "label": "Table 1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Population",
+          "meaning": "Galactic stellar population: Thin disk (D), Thick disk (TD), or Halo (H).",
+          "unit_text": "",
+          "source_of_definition": "table header / Bensby et al. 2003",
+          "confidence": 1.0
+        },
+        {
+          "name": "X",
+          "meaning": "Observed fraction of stars in the solar neighborhood belonging to this population.",
+          "unit_text": "",
+          "source_of_definition": "table header / Bensby et al. 2003",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ_U",
+          "meaning": "Characteristic velocity dispersion in the U (radial) direction.",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / Bensby et al. 2003",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ_V",
+          "meaning": "Characteristic velocity dispersion in the V (tangential/rotational) direction.",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / Bensby et al. 2003",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ_W",
+          "meaning": "Characteristic velocity dispersion in the W (vertical) direction.",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / Bensby et al. 2003",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_asym",
+          "meaning": "Asymmetric drift: offset between the mean rotational velocity of the population and the Local Standard of Rest.",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / Bensby et al. 2003",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Observed fraction of stars for the populations in the solar neighborhood, characteristic velocity dispersions (σ_U, σ_V, and σ_W) and the asymmetric drift (V_asym)",
+      "comments": "Values are taken from Bensby et al. (2003, A&A 410, 527). Thin disk: X=0.94, σ=(35,20,16), V_asym=-15. Thick disk: X=0.06, σ=(67,38,35), V_asym=-46. Halo: X=0.0015, σ=(160,90,90), V_asym=-220."
+    },
+    {
+      "id": "table-Table-2",
+      "kind": "latex_table",
+      "asset_type": "catalog_table",
+      "role_in_paper": "Primary catalog table presenting atmospheric parameters, celestial positions, proper motions, and radial velocities for the 16 high-velocity (HiVel) star candidates selected from the Gaia DR1 + LAMOST DR4 cross-matched sample. This is the core observational dataset of the paper, defining the HiVel sample for subsequent chemical and orbital analysis.",
+      "source_refs": [
+        {
+          "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+          "start_line": 251,
+          "end_line": 279,
+          "caption": "Atmospheric parameters and positions for the 16 HiVel stars.",
+          "label": "Table 2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Notation",
+          "meaning": "Identifier for each high-velocity star (HiVel1 through HiVel16), assigned by the authors.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "source-id",
+          "meaning": "Gaia DR1 source identifier (TGAS catalog). A unique 64-bit integer identifying the star in the Gaia archive.",
+          "unit_text": "",
+          "source_of_definition": "table header / Gaia DR1",
+          "confidence": 1.0
+        },
+        {
+          "name": "l",
+          "meaning": "Galactic longitude from the TGAS catalog.",
+          "unit_text": "deg",
+          "source_of_definition": "table header / Gaia DR1",
+          "confidence": 1.0
+        },
+        {
+          "name": "b",
+          "meaning": "Galactic latitude from the TGAS catalog.",
+          "unit_text": "deg",
+          "source_of_definition": "table header / Gaia DR1",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_α cos(δ)",
+          "meaning": "Proper motion in right ascension (multiplied by cos(δ)), from Gaia DR1, with uncertainty.",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header / Gaia DR1",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_δ",
+          "meaning": "Proper motion in declination, from Gaia DR1, with uncertainty.",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header / Gaia DR1",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_⊙",
+          "meaning": "Heliocentric radial velocity measured from LAMOST DR4 spectra (LSP3 pipeline), with uncertainty.",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header / LAMOST DR4 LSP3",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_eff",
+          "meaning": "Effective temperature from LAMOST LSP3 stellar parameter pipeline (template matching with MILES library).",
+          "unit_text": "K",
+          "source_of_definition": "table header / LAMOST LSP3",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(g)",
+          "meaning": "Surface gravity (logarithmic) from LAMOST LSP3 stellar parameter pipeline.",
+          "unit_text": "dex",
+          "source_of_definition": "table header / LAMOST LSP3",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]",
+          "meaning": "Iron abundance relative to solar, from LAMOST LSP3 pipeline, with uncertainty.",
+          "unit_text": "dex",
+          "source_of_definition": "table header / LAMOST LSP3",
+          "confidence": 1.0
+        },
+        {
+          "name": "[α/Fe]",
+          "meaning": "Overall α-element (Mg, Si, Ca, Ti) to iron abundance ratio, from LAMOST LSP3 pipeline, with uncertainty. Dash indicates no measurement available.",
+          "unit_text": "dex",
+          "source_of_definition": "table header / LAMOST LSP3",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Atmospheric parameters and positions for the 16 HiVel stars.",
+      "comments": "Stars HiVel6, HiVel12, and HiVel16 have no [α/Fe] measurement. Three stars (HiVel14, HiVel15, HiVel16) are later found to be unbound based on their very high velocities. The sample was selected from 436 halo stars with V_gsr > 300 km/s, after quality cuts: Teff 3500-8000 K, log g > 0.5, [Fe/H] > -4.0, relative errors in proper motion and distance < 50%."
+    },
+    {
+      "id": "table-003",
+      "kind": "latex_table",
+      "asset_type": "catalog_table",
+      "role_in_paper": "Derived kinematic and orbital table presenting Galactocentric Cartesian positions (x, y, z), heliocentric distance (D_⊙), Galactocentric velocity components (U, V, W), Galactocentric rest-frame velocity (V_gsr), orbital eccentricity (e), and maximum vertical excursion (Z_max) for the 16 HiVel stars. These quantities are computed from Gaia DR1 astrometry + LAMOST RVs using adopted Solar position/velocity parameters and orbital integration in the McMillan (2017) Galactic potential.",
+      "source_refs": [
+        {
+          "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+          "start_line": 281,
+          "end_line": 308,
+          "caption": "Spatial positions and Velocities of 16 HiVel stars",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Notation",
+          "meaning": "HiVel star identifier matching Table 2 (HiVel1 through HiVel16).",
+          "unit_text": "",
+          "source_of_definition": "table header / matches Table 2",
+          "confidence": 1.0
+        },
+        {
+          "name": "x",
+          "meaning": "Galactocentric Cartesian X-coordinate (X axis toward Galactic center, l=0°), with uncertainty, computed from TGAS parallax distances using the Astraatmadja & Bailer-Jones (2016) Bayesian distance estimator.",
+          "unit_text": "kpc",
+          "source_of_definition": "table header / derived from TGAS",
+          "confidence": 1.0
+        },
+        {
+          "name": "y",
+          "meaning": "Galactocentric Cartesian Y-coordinate (Y axis toward l=90°, direction of Solar motion), with uncertainty.",
+          "unit_text": "kpc",
+          "source_of_definition": "table header / derived from TGAS",
+          "confidence": 1.0
+        },
+        {
+          "name": "z",
+          "meaning": "Galactocentric Cartesian Z-coordinate (Z axis toward North Galactic Pole), with uncertainty.",
+          "unit_text": "kpc",
+          "source_of_definition": "table header / derived from TGAS",
+          "confidence": 1.0
+        },
+        {
+          "name": "U",
+          "meaning": "Galactocentric radial velocity component (positive outward from GC), with uncertainty. Computed from observed velocities corrected for Solar peculiar motion and LSR.",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header / derived",
+          "confidence": 1.0
+        },
+        {
+          "name": "V",
+          "meaning": "Galactocentric tangential velocity component (positive in direction of Galactic rotation), with uncertainty.",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header / derived",
+          "confidence": 1.0
+        },
+        {
+          "name": "W",
+          "meaning": "Galactocentric vertical velocity component (positive toward North Galactic Pole), with uncertainty.",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header / derived",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_gsr",
+          "meaning": "Total Galactocentric rest-frame speed: magnitude of the 3D space velocity vector in the Galactocentric frame, without uncertainty reported in the table.",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header / derived",
+          "confidence": 1.0
+        },
+        {
+          "name": "D_⊙",
+          "meaning": "Heliocentric distance estimated from TGAS parallax using the Bayesian distance estimator of Astraatmadja & Bailer-Jones (2016), with uncertainty.",
+          "unit_text": "pc",
+          "source_of_definition": "table header / Astraatmadja & Bailer-Jones 2016",
+          "confidence": 1.0
+        },
+        {
+          "name": "e",
+          "meaning": "Orbital eccentricity, defined as e = (r_apo - r_peri)/(r_apo + r_peri), derived from backwards orbit integration in the McMillan (2017) Galactic potential model. Not reported for HiVel14-16 (unbound stars).",
+          "unit_text": "",
+          "source_of_definition": "table header / McMillan 2017 potential",
+          "confidence": 1.0
+        },
+        {
+          "name": "Z_max",
+          "meaning": "Maximum vertical height above the Galactic plane reached along the orbit, from backwards integration. Not reported for HiVel14-16 (unbound stars).",
+          "unit_text": "kpc",
+          "source_of_definition": "table header / McMillan 2017 potential",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Spatial positions and Velocities of 16 HiVel stars",
+      "comments": "Three stars (HiVel14, HiVel15, HiVel16) have no orbital parameters (e, Z_max) because they are unbound — their velocities exceed the local escape speed. Adopted parameters: R_⊙=8.2 kpc, V_LSR=220 km/s, solar peculiar motion (10.0, 11.0, 7.0) km/s."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission homepage. The paper uses Gaia DR1 (TGAS) proper motions and parallaxes as primary astrometric input. This URL appears in the acknowledgments as a general resource reference, not a direct data link.",
+      "source_refs": [
+        {
+          "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+          "start_line": 398,
+          "end_line": 398,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission Gaia (http://www.cosmos.esa.int/gaia), processed by the Gaia Data Processing and Analysis Consortium (DPAC, http://www.cosmos.esa.int/web/gaia/dpac/consortium)."
+        }
+      ],
+      "evidence": "This work has made use of data from the European Space Agency (ESA) mission Gaia (http://www.cosmos.esa.int/gaia), processed by the Gaia Data Processing and Analysis Consortium (DPAC, http://www.cosmos.esa.int/web/gaia/dpac/consortium).",
+      "comments": "Mission homepage only — the actual data come from Gaia DR1 (TGAS catalog) available at https://gea.esac.esa.int/archive/."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "Gaia Data Processing and Analysis Consortium (DPAC) homepage. Referenced in acknowledgments only.",
+      "source_refs": [
+        {
+          "path": "literature/1807.00427/arxiv_source/dch.hjn.tex",
+          "start_line": 398,
+          "end_line": 398,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission Gaia (http://www.cosmos.esa.int/gaia), processed by the Gaia Data Processing and Analysis Consortium (DPAC, http://www.cosmos.esa.int/web/gaia/dpac/consortium)."
+        }
+      ],
+      "evidence": "This work has made use of data from the European Space Agency (ESA) mission Gaia (http://www.cosmos.esa.int/gaia), processed by the Gaia Data Processing and Analysis Consortium (DPAC, http://www.cosmos.esa.int/web/gaia/dpac/consortium).",
+      "comments": "Acknowledgments-only reference; not a data access point."
+    }
+  ]
+}

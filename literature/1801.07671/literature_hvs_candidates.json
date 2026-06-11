@@ -1,0 +1,56 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:06:17",
+  "paper": {
+    "arxiv_id": "1801.07671",
+    "bibcode": "2018AstL...44..193B",
+    "title": "Search for Stellar Streams Based on Data from the RAVE5 and Gaia TGAS Catalogues",
+    "month": "2018-01",
+    "source_note_json": "notes/2018/2018-01/2018-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1801.07671",
+      "pdf": "https://arxiv.org/pdf/1801.07671"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1801.07671",
+    "audit_path": "literature/1801.07671/audit.json",
+    "catalog_review_path": "literature/1801.07671/catalog_review.json",
+    "catalog_extraction_path": "literature/1801.07671/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1801.07671/catalog_tables/table-1-bb17-3-clump-stars.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:06:17",
+    "extractor": "agent",
+    "summary": "No HVS candidates found. This paper searches for stellar streams in the solar neighborhood using proper motions from Gaia TGAS and line-of-sight velocities from RAVE5. The paper identifies three kinematic clumps (BB17-1, BB17-2, BB17-3) with large velocities (V<-150 km/s), associating BB17-3 with debris from the globular cluster ω Cen. The single mention of 'escape velocity from the Galaxy' (lines 248-250) is a passing technical note about a data quality cut (|Vr|<350 km/s) to filter out low-quality measurements with spuriously high velocities — it is not a claim about unbound or hypervelocity stars. The paper does not select for or discuss HVS, hypervelocity stars, or Galactic escape trajectories."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "bb17-clumps",
+      "description": "Three kinematic clumps (BB17-1, BB17-2, BB17-3) identified in the V vs sqrt(U^2+2V^2) velocity plane from >200,000 RAVE5+TGAS stars with V<-150 km/s. The paper searches for stellar streams, not HVS, and the velocity threshold is well below Galactic escape speed.",
+      "decision": "excluded",
+      "reason": "No HVS candidates present. The paper identifies stellar streams (kinematic clumps) associated with known structures like ω Cen debris. The velocity range (V<-150 km/s) is far below the ~500+ km/s needed for unbound Galactic trajectories. The single mention of 'escape velocity from the Galaxy' (lines 248-250) refers to a data quality cut filtering out low-SNR measurements, not an HVS claim. Full paper text reviewed — zero claims of hypervelocity stars, unbound stars, or Galactic escape trajectories as a scientific finding.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1801.07671/arxiv_source/Om_Cen-arxiv=2018.tex",
+          "start_line": 42,
+          "end_line": 59,
+          "context": "Abstract---We have analyzed the space velocities of stars with the proper motions and trigonometric parallaxes from the Gaia TGAS catalogue in combination with the line-of-sight velocities from the RAVE5 catalogue. In the V, sqrt(U^2+2V^2) velocity plane we have identified three clumps, BB17-1, BB17-2, and BB17-3, in the region of large velocities (V<-150 km/s). The stars of the BB17-1 and BB17-2 clumps are associated with the kinematic groups VelHel-6 and VelHel-7 detected previously by Helmi et al. We give the greatest attention to the BB17-3 clump. The latter is shown to be most closely linked with the debris of the globular cluster ω Cen."
+        },
+        {
+          "kind": "text",
+          "path": "literature/1801.07671/arxiv_source/Om_Cen-arxiv=2018.tex",
+          "start_line": 243,
+          "end_line": 250,
+          "context": "More than 200 000 stars with the trigonometric parallaxes and proper motions from the Gaia TGAS catalogue and the line-of-sight velocities from the RAVE5 catalogue satisfy these constraints. The constraint on the magnitude of the line-of-sight velocity |Vr| is related to the existence of an appreciable number of low-quality measurements (with low signal-to noise ratios) with line-of-sight velocities exceeding the threshold escape velocity from the Galaxy."
+        }
+      ]
+    }
+  ]
+}

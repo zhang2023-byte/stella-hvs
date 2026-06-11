@@ -1,0 +1,337 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:38:54",
+  "paper": {
+    "arxiv_id": "2402.02876",
+    "title": "High-speed stars. II. An unbound star, young stars, bulge metal-poor stars, and Aurora candidates",
+    "month": "2024-02"
+  },
+  "review": {
+    "path": "literature/2402.02876/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123854",
+    "started_at": "2026-05-17T12:38:54",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2402.02876",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-masses",
+      "internal_table_id": "table-masses",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+        "start_line": 587,
+        "end_line": 607,
+        "caption": "Masses, ages, and metallicities for the young stars.\\label{masses}",
+        "label": "masses"
+      },
+      "source_path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+      "excerpt_path": "literature/2402.02876/catalog_sources/table-masses/excerpt.tex",
+      "sha256": "047a3b552ad27fa88b1dac90b9cd44ce43e67f6b33c85abe6095a5266c07c533",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-cabun",
+      "internal_table_id": "table-cabun",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+        "start_line": 716,
+        "end_line": 731,
+        "caption": "Carbon enhanced stars.",
+        "label": "cabun"
+      },
+      "source_path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+      "excerpt_path": "literature/2402.02876/catalog_sources/table-cabun/excerpt.tex",
+      "sha256": "9b4c4576a70b72d2c8835f3f0962b4354620386c0b4c4a320408a599845c2e5e",
+      "line_count": 16,
+      "error": ""
+    },
+    {
+      "id": "table-tablenam",
+      "internal_table_id": "table-tablenam",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+        "start_line": 1661,
+        "end_line": 2027,
+        "caption": "\\label{tablenam} Names and Gaia DR3 identifiers for our target stars",
+        "label": "tablenam"
+      },
+      "source_path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+      "excerpt_path": "literature/2402.02876/catalog_sources/table-tablenam/excerpt.tex",
+      "sha256": "a54a81bbd698abd2fb9c43873ea215b3a1f94aeed2a31603e5b8afe3302ba04e",
+      "line_count": 367,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-masses",
+      "internal_table_id": "table-masses",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2402.02876/catalog_tables/table-masses.ecsv",
+      "caption": "Masses, ages, and metallicities for the young stars.\\label{masses}",
+      "label": "masses",
+      "row_count": 10,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "Mass",
+          "Age",
+          "[Fe/H]"
+        ],
+        [
+          "",
+          "M \\sun",
+          "Ma",
+          "dex"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Mass | M \\sun",
+          "unit_text": "Mass",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Age | Ma",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "[Fe/H] | dex",
+          "unit_text": "[Fe/H]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsl0jh8z2/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2402.02876/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsl0jh8z2/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2402.02876/catalog_sources/table-masses/wrapped.tex",
+            "html": "literature/2402.02876/catalog_sources/table-masses/latexml.html",
+            "stdout": "literature/2402.02876/catalog_sources/table-masses/latexml.stdout.txt",
+            "stderr": "literature/2402.02876/catalog_sources/table-masses/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "047a3b552ad27fa88b1dac90b9cd44ce43e67f6b33c85abe6095a5266c07c533"
+    },
+    {
+      "id": "table-cabun",
+      "internal_table_id": "table-cabun",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2402.02876/catalog_tables/table-cabun.ecsv",
+      "caption": "Carbon enhanced stars.",
+      "label": "cabun",
+      "row_count": 6,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "[C/H]",
+          "[Fe/H]",
+          "[Ba/Fe] NLTE"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "[C/H]",
+          "unit_text": "[C/H]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "[Fe/H]",
+          "unit_text": "[Fe/H]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "[Ba/Fe] NLTE",
+          "unit_text": "[Ba/Fe] NLTE",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpicxb251d/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2402.02876/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpicxb251d/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2402.02876/catalog_sources/table-cabun/wrapped.tex",
+            "html": "literature/2402.02876/catalog_sources/table-cabun/latexml.html",
+            "stdout": "literature/2402.02876/catalog_sources/table-cabun/latexml.stdout.txt",
+            "stderr": "literature/2402.02876/catalog_sources/table-cabun/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9b4c4576a70b72d2c8835f3f0962b4354620386c0b4c4a320408a599845c2e5e"
+    },
+    {
+      "id": "table-tablenam",
+      "internal_table_id": "table-tablenam",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2402.02876/catalog_tables/table-tablenam.ecsv",
+      "caption": "\\label{tablenam} Names and Gaia DR3 identifiers for our target stars",
+      "label": "tablenam",
+      "row_count": 350,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "Gaia DR3 id"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR3 id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4ph13kwi/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2402.02876/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4ph13kwi/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2402.02876/catalog_sources/table-tablenam/wrapped.tex",
+            "html": "literature/2402.02876/catalog_sources/table-tablenam/latexml.html",
+            "stdout": "literature/2402.02876/catalog_sources/table-tablenam/latexml.stdout.txt",
+            "stderr": "literature/2402.02876/catalog_sources/table-tablenam/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a54a81bbd698abd2fb9c43873ea215b3a1f94aeed2a31603e5b8afe3302ba04e"
+    }
+  ]
+}

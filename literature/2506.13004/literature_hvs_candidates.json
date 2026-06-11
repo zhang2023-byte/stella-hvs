@@ -1,0 +1,84 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T19:39:08",
+  "paper": {
+    "arxiv_id": "2506.13004",
+    "bibcode": "2025ApJ...988..146V",
+    "title": "New Field OB and OBe Binaries of the SMC Wing: Observational Properties and Population Modeling",
+    "month": "2025-06",
+    "source_note_json": "notes/2025/2025-06/2025-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2506.13004",
+      "pdf": "https://arxiv.org/pdf/2506.13004"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2506.13004",
+    "audit_path": "literature/2506.13004/audit.json",
+    "catalog_review_path": "literature/2506.13004/catalog_review.json",
+    "catalog_extraction_path": "literature/2506.13004/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2506.13004/catalog_tables/table-table-OBbinaryresults.ecsv",
+      "literature/2506.13004/catalog_tables/table-table-OBebinaryresults.ecsv",
+      "literature/2506.13004/catalog_tables/table-table-Binfreq.ecsv",
+      "literature/2506.13004/catalog_tables/table-table-BPASSpop.ecsv",
+      "literature/2506.13004/catalog_tables/table-table-DESvsBSS.ecsv",
+      "literature/2506.13004/catalog_tables/table-table-RVmeas.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T19:39:08",
+    "extractor": "agent",
+    "summary": "This paper studies OB and OBe binaries in the SMC Wing. The objects discussed are runaways and walkaways ejected from their parent clusters into the SMC field via the binary supernova scenario (BSS) and dynamical ejection scenario (DES). None of the objects are presented as possibly unbound from the Milky Way / Galactic potential. The velocity thresholds (space velocities > 30 km/s for runaways, > 24 km/s transverse velocity) are used to distinguish cluster-ejected field stars from cluster-bound stars, not to assess Galactic escape. The paper does not discuss any object as a hypervelocity star, Galactic-unbound candidate, or escaping the Milky Way."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-table-OBbinaryresults",
+      "description": "RIOTS4 OB Wing Binaries: 16 OB binary systems in the SMC Wing with spectroscopic classifications, RV measurements, mass constraints, and orbital periods.",
+      "decision": "excluded",
+      "reason": "These objects are field OB binaries in the SMC, ejected from their parent clusters via DES or BSS mechanisms. The paper does not present them as possibly unbound from the Milky Way / Galactic potential.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+          "start_line": 243,
+          "end_line": 250,
+          "context": "Paper describes OB binaries in the SMC Wing and their ejection mechanisms (BSS and DES) from parent clusters into the SMC field."
+        }
+      ]
+    },
+    {
+      "group_id": "table-table-OBebinaryresults",
+      "description": "RIOTS4 OBe Wing Binaries: 17 OBe binary systems in the SMC Wing with spectroscopic classifications, RV measurements, mass constraints, and orbital periods.",
+      "decision": "excluded",
+      "reason": "These objects are field OBe binaries in the SMC, interpreted as post-interaction mass gainers ejected from their parent clusters via BSS or DES mechanisms. The paper does not present them as possibly unbound from the Milky Way / Galactic potential.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+          "start_line": 327,
+          "end_line": 335,
+          "context": "Paper describes OBe binaries in the SMC Wing as post-interaction products ejected from clusters via BSS or DES."
+        }
+      ]
+    },
+    {
+      "group_id": "table-table-RVmeas",
+      "description": "RIOTS4 Wing RV Measurements: 373 rows of radial velocity measurements for SMC Wing stars (both binaries and single stars) including coordinates, instruments, and heliocentric RVs.",
+      "decision": "excluded",
+      "reason": "These are RV measurements for SMC field stars. The paper discusses their kinematics in the context of cluster ejection into the SMC field, not Galactic escape or unbound status from the Milky Way.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.13004/arxiv_source/Vargas_Salazar2024.tex",
+          "start_line": 1640,
+          "end_line": 1650,
+          "context": "Table caption and surrounding text describe RV measurements for SMC Wing stars, both binaries and single stars."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2030 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T10:15:25",
+  "paper": {
+    "arxiv_id": "2407.02593",
+    "bibcode": "2024MNRAS.532.2875N",
+    "title": "A Detailed Chemical Study of the Extreme Velocity Stars in the Galaxy",
+    "month": "2024-07",
+    "source_note_json": "notes/2024/2024-07/2024-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2407.02593",
+      "pdf": "https://arxiv.org/pdf/2407.02593"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2407.02593",
+    "audit_path": "literature/2407.02593/audit.json",
+    "catalog_review_path": "literature/2407.02593/catalog_review.json",
+    "catalog_extraction_path": "literature/2407.02593/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+      "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+      "literature/2407.02593/catalog_tables/table-tab-line_subset.ecsv",
+      "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-22T10:15:25",
+    "extractor": "agent",
+    "summary": "Extracted 3 HVS candidates from 2407.02593: star 7 (definitively unbound), star 5 (marginally bound/possibly unbound), and star 8 (could be unbound/marginally unbound). The remaining 13 stars from the sample of 16 are explicitly concluded to be bound to the Galaxy and were excluded."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR3 astrometry, photometry, and proper motions",
+      "inputs": [
+        "Gaia DR3"
+      ],
+      "outputs": [
+        "RA, Dec, proper motions, G-band photometry"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.02593/arxiv_source/main.tex",
+          "start_line": 158,
+          "end_line": 160,
+          "context": "The astrometry is from Gaia DR3"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "sample_selection",
+      "summary": "Selection of 16 candidate late-type HVSs from literature catalogs (Bromley_2018, Hattori_2018a, Marchetti_2019b) and ADQL queries on Gaia DR2/DR3",
+      "inputs": [
+        "Literature HVS catalogs",
+        "Gaia DR2/DR3"
+      ],
+      "outputs": [
+        "16 candidate HVSs for follow-up"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.02593/arxiv_source/main.tex",
+          "start_line": 126,
+          "end_line": 137,
+          "context": "Target selection from literature and ADQL queries"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "radial_velocity_measurement",
+      "summary": "Ground-based high-resolution spectroscopic follow-up at Apache Point Observatory (ARCES) and McDonald Observatory (Tull Echelle Spectrograph) to measure radial velocities",
+      "inputs": [
+        "Candidate HVSs"
+      ],
+      "outputs": [
+        "Heliocentric radial velocities and uncertainties"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.02593/arxiv_source/main.tex",
+          "start_line": 606,
+          "end_line": 607,
+          "context": "Observations using Tull Echelle Spectrograph and ARCES"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Adopted photo-geometric distance estimates from Bailer-Jones_2021 in lieu of Gaia parallax inversion because more than a third of stars have relative parallax errors >10%",
+      "inputs": [
+        "Gaia DR3 parallaxes"
+      ],
+      "outputs": [
+        "Photo-geometric distances"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.02593/arxiv_source/main.tex",
+          "start_line": 158,
+          "end_line": 160,
+          "context": "Use distances from Bailer-Jones_2021"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-01",
+        "step-03"
+      ],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Atmospheric parameter and abundance determination using spectral synthesis with LTE models in a Bayesian framework (LoneStar code). Combined spectroscopic, photometric, and astrometric constraints via isochrone fitting.",
+      "inputs": [
+        "High-resolution spectra",
+        "Gaia DR3 photometry",
+        "2MASS, AllWISE, SkyMapper, Pan-STARRS, SDSS photometry",
+        "Bailer-Jones_2021 distances"
+      ],
+      "outputs": [
+        "Teff, logg, [Fe/H], microturbulence, chemical abundances"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.02593/arxiv_source/main.tex",
+          "start_line": 243,
+          "end_line": 268,
+          "context": "Atmospheric parameter fitting methods"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-01",
+        "step-03",
+        "step-04"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Calculation of total velocity v_total and galactocentric distance r using Gaia DR3 astrometry, Bailer-Jones_2021 distances, and ground-based RVs. Monte Carlo sampling of 1000 realizations for uncertainty propagation.",
+      "inputs": [
+        "Gaia DR3 astrometry",
+        "Bailer-Jones_2021 distances",
+        "Ground-based RVs"
+      ],
+      "outputs": [
+        "v_total",
+        "r",
+        "6D phase-space coordinates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.02593/arxiv_source/main.tex",
+          "start_line": 370,
+          "end_line": 382,
+          "context": "Dynamic analysis and velocity calculation"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "Milky Way gravitational potential model from Williams_2017, spherical model with 1-sigma parameter uncertainties",
+      "inputs": [
+        "Williams_2017 model parameters"
+      ],
+      "outputs": [
+        "Escape velocity curve with uncertainties"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.02593/arxiv_source/main.tex",
+          "start_line": 382,
+          "end_line": 383,
+          "context": "MW gravitational potential from Williams_2017"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [
+        "step-06",
+        "step-07"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Comparison of v_total to escape velocity curve to determine bound/unbound status. Monte Carlo sampling propagates astrometric, RV, and distance uncertainties.",
+      "inputs": [
+        "v_total",
+        "r",
+        "Escape velocity curve"
+      ],
+      "outputs": [
+        "Bound/unbound classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.02593/arxiv_source/main.tex",
+          "start_line": 382,
+          "end_line": 394,
+          "context": "Assessment of bound/unbound status"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": [
+        "step-06",
+        "step-07"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Orbit integration using galpy backwards in time to search for progenitor systems (globular clusters and Milky Way satellites). Integration lengths of 300 Myr to 1.5 Gyr explored.",
+      "inputs": [
+        "6D phase-space coordinates",
+        "MW potential"
+      ],
+      "outputs": [
+        "Orbital trajectories",
+        "Closest approach to candidate progenitors"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.02593/arxiv_source/main.tex",
+          "start_line": 384,
+          "end_line": 386,
+          "context": "Orbit integration to locate progenitors"
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "depends_on": [
+        "step-09"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Assessment of possible origins by comparing chemical abundances and dynamics to globular clusters, satellite galaxies, LMC, and stellar halo populations",
+      "inputs": [
+        "Orbital trajectories",
+        "Chemical abundances"
+      ],
+      "outputs": [
+        "Origin constraints"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.02593/arxiv_source/main.tex",
+          "start_line": 554,
+          "end_line": 595,
+          "context": "Possible origins for unbound or marginally bound stars"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2407.02593:cand-005",
+        "paper_candidate_id": "star 5",
+        "gaia_source_id": "Gaia DR3 1396963577886583296",
+        "all": [
+          {
+            "value": "star 5",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 22,
+                "column": "col_004",
+                "column_header": "RA",
+                "raw_value": "237.7316"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 1396963577886583296",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 22,
+                "column": "col_004",
+                "column_header": "RA",
+                "raw_value": "237.7316"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper concludes star 5 is marginally bound (1-sigma level) based on the Williams_2017 escape velocity model. It is one of three stars discussed as possibly unbound or marginally bound.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The paper explicitly discusses star 5 as marginally bound at the 1-sigma level in multiple places (Figure caption, Results, Discussion, and Summary).",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2407.02593/arxiv_source/main.tex",
+            "start_line": 609,
+            "end_line": 609,
+            "context": "Summary of bound/unbound assessment"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2407.02593/arxiv_source/main.tex",
+            "start_line": 126,
+            "end_line": 137,
+            "context": "Target selection from literature"
+          }
+        ],
+        "citation": {
+          "bibkey": "Marchetti_2019b",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2407.02593/arxiv_source/main.tex",
+              "start_line": 158,
+              "end_line": 174,
+              "context": "Reference column indicates Marchetti_2019b as source"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2407.02593/arxiv_source/stars.bib",
+              "start_line": 1304,
+              "end_line": 1314,
+              "context": "Bibliography entry for Marchetti_2019b"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "237.7316",
+            "value": "237.7316",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2407.02593/arxiv_source/main.tex",
+                  "start_line": 158,
+                  "end_line": 160,
+                  "context": "Gaia DR3 astrometry"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2407.02593/arxiv_source/main.tex",
+                  "start_line": 158,
+                  "end_line": 160,
+                  "context": "Gaia DR3 astrometry"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 22,
+                "column": "col_004",
+                "column_header": "RA",
+                "raw_value": "237.7316"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "44.4357",
+            "value": "44.4357",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2407.02593/arxiv_source/main.tex",
+                  "start_line": 158,
+                  "end_line": 160,
+                  "context": "Gaia DR3 astrometry"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2407.02593/arxiv_source/main.tex",
+                  "start_line": 158,
+                  "end_line": 160,
+                  "context": "Gaia DR3 astrometry"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 22,
+                "column": "col_005",
+                "column_header": "DEC",
+                "raw_value": "44.4357"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "19923",
+            "value": "19923",
+            "unit": "pc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 22,
+                "column": "col_006",
+                "column_header": "Distance",
+                "raw_value": "19923"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-417.5",
+            "value": "-417.5",
+            "unit": "km s^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 22,
+                "column": "col_008",
+                "column_header": "RV",
+                "raw_value": "-417.5"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ],
+            "error": "0.1"
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "13.229",
+          "value": "13.229",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 67,
+              "column": "col_003",
+              "column_header": "Gaia G | mag",
+              "raw_value": "13.229"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "11.13",
+          "value": "11.13",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "J",
+          "system": "2MASS",
+          "survey": "2MASS",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 67,
+              "column": "col_004",
+              "column_header": "J | mag",
+              "raw_value": "11.13"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "10.36",
+          "value": "10.36",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "H",
+          "system": "2MASS",
+          "survey": "2MASS",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 67,
+              "column": "col_006",
+              "column_header": "H | mag",
+              "raw_value": "10.36"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "10.19",
+          "value": "10.19",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "K_s",
+          "system": "2MASS",
+          "survey": "2MASS",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 67,
+              "column": "col_008",
+              "column_header": "K_s | mag",
+              "raw_value": "10.19"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "10.11",
+          "value": "10.11",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "W1",
+          "system": "WISE",
+          "survey": "AllWISE",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 67,
+              "column": "col_010",
+              "column_header": "W_1 | mag",
+              "raw_value": "10.11"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "10.19",
+          "value": "10.19",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "W2",
+          "system": "WISE",
+          "survey": "AllWISE",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 67,
+              "column": "col_012",
+              "column_header": "W_2 | mag",
+              "raw_value": "10.19"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "3987",
+          "value": "3987",
+          "unit": "K",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 74,
+              "column": "col_002",
+              "column_header": "\\mathrmT_eff | (K)",
+              "raw_value": "3987"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ],
+          "error": "11",
+          "description": "Spectro-photometric fit combining LTE synthesis with isochrone constraints"
+        },
+        "log_g": {
+          "raw_value": "0.47",
+          "value": "0.47",
+          "unit": "dex",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 74,
+              "column": "col_004",
+              "column_header": "\\log g | (dex)",
+              "raw_value": "0.47"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ],
+          "error": "0.04"
+        },
+        "metallicity": {
+          "raw_value": "-1.41",
+          "value": "-1.41",
+          "unit": "dex",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 74,
+              "column": "col_006",
+              "column_header": "[Fe/H] | (dex)",
+              "raw_value": "-1.41"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ],
+          "error": "0.17"
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null
+      },
+      "abundances": [
+        {
+          "raw_value": "-1.18",
+          "value": "-1.18",
+          "error": "0.08",
+          "unit": "dex",
+          "element": "Na",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 74,
+              "column": "col_009",
+              "column_header": "[Na/H] | (dex)",
+              "raw_value": "-1.18"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        {
+          "raw_value": "-0.79",
+          "value": "-0.79",
+          "error": "0.20",
+          "unit": "dex",
+          "element": "Mg",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 74,
+              "column": "col_011",
+              "column_header": "[Mg/H] | (dex)",
+              "raw_value": "-0.79"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        {
+          "raw_value": "-0.85",
+          "value": "-0.85",
+          "error": "0.08",
+          "unit": "dex",
+          "element": "Al",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 74,
+              "column": "col_013",
+              "column_header": "[Al/H] | (dex)",
+              "raw_value": "-0.85"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        {
+          "raw_value": "-0.95",
+          "value": "-0.95",
+          "error": "0.06",
+          "unit": "dex",
+          "element": "Si",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 74,
+              "column": "col_015",
+              "column_header": "[Si/H] | (dex)",
+              "raw_value": "-0.95"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        }
+      ],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": [
+          {
+            "name": "origin_assessment_summary",
+            "raw_value": "No clear dynamical progenitor found. Closest approach is Draco II at 3.5 kpc. Chemical abundances consistent with stellar halo. Paper concludes likely born in situ stellar halo.",
+            "value": "",
+            "description": "No clear dynamical progenitor found. Closest approach is Draco II at 3.5 kpc. Chemical abundances consistent with stellar halo. Paper concludes likely born in situ stellar halo.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2407.02593/arxiv_source/main.tex",
+                "start_line": 554,
+                "end_line": 595,
+                "context": "Origin assessment"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ]
+          }
+        ]
+      },
+      "extra": [
+        {
+          "name": "microturbulence",
+          "raw_value": "1.97",
+          "value": "1.97",
+          "unit": "km s^-1",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 74,
+              "column": "col_008",
+              "column_header": "\\xi | (km s^-1)",
+              "raw_value": "1.97"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2407.02593:cand-007",
+        "paper_candidate_id": "star 7",
+        "gaia_source_id": "Gaia DR3 1383279090527227264",
+        "all": [
+          {
+            "value": "star 7",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 24,
+                "column": "col_004",
+                "column_header": "RA",
+                "raw_value": "240.3373"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 1383279090527227264",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 24,
+                "column": "col_004",
+                "column_header": "RA",
+                "raw_value": "240.3373"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper concludes star 7 is definitively unbound from the Galaxy based on the Williams_2017 escape velocity model. It is the only star in the sample classified as very likely unbound.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The paper explicitly states star 7 is 'definitively unbound' and 'very likely unbound' in multiple places (Figure caption, Results, Discussion, and Summary).",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2407.02593/arxiv_source/main.tex",
+            "start_line": 609,
+            "end_line": 609,
+            "context": "Summary of bound/unbound assessment"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2407.02593/arxiv_source/main.tex",
+            "start_line": 126,
+            "end_line": 137,
+            "context": "Target selection from literature"
+          }
+        ],
+        "citation": {
+          "bibkey": "Bromley_2018",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2407.02593/arxiv_source/main.tex",
+              "start_line": 158,
+              "end_line": 174,
+              "context": "Reference column indicates Bromley_2018 as source"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2407.02593/arxiv_source/stars.bib",
+              "start_line": 266,
+              "end_line": 276,
+              "context": "Bibliography entry for Bromley_2018"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "240.3373",
+            "value": "240.3373",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2407.02593/arxiv_source/main.tex",
+                  "start_line": 158,
+                  "end_line": 160,
+                  "context": "Gaia DR3 astrometry"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2407.02593/arxiv_source/main.tex",
+                  "start_line": 158,
+                  "end_line": 160,
+                  "context": "Gaia DR3 astrometry"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 24,
+                "column": "col_004",
+                "column_header": "RA",
+                "raw_value": "240.3373"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "41.1668",
+            "value": "41.1668",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2407.02593/arxiv_source/main.tex",
+                  "start_line": 158,
+                  "end_line": 160,
+                  "context": "Gaia DR3 astrometry"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2407.02593/arxiv_source/main.tex",
+                  "start_line": 158,
+                  "end_line": 160,
+                  "context": "Gaia DR3 astrometry"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 24,
+                "column": "col_005",
+                "column_header": "DEC",
+                "raw_value": "41.1668"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "6311",
+            "value": "6311",
+            "unit": "pc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 24,
+                "column": "col_006",
+                "column_header": "Distance",
+                "raw_value": "6311"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-184.4",
+            "value": "-184.4",
+            "unit": "km s^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 24,
+                "column": "col_008",
+                "column_header": "RV",
+                "raw_value": "-184.4"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ],
+            "error": "0.2"
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "12.998",
+          "value": "12.998",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 69,
+              "column": "col_003",
+              "column_header": "Gaia G | mag",
+              "raw_value": "12.998"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "11.52",
+          "value": "11.52",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "J",
+          "system": "2MASS",
+          "survey": "2MASS",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 69,
+              "column": "col_004",
+              "column_header": "J | mag",
+              "raw_value": "11.52"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "10.99",
+          "value": "10.99",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "H",
+          "system": "2MASS",
+          "survey": "2MASS",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 69,
+              "column": "col_006",
+              "column_header": "H | mag",
+              "raw_value": "10.99"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "10.90",
+          "value": "10.90",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "K_s",
+          "system": "2MASS",
+          "survey": "2MASS",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 69,
+              "column": "col_008",
+              "column_header": "K_s | mag",
+              "raw_value": "10.90"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "10.82",
+          "value": "10.82",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "W1",
+          "system": "WISE",
+          "survey": "AllWISE",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 69,
+              "column": "col_010",
+              "column_header": "W_1 | mag",
+              "raw_value": "10.82"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "10.86",
+          "value": "10.86",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "W2",
+          "system": "WISE",
+          "survey": "AllWISE",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 69,
+              "column": "col_012",
+              "column_header": "W_2 | mag",
+              "raw_value": "10.86"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "4817",
+          "value": "4817",
+          "unit": "K",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 76,
+              "column": "col_002",
+              "column_header": "\\mathrmT_eff | (K)",
+              "raw_value": "4817"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ],
+          "error": "13",
+          "description": "Spectro-photometric fit combining LTE synthesis with isochrone constraints"
+        },
+        "log_g": {
+          "raw_value": "1.74",
+          "value": "1.74",
+          "unit": "dex",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 76,
+              "column": "col_004",
+              "column_header": "\\log g | (dex)",
+              "raw_value": "1.74"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ],
+          "error": "0.06"
+        },
+        "metallicity": {
+          "raw_value": "-1.50",
+          "value": "-1.50",
+          "unit": "dex",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 76,
+              "column": "col_006",
+              "column_header": "[Fe/H] | (dex)",
+              "raw_value": "-1.50"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ],
+          "error": "0.16"
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null
+      },
+      "abundances": [
+        {
+          "raw_value": "-1.34",
+          "value": "-1.34",
+          "error": "0.09",
+          "unit": "dex",
+          "element": "Na",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 76,
+              "column": "col_009",
+              "column_header": "[Na/H] | (dex)",
+              "raw_value": "-1.34"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        {
+          "raw_value": "-1.06",
+          "value": "-1.06",
+          "error": "0.12",
+          "unit": "dex",
+          "element": "Mg",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 76,
+              "column": "col_011",
+              "column_header": "[Mg/H] | (dex)",
+              "raw_value": "-1.06"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        {
+          "raw_value": "-1.15",
+          "value": "-1.15",
+          "error": "0.07",
+          "unit": "dex",
+          "element": "Si",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 76,
+              "column": "col_015",
+              "column_header": "[Si/H] | (dex)",
+              "raw_value": "-1.15"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        }
+      ],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": [
+          {
+            "name": "origin_assessment_summary",
+            "raw_value": "Previously characterized in Bromley_2018 and Du_2018. No clear dynamical progenitor found. Closest GC approach is NGC 6205 at ~1 kpc (1.5 Gyr integration). Chemical abundances consistent with stellar halo ([alpha/Fe] ~ 0.4). Paper concludes likely born in situ stellar halo, ruling out LMC and accreted origins.",
+            "value": "",
+            "description": "Previously characterized in Bromley_2018 and Du_2018. No clear dynamical progenitor found. Closest GC approach is NGC 6205 at ~1 kpc (1.5 Gyr integration). Chemical abundances consistent with stellar halo ([alpha/Fe] ~ 0.4). Paper concludes likely born in situ stellar halo, ruling out LMC and accreted origins.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2407.02593/arxiv_source/main.tex",
+                "start_line": 554,
+                "end_line": 595,
+                "context": "Origin assessment"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ]
+          }
+        ]
+      },
+      "extra": [
+        {
+          "name": "microturbulence",
+          "raw_value": "1.82",
+          "value": "1.82",
+          "unit": "km s^-1",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 76,
+              "column": "col_008",
+              "column_header": "\\xi | (km s^-1)",
+              "raw_value": "1.82"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2407.02593:cand-008",
+        "paper_candidate_id": "star 8",
+        "gaia_source_id": "Gaia DR3 1478837543019912064",
+        "all": [
+          {
+            "value": "star 8",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 25,
+                "column": "col_004",
+                "column_header": "RA",
+                "raw_value": "212.4777"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 1478837543019912064",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 25,
+                "column": "col_004",
+                "column_header": "RA",
+                "raw_value": "212.4777"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper concludes star 8 could be unbound based on the overlap between its v_total uncertainties and the escape velocity uncertainties. It is discussed as marginally unbound (1-sigma level) or potentially marginally bound.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The paper explicitly discusses star 8 as 'could be unbound' and 'marginally unbound' in multiple places (Figure caption, Results, Discussion, and Summary).",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2407.02593/arxiv_source/main.tex",
+            "start_line": 609,
+            "end_line": 609,
+            "context": "Summary of bound/unbound assessment"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2407.02593/arxiv_source/main.tex",
+            "start_line": 126,
+            "end_line": 137,
+            "context": "Target selection from literature"
+          }
+        ],
+        "citation": {
+          "bibkey": "Bromley_2018",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2407.02593/arxiv_source/main.tex",
+              "start_line": 158,
+              "end_line": 174,
+              "context": "Reference column indicates Bromley_2018 as source"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2407.02593/arxiv_source/stars.bib",
+              "start_line": 266,
+              "end_line": 276,
+              "context": "Bibliography entry for Bromley_2018"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "212.4777",
+            "value": "212.4777",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2407.02593/arxiv_source/main.tex",
+                  "start_line": 158,
+                  "end_line": 160,
+                  "context": "Gaia DR3 astrometry"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2407.02593/arxiv_source/main.tex",
+                  "start_line": 158,
+                  "end_line": 160,
+                  "context": "Gaia DR3 astrometry"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 25,
+                "column": "col_004",
+                "column_header": "RA",
+                "raw_value": "212.4777"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "33.7129",
+            "value": "33.7129",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2407.02593/arxiv_source/main.tex",
+                  "start_line": 158,
+                  "end_line": 160,
+                  "context": "Gaia DR3 astrometry"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2407.02593/arxiv_source/main.tex",
+                  "start_line": 158,
+                  "end_line": 160,
+                  "context": "Gaia DR3 astrometry"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 25,
+                "column": "col_005",
+                "column_header": "DEC",
+                "raw_value": "33.7129"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "5805",
+            "value": "5805",
+            "unit": "pc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 25,
+                "column": "col_006",
+                "column_header": "Distance",
+                "raw_value": "5805"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-246.1",
+            "value": "-246.1",
+            "unit": "km s^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+                "line": 25,
+                "column": "col_008",
+                "column_header": "RV",
+                "raw_value": "-246.1"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ],
+            "error": "0.6"
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "13.083",
+          "value": "13.083",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia DR3",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 70,
+              "column": "col_003",
+              "column_header": "Gaia G | mag",
+              "raw_value": "13.083"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "11.75",
+          "value": "11.75",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "J",
+          "system": "2MASS",
+          "survey": "2MASS",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 70,
+              "column": "col_004",
+              "column_header": "J | mag",
+              "raw_value": "11.75"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "11.31",
+          "value": "11.31",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "H",
+          "system": "2MASS",
+          "survey": "2MASS",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 70,
+              "column": "col_006",
+              "column_header": "H | mag",
+              "raw_value": "11.31"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "11.22",
+          "value": "11.22",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "K_s",
+          "system": "2MASS",
+          "survey": "2MASS",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 70,
+              "column": "col_008",
+              "column_header": "K_s | mag",
+              "raw_value": "11.22"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "11.17",
+          "value": "11.17",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "W1",
+          "system": "WISE",
+          "survey": "AllWISE",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 70,
+              "column": "col_010",
+              "column_header": "W_1 | mag",
+              "raw_value": "11.17"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "11.18",
+          "value": "11.18",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "band": "W2",
+          "system": "WISE",
+          "survey": "AllWISE",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+              "line": 70,
+              "column": "col_012",
+              "column_header": "W_2 | mag",
+              "raw_value": "11.18"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "5099",
+          "value": "5099",
+          "unit": "K",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 77,
+              "column": "col_002",
+              "column_header": "\\mathrmT_eff | (K)",
+              "raw_value": "5099"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ],
+          "error": "47",
+          "description": "Spectro-photometric fit combining LTE synthesis with isochrone constraints"
+        },
+        "log_g": {
+          "raw_value": "1.93",
+          "value": "1.93",
+          "unit": "dex",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 77,
+              "column": "col_004",
+              "column_header": "\\log g | (dex)",
+              "raw_value": "1.93"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ],
+          "error": "0.09"
+        },
+        "metallicity": {
+          "raw_value": "-1.92",
+          "value": "-1.92",
+          "unit": "dex",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 77,
+              "column": "col_006",
+              "column_header": "[Fe/H] | (dex)",
+              "raw_value": "-1.92"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ],
+          "error": "0.11"
+        },
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null
+      },
+      "abundances": [
+        {
+          "raw_value": "-1.25",
+          "value": "-1.25",
+          "error": "0.20",
+          "unit": "dex",
+          "element": "Na",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 77,
+              "column": "col_009",
+              "column_header": "[Na/H] | (dex)",
+              "raw_value": "-1.25"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        {
+          "raw_value": "-1.64",
+          "value": "-1.64",
+          "error": "0.11",
+          "unit": "dex",
+          "element": "Mg",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 77,
+              "column": "col_011",
+              "column_header": "[Mg/H] | (dex)",
+              "raw_value": "-1.64"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        }
+      ],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": [
+          {
+            "name": "origin_assessment_summary",
+            "raw_value": "No clear dynamical progenitor found. With modified potential (heavier DM halo), closest approach is NGC 5897 at ~280 pc ~1.25 Gyr ago. Chemical abundances consistent with stellar halo. Paper concludes likely from stellar halo.",
+            "value": "",
+            "description": "No clear dynamical progenitor found. With modified potential (heavier DM halo), closest approach is NGC 5897 at ~280 pc ~1.25 Gyr ago. Chemical abundances consistent with stellar halo. Paper concludes likely from stellar halo.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2407.02593/arxiv_source/main.tex",
+                "start_line": 554,
+                "end_line": 595,
+                "context": "Origin assessment"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ]
+          }
+        ]
+      },
+      "extra": [
+        {
+          "name": "microturbulence",
+          "raw_value": "1.83",
+          "value": "1.83",
+          "unit": "km s^-1",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+              "line": 77,
+              "column": "col_008",
+              "column_header": "\\xi | (km s^-1)",
+              "raw_value": "1.83"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        }
+      ]
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-obs-bound-stars",
+      "description": "The 13 stars from Table 1 (tab:obs) that the paper concludes are gravitationally bound to the Galaxy",
+      "decision": "excluded",
+      "reason": "The paper explicitly concludes these 13 high-velocity stars are bound to the Galaxy, despite having total velocities v_total > 300 km/s (all but one > 350 km/s). Only stars 5, 7, and 8 are discussed as possibly unbound or marginally bound.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.02593/arxiv_source/main.tex",
+          "start_line": 609,
+          "end_line": 609,
+          "context": "Summary stating the remainder are bound"
+        }
+      ]
+    }
+  ]
+}

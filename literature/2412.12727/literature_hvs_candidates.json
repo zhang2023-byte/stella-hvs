@@ -1,0 +1,103 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T18:16:49",
+  "paper": {
+    "arxiv_id": "2412.12727",
+    "bibcode": "2024NatCo..1510608P",
+    "title": "A binary system in the S cluster close to the supermassive black hole Sagittarius A*",
+    "month": "2024-12",
+    "source_note_json": "notes/2024/2024-12/2024-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2412.12727",
+      "pdf": "https://arxiv.org/pdf/2412.12727"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2412.12727",
+    "audit_path": "literature/2412.12727/audit.json",
+    "catalog_review_path": "literature/2412.12727/catalog_review.json",
+    "catalog_extraction_path": "literature/2412.12727/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2412.12727/catalog_tables/table-tab-d9_parameter-2.ecsv",
+      "literature/2412.12727/catalog_tables/table-tab-d9_kepler_comp-2.ecsv",
+      "literature/2412.12727/catalog_tables/table-tab-flux_filter_comp-2.ecsv",
+      "literature/2412.12727/catalog_tables/table-tab-extinction_comp.ecsv",
+      "literature/2412.12727/catalog_tables/table-tab-binary_overview-2.ecsv",
+      "literature/2412.12727/catalog_tables/table-tab-rv_values_1.ecsv",
+      "literature/2412.12727/catalog_tables/table-tab-rv_values_2.ecsv",
+      "literature/2412.12727/catalog_tables/table-tab-rv_values_3.ecsv",
+      "literature/2412.12727/catalog_tables/table-tab-data_sinfo1.ecsv",
+      "literature/2412.12727/catalog_tables/table-tab-data_sinfo2.ecsv",
+      "literature/2412.12727/catalog_tables/table-tab-data_sinfo4.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T18:16:49",
+    "extractor": "agent",
+    "summary": "Paper reports the detection of a spectroscopic binary system D9 in the S cluster near Sgr A*. The system is explicitly described as bound to Sgr A* on a stable, mildly eccentric orbit. The paper does not present any objects as possibly unbound from the Milky Way or as Galactic-escape candidates. All tables contain bound binary parameters, radial-velocity epochs, and observation logs for the D9 system. No HVS/unbound candidates are identified."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "d9-system",
+      "description": "The D9 binary system (primary D9a and secondary D9b) orbiting Sgr A*.",
+      "decision": "excluded",
+      "reason": "The paper explicitly describes D9 as bound to Sgr A* on a stable Keplerian orbit with semi-major axis 44 mpc and eccentricity 0.32. It states the system 'remains in a stable, mildly eccentric orbit around Sgr A*' and 'qualifies as an S cluster member.' This is a Galactic-center-bound binary, not a candidate for Galactic unbinding.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 66,
+          "end_line": 66,
+          "context": "Abstract states D9 is a binary system in the S cluster close to Sgr A* with stable orbit against disruption."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 180,
+          "end_line": 181,
+          "context": "Paper states the system remains in a stable, mildly eccentric orbit around Sgr A* and can be described as a hard binary."
+        }
+      ]
+    },
+    {
+      "group_id": "table-tab-binary_overview-2",
+      "description": "Overview table of known binaries in the Galactic center.",
+      "decision": "excluded",
+      "reason": "This table lists confirmed binaries in the Galactic center (including D9 as the only S-cluster member). These are all bound systems near Sgr A*; the paper does not present any of them as possibly unbound from the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 1064,
+          "end_line": 1082,
+          "context": "Table caption and content list binaries of the Galactic center with D9 as the only S cluster member."
+        }
+      ]
+    },
+    {
+      "group_id": "s-cluster-population",
+      "description": "S-cluster stars (high-velocity stars and G-objects) mentioned in the abstract and introduction.",
+      "decision": "excluded",
+      "reason": "The abstract mentions 'high-velocity stars and peculiar G objects orbit the central supermassive black hole' as constituents of the S cluster. The introduction clarifies these stars orbit Sgr A* 'at velocities of up to several thousand km/s' inside the S cluster. These are bound to the SMBH, not escaping the Galaxy. The paper does not claim any S-cluster star is unbound from the Milky Way.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 66,
+          "end_line": 66,
+          "context": "Abstract mentions high-velocity stars and G objects orbit Sgr A* as the S cluster."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 73,
+          "end_line": 73,
+          "context": "Introduction states stars in the S cluster orbit the black hole at high velocities inside the S cluster."
+        }
+      ]
+    }
+  ]
+}

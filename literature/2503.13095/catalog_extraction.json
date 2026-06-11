@@ -1,0 +1,339 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:33",
+  "paper": {
+    "arxiv_id": "2503.13095",
+    "title": "A slowly pulsating run-away B star at high Galactic latitude ejected from a spiral arm",
+    "month": "2025-03"
+  },
+  "review": {
+    "path": "literature/2503.13095/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123933",
+    "started_at": "2026-05-17T12:39:33",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2503.13095",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-atmos",
+      "internal_table_id": "table-tab-atmos",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2503.13095/arxiv_source/runaway_AN_final.tex",
+        "start_line": 112,
+        "end_line": 135,
+        "caption": "Atmospheric parameters and chemical abundances compared to the present-day cosmic abundance standard \\citet[CAS, ][]{2012A&A...539A.143N}. The uncertainties are statistical 1$\\sigma$ except for $T_{\\mathrm{eff}}$ and $\\log g$ (see text).",
+        "label": "tab:atmos"
+      },
+      "source_path": "literature/2503.13095/arxiv_source/runaway_AN_final.tex",
+      "excerpt_path": "literature/2503.13095/catalog_sources/table-tab-atmos/excerpt.tex",
+      "sha256": "1fa3a618c174de54b2dadfd1a7f7763b07b19057fa70f58c9e99f92c9bbf1652",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-tab-stellar",
+      "internal_table_id": "table-tab-stellar",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2503.13095/arxiv_source/runaway_AN_final.tex",
+        "start_line": 164,
+        "end_line": 177,
+        "caption": "Stellar parameters derived from MIST models (see Fig. \\ref{fig:kiel_age_mass}).",
+        "label": "tab:stellar"
+      },
+      "source_path": "literature/2503.13095/arxiv_source/runaway_AN_final.tex",
+      "excerpt_path": "literature/2503.13095/catalog_sources/table-tab-stellar/excerpt.tex",
+      "sha256": "91e5a177697a289665d408a415ad6552a92807a518c3cf7355284ec15dccb6db",
+      "line_count": 14,
+      "error": ""
+    },
+    {
+      "id": "table-tab-kinematic",
+      "internal_table_id": "table-tab-kinematic",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2503.13095/arxiv_source/runaway_AN_final.tex",
+        "start_line": 206,
+        "end_line": 225,
+        "caption": "Galactic restframe velocity $v_{\\textnormal{grf}}$, plane crossing positions ($x_{\\textnormal{d}}$,$y_{\\textnormal{d}}$,$r_{\\textnormal{d}}$), plane crossing velocities ($v_{x\\textnormal{,d}}$,$v_{y\\textnormal{,d}}$,$v_{z\\textnormal{,d}}$), disk ejection velocity $v_{\\textnormal{ej}}$, and time of flight $\\tau_{\\textnormal{flight}}$.",
+        "label": "tab:kinematic"
+      },
+      "source_path": "literature/2503.13095/arxiv_source/runaway_AN_final.tex",
+      "excerpt_path": "literature/2503.13095/catalog_sources/table-tab-kinematic/excerpt.tex",
+      "sha256": "5739bf5f049323d62e6592ba335aef60677d239e9e639deeb50d604b9d00ada0",
+      "line_count": 20,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-atmos",
+      "internal_table_id": "table-tab-atmos",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2503.13095/catalog_tables/table-tab-atmos.ecsv",
+      "caption": "Atmospheric parameters and chemical abundances compared to the present-day cosmic abundance standard \\citet[CAS, ][]{2012A&A...539A.143N}. The uncertainties are statistical 1$\\sigma$ except for $T_{\\mathrm{eff}}$ and $\\log g$ (see text).",
+      "label": "tab:atmos",
+      "row_count": 13,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "",
+          "CAS"
+        ],
+        [
+          "Effective temperature T_eff [K]",
+          "14,500+/- 300",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Effective temperature T_eff [K]",
+          "unit_text": "Effective temperature T_eff [K]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "14,500+/- 300",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "CAS",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpug1fj1dn/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2503.13095/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpug1fj1dn/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2503.13095/catalog_sources/table-tab-atmos/wrapped.tex",
+            "html": "literature/2503.13095/catalog_sources/table-tab-atmos/latexml.html",
+            "stdout": "literature/2503.13095/catalog_sources/table-tab-atmos/latexml.stdout.txt",
+            "stderr": "literature/2503.13095/catalog_sources/table-tab-atmos/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "1fa3a618c174de54b2dadfd1a7f7763b07b19057fa70f58c9e99f92c9bbf1652"
+    },
+    {
+      "id": "table-tab-stellar",
+      "internal_table_id": "table-tab-stellar",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2503.13095/catalog_tables/table-tab-stellar.ecsv",
+      "caption": "Stellar parameters derived from MIST models (see Fig. \\ref{fig:kiel_age_mass}).",
+      "label": "tab:stellar",
+      "row_count": 2,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "mass [M ⊙ ]",
+          "4.75+/- 0.24"
+        ],
+        [
+          "radius [R ⊙ ]",
+          "4.50+/- 0.4"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "mass [M ⊙ ] | radius [R ⊙ ]",
+          "unit_text": "mass [M ⊙ ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "4.75+/- 0.24 | 4.50+/- 0.4",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp66veogmx/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2503.13095/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp66veogmx/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2503.13095/catalog_sources/table-tab-stellar/wrapped.tex",
+            "html": "literature/2503.13095/catalog_sources/table-tab-stellar/latexml.html",
+            "stdout": "literature/2503.13095/catalog_sources/table-tab-stellar/latexml.stdout.txt",
+            "stderr": "literature/2503.13095/catalog_sources/table-tab-stellar/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "91e5a177697a289665d408a415ad6552a92807a518c3cf7355284ec15dccb6db"
+    },
+    {
+      "id": "table-tab-kinematic",
+      "internal_table_id": "table-tab-kinematic",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2503.13095/catalog_tables/table-tab-kinematic.ecsv",
+      "caption": "Galactic restframe velocity $v_{\\textnormal{grf}}$, plane crossing positions ($x_{\\textnormal{d}}$,$y_{\\textnormal{d}}$,$r_{\\textnormal{d}}$), plane crossing velocities ($v_{x\\textnormal{,d}}$,$v_{y\\textnormal{,d}}$,$v_{z\\textnormal{,d}}$), disk ejection velocity $v_{\\textnormal{ej}}$, and time of flight $\\tau_{\\textnormal{flight}}$.",
+      "label": "tab:kinematic",
+      "row_count": 8,
+      "column_count": 2,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "v_\\textnormalgrf [km s^-1]",
+          "210+/-4"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "v_\\textnormalgrf [km s^-1]",
+          "unit_text": "v_\\textnormalgrf [km s^-1]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "210+/-4",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\tau",
+        "unresolved LaTeX macro preserved: \\textnormal",
+        "unresolved LaTeX macro preserved: \\textnormald",
+        "unresolved LaTeX macro preserved: \\textnormalej",
+        "unresolved LaTeX macro preserved: \\textnormalflight",
+        "unresolved LaTeX macro preserved: \\textnormalgrf"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9eegtpnz/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2503.13095/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9eegtpnz/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2503.13095/catalog_sources/table-tab-kinematic/wrapped.tex",
+            "html": "literature/2503.13095/catalog_sources/table-tab-kinematic/latexml.html",
+            "stdout": "literature/2503.13095/catalog_sources/table-tab-kinematic/latexml.stdout.txt",
+            "stderr": "literature/2503.13095/catalog_sources/table-tab-kinematic/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb0t6d57k/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb0t6d57k/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2503.13095/catalog_sources/table-tab-kinematic/wrapped.tex",
+            "html": "literature/2503.13095/catalog_sources/table-tab-kinematic/pandoc.html",
+            "stdout": "literature/2503.13095/catalog_sources/table-tab-kinematic/pandoc.stdout.txt",
+            "stderr": "literature/2503.13095/catalog_sources/table-tab-kinematic/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "5739bf5f049323d62e6592ba335aef60677d239e9e639deeb50d604b9d00ada0"
+    }
+  ]
+}

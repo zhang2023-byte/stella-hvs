@@ -1,0 +1,123 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:35:00",
+  "paper": {
+    "arxiv_id": "1807.06486",
+    "bibcode": "2018MNRAS.480.2109D",
+    "title": "Massive stars in the hinterland of the young cluster, Westerlund 2",
+    "month": "2018-07",
+    "source_note_json": "notes/2018/2018-07/2018-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1807.06486",
+      "pdf": "https://arxiv.org/pdf/1807.06486"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1807.06486",
+    "audit_path": "literature/1807.06486/audit.json",
+    "catalog_review_path": "literature/1807.06486/catalog_review.json",
+    "catalog_extraction_path": "literature/1807.06486/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:35:00",
+    "extractor": "agent",
+    "summary": "Paper studies 40 candidate OB stars around the young massive cluster Westerlund 2. VLT/X-shooter spectroscopy of two O4V stars. Gaia DR2 proper motions suggest 8-11 early O/WR stars ejected from Wd2 in last ~1 Myr (up to ~25% ejection efficiency). These are ordinary cluster runaway stars (velocities ~30-200 km/s from BSE/DE), not Galactic-unbound hypervelocity stars. No star is presented as possibly unbound from the Galaxy."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "40 candidate OB stars from Mohr-Smith+2017 (MS-II) VPHAS+ photometric catalog within 1.5x1.5 sq.deg around Wd2. O-star temp range, extinction 5.5<A0<7.5, >10 arcmin from cluster center.",
+      "inputs": ["VPHAS+ photometry", "2MASS NIR photometry", "MS-II catalog"],
+      "outputs": ["40 candidate OB stars in Wd2 hinterland"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1807.06486/arxiv_source/wd2-rvs-top.tex",
+          "start_line": 186,
+          "end_line": 189,
+          "context": "Sec 2.2: sample selection criteria around Wd2"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": ["step-01"],
+      "step_type": "radial_velocity_measurement",
+      "summary": "VLT/X-shooter spectroscopy of two hottest O stars (MS-II #1273, #1338). RV relative to MSP 182: -29.4+/-1.7 and -14.4+/-2.2 km/s.",
+      "inputs": ["VLT/X-shooter spectra"],
+      "outputs": ["RVs and stellar parameters for 2 O stars"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1807.06486/arxiv_source/wd2-rvs-top.tex",
+          "start_line": 45,
+          "end_line": 46,
+          "context": "Abstract: X-shooter spectra, RVs of two O stars"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": ["step-01"],
+      "step_type": "cross_match",
+      "summary": "Gaia DR2 proper motions cross-matched for full sample. PM analysis to identify stars kinematically consistent with Wd2 ejection.",
+      "inputs": ["Gaia DR2"],
+      "outputs": ["PM vectors for 40 candidates"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1807.06486/arxiv_source/wd2-rvs-top.tex",
+          "start_line": 45,
+          "end_line": 46,
+          "context": "Abstract: Gaia DR2 PMs, 8-11 stars ejected from Wd2"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": ["step-02", "step-03"],
+      "step_type": "velocity_calculation",
+      "summary": "Space motions from Gaia DR2 PMs + X-shooter RVs, Wd2 distance 5+/-1 kpc. Compare with cluster mean PM to identify escapers. 8-11 stars consistent with Wd2 ejection in last 1 Myr.",
+      "inputs": ["Gaia DR2 PMs", "X-shooter RVs", "Wd2 distance estimate"],
+      "outputs": ["Ejection assessment for 40 candidates"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1807.06486/arxiv_source/wd2-rvs-top.tex",
+          "start_line": 45,
+          "end_line": 46,
+          "context": "Abstract: 8-11 early O/WR stars ejected from Wd2 in last 1 Myr"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "wd2-hinterland-ob-stars",
+      "description": "40 candidate OB stars in Wd2 hinterland (Table 1). Stars with Gaia DR2 PMs consistent with Wd2 cluster ejection. Ordinary cluster runaway stars with space velocities ~30-200 km/s from BSE/DE mechanisms.",
+      "decision": "excluded",
+      "reason": "Paper presents these as cluster runaway/escaped stars from Westerlund 2, not as Galactic-unbound hypervelocity stars. Ejection velocities ~30-200 km/s, well below Galactic escape velocity (~500-600 km/s). No star claimed to be unbound from the Milky Way.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1807.06486/arxiv_source/wd2-rvs-top.tex",
+          "start_line": 45,
+          "end_line": 46,
+          "context": "Abstract: 8-11 ejected from Wd2, ~25% ejection efficiency"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1807.06486/arxiv_source/wd2-rvs-top.tex",
+          "start_line": 63,
+          "end_line": 63,
+          "context": "Intro: runaway O stars, BSE/DE mechanisms up to 200 km/s"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,318 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:33:54",
+  "paper": {
+    "arxiv_id": "1904.02126",
+    "title": "On the origin of very massive stars around NGC 3603",
+    "month": "2019-04"
+  },
+  "review": {
+    "path": "literature/1904.02126/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083354",
+    "started_at": "2026-06-07T08:33:54",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1904.02126",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-001",
+      "internal_table_id": "table-001",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1904.02126/arxiv_source/arxiv_try2.tex",
+        "start_line": 88,
+        "end_line": 108,
+        "caption": "Spectral type and positions of RFS7 and RFS8",
+        "label": ""
+      },
+      "source_path": "literature/1904.02126/arxiv_source/arxiv_try2.tex",
+      "excerpt_path": "literature/1904.02126/catalog_sources/table-001/excerpt.tex",
+      "sha256": "13718193d397967f6584d7841fd441a52338e6b47611820c855a2406b02b11e1",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-002",
+      "internal_table_id": "table-002",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1904.02126/arxiv_source/arxiv_try2.tex",
+        "start_line": 140,
+        "end_line": 167,
+        "caption": "{\\it Gaia} DR2 proper motions, parallaxes and derived motions of RFS7 and RFS8",
+        "label": ""
+      },
+      "source_path": "literature/1904.02126/arxiv_source/arxiv_try2.tex",
+      "excerpt_path": "literature/1904.02126/catalog_sources/table-002/excerpt.tex",
+      "sha256": "355c699d9ac33f5e5bef89649b4408aacdc06fd5d4bf9045bd10f7b0459ee61d",
+      "line_count": 28,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-001",
+      "internal_table_id": "table-001",
+      "status": "success",
+      "ecsv_path": "literature/1904.02126/catalog_tables/table-001.ecsv",
+      "caption": "Spectral type and positions of RFS7 and RFS8",
+      "label": "",
+      "row_count": 6,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2gw639pz/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1904.02126/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2gw639pz/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1904.02126/catalog_sources/table-001/wrapped.tex",
+            "html": "literature/1904.02126/catalog_sources/table-001/latexml.html",
+            "stdout": "literature/1904.02126/catalog_sources/table-001/latexml.stdout.txt",
+            "stderr": "literature/1904.02126/catalog_sources/table-001/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "13718193d397967f6584d7841fd441a52338e6b47611820c855a2406b02b11e1"
+    },
+    {
+      "id": "table-002",
+      "internal_table_id": "table-002",
+      "status": "success",
+      "ecsv_path": "literature/1904.02126/catalog_tables/table-002.ecsv",
+      "caption": "{\\it Gaia} DR2 proper motions, parallaxes and derived motions of RFS7 and RFS8",
+      "label": "",
+      "row_count": 2,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "\\mu_\\alpha",
+          "\\mu_\\delta",
+          "\\pi",
+          "\\mu_\\rm relative",
+          "\\mu_l",
+          "\\mu_b",
+          "v_\\rm 2D",
+          "Pec. v_t"
+        ],
+        [
+          "",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(mas)",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(km s -1 )",
+          "(km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\mu_\\alpha | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mu_\\delta | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\pi | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\rm relative | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_l | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_b | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "v_\\rm 2D | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Pec. v_t | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp21z6i8z8/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1904.02126/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp21z6i8z8/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1904.02126/catalog_sources/table-002/wrapped.tex",
+            "html": "literature/1904.02126/catalog_sources/table-002/latexml.html",
+            "stdout": "literature/1904.02126/catalog_sources/table-002/latexml.stdout.txt",
+            "stderr": "literature/1904.02126/catalog_sources/table-002/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "355c699d9ac33f5e5bef89649b4408aacdc06fd5d4bf9045bd10f7b0459ee61d"
+    }
+  ]
+}

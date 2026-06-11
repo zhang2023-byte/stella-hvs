@@ -1,0 +1,400 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:17",
+  "paper": {
+    "arxiv_id": "2601.19866",
+    "title": "Discovery of Galactic center ejected star in DESI DR1",
+    "month": "2026-01"
+  },
+  "review": {
+    "path": "literature/2601.19866/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124017",
+    "started_at": "2026-05-17T12:40:17",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2601.19866",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-quality",
+      "internal_table_id": "table-tab-quality",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2601.19866/arxiv_source/aanda.tex",
+        "start_line": 154,
+        "end_line": 167,
+        "caption": "Quality selections.",
+        "label": "tab:quality"
+      },
+      "source_path": "literature/2601.19866/arxiv_source/aanda.tex",
+      "excerpt_path": "literature/2601.19866/catalog_sources/table-tab-quality/excerpt.tex",
+      "sha256": "40af0fc5be950fd54f89aa374a9aac9a60c99af11620addfc971a8153debe2c3",
+      "line_count": 14,
+      "error": ""
+    },
+    {
+      "id": "table-tab-desi_hvs1",
+      "internal_table_id": "table-tab-desi_hvs1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2601.19866/arxiv_source/aanda.tex",
+        "start_line": 211,
+        "end_line": 244,
+        "caption": "Measured parameters of \\candidate from \\gaia and DESI DR1. Parallax corresponds to the zero-point corrected value. Reported \\feh corresponds to the corrected metallicity \\citep{DESIMW}.",
+        "label": "tab:desi_hvs1"
+      },
+      "source_path": "literature/2601.19866/arxiv_source/aanda.tex",
+      "excerpt_path": "literature/2601.19866/catalog_sources/table-tab-desi_hvs1/excerpt.tex",
+      "sha256": "d3c315a95f1696702ac47c6e2ac203b0d47daec27b6e4c16ef20d95bb876b959",
+      "line_count": 34,
+      "error": ""
+    },
+    {
+      "id": "table-tab-photometric_measurements",
+      "internal_table_id": "table-tab-photometric_measurements",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2601.19866/arxiv_source/aanda.tex",
+        "start_line": 335,
+        "end_line": 366,
+        "caption": "Photometric measurements",
+        "label": "tab:photometric_measurements"
+      },
+      "source_path": "literature/2601.19866/arxiv_source/aanda.tex",
+      "excerpt_path": "literature/2601.19866/catalog_sources/table-tab-photometric_measurements/excerpt.tex",
+      "sha256": "bb61faff9ff9601cadde21db7ccefe89e280d2bdef4837ebd548062c5871df1b",
+      "line_count": 32,
+      "error": ""
+    },
+    {
+      "id": "table-tab-nested_fit",
+      "internal_table_id": "table-tab-nested_fit",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2601.19866/arxiv_source/aanda.tex",
+        "start_line": 369,
+        "end_line": 393,
+        "caption": "Parameters obtained from fitting MIST isochrones to DESI HVS1 photometry and by combining with spectroscopic constraints. Values reported correspond to the median with 16th and 84th percentiles for the lower and upper limits.",
+        "label": "tab:nested_fit"
+      },
+      "source_path": "literature/2601.19866/arxiv_source/aanda.tex",
+      "excerpt_path": "literature/2601.19866/catalog_sources/table-tab-nested_fit/excerpt.tex",
+      "sha256": "0b4c3a648fb3068d7e10306f3902cb286ebab5fcd83c4c6ece8bef2da582a8a1",
+      "line_count": 25,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-quality",
+      "internal_table_id": "table-tab-quality",
+      "status": "success",
+      "ecsv_path": "literature/2601.19866/catalog_tables/table-tab-quality.ecsv",
+      "caption": "Quality selections.",
+      "label": "tab:quality",
+      "row_count": 2,
+      "column_count": 1,
+      "environment": "",
+      "header_rows": [
+        [
+          "Selection Criteria"
+        ],
+        [
+          "\\textttRR_SPECTYPE=\\texttt'STAR' ,"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Selection Criteria | \\textttRR_SPECTYPE=\\texttt'STAR' ,",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjt26dijx/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2601.19866/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjt26dijx/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2601.19866/catalog_sources/table-tab-quality/wrapped.tex",
+            "html": "literature/2601.19866/catalog_sources/table-tab-quality/latexml.html",
+            "stdout": "literature/2601.19866/catalog_sources/table-tab-quality/latexml.stdout.txt",
+            "stderr": "literature/2601.19866/catalog_sources/table-tab-quality/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "40af0fc5be950fd54f89aa374a9aac9a60c99af11620addfc971a8153debe2c3"
+    },
+    {
+      "id": "table-tab-desi_hvs1",
+      "internal_table_id": "table-tab-desi_hvs1",
+      "status": "success",
+      "ecsv_path": "literature/2601.19866/catalog_tables/table-tab-desi_hvs1.ecsv",
+      "caption": "Measured parameters of \\candidate from \\gaia and DESI DR1. Parallax corresponds to the zero-point corrected value. Reported \\feh corresponds to the corrected metallicity \\citep{DESIMW}.",
+      "label": "tab:desi_hvs1",
+      "row_count": 17,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value",
+          "unit"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "unit",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpl1fcc0uc/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2601.19866/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpl1fcc0uc/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2601.19866/catalog_sources/table-tab-desi_hvs1/wrapped.tex",
+            "html": "literature/2601.19866/catalog_sources/table-tab-desi_hvs1/latexml.html",
+            "stdout": "literature/2601.19866/catalog_sources/table-tab-desi_hvs1/latexml.stdout.txt",
+            "stderr": "literature/2601.19866/catalog_sources/table-tab-desi_hvs1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d3c315a95f1696702ac47c6e2ac203b0d47daec27b6e4c16ef20d95bb876b959"
+    },
+    {
+      "id": "table-tab-photometric_measurements",
+      "internal_table_id": "table-tab-photometric_measurements",
+      "status": "success",
+      "ecsv_path": "literature/2601.19866/catalog_tables/table-tab-photometric_measurements.ecsv",
+      "caption": "Photometric measurements",
+      "label": "tab:photometric_measurements",
+      "row_count": 12,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Band",
+          "Magnitude"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Band",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Magnitude",
+          "unit_text": "Magnitude",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgaiwkwhp/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2601.19866/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgaiwkwhp/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2601.19866/catalog_sources/table-tab-photometric_measurements/wrapped.tex",
+            "html": "literature/2601.19866/catalog_sources/table-tab-photometric_measurements/latexml.html",
+            "stdout": "literature/2601.19866/catalog_sources/table-tab-photometric_measurements/latexml.stdout.txt",
+            "stderr": "literature/2601.19866/catalog_sources/table-tab-photometric_measurements/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "bb61faff9ff9601cadde21db7ccefe89e280d2bdef4837ebd548062c5871df1b"
+    },
+    {
+      "id": "table-tab-nested_fit",
+      "internal_table_id": "table-tab-nested_fit",
+      "status": "success",
+      "ecsv_path": "literature/2601.19866/catalog_tables/table-tab-nested_fit.ecsv",
+      "caption": "Parameters obtained from fitting MIST isochrones to DESI HVS1 photometry and by combining with spectroscopic constraints. Values reported correspond to the median with 16th and 84th percentiles for the lower and upper limits.",
+      "label": "tab:nested_fit",
+      "row_count": 5,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value",
+          "Value",
+          "Unit"
+        ],
+        [
+          "",
+          "Photometric",
+          "Spectro-Photometric",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value | Photometric",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Value | Spectro-Photometric",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Unit",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxwgd23db/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2601.19866/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxwgd23db/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2601.19866/catalog_sources/table-tab-nested_fit/wrapped.tex",
+            "html": "literature/2601.19866/catalog_sources/table-tab-nested_fit/latexml.html",
+            "stdout": "literature/2601.19866/catalog_sources/table-tab-nested_fit/latexml.stdout.txt",
+            "stderr": "literature/2601.19866/catalog_sources/table-tab-nested_fit/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0b4c3a648fb3068d7e10306f3902cb286ebab5fcd83c4c6ece8bef2da582a8a1"
+    }
+  ]
+}

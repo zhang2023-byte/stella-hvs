@@ -1,0 +1,728 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:54",
+  "paper": {
+    "arxiv_id": "2506.07904",
+    "title": "Fundamental Parameters for Central Stars of 103 Infrared Bowshock Nebulae",
+    "month": "2025-06"
+  },
+  "review": {
+    "path": "literature/2506.07904/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123954",
+    "started_at": "2026-05-17T12:39:54",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2506.07904",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-cuts",
+      "internal_table_id": "table-tab-cuts",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2506.07904/arxiv_source/arxiv.tex",
+        "start_line": 419,
+        "end_line": 427,
+        "caption": "Starting samples and cuts",
+        "label": "tab:cuts"
+      },
+      "source_path": "literature/2506.07904/arxiv_source/arxiv.tex",
+      "excerpt_path": "literature/2506.07904/catalog_sources/table-tab-cuts/excerpt.tex",
+      "sha256": "fea08324bfd3569b9ef4a52f5d09aea6d7481f80209477732f45defe69c3e0a0",
+      "line_count": 9,
+      "error": ""
+    },
+    {
+      "id": "table-tab-obs",
+      "internal_table_id": "table-tab-obs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2506.07904/arxiv_source/arxiv.tex",
+        "start_line": 466,
+        "end_line": 578,
+        "caption": "Observations \\label{tab:obs}",
+        "label": "tab:obs"
+      },
+      "source_path": "literature/2506.07904/arxiv_source/arxiv.tex",
+      "excerpt_path": "literature/2506.07904/catalog_sources/table-tab-obs/excerpt.tex",
+      "sha256": "0de96419b2f985b146abe4a3c57ea0a80bf41764919e3be95dcf339210831001",
+      "line_count": 113,
+      "error": ""
+    },
+    {
+      "id": "table-tab-comp",
+      "internal_table_id": "table-tab-comp",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2506.07904/arxiv_source/arxiv.tex",
+        "start_line": 678,
+        "end_line": 743,
+        "caption": "Comparison Results\\label{tab:comp}",
+        "label": "tab:comp"
+      },
+      "source_path": "literature/2506.07904/arxiv_source/arxiv.tex",
+      "excerpt_path": "literature/2506.07904/catalog_sources/table-tab-comp/excerpt.tex",
+      "sha256": "310c150822b8de64eca822be4d77ecd225c2dcd20aa53898de0413ea6a061d10",
+      "line_count": 66,
+      "error": ""
+    },
+    {
+      "id": "table-tab-res",
+      "internal_table_id": "table-tab-res",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2506.07904/arxiv_source/arxiv.tex",
+        "start_line": 788,
+        "end_line": 902,
+        "caption": "Bowshock Star Results\\label{tab:res}",
+        "label": "tab:res"
+      },
+      "source_path": "literature/2506.07904/arxiv_source/arxiv.tex",
+      "excerpt_path": "literature/2506.07904/catalog_sources/table-tab-res/excerpt.tex",
+      "sha256": "318eb9c13d33e4b704f114466e4274f68a1f914913f57bd3e7edc50d3b8e17d6",
+      "line_count": 115,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-cuts",
+      "internal_table_id": "table-tab-cuts",
+      "status": "success",
+      "ecsv_path": "literature/2506.07904/catalog_tables/table-tab-cuts.ecsv",
+      "caption": "Starting samples and cuts",
+      "label": "tab:cuts",
+      "row_count": 3,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "K16",
+          "709"
+        ],
+        [
+          "J19",
+          "187 of 310"
+        ],
+        [
+          "Total",
+          "896"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "K16 | J19 | Total",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "709 | 187 of 310 | 896",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzz4qw0uo/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2506.07904/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzz4qw0uo/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.07904/catalog_sources/table-tab-cuts/wrapped.tex",
+            "html": "literature/2506.07904/catalog_sources/table-tab-cuts/latexml.html",
+            "stdout": "literature/2506.07904/catalog_sources/table-tab-cuts/latexml.stdout.txt",
+            "stderr": "literature/2506.07904/catalog_sources/table-tab-cuts/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "fea08324bfd3569b9ef4a52f5d09aea6d7481f80209477732f45defe69c3e0a0"
+    },
+    {
+      "id": "table-tab-obs",
+      "internal_table_id": "table-tab-obs",
+      "status": "success",
+      "ecsv_path": "literature/2506.07904/catalog_tables/table-tab-obs.ecsv",
+      "caption": "Observations \\label{tab:obs}",
+      "label": "tab:obs",
+      "row_count": 104,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "SBN ID",
+          "Alias",
+          "R.A. (2000)",
+          "Dec. (2000)",
+          "B_P",
+          "Observatory",
+          "Exposures"
+        ],
+        [
+          "",
+          "",
+          "HH:MM:SS",
+          "∘ :’:”",
+          "(mag)",
+          "",
+          ""
+        ],
+        [
+          "(1)",
+          "(2)",
+          "(3)",
+          "(4)",
+          "(5)",
+          "(6)",
+          "(7)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "SBN ID | (1)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Alias | (2)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "R.A. (2000) | HH:MM:SS | (3)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Dec. (2000) | ∘ :’:” | (4)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "B_P | (mag) | (5)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Observatory | (6)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Exposures | (7)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwhz7wkgs/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2506.07904/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwhz7wkgs/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.07904/catalog_sources/table-tab-obs/wrapped.tex",
+            "html": "literature/2506.07904/catalog_sources/table-tab-obs/latexml.html",
+            "stdout": "literature/2506.07904/catalog_sources/table-tab-obs/latexml.stdout.txt",
+            "stderr": "literature/2506.07904/catalog_sources/table-tab-obs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0de96419b2f985b146abe4a3c57ea0a80bf41764919e3be95dcf339210831001"
+    },
+    {
+      "id": "table-tab-comp",
+      "internal_table_id": "table-tab-comp",
+      "status": "success",
+      "ecsv_path": "literature/2506.07904/catalog_tables/table-tab-comp.ecsv",
+      "caption": "Comparison Results\\label{tab:comp}",
+      "label": "tab:comp",
+      "row_count": 58,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "R.A. (2000)",
+          "Dec. (2000)",
+          "T_eff",
+          "\\sigma_T_eff",
+          "\\log g",
+          "\\sigma_\\log g",
+          "\\vsini",
+          "\\sigma_v\\sin i",
+          "Reference(s)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R.A. (2000)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec. (2000)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "T_eff",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_T_eff",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\log g",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_\\log g",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\vsini",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_v\\sin i",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Reference(s)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1fgghdrl/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2506.07904/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1fgghdrl/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.07904/catalog_sources/table-tab-comp/wrapped.tex",
+            "html": "literature/2506.07904/catalog_sources/table-tab-comp/latexml.html",
+            "stdout": "literature/2506.07904/catalog_sources/table-tab-comp/latexml.stdout.txt",
+            "stderr": "literature/2506.07904/catalog_sources/table-tab-comp/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "310c150822b8de64eca822be4d77ecd225c2dcd20aa53898de0413ea6a061d10"
+    },
+    {
+      "id": "table-tab-res",
+      "internal_table_id": "table-tab-res",
+      "status": "success",
+      "ecsv_path": "literature/2506.07904/catalog_tables/table-tab-res.ecsv",
+      "caption": "Bowshock Star Results\\label{tab:res}",
+      "label": "tab:res",
+      "row_count": 104,
+      "column_count": 16,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Sp. T.",
+          "T_eff",
+          "\\sigma_T_eff",
+          "\\log g",
+          "\\sigma_\\log g",
+          "\\vsini",
+          "\\sigma_v\\sin i",
+          "R_*",
+          "\\sigma_R_*",
+          "L_*",
+          "\\sigma_L_*",
+          "A_V",
+          "\\sigma_A_V",
+          "RUWE",
+          "flag"
+        ],
+        [
+          "",
+          "",
+          "( \\kelvin )",
+          "( \\kelvin )",
+          "",
+          "",
+          "(km s^-1)",
+          "(km s^-1)",
+          "( \\rsun )",
+          "( \\rsun )",
+          "( \\lsun )",
+          "( \\lsun )",
+          "(mag)",
+          "(mag)",
+          "",
+          ""
+        ],
+        [
+          "(1)",
+          "(2)",
+          "(3)",
+          "(4)",
+          "(5)",
+          "(6)",
+          "(7)",
+          "(8)",
+          "(9)",
+          "(10)",
+          "(11)",
+          "(12)",
+          "(13)",
+          "(14)",
+          "(15)",
+          "(16)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID | (1)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Sp. T. | (2)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "T_eff | ( \\kelvin ) | (3)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\sigma_T_eff | ( \\kelvin ) | (4)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\log g | (5)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\sigma_\\log g | (6)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\vsini | (km s^-1) | (7)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\sigma_v\\sin i | (km s^-1) | (8)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "R_* | ( \\rsun ) | (9)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\sigma_R_* | ( \\rsun ) | (10)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "L_* | ( \\lsun ) | (11)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\sigma_L_* | ( \\lsun ) | (12)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "A_V | (mag) | (13)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "\\sigma_A_V | (mag) | (14)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "RUWE | (15)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "flag | (16)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpkw9sn_mk/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2506.07904/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpkw9sn_mk/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.07904/catalog_sources/table-tab-res/wrapped.tex",
+            "html": "literature/2506.07904/catalog_sources/table-tab-res/latexml.html",
+            "stdout": "literature/2506.07904/catalog_sources/table-tab-res/latexml.stdout.txt",
+            "stderr": "literature/2506.07904/catalog_sources/table-tab-res/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "318eb9c13d33e4b704f114466e4274f68a1f914913f57bd3e7edc50d3b8e17d6"
+    }
+  ]
+}

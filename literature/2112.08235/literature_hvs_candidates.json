@@ -1,0 +1,80 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T12:03:00",
+  "paper": {
+    "arxiv_id": "2112.08235",
+    "bibcode": "2022AJ....163..100G",
+    "title": "The Transformative Journey of HD 93521",
+    "month": "2021-12",
+    "source_note_json": "notes/2021/2021-12/2021-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2112.08235",
+      "pdf": "https://arxiv.org/pdf/2112.08235"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2112.08235",
+    "audit_path": "literature/2112.08235/audit.json",
+    "catalog_review_path": "literature/2112.08235/catalog_review.json",
+    "catalog_extraction_path": "literature/2112.08235/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2112.08235/catalog_tables/table-tab-vr.ecsv",
+      "literature/2112.08235/catalog_tables/table-tab-properties.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T12:03:00",
+    "extractor": "agent",
+    "summary": "论文研究HD 93521——一颗位于银盘上方约1 kpc的大质量高速自转O9.5 IIInn型恒星。利用Gaia EDR3天体测量和视向速度数据计算飞行时间39±3 Myr，通过旋转模型和SED拟合得到演化年龄约5±2 Myr。论文的核心发现是飞行时间远大于演化年龄，提出二元并合假说：HD 93521最初作为一个由两颗约8 M_sun恒星组成的密近双星系统被超新星kick从银盘中弹射出去，随后双星并合形成了目前观测到的大质量高速自转单星。论文用'runaway'和'ejected from the disk'描述HD 93521的起源，这些术语指从银盘逃逸的速逃星（disk runaway），而非逃离银河系的非束缚超高速星（HVS）。论文未声称HD 93521为银河系非束缚天体。因此无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文研究单一恒星HD 93521，它从银盘中被弹射（disk ejection），飞行时间39 Myr，高度~1 kpc。论文的核心科学问题是飞行时间与演化年龄的差异及并合假说，不涉及银河系逃逸速度或非束缚状态判定。论文使用'runaway'指银盘逃逸星（supernova-ejected disk runaway），非HVS。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (ms1.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2112.08235/arxiv_source/ms1.tex",
+          "start_line": 84,
+          "end_line": 87,
+          "context": "remote objects are probably runaway stars that were ejected from the disk by a supernova; known examples of runaway binary stars in the halo (e.g. IT Lib)"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2112.08235/arxiv_source/ms1.tex",
+          "start_line": 1,
+          "end_line": 1,
+          "context": "Title: The Transformative Journey of HD 93521"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "hd93521-runaway",
+      "description": "HD 93521是一颗O9.5 IIInn型恒星，位于银盘上方约1 kpc，具有高速自转（v sin i ≈ 400 km/s）。论文利用Gaia EDR3自行和视差（距离约1.1 kpc）以及文献视向速度（Table 1）计算飞行时间39±3 Myr。通过旋转模型拟合SED得到光度log(L/L_sun)=4.33±0.05，有效温度T_eff=30,000±1,000 K（Table 2）。与Brott et al.旋转恒星演化轨迹比较得到演化年龄约5±2 Myr。论文提出双星并合假说解释年龄差异。",
+      "decision": "excluded",
+      "reason": "论文用'runaway'和'ejected from the disk'描述HD 93521，这些术语表示从银盘中通过超新星kick弹射的速逃星（disk runaway）。论文引言（第84行）明确说明'remote objects are probably runaway stars that were ejected from the disk by a supernova in a massive binary system'，将HD 93521与IT Lib等已知银盘逃逸双星并列。论文的核心科学问题是飞行时间-演化年龄差异及其并合解释，而非HD 93521是否为银河系非束缚天体。飞行时间39 Myr跨越~1 kpc高度意味着平均垂直速度仅约26 km/s，远低于银河系逃逸速度。论文全文未使用'hypervelocity star'、'unbound'、'escape velocity'或'HVS'等术语，而始终使用'runaway'描述。Runaway star在本文语境下是超新星弹射导致的银盘逃逸星，仍受银河系引力束缚。速逃星（runaway star）与超高速星（HVS/hypervelocity star）为不同天体类别。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2112.08235/arxiv_source/ms1.tex",
+          "start_line": 84,
+          "end_line": 87,
+          "context": "Introduction: remote objects are probably runaway stars ejected from disk by supernova in massive binary; HD 93521 is one of the brightest examples"
+        }
+      ]
+    }
+  ]
+}

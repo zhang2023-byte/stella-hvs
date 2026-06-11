@@ -1,0 +1,1026 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:21",
+  "paper": {
+    "arxiv_id": "2512.17698",
+    "title": "A VLA search for compact radio sources in the explosive molecular outflows DR 21 and G5.89",
+    "month": "2025-12"
+  },
+  "review": {
+    "path": "literature/2512.17698/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124021",
+    "started_at": "2026-05-17T12:40:21",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2512.17698",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 6,
+      "work_count": 6,
+      "table_count": 6,
+      "success_count": 6,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 6,
+      "file_success_count": 6,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-obs",
+      "internal_table_id": "table-tab-obs",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+        "start_line": 186,
+        "end_line": 220,
+        "caption": "VLA observations and image properties.",
+        "label": "tab:obs"
+      },
+      "source_path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+      "excerpt_path": "literature/2512.17698/catalog_sources/table-tab-obs/excerpt.tex",
+      "sha256": "2d723cc594f6960da1b8200b39078625bf062da80ded94c8116b343eaa008455",
+      "line_count": 35,
+      "error": ""
+    },
+    {
+      "id": "table-tab-crsM",
+      "internal_table_id": "table-tab-crsM",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+        "start_line": 318,
+        "end_line": 359,
+        "caption": "Compact radio sources in \\dr.",
+        "label": "tab:crsM"
+      },
+      "source_path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+      "excerpt_path": "literature/2512.17698/catalog_sources/table-tab-crsM/excerpt.tex",
+      "sha256": "a0e4e47ba5b82c6fd2777fbab4e3e8680851df64fcf618a1c01c6a5837186955",
+      "line_count": 42,
+      "error": ""
+    },
+    {
+      "id": "table-tab-count",
+      "internal_table_id": "table-tab-count",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+        "start_line": 385,
+        "end_line": 408,
+        "caption": "Counterparts to compact radio sources of \\dr.",
+        "label": "tab:count"
+      },
+      "source_path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+      "excerpt_path": "literature/2512.17698/catalog_sources/table-tab-count/excerpt.tex",
+      "sha256": "dbb398376a256c45d9c8356165172d3e1023deee3f9d2eac019cf2db9107362a",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-tab-par_fit",
+      "internal_table_id": "table-tab-par_fit",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+        "start_line": 476,
+        "end_line": 504,
+        "caption": "Arc-shaped structure flux densities and parameters of the best parabola fit for each arc of \\dr.",
+        "label": "tab:par_fit"
+      },
+      "source_path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+      "excerpt_path": "literature/2512.17698/catalog_sources/table-tab-par_fit/excerpt.tex",
+      "sha256": "cb7600ff90027bf12bc7610216e0d05a0bb090616c0a610e1b49da01d40e24ed",
+      "line_count": 29,
+      "error": ""
+    },
+    {
+      "id": "table-tab-crsGf",
+      "internal_table_id": "table-tab-crsGf",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+        "start_line": 510,
+        "end_line": 536,
+        "caption": "Compact radio sources in \\gf.",
+        "label": "tab:crsGf"
+      },
+      "source_path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+      "excerpt_path": "literature/2512.17698/catalog_sources/table-tab-crsGf/excerpt.tex",
+      "sha256": "a518328932acfedb21e61bfbe15c3e7155d04e7517210e7c6cff3050f51485af",
+      "line_count": 27,
+      "error": ""
+    },
+    {
+      "id": "table-tab-crsA",
+      "internal_table_id": "table-tab-crsA",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+        "start_line": 866,
+        "end_line": 909,
+        "caption": "Compact radio sources in \\dr.",
+        "label": "tab:crsA"
+      },
+      "source_path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+      "excerpt_path": "literature/2512.17698/catalog_sources/table-tab-crsA/excerpt.tex",
+      "sha256": "4603ed3f1081a484f32d26cc4a60af2a8a9dbbd832fb6108be320319a92ce042",
+      "line_count": 44,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-obs",
+      "internal_table_id": "table-tab-obs",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2512.17698/catalog_tables/table-tab-obs.ecsv",
+      "caption": "VLA observations and image properties.",
+      "label": "tab:obs",
+      "row_count": 18,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Target",
+          "Date",
+          "Sub-",
+          "Synthesized beam",
+          "rms noise"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Target",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Date",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Sub-",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Synthesized beam",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "rms noise",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjrjxw2ir/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2512.17698/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjrjxw2ir/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2512.17698/catalog_sources/table-tab-obs/wrapped.tex",
+            "html": "literature/2512.17698/catalog_sources/table-tab-obs/latexml.html",
+            "stdout": "literature/2512.17698/catalog_sources/table-tab-obs/latexml.stdout.txt",
+            "stderr": "literature/2512.17698/catalog_sources/table-tab-obs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2d723cc594f6960da1b8200b39078625bf062da80ded94c8116b343eaa008455"
+    },
+    {
+      "id": "table-tab-crsM",
+      "internal_table_id": "table-tab-crsM",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2512.17698/catalog_tables/table-tab-crsM.ecsv",
+      "caption": "Compact radio sources in \\dr.",
+      "label": "tab:crsM",
+      "row_count": 14,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "#",
+          "R.A.",
+          "Dec.",
+          "S_\\nu,\\rm int \\supa",
+          "S_\\nu,\\rm peak \\supa",
+          "\\alpha",
+          "S_\\nu,\\rm int,1",
+          "S_\\nu,\\rm peak,1",
+          "S_\\nu,\\rm int,2",
+          "S_\\nu,\\rm peak,2",
+          "Var."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "#",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R.A.",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec.",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "S_\\nu,\\rm int \\supa",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "S_\\nu,\\rm peak \\supa",
+          "unit_text": "S_\\nu,\\rm peak \\supa",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\alpha",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "S_\\nu,\\rm int,1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "S_\\nu,\\rm peak,1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "S_\\nu,\\rm int,2",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "S_\\nu,\\rm peak,2",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Var.",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_4z5a2md/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2512.17698/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_4z5a2md/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2512.17698/catalog_sources/table-tab-crsM/wrapped.tex",
+            "html": "literature/2512.17698/catalog_sources/table-tab-crsM/latexml.html",
+            "stdout": "literature/2512.17698/catalog_sources/table-tab-crsM/latexml.stdout.txt",
+            "stderr": "literature/2512.17698/catalog_sources/table-tab-crsM/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a0e4e47ba5b82c6fd2777fbab4e3e8680851df64fcf618a1c01c6a5837186955"
+    },
+    {
+      "id": "table-tab-count",
+      "internal_table_id": "table-tab-count",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2512.17698/catalog_tables/table-tab-count.ecsv",
+      "caption": "Counterparts to compact radio sources of \\dr.",
+      "label": "tab:count",
+      "row_count": 4,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Source #",
+          "Infrared",
+          "X-rays",
+          "L_X [erg s -1 ] \\supa",
+          "Type",
+          "Ref.",
+          "L_R \\supb [erg s -1 Hz -1 ]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Source #",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Infrared",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "X-rays",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "L_X [erg s -1 ] \\supa",
+          "unit_text": "L_X [erg s -1 ] \\supa",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Ref.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "L_R \\supb [erg s -1 Hz -1 ]",
+          "unit_text": "L_R \\supb [erg s -1 Hz -1 ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpoi58nfvr/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2512.17698/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpoi58nfvr/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2512.17698/catalog_sources/table-tab-count/wrapped.tex",
+            "html": "literature/2512.17698/catalog_sources/table-tab-count/latexml.html",
+            "stdout": "literature/2512.17698/catalog_sources/table-tab-count/latexml.stdout.txt",
+            "stderr": "literature/2512.17698/catalog_sources/table-tab-count/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "dbb398376a256c45d9c8356165172d3e1023deee3f9d2eac019cf2db9107362a"
+    },
+    {
+      "id": "table-tab-par_fit",
+      "internal_table_id": "table-tab-par_fit",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2512.17698/catalog_tables/table-tab-par_fit.ecsv",
+      "caption": "Arc-shaped structure flux densities and parameters of the best parabola fit for each arc of \\dr.",
+      "label": "tab:par_fit",
+      "row_count": 9,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "S_\\nu,\\rm int \\supa",
+          "S_\\nu,\\rm peak \\supa",
+          "x_f \\supb",
+          "y_f \\supb",
+          "r_0 \\supc",
+          "\\theta \\supd"
+        ],
+        [
+          "",
+          "mJy",
+          "mJy beam -1",
+          "20^\\rm h39^\\rm m[^\\rm s]",
+          "42^\\circ19^\\prime[^\\prime\\prime]",
+          "[ ′′ ]",
+          "[ ∘ ]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "S_\\nu,\\rm int \\supa | mJy",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "S_\\nu,\\rm peak \\supa | mJy beam -1",
+          "unit_text": "S_\\nu,\\rm peak \\supa",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "x_f \\supb | 20^\\rm h39^\\rm m[^\\rm s]",
+          "unit_text": "20^\\rm h39^\\rm m[^\\rm s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "y_f \\supb | 42^\\circ19^\\prime[^\\prime\\prime]",
+          "unit_text": "42^\\circ19^\\prime[^\\prime\\prime]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "r_0 \\supc | [ ′′ ]",
+          "unit_text": "[ ′′ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\theta \\supd | [ ∘ ]",
+          "unit_text": "[ ∘ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzi88qfhx/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2512.17698/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzi88qfhx/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2512.17698/catalog_sources/table-tab-par_fit/wrapped.tex",
+            "html": "literature/2512.17698/catalog_sources/table-tab-par_fit/latexml.html",
+            "stdout": "literature/2512.17698/catalog_sources/table-tab-par_fit/latexml.stdout.txt",
+            "stderr": "literature/2512.17698/catalog_sources/table-tab-par_fit/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "cb7600ff90027bf12bc7610216e0d05a0bb090616c0a610e1b49da01d40e24ed"
+    },
+    {
+      "id": "table-tab-crsGf",
+      "internal_table_id": "table-tab-crsGf",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2512.17698/catalog_tables/table-tab-crsGf.ecsv",
+      "caption": "Compact radio sources in \\gf.",
+      "label": "tab:crsGf",
+      "row_count": 3,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "#",
+          "R.A.",
+          "Dec.",
+          "S_\\rm peak \\supa",
+          "S_\\rm int",
+          "S_\\rm peak",
+          "S_\\rm peak,LSB",
+          "S_\\rm peak,USB",
+          "\\alpha \\supb"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "#",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R.A.",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec.",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "S_\\rm peak \\supa",
+          "unit_text": "S_\\rm peak \\supa",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "S_\\rm int",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "S_\\rm peak",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "S_\\rm peak,LSB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "S_\\rm peak,USB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\alpha \\supb",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpets7h2bz/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2512.17698/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpets7h2bz/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2512.17698/catalog_sources/table-tab-crsGf/wrapped.tex",
+            "html": "literature/2512.17698/catalog_sources/table-tab-crsGf/latexml.html",
+            "stdout": "literature/2512.17698/catalog_sources/table-tab-crsGf/latexml.stdout.txt",
+            "stderr": "literature/2512.17698/catalog_sources/table-tab-crsGf/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a518328932acfedb21e61bfbe15c3e7155d04e7517210e7c6cff3050f51485af"
+    },
+    {
+      "id": "table-tab-crsA",
+      "internal_table_id": "table-tab-crsA",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2512.17698/catalog_tables/table-tab-crsA.ecsv",
+      "caption": "Compact radio sources in \\dr.",
+      "label": "tab:crsA",
+      "row_count": 14,
+      "column_count": 17,
+      "environment": "",
+      "header_rows": [
+        [
+          "#",
+          "R.A.",
+          "Dec.",
+          "S_\\rm int,LSB",
+          "S_\\rm peak,LSB",
+          "S_\\rm int,USB",
+          "S_\\rm peak,USB",
+          "S_\\rm int,1,LSB",
+          "S_\\rm peak,1,LSB",
+          "S_\\rm int,1,USB",
+          "S_\\rm peak,1,USB",
+          "\\alpha_1",
+          "S_\\rm int,2,LSB",
+          "S_\\rm peak,2,LSB",
+          "S_\\rm int,2,USB",
+          "S_\\rm peak,2,USB",
+          "\\alpha_2"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "#",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R.A.",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec.",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "S_\\rm int,LSB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "S_\\rm peak,LSB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "S_\\rm int,USB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "S_\\rm peak,USB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "S_\\rm int,1,LSB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "S_\\rm peak,1,LSB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "S_\\rm int,1,USB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "S_\\rm peak,1,USB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\alpha_1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "S_\\rm int,2,LSB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "S_\\rm peak,2,LSB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "S_\\rm int,2,USB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "S_\\rm peak,2,USB",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "\\alpha_2",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp36av0i87/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2512.17698/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp36av0i87/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2512.17698/catalog_sources/table-tab-crsA/wrapped.tex",
+            "html": "literature/2512.17698/catalog_sources/table-tab-crsA/latexml.html",
+            "stdout": "literature/2512.17698/catalog_sources/table-tab-crsA/latexml.stdout.txt",
+            "stderr": "literature/2512.17698/catalog_sources/table-tab-crsA/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4603ed3f1081a484f32d26cc4a60af2a8a9dbbd832fb6108be320319a92ce042"
+    }
+  ]
+}

@@ -1,0 +1,674 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2004.13730",
+    "title": "Runaway and walkaway stars from the ONC with Gaia DR2",
+    "month": "2020-04",
+    "source_note_json": "notes/2020/2020-04/2020-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2004.13730",
+      "pdf": "https://arxiv.org/pdf/2004.13730"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2004.13730",
+    "audit_path": "literature/2004.13730/audit.json",
+    "source_dir": "literature/2004.13730/arxiv_source",
+    "tex_root": "literature/2004.13730/arxiv_source/Main_document.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T11:32:30",
+    "reviewer": "agent",
+    "summary": "The paper searches for runaway (RW) and walkaway (WW) stars within 100 pc of the Orion Nebula Cluster (ONC) using Gaia DR2. Nine internal LaTeX tables include: ONC reference parameters, simulation binary fractions and separations, simulation predictions for RW/WW counts, Gaia DR2 2D candidate tables for RW (31 candidates) and WW (54 candidates), excluded candidates, stars with varying RVs, and past ONC visitors. All identified stars are low/intermediate-mass (<8 Msun) cluster escapees from the ONC. The paper studies dynamical ejection from a star-forming region; none of the stars are claimed to be unbound from the Galaxy or to be hypervelocity stars. Internal tables present observational catalogs but the objects are Galactic bound cluster escapees."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-ONC_para",
+      "kind": "latex_table",
+      "asset_type": "",
+      "role_in_paper": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+          "start_line": 154,
+          "end_line": 171,
+          "caption": "ONC centre parameters used in the analysis; [1]~\\citet{RN264}",
+          "label": "tab:ONC_para"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Right ascension [RA] (ICRS) \\alpha_0 | Declination [Dec] (ICRS) \\delta_0 | Proper motion RA \\mu_\\alpha ^\\star,0 (mas yr^-1) | Proper motion Dec \\mu_\\delta_0 (mas yr^-1) | RV ( km s^-1)",
+          "meaning": "",
+          "unit_text": "Right ascension [RA] (ICRS) \\alpha_0",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "5h 35m 16s [1] | -05\\degree 23^\\prime 40^\\prime\\prime [1] | 1.51 +/- 0.11 [1] | 0.50 +/- 0.12 [1] | 21.8 +/- 6.6 [1]",
+          "meaning": "",
+          "unit_text": "5h 35m 16s [1]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "ONC centre parameters used in the analysis; [1]~\\citet{RN264}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-Bin_frac",
+      "kind": "latex_table",
+      "asset_type": "",
+      "role_in_paper": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+          "start_line": 292,
+          "end_line": 307,
+          "caption": "Binary fractions in the $N$-body simulations. Column 1 shows the mass range based on the mass of the primary star; Column 2 shows the binary fraction $f_{\\text{bin}}$.",
+          "label": "tab:Bin_frac"
+        }
+      ],
+      "columns": [
+        {
+          "name": "m_p [M_\\sun]",
+          "meaning": "",
+          "unit_text": "m_p [M_\\sun]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "f_bin",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Source",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Binary fractions in the $N$-body simulations. Column 1 shows the mass range based on the mass of the primary star; Column 2 shows the binary fraction $f_{\\text{bin}}$.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-Bin_sep",
+      "kind": "latex_table",
+      "asset_type": "",
+      "role_in_paper": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+          "start_line": 309,
+          "end_line": 323,
+          "caption": "Mean binary separations in the $N$-body simulations. Column 1 shows the mass range based on the mass of the primary star; Column 2 shows the mean binary separation $\\bar{a}$; Column 3 represents the variance $\\sigma_{\\textrm{log}\\,\\bar{a}}$ of the log-normal fit to the binary separation distributions.",
+          "label": "tab:Bin_sep"
+        }
+      ],
+      "columns": [
+        {
+          "name": "m_p [M_\\sun]",
+          "meaning": "",
+          "unit_text": "m_p [M_\\sun]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\bara [au]",
+          "meaning": "",
+          "unit_text": "\\bara [au]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_log \\bara",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Source",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Mean binary separations in the $N$-body simulations. Column 1 shows the mass range based on the mass of the primary star; Column 2 shows the mean binary separation $\\bar{a}$; Column 3 represents the variance $\\sigma_{\\textrm{log}\\,\\bar{a}}$ of the log-normal fit to the binary separation distributions.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-RW_WW_pred",
+      "kind": "latex_table",
+      "asset_type": "",
+      "role_in_paper": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+          "start_line": 371,
+          "end_line": 397,
+          "caption": "Ejected RW and WW stars from $N$-body simulations at all distances and within the search radius of 100 pc at different times during the simulations. We show the averages from all 20 simulations and maxima in a single simulation. [] indicates the number of RW/WW stars within 100 pc. We count ejected binary systems as one star when calculating averages and maxima. The uncertainties in our averages are the standard deviations.",
+          "label": "tab:RW_WW_pred"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Mass m (M_\\sun)",
+          "meaning": "",
+          "unit_text": "Mass m (M_\\sun)",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "RW average / maximum",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "WW average / maximum",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Ejected RW and WW stars from $N$-body simulations at all distances and within the search radius of 100 pc at different times during the simulations. We show the averages from all 20 simulations and maxima in a single simulation. [] indicates the number of RW/WW stars within 100 pc. We count ejected binary systems as one star when calculating averages and maxima. The uncertainties in our averages are the standard deviations.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-RWC_2D",
+      "kind": "latex_table",
+      "asset_type": "",
+      "role_in_paper": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+          "start_line": 425,
+          "end_line": 469,
+          "caption": "RW star 2D candidates sorted by decreasing 2D-velocity. Column 2+3: velocity in ONC rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2015ApJ...807...27C}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7--9: from literature sources - $^{1}$\\citet{1988AJ.....95.1744V}, $^{2}$\\citet{1997AJ....113.1733H}, $^{3}$\\citet{1999MSS...C05....0H}, $^{4}$\\citet{2000AJ....119.3026R}, $^{5}$\\citet{2016ApJ...818...59D}, $^{6}$\\citet{1995A&AS..110..367N}.",
+          "label": "tab:RWC_2D"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "2D-velocity rf | (km s^-1)",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Radial velocity rf | (km s^-1)",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "3D-cand.",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Flight time | (Myr)",
+          "meaning": "",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Iso. age | (Myr)",
+          "meaning": "",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Age | (Myr)",
+          "meaning": "",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Mass | (M_\\sun)",
+          "meaning": "",
+          "unit_text": "Mass",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "RW star 2D candidates sorted by decreasing 2D-velocity. Column 2+3: velocity in ONC rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2015ApJ...807...27C}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7--9: from literature sources - $^{1}$\\citet{1988AJ.....95.1744V}, $^{2}$\\citet{1997AJ....113.1733H}, $^{3}$\\citet{1999MSS...C05....0H}, $^{4}$\\citet{2000AJ....119.3026R}, $^{5}$\\citet{2016ApJ...818...59D}, $^{6}$\\citet{1995A&AS..110..367N}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-WWC_2D",
+      "kind": "latex_table",
+      "asset_type": "",
+      "role_in_paper": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+          "start_line": 471,
+          "end_line": 539,
+          "caption": "WW star 2D candidates. Column 2+3: velocity in ONC rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2015ApJ...807...27C}, $^{c}$\\citet{2006AstL...32..759G},$^{d}$\\citet{2018AJ....156...84K}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7--9: from literature sources - $^{1}$\\citet{1988AJ.....95.1744V}, $^{2}$\\citet{1997AJ....113.1733H}, $^{3}$\\citet{1999MSS...C05....0H}, $^{4}$ \\citet{2000AJ....119.3026R}, $^{5}$\\citet{RN218}, $^{6}$\\citet{RN263}, $^{7}$\\citet{2012ApJ...748...14D}, $^{8}$\\citet{2012ApJ...752...59H}, $^{9}$\\citet{2013ApJ...764..114H}, $^{10}$\\citet{2016ApJ...818...59D}, $^{11}$\\citet{2011ApJS..193...24S}, $^{12}$\\citet{2010AN....331..349H}.",
+          "label": "tab:WWC_2D"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "2D-velocity rf | (km s^-1)",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Radial velocity rf | (km s^-1)",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "3D-cand.",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Flight time | (Myr)",
+          "meaning": "",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Iso. age | (Myr)",
+          "meaning": "",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Age | (Myr)",
+          "meaning": "",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Mass | (M_\\sun)",
+          "meaning": "",
+          "unit_text": "Mass",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "WW star 2D candidates. Column 2+3: velocity in ONC rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2015ApJ...807...27C}, $^{c}$\\citet{2006AstL...32..759G},$^{d}$\\citet{2018AJ....156...84K}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7--9: from literature sources - $^{1}$\\citet{1988AJ.....95.1744V}, $^{2}$\\citet{1997AJ....113.1733H}, $^{3}$\\citet{1999MSS...C05....0H}, $^{4}$ \\citet{2000AJ....119.3026R}, $^{5}$\\citet{RN218}, $^{6}$\\citet{RN263}, $^{7}$\\citet{2012ApJ...748...14D}, $^{8}$\\citet{2012ApJ...752...59H}, $^{9}$\\citet{2013ApJ...764..114H}, $^{10}$\\citet{2016ApJ...818...59D}, $^{11}$\\citet{2011ApJS..193...24S}, $^{12}$\\citet{2010AN....331..349H}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-RWC_2D_excluded",
+      "kind": "latex_table",
+      "asset_type": "",
+      "role_in_paper": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+          "start_line": 696,
+          "end_line": 729,
+          "caption": "Excluded RW and WW star 2D-candidates. Column 2+3: velocity in ONC rest frame [rf]; Column 3: RV sources -- $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2015ApJ...807...27C}, $^{c}$\\citet{2006AstL...32..759G}; Column 4: Reason for exclusion; Column 5--7: from literature sources -- $^{1}$\\citet{2016ApJ...818...59D}, $^{2}$\\citet{1999MSS...C05....0H}, $^{3}$\\citet{1995A&AS..110..367N}, $^{4}$\\citet{1988mcts.book.....H}, $^{5}$\\citet{RN263}.",
+          "label": "tab:RWC_2D_excluded"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "2D-velocity rf | (km s^-1)",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Radial velocity rf | (km s^-1)",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Exclusion reason",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Age | (Myr)",
+          "meaning": "",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Mass | (M_\\sun)",
+          "meaning": "",
+          "unit_text": "Mass",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Excluded RW and WW star 2D-candidates. Column 2+3: velocity in ONC rest frame [rf]; Column 3: RV sources -- $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2015ApJ...807...27C}, $^{c}$\\citet{2006AstL...32..759G}; Column 4: Reason for exclusion; Column 5--7: from literature sources -- $^{1}$\\citet{2016ApJ...818...59D}, $^{2}$\\citet{1999MSS...C05....0H}, $^{3}$\\citet{1995A&AS..110..367N}, $^{4}$\\citet{1988mcts.book.....H}, $^{5}$\\citet{RN263}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-2D_cand_varying_RV",
+      "kind": "latex_table",
+      "asset_type": "",
+      "role_in_paper": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+          "start_line": 735,
+          "end_line": 751,
+          "caption": "Slow 2D-candidates with multiple, varying RV measurements; Column 2: velocity in ONC rest frame [rf]; Column 3: RV sources of varying measurements - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2015ApJ...807...27C}, $^{c}$\\citet{2018AJ....156...84K}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7--9: from literature sources - $^{1}$\\citet{1997AJ....113.1733H}, $^{2}$\\citet{2016ApJ...818...59D}.",
+          "label": "tab:2D_cand_varying_RV"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "2D-velocity rf | (km s^-1)",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Radial velocity rf | (km s^-1)",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "3D-cand.",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Flight time | (Myr)",
+          "meaning": "",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Iso. age | (Myr)",
+          "meaning": "",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Age | (Myr)",
+          "meaning": "",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Mass | (M_\\sun)",
+          "meaning": "",
+          "unit_text": "Mass",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Slow 2D-candidates with multiple, varying RV measurements; Column 2: velocity in ONC rest frame [rf]; Column 3: RV sources of varying measurements - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2015ApJ...807...27C}, $^{c}$\\citet{2018AJ....156...84K}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7--9: from literature sources - $^{1}$\\citet{1997AJ....113.1733H}, $^{2}$\\citet{2016ApJ...818...59D}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-Visitors_list",
+      "kind": "latex_table",
+      "asset_type": "",
+      "role_in_paper": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+          "start_line": 758,
+          "end_line": 816,
+          "caption": "Past visitors to the ONC. Column 2+3: velocity in ONC rest frame [rf]; Column 3: RV sources -- $^{a}$\\textit{Gaia} DR2; Column 4: age from PARSEC isochrones \\citep{RN225}; Column 5--7: from literature sources -- $^{1}$\\citet{2016ApJ...818...59D}.",
+          "label": "tab:Visitors_list"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "2D-velocity rf | (km s^-1)",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Radial velocity rf | (km s^-1)",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Iso. age | (Myr)",
+          "meaning": "",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Age | (Myr)",
+          "meaning": "",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Mass | (M_\\sun)",
+          "meaning": "",
+          "unit_text": "Mass",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Past visitors to the ONC. Column 2+3: velocity in ONC rest frame [rf]; Column 3: RV sources -- $^{a}$\\textit{Gaia} DR2; Column 4: age from PARSEC isochrones \\citep{RN225}; Column 5--7: from literature sources -- $^{1}$\\citet{2016ApJ...818...59D}.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dr2-known-issues",
+      "local_path": "",
+      "description": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+          "start_line": 173,
+          "end_line": 173,
+          "context": "\\end{table}\n\nCuts to increase astrometric and photometric quality are applied to this data. We use the re-normalised unit weight error RUWE \\citep[][``\\textit{Gaia} known issues'' website\\footnote{https://www.cosmos.esa.int/web/gaia/dr2-known-issues}]{LL:LL-124}, which is an indicator for how well the single-star model fits to the observations. Higher RUWE values indicate problems with the astrometry or the presence of a non-single star. The technical note GAIA-C3-TN-LU-LL-124-01 \\citep{LL:LL-124} provided an example for calculating an upper boundary for a good fit. This example derived a RUWE boundary of 1.4. Plotting our data in the same way as described in the technical note results in a RUWE distribution as shown in Fig.~\\ref{fig:RUWE_1.2}, where we also include the example distribution from \\citet{LL:LL-124}. The resulting graph shows that excluding stars with RUWE > 1.4 leaves stars located in the upper tail of the distribution. We consider RUWE = 1.3 a better (more conservative) upper boundary for our data set and exclude all data above this value.\n\\begin{figure}\n    \\centering"
+        }
+      ],
+      "evidence": "\\end{table}\n\nCuts to increase astrometric and photometric quality are applied to this data. We use the re-normalised unit weight error RUWE \\citep[][``\\textit{Gaia} known issues'' website\\footnote{https://www.cosmos.esa.int/web/gaia/dr2-known-issues}]{LL:LL-124}, which is an indicator for how well the single-star model fits to the observations. Higher RUWE values indicate problems with the astrometry or the presence of a non-single star. The technical note GAIA-C3-TN-LU-LL-124-01 \\citep{LL:LL-124} provided an example for calculating an upper boundary for a good fit. This example derived a RUWE boundary of 1.4. Plotting our data in the same way as described in the technical note results in a RUWE distribution as shown in Fig.~\\ref{fig:RUWE_1.2}, where we also include the example distribution from \\citet{LL:LL-124}. The resulting graph shows that excluding stars with RUWE > 1.4 leaves stars located in the upper tail of the distribution. We consider RUWE = 1.3 a better (more conservative) upper boundary for our data set and exclude all data above this value.\n\\begin{figure}\n    \\centering",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+          "start_line": 216,
+          "end_line": 216,
+          "context": "For 2D-candidates without RV, we use the radial distance of these candidates to the cluster boundary and each candidate's minimum flight time to calculate a required RV to reach this distance since ejection. If the resulting velocity is > |500|\\,km\\,s$^{-1}$ we exclude these 2D-candidates from the list of 2D-candidates. \n\nWe have searched through several RV surveys, i.e. RAVE DR5 \\citep{2017AJ....153...75K}, GALAH DR1 \\citep{2017MNRAS.465.3203M} and also the Simbad/VizieR databases \\citep{2000A&AS..143....9W, 2000A&AS..143...23O} to complete our data set with secondary RV measurements. We find additional RVs in \\citet{2006AstL...32..759G}, \\citet{2015ApJ...807...27C}, and \\citet{2018AJ....156...84K} for several 2D RW and WW candidates. We also find secondary, more precise RVs for several sources, where the \\textit{Gaia} DR2 RVs have large errors, and use these secondary RVs instead.\n\nBefore tracing back 2D-candidates with RVs in three dimensions, we exclude those 2D-candidates where the RV points towards the ONC as these stars cannot have originated from the ONC. We then trace back the remaining candidates in the same way as described for the xy-plane in the xz-plane and yz-plane. Instead of a circular cluster boundary, the boundary in the latter two planes turns into an ellipse with semi-minor axis of 2.5 pc (in the x and y axes) and semi-major axis of 15 pc (in the z axis)."
+        }
+      ],
+      "evidence": "For 2D-candidates without RV, we use the radial distance of these candidates to the cluster boundary and each candidate's minimum flight time to calculate a required RV to reach this distance since ejection. If the resulting velocity is > |500|\\,km\\,s$^{-1}$ we exclude these 2D-candidates from the list of 2D-candidates. \n\nWe have searched through several RV surveys, i.e. RAVE DR5 \\citep{2017AJ....153...75K}, GALAH DR1 \\citep{2017MNRAS.465.3203M} and also the Simbad/VizieR databases \\citep{2000A&AS..143....9W, 2000A&AS..143...23O} to complete our data set with secondary RV measurements. We find additional RVs in \\citet{2006AstL...32..759G}, \\citet{2015ApJ...807...27C}, and \\citet{2018AJ....156...84K} for several 2D RW and WW candidates. We also find secondary, more precise RVs for several sources, where the \\textit{Gaia} DR2 RVs have large errors, and use these secondary RVs instead.\n\nBefore tracing back 2D-candidates with RVs in three dimensions, we exclude those 2D-candidates where the RV points towards the ONC as these stars cannot have originated from the ONC. We then trace back the remaining candidates in the same way as described for the xy-plane in the xz-plane and yz-plane. Instead of a circular cluster boundary, the boundary in the latter two planes turns into an ellipse with semi-minor axis of 2.5 pc (in the x and y axes) and semi-major axis of 15 pc (in the z axis).",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "http://stev.oapd.inaf.it/cgi-bin/cmd",
+      "local_path": "",
+      "description": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+          "start_line": 249,
+          "end_line": 249,
+          "context": "\\subsubsection{Age estimate using PARSEC isochrones}\n\nWe use an upper age limit of 4 Myr and consider only stars that are younger than this age to have possibly originated in the ONC. To get age estimates of our candidate stars, we use PARSEC isochrones \\citep[version 1.2S,][]{RN225} to separate the stars into two age brackets (younger stars plotted above the isochrone, older stars below). We download data\\footnote{http://stev.oapd.inaf.it/cgi-bin/cmd} to produce an isochrone using a linear age of 4 Myr with a mean metallicity of $Z$ = 0.011268 \\citep{RN331,RN232} and interstellar extinction $A_{\\rm{V}}$ = 0. We use the \\citet{2018A&A...616A...4E} passbands. \n\n\\subsection{Error calculation}"
+        }
+      ],
+      "evidence": "\\subsubsection{Age estimate using PARSEC isochrones}\n\nWe use an upper age limit of 4 Myr and consider only stars that are younger than this age to have possibly originated in the ONC. To get age estimates of our candidate stars, we use PARSEC isochrones \\citep[version 1.2S,][]{RN225} to separate the stars into two age brackets (younger stars plotted above the isochrone, older stars below). We download data\\footnote{http://stev.oapd.inaf.it/cgi-bin/cmd} to produce an isochrone using a linear age of 4 Myr with a mean metallicity of $Z$ = 0.011268 \\citep{RN331,RN232} and interstellar extinction $A_{\\rm{V}}$ = 0. We use the \\citet{2018A&A...616A...4E} passbands. \n\n\\subsection{Error calculation}",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+          "start_line": 672,
+          "end_line": 672,
+          "context": "CS acknowledges PhD funding from the 4IR STFC Centre for Doctoral Training in Data Intensive Science. CS thanks ESTEC/ESA in Noordwijk for hosting her as a visiting researcher during the major part of the work on this project and the \\textit{Gaia} team there for their support and feedback. RJP acknowledges support from the Royal Society in the form of a Dorothy Hodgkin Fellowship.\n\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. \n\nThis research has made use of the SIMBAD database, operated at CDS and the VizieR catalogue access tool, CDS, Strasbourg, France."
+        }
+      ],
+      "evidence": "CS acknowledges PhD funding from the 4IR STFC Centre for Doctoral Training in Data Intensive Science. CS thanks ESTEC/ESA in Noordwijk for hosting her as a visiting researcher during the major part of the work on this project and the \\textit{Gaia} team there for their support and feedback. RJP acknowledges support from the Royal Society in the form of a Dorothy Hodgkin Fellowship.\n\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. \n\nThis research has made use of the SIMBAD database, operated at CDS and the VizieR catalogue access tool, CDS, Strasbourg, France.",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+          "start_line": 672,
+          "end_line": 672,
+          "context": "CS acknowledges PhD funding from the 4IR STFC Centre for Doctoral Training in Data Intensive Science. CS thanks ESTEC/ESA in Noordwijk for hosting her as a visiting researcher during the major part of the work on this project and the \\textit{Gaia} team there for their support and feedback. RJP acknowledges support from the Royal Society in the form of a Dorothy Hodgkin Fellowship.\n\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. \n\nThis research has made use of the SIMBAD database, operated at CDS and the VizieR catalogue access tool, CDS, Strasbourg, France."
+        }
+      ],
+      "evidence": "CS acknowledges PhD funding from the 4IR STFC Centre for Doctoral Training in Data Intensive Science. CS thanks ESTEC/ESA in Noordwijk for hosting her as a visiting researcher during the major part of the work on this project and the \\textit{Gaia} team there for their support and feedback. RJP acknowledges support from the Royal Society in the form of a Dorothy Hodgkin Fellowship.\n\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. \n\nThis research has made use of the SIMBAD database, operated at CDS and the VizieR catalogue access tool, CDS, Strasbourg, France.",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "",
+      "source_refs": [
+        {
+          "path": "literature/2004.13730/arxiv_source/Main_document.tex",
+          "start_line": 674,
+          "end_line": 674,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. \n\nThis research has made use of the SIMBAD database, operated at CDS and the VizieR catalogue access tool, CDS, Strasbourg, France.\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        }
+      ],
+      "evidence": "This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. \n\nThis research has made use of the SIMBAD database, operated at CDS and the VizieR catalogue access tool, CDS, Strasbourg, France.\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%",
+      "comments": ""
+    }
+  ]
+}

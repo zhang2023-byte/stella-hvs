@@ -1,0 +1,326 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:39:49",
+  "paper": {
+    "arxiv_id": "1807.02028",
+    "title": "In-Situ Star Formation in the Outskirts of the Large Magellanic Cloud: Gaia DR2 Confirmation",
+    "month": "2018-07"
+  },
+  "review": {
+    "path": "literature/1807.02028/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083949",
+    "started_at": "2026-06-07T08:39:49",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1807.02028",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1807.02028/arxiv_source/ms.tex",
+        "start_line": 269,
+        "end_line": 289,
+        "caption": "Proper motions and proper-motion differences between targets and field",
+        "label": "tab1"
+      },
+      "source_path": "literature/1807.02028/arxiv_source/ms.tex",
+      "excerpt_path": "literature/1807.02028/catalog_sources/table-tab1/excerpt.tex",
+      "sha256": "0ba03292226e1a9b477b4f0343d8bfb800ab7b02d1d4d7fce4003ba38f27f638",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-tab2",
+      "internal_table_id": "table-tab2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1807.02028/arxiv_source/ms.tex",
+        "start_line": 341,
+        "end_line": 360,
+        "caption": "Velocity and travel distance",
+        "label": "tab2"
+      },
+      "source_path": "literature/1807.02028/arxiv_source/ms.tex",
+      "excerpt_path": "literature/1807.02028/catalog_sources/table-tab2/excerpt.tex",
+      "sha256": "cd61535d80da1cdbeb95f581297cad70a19a22947ea4caea0ee5d61f94e9c686",
+      "line_count": 20,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "status": "success",
+      "ecsv_path": "literature/1807.02028/catalog_tables/table-tab1.ecsv",
+      "caption": "Proper motions and proper-motion differences between targets and field",
+      "label": "tab1",
+      "row_count": 6,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR2 ID",
+          "ID",
+          "N f",
+          "<\\mu_\\alpha^f>",
+          "<\\mu_\\delta^f>",
+          "\\mu_\\alpha",
+          "\\mu_\\delta",
+          "\\Delta\\mu_\\alpha",
+          "\\Delta\\mu_\\delta"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR2 ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "N f",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "<\\mu_\\alpha^f>",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "<\\mu_\\delta^f>",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_\\alpha",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_\\delta",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\Delta\\mu_\\alpha",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\Delta\\mu_\\delta",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprlxhqhge/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1807.02028/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprlxhqhge/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1807.02028/catalog_sources/table-tab1/wrapped.tex",
+            "html": "literature/1807.02028/catalog_sources/table-tab1/latexml.html",
+            "stdout": "literature/1807.02028/catalog_sources/table-tab1/latexml.stdout.txt",
+            "stderr": "literature/1807.02028/catalog_sources/table-tab1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0ba03292226e1a9b477b4f0343d8bfb800ab7b02d1d4d7fce4003ba38f27f638"
+    },
+    {
+      "id": "table-tab2",
+      "internal_table_id": "table-tab2",
+      "status": "success",
+      "ecsv_path": "literature/1807.02028/catalog_tables/table-tab2.ecsv",
+      "caption": "Velocity and travel distance",
+      "label": "tab2",
+      "row_count": 7,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "\\Delta V_T",
+          "Age",
+          "Dist",
+          "",
+          "\\Delta V_los"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\Delta V_T",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Age",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Dist",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\Delta V_los",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3etvwobz/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1807.02028/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3etvwobz/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1807.02028/catalog_sources/table-tab2/wrapped.tex",
+            "html": "literature/1807.02028/catalog_sources/table-tab2/latexml.html",
+            "stdout": "literature/1807.02028/catalog_sources/table-tab2/latexml.stdout.txt",
+            "stderr": "literature/1807.02028/catalog_sources/table-tab2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "cd61535d80da1cdbeb95f581297cad70a19a22947ea4caea0ee5d61f94e9c686"
+    }
+  ]
+}

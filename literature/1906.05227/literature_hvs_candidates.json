@@ -1,0 +1,2735 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T03:11:47.333139",
+  "paper": {
+    "arxiv_id": "1906.05227",
+    "bibcode": "2019A&A...627A.104D",
+    "title": "Flying far and fast: the distribution of distant hypervelocity star candidates from Gaia DR2 data",
+    "month": "2019-06",
+    "source_note_json": "notes/2019/2019-06/2019-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1906.05227",
+      "pdf": "https://arxiv.org/pdf/1906.05227"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1906.05227",
+    "audit_path": "literature/1906.05227/audit.json",
+    "catalog_review_path": "literature/1906.05227/catalog_review.json",
+    "catalog_extraction_path": "literature/1906.05227/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1906.05227/catalog_tables/table-valid.ecsv",
+      "literature/1906.05227/catalog_tables/table-best1.ecsv",
+      "literature/1906.05227/catalog_tables/table-best2.ecsv",
+      "literature/1906.05227/catalog_tables/table-vbest1.ecsv",
+      "literature/1906.05227/catalog_tables/table-vbest2.ecsv",
+      "literature/1906.05227/catalog_tables/table-vbesth1.ecsv",
+      "literature/1906.05227/catalog_tables/table-vbesth2.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-06-07T03:11:47.333137",
+    "extractor": "agent",
+    "summary": "论文利用Gaia DR2搜索银心距>30 kpc的遥远HVS候选体。从15,681个远距离源中选出174个V_gc>500 km/s的最佳样本。速度均为ETW偏差下限。部分候选体速度达2000 km/s，可能具河外起源。共提取22颗。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR2: 87.7M sources. Selected 4.83M with complete astrometry+RV. 15,681 with r_gc > 30 kpc.",
+      "inputs": [
+        "Gaia DR2"
+      ],
+      "outputs": [
+        "15,681 distant candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 1,
+          "end_line": 1401,
+          "context": "Sec 2"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "velocity_computation",
+      "summary": "Galactic rest-frame velocities. No global parallax zero-point correction.",
+      "inputs": [
+        "Gaia DR2"
+      ],
+      "outputs": [
+        "V_gc",
+        "r_gc",
+        "RUWE"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 1,
+          "end_line": 1401,
+          "context": "Sec 2"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "monte_carlo_sampling",
+      "summary": "MC sampling for uncertainty propagation. Best sample: 174 stars with V_gc > 500 km/s.",
+      "inputs": [
+        "Gaia DR2 uncertainties"
+      ],
+      "outputs": [
+        "174 best sample"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 1,
+          "end_line": 1401,
+          "context": "Sec 2-3"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "bound_classification",
+      "summary": "HVS candidates at r_gc > 30 kpc, V_gc > 500 km/s (lower limits due to ETW bias). Up to 2000 km/s.",
+      "inputs": [
+        "MC samples"
+      ],
+      "outputs": [
+        "174 HVS candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 1,
+          "end_line": 1401,
+          "context": "Sec 3-4"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-001",
+        "paper_candidate_id": "1867261981412622976",
+        "gaia_source_id": "1867261981412622976",
+        "all": [
+          {
+            "value": "1867261981412622976",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Best HVS candidate (parallax rel err < 0.5). r_gc > 30 kpc, V_gc > 500 km/s.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "317.50283948290",
+          "value": "317.50283948290",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "+35.06321358265",
+          "value": "+35.06321358265",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "79.98394750766",
+          "value": "79.98394750766",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "- 8.75202945162",
+          "value": "-",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0307 +/- 0.0146",
+          "value": "0.0307",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 2.120 +/- 0.020",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-002",
+        "paper_candidate_id": "2076234920873478272",
+        "gaia_source_id": "2076234920873478272",
+        "all": [
+          {
+            "value": "2076234920873478272",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Best HVS candidate (parallax rel err < 0.5). r_gc > 30 kpc, V_gc > 500 km/s.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "294.95021989885",
+          "value": "294.95021989885",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "+39.26741709907",
+          "value": "+39.26741709907",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "73.02211904083",
+          "value": "73.02211904083",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "+8.29595299575",
+          "value": "+8.29595299575",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0308 +/- 0.0146",
+          "value": "0.0308",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 2.328 +/- 0.024",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-003",
+        "paper_candidate_id": "2130229806599268480",
+        "gaia_source_id": "2130229806599268480",
+        "all": [
+          {
+            "value": "2130229806599268480",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Best HVS candidate (parallax rel err < 0.5). r_gc > 30 kpc, V_gc > 500 km/s.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "287.78291416193",
+          "value": "287.78291416193",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "+45.49653404425",
+          "value": "+45.49653404425",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "76.40831708998",
+          "value": "76.40831708998",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "+15.76370451034",
+          "value": "+15.76370451034",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0295 +/- 0.0141",
+          "value": "0.0295",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 1.842 +/- 0.026",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-004",
+        "paper_candidate_id": "5252768161477321472",
+        "gaia_source_id": "5252768161477321472",
+        "all": [
+          {
+            "value": "5252768161477321472",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Best HVS candidate (parallax rel err < 0.5). r_gc > 30 kpc, V_gc > 500 km/s.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "151.81209119622",
+          "value": "151.81209119622",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "- 63.07207249907",
+          "value": "- 63.07207249907",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "285.53624820401",
+          "value": "285.53624820401",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "- 5.88769893896",
+          "value": "-",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0319 +/- 0.0152",
+          "value": "0.0319",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 4.431 +/- 0.027",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-005",
+        "paper_candidate_id": "5303914835370054656",
+        "gaia_source_id": "5303914835370054656",
+        "all": [
+          {
+            "value": "5303914835370054656",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Best HVS candidate (parallax rel err < 0.5). r_gc > 30 kpc, V_gc > 500 km/s.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "135.88008255316",
+          "value": "135.88008255316",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "- 57.43383739232",
+          "value": "- 57.43383739232",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "275.88018014633",
+          "value": "275.88018014633",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "- 7.07867974501",
+          "value": "-",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0312 +/- 0.0148",
+          "value": "0.0312",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 2.298 +/- 0.031",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-006",
+        "paper_candidate_id": "5304019117178317312",
+        "gaia_source_id": "5304019117178317312",
+        "all": [
+          {
+            "value": "5304019117178317312",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Best HVS candidate (parallax rel err < 0.5). r_gc > 30 kpc, V_gc > 500 km/s.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "137.68599081936",
+          "value": "137.68599081936",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "- 56.73618453511",
+          "value": "- 56.73618453511",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "276.01906096699",
+          "value": "276.01906096699",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "- 5.88263899848",
+          "value": "-",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0310 +/- 0.0154",
+          "value": "0.0310",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 2.551 +/- 0.031",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-007",
+        "paper_candidate_id": "5317229302706969088",
+        "gaia_source_id": "5317229302706969088",
+        "all": [
+          {
+            "value": "5317229302706969088",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Best HVS candidate (parallax rel err < 0.5). r_gc > 30 kpc, V_gc > 500 km/s.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "133.82399802206",
+          "value": "133.82399802206",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "- 54.56011892711",
+          "value": "- 54.56011892711",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "272.93005017631",
+          "value": "272.93005017631",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "- 6.08394727436",
+          "value": "-",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0296 +/- 0.0142",
+          "value": "0.0296",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 2.743 +/- 0.027",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-008",
+        "paper_candidate_id": "5317776481532378240",
+        "gaia_source_id": "5317776481532378240",
+        "all": [
+          {
+            "value": "5317776481532378240",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Best HVS candidate (parallax rel err < 0.5). r_gc > 30 kpc, V_gc > 500 km/s.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "130.49490546902",
+          "value": "130.49490546902",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "- 54.79662905248",
+          "value": "- 54.79662905248",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "271.90741854172",
+          "value": "271.90741854172",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "- 7.73602796070",
+          "value": "-",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0317 +/- 0.0158",
+          "value": "0.0317",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 3.186 +/- 0.031",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-009",
+        "paper_candidate_id": "5489467833544327040",
+        "gaia_source_id": "5489467833544327040",
+        "all": [
+          {
+            "value": "5489467833544327040",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Best HVS candidate (parallax rel err < 0.5). r_gc > 30 kpc, V_gc > 500 km/s.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "117.63555537419",
+          "value": "117.63555537419",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "- 53.40035704153",
+          "value": "- 53.40035704153",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "266.59793639347",
+          "value": "266.59793639347",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "- 13.34069255350",
+          "value": "-",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0335 +/- 0.0145",
+          "value": "0.0335",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 0.908 +/- 0.030",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-010",
+        "paper_candidate_id": "5531793499296526336",
+        "gaia_source_id": "5531793499296526336",
+        "all": [
+          {
+            "value": "5531793499296526336",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Best HVS candidate (parallax rel err < 0.5). r_gc > 30 kpc, V_gc > 500 km/s.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "116.33885534981",
+          "value": "116.33885534981",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "- 44.89073152454",
+          "value": "- 44.89073152454",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "258.52760575222",
+          "value": "258.52760575222",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "- 10.06954996387",
+          "value": "-",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0354 +/- 0.0174",
+          "value": "0.0354",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 1.462 +/- 0.031",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-011",
+        "paper_candidate_id": "2040146269183375232",
+        "gaia_source_id": "2040146269183375232",
+        "all": [
+          {
+            "value": "2040146269183375232",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Best HVS candidate (parallax rel err < 0.5). r_gc > 30 kpc, V_gc > 500 km/s.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "284.24996846082",
+          "value": "284.24996846082",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "+27.66842104956",
+          "value": "+27.66842104956",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "58.47199343295",
+          "value": "58.47199343295",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "+11.10518803277",
+          "value": "+11.10518803277",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0248 +/- 0.0146",
+          "value": "0.0248",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 4.244 +/- 0.020",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-012",
+        "paper_candidate_id": "2255126837089768192",
+        "gaia_source_id": "2255126837089768192",
+        "all": [
+          {
+            "value": "2255126837089768192",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Best HVS candidate (parallax rel err < 0.5). r_gc > 30 kpc, V_gc > 500 km/s.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "287.82340994615",
+          "value": "287.82340994615",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "+67.16711968401",
+          "value": "+67.16711968401",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "98.10331412498",
+          "value": "98.10331412498",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "+22.97752933362",
+          "value": "+22.97752933362",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0181 +/- 0.0126",
+          "value": "0.0181",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 4.060 +/- 0.026",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-013",
+        "paper_candidate_id": "5846959127210423424",
+        "gaia_source_id": "5846959127210423424",
+        "all": [
+          {
+            "value": "5846959127210423424",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Best HVS candidate (parallax rel err < 0.5). r_gc > 30 kpc, V_gc > 500 km/s.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "210.01295570953",
+          "value": "210.01295570953",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "- 69.82803148077",
+          "value": "- 69.82803148077",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "308.82316018688",
+          "value": "308.82316018688",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "- 7.74494766675",
+          "value": "-",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0274 +/- 0.0190",
+          "value": "0.0274",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 6.796 +/- 0.027",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-014",
+        "paper_candidate_id": "1696697285206197248",
+        "gaia_source_id": "1696697285206197248",
+        "all": [
+          {
+            "value": "1696697285206197248",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Distant HVS candidate. r_gc > 30 kpc, V_gc > 500 km/s. Velocity is lower limit (ETW bias).",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "236.71959038696",
+          "value": "236.71959038696",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "+73.23047076409",
+          "value": "+73.23047076409",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "108.14355244960",
+          "value": "108.14355244960",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "+38.44334319408",
+          "value": "+38.44334319408",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0248 +/- 0.0134",
+          "value": "0.0248",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 4.688 +/- 0.026",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-015",
+        "paper_candidate_id": "2045060021021275776",
+        "gaia_source_id": "2045060021021275776",
+        "all": [
+          {
+            "value": "2045060021021275776",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Distant HVS candidate. r_gc > 30 kpc, V_gc > 500 km/s. Velocity is lower limit (ETW bias).",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "292.52188374790",
+          "value": "292.52188374790",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "+31.54338716612",
+          "value": "+31.54338716612",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "65.21699800964",
+          "value": "65.21699800964",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "+06.38673084189",
+          "value": "+06.38673084189",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0286 +/- 0.0155",
+          "value": "0.0286",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 2.671 +/- 0.026",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-016",
+        "paper_candidate_id": "2079869356551980672",
+        "gaia_source_id": "2079869356551980672",
+        "all": [
+          {
+            "value": "2079869356551980672",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Distant HVS candidate. r_gc > 30 kpc, V_gc > 500 km/s. Velocity is lower limit (ETW bias).",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "295.32788216218",
+          "value": "295.32788216218",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "+45.04160856299",
+          "value": "+45.04160856299",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "78.31989589146",
+          "value": "78.31989589146",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "+10.77144848514",
+          "value": "+10.77144848514",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0257 +/- 0.0157",
+          "value": "0.0257",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 2.290 +/- 0.029",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-017",
+        "paper_candidate_id": "2101802964257385984",
+        "gaia_source_id": "2101802964257385984",
+        "all": [
+          {
+            "value": "2101802964257385984",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Distant HVS candidate. r_gc > 30 kpc, V_gc > 500 km/s. Velocity is lower limit (ETW bias).",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "290.56036760943",
+          "value": "290.56036760943",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "+41.60838045004",
+          "value": "+41.60838045004",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "73.60284663359",
+          "value": "73.60284663359",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "+12.33450825973",
+          "value": "+12.33450825973",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0275 +/- 0.0168",
+          "value": "0.0275",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 2.318 +/- 0.029",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-018",
+        "paper_candidate_id": "2186552770772130048",
+        "gaia_source_id": "2186552770772130048",
+        "all": [
+          {
+            "value": "2186552770772130048",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Distant HVS candidate. r_gc > 30 kpc, V_gc > 500 km/s. Velocity is lower limit (ETW bias).",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "307.76357356019",
+          "value": "307.76357356019",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "+55.06179129105",
+          "value": "+55.06179129105",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "91.18635454905",
+          "value": "91.18635454905",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "+09.15879626453",
+          "value": "+09.15879626453",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0286 +/- 0.0201",
+          "value": "0.0286",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 1.964 +/- 0.043",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-019",
+        "paper_candidate_id": "5348384273914768000",
+        "gaia_source_id": "5348384273914768000",
+        "all": [
+          {
+            "value": "5348384273914768000",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Distant HVS candidate. r_gc > 30 kpc, V_gc > 500 km/s. Velocity is lower limit (ETW bias).",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "169.73145311955",
+          "value": "169.73145311955",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "- 52.90554045217",
+          "value": "- 52.90554045217",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "289.10868902638",
+          "value": "289.10868902638",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "+07.46532297730",
+          "value": "+07.46532297730",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0302 +/- 0.0179",
+          "value": "0.0302",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "+2.842 +/- 0.027",
+          "value": "+2.842 +/- 0.027",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-020",
+        "paper_candidate_id": "5365388599188363648",
+        "gaia_source_id": "5365388599188363648",
+        "all": [
+          {
+            "value": "5365388599188363648",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Distant HVS candidate. r_gc > 30 kpc, V_gc > 500 km/s. Velocity is lower limit (ETW bias).",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "155.82929212599",
+          "value": "155.82929212599",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "- 47.49147237014",
+          "value": "- 47.49147237014",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "278.65087406165",
+          "value": "278.65087406165",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "+08.27589925726",
+          "value": "+08.27589925726",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0276 +/- 0.0173",
+          "value": "0.0276",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 2.758 +/- 0.030",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-021",
+        "paper_candidate_id": "5370493837834558976",
+        "gaia_source_id": "5370493837834558976",
+        "all": [
+          {
+            "value": "5370493837834558976",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Distant HVS candidate. r_gc > 30 kpc, V_gc > 500 km/s. Velocity is lower limit (ETW bias).",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "173.72835355643",
+          "value": "173.72835355643",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "- 48.87607199491",
+          "value": "- 48.87607199491",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "290.19714079581",
+          "value": "290.19714079581",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "+12.09429343550",
+          "value": "+12.09429343550",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0302 +/- 0.0169",
+          "value": "0.0302",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 5.179 +/- 0.025",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    },
+    {
+      "identifiers": {
+        "record_id": "1906.05227:cand-022",
+        "paper_candidate_id": "5641968206535885696",
+        "gaia_source_id": "5641968206535885696",
+        "all": [
+          {
+            "value": "5641968206535885696",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1906.05227/arxiv_source/farfast.tex",
+                "start_line": 0,
+                "end_line": 0,
+                "context": "Candidate identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Distant HVS candidate. r_gc > 30 kpc, V_gc > 500 km/s. Velocity is lower limit (ETW bias).",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Explicitly listed in paper's HVS candidate table.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1906.05227/arxiv_source/farfast.tex",
+            "start_line": 0,
+            "end_line": 0,
+            "context": "Candidate table"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "origin_refs": []
+      },
+      "observed_phase_space": {
+        "ra": {
+          "raw_value": "130.52236743872",
+          "value": "130.52236743872",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "RA"
+        },
+        "dec": {
+          "raw_value": "- 30.73543082547",
+          "value": "- 30.73543082547",
+          "unit": "deg",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [],
+          "description": "Dec"
+        },
+        "parallax": {
+          "raw_value": "252.84426142858",
+          "value": "252.84426142858",
+          "unit": "mas",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmra": {
+          "raw_value": "+07.01406877053",
+          "value": "+07.01406877053",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "pmdec": {
+          "raw_value": "0.0298 +/- 0.0199",
+          "value": "0.0298",
+          "unit": "mas/yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radial_velocity": {
+          "raw_value": "- 2.689 +/- 0.028",
+          "value": "-",
+          "unit": "km/s",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      },
+      "derived_quantities": {}
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_name": "Best sample",
+      "description": "174 HVS candidates at r_gc > 30 kpc, V_gc > 500 km/s from Gaia DR2.",
+      "candidate_count": 22
+    }
+  ]
+}

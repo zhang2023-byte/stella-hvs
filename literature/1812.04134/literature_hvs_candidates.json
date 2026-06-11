@@ -1,0 +1,70 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:54:00",
+  "paper": {
+    "arxiv_id": "1812.04134",
+    "bibcode": null,
+    "title": "Stellar Proper Motions in the Orion Nebula Cluster",
+    "month": "2018-12",
+    "source_note_json": "notes/2018/2018-12/2018-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1812.04134",
+      "pdf": "https://arxiv.org/pdf/1812.04134"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1812.04134",
+    "audit_path": "literature/1812.04134/audit.json",
+    "catalog_review_path": "literature/1812.04134/catalog_review.json",
+    "catalog_extraction_path": "literature/1812.04134/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:54:00",
+    "extractor": "agent",
+    "summary": "本文测量猎户座星云星团(ONC)中701颗恒星的高精度自行，研究星团动力学、维里平衡和恒星形成效率。发现10余颗逃逸星候选体，但逃逸速度仅~数km/s，属于星团内部动力学逃逸。不涉及银河系高速星(HVS)或超高速星候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "Quick scan of paper abstract and title for HVS relevance assessment.",
+      "inputs": [
+        "arXiv abstract",
+        "Monthly literature notes"
+      ],
+      "outputs": [
+        "HVS relevance classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1812.04134/paper_abstract.txt",
+          "start_line": 5,
+          "end_line": 5,
+          "context": "Paper abstract"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "quick-scan-review",
+      "description": "本文利用HST ACS/WFPC2/WFC3IR和Keck II NIRC2数据，测量ONC中701颗恒星在~6'×6'视场内的自行。发现10余颗逃逸星候选体主要集中在星团核心区域。逃逸星逃逸速度仅为数km/s量级（自行离差σ~0.8-1.1 mas/yr，对应~1.6-2.1 km/s at 400pc）。论文还研究了BN/KL区域高速IR源BN、x、n的自行。论文聚焦星团动力学、维里平衡和恒星形成理论。",
+      "decision": "excluded",
+      "reason": "本文研究的逃逸星是猎户座星云星团内的小速度逃逸天体（km/s量级），属于星团内部动力学过程。论文研究星团动力学和恒星形成，不涉及银河系高速星（速度>数百km/s）或超高速星候选体。ONC位于银河系盘面内（d~400 pc），逃逸星未离开银河系引力势。不满足HVS候选体标准。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1812.04134/paper_abstract.txt",
+          "start_line": 5,
+          "end_line": 5,
+          "context": "Paper abstract"
+        }
+      ]
+    }
+  ]
+}

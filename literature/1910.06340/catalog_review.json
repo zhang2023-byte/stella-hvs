@@ -1,0 +1,595 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1910.06340",
+    "title": "Pristine IX: CFHT ESPaDOnS Spectroscopic Analysis of 115 Bright Metal-Poor Candidate Stars",
+    "month": "2019-10",
+    "source_note_json": "notes/2019/2019-10/2019-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1910.06340",
+      "pdf": "https://arxiv.org/pdf/1910.06340"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1910.06340",
+    "audit_path": "literature/1910.06340/audit.json",
+    "source_dir": "literature/1910.06340/arxiv_source",
+    "tex_root": "literature/1910.06340/arxiv_source/Venn.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:30:00",
+    "reviewer": "agent",
+    "summary": "本文利用CFHT ESPaDOnS高分辨率光谱(R~68,000)对Pristine巡天选出的115颗亮(V<15)贫金属候选星进行详细的化学动力学分析，发现28颗新的[Fe/H]<-2.5亮星和5颗[Fe/H]<-3.0星。恒星参数通过贝叶斯推断法结合SDSS测光、Gaia DR2视差和MESA/MIST等龄线确定。对28颗新贫金属星和标准星HD122563进行了10种元素(Na, Mg, Ca, Sc, Ti, Cr, Fe, Ni, Y, Ba)的化学丰度分析，并计算了70颗候选星的轨道运动学参数。论文包含7个内部表格：1个115颗候选星目标列表(含坐标、测光和Pristine金属丰度)、1个恒星参数与视向速度表(含Gaia DR2视差、贝叶斯距离/温度/表面重力、Quick Six金属丰度)、1个铁族和重元素丰度表、1个轻元素(α元素)丰度表、1个系统误差汇总表、1个系统误差分解示例表、1个70颗星的轨道和运动学参数表(含U,V,W速度、轨道远心/近心距、偏心率、作用量Jφ/Jz和能量E)。外部资源：linemake谱线数据库(https://github.com/vmplacco/linemake)为方法论工具；INSPECT非LTE校正数据库(http://inspect-stars.com)为参考数据；Gaia DR2和SIMBAD为公开数据源。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-targets",
+      "kind": "latex_table",
+      "asset_type": "target_catalog",
+      "role_in_paper": "列出115颗Pristine巡天选出的亮(V<15)贫金属候选星的完整目标列表，包括SDSS天球坐标(RA, DEC)、V和I星等(由SDSS测光转换，观测者单位)、色余E(B-V)、消红化后的CaHK0和SDSS ugri0星等、SDSS色温度T_SDSS及其误差、Pristine金属丰度[Fe]P及其误差、CFHT观测学期标签。按高概率([Fe/H]P≤-2.5, 双色校准)、仅g-r校准、低概率、已移出Pristine星表四组排列。这是论文的基础数据目录。",
+      "source_refs": [
+        {
+          "path": "literature/1910.06340/arxiv_source/Venn.tex",
+          "start_line": 1730,
+          "end_line": 1730,
+          "caption": "Metal-Poor Targets (115) from the original Pristine survey footprint.",
+          "label": "tab:targets"
+        }
+      ],
+      "columns": [
+        {
+          "name": "RA_SDSS",
+          "meaning": "SDSS J2000赤经(度)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DEC_SDSS",
+          "meaning": "SDSS J2000赤纬(度)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V",
+          "meaning": "V波段星等(由SDSS测光按Jordi+2006转换，观测者单位，未消红化)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "I",
+          "meaning": "I波段星等(由SDSS测光按Jordi+2006转换，观测者单位，未消红化)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "E(B-V)",
+          "meaning": "色余，取自Schlegel+1998消光图",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "CaHK0",
+          "meaning": "消红化后的Pristine CaHK窄带星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "u0, g0, r0, i0",
+          "meaning": "消红化后的SDSS ugri波段星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_SDSS",
+          "meaning": "SDSS色温度(矮星和巨星解的平均值)，由SDSS (g-i)测光通过红外流量法(IRFM)计算，假设[Fe/H]=-2.5",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "dT",
+          "meaning": "SDSS色温度的1σ不确定度",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe]P",
+          "meaning": "Pristine巡天金属丰度估计值([Fe/H])",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "dFeP",
+          "meaning": "Pristine金属丰度的1σ不确定度",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "COMM",
+          "meaning": "CFHT观测学期标签(如16BC008, 17AC002, 18BC018)，含i星等饱和标记",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table targets列出115颗候选星(Table 1): 高概率双色组59颗、仅g-r组10颗、低概率组19颗、已移出Pristine星表组27颗(含1颗仍确认为贫金属的Pristine_213.7879+08.4232，标记**)。每组内按RA排序。目标选择来自Pristine内部星表(Internal-Catalogue-1802.dat)，包含原始~1000平方度天区内28557颗V<15亮星，经SDSS测光交叉匹配、非恒星污染剔除、白矮星剔除(u-g>0.6)、Pan-STARRS1变星标记剔除和质量控制筛选。",
+      "comments": "该表数据实际存储在独立文件 targetsv2.tab1 中，通过 \\input 命令引入主tex文件(行1730)。表格跨页(table*)，第二部分(continued)列出低概率和已移出星表的目标。"
+    },
+    {
+      "id": "table-newfs",
+      "kind": "latex_table",
+      "asset_type": "stellar_parameter_table",
+      "role_in_paper": "列出Gaia DR2视差、贝叶斯推断法导出的距离(D)、温度(T)和表面重力(log g)等恒星参数，以及Quick Six快速光谱金属丰度分析结果：Fe I和Fe II各自丰度、加权平均[Fe/H]Q6、标准偏差σFeQ6和所用谱线数N。同时给出ESPaDOnS视向速度RV。对4颗星给出矮星/巨星双解，对4颗星给出第二距离解(D2)。这是连接目标列表(Table 1)与详细化学丰度分析(Tables 3-4)的关键中间数据表。",
+      "source_refs": [
+        {
+          "path": "literature/1910.06340/arxiv_source/Venn.tex",
+          "start_line": 1731,
+          "end_line": 1731,
+          "caption": "Gaia DR2 parallaxes, and the derived distances (D), temperatures (T), and surface gravities (log g) from the Bayesian inference method...",
+          "label": "tab:newfs"
+        }
+      ],
+      "columns": [
+        {
+          "name": "RA_SDSS, DEC_SDSS",
+          "meaning": "SDSS天球坐标(度)，用于恒星标识",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "par, dpar",
+          "meaning": "Gaia DR2视差及其不确定度",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D, dD",
+          "meaning": "贝叶斯推断法导出的日心距离及其不确定度",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T, dT",
+          "meaning": "贝叶斯推断法导出的有效温度及其不确定度",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(g), dlg",
+          "meaning": "贝叶斯推断法导出的表面重力对数值及其不确定度",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "ESPaDOnS视向速度测量值",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Fe I, Fe II",
+          "meaning": "Quick Six分析中Fe I和Fe II各自导出的铁丰度(log ε值)",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]Q6",
+          "meaning": "Fe I和Fe II的加权平均金属丰度",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σFeQ6",
+          "meaning": "Fe I和Fe II丰度的标准偏差(反映电离平衡一致性)",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N,Com",
+          "meaning": "用于金属丰度平均的Fe线总数及备注(如D2=第二距离解, dwarf/giant=双解)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table newfs包含89颗仍在Pristine星表中的恒星(含1颗保留星)。贝叶斯推断结合SDSS测光、Gaia DR2视差(零点校正-0.029 mas)、MESA/MIST等龄线([Fe/H]≤-4)和银河系恒星密度先验分布，假设年龄11-14 Gyr平坦先验。85颗星获得唯一解；4颗星给出矮星/巨星双解。Quick Six分析使用MOOG(LTE)和ATLAS9模型大气，从~800-900 Å宽光谱区间选取Fe I/Fe II线。电离平衡要求Fe I和Fe II丰度一致，多数星的σFeQ6<0.2 dex，表明电离平衡良好。",
+      "comments": "该表数据存储在独立文件 newfsv2.tab2 中，通过 \\input 引入(行1731)。"
+    },
+    {
+      "id": "table-iron",
+      "kind": "latex_table",
+      "asset_type": "chemical_abundance_table",
+      "role_in_paper": "列出28颗新贫金属星和标准星HD122563的铁族和重元素丰度，包括加权平均[Fe/H]及其误差、Fe I和Fe II各自丰度(含谱线数N)、[Cr/Fe]、[Ni/Fe]、[Y/Fe]和[Ba/Fe]的相对丰度。这是论文的核心化学丰度产出之一，揭示大多数星的Cr、Ni近似太阳值，但一颗r-process富集星(r-II)Pristine_214.5556+07.4670显示极高[Y/Fe]=+1.48和[Ba/Fe]=+1.77，另有一颗低[Mg/Fe]星Pristine_201.8711+07.1810。",
+      "source_refs": [
+        {
+          "path": "literature/1910.06340/arxiv_source/Venn.tex",
+          "start_line": 1732,
+          "end_line": 1732,
+          "caption": "Iron-group and heavy element abundances in the new 28 metal-poor stars, and our analysis of HD122563.",
+          "label": "tab:iron"
+        }
+      ],
+      "columns": [
+        {
+          "name": "RA_SDSS",
+          "meaning": "SDSS赤经(度)，恒星标识",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H] ± δ",
+          "meaning": "Fe I和Fe II的加权平均金属丰度及标准误差(δ=σ/√(N_FeI+N_FeII))",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(Fe I) ± σ (N)",
+          "meaning": "Fe I线的平均丰度log ε(Fe)、标准偏差和所用谱线数",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(Fe II) ± σ (N)",
+          "meaning": "Fe II线的平均丰度log ε(Fe)、标准偏差和所用谱线数",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Cr/Fe] ± σ (N)",
+          "meaning": "铬相对铁丰度([Cr/Fe])、标准偏差和谱线数",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Ni/Fe] ± σ (N)",
+          "meaning": "镍相对铁丰度([Ni/Fe])、标准偏差和谱线数",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Y/Fe] ± σ (N)",
+          "meaning": "钇相对铁丰度([Y/Fe])，多为上限值，标准偏差和谱线数",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Ba/Fe] ± σ (N)",
+          "meaning": "钡相对铁丰度([Ba/Fe])、标准偏差和谱线数",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table iron (Table 3)包含29行(28颗新星+HD122563)。[Fe/H]范围从-3.29(Pristine_237.8246)到-2.47(Pristine_198.5486)。HD122563得到[Fe/H]=-2.76±0.01，与文献值一致。多数星[Cr/Fe]约-0.4至+0.2，[Ni/Fe]约-0.2至+0.2，与正常银晕星一致。显著异常：Pristine_214.5556为r-II星([Y/Fe]=+1.48, [Ba/Fe]=+1.77)，Pristine_245.8356为CEMP-s候选体([Y/Ba]>0)，Pristine_201.8711显示极低[Mg/Fe]=-0.05(见Table 4)。对于谱线不足的元素给出上限值。",
+      "comments": "该表数据存储在独立文件 ironv3.tab3 中，通过 \\input 引入(行1732)。"
+    },
+    {
+      "id": "table-alpha",
+      "kind": "latex_table",
+      "asset_type": "chemical_abundance_table",
+      "role_in_paper": "列出28颗新贫金属星和HD122563的轻元素(α和奇Z元素)丰度：[Na/Fe]、[Mg/Fe]、[Ca/Fe]、[Sc/Fe]、[Ti I/Fe]和[Ti II/Fe]的相对丰度及谱线数。用于约束早期银河系的核合成过程。多数星显示典型的银晕α增强([Mg/Fe]~+0.2至+0.4)，但Pristine_201.8711+07.1810显示异常低的[Mg/Fe]=-0.05±0.11，可能反映了特殊的超新星核合成产额。",
+      "source_refs": [
+        {
+          "path": "literature/1910.06340/arxiv_source/Venn.tex",
+          "start_line": 1733,
+          "end_line": 1733,
+          "caption": "Light element abundances in the new 28 metal-poor stars (and our analysis of HD122563).",
+          "label": "tab:alpha"
+        }
+      ],
+      "columns": [
+        {
+          "name": "RA_SDSS",
+          "meaning": "SDSS赤经(度)，恒星标识",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Na/Fe] ± σ (N)",
+          "meaning": "钠相对铁丰度、标准偏差和谱线数(通常2条Na I D线)",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Mg/Fe] ± σ (N)",
+          "meaning": "镁相对铁丰度、标准偏差和谱线数(通常2-3条Mg I线)",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Ca/Fe] ± σ (N)",
+          "meaning": "钙相对铁丰度、标准偏差和谱线数(通常1-9条Ca I线)",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Sc/Fe] ± σ (N)",
+          "meaning": "钪相对铁丰度(Sc II线)、标准偏差和谱线数，多为上限",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[TiI/Fe] ± σ (N)",
+          "meaning": "钛(Ti I线)相对铁丰度、标准偏差和谱线数",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[TiII/Fe] ± σ (N)",
+          "meaning": "钛(Ti II线)相对铁丰度、标准偏差和谱线数",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table alpha (Table 4)包含29行。多数星显示[Mg/Fe]约+0.1至+0.4，符合银晕α增强特征。[Ca/Fe]通常+0.2至+0.7，Ti I和Ti II丰度在电离平衡良好的星中基本一致。Na的奇偶效应在多数星中表现为[Na/Fe]散布较大(-0.26至+0.76)。显著异常：Pristine_201.8711+07.1810为已知极低[Mg/Fe]=-0.05的星，Na也偏低([Na/Fe]=-0.12)。Pristine_251.4082也显示低[Mg/Fe]=-0.20。Pristine_229.1219显示非常高的[Ti/Fe](+1.26至+1.44)，需注意该星参数不确定度较大。",
+      "comments": "该表数据存储在独立文件 alphav2.tab4 中，通过 \\input 引入(行1733)。当N_X<4时，σ(X)取σ(Fe I)/√N_X。"
+    },
+    {
+      "id": "table-syserrs",
+      "kind": "latex_table",
+      "asset_type": "error_budget_table",
+      "role_in_paper": "列出每颗星每种元素(X)的系统误差(dX)，通过恒星参数(T, log g, [Fe/H])对各元素丰度的偏导数按正交求和得到。dT和dlogg取自Table newfs的贝叶斯推断不确定度，δ[Fe/H]取自Table iron。提供每颗星丰度测量的总系统误差估计，用于评估丰度比值的可靠性。",
+      "source_refs": [
+        {
+          "path": "literature/1910.06340/arxiv_source/Venn.tex",
+          "start_line": 1734,
+          "end_line": 1734,
+          "caption": "Total systematic errors (dX) per element species (X) due to the stellar parameters (T, logg, [Fe/H]) added in quadrature...",
+          "label": "tab:syserrs"
+        }
+      ],
+      "columns": [
+        {
+          "name": "RA_SDSS",
+          "meaning": "SDSS赤经(度)，恒星标识",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "dFeI, dFeII",
+          "meaning": "Fe I和Fe II丰度的总系统误差(dT, dlogg, d[Fe/H]的正交和)",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "dNa, dMg, dCa, dSc, dTiI, dTiII, dCrI, dNiI, dYII, dBaII",
+          "meaning": "各元素离子种类的总系统误差，由温度、表面重力和金属丰度不确定度正交求和",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table syserrs (Table 5)显示大多数星的系统误差较小(dFeI约0.01-0.09 dex)，但少数视差误差较大的星(如Pristine_214.5556: dFeI=0.17 dex, Pristine_229.1219: dFeI=0.16 dex)系统误差显著增大。dFeII通常小于dFeI，因为Fe II线对温度变化的敏感度较低。重元素(Y, Ba)的误差仅在谱线足够多的星中计算；多数星为空白(...)。",
+      "comments": "该表数据存储在独立文件 systerrs.tab5 中，通过 \\input 引入(行1734)。误差通过变化T(±dT)、log g(±dlogg)、[Fe/H](±δ[Fe/H])逐一计算偏导数后正交求和获得。"
+    },
+    {
+      "id": "table-errsample",
+      "kind": "latex_table",
+      "asset_type": "error_budget_table",
+      "role_in_paper": "以3颗代表性恒星为例，展示各恒星参数(T, log g, [Fe/H])单独变化时对各元素丰度的影响(即偏导数dX/dParam)，使读者理解Table syserrs中总系统误差的来源构成。演示了温度不确定度通常为主导误差源，对于较热的星log g也有显著影响。",
+      "source_refs": [
+        {
+          "path": "literature/1910.06340/arxiv_source/Venn.tex",
+          "start_line": 1735,
+          "end_line": 1735,
+          "caption": "Samples of the systematic errors from the individual stellar parameters per elemental species.",
+          "label": "tab:errsample"
+        }
+      ],
+      "columns": [
+        {
+          "name": "RA_SDSS",
+          "meaning": "SDSS赤经(度)，恒星标识",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Param ± d",
+          "meaning": "恒星参数及其不确定度(依次为T(K)、log g(dex)、[Fe/H](dex))",
+          "unit_text": "K, dex, dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "dFeI, dFeII, dNaI, dMgI, dCaI, dScII, dTiI, dTiII, dCrI, dNiI, dYII, dBaII",
+          "meaning": "该恒星参数单独变化±dParam时对各元素丰度的影响(dX/dParam × dParam)",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table errsample (Table 6)展示3颗星×3参数的9行数据：Pristine_193.8390(T=4764±32 K, log g=1.22±0.03, [Fe/H]=-2.80±0.02), Pristine_213.7879(T=5289±29 K, log g=2.27±0.07, [Fe/H]=-2.59±0.02), Pristine_214.5556(T=6482±203 K, log g=3.88±0.05, [Fe/H]=-2.50±0.05)。温度误差通常是主导项：对214.5556(ΔT=203 K)，dFeI=0.17 dex远超其他误差源。log g误差对热星影响显著。金属丰度误差项在所有情况下都可忽略。负值表示参数增加导致丰度降低。",
+      "comments": "该表数据存储在独立文件 errsample.tab6 中，通过 \\input 引入(行1735)。"
+    },
+    {
+      "id": "table-orbits",
+      "kind": "latex_table",
+      "asset_type": "kinematic_catalog",
+      "role_in_paper": "列出70颗Pristine贫金属候选星的完整轨道和运动学参数：Gaia DR2自行(pmra, pmdec)、日心空间速度分量(U, V, W)、轨道远心距(R_apo)、近心距(R_peri)、偏心率(ecc)、轨道最大离面高度(Z_max)、方位角作用量比(J_φ/J_φ⊙)、垂直作用量比(J_z/J_z⊙)和轨道能量比(E/E⊙)。用于识别运动学异常星(如非束缚轨道(E>0)、盘面轨道、高度偏心轨道穿透银心(R_peri<0.5 kpc)、逆行轨道等)，并发现8颗星的轨道能量和作用量与Gaia-Enceladus吸积事件一致。",
+      "source_refs": [
+        {
+          "path": "literature/1910.06340/arxiv_source/Venn.tex",
+          "start_line": 1736,
+          "end_line": 1736,
+          "caption": "Orbit and Action parameters for the 70 metal-poor candidates from the Pristine survey.",
+          "label": "tab:orbits"
+        }
+      ],
+      "columns": [
+        {
+          "name": "RA, DEC",
+          "meaning": "SDSS天球坐标(度)，恒星标识",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pmra, pmdec",
+          "meaning": "Gaia DR2赤经和赤纬方向自行及其不确定度",
+          "unit_text": "μas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "U, V, W",
+          "meaning": "日心空间速度分量(朝向银心U、银河旋转方向V、北银极方向W)及其不确定度",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R_apo, R_peri",
+          "meaning": "轨道远心距和近心距及其不确定度",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ecc",
+          "meaning": "轨道偏心率及其不确定度",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Z_max",
+          "meaning": "轨道离银道面的最大高度及其不确定度",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J_φ/J_φ⊙",
+          "meaning": "方位角作用量与太阳值之比，正值表示顺行，负值表示逆行",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J_z/J_z⊙",
+          "meaning": "垂直作用量与太阳值之比",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "E/E⊙",
+          "meaning": "轨道能量与太阳值之比，负值为束缚轨道，正值>1可能为非束缚",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table orbits (Table 7)包含70颗星的轨道参数。发现多颗运动学极端星：Pristine_181.4395+01.6294为非束缚轨道(E/E⊙=-1.919, 注意负值但绝对值很大，且J_φ/J_φ⊙=-2.4逆行)，Pristine_196.5453+12.1211为高度偏心(e=0.97)且近心距仅R_peri=0.5 kpc的盘面穿透轨道，Pristine_182.5364+00.9431为高能非束缚(E/E⊙=-0.66, 但R_apo=541 kpc极大)。8颗星的J_φ/J_φ⊙和E/E⊙与Gaia-Enceladus事件吻合。多颗星显示盘面轨道(低Z_max, 低偏心率)，挑战了贫金属星全为年老银晕星的简单图像。轨道计算使用galpy(Bovy 2015)和MWPotential2014，结合本文ESPaDOnS视向速度和Gaia DR2自行。",
+      "comments": "该表数据存储在独立文件 New2Orbits.tab7 中，通过 \\input 引入(行1736)。表格经旋转90度以适应页面宽度。"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-linemake",
+      "kind": "external_url",
+      "url": "https://github.com/vmplacco/linemake",
+      "local_path": "",
+      "description": "linemake原子谱线数据库和线表组装软件，由C. Sneden开发、V. Placco维护。MOOG光谱合成所需的原子和分子谱线数据来源，包含Kurucz、VALD和Old Dominion分子物理组等数据库的谱线参数。本文使用该工具生成用于丰度分析的谱线列表。",
+      "source_refs": [
+        {
+          "path": "literature/1910.06340/arxiv_source/Venn.tex",
+          "start_line": 916,
+          "end_line": 919,
+          "context": "line lists were gathered from the Kurucz atomic line database, and the VALD and the Old Dominion Molecular Physics groups. These lists and accompanying line list assembly software have been developed by C. Sneden and are curated by V. Placco at https://github.com/vmplacco/linemake."
+        }
+      ],
+      "evidence": "论文第3节(丰度分析)说明谱线数据来自Kurucz、VALD和Old Dominion分子物理组数据库，通过linemake软件(https://github.com/vmplacco/linemake)组装。该工具为通用光谱分析基础设施，非本文独有数据产品。",
+      "comments": "方法论工具引用，不是本文的特有数据产品。"
+    },
+    {
+      "id": "resource-inspect",
+      "kind": "external_url",
+      "url": "http://inspect-stars.com",
+      "local_path": "",
+      "description": "INSPECT非LTE改正数据库，提供多种元素在不同恒星参数下的非局部热动平衡(NLTE)偏离改正值。本文在Quick Six分析中通过比较Mashonkina+2017/2019的NLTE结果和INSPECT表来评估NLTE效应。",
+      "source_refs": [
+        {
+          "path": "literature/1910.06340/arxiv_source/Venn.tex",
+          "start_line": 662,
+          "end_line": 666,
+          "context": "NLTE effects are explored in this \"Quick Six\" analysis, by comparing the results from Mashonkina+2017, Mashonkina+2019 and the INSPECT table (INSPECT non-LTE corrections available at http://inspect-stars.com)."
+        }
+      ],
+      "evidence": "论文在第3.2节(Quick Six分析)中提到使用INSPECT数据库(http://inspect-stars.com)检查NLTE效应，引用了Amarsi+2016和Lind+2012。该数据库为外部公开资源，非本文生产。",
+      "comments": "外部参考数据库，用于验证NLTE改正。"
+    },
+    {
+      "id": "resource-gaia",
+      "kind": "external_resource_mention",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia卫星数据(DR2)，提供恒星视差和自行测量。本文使用Gaia DR2数据进行贝叶斯距离推断、恒星参数确定和轨道积分计算。Gaia为公开天体测量巡天，非本文特有数据产品。",
+      "source_refs": [
+        {
+          "path": "literature/1910.06340/arxiv_source/Venn.tex",
+          "start_line": 1605,
+          "end_line": 1609,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission Gaia (https://www.cosmos.esa.int/gaia), processed by the Gaia Data Processing and Analysis Consortium (DPAC, https://www.cosmos.esa.int/web/gaia/dpac/consortium)."
+        }
+      ],
+      "evidence": "论文致谢部分明确声明使用了Gaia DR2数据。视差和自行数据用于贝叶斯推断(§2.2)和轨道计算(§4)。Gaia DR2为公开巡天数据。",
+      "comments": "公开天体测量巡天数据源，非本文特有。"
+    },
+    {
+      "id": "resource-simbad",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "SIMBAD天文数据库(由CDS, Strasbourg维护)，用于恒星交叉证认和基本信息查询。本文在目标选择和参数汇总中使用了SIMBAD数据库。",
+      "source_refs": [
+        {
+          "path": "literature/1910.06340/arxiv_source/Venn.tex",
+          "start_line": 1609,
+          "end_line": 1612,
+          "context": "This research has made use of use of the SIMBAD database, operated at CDS, Strasbourg, France (Wenger+2000)."
+        }
+      ],
+      "evidence": "论文致谢部分声明使用了SIMBAD数据库。该数据库为通用天文基础设施。",
+      "comments": "通用天文数据库，非本文特有数据产品。"
+    }
+  ]
+}

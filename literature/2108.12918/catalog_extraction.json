@@ -1,0 +1,762 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:47:34",
+  "paper": {
+    "arxiv_id": "2108.12918",
+    "title": "Confirming NGC 6231 as the parent cluster of the runaway high-mass X-ray binary HD 153919/4U 1700-37 with Gaia DR2",
+    "month": "2021-08"
+  },
+  "review": {
+    "path": "literature/2108.12918/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084734",
+    "started_at": "2026-06-07T08:47:34",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2108.12918",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 7,
+      "work_count": 7,
+      "table_count": 7,
+      "success_count": 7,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 7,
+      "file_success_count": 7,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-6231",
+      "internal_table_id": "table-tab-6231",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+        "start_line": 131,
+        "end_line": 145,
+        "caption": "Overview of recent age determinations of NGC 6231. The second column indicates whether the isochrone is fit to the pre-main-sequence (PMS) or main-sequence (MS) population.",
+        "label": "tab:6231"
+      },
+      "source_path": "literature/2108.12918/arxiv_source/hmxb.tex",
+      "excerpt_path": "literature/2108.12918/catalog_sources/table-tab-6231/excerpt.tex",
+      "sha256": "92c86ffe6f9c1475ebc6c64676edbadfd639997a9a14f52bb1a257874ca56a59",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-tab-error",
+      "internal_table_id": "table-tab-error",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+        "start_line": 193,
+        "end_line": 205,
+        "caption": "Values of $\\sigma_s$ needed to calculate the correct errors with Eq.~\\ref{eqn:error}.",
+        "label": "tab:error"
+      },
+      "source_path": "literature/2108.12918/arxiv_source/hmxb.tex",
+      "excerpt_path": "literature/2108.12918/catalog_sources/table-tab-error/excerpt.tex",
+      "sha256": "be280da169fcb1dd88055f200bb15ea48e000d937102fda7d658193067a29606",
+      "line_count": 13,
+      "error": ""
+    },
+    {
+      "id": "table-tab-age_summary",
+      "internal_table_id": "table-tab-age_summary",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+        "start_line": 544,
+        "end_line": 575,
+        "caption": "Age determinations of NGC 6231 based on the {\\it Gaia} membership. The PARSEC and MIST models yield similar results on both the MS and whole population of NGC~6231. The fit to the PMS population failed to estimate the extinction and missed the MS population completely due to the lack of constraint in the MS section (see Fig.~{\\ref{fig:all_iso}}). The isochrone grid size is 0.1~Myr. In this work, we adopt the result of fitting to the PARSEC isochrone on the whole population as the age and extinction of the cluster.",
+        "label": "tab:age_summary"
+      },
+      "source_path": "literature/2108.12918/arxiv_source/hmxb.tex",
+      "excerpt_path": "literature/2108.12918/catalog_sources/table-tab-age_summary/excerpt.tex",
+      "sha256": "ab00d6bec8563f6e80309ffc4e1925246f786d62258adfef064394d1642dfcca",
+      "line_count": 32,
+      "error": ""
+    },
+    {
+      "id": "table-tab-4u",
+      "internal_table_id": "table-tab-4u",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+        "start_line": 588,
+        "end_line": 619,
+        "caption": "Updated parameters of the system HD 159313/4U1700-37, including error estimates and references.",
+        "label": "tab:4u"
+      },
+      "source_path": "literature/2108.12918/arxiv_source/hmxb.tex",
+      "excerpt_path": "literature/2108.12918/catalog_sources/table-tab-4u/excerpt.tex",
+      "sha256": "c8e48b7cc7119681e0adf4c333052f86fb34ebbe0cc2016cf9954000046b9960",
+      "line_count": 32,
+      "error": ""
+    },
+    {
+      "id": "table-tab-radvel",
+      "internal_table_id": "table-tab-radvel",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+        "start_line": 691,
+        "end_line": 709,
+        "caption": "Spectral type, radial velocity, membership probability, and the distance based on \\textit{Gaia} EDR3 \\citet{GaiaCollaboration2020}, for members of NGC 6231 and HD153919/4U1700-37. The mean radial velocity of the cluster members is $-33.4 \\pm 4.0$ km~s$^{-1}$. Notes: [1] \\citet{Sana2009}, [2] \\citet{Pourbaix2005}, [3] \\citet{Hill1974}, [4] \\citet{Wilson1953}, [5] \\citet{Gies1986}.",
+        "label": "tab:radvel"
+      },
+      "source_path": "literature/2108.12918/arxiv_source/hmxb.tex",
+      "excerpt_path": "literature/2108.12918/catalog_sources/table-tab-radvel/excerpt.tex",
+      "sha256": "2e37a1837eb621d21cd4cb8ba135d9c1aca23aed948701ff05f80c46196b1a4a",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-test",
+      "internal_table_id": "table-test",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+        "start_line": 808,
+        "end_line": 823,
+        "caption": "Scenarios that resulted in the largest orbital separation for $\\gamma_{\\rm RLOF}$ = 1, 2, 3 for this system as described in Sect.\\ref{analyt}. Given are the current masses of the members of the binary: $M_2^{\\rm pre-CC}$ = 60 ${M}_\\odot$ and $M_1^{\\rm pre-CC}$ = 2.54 + 7.4 $\\simeq$ 10 ${M}_\\odot$, their relative velocity to NGC 6231: $v_{\\rm sys}$ = 63~km~s$^{-1}$, their current orbital period: $P_{\\rm cir}$ = 3.41 days and orbital separation: $a_{\\rm pre-CC}$ = 38 ${R}_\\odot$. The initial mass $M_1^{\\rm ZAMS}$ ranges from 30 to 80 ${M}_\\odot$ and $M_2^{\\rm ZAMS}$ ranges from 10 to 50 ${M}_\\odot$. Only solutions with a high $\\gamma_{\\rm RLOF}$ and a low $\\beta_{\\rm RLOF}$, so when a lot of angular momentum leaves the system due to nonconservative mass transfer, seem to give a $a_{\\rm ZAMS}$ that could be large enough to avoid merging of the system. For comparison: HD 153919 with a mass of 60 ${M}_\\odot$ has a radius of $25 {R}_\\odot$.",
+        "label": "test"
+      },
+      "source_path": "literature/2108.12918/arxiv_source/hmxb.tex",
+      "excerpt_path": "literature/2108.12918/catalog_sources/table-test/excerpt.tex",
+      "sha256": "a9d01d9867ccafc4f59736d32cc1b58e01daa1762fc459f0e9f04e2d05de6af0",
+      "line_count": 16,
+      "error": ""
+    },
+    {
+      "id": "table-tab-pmin_n_relation",
+      "internal_table_id": "table-tab-pmin_n_relation",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+        "start_line": 947,
+        "end_line": 967,
+        "caption": "The number of candidates $n_{*}$ in relation with the probability threshold $p_{min}$ for NGC 6231.",
+        "label": "tab:pmin_n_relation"
+      },
+      "source_path": "literature/2108.12918/arxiv_source/hmxb.tex",
+      "excerpt_path": "literature/2108.12918/catalog_sources/table-tab-pmin_n_relation/excerpt.tex",
+      "sha256": "5c291ddf82b38b152394f23c3a07edf3e003891897945afa51d727dfdd36cbfd",
+      "line_count": 21,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-6231",
+      "internal_table_id": "table-tab-6231",
+      "status": "success",
+      "ecsv_path": "literature/2108.12918/catalog_tables/table-tab-6231.ecsv",
+      "caption": "Overview of recent age determinations of NGC 6231. The second column indicates whether the isochrone is fit to the pre-main-sequence (PMS) or main-sequence (MS) population.",
+      "label": "tab:6231",
+      "row_count": 5,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Age determination NGC 6231",
+          "",
+          ""
+        ],
+        [
+          "Age (Myr)",
+          "Isochrone",
+          "Reference"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Age determination NGC 6231 | Age (Myr)",
+          "unit_text": "Age (Myr)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Isochrone",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Reference",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzubx00_c/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2108.12918/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzubx00_c/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2108.12918/catalog_sources/table-tab-6231/wrapped.tex",
+            "html": "literature/2108.12918/catalog_sources/table-tab-6231/latexml.html",
+            "stdout": "literature/2108.12918/catalog_sources/table-tab-6231/latexml.stdout.txt",
+            "stderr": "literature/2108.12918/catalog_sources/table-tab-6231/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "92c86ffe6f9c1475ebc6c64676edbadfd639997a9a14f52bb1a257874ca56a59"
+    },
+    {
+      "id": "table-tab-error",
+      "internal_table_id": "table-tab-error",
+      "status": "success",
+      "ecsv_path": "literature/2108.12918/catalog_tables/table-tab-error.ecsv",
+      "caption": "Values of $\\sigma_s$ needed to calculate the correct errors with Eq.~\\ref{eqn:error}.",
+      "label": "tab:error",
+      "row_count": 2,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "G <13",
+          "G >13",
+          "Unit"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "G <13",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "G >13",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Unit",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvaeyfhl3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2108.12918/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvaeyfhl3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2108.12918/catalog_sources/table-tab-error/wrapped.tex",
+            "html": "literature/2108.12918/catalog_sources/table-tab-error/latexml.html",
+            "stdout": "literature/2108.12918/catalog_sources/table-tab-error/latexml.stdout.txt",
+            "stderr": "literature/2108.12918/catalog_sources/table-tab-error/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "be280da169fcb1dd88055f200bb15ea48e000d937102fda7d658193067a29606"
+    },
+    {
+      "id": "table-tab-age_summary",
+      "internal_table_id": "table-tab-age_summary",
+      "status": "success",
+      "ecsv_path": "literature/2108.12918/catalog_tables/table-tab-age_summary.ecsv",
+      "caption": "Age determinations of NGC 6231 based on the {\\it Gaia} membership. The PARSEC and MIST models yield similar results on both the MS and whole population of NGC~6231. The fit to the PMS population failed to estimate the extinction and missed the MS population completely due to the lack of constraint in the MS section (see Fig.~{\\ref{fig:all_iso}}). The isochrone grid size is 0.1~Myr. In this work, we adopt the result of fitting to the PARSEC isochrone on the whole population as the age and extinction of the cluster.",
+      "label": "tab:age_summary",
+      "row_count": 7,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Model",
+          "Age (Myr)",
+          "A_V (mag)",
+          "Population"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Model",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Age (Myr)",
+          "unit_text": "Age (Myr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "A_V (mag)",
+          "unit_text": "A_V (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Population",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz3g59uvf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2108.12918/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz3g59uvf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2108.12918/catalog_sources/table-tab-age_summary/wrapped.tex",
+            "html": "literature/2108.12918/catalog_sources/table-tab-age_summary/latexml.html",
+            "stdout": "literature/2108.12918/catalog_sources/table-tab-age_summary/latexml.stdout.txt",
+            "stderr": "literature/2108.12918/catalog_sources/table-tab-age_summary/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ab00d6bec8563f6e80309ffc4e1925246f786d62258adfef064394d1642dfcca"
+    },
+    {
+      "id": "table-tab-4u",
+      "internal_table_id": "table-tab-4u",
+      "status": "success",
+      "ecsv_path": "literature/2108.12918/catalog_tables/table-tab-4u.ecsv",
+      "caption": "Updated parameters of the system HD 159313/4U1700-37, including error estimates and references.",
+      "label": "tab:4u",
+      "row_count": 21,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "HD 153919/4U1700-37",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Quantity",
+          "Value",
+          "Error",
+          "Reference"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "HD 153919/4U1700-37 | Quantity",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Error",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Reference",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpifofzv2z/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2108.12918/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpifofzv2z/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2108.12918/catalog_sources/table-tab-4u/wrapped.tex",
+            "html": "literature/2108.12918/catalog_sources/table-tab-4u/latexml.html",
+            "stdout": "literature/2108.12918/catalog_sources/table-tab-4u/latexml.stdout.txt",
+            "stderr": "literature/2108.12918/catalog_sources/table-tab-4u/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c8e48b7cc7119681e0adf4c333052f86fb34ebbe0cc2016cf9954000046b9960"
+    },
+    {
+      "id": "table-tab-radvel",
+      "internal_table_id": "table-tab-radvel",
+      "status": "success",
+      "ecsv_path": "literature/2108.12918/catalog_tables/table-tab-radvel.ecsv",
+      "caption": "Spectral type, radial velocity, membership probability, and the distance based on \\textit{Gaia} EDR3 \\citet{GaiaCollaboration2020}, for members of NGC 6231 and HD153919/4U1700-37. The mean radial velocity of the cluster members is $-33.4 \\pm 4.0$ km~s$^{-1}$. Notes: [1] \\citet{Sana2009}, [2] \\citet{Pourbaix2005}, [3] \\citet{Hill1974}, [4] \\citet{Wilson1953}, [5] \\citet{Gies1986}.",
+      "label": "tab:radvel",
+      "row_count": 8,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "Spectral type",
+          "v_rad (km s -1 )",
+          "error (km s -1 )",
+          "p_Member",
+          "Distance (kpc)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Spectral type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "v_rad (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "error (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "p_Member",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Distance (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1253q1bd/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2108.12918/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1253q1bd/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2108.12918/catalog_sources/table-tab-radvel/wrapped.tex",
+            "html": "literature/2108.12918/catalog_sources/table-tab-radvel/latexml.html",
+            "stdout": "literature/2108.12918/catalog_sources/table-tab-radvel/latexml.stdout.txt",
+            "stderr": "literature/2108.12918/catalog_sources/table-tab-radvel/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2e37a1837eb621d21cd4cb8ba135d9c1aca23aed948701ff05f80c46196b1a4a"
+    },
+    {
+      "id": "table-test",
+      "internal_table_id": "table-test",
+      "status": "success",
+      "ecsv_path": "literature/2108.12918/catalog_tables/table-test.ecsv",
+      "caption": "Scenarios that resulted in the largest orbital separation for $\\gamma_{\\rm RLOF}$ = 1, 2, 3 for this system as described in Sect.\\ref{analyt}. Given are the current masses of the members of the binary: $M_2^{\\rm pre-CC}$ = 60 ${M}_\\odot$ and $M_1^{\\rm pre-CC}$ = 2.54 + 7.4 $\\simeq$ 10 ${M}_\\odot$, their relative velocity to NGC 6231: $v_{\\rm sys}$ = 63~km~s$^{-1}$, their current orbital period: $P_{\\rm cir}$ = 3.41 days and orbital separation: $a_{\\rm pre-CC}$ = 38 ${R}_\\odot$. The initial mass $M_1^{\\rm ZAMS}$ ranges from 30 to 80 ${M}_\\odot$ and $M_2^{\\rm ZAMS}$ ranges from 10 to 50 ${M}_\\odot$. Only solutions with a high $\\gamma_{\\rm RLOF}$ and a low $\\beta_{\\rm RLOF}$, so when a lot of angular momentum leaves the system due to nonconservative mass transfer, seem to give a $a_{\\rm ZAMS}$ that could be large enough to avoid merging of the system. For comparison: HD 153919 with a mass of 60 ${M}_\\odot$ has a radius of $25 {R}_\\odot$.",
+      "label": "test",
+      "row_count": 7,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa85r5k1s/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2108.12918/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa85r5k1s/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2108.12918/catalog_sources/table-test/wrapped.tex",
+            "html": "literature/2108.12918/catalog_sources/table-test/latexml.html",
+            "stdout": "literature/2108.12918/catalog_sources/table-test/latexml.stdout.txt",
+            "stderr": "literature/2108.12918/catalog_sources/table-test/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a9d01d9867ccafc4f59736d32cc1b58e01daa1762fc459f0e9f04e2d05de6af0"
+    },
+    {
+      "id": "table-tab-pmin_n_relation",
+      "internal_table_id": "table-tab-pmin_n_relation",
+      "status": "success",
+      "ecsv_path": "literature/2108.12918/catalog_tables/table-tab-pmin_n_relation.ecsv",
+      "caption": "The number of candidates $n_{*}$ in relation with the probability threshold $p_{min}$ for NGC 6231.",
+      "label": "tab:pmin_n_relation",
+      "row_count": 10,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "p_min",
+          "n_*"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "p_min",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "n_*",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpk__kpion/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2108.12918/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpk__kpion/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2108.12918/catalog_sources/table-tab-pmin_n_relation/wrapped.tex",
+            "html": "literature/2108.12918/catalog_sources/table-tab-pmin_n_relation/latexml.html",
+            "stdout": "literature/2108.12918/catalog_sources/table-tab-pmin_n_relation/latexml.stdout.txt",
+            "stderr": "literature/2108.12918/catalog_sources/table-tab-pmin_n_relation/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5c291ddf82b38b152394f23c3a07edf3e003891897945afa51d727dfdd36cbfd"
+    }
+  ]
+}

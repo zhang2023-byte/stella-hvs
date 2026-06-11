@@ -1,0 +1,828 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:14",
+  "paper": {
+    "arxiv_id": "2407.02593",
+    "title": "A Detailed Chemical Study of the Extreme Velocity Stars in the Galaxy",
+    "month": "2024-07"
+  },
+  "review": {
+    "path": "literature/2407.02593/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123914",
+    "started_at": "2026-05-17T12:39:14",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2407.02593",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-obs",
+      "internal_table_id": "table-tab-obs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.02593/arxiv_source/main.tex",
+        "start_line": 157,
+        "end_line": 185,
+        "caption": "The observational parameters of the stars used in this study. A complete machine-readable version is available online. The astrometry is from Gaia DR3. We elect to use the distances from \\protect\\cite{Bailer-Jones_2021} in lieu of the values from parallax inversion from Gaia DR3 because more than a third of our science stars have relative parallax errors greater than 10\\%. Radial velocities are derived from the ground based follow-up observations along with the signal-to-noise ratio (SNR). The literature source of the candidate hyper velocity star is provided in the reference column. Stars used for calibrations or previous detailed in other studies \\protect\\citep[e.g.,][]{Hawkins_2018,Henrique_2022} are not included in our data tables. We use the abbreviation McD to indicate the observations were taken at the McDonald Observatory, and APO for the Apache Point Observatory. The ADQL entry in the source column indicates the targets were acquired from the ADQL query listed in Appendix \\ref{appendix:adql_query}.",
+        "label": "tab:obs"
+      },
+      "source_path": "literature/2407.02593/arxiv_source/main.tex",
+      "excerpt_path": "literature/2407.02593/catalog_sources/table-tab-obs/excerpt.tex",
+      "sha256": "c158797708ea659cce1d6ae83c9feb0f3b6b7b2ad906cf2c43a56ab17270dfaa",
+      "line_count": 29,
+      "error": ""
+    },
+    {
+      "id": "table-tab-photometry",
+      "internal_table_id": "table-tab-photometry",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.02593/arxiv_source/main.tex",
+        "start_line": 209,
+        "end_line": 237,
+        "caption": "A portion of the photometric Data used for isochrone fitting. For compactness, we only display a subset of the columns. We assume an error of 0.005 mags for the Gaia G band magnitude. When values are not present or do not pass our quality cuts, a nan value is provided. The Gaia photometry corresponds to Gaia DR2 with the values from Gaia DR3 producing no changes. The $J$, $\\sigma_{J}$, $H$, $\\sigma_{H}$, $K_s$, $\\sigma_{K_{s}}$ correspond to the 2MASS survey. $W1$ and $W2$ are photometry from AllWISE. We use SkyMapper DR2 data, PANSTARRs DR1 data, and SDSS IV data when available. A full machine readable version of the table is available online. \\label{tab:photometry}",
+        "label": "tab:photometry"
+      },
+      "source_path": "literature/2407.02593/arxiv_source/main.tex",
+      "excerpt_path": "literature/2407.02593/catalog_sources/table-tab-photometry/excerpt.tex",
+      "sha256": "d5ab27328ed320a6b4a43630eed057a929ba068375f82011406fc605cc874382",
+      "line_count": 29,
+      "error": ""
+    },
+    {
+      "id": "table-tab-line_subset",
+      "internal_table_id": "table-tab-line_subset",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.02593/arxiv_source/main.tex",
+        "start_line": 340,
+        "end_line": 362,
+        "caption": "A portion of our line selection for each element, its atomic properties and the absolute abundance we derive for each absorption feature. A full machine-readable version, including abundances for each star for each line, is available online. The lines used will vary between stars because of the quality checks. $\\chi$ is the excitation potential in eV, $\\log gf$ is the logarithm of the oscillator strength $f$ multiplied by its statistical weight $g$, and log($\\epsilon$) is the absolute abundance (after subtracting the Solar abundances) derived for this line. The solar abundances adopted are from \\protect\\cite{grevesse_solar_abunds}, except where described otherwise in Section \\ref{section:abund_methods}. \\label{tab:line_subset}",
+        "label": "tab:line_subset"
+      },
+      "source_path": "literature/2407.02593/arxiv_source/main.tex",
+      "excerpt_path": "literature/2407.02593/catalog_sources/table-tab-line_subset/excerpt.tex",
+      "sha256": "e49dda26f5b63aa9c46f51f3bcc6c08553d88ebf1fe0509388e73e06c153b883",
+      "line_count": 23,
+      "error": ""
+    },
+    {
+      "id": "table-tab-param_and_abund",
+      "internal_table_id": "table-tab-param_and_abund",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.02593/arxiv_source/main.tex",
+        "start_line": 406,
+        "end_line": 436,
+        "caption": "A portion of the atmospheric parameters and abundances for the HVS candidates. Stars are labeled by their alias from Table \\ref{tab:obs}. The $\\mathrm{[Fe/H]}$ value is the abundance determined for iron rather than the metallicity from the atmospheric parameter fitting; however, these values are nearly identical ($|\\Delta|<0.03$). $\\xi$ is the microturbulence velocity. We only provide internal errors for \\teff \\ and \\logg \\ as the external errors are provided in the text and identical for each star. The internal errors for $\\xi$ (i.e., $\\sigma_{\\xi}$) were negligible compared to the external error therefore we do not list them. Abundances which lacked measurements are given a nan. The error in abundance measurement is the total error described in Section \\ref{section:abund_methods}. [X/Fe] values are provided in the digital version of this table. A full machine readable version of the table is available online. \\label{tab:param_and_abund}",
+        "label": "tab:param_and_abund"
+      },
+      "source_path": "literature/2407.02593/arxiv_source/main.tex",
+      "excerpt_path": "literature/2407.02593/catalog_sources/table-tab-param_and_abund/excerpt.tex",
+      "sha256": "473e374a4620d541c87d418f5f54b9cc5edf19346e19b78303ee90dcc719e299",
+      "line_count": 31,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-obs",
+      "internal_table_id": "table-tab-obs",
+      "status": "success",
+      "ecsv_path": "literature/2407.02593/catalog_tables/table-tab-obs.ecsv",
+      "caption": "The observational parameters of the stars used in this study. A complete machine-readable version is available online. The astrometry is from Gaia DR3. We elect to use the distances from \\protect\\cite{Bailer-Jones_2021} in lieu of the values from parallax inversion from Gaia DR3 because more than a third of our science stars have relative parallax errors greater than 10\\%. Radial velocities are derived from the ground based follow-up observations along with the signal-to-noise ratio (SNR). The literature source of the candidate hyper velocity star is provided in the reference column. Stars used for calibrations or previous detailed in other studies \\protect\\citep[e.g.,][]{Hawkins_2018,Henrique_2022} are not included in our data tables. We use the abbreviation McD to indicate the observations were taken at the McDonald Observatory, and APO for the Apache Point Observatory. The ADQL entry in the source column indicates the targets were acquired from the ADQL query listed in Appendix \\ref{appendix:adql_query}.",
+      "label": "tab:obs",
+      "row_count": 17,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR3 source id",
+          "Alias",
+          "Observatory",
+          "RA",
+          "DEC",
+          "Distance",
+          "G",
+          "RV",
+          "\\sigma_RV",
+          "SNR",
+          "Reference"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR3 source id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Alias",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Observatory",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RA",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "DEC",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Distance",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "G",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "RV",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_RV",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "SNR",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Reference",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpj2e4qvhr/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.02593/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpj2e4qvhr/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.02593/catalog_sources/table-tab-obs/wrapped.tex",
+            "html": "literature/2407.02593/catalog_sources/table-tab-obs/latexml.html",
+            "stdout": "literature/2407.02593/catalog_sources/table-tab-obs/latexml.stdout.txt",
+            "stderr": "literature/2407.02593/catalog_sources/table-tab-obs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c158797708ea659cce1d6ae83c9feb0f3b6b7b2ad906cf2c43a56ab17270dfaa"
+    },
+    {
+      "id": "table-tab-photometry",
+      "internal_table_id": "table-tab-photometry",
+      "status": "success",
+      "ecsv_path": "literature/2407.02593/catalog_tables/table-tab-photometry.ecsv",
+      "caption": "A portion of the photometric Data used for isochrone fitting. For compactness, we only display a subset of the columns. We assume an error of 0.005 mags for the Gaia G band magnitude. When values are not present or do not pass our quality cuts, a nan value is provided. The Gaia photometry corresponds to Gaia DR2 with the values from Gaia DR3 producing no changes. The $J$, $\\sigma_{J}$, $H$, $\\sigma_{H}$, $K_s$, $\\sigma_{K_{s}}$ correspond to the 2MASS survey. $W1$ and $W2$ are photometry from AllWISE. We use SkyMapper DR2 data, PANSTARRs DR1 data, and SDSS IV data when available. A full machine readable version of the table is available online. \\label{tab:photometry}",
+      "label": "tab:photometry",
+      "row_count": 16,
+      "column_count": 13,
+      "environment": "",
+      "header_rows": [
+        [
+          "Alias",
+          "Gaia DR3",
+          "Gaia G",
+          "J",
+          "\\sigma_J",
+          "H",
+          "\\sigma_H",
+          "K_s",
+          "\\sigma_K_s",
+          "W_1",
+          "\\sigma_W_1",
+          "W_2",
+          "\\sigma_W_2"
+        ],
+        [
+          "",
+          "",
+          "mag",
+          "mag",
+          "mag",
+          "mag",
+          "mag",
+          "mag",
+          "mag",
+          "mag",
+          "mag",
+          "mag",
+          "mag"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Alias",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR3",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Gaia G | mag",
+          "unit_text": "mag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "J | mag",
+          "unit_text": "mag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_J | mag",
+          "unit_text": "mag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "H | mag",
+          "unit_text": "mag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_H | mag",
+          "unit_text": "mag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "K_s | mag",
+          "unit_text": "mag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_K_s | mag",
+          "unit_text": "mag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "W_1 | mag",
+          "unit_text": "mag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\sigma_W_1 | mag",
+          "unit_text": "mag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "W_2 | mag",
+          "unit_text": "mag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "\\sigma_W_2 | mag",
+          "unit_text": "mag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa5j_ygj8/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.02593/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa5j_ygj8/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.02593/catalog_sources/table-tab-photometry/wrapped.tex",
+            "html": "literature/2407.02593/catalog_sources/table-tab-photometry/latexml.html",
+            "stdout": "literature/2407.02593/catalog_sources/table-tab-photometry/latexml.stdout.txt",
+            "stderr": "literature/2407.02593/catalog_sources/table-tab-photometry/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d5ab27328ed320a6b4a43630eed057a929ba068375f82011406fc605cc874382"
+    },
+    {
+      "id": "table-tab-line_subset",
+      "internal_table_id": "table-tab-line_subset",
+      "status": "success",
+      "ecsv_path": "literature/2407.02593/catalog_tables/table-tab-line_subset.ecsv",
+      "caption": "A portion of our line selection for each element, its atomic properties and the absolute abundance we derive for each absorption feature. A full machine-readable version, including abundances for each star for each line, is available online. The lines used will vary between stars because of the quality checks. $\\chi$ is the excitation potential in eV, $\\log gf$ is the logarithm of the oscillator strength $f$ multiplied by its statistical weight $g$, and log($\\epsilon$) is the absolute abundance (after subtracting the Solar abundances) derived for this line. The solar abundances adopted are from \\protect\\cite{grevesse_solar_abunds}, except where described otherwise in Section \\ref{section:abund_methods}. \\label{tab:line_subset}",
+      "label": "tab:line_subset",
+      "row_count": 10,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Identifier",
+          "Element",
+          "\\lambda",
+          "\\log gf",
+          "\\chi",
+          "\\log(\\epsilon)"
+        ],
+        [
+          "",
+          "",
+          "(Å)",
+          "(dex)",
+          "(eV)",
+          "(dex)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Identifier",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Element",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\lambda | (Å)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\log gf | (dex)",
+          "unit_text": "(dex)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\chi | (eV)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\log(\\epsilon) | (dex)",
+          "unit_text": "(dex)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqjcmircg/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.02593/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqjcmircg/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.02593/catalog_sources/table-tab-line_subset/wrapped.tex",
+            "html": "literature/2407.02593/catalog_sources/table-tab-line_subset/latexml.html",
+            "stdout": "literature/2407.02593/catalog_sources/table-tab-line_subset/latexml.stdout.txt",
+            "stderr": "literature/2407.02593/catalog_sources/table-tab-line_subset/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e49dda26f5b63aa9c46f51f3bcc6c08553d88ebf1fe0509388e73e06c153b883"
+    },
+    {
+      "id": "table-tab-param_and_abund",
+      "internal_table_id": "table-tab-param_and_abund",
+      "status": "success",
+      "ecsv_path": "literature/2407.02593/catalog_tables/table-tab-param_and_abund.ecsv",
+      "caption": "A portion of the atmospheric parameters and abundances for the HVS candidates. Stars are labeled by their alias from Table \\ref{tab:obs}. The $\\mathrm{[Fe/H]}$ value is the abundance determined for iron rather than the metallicity from the atmospheric parameter fitting; however, these values are nearly identical ($|\\Delta|<0.03$). $\\xi$ is the microturbulence velocity. We only provide internal errors for \\teff \\ and \\logg \\ as the external errors are provided in the text and identical for each star. The internal errors for $\\xi$ (i.e., $\\sigma_{\\xi}$) were negligible compared to the external error therefore we do not list them. Abundances which lacked measurements are given a nan. The error in abundance measurement is the total error described in Section \\ref{section:abund_methods}. [X/Fe] values are provided in the digital version of this table. A full machine readable version of the table is available online. \\label{tab:param_and_abund}",
+      "label": "tab:param_and_abund",
+      "row_count": 16,
+      "column_count": 16,
+      "environment": "",
+      "header_rows": [
+        [
+          "Alias",
+          "\\mathrmT_eff",
+          "\\sigma_\\mathrmT_eff",
+          "\\log g",
+          "\\sigma_\\log g",
+          "[Fe/H]",
+          "\\sigma_[Fe/H]",
+          "\\xi",
+          "[Na/H]",
+          "\\sigma_[Na/H]",
+          "[Mg/H]",
+          "\\sigma_[Mg/H]",
+          "[Al/H]",
+          "\\sigma_[Al/H]",
+          "[Si/H]",
+          "\\sigma_[Si/H]"
+        ],
+        [
+          "",
+          "(K)",
+          "(K)",
+          "(dex)",
+          "(dex)",
+          "(dex)",
+          "(dex)",
+          "(km s -1 )",
+          "(dex)",
+          "(dex)",
+          "(dex)",
+          "(dex)",
+          "(dex)",
+          "(dex)",
+          "(dex)",
+          "(dex)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Alias",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\mathrmT_eff | (K)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma_\\mathrmT_eff | (K)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\log g | (dex)",
+          "unit_text": "(dex)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_\\log g | (dex)",
+          "unit_text": "(dex)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "[Fe/H] | (dex)",
+          "unit_text": "[Fe/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_[Fe/H] | (dex)",
+          "unit_text": "\\sigma_[Fe/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\xi | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "[Na/H] | (dex)",
+          "unit_text": "[Na/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\sigma_[Na/H] | (dex)",
+          "unit_text": "\\sigma_[Na/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "[Mg/H] | (dex)",
+          "unit_text": "[Mg/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\sigma_[Mg/H] | (dex)",
+          "unit_text": "\\sigma_[Mg/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "[Al/H] | (dex)",
+          "unit_text": "[Al/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "\\sigma_[Al/H] | (dex)",
+          "unit_text": "\\sigma_[Al/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "[Si/H] | (dex)",
+          "unit_text": "[Si/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "\\sigma_[Si/H] | (dex)",
+          "unit_text": "\\sigma_[Si/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfgo29uwl/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.02593/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfgo29uwl/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.02593/catalog_sources/table-tab-param_and_abund/wrapped.tex",
+            "html": "literature/2407.02593/catalog_sources/table-tab-param_and_abund/latexml.html",
+            "stdout": "literature/2407.02593/catalog_sources/table-tab-param_and_abund/latexml.stdout.txt",
+            "stderr": "literature/2407.02593/catalog_sources/table-tab-param_and_abund/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "473e374a4620d541c87d418f5f54b9cc5edf19346e19b78303ee90dcc719e299"
+    }
+  ]
+}

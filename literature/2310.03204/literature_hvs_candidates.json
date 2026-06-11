@@ -1,0 +1,49 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:12:09",
+  "paper": {
+    "arxiv_id": "2310.03204",
+    "bibcode": "2023ApJ...956L..41M",
+    "title": "An Extremely Massive White Dwarf Escaped From the Hyades Star Cluster",
+    "month": "2023-10",
+    "source_note_json": "notes/2023/2023-10/2023-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2310.03204",
+      "pdf": "https://arxiv.org/pdf/2310.03204"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2310.03204",
+    "audit_path": "literature/2310.03204/audit.json",
+    "catalog_review_path": "literature/2310.03204/catalog_review.json",
+    "catalog_extraction_path": "literature/2310.03204/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2310.03204/catalog_tables/table-tab-wd_derived.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:12:09",
+    "extractor": "agent",
+    "summary": "This paper studies an ultramassive white dwarf WD1 (Gaia EDR3 560883558756079616) that escaped from the Hyades star cluster. WD1 is a cluster runaway, with a reconstructed 3D velocity relative to the Hyades of only ~10 km/s, a radial velocity of ~20 km/s, and a distance of ~167 pc. The paper does not discuss whether WD1 is unbound from the Galaxy (Galactic-unbound), nor does it mention Galactic escape velocity or hypervelocity star (HVS) classification. This object is an ordinary cluster runaway, not an HVS candidate."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2310.03204:group-01",
+      "description": "Hyades runaway white dwarf candidates: WD1 (Gaia EDR3 560883558756079616, 1.317 Msun), WD2 (Gaia EDR3 3776918275016618112, ~1.1 Msun), WD3 (Gaia EDR3 3072348715677121280, ~1.1 Msun). All three are ultramassive white dwarfs with kinematics consistent with past membership in the Hyades open cluster.",
+      "decision": "rejected",
+      "reason": "These are cluster runaways (escaped from the Hyades open cluster), not Galactic-unbound hypervelocity stars. WD1's reconstructed 3D velocity relative to the Hyades cluster is only ~10 km/s, its heliocentric radial velocity is ~20 km/s at ~167 pc. The paper does not discuss escape from the Galaxy or compare velocities to the Galactic escape velocity. No HVS candidates identified.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2310.03204/arxiv_source/main.tex",
+          "start_line": 221,
+          "end_line": 263,
+          "context": "Section 3 White Dwarf Escapee Candidates: identifies WD1 as a Hyades cluster runaway with reconstructed 3D velocity ~10 km/s relative to cluster. Paper discusses escape from open cluster only, not Galactic escape."
+        }
+      ]
+    }
+  ]
+}

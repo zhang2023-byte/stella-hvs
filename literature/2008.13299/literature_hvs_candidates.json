@@ -1,0 +1,82 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:30:00",
+  "paper": {
+    "arxiv_id": "2008.13299",
+    "bibcode": "2020A&A...643A.116D",
+    "title": "High-resolution spectroscopic study of massive blue and red supergiants in Perseus OB1. I. Definition of the sample, membership, and kinematics",
+    "month": "2020-08",
+    "source_note_json": "notes/2020/2020-08/2020-08.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2008.13299",
+      "pdf": "https://arxiv.org/pdf/2008.13299"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2008.13299",
+    "audit_path": "literature/2008.13299/audit.json",
+    "catalog_review_path": "literature/2008.13299/catalog_review.json",
+    "catalog_extraction_path": "literature/2008.13299/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2008.13299/catalog_tables/table-001.ecsv",
+      "literature/2008.13299/catalog_tables/table-002.ecsv",
+      "literature/2008.13299/catalog_tables/table-003.ecsv",
+      "literature/2008.13299/catalog_tables/table-004.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:30:00",
+    "extractor": "agent",
+    "summary": "本文对Per OB1星协(含h和χ Persei双星团)中的88颗大质量蓝/红超巨星进行了高分辨率多历元光谱观测(405条光谱)，结合Gaia DR2天体测量研究了样本星的成员资格、双星性质和逃逸星(runaway)状态。主要发现O型星中约45%为逃逸星，而更演化恒星的逃逸比例<~5%。论文中的'runaway stars'指从诞生星团/星协中被动力学或超新星爆发弹射的大质量恒星，这些恒星虽然相对星协成员具有显著的运动学偏移，但仍处于银河系束缚轨道上。论文关注的是星协尺度的恒星运动学和双星性质，未涉及银河系逃逸速度或非束缚HVS的判定。未识别任何银河系非束缚超高速星候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS候选体相关性。论文研究Per OB1星协中runaway star的统计性质，属于星协成员星运动学和双星性质研究。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (39019corr_f.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+          "start_line": 88,
+          "end_line": 99,
+          "context": "Abstract: study of 88 massive stars in Per OB1; 45% of O stars are runaways, <~5% for evolved stars; membership and binary status."
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "per-ob1-runaway-o-stars",
+      "description": "Per OB1星协中被识别为runaway的O型星：约45%(5/11)的O型星因自行和/或RV超出2σ被识别为逃逸星。具体包括HD 12993, HD 13022, HD 13338, HD 13745, HD 14434等。",
+      "decision": "excluded",
+      "reason": "论文中的'runaway star'指相对于所在星协/星团具有显著运动学偏移的大质量恒星（通常因星团动力学相互作用或超新星爆发弹射），但这些恒星仍在星协附近（论文样本限制在4.5°内），处于银河系束缚轨道。论文使用'2σ超出'作为统计离群判据识别runaway，而非基于银河系逃逸速度。Per OB1距离约2.5 kpc，该处的银河系逃逸速度远大于这些恒星的空间速度。论文未声称任何恒星为非束缚HVS，也未进行银河系束缚状态评估。'runaway'与'HVS'(银河系非束缚超高速星)是完全不同的概念。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+          "start_line": 88,
+          "end_line": 99,
+          "context": "Abstract: runaway stars identified via 2σ PM/RV outliers; 45% of O stars are runaways."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+          "start_line": 529,
+          "end_line": 550,
+          "context": "Table 3: Summary of runaway star identification by SpT group; 2σ and 4σ outlier criteria."
+        }
+      ]
+    }
+  ]
+}

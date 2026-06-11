@@ -1,0 +1,118 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T11:30:33",
+  "paper": {
+    "arxiv_id": "2004.12622",
+    "title": "The K supergiant runaway star HD 137071",
+    "month": "2020-04"
+  },
+  "review": {
+    "path": "literature/2004.12622/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "needs_review"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T113033",
+    "started_at": "2026-06-07T11:30:33",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2004.12622",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-basicpars",
+      "internal_table_id": "table-basicpars",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2004.12622/arxiv_source/HD137071.tex",
+        "start_line": 87,
+        "end_line": 108,
+        "caption": "Basic data of HD~137071",
+        "label": "basicpars"
+      },
+      "source_path": "literature/2004.12622/arxiv_source/HD137071.tex",
+      "excerpt_path": "literature/2004.12622/catalog_sources/table-basicpars/excerpt.tex",
+      "sha256": "f6ab9b5c1f12ec8d93a8ec43c7579c50961b92f768b187f77ee44cca6a67e963",
+      "line_count": 22,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-basicpars",
+      "internal_table_id": "table-basicpars",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2004.12622/catalog_tables/table-basicpars.ecsv",
+      "caption": "Basic data of HD~137071",
+      "label": "basicpars",
+      "row_count": 12,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqd9a5vh6/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2004.12622/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqd9a5vh6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2004.12622/catalog_sources/table-basicpars/wrapped.tex",
+            "html": "literature/2004.12622/catalog_sources/table-basicpars/latexml.html",
+            "stdout": "literature/2004.12622/catalog_sources/table-basicpars/latexml.stdout.txt",
+            "stderr": "literature/2004.12622/catalog_sources/table-basicpars/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f6ab9b5c1f12ec8d93a8ec43c7579c50961b92f768b187f77ee44cca6a67e963"
+    }
+  ]
+}

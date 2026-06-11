@@ -1,0 +1,61 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:01:48",
+  "paper": {
+    "arxiv_id": "2102.10210",
+    "bibcode": "2021AJ....161..234M",
+    "title": "Bayesian Cross-Matching of High Proper Motion Stars in Gaia DR2 and Photometric Metallicities for $\\\\sim$1.7 million K and M Dwarfs",
+    "month": "2021-02",
+    "source_note_json": "notes/2021/2021-02/2021-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2102.10210",
+      "pdf": "https://arxiv.org/pdf/2102.10210"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2102.10210",
+    "audit_path": "literature/2102.10210/audit.json",
+    "catalog_review_path": "literature/2102.10210/catalog_review.json",
+    "catalog_extraction_path": "literature/2102.10210/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2102.10210/catalog_tables/table-tab-best_match_results.ecsv",
+      "literature/2102.10210/catalog_tables/table-tab-best_match_results_descrip.ecsv",
+      "literature/2102.10210/catalog_tables/table-tab-2MASS_all_matches.ecsv",
+      "literature/2102.10210/catalog_tables/table-tab-ALLWISE_all_matches.ecsv",
+      "literature/2102.10210/catalog_tables/table-tab-GALEX_all_matches.ecsv",
+      "literature/2102.10210/catalog_tables/table-tab-PS1_all_matches.ecsv",
+      "literature/2102.10210/catalog_tables/table-tab-SDSS_all_matches.ecsv",
+      "literature/2102.10210/catalog_tables/table-tab-RAVE_all_matches.ecsv",
+      "literature/2102.10210/catalog_tables/table-tab-KM_poly.ecsv",
+      "literature/2102.10210/catalog_tables/table-tab-M_poly.ecsv",
+      "literature/2102.10210/catalog_tables/table-tab-best_match_results_compare.ecsv",
+      "literature/2102.10210/catalog_tables/table-tab-K_metals.ecsv",
+      "literature/2102.10210/catalog_tables/table-tab-M_metals.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:01:48",
+    "extractor": "agent",
+    "summary": "No HVS candidates found. This paper cross-matches 5.8M Gaia DR2 high proper-motion stars (mu>40 mas/yr) to 2MASS, AllWISE, GALEX, RAVE, SDSS, and Pan-STARRS using a Bayesian framework, then derives photometric metallicities for ~1.7M K and M dwarfs. The paper does not select for or discuss hypervelocity stars, unbound stars, or Galactic escape trajectories. No HVS-related keywords appear in the text."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "all-high-pm-stars",
+      "description": "The entire sample of 5,827,988 Gaia DR2 high proper-motion stars (mu>40 mas/yr) cross-matched to external catalogs. The paper selects on proper motion only, with no velocity cut or HVS-specific selection criteria.",
+      "decision": "excluded",
+      "reason": "No HVS candidates present. The paper selects solely on proper motion (mu>40 mas/yr), well below HVS thresholds. The cross-matching and metallicity analysis does not involve velocity measurements, Galactic potential modeling, unbound trajectory assessments, or any HVS-related discussion. Full paper text reviewed — zero mentions of hypervelocity, unbound, or escaping stars.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 33,
+          "end_line": 35,
+          "context": "We present a Bayesian method to cross-match 5,827,988 high proper motion Gaia sources (mu>40 mas/yr) to various photometric surveys: 2MASS, AllWISE, GALEX, RAVE, SDSS and Pan-STARRS. To efficiently associate these objects across catalogs, we develop a technique that compares the multidimensional distribution of all sources in the vicinity of each Gaia star to a reference distribution of random field stars obtained by extracting all sources in a region on the sky displaced 2'. This offset preserves the local field stellar density and magnitude distribution allowing us to characterize the frequency of chance alignments. The resulting catalog with Bayesian probabilities >95% has a marginally higher match rate than current internal Gaia DR2 matches for most catalogs. However, a significant improvement is found with Pan-STARRS, where ~99.8% of the sample within the Pan-STARRS footprint is recovered, as compared to a low ~20.8% in Gaia DR2. Using these results, we train a Gaussian Process Regressor to calibrate two photometric metallicity relationships."
+        }
+      ]
+    }
+  ]
+}

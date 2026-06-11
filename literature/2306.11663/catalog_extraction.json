@@ -1,0 +1,223 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:57:29",
+  "paper": {
+    "arxiv_id": "2306.11663",
+    "title": "Not so fast, not so furious: just magnetic",
+    "month": "2023-06"
+  },
+  "review": {
+    "path": "literature/2306.11663/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225729",
+    "started_at": "2026-05-22T22:57:29",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2306.11663",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-Tab_Log",
+      "internal_table_id": "table-Tab_Log",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.11663/arxiv_source/NFNF.tex",
+        "start_line": 104,
+        "end_line": 121,
+        "caption": "\\label{Tab_Log} Log of the spectropolarimetric observations of WD\\,0810-353.",
+        "label": "Tab_Log"
+      },
+      "source_path": "literature/2306.11663/arxiv_source/NFNF.tex",
+      "excerpt_path": "literature/2306.11663/catalog_sources/table-Tab_Log/excerpt.tex",
+      "sha256": "a8c5713140ef7e3a50237d124b04ed1dd6d5a64cdc9a9f0dae6e9fb3752743c3",
+      "line_count": 18,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-Tab_Log",
+      "internal_table_id": "table-Tab_Log",
+      "status": "success",
+      "ecsv_path": "literature/2306.11663/catalog_tables/table-Tab_Log.ecsv",
+      "caption": "\\label{Tab_Log} Log of the spectropolarimetric observations of WD\\,0810-353.",
+      "label": "Tab_Log",
+      "row_count": 6,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "DATE",
+          "UT",
+          "Exp",
+          "S/N",
+          "Instrument",
+          "Grism",
+          "Spectral",
+          "R",
+          "Reference",
+          "Color code"
+        ],
+        [
+          "yyyy-dd-mm",
+          "hh:mm",
+          "(s)",
+          "per Å",
+          "",
+          "",
+          "range (Å)",
+          "",
+          "",
+          "in Fig. LABEL:New_spectra"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "DATE | yyyy-dd-mm",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "UT | hh:mm",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Exp | (s)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "S/N | per Å",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Instrument",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Grism",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Spectral | range (Å)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "R",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Reference",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Color code | in Fig. LABEL:New_spectra",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4aqtf8wy/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.11663/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4aqtf8wy/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.11663/catalog_sources/table-Tab_Log/wrapped.tex",
+            "html": "literature/2306.11663/catalog_sources/table-Tab_Log/latexml.html",
+            "stdout": "literature/2306.11663/catalog_sources/table-Tab_Log/latexml.stdout.txt",
+            "stderr": "literature/2306.11663/catalog_sources/table-Tab_Log/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a8c5713140ef7e3a50237d124b04ed1dd6d5a64cdc9a9f0dae6e9fb3752743c3"
+    }
+  ]
+}

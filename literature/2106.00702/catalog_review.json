@@ -1,0 +1,273 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2106.00702",
+    "title": "RR Lyrae Stars In Stellar Streams with Gaia: The Escapers",
+    "month": "2021-06",
+    "source_note_json": "notes/2021/2021-06/2021-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2106.00702",
+      "pdf": "https://arxiv.org/pdf/2106.00702"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2106.00702",
+    "audit_path": "literature/2106.00702/audit.json",
+    "source_dir": "literature/2106.00702/arxiv_source",
+    "tex_root": "literature/2106.00702/arxiv_source/ms_onecolumn.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:18:29",
+    "reviewer": "agent",
+    "summary": "Paper searches for RR Lyrae stars that may have escaped from seven globular clusters (Pal 13, M92, M5, NGC 5466, NGC 1261, NGC 288, NGC 1851) using Gaia EDR3 proper motions, distances from M_G-[Fe/H] and M_V-[Fe/H] relations, color-magnitude diagrams, and previously identified stream loci. Contains two LaTeX tables: Table 1 (GCTableSummary) listing adopted cluster properties (positions, distances, PMs, metallicities) and Table 2 (TableEscapers) presenting the 24 candidate RRL escapers with positions, distances, periods, amplitudes, confidence groups, and source catalogs. Three external URLs reference software/tools used: DECaLS survey, Astropy coordinate matching, and Gaia DR3 parallax zero-point correction."
+  },
+  "internal_tables": [
+    {
+      "id": "table-RaDec1",
+      "kind": "latex_table",
+      "asset_type": "input_parameters",
+      "role_in_paper": "Summarizes the adopted properties (R.A., Dec., distance, proper motion, metallicity) of the seven globular clusters investigated for escaped RR Lyrae stars, along with the number of RRL candidates found per cluster.",
+      "source_refs": [
+        {
+          "path": "literature/2106.00702/arxiv_source/ms_onecolumn.tex",
+          "start_line": 246,
+          "end_line": 278,
+          "caption": "The Studied Globular Clusters",
+          "label": "GCTableSummary"
+        }
+      ],
+      "columns": [
+        {
+          "name": "GC",
+          "meaning": "Globular cluster name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A.",
+          "meaning": "Right Ascension (J2000.0, decimal degrees)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec.",
+          "meaning": "Declination (J2000.0, decimal degrees)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D_GC",
+          "meaning": "Distance to the globular cluster",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(mu_alpha, mu_delta)",
+          "meaning": "Mean proper motion of the cluster (not corrected for solar reflex motion)",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "err_(mu_alpha, mu_delta)",
+          "meaning": "Uncertainties on the mean proper motion",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]",
+          "meaning": "Metallicity of the globular cluster",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_RRL",
+          "meaning": "Number of RR Lyrae star candidates identified as possible escapers from this cluster",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The different adopted values including distances to GCs (D_GC) are summarized in Table 1 (Section 3.2 Distances and PMs). PMs adopted from Baumgardt et al. 2019, metallicities from Koch et al. 2019, Carretta et al. 2009, Harris 1996, and Ferro et al. 2019.",
+      "comments": "Label in TeX source is 'GCTableSummary' but skeleton parsed footnote label 'RaDec1'. Cluster distances range 7.5-26.0 kpc. PM values are given as (mu_alpha, mu_delta) pairs."
+    },
+    {
+      "id": "table-RaDec",
+      "kind": "latex_table",
+      "asset_type": "candidate_catalog",
+      "role_in_paper": "Primary results table presenting the 24 RR Lyrae stars identified as likely escapers from seven globular clusters. Lists sky positions, derived distances, pulsation periods, photometric amplitudes, confidence group (A/B/C), and source catalog (CRTS/Gaia/Both).",
+      "source_refs": [
+        {
+          "path": "literature/2106.00702/arxiv_source/ms_onecolumn.tex",
+          "start_line": 644,
+          "end_line": 784,
+          "caption": "The Escapers: RRL Stars Originating from GCs",
+          "label": "TableEscapers"
+        }
+      ],
+      "columns": [
+        {
+          "name": "G.C.",
+          "meaning": "Globular cluster that the RRL star is associated with",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_RRL",
+          "meaning": "Total number of RRL candidates identified for this globular cluster",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Star_#",
+          "meaning": "Star identifier number, cross-referenced to Figures 3, 4, 5, and 6",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A.",
+          "meaning": "Right Ascension (J2000.0, decimal degrees)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec.",
+          "meaning": "Declination (J2000.0, decimal degrees)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_RRL",
+          "meaning": "Distance to the RRL star derived from M_G-[Fe/H] and/or M_V-[Fe/H] relations",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_V",
+          "meaning": "Pulsation period from the CRTS catalog (Drake et al. 2013a)",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_G",
+          "meaning": "Pulsation period from the Gaia DR2 RRL catalog (Clementini et al. 2019)",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_V",
+          "meaning": "Photometric amplitude in V band from the CRTS catalog",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_G",
+          "meaning": "Photometric amplitude in Gaia G band from Clementini et al. 2019",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_BP",
+          "meaning": "Photometric amplitude in Gaia BP band from Clementini et al. 2019",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_RP",
+          "meaning": "Photometric amplitude in Gaia RP band from Clementini et al. 2019",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Group",
+          "meaning": "Confidence group: A (very high likelihood of escape), B (intermediate), C (low likelihood)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Catalog",
+          "meaning": "Source catalog(s) providing data: CRTS only, Gaia only, or Both",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "We list all our findings in Table 2 (Section 5 Summary). 24 RRL stars are associated with 7 GCs: Pal 13 (4 Group A), M92 (1 Group A), M5 (3A+1B+2C), NGC 5466 (2A+1B+1C), NGC 1261 (1B+1C), NGC 288 (1A+1B), NGC 1851 (2A+3B). Distances derived via M_G-[Fe/H] (Muraveva et al. 2018) and M_V-[Fe/H] (Drake et al. 2013a) relations, adopting cluster [Fe/H] values. PMs corrected for solar reflex motion using GALA (Price-Whelan 2017).",
+      "comments": "Label in TeX source is 'TableEscapers' but skeleton parsed footnote label 'RaDec'. 24 candidate stars across 7 clusters. Distances range 5.7-24.7 kpc. NA entries indicate data not available from that catalog."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://www.legacysurvey.org/decamls/",
+      "local_path": "",
+      "description": "Dark Energy Camera Legacy Survey (DECaLS) website, part of the DESI Legacy Imaging Surveys. Cited as the photometric data source used by Shipp et al. (2020) to detect tidal tails around Pal 13.",
+      "source_refs": [
+        {
+          "path": "literature/2106.00702/arxiv_source/ms_onecolumn.tex",
+          "start_line": 104,
+          "end_line": 104,
+          "context": "\\citet{shipp2020} studied tidal tails around GC Palomar 13 (hereafter, Pal 13) using photometric data from the Dark Energy Camera Legacy Survey (DECaLS\\footnote{\\url{https://www.legacysurvey.org/decamls/}}) of the DESI Legacy Imaging Surveys \\citep{Dey2019}."
+        }
+      ],
+      "evidence": "Cited in Section 1 Introduction as the photometric survey used by Shipp et al. (2020) for matched-filter detection of tidal tails around Pal 13, whose RRL star identifications this paper builds upon and expands.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://docs.astropy.org/en/stable/coordinates/matchsep.html",
+      "local_path": "",
+      "description": "Astropy documentation page for computing spherical separations between sky coordinates. Used in this paper to calculate Delta_XY, the angular separation between each globular cluster and candidate RRL star.",
+      "source_refs": [
+        {
+          "path": "literature/2106.00702/arxiv_source/ms_onecolumn.tex",
+          "start_line": 398,
+          "end_line": 398,
+          "context": "$\\Delta$XY is the spherical separation between the GC and each RRL star and is computed using Astropy\\footnote{\\url{https://docs.astropy.org/en/stable/coordinates/matchsep.html}} \\citep{astropy:2013, astropy:2018}."
+        }
+      ],
+      "evidence": "Referenced in Section 4 Analysis as the method used for computing spherical separations (Delta_XY) between globular clusters and RRL candidates, a key metric in the 2D diagnostic plots (Figures 3-6).",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://gitlab.com/icc-ub/public/gaiadr3_zeropoint",
+      "local_path": "",
+      "description": "GitLab repository hosting the Lindegren et al. (2020) Gaia DR3/EDR3 parallax zero-point correction code. Used in this paper for validating RRL distances derived from period-luminosity-metallicity relations against Gaia EDR3 parallaxes.",
+      "source_refs": [
+        {
+          "path": "literature/2106.00702/arxiv_source/ms_onecolumn.tex",
+          "start_line": 567,
+          "end_line": 567,
+          "context": "The parallax values were zero point corrected using the \\citet{lindegren2020} solution\\footnote{\\url{https://gitlab.com/icc-ub/public/gaiadr3_zeropoint}\\label{zeropoint}}."
+        }
+      ],
+      "evidence": "Referenced in Section 4.7 Gaia Parallaxes for zero-point correction of EDR3 parallaxes when computing d_GAIA distances for comparison with the M_G-[Fe/H] derived d_RRL distances. Figure 7 shows d_GAIA vs d_RRL comparison.",
+      "comments": ""
+    }
+  ]
+}

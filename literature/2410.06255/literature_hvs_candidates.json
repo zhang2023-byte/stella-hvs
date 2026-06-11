@@ -1,0 +1,88 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T18:09:40",
+  "paper": {
+    "arxiv_id": "2410.06255",
+    "bibcode": "2024Natur.634..809S",
+    "title": "Two waves of massive stars running away from the young cluster R136",
+    "month": "2024-10",
+    "source_note_json": "notes/2024/2024-10/2024-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2410.06255",
+      "pdf": "https://arxiv.org/pdf/2410.06255"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2410.06255",
+    "audit_path": "literature/2410.06255/audit.json",
+    "catalog_review_path": "literature/2410.06255/catalog_review.json",
+    "catalog_extraction_path": "literature/2410.06255/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2410.06255/catalog_tables/table-tab-R136params.ecsv",
+      "literature/2410.06255/catalog_tables/table-tab-luminous_stars.ecsv",
+      "literature/2410.06255/catalog_tables/table-tab-kinematic_runaways.ecsv",
+      "literature/2410.06255/catalog_tables/table-004.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T18:09:40",
+    "extractor": "agent",
+    "summary": "The paper reports 55 massive runaway stars ejected from the young cluster R136 in the Large Magellanic Cloud. The paper treats these objects as cluster runaways (dynamically ejected from R136) and does not discuss any of them as possibly unbound from the Milky Way / Galactic potential. No Galactic-unbound HVS or hyper-runaway candidates are identified."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-kinematic_runaways",
+      "description": "Runaway stars dynamically ejected from R136 in the past 3 Myr, identified via Gaia DR3 astrometry and traced back kinematically to the cluster centre.",
+      "decision": "excluded",
+      "reason": "The paper presents these objects as runaway stars ejected from the young cluster R136 in the LMC. They are discussed solely in the context of cluster dynamics and dynamical ejection from R136, not as candidates unbound from the Milky Way Galactic potential. The maximum transverse velocities reported (~28-195 km/s) are relative to R136, not the Galactic rest frame, and the paper makes no bound/unbound claim regarding the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2410.06255/arxiv_source/MAIN.tex",
+          "start_line": 168,
+          "end_line": 169,
+          "context": "Abstract describing 55 massive runaway stars ejected from R136 in the LMC via dynamical ejection channels, with no mention of Galactic-unbound status."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2410.06255/arxiv_source/MAIN.tex",
+          "start_line": 184,
+          "end_line": 185,
+          "context": "Main text introducing runaways as stars consistent with running away from R136, with transverse velocity > 27.6 km/s relative to the cluster."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2410.06255/arxiv_source/MAIN.tex",
+          "start_line": 314,
+          "end_line": 317,
+          "context": "Methods section defining runaways as stars with transverse velocity difference larger than 27.6 km/s relative to R136, using escape velocity of R136 (~21 km/s) as the cluster-scale reference."
+        }
+      ]
+    },
+    {
+      "group_id": "table-tab-luminous_stars",
+      "description": "All luminous stars in 30 Doradus with log(L/L_sun) > 6.0, including cluster members, runaways, and field stars.",
+      "decision": "excluded",
+      "reason": "The paper classifies these objects into three categories (cluster stars, runaways, field stars) based on projected distance from R136 and kinematics. None are presented as possibly unbound from the Milky Way. Field stars that may still originate from R136 are described as potentially being on wider elliptical orbits that did not reach the cluster escape velocity, not as Galactic-unbound.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2410.06255/arxiv_source/MAIN.tex",
+          "start_line": 358,
+          "end_line": 360,
+          "context": "Description of the luminous stars sample in 30 Doradus, including stars inside R136, the surrounding halo, and the 30 Doradus Nebula."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2410.06255/arxiv_source/MAIN.tex",
+          "start_line": 364,
+          "end_line": 371,
+          "context": "Explanation of runaway fraction calculation distinguishing cluster stars, runaways, and field stars, with field stars described as possibly on wider elliptical orbits that did not reach escape velocity."
+        }
+      ]
+    }
+  ]
+}

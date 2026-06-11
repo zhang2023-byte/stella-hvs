@@ -1,0 +1,67 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:27:32",
+  "paper": {
+    "arxiv_id": "2311.04174",
+    "bibcode": "2024A&A...681A..21S",
+    "title": "The early evolution of young massive clusters. II. The kinematic history of NGC 6618 / M 17",
+    "month": "2023-11",
+    "source_note_json": "notes/2023/2023-11/2023-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2311.04174",
+      "pdf": "https://arxiv.org/pdf/2311.04174"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2311.04174",
+    "audit_path": "literature/2311.04174/audit.json",
+    "catalog_review_path": "literature/2311.04174/catalog_review.json",
+    "catalog_extraction_path": "literature/2311.04174/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2311.04174/catalog_tables/table-tab-members_all.ecsv",
+      "literature/2311.04174/catalog_tables/table-tab-member_Ostars.ecsv",
+      "literature/2311.04174/catalog_tables/table-tab-NGC6618params.ecsv",
+      "literature/2311.04174/catalog_tables/table-tab-runaways.ecsv",
+      "literature/2311.04174/catalog_tables/table-tab-NGC6618PG.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:27:32",
+    "extractor": "agent",
+    "summary": "This paper uses Gaia DR3 data to identify 42 member stars and 13 runaway stars (7 O-type, 6 B-type or later) of the young massive cluster NGC 6618 (M 17). These runaways have tangential velocities of 10-70 km/s relative to the cluster and kinematic ages of ~100-1250 kyr. The paper classifies them as 'dynamically ejected runaways', i.e., stars that escaped from the cluster, with escape velocity referenced to the typical 3D escape velocity of 3-5 km/s for young massive clusters. The paper never discusses Galactic escape velocity, hypervelocity stars (HVS), Galactic-unbound status, or Galactic escape. All identified runaway stars are cluster escapers, still gravitationally bound to the Galaxy. No HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2311.04174:group-01",
+      "description": "NGC 6618 dynamically ejected runaway candidates (Table tab:runaways). 13 runaway stars identified via Gaia DR3 astrometry: traceback analysis within 5 deg search radius requiring parallax within 3σ of cluster, fractional parallax uncertainty > 10, Ks < 11 mag, Δv_T > 5 km/s away from cluster, minimum separation < 1.0 pc from cluster center within 1.5 Myr lookback. Iterative proper motion refinement; late-type interlopers removed via colour-colour diagrams and GSP-Phot Teff/log g. Final sample: 7 O-type + 6 B/later-type runaways with |Δv_T| = 10–70 km/s and t_kin = 100–1250 kyr.",
+      "decision": "rejected",
+      "reason": "All stars identified in this paper are cluster runaways/escapers. The paper explicitly defines escape velocity as the typical 3D escape velocity of 3-5 km/s for young massive clusters ('We note that typical 3D escape velocities are 3-5 km/s for young massive clusters', line 423), not the Galactic escape velocity (~500 km/s). The runaway stars' tangential velocities are only 10-70 km/s relative to the cluster, far below the Galactic escape velocity. The paper never uses terms such as HVS, hypervelocity, Galactic escape, or Galactic-unbound. All stars escaped from the NGC 6618 cluster but remain gravitationally bound to the Galaxy. No HVS candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2311.04174/arxiv_source/Published.tex",
+          "start_line": 415,
+          "end_line": 424,
+          "context": "Section 4: 'Dynamically ejected runaways' — defines runaway search methodology. Explicitly states 'typical 3D escape velocities are 3-5 km/s for young massive clusters' (cluster escape, NOT Galactic escape). Requires Δv_T > 5 km/s and stars moving away from cluster."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2311.04174/arxiv_source/Published.tex",
+          "start_line": 104,
+          "end_line": 106,
+          "context": "Abstract: 'We have also identified six O star runaways... When constructing the initial mass function, one has to take into account the massive stars that have already escaped from the cluster.' These are described as cluster escapers, not Galactic-unbound."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2311.04174/arxiv_source/Published.tex",
+          "start_line": 469,
+          "end_line": 481,
+          "context": "Section 5: 'Physical properties of runaways' — details |Δv_T| = 10–70 km/s, kinematic ages 100–1250 kyr. All velocities are relative to the cluster, no comparison to Galactic escape velocity. No mention of HVS or Galactic-unbound status."
+        }
+      ]
+    }
+  ]
+}

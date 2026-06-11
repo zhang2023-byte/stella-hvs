@@ -1,0 +1,554 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2311.04174",
+    "title": "The early evolution of young massive clusters. II. The kinematic history of NGC 6618 / M 17",
+    "month": "2023-11",
+    "source_note_json": "notes/2023/2023-11/2023-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2311.04174",
+      "pdf": "https://arxiv.org/pdf/2311.04174"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2311.04174",
+    "audit_path": "literature/2311.04174/audit.json",
+    "source_dir": "literature/2311.04174/arxiv_source",
+    "tex_root": "literature/2311.04174/arxiv_source/Published.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:46:46",
+    "reviewer": "agent",
+    "summary": "All structured data assets reviewed. 6 internal tables (members_all, member_Ostars, NGC6618params, runaways, NGC6618PG, appendix_members) and 5 external resources (Gaia docs, pyUPMASK, Zenodo DOI, Gaia ESA, DPAC) identified. Paper studies NGC 6618/M 17 using Gaia DR3 astrometry: 42 cluster members, 22 O stars, 13 runaways, cluster distance 1674 pc, age ~0.65 Myr. No additional catalogs or data files found beyond the tables in the tex source."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-members_all",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "primary_result_table",
+      "source_refs": [
+        {
+          "path": "literature/2311.04174/arxiv_source/Published.tex",
+          "start_line": 166,
+          "end_line": 225,
+          "caption": "\\textit{Gaia} DR3 members of NGC\\,6618 with and without spectral classification, sorted by their $K_{\\rm{s}}$ magnitude.",
+          "label": "tab:members_all"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Identifier",
+          "meaning": "Star identifier (B-number or 2MASS)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "source_id",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Right ascension",
+          "meaning": "Right ascension",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Declination",
+          "meaning": "Declination",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "K_s",
+          "meaning": "K_s-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "Spectral type classification",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Ref.",
+          "meaning": "Reference for spectral type",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Gaia DR3 members of NGC 6618 with and without spectral classification, sorted by K_s magnitude. 42 member stars listed.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-member_Ostars",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "primary_result_table",
+      "source_refs": [
+        {
+          "path": "literature/2311.04174/arxiv_source/Published.tex",
+          "start_line": 227,
+          "end_line": 284,
+          "caption": "O(B) stars in and around NGC\\,6618, with and without spectral classification, sorted by their K$_{\\rm{s}}$ magnitude. Membership is indicated by `Y'; non-members by `N', and candidate members by `C'.",
+          "label": "tab:member_Ostars"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Identifier",
+          "meaning": "Star identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "alpha",
+          "meaning": "Right ascension",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "delta",
+          "meaning": "Declination",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "K_s",
+          "meaning": "K_s-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "Spectral type classification",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Projected distance from centre",
+          "meaning": "Projected distance from cluster centre",
+          "unit_text": "arcmin (pc)",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Distance",
+          "meaning": "Distance from parallax",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Ruwe",
+          "meaning": "Renormalised unit weight error",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Member",
+          "meaning": "Membership classification (Y/N/C)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Ref.",
+          "meaning": "Reference",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "O(B) stars in and around NGC 6618, with and without spectral classification. 22 confirmed and candidate O stars plus B star sections.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-NGC6618params",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "summary_table",
+      "source_refs": [
+        {
+          "path": "literature/2311.04174/arxiv_source/Published.tex",
+          "start_line": 349,
+          "end_line": 397,
+          "caption": "Astrometric, kinematic, and physical parameters of NGC\\,6618.",
+          "label": "tab:NGC6618params"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Parameter name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Symbol",
+          "meaning": "Parameter symbol",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Parameter value with uncertainties",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Astrometric, kinematic, and physical parameters of NGC 6618 including coordinates, proper motions, dispersions, distance, radial velocity, mass, radius, age, extinction, and O star count.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-runaways",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "primary_result_table",
+      "source_refs": [
+        {
+          "path": "literature/2311.04174/arxiv_source/Published.tex",
+          "start_line": 500,
+          "end_line": 545,
+          "caption": "Properties of runaways coming from NGC\\,6618, sorted by increasing kinematic age $t_{\\rm{kin}}$.",
+          "label": "tab:runaways"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Identifier",
+          "meaning": "Star identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "K_s",
+          "meaning": "K_s-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "Spectral type",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "|Delta v_T|",
+          "meaning": "Absolute transverse velocity relative to cluster",
+          "unit_text": "km s^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "v_R",
+          "meaning": "Radial velocity",
+          "unit_text": "km s^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "t_kin",
+          "meaning": "Kinematic age",
+          "unit_text": "kyr",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "r_imp,2D",
+          "meaning": "Projected impact parameter",
+          "unit_text": "arcmin",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "A_V",
+          "meaning": "Visual extinction",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Ref.",
+          "meaning": "Reference",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Properties of 13 runaways coming from NGC 6618, sorted by increasing kinematic age. Includes O and B star runaways with transverse velocities, kinematic ages, and impact parameters.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-NGC6618PG",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "supplementary_table",
+      "source_refs": [
+        {
+          "path": "literature/2311.04174/arxiv_source/Published.tex",
+          "start_line": 571,
+          "end_line": 608,
+          "caption": "Known and candidate OB stars in NGC\\,6618\\,PG and M\\,17\\,EB.",
+          "label": "tab:NGC6618PG"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Identifier",
+          "meaning": "Star identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Sp. type",
+          "meaning": "Spectral type",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "K_s",
+          "meaning": "K_s-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Distance",
+          "meaning": "Distance from parallax",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Runaway",
+          "meaning": "Whether identified as runaway (Y/N/T/F)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Known and candidate OB stars in NGC 6618 PG and M 17 EB. 14 stars listed with spectral types, distances, and runaway status.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-appendix_members",
+      "kind": "supertabular",
+      "asset_type": "star_catalog",
+      "role_in_paper": "supplementary_table",
+      "source_refs": [
+        {
+          "path": "literature/2311.04174/arxiv_source/Published.tex",
+          "start_line": 779,
+          "end_line": 844,
+          "caption": "Members of NGC\\,6618.",
+          "label": "sec:appendix_members"
+        }
+      ],
+      "columns": [
+        {
+          "name": "source_id",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "l",
+          "meaning": "Galactic longitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "b",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "parallax",
+          "meaning": "Parallax with uncertainty",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "pml",
+          "meaning": "Proper motion in l* direction",
+          "unit_text": "mas yr^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "pmb",
+          "meaning": "Proper motion in b direction",
+          "unit_text": "mas yr^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Radial velocity",
+          "meaning": "Radial velocity from Gaia DR3",
+          "unit_text": "km s^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia G-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "G_Bp",
+          "meaning": "Gaia BP magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "G_Rp",
+          "meaning": "Gaia RP magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Appendix B.1: Full Gaia DR3 astrometry and photometry for all 42 members of NGC 6618. Spans two landscape pages via supertabular. Contains source_id, Galactic coordinates, parallax, proper motions, radial velocity, and G/BP/RP magnitudes with uncertainties.",
+      "comments": "Multi-page supertabular spanning lines 779-844. Row count: 42 member stars."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://gea.esac.esa.int/archive/documentation/GEDR3/Data_processing/chap_cu3ast/sec_cu3ast_intro/ssec_cu3ast_intro_tansforms.html",
+      "local_path": "",
+      "description": "Gaia DR3 documentation for ICRS to Galactic coordinate transformation",
+      "source_refs": [
+        {
+          "path": "literature/2311.04174/arxiv_source/Published.tex",
+          "start_line": 149,
+          "end_line": 149,
+          "context": "The ICRS astrometric data and errors are converted to Galactic coordinates with the transformation given in the Gaia documentation."
+        }
+      ],
+      "evidence": "Referenced as footnote in Section 2.1 (Membership selection using Gaia).",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://github.com/msolpera/pyUPMASK",
+      "local_path": "",
+      "description": "pyUPMASK: Python port of the UPMASK unsupervised membership algorithm",
+      "source_refs": [
+        {
+          "path": "literature/2311.04174/arxiv_source/Published.tex",
+          "start_line": 149,
+          "end_line": 149,
+          "context": "We have applied pyupmask: the python port that builds upon the unsupervised membership algorithm upmask."
+        }
+      ],
+      "evidence": "Referenced as footnote in Section 2.1. Software tool used for Gaia membership selection.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://doi.org/10.5281/zenodo.8120575",
+      "local_path": "",
+      "description": "Zenodo DOI hosting data and data products from this paper",
+      "source_refs": [
+        {
+          "path": "literature/2311.04174/arxiv_source/Published.tex",
+          "start_line": 710,
+          "end_line": 710,
+          "context": "The data and data products presented in this paper are available at the following DOI."
+        }
+      ],
+      "evidence": "Referenced in Acknowledgements. Primary data repository for this paper's catalogs.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission homepage",
+      "source_refs": [
+        {
+          "path": "literature/2311.04174/arxiv_source/Published.tex",
+          "start_line": 711,
+          "end_line": 711,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission Gaia."
+        }
+      ],
+      "evidence": "Referenced in Acknowledgements. Standard Gaia mission acknowledgment.",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "Gaia Data Processing and Analysis Consortium (DPAC)",
+      "source_refs": [
+        {
+          "path": "literature/2311.04174/arxiv_source/Published.tex",
+          "start_line": 713,
+          "end_line": 713,
+          "context": "processed by the Gaia Data Processing and Analysis Consortium (DPAC)."
+        }
+      ],
+      "evidence": "Referenced in Acknowledgements. Standard DPAC acknowledgment.",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_bib",
+      "url": "",
+      "local_path": "literature/2311.04174/arxiv_source/Published.bib",
+      "description": "Bibliography file for the paper",
+      "source_refs": [
+        {
+          "path": "literature/2311.04174/arxiv_source/Published.tex",
+          "start_line": 722,
+          "end_line": 722,
+          "context": "\\bibliography{Published.bib}"
+        }
+      ],
+      "evidence": "Referenced at line 722 as the bibliography source.",
+      "comments": ""
+    }
+  ]
+}

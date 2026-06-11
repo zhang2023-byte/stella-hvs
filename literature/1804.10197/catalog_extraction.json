@@ -1,0 +1,200 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:38:41",
+  "paper": {
+    "arxiv_id": "1804.10197",
+    "title": "A hypervelocity star with a Magellanic origin",
+    "month": "2018-04"
+  },
+  "review": {
+    "path": "literature/1804.10197/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083841",
+    "started_at": "2026-06-07T08:38:41",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1804.10197",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-hvs",
+      "internal_table_id": "table-tab-hvs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.10197/arxiv_source/hvs.tex",
+        "start_line": 270,
+        "end_line": 303,
+        "caption": "The 26 hypervelocity stars considered in this work. Almost all of the proper motion measurements are from Gaia DR2 except for HVS1, HVS4, HVS13, and HIP60350. {\\scriptsize \\textbf{References:} (1) \\citet{brown_proper_2015} (2) \\citet{2018arXiv180409365G}, (3) \\citet{geier_fastest_2015}, (4) \\citet{brown_mmt_2014}, (5) \\citet{zheng_first_2014}, (6) \\citet{huang_discovery_2017}, (7) \\citet{heber_hypervelocity_2008}, (8) \\citet{irrgang_nature_2010}}",
+        "label": "tab:hvs"
+      },
+      "source_path": "literature/1804.10197/arxiv_source/hvs.tex",
+      "excerpt_path": "literature/1804.10197/catalog_sources/table-tab-hvs/excerpt.tex",
+      "sha256": "a9e8899f974a021b295ed6030a56c8db41fa22a37b2092ae57b03c8774efb081",
+      "line_count": 34,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-hvs",
+      "internal_table_id": "table-tab-hvs",
+      "status": "success",
+      "ecsv_path": "literature/1804.10197/catalog_tables/table-tab-hvs.ecsv",
+      "caption": "The 26 hypervelocity stars considered in this work. Almost all of the proper motion measurements are from Gaia DR2 except for HVS1, HVS4, HVS13, and HIP60350. {\\scriptsize \\textbf{References:} (1) \\citet{brown_proper_2015} (2) \\citet{2018arXiv180409365G}, (3) \\citet{geier_fastest_2015}, (4) \\citet{brown_mmt_2014}, (5) \\citet{zheng_first_2014}, (6) \\citet{huang_discovery_2017}, (7) \\citet{heber_hypervelocity_2008}, (8) \\citet{irrgang_nature_2010}}",
+      "label": "tab:hvs",
+      "row_count": 26,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "R.A.",
+          "Dec.",
+          "\\mu_\\alpha\\cos\\delta (mas yr^-1)",
+          "\\mu_\\delta (mas yr^-1)",
+          "Corr(\\mu_\\alpha\\cos\\delta,\\mu_\\delta)",
+          "v_hel (km s^-1)",
+          "D_hel (kpc)",
+          "Ref."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R.A.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\alpha\\cos\\delta (mas yr^-1)",
+          "unit_text": "\\mu_\\alpha\\cos\\delta (mas yr^-1)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\delta (mas yr^-1)",
+          "unit_text": "\\mu_\\delta (mas yr^-1)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Corr(\\mu_\\alpha\\cos\\delta,\\mu_\\delta)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_hel (km s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "D_hel (kpc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Ref.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprjltjq5z/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.10197/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprjltjq5z/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.10197/catalog_sources/table-tab-hvs/wrapped.tex",
+            "html": "literature/1804.10197/catalog_sources/table-tab-hvs/latexml.html",
+            "stdout": "literature/1804.10197/catalog_sources/table-tab-hvs/latexml.stdout.txt",
+            "stderr": "literature/1804.10197/catalog_sources/table-tab-hvs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a9e8899f974a021b295ed6030a56c8db41fa22a37b2092ae57b03c8774efb081"
+    }
+  ]
+}

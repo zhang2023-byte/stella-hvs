@@ -1,0 +1,553 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1907.06375",
+    "title": "PG 1610$+$062: a runaway B star challenging classical ejection mechanisms",
+    "month": "2019-07",
+    "source_note_json": "notes/2019/2019-07/2019-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1907.06375",
+      "pdf": "https://arxiv.org/pdf/1907.06375"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1907.06375",
+    "audit_path": "literature/1907.06375/audit.json",
+    "source_dir": "literature/1907.06375/arxiv_source",
+    "tex_root": "literature/1907.06375/arxiv_source/paper.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:30:00",
+    "reviewer": "agent",
+    "summary": "该论文为A&A Letter，报告了一颗新的极端盘面逃逸B型星PG 1610+062的发现。论文基于Keck/ESI中分辨率光谱进行定量光谱分析，推导了大气参数和化学丰度（C、N、O、Ne、Mg、Al、Si、S、Ar、Fe），并利用Gaia DR2自行和分光光度距离（17.3 kpc）进行运动学分析，追溯其轨迹至Carina-Sagittarius旋臂，弹射速度550±40 km/s，超过了经典弹射机制的上限。论文包含6个LaTeX数据表：大气参数与丰度表（含统计和系统误差）、恒星参数与距离表、测光SED拟合参数表、三种银河质量模型下的运动学参数表（99%置信区间）、极端盘面逃逸星弹射速度对比表、以及附录中的ATLAS光变曲线振荡参数表。无本地机器可读数据文件（仅含.tex输入数据文件和.pdf图片）。外部资源方面，正文中给出了CAHA Twin摄谱仪URL，致谢部分提及Gaia、SDSS等数据来源（属通用致谢，不计入结构化数据资产）。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-atmospheric_parameters",
+      "kind": "latex_table",
+      "asset_type": "stellar_atmosphere_table",
+      "role_in_paper": "该表为论文核心数据表，给出两颗程序星（PG 1610+062和HD 137366）的大气参数和化学丰度，包括统计和系统不确定度。HD 137366作为太阳邻域参考星用于差分丰度分析。",
+      "source_refs": [
+        {
+          "path": "literature/1907.06375/arxiv_source/paper.tex",
+          "start_line": 86,
+          "end_line": 102,
+          "caption": "Atmospheric parameters and abundances of the two program stars.",
+          "label": "table:atmospheric_parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "恒星名称：PG 1610+062 或 HD 137366",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Teff",
+          "meaning": "有效温度",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(g)",
+          "meaning": "表面重力（对数）",
+          "unit_text": "cgs",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vrad",
+          "meaning": "径向速度",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vsini",
+          "meaning": "投影自转速度",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "zeta",
+          "meaning": "微湍流速度",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.8
+        },
+        {
+          "name": "xi",
+          "meaning": "微湍流速度（另一参数化）",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.7
+        },
+        {
+          "name": "He",
+          "meaning": "氦丰度 log(n(He))",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "C",
+          "meaning": "碳丰度 log(n(C))",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N",
+          "meaning": "氮丰度 log(n(N))",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "O",
+          "meaning": "氧丰度 log(n(O))",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ne",
+          "meaning": "氖丰度 log(n(Ne))",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mg",
+          "meaning": "镁丰度 log(n(Mg))",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Al",
+          "meaning": "铝丰度 log(n(Al))",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Si",
+          "meaning": "硅丰度 log(n(Si))",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S",
+          "meaning": "硫丰度 log(n(S))",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ar",
+          "meaning": "氩丰度 log(n(Ar))",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Fe",
+          "meaning": "铁丰度 log(n(Fe))",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Atmospheric parameters and abundances of the two program stars. 表头明确列出所有元素丰度列。每颗星有三行数据（最佳值、统计误差Stat.、系统误差Sys.）。",
+      "comments": "数据通过\\input{table_atmospheric_params.tex}引入。丰度n(x)为各元素相对于所有元素的粒子数分数。统计不确定度为Δχ²=6.63对应99%置信限。系统不确定度覆盖Teff±2%和log(g)±0.1的变化。PG 1610+062的径向速度为四幅ESI光谱结果的平均值。"
+    },
+    {
+      "id": "table-stellar_parameters",
+      "kind": "latex_table",
+      "asset_type": "stellar_parameters_table",
+      "role_in_paper": "该表给出两颗程序星的恒星物理参数：质量M、年龄τ、光度log(L/L☉)、半径R★、分光光度距离d、色余E(B-V)、以及光球质量分数X、Y、Z。距离是后续运动学分析的关键输入。",
+      "source_refs": [
+        {
+          "path": "literature/1907.06375/arxiv_source/paper.tex",
+          "start_line": 104,
+          "end_line": 120,
+          "caption": "Stellar parameters, spectrophotometric distances, color excesses, and photospheric mass fractions of the two program stars.",
+          "label": "table:stellar_parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "恒星名称：PG 1610+062 或 HD 137366",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M",
+          "meaning": "恒星质量",
+          "unit_text": "M☉",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "tau",
+          "meaning": "恒星年龄",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(L/L☉)",
+          "meaning": "光度（对数，太阳单位）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Rstar",
+          "meaning": "恒星半径",
+          "unit_text": "R☉",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "分光光度距离",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "E(B-V)",
+          "meaning": "色余",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "X",
+          "meaning": "光球氢质量分数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Y",
+          "meaning": "光球氦质量分数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Z",
+          "meaning": "光球金属质量分数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Stellar parameters, spectrophotometric distances, color excesses, and photospheric mass fractions of the two program stars. 表头明确列出各物理参数列，包含不对称误差。",
+      "comments": "数据通过\\input{table_stellar_params.tex}引入。除距离d包含测光不确定度外，其他参数仅覆盖Teff±2%和log(g)±0.1变化引起的系统误差（99%置信限）。恒星参数基于(T_eff, log(g))图与Georgy+2013单星演化轨迹的比较。"
+    },
+    {
+      "id": "table-photometry",
+      "kind": "latex_table",
+      "asset_type": "photometry_fit_table",
+      "role_in_paper": "该表列出通过SED拟合（Atlas12模型拟合多波段测光数据）得到的两颗星的测光参数：有效温度、表面重力、角直径和色余，用于交叉检验光谱分析结果并推导分光光度距离。",
+      "source_refs": [
+        {
+          "path": "literature/1907.06375/arxiv_source/paper.tex",
+          "start_line": 141,
+          "end_line": 165,
+          "caption": "Stellar parameters derived from photometry.",
+          "label": "table:photometry"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "参数名称",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "参数最佳拟合值及99%置信区间",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Stellar parameters derived from photometry. 表中每行给出一个参数及其拟合值，分为PG 1610+062和HD 137366两个子表。",
+      "comments": "不确定度为基于χ²统计的单参数99%置信区间。Teff、log(g)、角直径Θ、E(B-V)各一行。测光数据来自GALEX、SDSS、APASS、Gaia、Hipparcos、Tycho、Pan-STARRS、Geneva、2MASS、WISE等多波段测光系统。"
+    },
+    {
+      "id": "table-kinematic_parameters",
+      "kind": "latex_table",
+      "asset_type": "kinematic_parameters_table",
+      "role_in_paper": "该表为论文核心数据表之一，给出PG 1610+062在三种不同银河质量模型下的运动学参数：当前位置和速度（银河笛卡尔坐标）、银河系静止系速度、逃逸速度差、束缚概率Pb、盘面穿越处的参数、弹射速度和飞行时间。所有结果均以中位数和99%置信限表示。",
+      "source_refs": [
+        {
+          "path": "literature/1907.06375/arxiv_source/paper.tex",
+          "start_line": 182,
+          "end_line": 200,
+          "caption": "Kinematic parameters of PG 1610$+$062 for the three different Galactic mass models of Irrgang et al. (2013).",
+          "label": "table:kinematic_parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "x",
+          "meaning": "当前银河笛卡尔坐标x分量",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "y",
+          "meaning": "当前银河笛卡尔坐标y分量",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "z",
+          "meaning": "当前银河笛卡尔坐标z分量",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r",
+          "meaning": "当前银心距离",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vx",
+          "meaning": "当前银河笛卡尔速度x分量",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vy",
+          "meaning": "当前银河笛卡尔速度y分量",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vz",
+          "meaning": "当前银河笛卡尔速度z分量",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vGrf",
+          "meaning": "银河系静止系总速度",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vGrf-vesc",
+          "meaning": "银河系静止系速度减去本地逃逸速度",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Pb",
+          "meaning": "恒星受银河系引力束缚的概率（Monte Carlo中束缚样本占比）",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "xd",
+          "meaning": "盘面穿越处银河笛卡尔坐标x分量",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "yd",
+          "meaning": "盘面穿越处银河笛卡尔坐标y分量",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "zd",
+          "meaning": "盘面穿越处银河笛卡尔坐标z分量",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "rd",
+          "meaning": "盘面穿越处银心距离",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vx,d",
+          "meaning": "盘面穿越处银河笛卡尔速度x分量",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vy,d",
+          "meaning": "盘面穿越处银河笛卡尔速度y分量",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vz,d",
+          "meaning": "盘面穿越处银河笛卡尔速度z分量",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vGrf,d",
+          "meaning": "盘面穿越处银河系静止系总速度",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vej",
+          "meaning": "弹射速度（相对于旋转银盘的银河系静止系速度）",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "tau_flight",
+          "meaning": "飞行时间（自盘面穿越至今）",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Kinematic parameters of PG 1610+062 for the three different Galactic mass models of Irrgang et al. (2013). 表头列出所有运动学参量列，分为当前位置/速度、盘面穿越处参数两组。",
+      "comments": "数据通过三个\\input文件引入（kinematics_results_AS_conf_0.990.tex、kinematics_results_MN_TF_conf_0.990.tex、kinematics_results_MN_NFW_conf_0.990.tex），对应Irrgang+2013的Model I（轴对称）、Model II（MN+TF）和Model III（MN+NFW）三种银河势模型。结果以中位数和99%置信限给出，通过100,000次Monte Carlo模拟传播距离、自行和径向速度的不确定度。弹射速度vej定义为相对于旋转银盘的银河系静止系速度。"
+    },
+    {
+      "id": "table-ejection_velocities",
+      "kind": "latex_table",
+      "asset_type": "literature_comparison_table",
+      "role_in_paper": "该表汇总了已知的极端盘面逃逸候选星（弹射速度超过经典机制上限~400 km/s的MS星），将PG 1610+062与文献中的其他天体进行比较，展示其在弹射速度和距离空间的独特位置。",
+      "source_refs": [
+        {
+          "path": "literature/1907.06375/arxiv_source/paper.tex",
+          "start_line": 208,
+          "end_line": 247,
+          "caption": "Ejection velocities (relative to the rotating Galactic disk) and heliocentric distances of candidate MS stars that were possibly ejected from the Galactic disk beyond the velocity limit of classical mechanisms.",
+          "label": "table:ejection_velocities"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "恒星名称",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vej",
+          "meaning": "弹射速度（相对于旋转银盘）",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Distance",
+          "meaning": "日心距离",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Reference",
+          "meaning": "数据来源文献编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Ejection velocities (relative to the rotating Galactic disk) and heliocentric distances of candidate MS stars that were possibly ejected from the Galactic disk beyond the velocity limit of classical mechanisms. 包含21颗星的对比数据。",
+      "comments": "该表为文献汇总表，不确定度为1σ。参考文献：(1) Irrgang+2018a, (2) Irrgang+2018b, (3) Hattori+2018, (4) Li+2018, (5) Silva & Napiwotzki 2011。HD 271791的数据基于Heber+2008的距离和径向速度以及Gaia DR2自行（本工作更新）。表注还说明LAMOST-HVS4若取MS性质则弹射速度可达697±12 km/s。"
+    },
+    {
+      "id": "table-oscillation_params",
+      "kind": "latex_table",
+      "asset_type": "light_curve_fit_table",
+      "role_in_paper": "附录中的表，给出PG 1610+062的ATLAS光变曲线拟合结果：振荡频率、周期、参考历元、相位、平均星等和半振幅（c和o两个波段），用于确认该星的SPB（慢脉动B星）性质。",
+      "source_refs": [
+        {
+          "path": "literature/1907.06375/arxiv_source/paper.tex",
+          "start_line": 610,
+          "end_line": 633,
+          "caption": "Observed oscillation parameters of PG 1610$+$062 derived from the two ATLAS light curves.",
+          "label": "table:oscillation_params"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "参数名称",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "参数最佳拟合值及99%置信区间",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Observed oscillation parameters of PG 1610+062 derived from the two ATLAS light curves. 表中包含8行参数：频率、周期、参考历元、相位、o波段平均星等和半振幅、c波段平均星等和半振幅。",
+      "comments": "表中参数通过拟合余弦函数得到。ATLAS光变曲线包含c波段90个数据点（跨度653.29天）和o波段88个数据点（跨度686.25天）。不确定度为基于χ²统计的单参数99%置信区间（χ²_reduced≈1.5）。由于采样稀疏，存在混叠频率。"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://www.caha.es/pedraz/Twin/",
+      "local_path": "",
+      "description": "Calar Alto天文台3.5米望远镜TWIN摄谱仪信息页面。论文使用该仪器获取HD 137366和PG 1610+062的低分辨率光谱（R≈1500-2500，S/N≈160），用于径向速度监测和光谱分析。",
+      "source_refs": [
+        {
+          "path": "literature/1907.06375/arxiv_source/paper.tex",
+          "start_line": 129,
+          "end_line": 129,
+          "context": "the {\\sc Twin} spectrograph\\footnote{\\url{http://www.caha.es/pedraz/Twin/}} mounted at the 3.5\\,m telescope at Calar Alto observatory ($R \\approx 1500-2500$, $\\textnormal{S/N} \\approx 160$ in the visual, coadded from 14 individual spectra)."
+        }
+      ],
+      "evidence": "论文第2节（Spectroscopic analysis）正文脚注中给出的CAHA Twin摄谱仪URL。论文使用该仪器获取了14幅低分辨率光谱（叠加后S/N≈160），用于PG 1610+062的径向速度测量。",
+      "comments": "该URL为仪器描述页面，非直接数据下载链接。实际观测数据存储于CAHA档案中（CAB at INTA-CSIC），论文致谢中提及但未给出具体访问方式。"
+    }
+  ]
+}

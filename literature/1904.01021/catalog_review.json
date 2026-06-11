@@ -1,0 +1,76 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1904.01021",
+    "title": "Gaia DR2 orbital properties for field stars with globular cluster-like CN band strengths",
+    "month": "2019-04",
+    "source_note_json": "notes/2019/2019-04/2019-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1904.01021",
+      "pdf": "https://arxiv.org/pdf/1904.01021"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1904.01021",
+    "audit_path": "literature/1904.01021/audit.json",
+    "source_dir": "literature/1904.01021/arxiv_source",
+    "tex_root": "literature/1904.01021/arxiv_source/Final.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:37:41",
+    "reviewer": "agent",
+    "summary": "该论文为A&A Letter，利用Gaia DR2天体测量数据和SDSS光谱数据，对57颗具有球状星团(GC)特征CN带强度的场星进行了轨道动力学分析，并与银河系已知球状星团进行比较以判断其是否为星团逃逸星。论文的核心数据资产为Table 1（tab:match），列出63对星-星团候选匹配，含星名、星团名、轨道关联排除置信度和金属丰度差异。该星表完整地内嵌于LaTeX源文件中（63行数据，无需从外部获取）。论文无独立机器可读数据文件或外部数据资源URL。论文使用的外部数据（SDSS SEGUE光谱、Gaia DR2天体测量、Vasiliev19星团星表）均为公开巡天/文献数据，非本论文自产结构化数据资产。ADS元数据显示本文仅关联SIMBAD对象（94条），无CDS/VizieR数据表链接。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-match",
+      "kind": "latex_table",
+      "asset_type": "candidate_association_table",
+      "role_in_paper": "该表为论文核心结果表，列出基于轨道作用量(Jr, Jz, Lz)和金属丰度比较得到的63对CN-强场星与球状星团的候选动力学关联。论文通过5643对星-星团组合的假设检验，仅63对在95%置信水平上无法排除关联，其中11对低于68%置信水平（表中加粗条目），被识别为最可能的星团逃逸星候选体。该表直接支撑论文'约50%低轨道圆度CN-强星可能与已知GC存在动力学关联'的核心结论。",
+      "source_refs": [
+        {
+          "path": "literature/1904.01021/arxiv_source/Final.tex",
+          "start_line": 195,
+          "end_line": 289,
+          "caption": "Possible star-cluster associations based on the orbital actions and metallicity. The columns list the star and cluster IDs, the degree of confidence for the orbital association rejection, and the absolute difference in metallicity. Entries in bold are the associations that can be excluded at less than 68\\% confidence level.",
+          "label": "tab:match"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star ID",
+          "meaning": "CN-强场星的SDSS名称标识（J2000坐标格式），来自Martell et al. (2010, 2011)的SEGUE/SEGUE-2巡天选源",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Cluster",
+          "meaning": "球状星团名称（NGC/IC/ESO/Pal编号），来自Vasiliev (2019)的银河系球状星团星表（共150个星团，排除Djorg 1、Terzan 10、ESO456-78）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Confidence level",
+          "meaning": "轨道关联排除置信度：基于径向作用量Jr、垂直作用量Jz和角动量Lz三分量假设检验（1000次Monte Carlo采样），值越低表示星-星团轨道越不可区分，越可能是真实关联。低于68%的条目用粗体标记为最佳候选",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "∣Δ[Fe/H]∣",
+          "meaning": "CN-强星与球状星团之间的金属丰度[Fe/H]绝对差异。星团金属丰度主要来自Carretta et al. (2009)，15个缺测星团采用Harris (1996, 2010版)，Crater和2MASS-GC03分别采用Kirby (2015)和Carballo-Bello (2016)。论文仅考虑∣Δ[Fe/H]∣<0.2 dex的配对",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "论文§4（Results，第148行起）详细描述了表1的构建方法：对57颗CN-强星×147个GC（排除3个径向速度不确定星团）共5643对组合，逐对进行Jr/Jz/Lz三分量假设检验，筛选∣Δ[Fe/H]∣<0.2 dex且排除置信度<95%的配对。表头明确列出四列：Star ID、Cluster、Confidence level、∣Δ[Fe/H]∣。表格完整内嵌于Final.tex第203-285行，包含63行数据（11行加粗标记为<68%置信水平的最高候选），caption和label均完整。",
+      "comments": "该表数据直接来自论文的轨道积分和假设检验计算，非外部数据引用。63对匹配涉及20颗不同的CN-强星（其中9颗仅匹配单一星团，11颗匹配多个星团）。论文提到采用McMillan (2017)势函数重复分析得到60对匹配（95%置信水平），结果与主分析高度一致，但该替代结果未在表中列出。表中数据包含原始LaTeX粗体标记（\\textbf{}）用于区分置信水平<68%和≥68%的条目。"
+    }
+  ],
+  "external_resources": []
+}

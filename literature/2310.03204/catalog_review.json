@@ -1,0 +1,340 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2310.03204",
+    "title": "An Extremely Massive White Dwarf Escaped From the Hyades Star Cluster",
+    "month": "2023-10",
+    "source_note_json": "notes/2023/2023-10/2023-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2310.03204",
+      "pdf": "https://arxiv.org/pdf/2310.03204"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2310.03204",
+    "audit_path": "literature/2310.03204/audit.json",
+    "source_dir": "literature/2310.03204/arxiv_source",
+    "tex_root": "literature/2310.03204/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:41:29",
+    "reviewer": "agent",
+    "summary": "Single-table paper. Table 1 (tab:wd_derived) contains 27 data columns across 3 sub-tables for WD1: Gaia EDR3 astrometry/photometry (9 cols), Pan-STARRS1+GALEX photometry (7 cols), derived+spectroscopic quantities (11 cols). No machine-readable supplementary tables provided. External resources: 7 URLs (Gaia archive, pyphot, Astropy, MAST, Gaia ESA, DPAC). Key external datasets referenced: Gaia EDR3, Fusillo WD catalog, SDSS, GALEX, Pan-STARRS1, Gemini GMOS spectroscopy, PARSEC isochrones, Bedard+2020 CO cooling models, Althaus+2022 ONe cooling models, Tremblay+2011 DA atmospheric models, Caiazzo+2021 mass-radius relations."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-wd_derived",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "primary_results",
+      "source_refs": [
+        {
+          "path": "literature/2310.03204/arxiv_source/main.tex",
+          "start_line": 283,
+          "end_line": 362,
+          "caption": "WD1 astrometric and photometric quantities from Gaia EDR3 (top row), additional photometry from Galex and Pan-STARRS1 (middle row), along with derived and spectroscopic quantities (bottom row). Spectroscopic estimates for radius, mass and age obtained with the assumption of an ONe core composition.",
+          "label": "tab:wd_derived"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR3 Source ID",
+          "meaning": "Unique Gaia DR3 source identifier for WD1",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA",
+          "meaning": "Right Ascension of WD1 from Gaia EDR3",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec",
+          "meaning": "Declination of WD1 from Gaia EDR3",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Parallax",
+          "meaning": "Gaia EDR3 parallax measurement",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pm RA",
+          "meaning": "Proper motion in Right Ascension from Gaia EDR3",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pm Dec",
+          "meaning": "Proper motion in Declination from Gaia EDR3",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia G-band apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Abs G",
+          "meaning": "Absolute G-band magnitude derived from parallax",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Bp-Rp",
+          "meaning": "Gaia BP-RP color index",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PS1-y",
+          "meaning": "Pan-STARRS1 y-band apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PS1-z",
+          "meaning": "Pan-STARRS1 z-band apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PS1-i",
+          "meaning": "Pan-STARRS1 i-band apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PS1-r",
+          "meaning": "Pan-STARRS1 r-band apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PS1-g",
+          "meaning": "Pan-STARRS1 g-band apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Galex-NUV",
+          "meaning": "GALEX near-ultraviolet apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Galex-FUV",
+          "meaning": "GALEX far-ultraviolet apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_present",
+          "meaning": "Present-day heliocentric distance of WD1",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_r",
+          "meaning": "Reconstructed radial velocity from escapee trajectory analysis",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_min",
+          "meaning": "Minimum distance between WD1 and cluster center at closest approach",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Δv_3D",
+          "meaning": "Reconstructed 3D velocity relative to cluster center",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_escape",
+          "meaning": "Time since closest approach to cluster center (escape time)",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log g",
+          "meaning": "Surface gravity from spectroscopic Balmer line fitting",
+          "unit_text": "cm s^-2",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_eff",
+          "meaning": "Effective temperature from spectroscopic fitting",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_z,g",
+          "meaning": "Gravitational redshift velocity (corrected for radial motion)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R",
+          "meaning": "WD1 radius from ONe core cooling models",
+          "unit_text": "km",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M",
+          "meaning": "WD1 mass from ONe core cooling models",
+          "unit_text": "M_⊙",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_cool",
+          "meaning": "WD1 cooling age from ONe core cooling models",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "WD1 astrometric and photometric quantities from Gaia EDR3 (top row), additional photometry from Galex and Pan-STARRS1 (middle row), along with derived and spectroscopic quantities (bottom row). Spectroscopic estimates for radius, mass and age obtained with the assumption of an ONe core composition.",
+      "comments": "Single-row table with one data row for WD1. Top sub-table: Gaia DR3 Source ID=560883558756079616, RA=39.6517 deg, Dec=76.7052 deg, Parallax=5.98 mas, pmRA=46.46 mas/yr, pmDec=-26.49 mas/yr, G=19.21 mag, Abs G=13.09 mag, Bp-Rp=-0.40 mag. Middle sub-table: PS1 photometry (y,z,i,r,g) and GALEX (NUV,FUV). Bottom sub-table: d_present=167 pc, v_r=20.4 km/s, d_min=21.38 pc, Δv_3D=9.98 km/s, t_escape=15 Myr, log g=9.55±0.11, T_eff=26400±200 K, v_z,g=260±21 km/s, R=2230+280/-250 km, M=1.317+0.014/-0.018 M_⊙, t_cool=556+15/-22 Myr."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://gea.esac.esa.int/archive/",
+      "local_path": "",
+      "description": "Gaia archive; used to access gaiaedr3.dr2_neighborhood crossmatch routine for crossmatching Gaia DR2 Hyades catalog with EDR3",
+      "source_refs": [
+        {
+          "path": "literature/2310.03204/arxiv_source/main.tex",
+          "start_line": 146,
+          "end_line": 146,
+          "context": "Using this sample, we crossmatch with the Gaia EDR3 catalogue using the routine gaiaedr3.dr2_neighborhood (available at the Gaia archive)"
+        }
+      ],
+      "evidence": "Footnote in Section 2.1 (Current Cluster): crossmatch routine gaiaedr3.dr2_neighborhood available at Gaia archive",
+      "comments": "Essential for building the Hyades cluster member sample"
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://mfouesneau.github.io/docs/pyphot/",
+      "local_path": "",
+      "description": "pyphot package; used to compute synthetic photometry from normalized synthetic spectra for photometric radius fit",
+      "source_refs": [
+        {
+          "path": "literature/2310.03204/arxiv_source/main.tex",
+          "start_line": 368,
+          "end_line": 368,
+          "context": "we compute synthetic photometry using the pyphot package"
+        }
+      ],
+      "evidence": "Footnote in Section 2.4 (Theoretical Mass-Radius Relation): synthetic photometry computed using pyphot package",
+      "comments": "Also listed in \\software{} command"
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://archive.stsci.edu/",
+      "local_path": "",
+      "description": "Mikulski Archive for Space Telescopes (MAST); GALEX data archive",
+      "source_refs": [
+        {
+          "path": "literature/2310.03204/arxiv_source/main.tex",
+          "start_line": 402,
+          "end_line": 402,
+          "context": "The Pan-STARRS1 Surveys (PS1) and the PS1 public science archive..."
+        }
+      ],
+      "evidence": "Referenced in acknowledgments via Pan-STARRS1 and GALEX data usage",
+      "comments": "GALEX photometry used for WD1 photometric radius determination"
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission homepage; data from Gaia DR2 and EDR3 used throughout the paper",
+      "source_refs": [
+        {
+          "path": "literature/2310.03204/arxiv_source/main.tex",
+          "start_line": 402,
+          "end_line": 402,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission Gaia"
+        }
+      ],
+      "evidence": "Referenced in acknowledgments; Gaia EDR3 data is the primary data source for the entire analysis",
+      "comments": "Primary data source: astrometry, photometry, proper motions, parallaxes"
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia)",
+      "local_path": "",
+      "description": "Gaia mission URL with trailing parenthesis (likely formatting artifact in LaTeX)",
+      "source_refs": [
+        {
+          "path": "literature/2310.03204/arxiv_source/main.tex",
+          "start_line": 402,
+          "end_line": 402,
+          "context": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia)}"
+        }
+      ],
+      "evidence": "Likely a LaTeX URL parsing artifact; the trailing parenthesis is part of LaTeX formatting",
+      "comments": "Duplicate of resource-004 due to LaTeX \\url parsing; actual URL is https://www.cosmos.esa.int/gaia"
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "Gaia Data Processing and Analysis Consortium (DPAC) page",
+      "source_refs": [
+        {
+          "path": "literature/2310.03204/arxiv_source/main.tex",
+          "start_line": 402,
+          "end_line": 402,
+          "context": "DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}"
+        }
+      ],
+      "evidence": "Referenced in acknowledgments for Gaia data processing credit",
+      "comments": "Acknowledgement of DPAC consortium for Gaia data processing"
+    }
+  ]
+}

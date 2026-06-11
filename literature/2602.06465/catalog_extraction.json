@@ -1,0 +1,542 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:22",
+  "paper": {
+    "arxiv_id": "2602.06465",
+    "title": "The Walkaway Star HP Tau/G2: Evidence for a Stellar Merger",
+    "month": "2026-02"
+  },
+  "review": {
+    "path": "literature/2602.06465/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124022",
+    "started_at": "2026-05-17T12:40:22",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2602.06465",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-001",
+      "internal_table_id": "table-001",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+        "start_line": 622,
+        "end_line": 710,
+        "caption": "Young Stars in the HP Tau Group",
+        "label": ""
+      },
+      "source_path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+      "excerpt_path": "literature/2602.06465/catalog_sources/table-001/excerpt.tex",
+      "sha256": "bdc1913f8ba13538b018a96be94e45619abe8d5f4b20556a1533c15674b7fab5",
+      "line_count": 89,
+      "error": ""
+    },
+    {
+      "id": "table-002",
+      "internal_table_id": "table-002",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+        "start_line": 718,
+        "end_line": 785,
+        "caption": "Proper Motions within Rest Frame$^a$ and Radial and Space Velocities",
+        "label": ""
+      },
+      "source_path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+      "excerpt_path": "literature/2602.06465/catalog_sources/table-002/excerpt.tex",
+      "sha256": "2a80aaaf36c12deefc3ef1b2550858141914644c25b95a2594f478dbcc93dada",
+      "line_count": 68,
+      "error": ""
+    },
+    {
+      "id": "table-tab-comparison",
+      "internal_table_id": "table-tab-comparison",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+        "start_line": 2351,
+        "end_line": 2482,
+        "caption": "Comparison of HP Tau/G2 with HD 283572 and FK Com \\label{tab:comparison}",
+        "label": "tab:comparison"
+      },
+      "source_path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+      "excerpt_path": "literature/2602.06465/catalog_sources/table-tab-comparison/excerpt.tex",
+      "sha256": "9dd7046b385d5af1f91ddcb5e3f946dcdc4de4d958085d0d5a284a517df7a78e",
+      "line_count": 132,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-001",
+      "internal_table_id": "table-001",
+      "status": "success",
+      "ecsv_path": "literature/2602.06465/catalog_tables/table-001.ecsv",
+      "caption": "Young Stars in the HP Tau Group",
+      "label": "",
+      "row_count": 24,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "#",
+          "Object",
+          "2MASS",
+          "SpT a",
+          "G",
+          "J b",
+          "H b",
+          "K b",
+          "pmra c",
+          "pmdec c",
+          "Notes"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mas/yr]",
+          "[mas/yr]",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "#",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "2MASS",
+          "unit_text": "2MASS",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "SpT a",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "J b | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "H b | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "K b | [mag]",
+          "unit_text": "K b",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "pmra c | [mas/yr]",
+          "unit_text": "[mas/yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "pmdec c | [mas/yr]",
+          "unit_text": "[mas/yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Notes",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpthau2bq0/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2602.06465/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpthau2bq0/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2602.06465/catalog_sources/table-001/wrapped.tex",
+            "html": "literature/2602.06465/catalog_sources/table-001/latexml.html",
+            "stdout": "literature/2602.06465/catalog_sources/table-001/latexml.stdout.txt",
+            "stderr": "literature/2602.06465/catalog_sources/table-001/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "bdc1913f8ba13538b018a96be94e45619abe8d5f4b20556a1533c15674b7fab5"
+    },
+    {
+      "id": "table-002",
+      "internal_table_id": "table-002",
+      "status": "success",
+      "ecsv_path": "literature/2602.06465/catalog_tables/table-002.ecsv",
+      "caption": "Proper Motions within Rest Frame$^a$ and Radial and Space Velocities",
+      "label": "",
+      "row_count": 11,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "Dist.",
+          "pmra",
+          "pmdec",
+          "Tang.Vel.",
+          "PA",
+          "Rad.Vel. b",
+          "Spa.Vel. c",
+          "RUWE d"
+        ],
+        [
+          "",
+          "[pc]",
+          "[mas/yr]",
+          "[mas/yr]",
+          "[km/sec]",
+          "[deg.]",
+          "[km/sec]",
+          "[km/sec]",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Dist. | [pc]",
+          "unit_text": "[pc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "pmra | [mas/yr]",
+          "unit_text": "[mas/yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "pmdec | [mas/yr]",
+          "unit_text": "[mas/yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Tang.Vel. | [km/sec]",
+          "unit_text": "[km/sec]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "PA | [deg.]",
+          "unit_text": "[deg.]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Rad.Vel. b | [km/sec]",
+          "unit_text": "[km/sec]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Spa.Vel. c | [km/sec]",
+          "unit_text": "[km/sec]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "RUWE d",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpct_uvk6p/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2602.06465/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpct_uvk6p/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2602.06465/catalog_sources/table-002/wrapped.tex",
+            "html": "literature/2602.06465/catalog_sources/table-002/latexml.html",
+            "stdout": "literature/2602.06465/catalog_sources/table-002/latexml.stdout.txt",
+            "stderr": "literature/2602.06465/catalog_sources/table-002/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2a80aaaf36c12deefc3ef1b2550858141914644c25b95a2594f478dbcc93dada"
+    },
+    {
+      "id": "table-tab-comparison",
+      "internal_table_id": "table-tab-comparison",
+      "status": "success",
+      "ecsv_path": "literature/2602.06465/catalog_tables/table-tab-comparison.ecsv",
+      "caption": "Comparison of HP Tau/G2 with HD 283572 and FK Com \\label{tab:comparison}",
+      "label": "tab:comparison",
+      "row_count": 18,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "HP Tau/G2",
+          "Ref. a",
+          "HD 283572",
+          "Ref. a",
+          "FK Com",
+          "Ref. a"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "HP Tau/G2",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Ref. a",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "HD 283572",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Ref. a",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "FK Com",
+          "unit_text": "FK Com",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Ref. a",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpggk5boiv/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2602.06465/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpggk5boiv/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2602.06465/catalog_sources/table-tab-comparison/wrapped.tex",
+            "html": "literature/2602.06465/catalog_sources/table-tab-comparison/latexml.html",
+            "stdout": "literature/2602.06465/catalog_sources/table-tab-comparison/latexml.stdout.txt",
+            "stderr": "literature/2602.06465/catalog_sources/table-tab-comparison/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9dd7046b385d5af1f91ddcb5e3f946dcdc4de4d958085d0d5a284a517df7a78e"
+    }
+  ]
+}

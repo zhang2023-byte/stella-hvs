@@ -1,0 +1,259 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:35:11",
+  "paper": {
+    "arxiv_id": "1908.07550",
+    "title": "Runaway Young Stars near the Orion Nebula",
+    "month": "2019-08"
+  },
+  "review": {
+    "path": "literature/1908.07550/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083511",
+    "started_at": "2026-06-07T08:35:11",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1908.07550",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab_sources",
+      "internal_table_id": "table-tab_sources",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1908.07550/arxiv_source/OrionPMLetter.tex",
+        "start_line": 60,
+        "end_line": 75,
+        "caption": "Known members of the Orion A from the literature.\\label{tab:sources}",
+        "label": "tab:sources"
+      },
+      "source_path": "literature/1908.07550/arxiv_source/OrionPMLetter.tex",
+      "excerpt_path": "literature/1908.07550/catalog_sources/table-tab_sources/excerpt.tex",
+      "sha256": "633ac9576f5e0cd4cfbc5d1dedf6f85b4ed4ddcdc1608926b9d95e189aa3f322",
+      "line_count": 16,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab_sources",
+      "internal_table_id": "table-tab_sources",
+      "status": "success",
+      "ecsv_path": "literature/1908.07550/catalog_tables/table-tab_sources.ecsv",
+      "caption": "Known members of the Orion A from the literature.\\label{tab:sources}",
+      "label": "tab:sources",
+      "row_count": 2,
+      "column_count": 10,
+      "environment": "deluxetable*",
+      "header_rows": [
+        [
+          "\\alpha",
+          "\\delta",
+          "\\colheadRef.\\tablenotemarka",
+          "Gaia DR2",
+          "\\mu_\\alpha",
+          "\\mu_\\delta",
+          "\\pi",
+          "\\colheadRV\\tablenotemarkb",
+          "High",
+          "Simbad"
+        ],
+        [
+          "(J2000)",
+          "(J2000)",
+          "",
+          "Source ID",
+          "(\\masyr)",
+          "(\\masyr)",
+          "(mas)",
+          "(\\kms)",
+          "PM?",
+          "ID"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\alpha | (J2000)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\delta | (J2000)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\colheadRef.\\tablenotemarka",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Gaia DR2 | Source ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\alpha | (\\masyr)",
+          "unit_text": "(\\masyr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_\\delta | (\\masyr)",
+          "unit_text": "(\\masyr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\pi | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\colheadRV\\tablenotemarkb | (\\kms)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "High | PM?",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Simbad | ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\alpha",
+        "unresolved LaTeX macro preserved: \\colheadRV",
+        "unresolved LaTeX macro preserved: \\colheadRef",
+        "unresolved LaTeX macro preserved: \\delta",
+        "unresolved LaTeX macro preserved: \\kms",
+        "unresolved LaTeX macro preserved: \\masyr",
+        "unresolved LaTeX macro preserved: \\mu",
+        "unresolved LaTeX macro preserved: \\pi",
+        "unresolved LaTeX macro preserved: \\tablenotemarka",
+        "unresolved LaTeX macro preserved: \\tablenotemarkb"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpma6r0njt/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1908.07550/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpma6r0njt/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/1908.07550/catalog_sources/table-tab_sources/wrapped.tex",
+            "html": "literature/1908.07550/catalog_sources/table-tab_sources/latexml.html",
+            "stdout": "literature/1908.07550/catalog_sources/table-tab_sources/latexml.stdout.txt",
+            "stderr": "literature/1908.07550/catalog_sources/table-tab_sources/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9uuxm26w/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9uuxm26w/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/1908.07550/catalog_sources/table-tab_sources/wrapped.tex",
+            "html": "literature/1908.07550/catalog_sources/table-tab_sources/pandoc.html",
+            "stdout": "literature/1908.07550/catalog_sources/table-tab_sources/pandoc.stdout.txt",
+            "stderr": "literature/1908.07550/catalog_sources/table-tab_sources/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "633ac9576f5e0cd4cfbc5d1dedf6f85b4ed4ddcdc1608926b9d95e189aa3f322"
+    }
+  ]
+}

@@ -1,0 +1,432 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1907.09298",
+    "title": "Searching for correlations in GAIA DR2 unbound star trajectories",
+    "month": "2019-07",
+    "source_note_json": "notes/2019/2019-07/2019-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1907.09298",
+      "pdf": "https://arxiv.org/pdf/1907.09298"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1907.09298",
+    "audit_path": "literature/1907.09298/audit.json",
+    "source_dir": "literature/1907.09298/arxiv_source",
+    "tex_root": "literature/1907.09298/arxiv_source/gaiadm.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:30:00",
+    "reviewer": "agent",
+    "summary": "本文基于Gaia DR2数据开展银河系高速星(HVS)轨迹与球状星团(GC)和矮星系之间关联的贝叶斯分析，研究PBH冷暗物质场景下恒星被致密天体散射的可能性。样本包含1649颗Gaia DR2高速星(经质量筛选，Pub>0.5)、52个Gaia DR2球状星团和35个邻近(矮)星系。使用gala软件积分轨道，定义影响参数θ为最小距离与天体半径之比，通过贝叶斯因子K评估散射证据。主要结果：在假设Marchetti+2018距离时，发现2颗星与Sagittarius dSph在20-40 Myr前有轨迹交叉的正证据(θ0=0.36, K>1)；使用Anders+2019距离时结果未确认。论文包含5个内部表格：1个银河系势参数表(模型参数)、1个GC标识符表(52个NGC编号)、1个邻近星系标识与参考文献表(35个星系)、1个Sagittarius dSph相空间与尺度数据表(单行关键参数)、1个HVS候选体数据表(5颗候选星的Gaia DR2天体测量、视向速度、双距离估计和脱绑概率)。外部资源包括Gaia DR2文档、arXiv:1901.10460的污染视向速度列表辅助文件、Nearby Dwarf Database、gala软件库，以及本文arXiv页面上的辅助FITS文件(gal.fits星系星表、gc.fits球状星团星表、hvs.fits高速星星表、README.txt说明文件)。排除了致谢部分的通用数据库声明(Astropy、Gaia/DPAC任务网页)。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-mwpot",
+      "kind": "latex_table",
+      "asset_type": "model_parameter_table",
+      "role_in_paper": "列出用于轨道积分的银河系引力势四个成分(核、核球、盘、晕)的模型类型和质量/尺度参数。核和核球采用Hernquist势，盘采用Miyamoto-Nagai势，晕采用NFW势。参数与Marchetti+2018一致。该表为轨道积分提供基础物理模型，不直接包含观测数据。",
+      "source_refs": [
+        {
+          "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+          "start_line": 275,
+          "end_line": 294,
+          "caption": "Milky Way potential parameters.",
+          "label": "tab:mwpot"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Component",
+          "meaning": "银河系引力势成分(Nucleus核, Bulge核球, Disk盘, Halo晕)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Potential",
+          "meaning": "所采用的引力势模型形式(Hernquist, Miyamoto-Nagai, NFW)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Parameters",
+          "meaning": "各成分的质量参数m和尺度参数a(和/或b)，质量以太阳质量M☉为单位，尺度以kpc为单位",
+          "unit_text": "M☉, kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table tab:mwpot (Table 1)列出4行对应4个银河系势成分。核：m=1.71×10⁹ M☉, a=0.07 kpc。核球：m=5×10⁹ M☉, a=1.0 kpc。盘：m=6.8×10¹⁰ M☉, a=3 kpc, b=0.28 kpc。晕：m=5.4×10¹¹ M☉, a=15.62 kpc。参数与Marchetti+2018所用相同。论文验证了将NFW晕替换为Einasto轮廓或幂律势对结论无影响。",
+      "comments": "该表为纯模型参数表，无观测数据。行269-273提到改用Einasto轮廓不影响结论。"
+    },
+    {
+      "id": "table-tab-gc_id",
+      "kind": "latex_table",
+      "asset_type": "source_catalog",
+      "role_in_paper": "列出52个Gaia DR2球状星团的NGC标识符，这些星团具有完整的相空间(位置、自行、视向速度)和半径(基于自行成员定义的最大半径)信息。该表为论文轨道交叉分析提供球状星团目标列表，星团数据来源为Gaia DR2 collaboration 2018。",
+      "source_refs": [
+        {
+          "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+          "start_line": 671,
+          "end_line": 690,
+          "caption": "Globular clusters identifiers.",
+          "label": "tab:gc_id"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Col1",
+          "meaning": "第一列球状星团NGC标识符(如NGC0104, NGC0288, ..., NGC5139)",
+          "unit_text": "",
+          "source_of_definition": "deduced from table layout",
+          "confidence": 0.9
+        },
+        {
+          "name": "Col2",
+          "meaning": "第二列球状星团NGC标识符(如NGC5272, NGC5286, ..., NGC6205)",
+          "unit_text": "",
+          "source_of_definition": "deduced from table layout",
+          "confidence": 0.9
+        },
+        {
+          "name": "Col3",
+          "meaning": "第三列球状星团NGC标识符(如NGC6218, NGC6254, ...)",
+          "unit_text": "",
+          "source_of_definition": "deduced from table layout",
+          "confidence": 0.9
+        },
+        {
+          "name": "Col4",
+          "meaning": "第四列球状星团NGC标识符(如NGC6388, NGC6397, ...)",
+          "unit_text": "",
+          "source_of_definition": "deduced from table layout",
+          "confidence": 0.9
+        },
+        {
+          "name": "Col5",
+          "meaning": "第五列球状星团NGC标识符(如NGC6656, NGC6681, ..., NGC7099, 末行仅3列有值)",
+          "unit_text": "",
+          "source_of_definition": "deduced from table layout",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Table tab:gc_id列出52个GC标识符，排列为5列×11行(末行仅3个)。原文说明从Gaia DR2星表中选取具有完整相空间和半径信息的52个GC，由Gaia DR2 collaboration (2018A&A...616A..12G)标识。GC半径定义为自行成员所在的最大半径。Figure 4显示GC位置分布集中在太阳与银心之间。",
+      "comments": "该表仅为标识符列表，无可解析的数据值，实际天体测量数据来自Gaia DR2外部星表。排列为5列仅用于紧凑呈现，各列无物理区分。"
+    },
+    {
+      "id": "table-tab-gal_id",
+      "kind": "latex_table",
+      "asset_type": "source_catalog",
+      "role_in_paper": "列出35个邻近星系(主要为矮星系，含Andromeda、LMC、SMC及标记*的天体)的标识符及其位置/尺度/速度测量的参考文献。补充了正文2.2节中的描述。该表为轨道交叉分析提供星系目标列表及数据来源文献引用。",
+      "source_refs": [
+        {
+          "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+          "start_line": 692,
+          "end_line": 782,
+          "caption": "Nearby galaxy identifiers and detailed references (complementing those given in section~\\ref{sec:gc_gal}) for position, size and other useful measurements. All systems are identified as dwarf galaxies, excluded Andromeda, Large Magellanic Cloud (LMC), Small Magellanic Cloud (SMC) and objects of ambiguous nature denoted by an asterisk (*).",
+          "label": "tab:gal_id"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "星系名称标识符。标记*表示天体性质不确定(Draco II, Grus 1, Horologium 1, Reticulum 2, Triangulum II, Tucana III)。不含*的为确认的矮星系，Andromeda、LMC、SMC除外。",
+          "unit_text": "",
+          "source_of_definition": "table header / paper text (sec.2.2)",
+          "confidence": 1.0
+        },
+        {
+          "name": "References",
+          "meaning": "该星系位置、尺度和/或速度数据的文献引用(bibcode格式)。部分星系引用\"See section 2.2\"表示数据来源在正文中说明。",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table tab:gal_id列出35个条目(包括Leo V引用留空)。数据来源组合：位置和半光半径(r_h沿主轴)主要来自McConnachie 2012通过Nearby Dwarf Database；自行数据来自Gaia DR2 (Fritz+2018, 2018A&A...619A.103F)；Antlia II来自Torrealba+2018；Andromeda速度来自van der Marel+2012，光学主轴来自SIMBAD；LMC/SMC位置来自McConnachie 2012，尺度和速度来自SIMBAD (Wenger+2000)。",
+      "comments": "Leo V条目缺引用(行750: \\citet{})。天体中Draco II等标记*的为性质不明天体。34个确认星系+1个空白引用条目。"
+    },
+    {
+      "id": "table-tab-sag",
+      "kind": "latex_table",
+      "asset_type": "object_parameter_table",
+      "role_in_paper": "给出Sagittarius dSph的相空间坐标和尺度：ICRS J2000.0坐标(α,δ)、距离模数μ、自行(μα*, μδ)、视向速度Vr和沿主轴测量的半光半径rh。这些参数是轨道积分的输入，也是定义影响参数θ时分母R的来源(rh=342±12 arcmin，对应~2.6±0.2 kpc在~26 kpc距离处)。该表是论文核心分析对象的基本数据。",
+      "source_refs": [
+        {
+          "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+          "start_line": 784,
+          "end_line": 806,
+          "caption": "Sagittarius dSph phase-space and size data. Rows correspond to right-ascension $\\alpha$ and declination $\\delta$ (ICRS at epoch J2000.0), distance modulus $\\mu$, proper motions in right-ascension direction $\\mu_{\\alpha*} = \\mu_{\\alpha}\\cos{\\delta}$ and in declination direction $\\mu_{\\delta}$, radial velocity along the line-of-sight $V_{r}$ and half-light radius measured along the major axis $r_h$.",
+          "label": "tab:sag"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Sagittarius dSph的物理参数名称：α(赤经), δ(赤纬), μ(距离模数), μα*(自行赤经方向), μδ(自行赤纬方向), Vr(视向速度), rh(半光半径沿主轴)",
+          "unit_text": "",
+          "source_of_definition": "table header / caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "各参数的测量值及1σ不确定度：α=283.8313 deg, δ=-30.4606 deg, μ=17.13±0.11, μα*=-2.736±0.044 mas/yr, μδ=-1.357±0.043 mas/yr, Vr=140±2 km/s, rh=342±12 arcmin",
+          "unit_text": "deg, mas/yr, km/s, arcmin",
+          "source_of_definition": "table data",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table tab:sag以键值对形式给出7行数据。ICRS历元J2000.0。Sagittarius dSph是论文中唯一产生正散射证据的天体：在θ0=0.36(对应椭率ε=0.64±0.02的短长轴比)时，2颗HVS显示出正贝叶斯因子(K>1)。Figure 5、6显示相关轨道。该星系在日心距离~26 kpc处，半光半径~2.6 kpc，是本样本中离太阳最近的星系之一(Figure 4)。",
+      "comments": "该表仅1行数据(7个参数)，采用键值对布局。rh=342 arcmin = 5.7 deg 在该距离处对应~2.6 kpc的物理尺度。"
+    },
+    {
+      "id": "table-tab-hvs",
+      "kind": "latex_table",
+      "asset_type": "candidate_catalog",
+      "role_in_paper": "列出与Sagittarius dSph内致密天体散射兼容的HVS候选体。包含5颗Gaia DR2星的源标识符、J2015.5历元天体测量(α,δ,ϖ,μα*,μδ)、自行相关系数、视向速度、Marchetti+2018和Anders+2019双距离估计、以及基于Marchetti距离的银河系脱绑概率Pub。前2颗在正文第4节讨论(θ0=0.36时K>1)，后3颗在附录A讨论(替代星表选择Pub>0.9)。该表是论文的核心科学产出。",
+      "source_refs": [
+        {
+          "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+          "start_line": 809,
+          "end_line": 848,
+          "caption": "HVS compatible with having scattered with compact objects within Sagittarius dSph. Columns correspond to \\textit{Gaia} DR2 source identifier, RA and declination, parallax, proper motion in RA direction $\\mu_{\\alpha*}=\\mu_{\\alpha*}\\cos(\\delta)$, proper motion in declination direction, proper motions correlation coefficient, radial velocity and heliocentric distance derived in \\citet{2018MNRAS.tmp.2466M}, heliocentric distance derived in \\citet{2019A&A...628A..94A} and probability of being unbound from the Milky Way potential. The unbound probability relies on \\citet{2018MNRAS.tmp.2466M} distances. Reference epoch for astrometric quantities is J2015.5. While here we report the full source identifier, in the main text we only refer to the first 8 digits. The first two stars are discussed in section~\\ref{sec:results}, the others in appendix~\\ref{sec:altercuts}",
+          "label": "tab:hvs"
+        }
+      ],
+      "columns": [
+        {
+          "name": "source",
+          "meaning": "Gaia DR2 源标识符(source_id)，全文19位数字，正文中仅引用前8位",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(α, δ)",
+          "meaning": "赤经和赤纬(ICRS，历元J2015.5)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ϖ",
+          "meaning": "视差及其1σ不确定度",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μα*",
+          "meaning": "赤经方向自行 μα*=μα·cos(δ) 及其1σ不确定度，历元J2015.5",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μδ",
+          "meaning": "赤纬方向自行及其1σ不确定度，历元J2015.5",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "c_μα*μδ",
+          "meaning": "μα*和μδ之间的相关系数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Vr",
+          "meaning": "视向速度及其1σ不确定度",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_Marchetti",
+          "meaning": "基于Marchetti+2018 (arXiv:1804.10607)方法的日心距离及其上下误差界",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_Anders",
+          "meaning": "基于Anders+2019 (2019A&A...628A..94A)方法的日心距离及其上下误差界，该星表结合Gaia DR2天体测量/测光与外部测光星表，改善了消光和有效温度估计",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_ub",
+          "meaning": "基于Marchetti+2018距离的银河系脱绑概率，正文选择Pub>0.5，附录A选择Pub>0.9",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table tab:hvs (Table 5)列出5颗星，以水平线分为两组：前2颗对应正文第4节结果(6198594250104473728: Pub=0.87, d_Marchetti=9.4 kpc; 6242065813132837376: Pub=0.54, d_Marchetti=11.7 kpc)，后3颗对应附录A替代选择(52292628..., 62557247..., 62779130...: Pub=0.97-1.00, d_Marchetti=8.6-10.1 kpc)。正文2颗的散射时间约20-40 Myr前。Marchetti距离系统性地约为Anders距离的2倍(对远星差异更大)。附录3颗被Anders+2019标记为RUWE异常提示可能存在伪天体测量。HR图分析给出恒星年龄下限~100 Myr，与散射时间窗口兼容。",
+      "comments": "正文仅讨论前2颗(θ0=0.36)，附录A讨论后3颗(θ0=0或0.36)。所有星的P_ub基于Marchetti距离；正文选择Pub>0.5，附录选择Pub>0.9。后3颗星视差为负值(ϖ<0)，数据质量较差。补充的FITS文件hvs.fits包含完整的1649颗HVS样本星表。"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://gea.esac.esa.int/archive/documentation/GDR2/",
+      "local_path": "",
+      "description": "Gaia DR2官方文档页面，论文引用该文档以说明用于恒星样本筛选的质量判据变量定义(astrometric_gof_al, astrometric_excess_noise_sig, mean_varpi_factor_al, visibility_periods_used, rv_nb_transits)。为方法论参考资源而非数据产品。",
+      "source_refs": [
+        {
+          "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+          "start_line": 102,
+          "end_line": 102,
+          "context": "We base our analysis on the 7183262 stars selection provided by~\\citet{2018MNRAS.tmp.2466M}, established with the following quality cuts (see also \\textit{Gaia} DR2 documentation\\footnote{\\url{https://gea.esac.esa.int/archive/documentation/GDR2/}} for more information about variables description):"
+        }
+      ],
+      "evidence": "论文第2.1节第102行引用该URL作为质量判据变量说明的参考。URL取自论文源文件中的\\url{}命令。",
+      "comments": "该URL为Gaia DR2官方文档入口，非特定数据文件。"
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://arxiv.org/abs/1901.10460",
+      "local_path": "",
+      "description": "Boubert+2019 (arXiv:1901.10460)论文的arXiv页面。该论文的辅助文件(ancillary file)包含Gaia DR2中可能被污染的视向速度列表，本文用于剔除污染视向速度以确保样本清洁。",
+      "source_refs": [
+        {
+          "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+          "start_line": 113,
+          "end_line": 113,
+          "context": "Removing potentially spurious radial velocities \\citep{2019MNRAS.486.2618B}.\\footnote{The list of possibly contaminated radial velocities is available as ancillary file to \\href{http://arxiv.org/abs/1901.10460}{arXiv:1901.10460} [astro-ph.SR].}"
+        }
+      ],
+      "evidence": "论文第2.1节第113行在脚注中指出该arXiv页面提供可能被污染的视向速度列表作为辅助文件。该列表用于筛选步骤以排除伪视向速度测量。",
+      "comments": "资源的核心价值在于其辅助文件中的视向速度污染列表，而非arXiv论文本身。论文也通过\\citep{2019MNRAS.486.2618B}引用了该工作的正式发表版本。"
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "http://www.astro.uvic.ca/~alan/Nearby_Dwarf_Database.html",
+      "local_path": "",
+      "description": "Alan McConnachie维护的Nearby Dwarf Database网页，提供邻近矮星系的位置和半光半径(沿主轴测量)数据表。论文使用该数据库(2015年9月20日更新版本)获取星系位置和尺度信息，结合Gaia DR2自行数据(来自Fritz+2018)得到完整相空间信息。",
+      "source_refs": [
+        {
+          "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+          "start_line": 187,
+          "end_line": 187,
+          "context": "radius (measured along major axes) given by\\footnote{We use the table updated on 20 September 2015 available at \\url{http://www.astro.uvic.ca/~alan/Nearby_Dwarf_Database.html}.} \\citet{2012AJ....144....4M}"
+        }
+      ],
+      "evidence": "论文第2.2节第185-188行通过脚注引用该数据库，说明使用2015年9月20日版本的数据表获取星系半光半径。同时引用McConnachie 2012 (2012AJ....144....4M)作为参考。",
+      "comments": "该数据库是论文选取的35个星系样本中大部分天体的位置和尺度信息来源。数据库本身基于McConnachie 2012编制。URL来自论文源文件。"
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://gala-astro.readthedocs.io",
+      "local_path": "",
+      "description": "gala (Galactic and Gravitational Dynamics in Python) 软件库文档。论文使用gala进行轨道积分，采用其默认的银河系引力势模型(四成分：Hernquist核+核球、Miyamoto-Nagai盘、NFW晕)。为分析工具软件而非数据产品。",
+      "source_refs": [
+        {
+          "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+          "start_line": 246,
+          "end_line": 246,
+          "context": "Orbits are integrated using the \\texttt{gala} software library \\citep{2017JOSS....2..388P}\\footnote{\\url{https://gala-astro.readthedocs.io}}."
+        }
+      ],
+      "evidence": "论文第3.1节第245-246行引用gala库进行轨道积分，并通过脚注给出软件文档URL。同时引用Price-Whelan 2017 (2017JOSS....2..388P)作为软件论文。",
+      "comments": "gala是Python天体动力学开源软件库，论文使用其默认银河系势模型。软件不是论文特有的数据产品，但对其分析方法至关重要。"
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://arxiv.org/abs/1907.09298",
+      "local_path": "",
+      "description": "本文的arXiv页面，提供GC星表、星系星表和HVS星表的辅助FITS文件下载。论文正文明确指出'GC, galaxy and star catalogs are available as ancillary files at https://arxiv.org/abs/1907.09298'。",
+      "source_refs": [
+        {
+          "path": "literature/1907.09298/arxiv_source/gaiadm.tex",
+          "start_line": 669,
+          "end_line": 669,
+          "context": "GC, galaxy and star catalogs are available as ancillary files at \\url{https://arxiv.org/abs/1907.09298}."
+        }
+      ],
+      "evidence": "论文附录D第669行在表之前声明辅助FITS文件可通过该URL获取。arXiv页面上提供gal.fits, gc.fits, hvs.fits和README.txt四个辅助文件。",
+      "comments": "该资源是本地辅助FITS文件(resource-006至009)的远程获取入口。arXiv页面是这些数据文件的公开分发渠道。"
+    },
+    {
+      "id": "resource-006",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/1907.09298/arxiv_source/anc/README.txt",
+      "description": "辅助FITS文件的说明文档。描述gal.fits(邻近星系星表，含名称、坐标、距离模数、自行、视向速度、半径、银心速度)、gc.fits(球状星团星表，含坐标、自行、视向速度、日心笛卡尔位置)和hvs.fits(高速星星表，含source_id、坐标、视差、自行、视向速度、Marchetti和Anders双距离、脱绑概率)的列名、单位和描述。",
+      "source_refs": [
+        {
+          "path": "literature/1907.09298/arxiv_source/anc/README.txt",
+          "start_line": 1,
+          "end_line": 118,
+          "context": "Tables described below complement the following work: F. Montanari, D. Barrado, and J. García-Bellido, arXiv:1907.09298 [astro-ph.GA]."
+        }
+      ],
+      "evidence": "README.txt为arXiv辅助文件包的一部分，由论文作者撰写(署名Francesco Montanari, 日期2019年10月22日)。详细说明3个FITS文件的全部列定义、单位和内容。",
+      "comments": "该文件是对3个FITS数据文件的元数据说明，包含完整的列描述表格。推荐使用TOPCAT进行FITS可视化。"
+    },
+    {
+      "id": "resource-007",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/1907.09298/arxiv_source/anc/gal.fits",
+      "description": "邻近星系FITS星表。根据README.txt，包含35个星系的完整数据：名称、ICRS J2000.0坐标(ra, dec)、距离模数(μ)及上下误差界、自行(pmra, pmdec)及误差、自行相关系数、视向速度及误差、半径(rh)及上下误差界(arcmin)、距离(pc)及误差、银心笛卡尔速度(Vx, Vy, Vz)及误差。但各列并非均匀填满(assembles sources from different catalogs)。",
+      "source_refs": [
+        {
+          "path": "literature/1907.09298/arxiv_source/anc/README.txt",
+          "start_line": 25,
+          "end_line": 58,
+          "context": "1 gal.fits: Nearby galaxies. This table assembles sources from different catalogs and columns are not homogeneously filled in."
+        }
+      ],
+      "evidence": "README.txt第25-58行描述gal.fits的结构和列定义。论文表tab:gal_id列出星系标识符，但gal.fits包含完整的天体测量和运动学数据。数据来源多样(McConnachie 2012, Gaia DR2, Fritz+2018, SIMBAD等)，因此各列填充不均匀。",
+      "comments": "该FITS文件为论文分析所使用的35个星系的完整相空间数据库。注意各列填充不均匀(非均匀缺失)。"
+    },
+    {
+      "id": "resource-008",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/1907.09298/arxiv_source/anc/gc.fits",
+      "description": "球状星团FITS星表。根据README.txt，包含52个GC的完整数据：NGC标识符(Name)、ICRS J2000.0坐标(alpha, delta)、自行(mu_alpha, mu_delta)及误差、自行相关系数、视向速度(Vrad)及误差、日心笛卡尔位置(X, Y, Z)及其上下误差界(kpc)。数据源自Gaia DR2 GC星表(2018A&A...616A..12G)。",
+      "source_refs": [
+        {
+          "path": "literature/1907.09298/arxiv_source/anc/README.txt",
+          "start_line": 61,
+          "end_line": 88,
+          "context": "2 gc.fits: Galaxy clusters. [Note: README says 'Galaxy clusters' but the paper refers to them as globular clusters.]"
+        }
+      ],
+      "evidence": "README.txt第61-88行描述gc.fits的结构和列定义。论文表tab:gc_id列出52个GC的NGC标识符，gc.fits包含这些GC的完整天体测量和位置数据。数据来源为Gaia DR2 (2018A&A...616A...12G)。",
+      "comments": "README中将gc.fits描述为'Galaxy clusters'(星系团)，但论文全文中gc指globular clusters(球状星团)，系README中的术语不一致。52个GC均具有Gaia DR2自行成员定义的半径信息。"
+    },
+    {
+      "id": "resource-009",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/1907.09298/arxiv_source/anc/hvs.fits",
+      "description": "高速星FITS星表。根据README.txt，包含论文分析的1649颗HVS完整数据：Gaia DR2源标识符(source_id)、坐标(ra, dec)、视差及误差、自行(pmra, pmdec)及误差、自行相关系数、视向速度及误差、Marchetti+2018距离及上下误差界(pc)、Anders+2019距离及上下误差界(pc)、银河系脱绑概率(p_ub)。该文件包含全部样本而非仅表tab:hvs中的5颗候选星。",
+      "source_refs": [
+        {
+          "path": "literature/1907.09298/arxiv_source/anc/README.txt",
+          "start_line": 91,
+          "end_line": 118,
+          "context": "3 hvs.fits: Hypervelocity stars."
+        }
+      ],
+      "evidence": "README.txt第91-118行描述hvs.fits的结构和18列数据定义。论文表tab:hvs仅列出5颗与Sagittarius dSph散射兼容的候选星，而hvs.fits包含全部1649颗经筛选的HVS(Pub>0.5 + 质量判据)的完整数据。2.1节描述样本筛选流程从7,183,262颗星开始。该星表基于Marchetti+2018的Gaia DR2高速星星表。",
+      "comments": "该FITS文件为论文核心数据产品，包含完整1649颗HVS样本。表tab:hvs中的5颗星为该星表的子集。距离和脱绑概率列基于Marchetti+2018方法。"
+    }
+  ]
+}

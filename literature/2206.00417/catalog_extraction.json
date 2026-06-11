@@ -1,0 +1,671 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-23T11:39:30",
+  "paper": {
+    "arxiv_id": "2206.00417",
+    "title": "Milky Way archaeology using RR Lyrae and type II Cepheids II. High velocity RR Lyrae stars, and mass of the Milky Way",
+    "month": "2022-06"
+  },
+  "review": {
+    "path": "literature/2206.00417/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260523T113930",
+    "started_at": "2026-05-23T11:39:30",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2206.00417",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": true
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-Puls",
+      "internal_table_id": "table-tab-Puls",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+        "start_line": 254,
+        "end_line": 272,
+        "caption": "List of pulsation and chemical properties for high-velocity RR~Lyrae candidates found in our analysis. The first column lists our adopted object ID. Columns 2 and 3 provide the star's pulsation period $P$ and amplitude of the total light changes based on the CSS photometry. In the last two columns, we list the assumed RR~Lyrae sub-class and metallicity derived using the $\\Delta$S method. Similarly to Table~\\ref{tab:HV-RR} we marked variables with uncertain classification with an asterisk.",
+        "label": "tab:Puls"
+      },
+      "source_path": "literature/2206.00417/arxiv_source/high_vel.tex",
+      "excerpt_path": "literature/2206.00417/catalog_sources/table-tab-Puls/excerpt.tex",
+      "sha256": "aecea451c0972246cc76e22ebc6adfaef2b3a73a6795972f1bdaf60da53bd6aa",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-HV-RR",
+      "internal_table_id": "table-tab-HV-RR",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+        "start_line": 506,
+        "end_line": 524,
+        "caption": "List of likely unbound RR Lyrae variables in our sample with $P_{\\rm unb} > 0.5$. The first two columns represent our adopted object ID and \\gaia~EDR3 ID. Columns 3, 4, 5, and 6 list the heliocentric distances and systemic velocities together with their assumed uncertainties, as estimated in \\citet{Prudil2021Orphan}. Column 8 contains estimated $P_{\\rm unb}$ of the RR~Lyrae stars being unbound fulfilling the condition in Eq. 13. The calculated Galactocentric velocities and their covariances are listed in columns 9, 10, 11, 12, and 13 starting with the angular velocity $v_{y}$ followed by the quadrature of the radial and vertical velocity, $\\sqrt{v_{x}^2 + v_{z}^2}$ both accompanied by their uncertainties and correlations. The last five columns (14, 15, 16, 17, and 18) represent the total Galactocentric velocity $v_{\\rm GC}$ and distance $R_{\\rm GC}$ followed be their covariances.",
+        "label": "tab:HV-RR"
+      },
+      "source_path": "literature/2206.00417/arxiv_source/high_vel.tex",
+      "excerpt_path": "literature/2206.00417/catalog_sources/table-tab-HV-RR/excerpt.tex",
+      "sha256": "612f1748cfb0e800dd221117fdd3464784b10f94f33764fc7b2db157f74e1d4b",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-HV-RRastr",
+      "internal_table_id": "table-tab-HV-RRastr",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2206.00417/arxiv_source/high_vel.tex",
+        "start_line": 533,
+        "end_line": 551,
+        "caption": "Table of unbound RR Lyrae candidates with $P_{\\rm unb} > 0.5$ and their astrometric and photometric properties from \\gaia~catalog. The first column represents our object ID with an asterisk marking variables uncertain classification as RR~Lyrae stars. Columns 2, 3, 4, 5, and 6 lists \\gaia~EDR3 ID, equatorial and Galactic coordinates. The proper motions in right ascension and declination, together with their errors, are listed in columns 7, 8, 9, and 10. Columns 11 and 12 contain parallax and its uncertainty. The last three columns (13, 14 and 15) represent re-normalized unit weight error (RUWE) and \\gaia~photometry in $G$-band and color $G_{\\rm BP} - G_{\\rm RP}$.",
+        "label": "tab:HV-RRastr"
+      },
+      "source_path": "literature/2206.00417/arxiv_source/high_vel.tex",
+      "excerpt_path": "literature/2206.00417/catalog_sources/table-tab-HV-RRastr/excerpt.tex",
+      "sha256": "a4ac2f94bd1fa7783351ebfd9fe5300ea85417f3640029fc8e9cdfdbcbc13c17",
+      "line_count": 19,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-Puls",
+      "internal_table_id": "table-tab-Puls",
+      "status": "success",
+      "ecsv_path": "literature/2206.00417/catalog_tables/table-tab-Puls.ecsv",
+      "caption": "List of pulsation and chemical properties for high-velocity RR~Lyrae candidates found in our analysis. The first column lists our adopted object ID. Columns 2 and 3 provide the star's pulsation period $P$ and amplitude of the total light changes based on the CSS photometry. In the last two columns, we list the assumed RR~Lyrae sub-class and metallicity derived using the $\\Delta$S method. Similarly to Table~\\ref{tab:HV-RR} we marked variables with uncertain classification with an asterisk.",
+      "label": "tab:Puls",
+      "row_count": 9,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "P",
+          "Amp ^V_\\rm CSS",
+          "Type",
+          "[Fe/H]"
+        ],
+        [
+          "",
+          "[day]",
+          "[mag]",
+          "",
+          "[dex]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "P | [day]",
+          "unit_text": "[day]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Amp ^V_\\rm CSS | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "[Fe/H] | [dex]",
+          "unit_text": "[Fe/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcp4p10k6/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2206.00417/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcp4p10k6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2206.00417/catalog_sources/table-tab-Puls/wrapped.tex",
+            "html": "literature/2206.00417/catalog_sources/table-tab-Puls/latexml.html",
+            "stdout": "literature/2206.00417/catalog_sources/table-tab-Puls/latexml.stdout.txt",
+            "stderr": "literature/2206.00417/catalog_sources/table-tab-Puls/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "aecea451c0972246cc76e22ebc6adfaef2b3a73a6795972f1bdaf60da53bd6aa"
+    },
+    {
+      "id": "table-tab-HV-RR",
+      "internal_table_id": "table-tab-HV-RR",
+      "status": "success",
+      "ecsv_path": "literature/2206.00417/catalog_tables/table-tab-HV-RR.ecsv",
+      "caption": "List of likely unbound RR Lyrae variables in our sample with $P_{\\rm unb} > 0.5$. The first two columns represent our adopted object ID and \\gaia~EDR3 ID. Columns 3, 4, 5, and 6 list the heliocentric distances and systemic velocities together with their assumed uncertainties, as estimated in \\citet{Prudil2021Orphan}. Column 8 contains estimated $P_{\\rm unb}$ of the RR~Lyrae stars being unbound fulfilling the condition in Eq. 13. The calculated Galactocentric velocities and their covariances are listed in columns 9, 10, 11, 12, and 13 starting with the angular velocity $v_{y}$ followed by the quadrature of the radial and vertical velocity, $\\sqrt{v_{x}^2 + v_{z}^2}$ both accompanied by their uncertainties and correlations. The last five columns (14, 15, 16, 17, and 18) represent the total Galactocentric velocity $v_{\\rm GC}$ and distance $R_{\\rm GC}$ followed be their covariances.",
+      "label": "tab:HV-RR",
+      "row_count": 9,
+      "column_count": 17,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Gaia -EDR3 ID",
+          "d",
+          "\\sigma_d",
+          "v_\\rm sys",
+          "\\sigma_v_\\rm sys",
+          "P_\\rm unb",
+          "V",
+          "\\sigma_V",
+          "\\sqrtU^2+W^2",
+          "\\sigma_\\sqrtU^2+W^2",
+          "\\rho^V_\\sqrtU^2+W^2",
+          "v_\\rm GC",
+          "\\sigma_v_\\rm GC",
+          "R_\\rm GC",
+          "\\sigma_R_\\rm GC",
+          "\\rho^v_\\rm GC_R_\\rm GC"
+        ],
+        [
+          "",
+          "",
+          "[kpc]",
+          "[kpc]",
+          "[km s -1 ]",
+          "[km s -1 ]",
+          "",
+          "[km s -1 ]",
+          "[km s -1 ]",
+          "[km s -1 ]",
+          "[km s -1 ]",
+          "",
+          "[km s -1 ]",
+          "[km s -1 ]",
+          "[kpc]",
+          "[kpc]",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia -EDR3 ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "d | [kpc]",
+          "unit_text": "[kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\sigma_d | [kpc]",
+          "unit_text": "[kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "v_\\rm sys | [km s -1 ]",
+          "unit_text": "[km s -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\sigma_v_\\rm sys | [km s -1 ]",
+          "unit_text": "[km s -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "P_\\rm unb",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "V | [km s -1 ]",
+          "unit_text": "[km s -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_V | [km s -1 ]",
+          "unit_text": "[km s -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\sqrtU^2+W^2 | [km s -1 ]",
+          "unit_text": "[km s -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\sigma_\\sqrtU^2+W^2 | [km s -1 ]",
+          "unit_text": "[km s -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\rho^V_\\sqrtU^2+W^2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "v_\\rm GC | [km s -1 ]",
+          "unit_text": "[km s -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "\\sigma_v_\\rm GC | [km s -1 ]",
+          "unit_text": "[km s -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "R_\\rm GC | [kpc]",
+          "unit_text": "[kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "\\sigma_R_\\rm GC | [kpc]",
+          "unit_text": "[kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "\\rho^v_\\rm GC_R_\\rm GC",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwlisje4_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2206.00417/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwlisje4_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2206.00417/catalog_sources/table-tab-HV-RR/wrapped.tex",
+            "html": "literature/2206.00417/catalog_sources/table-tab-HV-RR/latexml.html",
+            "stdout": "literature/2206.00417/catalog_sources/table-tab-HV-RR/latexml.stdout.txt",
+            "stderr": "literature/2206.00417/catalog_sources/table-tab-HV-RR/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "612f1748cfb0e800dd221117fdd3464784b10f94f33764fc7b2db157f74e1d4b"
+    },
+    {
+      "id": "table-tab-HV-RRastr",
+      "internal_table_id": "table-tab-HV-RRastr",
+      "status": "success",
+      "ecsv_path": "literature/2206.00417/catalog_tables/table-tab-HV-RRastr.ecsv",
+      "caption": "Table of unbound RR Lyrae candidates with $P_{\\rm unb} > 0.5$ and their astrometric and photometric properties from \\gaia~catalog. The first column represents our object ID with an asterisk marking variables uncertain classification as RR~Lyrae stars. Columns 2, 3, 4, 5, and 6 lists \\gaia~EDR3 ID, equatorial and Galactic coordinates. The proper motions in right ascension and declination, together with their errors, are listed in columns 7, 8, 9, and 10. Columns 11 and 12 contain parallax and its uncertainty. The last three columns (13, 14 and 15) represent re-normalized unit weight error (RUWE) and \\gaia~photometry in $G$-band and color $G_{\\rm BP} - G_{\\rm RP}$.",
+      "label": "tab:HV-RRastr",
+      "row_count": 9,
+      "column_count": 15,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Gaia -EDR3 ID",
+          "\\alpha",
+          "\\delta",
+          "l",
+          "b",
+          "\\mu_\\alpha^\\ast",
+          "\\sigma_\\mu_\\alpha^\\ast",
+          "\\mu_\\delta",
+          "\\sigma_\\mu_\\delta",
+          "\\varpi",
+          "\\sigma_\\varpi",
+          "RUWE",
+          "G",
+          "G_\\rm BP-G_\\rm RP"
+        ],
+        [
+          "",
+          "",
+          "[deg]",
+          "[deg]",
+          "[deg]",
+          "[deg]",
+          "[mas yr -1 ]",
+          "[mas yr -1 ]",
+          "[mas yr -1 ]",
+          "[mas yr -1 ]",
+          "[mas]",
+          "[mas]",
+          "",
+          "[mag]",
+          "[mag]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia -EDR3 ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\alpha | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\delta | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "l | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "b | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_\\alpha^\\ast | [mas yr -1 ]",
+          "unit_text": "[mas yr -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\sigma_\\mu_\\alpha^\\ast | [mas yr -1 ]",
+          "unit_text": "[mas yr -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\mu_\\delta | [mas yr -1 ]",
+          "unit_text": "[mas yr -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\sigma_\\mu_\\delta | [mas yr -1 ]",
+          "unit_text": "[mas yr -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\varpi | [mas]",
+          "unit_text": "[mas]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\sigma_\\varpi | [mas]",
+          "unit_text": "[mas]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "RUWE",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "G_\\rm BP-G_\\rm RP | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp665u7t3y/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2206.00417/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp665u7t3y/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2206.00417/catalog_sources/table-tab-HV-RRastr/wrapped.tex",
+            "html": "literature/2206.00417/catalog_sources/table-tab-HV-RRastr/latexml.html",
+            "stdout": "literature/2206.00417/catalog_sources/table-tab-HV-RRastr/latexml.stdout.txt",
+            "stderr": "literature/2206.00417/catalog_sources/table-tab-HV-RRastr/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a4ac2f94bd1fa7783351ebfd9fe5300ea85417f3640029fc8e9cdfdbcbc13c17"
+    }
+  ]
+}

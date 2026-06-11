@@ -1,0 +1,203 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1804.05849",
+    "title": "On the kinematics of a runaway Be star population",
+    "month": "2018-04",
+    "source_note_json": "notes/2018/2018-04/2018-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1804.05849",
+      "pdf": "https://arxiv.org/pdf/1804.05849"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1804.05849",
+    "audit_path": "literature/1804.05849/audit.json",
+    "source_dir": "literature/1804.05849/arxiv_source",
+    "tex_root": "literature/1804.05849/arxiv_source/bestars.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T08:15:32",
+    "reviewer": "agent",
+    "summary": "Paper tests the hypothesis that classical Be stars originate through mass transfer in binary systems by measuring the fraction of runaway Be stars. Assembles the largest-to-date catalog of 632 Be stars with full 6D kinematics by cross-matching three sources (Berger & Gies 2001; BeSS database; LAMOST catalog of Hou et al. 2016) with TGAS (Gaia DR1) astrometry. Uses binary_c population synthesis to predict the runaway velocity distribution of a post-mass-transfer Be star population, accounting for observational selection biases, finding that 17.5% should be runaways if all Be stars come from mass-transfer binaries. Applies a Bayesian mixture model (5067 parameters for 632 stars) discriminating disc, runaway, and outlier populations. Finds 13.1^{+2.6}_{-2.4}% runaway fraction, and identifies 40 high-probability runaway Be stars (Table tab:runaway is the sole internal data table, listing these 40 stars with P_run, v_run, d, z). Argues that uncertainties in binary evolution prescriptions and degeneracy between velocity dispersion and runaway fraction can explain the slightly lower observed fraction, concluding all Be stars could originate through post-mass-transfer. Contains 1 internal table (40 data rows × 5 columns). External resources: TGAS/Gaia DR1 astrometry, BeSS database, SIMBAD/Vizier databases, LAMOST DR2, binary_c code, Stan MCMC software."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-runaway",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Primary result table listing the 40 Be stars identified as highly-likely runaway stars (P_run > 50%) by the Bayesian mixture model described in Sec. 4. This table is the key observational output of the paper: it presents the posterior runaway probability P_run, posterior runaway velocity v_run, and posterior distance d (inferred from TGAS parallax) for each star, along with the height above the Galactic plane z. Seven starred entries (*) were previously identified as high-peculiar-velocity stars by Berger & Gies (2001). The authors estimate ~4 of these 40 stars are false positives based on the ROC curve analysis. The 40 runaway candidates have velocity dispersions indicating an age of ~200 Myr, older than the ~35 Myr median age of the simulated Be star population, suggesting the velocity dispersions may be overestimated. The table directly supports the paper's conclusion that 13.1% of Be stars are runaways, consistent with all Be stars originating through mass transfer in binaries.",
+      "source_refs": [
+        {
+          "path": "literature/1804.05849/arxiv_source/bestars.tex",
+          "start_line": 1497,
+          "end_line": 1556,
+          "caption": "List of stars identified as highly-likely runaway stars by the method described in Sec. \\ref{sec:principal}. $P_{\\mathrm{run}}$ is the probability that the star is a runaway, $v_{\\mathrm{run}}$ is the posterior runaway velocity and $d$ is the posterior distance inferred from the parallax. All of the names are resolvable by Simbad. The starred entries are high-peculiar space velocity stars mentioned by \\citet{berger_search_2001}. Based on Fig. \\ref{fig:roccurve}, we should expect around 4 of these stars to be false positives.",
+          "label": "tab:runaway"
+        }
+      ],
+      "columns": [
+        {
+          "name": "P_run (%)",
+          "meaning": "Posterior runaway probability (in percent) from the Bayesian mixture model. Probability that the star belongs to the runaway population rather than the thin disc or outlier populations. The 40 stars listed all have P_run > 50%. Values range from 50.4% to 99.8%. The top 10 stars have P_run > 97.7%.",
+          "unit_text": "%",
+          "source_of_definition": "table header / Bayesian model posterior (Sec. 4)",
+          "confidence": 1.0
+        },
+        {
+          "name": "Name",
+          "meaning": "Star identifier resolvable by SIMBAD. Includes HD numbers, CD/BD designations, TYC identifiers, variable star names (W Del, V2123 Cyg, V716 Cen, RY Sct, GW Vel, Z Her, PZ Gem, V442 And), and the IAU-approved named star Menkib (ξ Per).",
+          "unit_text": "",
+          "source_of_definition": "table header / SIMBAD",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_run (km s^-1)",
+          "meaning": "Posterior runaway velocity (peculiar speed) with 68% credible intervals (upper/lower). The runaway velocity is the additional speed beyond the thin disc velocity dispersion that each star would have if it belongs to the runaway population. Values range from 18.3 to 130.1 km/s. RY Sct has the highest value (130.1 km/s) but with a very asymmetric error (+18.6/-111.8).",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header / Bayesian model posterior (Sec. 4)",
+          "confidence": 1.0
+        },
+        {
+          "name": "d (pc)",
+          "meaning": "Posterior heliocentric distance inferred from the TGAS parallax, with 68% credible intervals. Distances range from 84 pc (Z Her) to 1911 pc (CD-29 5159). The near/far distance degeneracy from parallax measurements is naturally handled by the Bayesian model's distance prior.",
+          "unit_text": "pc",
+          "source_of_definition": "table header / TGAS parallax + Bayesian distance prior",
+          "confidence": 1.0
+        },
+        {
+          "name": "z (pc)",
+          "meaning": "Posterior height above the Galactic plane (signed, negative = below plane), with 68% credible intervals. Values range from -660 pc (CD-30 850) to +640 pc (HD 127617). Most stars lie within |z| < 400 pc. All but two of the 40 runaways are within 400 pc of the plane, consistent with the expectation that Be star runaways are rarely ejected to high Galactic latitudes.",
+          "unit_text": "pc",
+          "source_of_definition": "table header / derived from d and Galactic coordinates",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "We now apply the model to the true catalogue of Be stars described in Section 2. Using the classification scheme from Sec. 4.3, 40 stars are classified as runaway stars and they are given in Table \\ref{tab:runaway}. 7 of these stars were classed as high peculiar space velocity stars by Berger & Gies (2001). The posterior runaway fraction is about 13.1^{+2.6}_{-2.4}%.",
+      "comments": "40 data rows × 5 columns. Table uses llcrr column specification with \\substack for asymmetric uncertainties. The table is the sole internal data table in the paper. It presents the primary catalog-level output: individual Be stars identified as probable runaways. The authors note ~4 expected false positives from the ROC analysis. Three eclipsing binaries appear (W Del, V716 Cen, RY Sct), explained as possible triple systems unbound by supernova or dynamically ejected binaries. Menkib (ξ Per) is a well-known runaway associated with the California Nebula bow shock. Z Her may be misclassified as a Be star (possible AM CVn variable)."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Reed (2003, 2005) catalog of Galactic OB stars — mentioned in a commented-out section of the TeX source as a potential comparison sample of luminous B stars that could be cross-matched with SIMBAD and TGAS. This catalog was not actually used in the final analysis.",
+      "source_refs": [
+        {
+          "path": "literature/1804.05849/arxiv_source/bestars.tex",
+          "start_line": 301,
+          "end_line": 301,
+          "context": "%stars for comparison to our Be sample, which we get by cross-matching\n%the catalogue of luminous stars by\n%\\citet{reed_catalog_2003,reed_vizier_2005} with SIMBAD and TGAS.\n\n\\subsection{The Berger \\& Gies sample}"
+        }
+      ],
+      "evidence": "Commented-out text in TeX source mentions Reed catalog of luminous stars as a potential B-star comparison sample.",
+      "comments": "The Reed catalog was not used in the final analysis (comment was removed from published version). Included for completeness of external resource audit."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Berger & Gies (2001) sample of 344 Be stars with published radial velocities, plus SIMBAD and Vizier databases used for cross-matching and radial velocity retrieval. The Berger & Gies sample is one of the three data sources for the combined Be star catalog. 163 of the 344 stars were cross-matched with TGAS. SIMBAD provided updated radial velocities (262 stars have smaller errors than Berger & Gies) and proper motion error ellipses.",
+      "source_refs": [
+        {
+          "path": "literature/1804.05849/arxiv_source/bestars.tex",
+          "start_line": 310,
+          "end_line": 310,
+          "context": "using the identifiers listed by \\citet{berger_search_2001}. Note that\nthe identifier of the thirteenth star in this sample, CSI+6****49,\ndoes not have a cross-match in SIMBAD, but querying Vizier returned\nthe valid identifier HD 10664. For 262 stars, the error on the radial\nvelocity recorded in SIMBAD is smaller than in"
+        }
+      ],
+      "evidence": "The Berger & Gies (2001) sample contains 344 stars. We obtain positions and updated radial velocities by querying SIMBAD. For 262 stars, the error on the radial velocity recorded in SIMBAD is smaller than in Berger & Gies (2001).",
+      "comments": "SIMBAD and Vizier are key data infrastructure for this paper. The Berger & Gies (2001) sample is explicitly used as Data Source 1 in Sec. 2.1. SIMBAD identifiers resolve all but one star (CSI+6****49, resolved via Vizier to HD 10664). ADS metadata indicates SIMBAD:57 objects linked to this paper."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "http://simbad.u-strasbg.fr/Pages/guide/errell.htx",
+      "local_path": "",
+      "description": "SIMBAD documentation page describing the method for converting proper motion error ellipse parameters (major axis A, minor axis B, position angle P) to uncertainties in individual RA and Dec components. The authors follow this recommended method and neglect the implied covariances.",
+      "source_refs": [
+        {
+          "path": "literature/1804.05849/arxiv_source/bestars.tex",
+          "start_line": 358,
+          "end_line": 358,
+          "context": "$P$. We convert these to uncertainties in the individual components\nfollowing the recommended\nmethod\\footnote{\\url{http://simbad.u-strasbg.fr/Pages/guide/errell.htx}}\nand neglect the implied covariances. We then carry out a\n$1\\;\\mathrm{arcsec}$ nearest neighbour cross-match with TGAS to obtain"
+        }
+      ],
+      "evidence": "SIMBAD provides the proper motion errors in terms of an error ellipse with a major axis A, minor axis B and position angle P. We convert these to uncertainties in the individual components following the recommended method.",
+      "comments": "This URL documents the error propagation methodology used for the BeSS data cross-match. The neglected covariances are a small systematic uncertainty in the catalog."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "http://dr2.lamost.org/doc/vac",
+      "local_path": "",
+      "description": "LAMOST Data Release 2 (DR2) value-added catalogue of 10,436 early-type emission-line stars from Hou et al. (2016). This is the third data source for the combined Be star catalog. The authors cross-match with LAMOST DR2 stellar catalogue to obtain radial velocities and with TGAS for parallaxes and proper motions, yielding 12 Be stars from this source.",
+      "source_refs": [
+        {
+          "path": "literature/1804.05849/arxiv_source/bestars.tex",
+          "start_line": 380,
+          "end_line": 380,
+          "context": "of 10,436 early-type emission-line stars which are in LAMOST.  This\ncatalogue is available as a value-added catalogue of LAMOST\nDR2\\footnote{\\url{http://dr2.lamost.org/doc/vac}}. We carry out a\n$1\\;\\mathrm{arcsec}$ nearest neighbour cross-match with the LAMOST DR2\nstellar catalogue to obtain the reported radial velocities with errors"
+        }
+      ],
+      "evidence": "Hou et al. (2016) presented a catalogue of 10,436 early-type emission-line stars which are in LAMOST. This catalogue is available as a value-added catalogue of LAMOST DR2. We carry out a 1 arcsec nearest neighbour cross-match.",
+      "comments": "Only 12 stars from LAMOST survived cross-matching with TGAS, a small fraction of the 632-star catalog. A +6.76 km/s offset correction was applied to LAMOST radial velocities based on Jing et al. (2016)."
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "http://mc-stan.org",
+      "local_path": "",
+      "description": "Stan probabilistic programming language (CmdStan v2.16.0) — the Hamiltonian Monte Carlo (HMC) sampler with No-U-Turn Sampling (NUTS) used to perform Bayesian inference on the three-component mixture model. The model has 5067 parameters for 632 stars. Stan computes the posterior distribution for the runaway fraction F_run and velocity dispersions.",
+      "source_refs": [
+        {
+          "path": "literature/1804.05849/arxiv_source/bestars.tex",
+          "start_line": 1319,
+          "end_line": 1319,
+          "context": "CmdStan}\\footnote{Stan Development Team. 2017. CmdStan: the\n  command-line interface to Stan, Version\n  2.16.0. \\url{http://mc-stan.org}}, to obtain the posterior for the\nmodel. {\\sc Stan} includes a Hamiltonian Markov chain Monte Carlo\nsampler which incorporates No-U-Turn Sampling"
+        }
+      ],
+      "evidence": "We use CmdStan (Stan Development Team 2017, v2.16.0) to obtain the posterior for the model. Stan includes a Hamiltonian Markov chain Monte Carlo sampler which incorporates No-U-Turn Sampling.",
+      "comments": "Stan is the computational engine for the paper's central Bayesian analysis. The HMC/NUTS algorithm efficiently samples the 5067-parameter posterior. The model is described as a 'triumph' in the conclusions section."
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://www.iau.org/public/themes/naming_stars/",
+      "local_path": "",
+      "description": "IAU Working Group on Star Names (WGSN) official list of 313 IAU-approved star names, referenced to note the significance of Menkib (ξ Persei) appearing among the 40 high-probability runaway Be stars. Menkib is a previously known runaway associated with the California Nebula (NGC 1499) bow shock.",
+      "source_refs": [
+        {
+          "path": "literature/1804.05849/arxiv_source/bestars.tex",
+          "start_line": 1447,
+          "end_line": 1447,
+          "context": "\\begin{itemize}\n\t\\item \\textbf{Menkib:} There are only 313\n          IAU-approved\\footnote{\\url{https://www.iau.org/public/themes/naming_stars/},\n            accessed 12/03/2018.} named stars and thus the appearance\n          of one in a modern astronomical paper is remarkable. Menkib"
+        }
+      ],
+      "evidence": "There are only 313 IAU-approved named stars and thus the appearance of one (Menkib) in a modern astronomical paper is remarkable. Menkib is a previously known runaway star associated with the California Nebula bow shock.",
+      "comments": "Not a data resource per se, but a contextual reference highlighting the significance of one of the identified runaway stars. The URL was accessed 12/03/2018."
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Be Star Spectra (BeSS) database (operated at LESIA, Observatoire de Meudon, France; Neiner et al. 2011) — the second and largest data source for the combined Be star catalog, containing 2265 classical Be stars. SIMBAD database (operated at CDS, Strasbourg; Wenger et al. 2000). Python software: AstroPy (Astropy Collaboration 2013) and corner.py (Foreman-Mackey 2016) for data processing and visualization.",
+      "source_refs": [
+        {
+          "path": "literature/1804.05849/arxiv_source/bestars.tex",
+          "start_line": 1918,
+          "end_line": 1918,
+          "context": "catalogue relied on the BeSS database, operated at LESIA, Observatoire\nde Meudon, France \\citep{neiner_be_2011} and the SIMBAD database,\noperated at CDS, Strasbourg, France \\citep{wenger_simbad_2000}. This\nwork made use of the {\\sc Python} modules {\\sc AstroPy}\n\\citep{astropy_collaboration_astropy:_2013}, {\\sc corner.py}"
+        }
+      ],
+      "evidence": "This catalogue relied on the BeSS database and the SIMBAD database. This work made use of the Python modules AstroPy and corner.py.",
+      "comments": "BeSS is the primary data source (Data Source 2, Sec. 2.2), providing radial velocities for 856 Be stars. SIMBAD provided proper motions, parallaxes, and radial velocities. AstroPy and corner.py are standard Python astronomy tools used for data processing and corner-plot visualization."
+    }
+  ]
+}

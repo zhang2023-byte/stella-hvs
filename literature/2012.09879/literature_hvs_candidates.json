@@ -1,0 +1,84 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:50:00",
+  "paper": {
+    "arxiv_id": "2012.09879",
+    "bibcode": "2021MNRAS.501L..12S",
+    "title": "Double trouble: Gaia reveals (proto)planetary systems that may experience more than one dense star-forming environment",
+    "month": "2020-12",
+    "source_note_json": "notes/2020/2020-12/2020-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2012.09879",
+      "pdf": "https://arxiv.org/pdf/2012.09879"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2012.09879",
+    "audit_path": "literature/2012.09879/audit.json",
+    "catalog_review_path": "literature/2012.09879/catalog_review.json",
+    "catalog_extraction_path": "literature/2012.09879/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:50:00",
+    "extractor": "agent",
+    "summary": "本文研究年轻恒星从恒星形成区被弹射后成为速逃星(runaway stars)的过程，特别关注那些在弹射过程中保留了原行星盘的年轻恒星系统。利用Gaia DR2数据，在猎户座星云团(ONC)附近发现了若干此类速逃星，并讨论了这些恒星-盘系统可能经历第二个稠密星形成环境(即ONC)的几率。论文研究的速逃星是低速(~几km/s量级)的年轻恒星天体(YSO)逃逸星，与银河系非束缚超高速星(HVS)完全无关。论文主题是行星系统形成与演化(accretion discs, planets and satellites: formation, circumstellar matter, star-forming regions)，不涉及HVS候选体评估。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文摘要和内容，评估HVS候选体相关性。论文研究年轻速逃星(YSO runaways)的原行星盘存活问题，属于行星系统形成与演化领域。论文中的'runaway stars'指从星团中被动力学弹射的低速年轻恒星，与银河系非束缚HVS无关。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (Main_document.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2012.09879/arxiv_source/Main_document.tex",
+          "start_line": 67,
+          "end_line": 68,
+          "context": "Title: Double trouble: Gaia reveals (proto)-planetary systems that may experience more than one dense star-forming environment"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2012.09879/arxiv_source/Main_document.tex",
+          "start_line": 91,
+          "end_line": 93,
+          "context": "Abstract: runaways ejected from birth regions, retained discs; encounter ONC; keywords: accretion discs, planets and satellites formation"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "on-runaways",
+      "description": "猎户座星云团(ONC)附近的速逃星，由Gaia DR2数据识别。这些是年轻恒星天体(YSO)，在从出生星团弹射过程中保留了原行星盘。论文关注这些恒星-盘系统是否可能遭遇第二个稠密星形成环境。",
+      "decision": "excluded",
+      "reason": "论文中的'速逃星'(runaway stars)指从恒星形成区被动力学弹射的低速年轻恒星，速度仅为几km/s量级，属于YSO逃逸星。这些恒星在银河系引力束缚下，与超高速星(HVS, 速度>~400 km/s, 可能逃离银河系)完全不同。论文研究的是行星系统形成与演化问题，不涉及银河系逃逸速度或HVS候选体评估。关键词: accretion, accretion discs, planets and satellites: formation, circumstellar matter - 完全属于行星科学领域。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2012.09879/arxiv_source/Main_document.tex",
+          "start_line": 91,
+          "end_line": 93,
+          "context": "Abstract: Planetary systems, star-forming regions, runaways, discs - planetary science context"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2012.09879/arxiv_source/Main_document.tex",
+          "start_line": 97,
+          "end_line": 99,
+          "context": "Keywords: accretion, accretion discs -- planets and satellites: formation -- circumstellar matter -- stars: kinematics and dynamics -- galaxies: star clusters: individual: Orion Nebula Cluster"
+        }
+      ]
+    }
+  ]
+}

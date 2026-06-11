@@ -1,0 +1,81 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T16:51:15",
+  "paper": {
+    "arxiv_id": "2402.01133",
+    "bibcode": "2024A&A...684A.205X",
+    "title": "Where do they come from? Identification of globular cluster escaped stars",
+    "month": "2024-02",
+    "source_note_json": "notes/2024/2024-02/2024-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2402.01133",
+      "pdf": "https://arxiv.org/pdf/2402.01133"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2402.01133",
+    "audit_path": "literature/2402.01133/audit.json",
+    "catalog_review_path": "literature/2402.01133/catalog_review.json",
+    "catalog_extraction_path": "literature/2402.01133/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2402.01133/catalog_tables/table-Tabel-GC-parameters.ecsv",
+      "literature/2402.01133/catalog_tables/table-Tabel-GC-iso.ecsv",
+      "literature/2402.01133/catalog_tables/table-Tabel-GC-star-pair.ecsv",
+      "literature/2402.01133/catalog_tables/table-Table-extra-tidal-stars.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T16:51:15",
+    "extractor": "agent",
+    "summary": "This paper identifies stars escaped from globular clusters (GCs) using two methods: action-space plus metallicity matching (Method I) and proper-motion / CMD selection in the cluster vicinity (Method II). All objects discussed are cluster escapers that remain gravitationally bound to the Milky Way; they contribute to the Milky Way halo and stellar streams. The paper does not present any object as possibly unbound from the Galaxy. Therefore, no HVS/unbound candidates are included."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-Tabel-GC-star-pair",
+      "description": "N-rich field stars with probable GC progenitor associations identified via action-space and metallicity matching (Method I). 29 highly probable pairs for 15 N-rich field stars.",
+      "decision": "excluded",
+      "reason": "These are GC-escaped stars identified through chemodynamical linking. The paper treats them as stars that left their host GCs and now orbit within the Milky Way potential, contributing to the MW halo. They are cluster escapers, not Galactic-unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+          "start_line": 313,
+          "end_line": 335,
+          "context": "Section describing Method I results: N-rich field stars associated with GCs via action-space and metallicity. The paper states these stars escaped GCs and contribute to the MW halo."
+        }
+      ]
+    },
+    {
+      "group_id": "table-Table-extra-tidal-stars",
+      "description": "Extra-tidal candidate stars identified around six GCs via proper-motion and CMD selection (Method II). 54 spectroscopically confirmed extra-tidal stars out of 95 with RV and metallicity observations.",
+      "decision": "excluded",
+      "reason": "These are extra-tidal candidates / cluster escapers that left their host GCs via tidal evaporation. The paper explicitly describes them as rotating differentially around the Milky Way and forming stellar streams. Even stars beyond the Jacobi radius are only unbound from the cluster, not from the Galaxy. The paper does not claim any are Galactic-unbound.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+          "start_line": 112,
+          "end_line": 113,
+          "context": "Introduction stating that escaped GC stars rotate differentially around the MW and create stellar streams, contributing to the MW halo."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+          "start_line": 260,
+          "end_line": 262,
+          "context": "Method II description: stars beyond the Jacobi radius are completely out of the cluster's gravitational potential, but those between tidal and Jacobi radius may be loosely bound to the cluster. No claim of Galactic unbinding."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2402.01133/arxiv_source/gc_escapees.tex",
+          "start_line": 410,
+          "end_line": 416,
+          "context": "Results section describing extra-tidal candidates around six GCs. Candidates are described as stars sharing kinematic properties with host GCs and forming stellar streams due to differential Galactic rotation."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:55:00",
+  "paper": {
+    "arxiv_id": "2106.02647",
+    "bibcode": "2021AJ....162...86K",
+    "title": "Spectroscopic Observations of Obscured Populations in the Inner Galaxy: 2MASS-GC02, Terzan 4, and the 200 km/s stellar peak",
+    "month": "2021-06",
+    "source_note_json": "notes/2021/2021-06/2021-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2106.02647",
+      "pdf": "https://arxiv.org/pdf/2106.02647"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2106.02647",
+    "audit_path": "literature/2106.02647/audit.json",
+    "catalog_review_path": "literature/2106.02647/catalog_review.json",
+    "catalog_extraction_path": "literature/2106.02647/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:55:00",
+    "extractor": "agent",
+    "summary": "论文通过APOGEE光谱数据研究低银纬球状星团2MASS-GC02和Terzan 4的化学丰度与视向速度，并调查银河系核盘假说中~200 km/s（银心静止系）高速恒星峰。论文讨论的高速恒星是银河系引力束缚的棒支撑轨道恒星，V_GSR ≈ 200 km/s，远低于银河系逃逸速度（~500-600 km/s）。论文未声称任何恒星为超高速星（HVS）或银河系非束缚天体，无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文研究球状星团成员星以及银棒支撑轨道上的高速恒星（V_GSR ~200 km/s），均为银河系束缚天体。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper abstract and title"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2106.02647/arxiv_source",
+          "start_line": 0,
+          "end_line": 0,
+          "context": "Title: Spectroscopic Observations of Obscured Populations in the Inner Galaxy: 2MASS-GC02, Terzan 4, and the 200 km/s stellar peak"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "bulge-high-velocity-stars",
+      "description": "银棒支撑轨道上的高速恒星（V_GSR ~200 km/s），通过APOGEE与新的视向速度观测数据在负银经方向搜寻。这些恒星的速度峰值约200 km/s，属于银河系内盘/核球动力学结构，非超高速星。",
+      "decision": "excluded",
+      "reason": "论文中的'high-velocity'恒星速度（V_GSR ≈ 200 km/s）是银河系棒支撑轨道（bar-supporting orbits）的动力学特征，远低于银河系逃逸速度。论文目标为检验核盘假说（nuclear disk hypothesis），非搜寻超高速星或银河系非束缚天体。论文摘要和内容未声称任何恒星为超高速星（HVS）。这些恒星是银河系束缚天体，属于银河系内盘/核球普通成员。"
+    }
+  ]
+}

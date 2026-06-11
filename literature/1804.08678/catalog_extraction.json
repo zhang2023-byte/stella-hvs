@@ -1,0 +1,570 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:31:32",
+  "paper": {
+    "arxiv_id": "1804.08678",
+    "title": "HST astrometry in the 30 Doradus region: II. Runaway stars from new proper motions in the Large Magellanic Cloud",
+    "month": "2018-04"
+  },
+  "review": {
+    "path": "literature/1804.08678/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083132",
+    "started_at": "2026-06-07T08:31:32",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1804.08678",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-1-ob-runaways",
+      "internal_table_id": "table-1-ob-runaways",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+        "start_line": 1172,
+        "end_line": 1190,
+        "caption": "Candidate OB proper-motion runaway stars",
+        "label": ""
+      },
+      "source_path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+      "excerpt_path": "literature/1804.08678/catalog_sources/table-1-ob-runaways/excerpt.tex",
+      "sha256": "8ff6c6cedce8e9d5617286512639f960778780782a6d2e3e3eddf15f35bd6feb",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-2-af-runaways",
+      "internal_table_id": "table-2-af-runaways",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+        "start_line": 1192,
+        "end_line": 1214,
+        "caption": "Candidate young A-F proper-motion runaways",
+        "label": "tab:afrun"
+      },
+      "source_path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+      "excerpt_path": "literature/1804.08678/catalog_sources/table-2-af-runaways/excerpt.tex",
+      "sha256": "c059dd944c0469ddcd7986c050bb427c1badafbfb1633f9c65b9226ce8117140",
+      "line_count": 23,
+      "error": ""
+    },
+    {
+      "id": "table-3-r136-escaped",
+      "internal_table_id": "table-3-r136-escaped",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+        "start_line": 1217,
+        "end_line": 1241,
+        "caption": "Likely-escaped stars from R136",
+        "label": ""
+      },
+      "source_path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+      "excerpt_path": "literature/1804.08678/catalog_sources/table-3-r136-escaped/excerpt.tex",
+      "sha256": "36aad1fb5b51478ae438716c605511dc6a4e6b05e66e122c3cac8634576f8e83",
+      "line_count": 25,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-1-ob-runaways",
+      "internal_table_id": "table-1-ob-runaways",
+      "status": "success",
+      "ecsv_path": "literature/1804.08678/catalog_tables/table-1-ob-runaways.ecsv",
+      "caption": "Candidate OB proper-motion runaway stars",
+      "label": "",
+      "row_count": 9,
+      "column_count": 16,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpykgj3s8g/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.08678/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpykgj3s8g/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.08678/catalog_sources/table-1-ob-runaways/wrapped.tex",
+            "html": "literature/1804.08678/catalog_sources/table-1-ob-runaways/latexml.html",
+            "stdout": "literature/1804.08678/catalog_sources/table-1-ob-runaways/latexml.stdout.txt",
+            "stderr": "literature/1804.08678/catalog_sources/table-1-ob-runaways/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8ff6c6cedce8e9d5617286512639f960778780782a6d2e3e3eddf15f35bd6feb"
+    },
+    {
+      "id": "table-2-af-runaways",
+      "internal_table_id": "table-2-af-runaways",
+      "status": "success",
+      "ecsv_path": "literature/1804.08678/catalog_tables/table-2-af-runaways.ecsv",
+      "caption": "Candidate young A-F proper-motion runaways",
+      "label": "tab:afrun",
+      "row_count": 13,
+      "column_count": 14,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq1jszb7l/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.08678/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq1jszb7l/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.08678/catalog_sources/table-2-af-runaways/wrapped.tex",
+            "html": "literature/1804.08678/catalog_sources/table-2-af-runaways/latexml.html",
+            "stdout": "literature/1804.08678/catalog_sources/table-2-af-runaways/latexml.stdout.txt",
+            "stderr": "literature/1804.08678/catalog_sources/table-2-af-runaways/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c059dd944c0469ddcd7986c050bb427c1badafbfb1633f9c65b9226ce8117140"
+    },
+    {
+      "id": "table-3-r136-escaped",
+      "internal_table_id": "table-3-r136-escaped",
+      "status": "success",
+      "ecsv_path": "literature/1804.08678/catalog_tables/table-3-r136-escaped.ecsv",
+      "caption": "Likely-escaped stars from R136",
+      "label": "",
+      "row_count": 10,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Ident",
+          "X (arcmin)",
+          "Y (arcmin)",
+          "Angle (deg)",
+          "Total pm (mas yr -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Ident",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "X (arcmin)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Y (arcmin)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Angle (deg)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Total pm (mas yr -1 )",
+          "unit_text": "Total pm (mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdq5dc5cf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.08678/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdq5dc5cf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.08678/catalog_sources/table-3-r136-escaped/wrapped.tex",
+            "html": "literature/1804.08678/catalog_sources/table-3-r136-escaped/latexml.html",
+            "stdout": "literature/1804.08678/catalog_sources/table-3-r136-escaped/latexml.stdout.txt",
+            "stderr": "literature/1804.08678/catalog_sources/table-3-r136-escaped/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "36aad1fb5b51478ae438716c605511dc6a4e6b05e66e122c3cac8634576f8e83"
+    }
+  ]
+}

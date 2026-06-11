@@ -1,0 +1,900 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:44:48",
+  "paper": {
+    "arxiv_id": "2012.02123",
+    "title": "Gaia EDR3 in 6D: Searching for unbound stars in the Galaxy",
+    "month": "2020-12"
+  },
+  "review": {
+    "path": "literature/2012.02123/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084448",
+    "started_at": "2026-06-07T08:44:48",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2012.02123",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 6,
+      "work_count": 6,
+      "table_count": 6,
+      "success_count": 6,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 6,
+      "file_success_count": 6,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-cuts",
+      "internal_table_id": "table-tab-cuts",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/GaiaEDR3_highV.tex",
+        "start_line": 169,
+        "end_line": 188,
+        "caption": "Summary of the cuts employed to select a clean subset of high velocity stars. The column $N_\\mathrm{stars}$ denotes the number of stars in {\\Gaia} EDR3 surviving each cut. The bulk of the analysis of this paper relies on the sample of 6969738 stars with precise astrometry from {\\Gaia} EDR3 and radial velocities from {\\Gaia} DR2.",
+        "label": "tab:cuts"
+      },
+      "source_path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/GaiaEDR3_highV.tex",
+      "excerpt_path": "literature/2012.02123/catalog_sources/table-tab-cuts/excerpt.tex",
+      "sha256": "f8ef72114080deb579ab58170290695ff8da891594f86cfeecf8566dc635176c",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-pot_params",
+      "internal_table_id": "table-tab-pot_params",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/GaiaEDR3_highV.tex",
+        "start_line": 215,
+        "end_line": 234,
+        "caption": "Characteristic scale parameters used in the \\textsc{gala} potential \\textsc{MilkyWayPotential} \\citep{bovy15, gala}.",
+        "label": "tab:pot_params"
+      },
+      "source_path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/GaiaEDR3_highV.tex",
+      "excerpt_path": "literature/2012.02123/catalog_sources/table-tab-pot_params/excerpt.tex",
+      "sha256": "65ac21ccffd1520a510dcce8c5f80a3e129900d648cd05eaaa7ed083ce1b594c",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-candidates",
+      "internal_table_id": "table-tab-candidates",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/tab_candidates_0.8.tex",
+        "start_line": 2,
+        "end_line": 70,
+        "caption": "Observed and derived properties for the clean sample of 17 high velocity stars with a probability $P_\\mathrm{ub} > 0.8$ of being unbound from the Milky Way. Quantities derived from the orbital integration are reported in Table \\ref{tab:candidates_orb}. Stars are ordered by decreasing values of $P_\\mathrm{ub}$.",
+        "label": "tab:candidates"
+      },
+      "source_path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/tab_candidates_0.8.tex",
+      "excerpt_path": "literature/2012.02123/catalog_sources/table-tab-candidates/excerpt.tex",
+      "sha256": "9a1e4d856e475b714d17998cd93fe2f729e4d5ea1d3a978038077d3464dc3e4d",
+      "line_count": 69,
+      "error": ""
+    },
+    {
+      "id": "table-tab-candidates_orb",
+      "internal_table_id": "table-tab-candidates_orb",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/tab_candidates_0.8_orb.tex",
+        "start_line": 1,
+        "end_line": 71,
+        "caption": "Galactocentric cylindrical coordinates $(R_\\mathrm{GC}, z_\\mathrm{GC})$, energy per unit mass $E$, minimum crossing radius $r_\\mathrm{min}$, ejection velocity $v_\\mathrm{ej}$, and flight time $t_\\mathrm{F}$ for the clean sample of 17 stars with $P_\\mathrm{ub} > 0.8$. Stars are ordered as in Table \\ref{tab:candidates}.",
+        "label": "tab:candidates_orb"
+      },
+      "source_path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/tab_candidates_0.8_orb.tex",
+      "excerpt_path": "literature/2012.02123/catalog_sources/table-tab-candidates_orb/excerpt.tex",
+      "sha256": "ec59afc883f06ed643e54f464f600df570a30f05323112b75e333acb4b889d5d",
+      "line_count": 71,
+      "error": ""
+    },
+    {
+      "id": "table-tab-candidates_zp",
+      "internal_table_id": "table-tab-candidates_zp",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/tab_candidates_0.8_zp.tex",
+        "start_line": 2,
+        "end_line": 62,
+        "caption": "Observed and derived properties for the clean sample of 12 high velocity stars with a probability $P_\\mathrm{ub} > 0.5$ of being unbound from the Milky Way, computed including the estimate of the parallax zero point $\\varpi_\\mathrm{zp}$. Stars are ordered by decreasing values of $P_\\mathrm{ub}$.",
+        "label": "tab:candidates_zp"
+      },
+      "source_path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/tab_candidates_0.8_zp.tex",
+      "excerpt_path": "literature/2012.02123/catalog_sources/table-tab-candidates_zp/excerpt.tex",
+      "sha256": "bca64cd4a1e1ee61416a31371a8d332f05182f4ee9b442fa8f0505f8fce487eb",
+      "line_count": 61,
+      "error": ""
+    },
+    {
+      "id": "table-tab-catalogue",
+      "internal_table_id": "table-tab-catalogue",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/tab_catalogue.tex",
+        "start_line": 1,
+        "end_line": 94,
+        "caption": "Description of the columns of the catalogue with distances and velocities. Entries labelled $^1$ are taken directly from the {\\Gaia} EDR3 catalogue, while entries labelled $^2$ are derived in this paper. We refer the interested reader to Section \\ref{sec:method} for details on how these quantities are computed. For the entries labelled $^2$, the quoted values correspond to the median of the distribution, with lower and upper uncertainties computed, respectively, from the $16$th and the $84$th percentile. Column 60 is present only in the version of the catalogue which includes the effect of the parallax zero point.",
+        "label": "tab:catalogue"
+      },
+      "source_path": "literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3/tab_catalogue.tex",
+      "excerpt_path": "literature/2012.02123/catalog_sources/table-tab-catalogue/excerpt.tex",
+      "sha256": "a37900cffcdfca7b40e42bbfe74398fefe4888a96e9408a48c182a03aeb9f347",
+      "line_count": 94,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-cuts",
+      "internal_table_id": "table-tab-cuts",
+      "status": "success",
+      "ecsv_path": "literature/2012.02123/catalog_tables/table-tab-cuts.ecsv",
+      "caption": "Summary of the cuts employed to select a clean subset of high velocity stars. The column $N_\\mathrm{stars}$ denotes the number of stars in {\\Gaia} EDR3 surviving each cut. The bulk of the analysis of this paper relies on the sample of 6969738 stars with precise astrometry from {\\Gaia} EDR3 and radial velocities from {\\Gaia} DR2.",
+      "label": "tab:cuts",
+      "row_count": 9,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cut",
+          "N_stars"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cut",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "N_stars",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpou4b9flg/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpou4b9flg/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2012.02123/catalog_sources/table-tab-cuts/wrapped.tex",
+            "html": "literature/2012.02123/catalog_sources/table-tab-cuts/latexml.html",
+            "stdout": "literature/2012.02123/catalog_sources/table-tab-cuts/latexml.stdout.txt",
+            "stderr": "literature/2012.02123/catalog_sources/table-tab-cuts/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f8ef72114080deb579ab58170290695ff8da891594f86cfeecf8566dc635176c"
+    },
+    {
+      "id": "table-tab-pot_params",
+      "internal_table_id": "table-tab-pot_params",
+      "status": "success",
+      "ecsv_path": "literature/2012.02123/catalog_tables/table-tab-pot_params.ecsv",
+      "caption": "Characteristic scale parameters used in the \\textsc{gala} potential \\textsc{MilkyWayPotential} \\citep{bovy15, gala}.",
+      "label": "tab:pot_params",
+      "row_count": 9,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Component",
+          "Parameters"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Component",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Parameters",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzk4uol_a/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzk4uol_a/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2012.02123/catalog_sources/table-tab-pot_params/wrapped.tex",
+            "html": "literature/2012.02123/catalog_sources/table-tab-pot_params/latexml.html",
+            "stdout": "literature/2012.02123/catalog_sources/table-tab-pot_params/latexml.stdout.txt",
+            "stderr": "literature/2012.02123/catalog_sources/table-tab-pot_params/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "65ac21ccffd1520a510dcce8c5f80a3e129900d648cd05eaaa7ed083ce1b594c"
+    },
+    {
+      "id": "table-tab-candidates",
+      "internal_table_id": "table-tab-candidates",
+      "status": "success",
+      "ecsv_path": "literature/2012.02123/catalog_tables/table-tab-candidates.ecsv",
+      "caption": "Observed and derived properties for the clean sample of 17 high velocity stars with a probability $P_\\mathrm{ub} > 0.8$ of being unbound from the Milky Way. Quantities derived from the orbital integration are reported in Table \\ref{tab:candidates_orb}. Stars are ordered by decreasing values of $P_\\mathrm{ub}$.",
+      "label": "tab:candidates",
+      "row_count": 20,
+      "column_count": 13,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\Gaia EDR3 ID",
+          "(RA, Dec.)",
+          "( l , b )",
+          "\\varpi",
+          "\\mu_\\alpha*",
+          "\\mu_\\delta",
+          "v_rad",
+          "G",
+          "d",
+          "r_GC",
+          "v_GC",
+          "P_MW",
+          "P_ub"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\Gaia EDR3 ID",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "(RA, Dec.)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "( l , b )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\varpi",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\alpha*",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_\\delta",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_rad",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "G",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "d",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "r_GC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "v_GC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "P_MW",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "P_ub",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6_4c5g3k/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6_4c5g3k/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2012.02123/catalog_sources/table-tab-candidates/wrapped.tex",
+            "html": "literature/2012.02123/catalog_sources/table-tab-candidates/latexml.html",
+            "stdout": "literature/2012.02123/catalog_sources/table-tab-candidates/latexml.stdout.txt",
+            "stderr": "literature/2012.02123/catalog_sources/table-tab-candidates/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9a1e4d856e475b714d17998cd93fe2f729e4d5ea1d3a978038077d3464dc3e4d"
+    },
+    {
+      "id": "table-tab-candidates_orb",
+      "internal_table_id": "table-tab-candidates_orb",
+      "status": "success",
+      "ecsv_path": "literature/2012.02123/catalog_tables/table-tab-candidates_orb.ecsv",
+      "caption": "Galactocentric cylindrical coordinates $(R_\\mathrm{GC}, z_\\mathrm{GC})$, energy per unit mass $E$, minimum crossing radius $r_\\mathrm{min}$, ejection velocity $v_\\mathrm{ej}$, and flight time $t_\\mathrm{F}$ for the clean sample of 17 stars with $P_\\mathrm{ub} > 0.8$. Stars are ordered as in Table \\ref{tab:candidates}.",
+      "label": "tab:candidates_orb",
+      "row_count": 18,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\Gaia EDR3 ID",
+          "R_GC",
+          "z_GC",
+          "E",
+          "r_min",
+          "v_ej",
+          "t_F"
+        ],
+        [
+          "",
+          "(pc)",
+          "(pc)",
+          "(kpc 2 Myr -2 )",
+          "(pc)",
+          "(km s -1 )",
+          "(Myr)"
+        ],
+        [
+          "Galactic",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\Gaia EDR3 ID | Galactic",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R_GC | (pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "z_GC | (pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "E | (kpc 2 Myr -2 )",
+          "unit_text": "(kpc 2 Myr -2 )",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "r_min | (pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v_ej | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "t_F | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpllf63tn6/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpllf63tn6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2012.02123/catalog_sources/table-tab-candidates_orb/wrapped.tex",
+            "html": "literature/2012.02123/catalog_sources/table-tab-candidates_orb/latexml.html",
+            "stdout": "literature/2012.02123/catalog_sources/table-tab-candidates_orb/latexml.stdout.txt",
+            "stderr": "literature/2012.02123/catalog_sources/table-tab-candidates_orb/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ec59afc883f06ed643e54f464f600df570a30f05323112b75e333acb4b889d5d"
+    },
+    {
+      "id": "table-tab-candidates_zp",
+      "internal_table_id": "table-tab-candidates_zp",
+      "status": "success",
+      "ecsv_path": "literature/2012.02123/catalog_tables/table-tab-candidates_zp.ecsv",
+      "caption": "Observed and derived properties for the clean sample of 12 high velocity stars with a probability $P_\\mathrm{ub} > 0.5$ of being unbound from the Milky Way, computed including the estimate of the parallax zero point $\\varpi_\\mathrm{zp}$. Stars are ordered by decreasing values of $P_\\mathrm{ub}$.",
+      "label": "tab:candidates_zp",
+      "row_count": 13,
+      "column_count": 13,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\Gaia EDR3 ID",
+          "(RA, Dec.)",
+          "( l , b )",
+          "\\varpi-\\varpi_zp",
+          "\\mu_\\alpha*",
+          "\\mu_\\delta",
+          "v_rad",
+          "G",
+          "d",
+          "r_GC",
+          "v_GC",
+          "P_MW",
+          "P_ub"
+        ],
+        [
+          "",
+          "( ∘ )",
+          "(mas)",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(km s -1 )",
+          "(mag)",
+          "(pc)",
+          "(pc)",
+          "(km s^-1)",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Galactic",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\Gaia EDR3 ID | Galactic",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "(RA, Dec.) | ( ∘ )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "( l , b ) | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\varpi-\\varpi_zp | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\alpha* | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_\\delta | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_rad | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "G | (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "d | (pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "r_GC | (km s^-1)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "v_GC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "P_MW",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "P_ub",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpoldjfl8n/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpoldjfl8n/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2012.02123/catalog_sources/table-tab-candidates_zp/wrapped.tex",
+            "html": "literature/2012.02123/catalog_sources/table-tab-candidates_zp/latexml.html",
+            "stdout": "literature/2012.02123/catalog_sources/table-tab-candidates_zp/latexml.stdout.txt",
+            "stderr": "literature/2012.02123/catalog_sources/table-tab-candidates_zp/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "bca64cd4a1e1ee61416a31371a8d332f05182f4ee9b442fa8f0505f8fce487eb"
+    },
+    {
+      "id": "table-tab-catalogue",
+      "internal_table_id": "table-tab-catalogue",
+      "status": "success",
+      "ecsv_path": "literature/2012.02123/catalog_tables/table-tab-catalogue.ecsv",
+      "caption": "Description of the columns of the catalogue with distances and velocities. Entries labelled $^1$ are taken directly from the {\\Gaia} EDR3 catalogue, while entries labelled $^2$ are derived in this paper. We refer the interested reader to Section \\ref{sec:method} for details on how these quantities are computed. For the entries labelled $^2$, the quoted values correspond to the median of the distribution, with lower and upper uncertainties computed, respectively, from the $16$th and the $84$th percentile. Column 60 is present only in the version of the catalogue which includes the effect of the parallax zero point.",
+      "label": "tab:catalogue",
+      "row_count": 60,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Column",
+          "Units",
+          "Name",
+          "Description"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Column",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Units",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Description",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp658cbfhs/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2012.02123/arxiv_source/Fastest stars in Gaia EDR3",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp658cbfhs/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2012.02123/catalog_sources/table-tab-catalogue/wrapped.tex",
+            "html": "literature/2012.02123/catalog_sources/table-tab-catalogue/latexml.html",
+            "stdout": "literature/2012.02123/catalog_sources/table-tab-catalogue/latexml.stdout.txt",
+            "stderr": "literature/2012.02123/catalog_sources/table-tab-catalogue/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a37900cffcdfca7b40e42bbfe74398fefe4888a96e9408a48c182a03aeb9f347"
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2112.08235",
+    "title": "The Transformative Journey of HD 93521",
+    "month": "2021-12",
+    "source_note_json": "notes/2021/2021-12/2021-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2112.08235",
+      "pdf": "https://arxiv.org/pdf/2112.08235"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2112.08235",
+    "audit_path": "literature/2112.08235/audit.json",
+    "source_dir": "literature/2112.08235/arxiv_source",
+    "tex_root": "literature/2112.08235/arxiv_source/ms1.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:01:35",
+    "reviewer": "agent",
+    "summary": "HD 93521 is a massive, rapidly rotating O9.5 IIInn star located ~1 kpc above the Galactic disk. The paper calculates a time-of-flight of 39+/-3 Myr from Gaia EDR3 astrometry and radial velocity measurements (Table 1), then derives stellar parameters via a rotational model fit to the SED (Table 2), yielding an evolutionary age of ~5+/-2 Myr. The large discrepancy is explained by a binary merger scenario: the system was ejected as a close binary of two ~8 Msun stars that later merged, rejuvenating the product. Two data tables present radial velocity compilation and stellar parameters."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-vr",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Compilation of all historical and new radial velocity measurements for HD 93521 used to compute the error-weighted mean radial velocity (-8.9+/-2.9 km/s) for the time-of-flight calculation.",
+      "source_refs": [
+        {
+          "path": "literature/2112.08235/arxiv_source/ms1.tex",
+          "start_line": 167,
+          "end_line": 198,
+          "caption": "Average Radial Velocity Measurements",
+          "label": "tab:vr"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Source",
+          "meaning": "Reference for the radial velocity measurements",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Number of Measurements",
+          "meaning": "Count of individual radial velocity spectra used in the average",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Mean Date (HJD-2400000)",
+          "meaning": "Mean Heliocentric Julian Date of the observations minus 2400000",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "<V_r>",
+          "meaning": "Error-weighted or simple mean radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "sigma(E)",
+          "meaning": "External standard deviation between individual measurements (scatter)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "sigma(I)",
+          "meaning": "Average of the internal estimated errors for individual measurements",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        }
+      ],
+      "evidence": "Table 1 compiles radial velocities from Plaskett (1931), Conti (1977), Garmany (1980), Howarth (1993), Fullerton (1996, two epochs), Cazorla (2017), plus new measurements from IUE (139 spectra) and ESPaDOnS (5 spectra).",
+      "comments": "The weighted mean of all entries gives <V_r> = -8.9 +/- 2.9 km/s. Some entries lack a mean date (nodata) or internal errors (nodata)."
+    },
+    {
+      "id": "table-tab-properties",
+      "kind": "latex_table",
+      "asset_type": "fit_table",
+      "role_in_paper": "Comparison of stellar parameters for HD 93521 derived from the rotational model in this paper versus the earlier study by Howarth & Smith (2001). Provides the key physical parameters used to place the star on the H-R diagram and determine its evolutionary age.",
+      "source_refs": [
+        {
+          "path": "literature/2112.08235/arxiv_source/ms1.tex",
+          "start_line": 381,
+          "end_line": 415,
+          "caption": "Stellar Parameters",
+          "label": "tab:properties"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Physical quantity describing the star or model",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Howarth & Smith (2001)",
+          "meaning": "Parameter value from the earlier study by Howarth & Smith (2001) using von Zeipel gravity darkening and a distance of 2.2 kpc",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "This Paper",
+          "meaning": "Parameter value from this work using omega-model gravity darkening, line-blanketed TLUSTY atmospheres, and Gaia EDR3 distance of 1.246 kpc",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        }
+      ],
+      "evidence": "Table 2 lists 18 parameters: gravity darkening law, v_e sin i, inclination i, equatorial velocity v_e, critical velocity v_c, Omega/Omega_c, polar radius R_p, equatorial radius R_e, mass M, log g_p, log g_e, log g(avg), T_p, T_e, <T>(avg), <T>(all), log(L/Lsun), He/H ratio y, and distance d.",
+      "comments": "Key results: R_p=6.1 Rsun, M=17 Msun, log(L/Lsun)=4.6, <T>(all)=31.0 kK. The revised distance from Gaia EDR3 (1.246 kpc vs old 2.2 kpc) drives significantly lower radius and luminosity."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-polarbase",
+      "kind": "external_url",
+      "url": "http://polarbase.irap.omp.eu/",
+      "local_path": "",
+      "description": "PolarBase archive of high-resolution spectropolarimetric data. ESPaDOnS spectra of HD 93521 used for radial velocity measurements were obtained from this archive.",
+      "source_refs": [
+        {
+          "path": "literature/2112.08235/arxiv_source/ms1.tex",
+          "start_line": 148,
+          "end_line": 148,
+          "context": "Canada-France-Hawaii Telescope \\citep{Donati2006}. \nThe ESPaDOnS spectra were obtained from  the {\\it PolarBase} \narchive\\footnote{http://polarbase.irap.omp.eu/} \n\\citep{Petit2014}, and were rebinned onto a heliocentric, $\\log \\lambda$ \nwavelength grid."
+        }
+      ],
+      "evidence": "ESPaDOnS spectra retrieved from PolarBase archive; 5 high S/N, high resolution spectra used for radial velocity cross-correlation with TLUSTY model template.",
+      "comments": ""
+    },
+    {
+      "id": "resource-calspec",
+      "kind": "external_url",
+      "url": "https://www.stsci.edu/hst/instrumentation/reference-data-for-calibration-and-tools/astronomical-catalogs/calspec",
+      "local_path": "",
+      "description": "HST CALSPEC spectral flux standard database. HD 93521 is a CALSPEC standard star; its UV+optical SED from IUE and HST/STIS was used for angular diameter fitting and SED analysis.",
+      "source_refs": [
+        {
+          "path": "literature/2112.08235/arxiv_source/ms1.tex",
+          "start_line": 269,
+          "end_line": 269,
+          "context": "optical part of the spectrum is well established thanks to its \ninclusion as a spectral flux standard in the Hubble Space Telescope \n(HST) CALSPEC\\footnote{https://www.stsci.edu/hst/instrumentation/reference-data-for-calibration-and-tools/astronomical-catalogs/calspec} \nprogram \\citep{Bohlin2014, Bohlin2020}."
+        }
+      ],
+      "evidence": "Observed SED from IUE (1148-1680 A) and HST/STIS (1680-10120 A) taken from CALSPEC; rebinned to R=500 for comparison with TLUSTY model SED.",
+      "comments": ""
+    }
+  ]
+}

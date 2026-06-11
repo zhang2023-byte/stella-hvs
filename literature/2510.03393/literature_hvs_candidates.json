@@ -1,0 +1,1128 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:01:08",
+  "paper": {
+    "arxiv_id": "2510.03393",
+    "bibcode": "2025ApJ...993L..10L",
+    "title": "Threading the Magellanic Needle: Hypervelocity Stars Trace the Past Location of the LMC",
+    "month": "2025-10",
+    "source_note_json": "notes/2025/2025-10/2025-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2510.03393",
+      "pdf": "https://arxiv.org/pdf/2510.03393"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2510.03393",
+    "audit_path": "literature/2510.03393/audit.json",
+    "catalog_review_path": "literature/2510.03393/catalog_review.json",
+    "catalog_extraction_path": "literature/2510.03393/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-22T20:01:08",
+    "extractor": "agent",
+    "summary": "Three LMC-origin HVSs (HVS 3, HVS 7, HVS 15) are discussed in the paper as dynamical tracers for constraining the LMC orbit. All three originate from the HVS Survey (Brown et al. 2014) and were identified as LMC-origin candidates by Han et al. (2025). The paper assumes they originated from the LMC and uses their trajectories to constrain the LMC's past orbit and present-day dynamical center."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Adopt HVS Survey dataset (Brown et al. 2014) and Gaia DR3 astrometry for HVS 3, 7, and 15 from Han et al. (2025)."
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "astrometric_calibration",
+      "summary": "Transform heliocentric observations to Galactocentric coordinates using Solar phase-space parameters from Reid et al. (2019) with uncertainties increased by factor of two."
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Compute Galactocentric velocities from observed phase-space coordinates."
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Integrate HVS orbits backward in time as test particles in evolving LMC-Milky Way potential using gala, with 10,000 Monte Carlo realizations per star."
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-04"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Assess LMC origin by evaluating which backward-integrated trajectories intersect the LMC's dynamical center within 1 kpc."
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "reported_value_adoption",
+      "summary": "Adopt heliocentric distance measurements directly from the HVS Survey dataset."
+    },
+    {
+      "id": "step-07",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "reported_value_adoption",
+      "summary": "Adopt heliocentric radial velocity measurements directly from the HVS Survey dataset."
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2510.03393:cand-001",
+        "paper_candidate_id": "HVS 3",
+        "gaia_source_id": "Gaia DR3 4777328613382967040",
+        "all": [
+          {
+            "value": "HVS 3",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2510.03393/arxiv_source/main.tex",
+                "start_line": 78,
+                "end_line": 78,
+                "context": "Paper focuses on HVS 3, HVS 7, and HVS 15 as the three stars with the highest likelihood of LMC origin."
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 4777328613382967040",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 23,
+                "column": "col_008",
+                "column_header": "Gaia source_id",
+                "raw_value": "4777328613382967040"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "The paper explicitly discusses this star as a hypervelocity star originating from the LMC, with an orbit incompatible with Galactic center ejection. It originates from the HVS Survey dataset of 21 unbound late B-type main sequence stars.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The paper clearly identifies this star as an LMC-origin hypervelocity star and provides complete observed phase-space coordinates in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2510.03393/arxiv_source/main.tex",
+            "start_line": 78,
+            "end_line": 78,
+            "context": "We focus on HVS 3, HVS 7, and HVS 15—the three stars with the highest likelihood of LMC origin, based on orbits that are incompatible with a Galactic center ejection."
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2510.03393/arxiv_source/main.tex",
+            "start_line": 78,
+            "end_line": 78,
+            "context": "Han2025 analyzed the full HVS Survey dataset and identified several HVSs that likely originated from the LMC."
+          }
+        ],
+        "citation": {
+          "bibkey": "Han2025",
+          "authors": [
+            "Han, Jiwon Jesse",
+            "El-Badry, Kareem",
+            "Lucchini, Scott",
+            "Hernquist, Lars",
+            "Brown, Warren",
+            "Garavito-Camargo, Nico",
+            "Conroy, Charlie",
+            "Sari, Re'em"
+          ],
+          "year": "2025",
+          "title": "Hypervelocity Stars Trace a Supermassive Black Hole in the Large Magellanic Cloud",
+          "doi": "10.3847/1538-4357/adb967",
+          "arxiv_id": "2502.00102",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2510.03393/arxiv_source/main.tex",
+              "start_line": 78,
+              "end_line": 78,
+              "context": "Han2025 analyzed the full HVS Survey dataset and identified several HVSs that likely originated from the LMC."
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2510.03393/arxiv_source/references.bib",
+              "start_line": 2520,
+              "end_line": 2535,
+              "context": "Bibliography entry for Han2025 with authors, title, year, doi, and adsurl containing bibcode."
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "69.55",
+            "value": "69.55",
+            "unit": "deg",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 23,
+                "column": "col_002",
+                "column_header": "RA | (deg)",
+                "raw_value": "69.55"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2510.03393/arxiv_source/main.tex",
+                  "start_line": 276,
+                  "end_line": 276,
+                  "context": "Paper states constraints are based on HVSs with currently available Gaia DR3 proper motions."
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2510.03393/arxiv_source/main.tex",
+                  "start_line": 276,
+                  "end_line": 276,
+                  "context": "Paper states constraints are based on HVSs with currently available Gaia DR3 proper motions."
+                }
+              ]
+            }
+          },
+          "dec": {
+            "raw_value": "-54.55",
+            "value": "-54.55",
+            "unit": "deg",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 23,
+                "column": "col_003",
+                "column_header": "Dec | (deg)",
+                "raw_value": "-54.55"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2510.03393/arxiv_source/main.tex",
+                  "start_line": 276,
+                  "end_line": 276,
+                  "context": "Paper states constraints are based on HVSs with currently available Gaia DR3 proper motions."
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2510.03393/arxiv_source/main.tex",
+                  "start_line": 276,
+                  "end_line": 276,
+                  "context": "Paper states constraints are based on HVSs with currently available Gaia DR3 proper motions."
+                }
+              ]
+            }
+          },
+          "distance": {
+            "raw_value": "61+/- 10",
+            "value": "61",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 23,
+                "column": "col_004",
+                "column_header": "Distance | (kpc)",
+                "raw_value": "61+/- 10"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ],
+            "error": "10"
+          },
+          "proper_motion_ra": {
+            "raw_value": "0.851+/- 0.11",
+            "value": "0.851",
+            "unit": "mas yr^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 23,
+                "column": "col_005",
+                "column_header": "\\mu_\\alpha | (mas yr -1 )",
+                "raw_value": "0.851+/- 0.11"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "error": "0.11"
+          },
+          "proper_motion_dec": {
+            "raw_value": "1.936+/- 0.162",
+            "value": "1.936",
+            "unit": "mas yr^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 23,
+                "column": "col_006",
+                "column_header": "\\mu_\\delta | (mas yr -1 )",
+                "raw_value": "1.936+/- 0.162"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "error": "0.162"
+          },
+          "radial_velocity": {
+            "raw_value": "723+/- 3",
+            "value": "723",
+            "unit": "km s^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 23,
+                "column": "col_007",
+                "column_header": "RV | (km s^-1)",
+                "raw_value": "723+/- 3"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ],
+            "error": "3"
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "LMC",
+          "value": "LMC",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2510.03393/arxiv_source/main.tex",
+              "start_line": 78,
+              "end_line": 78,
+              "context": "Paper assumes HVSs have originated from the LMC."
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2510.03393:cand-002",
+        "paper_candidate_id": "HVS 7",
+        "gaia_source_id": "Gaia DR3 3799146650623432704",
+        "all": [
+          {
+            "value": "HVS 7",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2510.03393/arxiv_source/main.tex",
+                "start_line": 78,
+                "end_line": 78,
+                "context": "Paper focuses on HVS 3, HVS 7, and HVS 15 as the three stars with the highest likelihood of LMC origin."
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 3799146650623432704",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 24,
+                "column": "col_008",
+                "column_header": "Gaia source_id",
+                "raw_value": "3799146650623432704"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "The paper explicitly discusses this star as a hypervelocity star originating from the LMC, with an orbit incompatible with Galactic center ejection. It originates from the HVS Survey dataset of 21 unbound late B-type main sequence stars.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The paper clearly identifies this star as an LMC-origin hypervelocity star and provides complete observed phase-space coordinates in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2510.03393/arxiv_source/main.tex",
+            "start_line": 78,
+            "end_line": 78,
+            "context": "We focus on HVS 3, HVS 7, and HVS 15—the three stars with the highest likelihood of LMC origin, based on orbits that are incompatible with a Galactic center ejection."
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2510.03393/arxiv_source/main.tex",
+            "start_line": 78,
+            "end_line": 78,
+            "context": "Han2025 analyzed the full HVS Survey dataset and identified several HVSs that likely originated from the LMC."
+          }
+        ],
+        "citation": {
+          "bibkey": "Han2025",
+          "authors": [
+            "Han, Jiwon Jesse",
+            "El-Badry, Kareem",
+            "Lucchini, Scott",
+            "Hernquist, Lars",
+            "Brown, Warren",
+            "Garavito-Camargo, Nico",
+            "Conroy, Charlie",
+            "Sari, Re'em"
+          ],
+          "year": "2025",
+          "title": "Hypervelocity Stars Trace a Supermassive Black Hole in the Large Magellanic Cloud",
+          "doi": "10.3847/1538-4357/adb967",
+          "arxiv_id": "2502.00102",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2510.03393/arxiv_source/main.tex",
+              "start_line": 78,
+              "end_line": 78,
+              "context": "Han2025 analyzed the full HVS Survey dataset and identified several HVSs that likely originated from the LMC."
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2510.03393/arxiv_source/references.bib",
+              "start_line": 2520,
+              "end_line": 2535,
+              "context": "Bibliography entry for Han2025 with authors, title, year, doi, and adsurl containing bibcode."
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "173.30",
+            "value": "173.30",
+            "unit": "deg",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 24,
+                "column": "col_002",
+                "column_header": "RA | (deg)",
+                "raw_value": "173.30"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2510.03393/arxiv_source/main.tex",
+                  "start_line": 276,
+                  "end_line": 276,
+                  "context": "Paper states constraints are based on HVSs with currently available Gaia DR3 proper motions."
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2510.03393/arxiv_source/main.tex",
+                  "start_line": 276,
+                  "end_line": 276,
+                  "context": "Paper states constraints are based on HVSs with currently available Gaia DR3 proper motions."
+                }
+              ]
+            }
+          },
+          "dec": {
+            "raw_value": "1.14",
+            "value": "1.14",
+            "unit": "deg",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 24,
+                "column": "col_003",
+                "column_header": "Dec | (deg)",
+                "raw_value": "1.14"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2510.03393/arxiv_source/main.tex",
+                  "start_line": 276,
+                  "end_line": 276,
+                  "context": "Paper states constraints are based on HVSs with currently available Gaia DR3 proper motions."
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2510.03393/arxiv_source/main.tex",
+                  "start_line": 276,
+                  "end_line": 276,
+                  "context": "Paper states constraints are based on HVSs with currently available Gaia DR3 proper motions."
+                }
+              ]
+            }
+          },
+          "distance": {
+            "raw_value": "52.17+/- 6.25",
+            "value": "52.17",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 24,
+                "column": "col_004",
+                "column_header": "Distance | (kpc)",
+                "raw_value": "52.17+/- 6.25"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ],
+            "error": "6.25"
+          },
+          "proper_motion_ra": {
+            "raw_value": "-0.09+/- 0.18",
+            "value": "-0.09",
+            "unit": "mas yr^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 24,
+                "column": "col_005",
+                "column_header": "\\mu_\\alpha | (mas yr -1 )",
+                "raw_value": "-0.09+/- 0.18"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "error": "0.18"
+          },
+          "proper_motion_dec": {
+            "raw_value": "0.02+/- 0.13",
+            "value": "0.02",
+            "unit": "mas yr^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 24,
+                "column": "col_006",
+                "column_header": "\\mu_\\delta | (mas yr -1 )",
+                "raw_value": "0.02+/- 0.13"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "error": "0.13"
+          },
+          "radial_velocity": {
+            "raw_value": "526.9+/- 3.0",
+            "value": "526.9",
+            "unit": "km s^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 24,
+                "column": "col_007",
+                "column_header": "RV | (km s^-1)",
+                "raw_value": "526.9+/- 3.0"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ],
+            "error": "3.0"
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "LMC",
+          "value": "LMC",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2510.03393/arxiv_source/main.tex",
+              "start_line": 78,
+              "end_line": 78,
+              "context": "Paper assumes HVSs have originated from the LMC."
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2510.03393:cand-003",
+        "paper_candidate_id": "HVS 15",
+        "gaia_source_id": "Gaia DR3 3794074603484360704",
+        "all": [
+          {
+            "value": "HVS 15",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2510.03393/arxiv_source/main.tex",
+                "start_line": 78,
+                "end_line": 78,
+                "context": "Paper focuses on HVS 3, HVS 7, and HVS 15 as the three stars with the highest likelihood of LMC origin."
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 3794074603484360704",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 25,
+                "column": "col_008",
+                "column_header": "Gaia source_id",
+                "raw_value": "3794074603484360704"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "The paper explicitly discusses this star as a hypervelocity star originating from the LMC, with an orbit incompatible with Galactic center ejection. It originates from the HVS Survey dataset of 21 unbound late B-type main sequence stars.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The paper clearly identifies this star as an LMC-origin hypervelocity star and provides complete observed phase-space coordinates in Table 1.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2510.03393/arxiv_source/main.tex",
+            "start_line": 78,
+            "end_line": 78,
+            "context": "We focus on HVS 3, HVS 7, and HVS 15—the three stars with the highest likelihood of LMC origin, based on orbits that are incompatible with a Galactic center ejection."
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2510.03393/arxiv_source/main.tex",
+            "start_line": 78,
+            "end_line": 78,
+            "context": "Han2025 analyzed the full HVS Survey dataset and identified several HVSs that likely originated from the LMC."
+          }
+        ],
+        "citation": {
+          "bibkey": "Han2025",
+          "authors": [
+            "Han, Jiwon Jesse",
+            "El-Badry, Kareem",
+            "Lucchini, Scott",
+            "Hernquist, Lars",
+            "Brown, Warren",
+            "Garavito-Camargo, Nico",
+            "Conroy, Charlie",
+            "Sari, Re'em"
+          ],
+          "year": "2025",
+          "title": "Hypervelocity Stars Trace a Supermassive Black Hole in the Large Magellanic Cloud",
+          "doi": "10.3847/1538-4357/adb967",
+          "arxiv_id": "2502.00102",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2510.03393/arxiv_source/main.tex",
+              "start_line": 78,
+              "end_line": 78,
+              "context": "Han2025 analyzed the full HVS Survey dataset and identified several HVSs that likely originated from the LMC."
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2510.03393/arxiv_source/references.bib",
+              "start_line": 2520,
+              "end_line": 2535,
+              "context": "Bibliography entry for Han2025 with authors, title, year, doi, and adsurl containing bibcode."
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "173.42",
+            "value": "173.42",
+            "unit": "deg",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 25,
+                "column": "col_002",
+                "column_header": "RA | (deg)",
+                "raw_value": "173.42"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2510.03393/arxiv_source/main.tex",
+                  "start_line": 276,
+                  "end_line": 276,
+                  "context": "Paper states constraints are based on HVSs with currently available Gaia DR3 proper motions."
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2510.03393/arxiv_source/main.tex",
+                  "start_line": 276,
+                  "end_line": 276,
+                  "context": "Paper states constraints are based on HVSs with currently available Gaia DR3 proper motions."
+                }
+              ]
+            }
+          },
+          "dec": {
+            "raw_value": "-1.35",
+            "value": "-1.35",
+            "unit": "deg",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 25,
+                "column": "col_003",
+                "column_header": "Dec | (deg)",
+                "raw_value": "-1.35"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2510.03393/arxiv_source/main.tex",
+                  "start_line": 276,
+                  "end_line": 276,
+                  "context": "Paper states constraints are based on HVSs with currently available Gaia DR3 proper motions."
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "survey_reference",
+              "reference_entry_id": "gaia-dr3",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/2510.03393/arxiv_source/main.tex",
+                  "start_line": 276,
+                  "end_line": 276,
+                  "context": "Paper states constraints are based on HVSs with currently available Gaia DR3 proper motions."
+                }
+              ]
+            }
+          },
+          "distance": {
+            "raw_value": "66.16+/- 9.75",
+            "value": "66.16",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 25,
+                "column": "col_004",
+                "column_header": "Distance | (kpc)",
+                "raw_value": "66.16+/- 9.75"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ],
+            "error": "9.75"
+          },
+          "proper_motion_ra": {
+            "raw_value": "-1.30+/- 0.36",
+            "value": "-1.3",
+            "unit": "mas yr^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 25,
+                "column": "col_005",
+                "column_header": "\\mu_\\alpha | (mas yr -1 )",
+                "raw_value": "-1.30+/- 0.36"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "error": "0.36"
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.48+/- 0.23",
+            "value": "-0.48",
+            "unit": "mas yr^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 25,
+                "column": "col_006",
+                "column_header": "\\mu_\\delta | (mas yr -1 )",
+                "raw_value": "-0.48+/- 0.23"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "error": "0.23"
+          },
+          "radial_velocity": {
+            "raw_value": "461.0+/- 6.3",
+            "value": "461.0",
+            "unit": "km s^-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2510.03393/catalog_tables/table-tab-ICdata-2.ecsv",
+                "line": 25,
+                "column": "col_007",
+                "column_header": "RV | (km s^-1)",
+                "raw_value": "461.0+/- 6.3"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ],
+            "error": "6.3"
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "LMC",
+          "value": "LMC",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2510.03393/arxiv_source/main.tex",
+              "start_line": 78,
+              "end_line": 78,
+              "context": "Paper assumes HVSs have originated from the LMC."
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        },
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-ICdata-hvss",
+      "description": "HVS 3, HVS 7, and HVS 15 from Table 1 (tab:ICdata), the three LMC-origin HVSs with the best-constrained positions and velocities.",
+      "decision": "included",
+      "reason": "The paper explicitly treats these three stars as hypervelocity stars originating from the LMC, using them as dynamical tracers to constrain the LMC's past orbit and present-day dynamical center.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2510.03393/arxiv_source/main.tex",
+          "start_line": 78,
+          "end_line": 78,
+          "context": "We focus on HVS 3, HVS 7, and HVS 15—the three stars with the highest likelihood of LMC origin, based on orbits that are incompatible with a Galactic center ejection."
+        }
+      ]
+    },
+    {
+      "group_id": "additional-hvss-mentioned",
+      "description": "Additional HVSs from the HVS Survey mentioned as potentially consistent with an LMC origin but not analyzed in detail in this paper.",
+      "decision": "excluded",
+      "reason": "The paper states that while additional HVSs may also be consistent with an LMC origin, their positions and velocities are less well constrained than those of the three stars analyzed here. The paper does not treat them as primary dynamical tracers.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2510.03393/arxiv_source/main.tex",
+          "start_line": 78,
+          "end_line": 78,
+          "context": "While additional HVSs may also be consistent with an LMC origin, their positions and velocities are less well constrained than those of the three stars we analyze here."
+        }
+      ]
+    }
+  ]
+}

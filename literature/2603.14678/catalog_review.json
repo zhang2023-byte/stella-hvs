@@ -1,0 +1,80 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2603.14678",
+    "title": "Revisiting candidate high-velocity stars associated with the Sagittarius dwarf spheroidal galaxy",
+    "month": "2026-03",
+    "source_note_json": "notes/2026/2026-03/2026-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2603.14678",
+      "pdf": "https://arxiv.org/pdf/2603.14678"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2603.14678",
+    "audit_path": "literature/2603.14678/audit.json",
+    "source_dir": "literature/2603.14678/arxiv_source",
+    "tex_root": "literature/2603.14678/arxiv_source/aa57476-25.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:33:58",
+    "reviewer": "agent",
+    "summary": "No internal LaTeX tables detected in the arXiv source. External resources include three Python packages used for analysis (speedystar, mwdust, PyGaia) referenced via GitHub URLs, plus survey data mentions (Gaia DR3, DESI DR1, LAMOST DR12) without concrete download URLs."
+  },
+  "internal_tables": [],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "code_repository",
+      "url": "https://github.com/fraserevans/speedystar",
+      "local_path": "",
+      "description": "Python package used to generate Hills-mechanism HVS samples from the Sgr dSph, perform orbit integration in the Galactic potential, and conduct mock observations.",
+      "source_refs": [
+        {
+          "path": "literature/2603.14678/arxiv_source/aa57476-25.tex",
+          "start_line": 159,
+          "end_line": 159,
+          "context": "We employed the Python package speedystar (https://github.com/fraserevans/speedystar) to generate HVS samples from the Hills mechanism..."
+        }
+      ],
+      "evidence": "We employed the Python package speedystar (https://github.com/fraserevans/speedystar) to generate HVS samples from the Hills mechanism...",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "code_repository",
+      "url": "https://github.com/jobovy/mwdust",
+      "local_path": "",
+      "description": "Python package used for dust extinction maps in the Milky Way.",
+      "source_refs": [
+        {
+          "path": "literature/2603.14678/arxiv_source/aa57476-25.tex",
+          "start_line": 172,
+          "end_line": 172,
+          "context": "https://github.com/jobovy/mwdust"
+        }
+      ],
+      "evidence": "https://github.com/jobovy/mwdust",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "code_repository",
+      "url": "https://github.com/agabrown/PyGaia",
+      "local_path": "",
+      "description": "Python package used to estimate anticipated Gaia DR4 astrometric and radial-velocity uncertainties.",
+      "source_refs": [
+        {
+          "path": "literature/2603.14678/arxiv_source/aa57476-25.tex",
+          "start_line": 186,
+          "end_line": 186,
+          "context": "PyGaia (https://github.com/agabrown/PyGaia)"
+        }
+      ],
+      "evidence": "PyGaia (https://github.com/agabrown/PyGaia)",
+      "comments": ""
+    }
+  ]
+}

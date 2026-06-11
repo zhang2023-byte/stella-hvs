@@ -1,0 +1,172 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1807.02028",
+    "title": "In-Situ Star Formation in the Outskirts of the Large Magellanic Cloud: Gaia DR2 Confirmation",
+    "month": "2018-07",
+    "source_note_json": "notes/2018/2018-07/2018-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1807.02028",
+      "pdf": "https://arxiv.org/pdf/1807.02028"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1807.02028",
+    "audit_path": "literature/1807.02028/audit.json",
+    "source_dir": "literature/1807.02028/arxiv_source",
+    "tex_root": "literature/1807.02028/arxiv_source/ms.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T07:59:22",
+    "reviewer": "agent",
+    "summary": "Paper uses Gaia DR2 proper motions to study 6 young B-type main-sequence stars in the outskirts of the LMC (7-13 degrees from center), previously identified by Moni Bidin et al. (2017, MB17). Gaia DR2 proper motions confirm that 4 stars formed in situ locally, while 2 (stars 390 and 403) have tangential velocity differences >200 km/s and are likely dynamical ejectees from the inner LMC. Includes 2 internal tables: (1) Table tab1 — proper motions and proper-motion differences between the 6 target stars and their local LMC field means. Columns: Gaia DR2 ID, MB17 ID, number of field stars used (N_f), mean field proper motions in RA and Dec, target star proper motions in RA and Dec, and proper-motion differences (Delta mu_alpha, Delta mu_delta). (2) Table tab2 — derived velocity and travel distance parameters. Columns: MB17 ID, tangential velocity difference Delta V_T (km/s), age (Myr), travel distance in degrees and kpc, and line-of-sight velocity difference Delta V_los (km/s) from the LMC disk model. No external data products or machine-readable tables are provided by the paper; it relies on public catalogs (Gaia DR2, 2MASS, GASS HI survey)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab1",
+      "kind": "latex_table",
+      "asset_type": "reference_table",
+      "role_in_paper": "Primary kinematic data table presenting Gaia DR2 proper motions for the 6 target young B-type stars and the mean proper motions of LMC field stars in each subfield. The proper-motion differences (last two columns) are the key observables used to distinguish in-situ stars from runaway candidates. Stars 390 and 403 show significant proper-motion offsets (>0.85 mas/yr) indicating they are not comoving with the local LMC field.",
+      "source_refs": [
+        {
+          "path": "literature/1807.02028/arxiv_source/ms.tex",
+          "start_line": 269,
+          "end_line": 289,
+          "caption": "Proper motions and proper-motion differences between targets and field",
+          "label": "tab1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 ID",
+          "meaning": "Gaia DR2 source identifier (unique 64-bit integer) for each target star. Used for cross-referencing with the Gaia archive.",
+          "unit_text": "",
+          "source_of_definition": "table header / Gaia DR2 catalog",
+          "confidence": 1.0
+        },
+        {
+          "name": "ID",
+          "meaning": "Star identifier from Moni Bidin et al. (2017, MB17). Values: 292, 307, 390, 403, 405, 406. Star 292 is a known member of the young stellar association ICA76 in the Bridge region.",
+          "unit_text": "",
+          "source_of_definition": "table header / Moni Bidin et al. 2017 (MB17)",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_f",
+          "meaning": "Number of LMC field stars (M giants selected via 2MASS J,H CMD plus parallax criterion) within the 1-degree radius subfield used to determine the mean local proper motion. Ranges from 13 (star 403) to 620 (star 292).",
+          "unit_text": "",
+          "source_of_definition": "table header / Section 2 (Analysis)",
+          "confidence": 1.0
+        },
+        {
+          "name": "<mu_alpha^f>",
+          "meaning": "Mean proper motion in Right Ascension (including cos(dec) factor) of the LMC field stars in the subfield, with uncertainty in parentheses (mas/yr). Reflects the local LMC disk motion including rotation.",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header / Section 2",
+          "confidence": 1.0
+        },
+        {
+          "name": "<mu_delta^f>",
+          "meaning": "Mean proper motion in Declination of the LMC field stars in the subfield, with uncertainty in parentheses (mas/yr).",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header / Section 2",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_alpha",
+          "meaning": "Gaia DR2 proper motion in Right Ascension (with cos(dec) factor) of the target young star, with uncertainty in parentheses (mas/yr). Average uncertainty ~0.08-0.15 mas/yr except star 390 with ~0.15 mas/yr.",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header / Gaia DR2 / Section 2",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_delta",
+          "meaning": "Gaia DR2 proper motion in Declination of the target young star, with uncertainty in parentheses (mas/yr).",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header / Gaia DR2 / Section 2",
+          "confidence": 1.0
+        },
+        {
+          "name": "Delta mu_alpha",
+          "meaning": "Proper-motion difference in Right Ascension: target star minus mean field, with uncertainty propagated in quadrature (mas/yr). Large positive values indicate the star moves faster eastward than the local disk. Star 390 shows +0.853 mas/yr, star 403 shows -0.287 mas/yr.",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header / Section 2",
+          "confidence": 1.0
+        },
+        {
+          "name": "Delta mu_delta",
+          "meaning": "Proper-motion difference in Declination: target star minus mean field, with uncertainty propagated in quadrature (mas/yr). Star 403 shows +1.127 mas/yr, a significant northward offset from the local LMC field.",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header / Section 2",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "We first determine the mean motion of LMC stars in the area around each of our target stars. This local field motion is then subtracted from the proper motion of the target star to obtain the star's motion with respect to its LMC neighbors... The values of these means, and the number of stars used in their determination, are listed in Tab.1, columns 4, 5 and 3 respectively. Finally, the last two columns of Tab.1 show the proper-motion difference between the target star and the mean of the field.",
+      "comments": "6 rows x 9 columns. All proper motions and differences are printed in full in the manuscript (no machine-readable version needed). The table demonstrates that stars 390 and 403 have significant proper-motion differences (>3 sigma in at least one component) while stars 292, 307, 405, and 406 are consistent with the local field motion. The Gaia DR2 IDs provide direct archival traceability. Proper motions use mas/yr units with mu_alpha* = mu_alpha * cos(delta)."
+    },
+    {
+      "id": "table-tab2",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Derived kinematic quantities combining the proper-motion differences from Table tab1 with a fixed LMC distance of 50 kpc and stellar ages from MB17. Tangential velocity differences Delta V_T and travel distances are used to determine whether stars could have formed at their current locations. The line-of-sight velocity difference Delta V_los (from MB17) is included for comparison but not used in travel-distance calculations.",
+      "source_refs": [
+        {
+          "path": "literature/1807.02028/arxiv_source/ms.tex",
+          "start_line": 341,
+          "end_line": 360,
+          "caption": "Velocity and travel distance",
+          "label": "tab2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Star identifier from MB17 (292, 307, 390, 403, 405, 406).",
+          "unit_text": "",
+          "source_of_definition": "table header / MB17",
+          "confidence": 1.0
+        },
+        {
+          "name": "Delta V_T",
+          "meaning": "Tangential velocity difference between the target star and the local LMC field, computed from proper-motion differences multiplied by a fixed 50 kpc distance. Uncertainty in parentheses (km/s). Dominated by the Gaia DR2 proper-motion uncertainty of each target star. Stars 390 (204 km/s) and 403 (276 km/s) show velocities exceeding 200 km/s, indicating they are likely runaways.",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / Section 3 (Velocities)",
+          "confidence": 1.0
+        },
+        {
+          "name": "Age",
+          "meaning": "Stellar age estimate from Moni Bidin et al. (2017, MB17) based on spectroscopic analysis. Uncertainty in parentheses (Myr). Ages range from 11 Myr (star 292) to 45 Myr (star 406).",
+          "unit_text": "Myr",
+          "source_of_definition": "table header / MB17",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dist (deg)",
+          "meaning": "Lifetime tangential travel distance in degrees on the sky, computed as Delta V_T * Age, converted to angular units at 50 kpc. Uncertainty propagated from Delta V_T and Age uncertainties. Stars 390 (8.4 deg) and 403 (6.5 deg) have travel distances much larger than their angular distance from the LMC center.",
+          "unit_text": "deg",
+          "source_of_definition": "table header / Section 3",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dist (kpc)",
+          "meaning": "Lifetime tangential travel distance in kiloparsecs, computed from the angular travel distance at the assumed LMC distance of 50 kpc. Stars 390 (7.1 kpc) and 403 (5.5 kpc) have large travel distances incompatible with in-situ formation.",
+          "unit_text": "kpc",
+          "source_of_definition": "table header / Section 3",
+          "confidence": 1.0
+        },
+        {
+          "name": "Delta V_los",
+          "meaning": "Line-of-sight velocity difference between the target star and the prediction of an LMC disk model, from Moni Bidin et al. (2017, MB17). With uncertainty (km/s). Not used in travel-distance calculation; included for comparison with the tangential velocity. Values range from -52 to +40 km/s.",
+          "unit_text": "km/s",
+          "source_of_definition": "table header / MB17 / Section 3",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Proper-motion differences are multiplied by a fixed 50-kpc distance, in agreement with the LMC's distance modulus of 18.49, yielding velocities in the plane of the sky. The total tangential-velocity differences, and their uncertainties are listed in Table 2 as Delta V_T. Ages, as derived by MB17, are also listed in Tab. 2 along with their estimated uncertainties. These are combined to calculate lifetime tangential-travel distances that are also given in Tab. 2, in both degrees and kpc.",
+      "comments": "6 rows x 6 columns. The paper notes that stars 390 and 403 show velocity differences in excess of 200 km/s with corresponding large travel distances of ~6-7 kpc. The remaining four stars have velocity differences < 100 km/s and travel distances of order 1 kpc, consistent with in-situ formation. Star 406 has a marginal travel distance of ~4 kpc due to its large age (45 Myr), but its proximity to star 405 and similar velocity vector suggest they may have formed together locally. All data printed in full in the manuscript."
+    }
+  ],
+  "external_resources": []
+}

@@ -1,0 +1,1388 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:43:31",
+  "paper": {
+    "arxiv_id": "2009.05773",
+    "title": "The Villafranca catalog of Galactic OB groups: I. Systems with O2-O3.5 stars",
+    "month": "2020-09"
+  },
+  "review": {
+    "path": "literature/2009.05773/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084331",
+    "started_at": "2026-06-07T08:43:31",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2009.05773",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 7,
+      "work_count": 7,
+      "table_count": 7,
+      "success_count": 7,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 7,
+      "file_success_count": 7,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-diststat",
+      "internal_table_id": "table-diststat",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.05773/arxiv_source/diststat.tex",
+        "start_line": 1,
+        "end_line": 71,
+        "caption": "Distance statistics as a function of year range, stellar group, method, and first author. For the latter, only those with four or more measurements are listed.",
+        "label": "diststat"
+      },
+      "source_path": "literature/2009.05773/arxiv_source/diststat.tex",
+      "excerpt_path": "literature/2009.05773/catalog_sources/table-diststat/excerpt.tex",
+      "sha256": "c8041f3c7f8866e6b94cc60c7af88ecda2ec03fa5fe571a391e41aa77458b002",
+      "line_count": 71,
+      "error": ""
+    },
+    {
+      "id": "table-sample",
+      "internal_table_id": "table-sample",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.05773/arxiv_source/ms.tex",
+        "start_line": 290,
+        "end_line": 366,
+        "caption": "Sample of Galactic O-type stellar groups in this paper. The other IDs may refer to the cluster or the associated H II region.",
+        "label": "sample"
+      },
+      "source_path": "literature/2009.05773/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2009.05773/catalog_sources/table-sample/excerpt.tex",
+      "sha256": "e28b01c1a0ed16d33db372b31a00eae18d84cf2c747270ea26c1d65d009d3508",
+      "line_count": 77,
+      "error": ""
+    },
+    {
+      "id": "table-filters",
+      "internal_table_id": "table-filters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.05773/arxiv_source/ms.tex",
+        "start_line": 433,
+        "end_line": 466,
+        "caption": "Field sizes and filters applied to the O-type stellar groups and subgroups in this paper. RUWE is filtered as <1.4 and \\sigma_{\\varpi_{\\rm c}} as <0.1 mas in all cases. For VO{014} the coordinates correspond to those of the Bajamar star.",
+        "label": "filters"
+      },
+      "source_path": "literature/2009.05773/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2009.05773/catalog_sources/table-filters/excerpt.tex",
+      "sha256": "6b3fb1f283432840f51012069730e6a937218da563da12544b5c957592b62426",
+      "line_count": 34,
+      "error": ""
+    },
+    {
+      "id": "table-results",
+      "internal_table_id": "table-results",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.05773/arxiv_source/ms.tex",
+        "start_line": 777,
+        "end_line": 811,
+        "caption": "Membership and distance results.",
+        "label": "results"
+      },
+      "source_path": "literature/2009.05773/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2009.05773/catalog_sources/table-results/excerpt.tex",
+      "sha256": "74a001a25404dccd9cafe4aed2dadf9d1f2600ed91cbad63185354ebfa86ef06",
+      "line_count": 35,
+      "error": ""
+    },
+    {
+      "id": "table-North_America_sample",
+      "internal_table_id": "table-North_America_sample",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.05773/arxiv_source/ms.tex",
+        "start_line": 1152,
+        "end_line": 1176,
+        "caption": "Gaia DR2-selected stars in VO{014}.",
+        "label": "North_America_sample"
+      },
+      "source_path": "literature/2009.05773/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2009.05773/catalog_sources/table-North_America_sample/excerpt.tex",
+      "sha256": "2cf48461f98950625ea8bed4de2a8aff7394ff0b57598699c52f2dfc905bc938",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-literature",
+      "internal_table_id": "table-literature",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.05773/arxiv_source/ms.tex",
+        "start_line": 1556,
+        "end_line": 1624,
+        "caption": "Literature distances. The specific target and a brief description of the method is given. Note that 'spectro-photometry' indicates a combination of spectroscopic and photometric methods. For simplicity, random and systematic uncertainties have been combined.",
+        "label": "literature"
+      },
+      "source_path": "literature/2009.05773/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2009.05773/catalog_sources/table-literature/excerpt.tex",
+      "sha256": "5a325658bb2e4d3f10ff43e56ca91a8623e3c677ef8b5c00cc27eb714c7ef74a",
+      "line_count": 69,
+      "error": ""
+    },
+    {
+      "id": "table-runaways",
+      "internal_table_id": "table-runaways",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.05773/arxiv_source/ms.tex",
+        "start_line": 2145,
+        "end_line": 2220,
+        "caption": "Possible runaway stars.",
+        "label": "runaways"
+      },
+      "source_path": "literature/2009.05773/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2009.05773/catalog_sources/table-runaways/excerpt.tex",
+      "sha256": "63f933fc90204dae804ba053c0339f6b0c2f1092c433e797abde68c56494efe9",
+      "line_count": 76,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-diststat",
+      "internal_table_id": "table-diststat",
+      "status": "success",
+      "ecsv_path": "literature/2009.05773/catalog_tables/table-diststat.ecsv",
+      "caption": "Distance statistics as a function of year range, stellar group, method, and first author. For the latter, only those with four or more measurements are listed.",
+      "label": "diststat",
+      "row_count": 50,
+      "column_count": 7,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "Type",
+          "\\mci\\overline\\varepsilon",
+          "\\mci\\sigma_\\varepsilon",
+          "\\mciN_\\varepsilon",
+          "\\mci\\overlined_\\rm n",
+          "\\mci\\sigma_d_\\rm n",
+          "\\mciN_d_\\rm n"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\mci\\overline\\varepsilon",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mci\\sigma_\\varepsilon",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mciN_\\varepsilon",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mci\\overlined_\\rm n",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mci\\sigma_d_\\rm n",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mciN_d_\\rm n",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\it",
+        "unresolved LaTeX macro preserved: \\mci",
+        "unresolved LaTeX macro preserved: \\mciN",
+        "unresolved LaTeX macro preserved: \\overline",
+        "unresolved LaTeX macro preserved: \\overlined",
+        "unresolved LaTeX macro preserved: \\rm",
+        "unresolved LaTeX macro preserved: \\sigma",
+        "unresolved LaTeX macro preserved: \\varepsilon"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsb0i82z_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.05773/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsb0i82z_/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.05773/catalog_sources/table-diststat/wrapped.tex",
+            "html": "literature/2009.05773/catalog_sources/table-diststat/latexml.html",
+            "stdout": "literature/2009.05773/catalog_sources/table-diststat/latexml.stdout.txt",
+            "stderr": "literature/2009.05773/catalog_sources/table-diststat/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9k_625p_/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9k_625p_/wrapped.tex"
+          ],
+          "error": "pandoc produced no HTML",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.05773/catalog_sources/table-diststat/wrapped.tex",
+            "html": "literature/2009.05773/catalog_sources/table-diststat/pandoc.html",
+            "stdout": "literature/2009.05773/catalog_sources/table-diststat/pandoc.stdout.txt",
+            "stderr": "literature/2009.05773/catalog_sources/table-diststat/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "c8041f3c7f8866e6b94cc60c7af88ecda2ec03fa5fe571a391e41aa77458b002"
+    },
+    {
+      "id": "table-sample",
+      "internal_table_id": "table-sample",
+      "status": "success",
+      "ecsv_path": "literature/2009.05773/catalog_tables/table-sample.ecsv",
+      "caption": "Sample of Galactic O-type stellar groups in this paper. The other IDs may refer to the cluster or the associated H II region.",
+      "label": "sample",
+      "row_count": 66,
+      "column_count": 5,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "ID",
+          "Other ID(s)",
+          "O- and WR-type stars",
+          "Spectral type",
+          "Ref."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Other ID(s)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "O- and WR-type stars",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Spectral type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Ref.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\citetCrametal",
+        "unresolved LaTeX macro preserved: \\citetCrowDess",
+        "unresolved LaTeX macro preserved: \\citetDrisetal",
+        "unresolved LaTeX macro preserved: \\citetHoffetal",
+        "unresolved LaTeX macro preserved: \\citetMaizBarb",
+        "unresolved LaTeX macro preserved: \\citetMaizetal",
+        "unresolved LaTeX macro preserved: \\citetMassThom",
+        "unresolved LaTeX macro preserved: \\citetMeleetal",
+        "unresolved LaTeX macro preserved: \\citetNazeetal",
+        "unresolved LaTeX macro preserved: \\citetRauwetal",
+        "unresolved LaTeX macro preserved: \\citetRomL",
+        "unresolved LaTeX macro preserved: \\citetRomLetal",
+        "unresolved LaTeX macro preserved: \\citetSotaetal",
+        "unresolved LaTeX macro preserved: \\citetVarAetal",
+        "unresolved LaTeX macro preserved: \\citetWalbetal",
+        "unresolved LaTeX macro preserved: \\citettenBetal",
+        "unresolved LaTeX macro preserved: \\citetvadH",
+        "unresolved LaTeX macro preserved: \\dagger",
+        "unresolved LaTeX macro preserved: \\multicolumn",
+        "unresolved LaTeX macro preserved: \\num",
+        "unresolved LaTeX macro preserved: \\phantomRef",
+        "unresolved LaTeX macro preserved: \\vspace"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpr3irk9g_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.05773/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpr3irk9g_/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.05773/catalog_sources/table-sample/wrapped.tex",
+            "html": "literature/2009.05773/catalog_sources/table-sample/latexml.html",
+            "stdout": "literature/2009.05773/catalog_sources/table-sample/latexml.stdout.txt",
+            "stderr": "literature/2009.05773/catalog_sources/table-sample/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpi6f0s0hs/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpi6f0s0hs/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.05773/catalog_sources/table-sample/wrapped.tex",
+            "html": "literature/2009.05773/catalog_sources/table-sample/pandoc.html",
+            "stdout": "literature/2009.05773/catalog_sources/table-sample/pandoc.stdout.txt",
+            "stderr": "literature/2009.05773/catalog_sources/table-sample/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "e28b01c1a0ed16d33db372b31a00eae18d84cf2c747270ea26c1d65d009d3508"
+    },
+    {
+      "id": "table-filters",
+      "internal_table_id": "table-filters",
+      "status": "success",
+      "ecsv_path": "literature/2009.05773/catalog_tables/table-filters.ecsv",
+      "caption": "Field sizes and filters applied to the O-type stellar groups and subgroups in this paper. RUWE is filtered as <1.4 and \\sigma_{\\varpi_{\\rm c}} as <0.1 mas in all cases. For VO{014} the coordinates correspond to those of the Bajamar star.",
+      "label": "filters",
+      "row_count": 20,
+      "column_count": 11,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "ID",
+          "\\mci\\Nf",
+          "field",
+          "\\dCC",
+          "\\alpha",
+          "\\delta",
+          "\\mcir",
+          "+/-ra",
+          "+/-dec",
+          "r_\\mu",
+          "\\Delta(\\GBP-\\GRP)"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "(deg)",
+          "(deg)",
+          "\\mci(\\arcsec)",
+          "(mas/a)",
+          "(mas/a)",
+          "(mas/a)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\mci\\Nf",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "field",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\dCC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\alpha | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\delta | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mcir | \\mci(\\arcsec)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "+/-ra | (mas/a)",
+          "unit_text": "(mas/a)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "+/-dec | (mas/a)",
+          "unit_text": "(mas/a)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "r_\\mu | (mas/a)",
+          "unit_text": "(mas/a)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\Delta(\\GBP-\\GRP)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\Delta",
+        "unresolved LaTeX macro preserved: \\GBP",
+        "unresolved LaTeX macro preserved: \\GRP",
+        "unresolved LaTeX macro preserved: \\Nf",
+        "unresolved LaTeX macro preserved: \\alpha",
+        "unresolved LaTeX macro preserved: \\arcmin",
+        "unresolved LaTeX macro preserved: \\arcsec",
+        "unresolved LaTeX macro preserved: \\dCC",
+        "unresolved LaTeX macro preserved: \\delta",
+        "unresolved LaTeX macro preserved: \\mci",
+        "unresolved LaTeX macro preserved: \\mcir",
+        "unresolved LaTeX macro preserved: \\mu",
+        "unresolved LaTeX macro preserved: \\num",
+        "unresolved LaTeX macro preserved: \\times"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6aisxakf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.05773/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6aisxakf/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.05773/catalog_sources/table-filters/wrapped.tex",
+            "html": "literature/2009.05773/catalog_sources/table-filters/latexml.html",
+            "stdout": "literature/2009.05773/catalog_sources/table-filters/latexml.stdout.txt",
+            "stderr": "literature/2009.05773/catalog_sources/table-filters/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdhitc5ah/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdhitc5ah/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.05773/catalog_sources/table-filters/wrapped.tex",
+            "html": "literature/2009.05773/catalog_sources/table-filters/pandoc.html",
+            "stdout": "literature/2009.05773/catalog_sources/table-filters/pandoc.stdout.txt",
+            "stderr": "literature/2009.05773/catalog_sources/table-filters/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "6b3fb1f283432840f51012069730e6a937218da563da12544b5c957592b62426"
+    },
+    {
+      "id": "table-results",
+      "internal_table_id": "table-results",
+      "status": "success",
+      "ecsv_path": "literature/2009.05773/catalog_tables/table-results.ecsv",
+      "caption": "Membership and distance results.",
+      "label": "results",
+      "row_count": 20,
+      "column_count": 16,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "ID",
+          "N_*,0",
+          "N_*",
+          "t_\\varpi",
+          "t_\\mu_\\alpha *",
+          "t_\\mu_\\delta",
+          "\\mcii\\pig",
+          "\\mcii+/-rag",
+          "\\mcii+/-decg",
+          "\\mcii\\pigc",
+          "\\mciid",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "\\mcii(mas)",
+          "\\mcii(mas/a)",
+          "\\mcii(mas/a)",
+          "\\mcii(mas)",
+          "\\mcii(pc)",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "N_*,0",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "N_*",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "t_\\varpi",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "t_\\mu_\\alpha *",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "t_\\mu_\\delta",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mcii\\pig | \\mcii(mas)",
+          "unit_text": "\\mcii(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\mcii+/-rag | \\mcii(mas/a)",
+          "unit_text": "\\mcii(mas/a)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\mcii+/-decg | \\mcii(mas/a)",
+          "unit_text": "\\mcii(mas/a)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\mcii\\pigc | \\mcii(mas)",
+          "unit_text": "\\mcii(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\mciid | \\mcii(pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\alpha",
+        "unresolved LaTeX macro preserved: \\delta",
+        "unresolved LaTeX macro preserved: \\mcii",
+        "unresolved LaTeX macro preserved: \\mciid",
+        "unresolved LaTeX macro preserved: \\mu",
+        "unresolved LaTeX macro preserved: \\pig",
+        "unresolved LaTeX macro preserved: \\pigc",
+        "unresolved LaTeX macro preserved: \\varpi"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpghkoy42_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.05773/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpghkoy42_/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.05773/catalog_sources/table-results/wrapped.tex",
+            "html": "literature/2009.05773/catalog_sources/table-results/latexml.html",
+            "stdout": "literature/2009.05773/catalog_sources/table-results/latexml.stdout.txt",
+            "stderr": "literature/2009.05773/catalog_sources/table-results/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprd232vo8/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprd232vo8/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.05773/catalog_sources/table-results/wrapped.tex",
+            "html": "literature/2009.05773/catalog_sources/table-results/pandoc.html",
+            "stdout": "literature/2009.05773/catalog_sources/table-results/pandoc.stdout.txt",
+            "stderr": "literature/2009.05773/catalog_sources/table-results/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "74a001a25404dccd9cafe4aed2dadf9d1f2600ed91cbad63185354ebfa86ef06"
+    },
+    {
+      "id": "table-North_America_sample",
+      "internal_table_id": "table-North_America_sample",
+      "status": "success",
+      "ecsv_path": "literature/2009.05773/catalog_tables/table-North_America_sample.ecsv",
+      "caption": "Gaia DR2-selected stars in VO{014}.",
+      "label": "North_America_sample",
+      "row_count": 12,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\mciGaia DR2 ID",
+          "\\mcii\\varpi",
+          "\\mciother ID",
+          ""
+        ],
+        [
+          "",
+          "\\mcii(mas)",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\mciGaia DR2 ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\mcii\\varpi | \\mcii(mas)",
+          "unit_text": "\\mcii(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mciother ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\mciGaia",
+        "unresolved LaTeX macro preserved: \\mcii",
+        "unresolved LaTeX macro preserved: \\mciother",
+        "unresolved LaTeX macro preserved: \\num",
+        "unresolved LaTeX macro preserved: \\varpi"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpw0ls4s42/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.05773/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpw0ls4s42/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.05773/catalog_sources/table-North_America_sample/wrapped.tex",
+            "html": "literature/2009.05773/catalog_sources/table-North_America_sample/latexml.html",
+            "stdout": "literature/2009.05773/catalog_sources/table-North_America_sample/latexml.stdout.txt",
+            "stderr": "literature/2009.05773/catalog_sources/table-North_America_sample/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpu11qnkmy/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpu11qnkmy/wrapped.tex"
+          ],
+          "error": "pandoc produced no HTML",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.05773/catalog_sources/table-North_America_sample/wrapped.tex",
+            "html": "literature/2009.05773/catalog_sources/table-North_America_sample/pandoc.html",
+            "stdout": "literature/2009.05773/catalog_sources/table-North_America_sample/pandoc.stdout.txt",
+            "stderr": "literature/2009.05773/catalog_sources/table-North_America_sample/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "2cf48461f98950625ea8bed4de2a8aff7394ff0b57598699c52f2dfc905bc938"
+    },
+    {
+      "id": "table-literature",
+      "internal_table_id": "table-literature",
+      "status": "success",
+      "ecsv_path": "literature/2009.05773/catalog_tables/table-literature.ecsv",
+      "caption": "Literature distances. The specific target and a brief description of the method is given. Note that 'spectro-photometry' indicates a combination of spectroscopic and photometric methods. For simplicity, random and systematic uncertainties have been combined.",
+      "label": "literature",
+      "row_count": 53,
+      "column_count": 6,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "ID",
+          "\\mciidistance",
+          "target",
+          "description",
+          "Ref.",
+          ""
+        ],
+        [
+          "",
+          "\\mcii(pc)",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\mciidistance | \\mcii(pc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "target",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "description",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Ref.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\RV",
+        "unresolved LaTeX macro preserved: \\eta",
+        "unresolved LaTeX macro preserved: \\it",
+        "unresolved LaTeX macro preserved: \\mcii",
+        "unresolved LaTeX macro preserved: \\mciidistance",
+        "unresolved LaTeX macro preserved: \\num",
+        "unresolved LaTeX macro preserved: \\sc",
+        "unresolved LaTeX macro preserved: \\vspace"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpttcg8ess/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.05773/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpttcg8ess/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.05773/catalog_sources/table-literature/wrapped.tex",
+            "html": "literature/2009.05773/catalog_sources/table-literature/latexml.html",
+            "stdout": "literature/2009.05773/catalog_sources/table-literature/latexml.stdout.txt",
+            "stderr": "literature/2009.05773/catalog_sources/table-literature/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmps0lggdag/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmps0lggdag/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.05773/catalog_sources/table-literature/wrapped.tex",
+            "html": "literature/2009.05773/catalog_sources/table-literature/pandoc.html",
+            "stdout": "literature/2009.05773/catalog_sources/table-literature/pandoc.stdout.txt",
+            "stderr": "literature/2009.05773/catalog_sources/table-literature/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "5a325658bb2e4d3f10ff43e56ca91a8623e3c677ef8b5c00cc27eb714c7ef74a"
+    },
+    {
+      "id": "table-runaways",
+      "internal_table_id": "table-runaways",
+      "status": "success",
+      "ecsv_path": "literature/2009.05773/catalog_tables/table-runaways.ecsv",
+      "caption": "Possible runaway stars.",
+      "label": "runaways",
+      "row_count": 61,
+      "column_count": 7,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "group",
+          "\\mciGaia DR2 ID",
+          "\\mciother ID",
+          "\\mcii\\varpi",
+          "\\mciG",
+          "\\GBP-\\GRP",
+          ""
+        ],
+        [
+          "ID",
+          "",
+          "",
+          "\\mcii(mas)",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "group | ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\mciGaia DR2 ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mciother ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mcii\\varpi | \\mcii(mas)",
+          "unit_text": "\\mcii(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mciG",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\GBP-\\GRP",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\GBP",
+        "unresolved LaTeX macro preserved: \\GRP",
+        "unresolved LaTeX macro preserved: \\dagger",
+        "unresolved LaTeX macro preserved: \\mciG",
+        "unresolved LaTeX macro preserved: \\mciGaia",
+        "unresolved LaTeX macro preserved: \\mcii",
+        "unresolved LaTeX macro preserved: \\mciother",
+        "unresolved LaTeX macro preserved: \\num",
+        "unresolved LaTeX macro preserved: \\varpi",
+        "unresolved LaTeX macro preserved: \\vspace"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpg0lg7wio/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.05773/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpg0lg7wio/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.05773/catalog_sources/table-runaways/wrapped.tex",
+            "html": "literature/2009.05773/catalog_sources/table-runaways/latexml.html",
+            "stdout": "literature/2009.05773/catalog_sources/table-runaways/latexml.stdout.txt",
+            "stderr": "literature/2009.05773/catalog_sources/table-runaways/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_fwlpdjm/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_fwlpdjm/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.05773/catalog_sources/table-runaways/wrapped.tex",
+            "html": "literature/2009.05773/catalog_sources/table-runaways/pandoc.html",
+            "stdout": "literature/2009.05773/catalog_sources/table-runaways/pandoc.stdout.txt",
+            "stderr": "literature/2009.05773/catalog_sources/table-runaways/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "63f933fc90204dae804ba053c0339f6b0c2f1092c433e797abde68c56494efe9"
+    }
+  ]
+}

@@ -1,0 +1,742 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:47:52",
+  "paper": {
+    "arxiv_id": "2110.02081",
+    "title": "Proper motions of OB stars in the far Carina Arm",
+    "month": "2021-10"
+  },
+  "review": {
+    "path": "literature/2110.02081/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084752",
+    "started_at": "2026-06-07T08:47:52",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2110.02081",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-vtrel_stats",
+      "internal_table_id": "table-tab-vtrel_stats",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+        "start_line": 319,
+        "end_line": 356,
+        "caption": "Percentages and numbers of O, B and emission line stars selected for (i) outlying relative proper motion, $|\\mu_{rel}|$ fronm 4109 stars, or for (ii) exceeding relative tangential velocity ($v_{t,rel}$) thresholds out of 3549 stars. In both cases some trimming of the original sample of 4199 stars has been applied to deal with stars that may not belong to the far Carina arm (see text). Under each star type, N, the relevant total number of stars of that type in the core sample is given, while n is the number per type selected. The errors on the percentages are Poisson errors. The second row of percentages, given in brackets for $v_{t,rel} > 20$ km s$^{-1}$, have been reduced to allow for a potential contamination of 15\\%.",
+        "label": "tab:vtrel_stats"
+      },
+      "source_path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+      "excerpt_path": "literature/2110.02081/catalog_sources/table-tab-vtrel_stats/excerpt.tex",
+      "sha256": "7e6e05b204aa4ecd62297c29ea065a9f6495e04f89766f12dcf744f31731b31e",
+      "line_count": 38,
+      "error": ""
+    },
+    {
+      "id": "table-tab-extreme",
+      "internal_table_id": "table-tab-extreme",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+        "start_line": 362,
+        "end_line": 388,
+        "caption": "Data on the objects with extreme relative proper motions ($|\\mu_{rel}|$) and the highest relative tangential velocities ($v_{t,rel} > 100$~km s$^{-1}$). Only stars with good parallaxes ($\\pi/\\sigma > 5$) and trustworthy SED fits ($\\chi^2 < 7.82$) are included. The cited bounds on $D_{2.0}$ correspond to the 16th and 84th percentiles of the EDSD inference. The lower bound is used to compute the lower limit on $v_{t,rel}$ given in brackets.",
+        "label": "tab:extreme"
+      },
+      "source_path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+      "excerpt_path": "literature/2110.02081/catalog_sources/table-tab-extreme/excerpt.tex",
+      "sha256": "df8980e87424a08e7a26d069c6946fe89e0730c0c837b579d67e846254a252d5",
+      "line_count": 27,
+      "error": ""
+    },
+    {
+      "id": "table-tab-stats",
+      "internal_table_id": "table-tab-stats",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+        "start_line": 462,
+        "end_line": 499,
+        "caption": "Statistics from simulation on how the number of chance candidates changes with changing simulation constraints.",
+        "label": "tab:stats"
+      },
+      "source_path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+      "excerpt_path": "literature/2110.02081/catalog_sources/table-tab-stats/excerpt.tex",
+      "sha256": "5cc0a170a6009ec1d2bcb454613c254856b327f530d3de5427bd99b2bac641d1",
+      "line_count": 38,
+      "error": ""
+    },
+    {
+      "id": "table-tab-n3603_wd2",
+      "internal_table_id": "table-tab-n3603_wd2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+        "start_line": 560,
+        "end_line": 619,
+        "caption": "Data on candidate OB-star ejections from (a) NGC 3603, (b) Westerlund 2 . In each section, they are ordered by estimated time of flight, $\\Delta t$. For NGC 3603 ($D_{2.0} = 6.91$ kpc), the minimum relative proper motion $|\\mu_{rel}|$ required of ejection candidates is 0.6~mas yr$^{-1}$. This was increased to 0.9~mas yr$^{-1}$ for Westerlund 2 ($D_{2.0} = 4.41$ kpc), in view of its lower distance. The last few rows at the foot of each section identify 'near miss' objects of potential interest (see text). The errors on $\\Delta t$ include contributions from the uncertainty in $|\\mu_{rel}|$ and a generous fixed error of 1.0~arcmin in $|{\\bf r}|$ that acknowledges our ignorance of the exact point of ejection within either cluster. The final column indicates whether the object was already identified previously as a likely runaway by either D18 (Westerlund 2) or by D19 (NGC 3603).",
+        "label": "tab:n3603_wd2"
+      },
+      "source_path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+      "excerpt_path": "literature/2110.02081/catalog_sources/table-tab-n3603_wd2/excerpt.tex",
+      "sha256": "93a191fd6d7625849bef3ba9c0eec32b5fce25226ec61b33f1bb02158776e1af",
+      "line_count": 60,
+      "error": ""
+    },
+    {
+      "id": "table-tab-TableAp",
+      "internal_table_id": "table-tab-TableAp",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+        "start_line": 1021,
+        "end_line": 1194,
+        "caption": "List of columns available in the catalogue, together with the units and brief description of the column content.",
+        "label": "tab:TableAp"
+      },
+      "source_path": "literature/2110.02081/arxiv_source/carina_arm.tex",
+      "excerpt_path": "literature/2110.02081/catalog_sources/table-tab-TableAp/excerpt.tex",
+      "sha256": "0dfdc1744411835e1691e63040d2a9115b1ac2c8b30abab5483885cff71ef0d3",
+      "line_count": 174,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-vtrel_stats",
+      "internal_table_id": "table-tab-vtrel_stats",
+      "status": "success",
+      "ecsv_path": "literature/2110.02081/catalog_tables/table-tab-vtrel_stats.ecsv",
+      "caption": "Percentages and numbers of O, B and emission line stars selected for (i) outlying relative proper motion, $|\\mu_{rel}|$ fronm 4109 stars, or for (ii) exceeding relative tangential velocity ($v_{t,rel}$) thresholds out of 3549 stars. In both cases some trimming of the original sample of 4199 stars has been applied to deal with stars that may not belong to the far Carina arm (see text). Under each star type, N, the relevant total number of stars of that type in the core sample is given, while n is the number per type selected. The errors on the percentages are Poisson errors. The second row of percentages, given in brackets for $v_{t,rel} > 20$ km s$^{-1}$, have been reduced to allow for a potential contamination of 15\\%.",
+      "label": "tab:vtrel_stats",
+      "row_count": 12,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "Star type",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "O",
+          "",
+          "B",
+          "",
+          "emission",
+          ""
+        ],
+        [
+          "(i) Relative proper motion ( |\\mu_rel| ) selection",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "(i) Relative proper motion ( |\\mu_rel| ) selection",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Star type | O",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "B",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "emission",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphes5sflu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2110.02081/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphes5sflu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2110.02081/catalog_sources/table-tab-vtrel_stats/wrapped.tex",
+            "html": "literature/2110.02081/catalog_sources/table-tab-vtrel_stats/latexml.html",
+            "stdout": "literature/2110.02081/catalog_sources/table-tab-vtrel_stats/latexml.stdout.txt",
+            "stderr": "literature/2110.02081/catalog_sources/table-tab-vtrel_stats/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7e6e05b204aa4ecd62297c29ea065a9f6495e04f89766f12dcf744f31731b31e"
+    },
+    {
+      "id": "table-tab-extreme",
+      "internal_table_id": "table-tab-extreme",
+      "status": "success",
+      "ecsv_path": "literature/2110.02081/catalog_tables/table-tab-extreme.ecsv",
+      "caption": "Data on the objects with extreme relative proper motions ($|\\mu_{rel}|$) and the highest relative tangential velocities ($v_{t,rel} > 100$~km s$^{-1}$). Only stars with good parallaxes ($\\pi/\\sigma > 5$) and trustworthy SED fits ($\\chi^2 < 7.82$) are included. The cited bounds on $D_{2.0}$ correspond to the 16th and 84th percentiles of the EDSD inference. The lower bound is used to compute the lower limit on $v_{t,rel}$ given in brackets.",
+      "label": "tab:extreme",
+      "row_count": 6,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cat. #",
+          "Galactic co-ordinates",
+          "",
+          "\\log(T_\\rm eff\\rm K)",
+          "\\chi^2",
+          "Parallax, \\pi",
+          "\\pi/\\sigma",
+          "distance (min - max)",
+          "|\\mu_\\rm rel|",
+          "v_t,rel (min)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cat. #",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Galactic co-ordinates",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\log(T_\\rm eff\\rm K)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\chi^2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Parallax, \\pi",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\pi/\\sigma",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "distance (min - max)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "|\\mu_\\rm rel|",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "v_t,rel (min)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpad45gkug/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2110.02081/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpad45gkug/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2110.02081/catalog_sources/table-tab-extreme/wrapped.tex",
+            "html": "literature/2110.02081/catalog_sources/table-tab-extreme/latexml.html",
+            "stdout": "literature/2110.02081/catalog_sources/table-tab-extreme/latexml.stdout.txt",
+            "stderr": "literature/2110.02081/catalog_sources/table-tab-extreme/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "df8980e87424a08e7a26d069c6946fe89e0730c0c837b579d67e846254a252d5"
+    },
+    {
+      "id": "table-tab-stats",
+      "internal_table_id": "table-tab-stats",
+      "status": "success",
+      "ecsv_path": "literature/2110.02081/catalog_tables/table-tab-stats.ecsv",
+      "caption": "Statistics from simulation on how the number of chance candidates changes with changing simulation constraints.",
+      "label": "tab:stats",
+      "row_count": 14,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Constraints",
+          "",
+          "",
+          "Candidate count",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Constraints",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Candidate count",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgus5k25r/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2110.02081/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgus5k25r/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2110.02081/catalog_sources/table-tab-stats/wrapped.tex",
+            "html": "literature/2110.02081/catalog_sources/table-tab-stats/latexml.html",
+            "stdout": "literature/2110.02081/catalog_sources/table-tab-stats/latexml.stdout.txt",
+            "stderr": "literature/2110.02081/catalog_sources/table-tab-stats/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5cc0a170a6009ec1d2bcb454613c254856b327f530d3de5427bd99b2bac641d1"
+    },
+    {
+      "id": "table-tab-n3603_wd2",
+      "internal_table_id": "table-tab-n3603_wd2",
+      "status": "success",
+      "ecsv_path": "literature/2110.02081/catalog_tables/table-tab-n3603_wd2.ecsv",
+      "caption": "Data on candidate OB-star ejections from (a) NGC 3603, (b) Westerlund 2 . In each section, they are ordered by estimated time of flight, $\\Delta t$. For NGC 3603 ($D_{2.0} = 6.91$ kpc), the minimum relative proper motion $|\\mu_{rel}|$ required of ejection candidates is 0.6~mas yr$^{-1}$. This was increased to 0.9~mas yr$^{-1}$ for Westerlund 2 ($D_{2.0} = 4.41$ kpc), in view of its lower distance. The last few rows at the foot of each section identify 'near miss' objects of potential interest (see text). The errors on $\\Delta t$ include contributions from the uncertainty in $|\\mu_{rel}|$ and a generous fixed error of 1.0~arcmin in $|{\\bf r}|$ that acknowledges our ignorance of the exact point of ejection within either cluster. The final column indicates whether the object was already identified previously as a likely runaway by either D18 (Westerlund 2) or by D19 (NGC 3603).",
+      "label": "tab:n3603_wd2",
+      "row_count": 38,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpu1_tp2tr/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2110.02081/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpu1_tp2tr/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2110.02081/catalog_sources/table-tab-n3603_wd2/wrapped.tex",
+            "html": "literature/2110.02081/catalog_sources/table-tab-n3603_wd2/latexml.html",
+            "stdout": "literature/2110.02081/catalog_sources/table-tab-n3603_wd2/latexml.stdout.txt",
+            "stderr": "literature/2110.02081/catalog_sources/table-tab-n3603_wd2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "93a191fd6d7625849bef3ba9c0eec32b5fce25226ec61b33f1bb02158776e1af"
+    },
+    {
+      "id": "table-tab-TableAp",
+      "internal_table_id": "table-tab-TableAp",
+      "status": "success",
+      "ecsv_path": "literature/2110.02081/catalog_tables/table-tab-TableAp.ecsv",
+      "caption": "List of columns available in the catalogue, together with the units and brief description of the column content.",
+      "label": "tab:TableAp",
+      "row_count": 50,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "No",
+          "Column",
+          "Units",
+          "Description"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "No",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Column",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Units",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Description",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpl6aefr7e/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2110.02081/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpl6aefr7e/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2110.02081/catalog_sources/table-tab-TableAp/wrapped.tex",
+            "html": "literature/2110.02081/catalog_sources/table-tab-TableAp/latexml.html",
+            "stdout": "literature/2110.02081/catalog_sources/table-tab-TableAp/latexml.stdout.txt",
+            "stderr": "literature/2110.02081/catalog_sources/table-tab-TableAp/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0dfdc1744411835e1691e63040d2a9115b1ac2c8b30abab5483885cff71ef0d3"
+    }
+  ]
+}

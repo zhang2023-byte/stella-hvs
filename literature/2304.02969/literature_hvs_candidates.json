@@ -1,0 +1,61 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:36:00",
+  "paper": {
+    "arxiv_id": "2304.02969",
+    "bibcode": "2023BSRSL..9211205H",
+    "title": "The fastest hot subdwarfs revisited",
+    "month": "2023-04",
+    "source_note_json": "notes/2023/2023-04/2023-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2304.02969",
+      "pdf": "https://arxiv.org/pdf/2304.02969"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2304.02969",
+    "audit_path": "literature/2304.02969/audit.json",
+    "catalog_review_path": "literature/2304.02969/catalog_review.json",
+    "catalog_extraction_path": "literature/2304.02969/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:36:00",
+    "extractor": "agent",
+    "summary": "Conference proceedings paper (BSRSL, sdOB10 meeting) revisiting the fastest hot subdwarf HVS candidates from the Hyper-MUCHFUSS project. The paper explicitly discusses hypervelocity stars (HVS), but the core conclusion is: after using Gaia EDR3 high-precision proper motions and new spectroscopic/spectrophotometric analyses, all previously proposed HVS candidates except the known US 708 are actually gravitationally bound to the Galaxy (Galactic-bound), belonging to an extreme halo population rather than being hypervelocity stars. The paper proposes no new HVS candidates, only confirming that US 708 remains the only known HVS among hot subdwarfs."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2304.02969:group-01",
+      "description": "The fastest hot subdwarf sample from the Hyper-MUCHFUSS project. This sample was initially selected from SDSS spectra based on anomalously high radial velocities and proper motions, comprising about a dozen HVS candidates (including the He-sdO US 708 and its spectral analogue SDSS J205030.39-061957.8). The paper re-analyzes the spectra using a new hybrid LTE/NLTE atmospheric model grid, determines SED spectrophotometric distances, and computes 3D space velocities using Gaia EDR3 high-precision proper motions.",
+      "decision": "rejected",
+      "reason": "The paper's explicit conclusion is that the Galactic rest-frame velocities of all sample stars are lower than the local Galactic escape velocities ('The resulting Galactic restframe velocities are lower than the local Galactic escape velocities indicating that no star of the sample is unbound to the Galaxy.'), belonging to an extreme halo population rather than HVS. The only known HVS is US 708, which was discovered as early as 2005 (Hirsch+2005, Heber+2005) and is not a new discovery of this paper. This paper proposes no new HVS candidates; it is a revisit and exclusionary study of existing candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2304.02969/arxiv_source/proc_heber_sdob10.tex",
+          "start_line": 127,
+          "end_line": 130,
+          "context": "Abstract: 'It turns out that all previously proposed HVS candidates are actually bound to the Galaxy, except US 708. The original candidate sample turns out to belong to an extreme halo population.'"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2304.02969/arxiv_source/proc_heber_sdob10.tex",
+          "start_line": 295,
+          "end_line": 298,
+          "context": "Kinematics section: 'The resulting Galactic restframe velocities are lower than the local Galactic escape velocities indicating that no star of the sample is unbound to the Galaxy... US 708 remains the only known HVS star among hot subdwarfs.'"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2304.02969/arxiv_source/proc_heber_sdob10.tex",
+          "start_line": 309,
+          "end_line": 312,
+          "context": "Conclusion: 'Except US 708 all stars turn out to be bound to the Galaxy. Their distribution in the kinematic Toomre diagram reveals that it is a sample of halo stars.'"
+        }
+      ]
+    }
+  ]
+}

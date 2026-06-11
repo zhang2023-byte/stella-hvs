@@ -1,0 +1,652 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2009.02123",
+    "title": "Identification of young nearby runaway stars based on Gaia data and the lithium test",
+    "month": "2020-09",
+    "source_note_json": "notes/2020/2020-09/2020-09.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2009.02123",
+      "pdf": "https://arxiv.org/pdf/2009.02123"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2009.02123",
+    "audit_path": "literature/2009.02123/audit.json",
+    "source_dir": "literature/2009.02123/arxiv_source",
+    "tex_root": "literature/2009.02123/arxiv_source/bischoff.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:55:00",
+    "reviewer": "agent",
+    "summary": "Paper identifies young nearby runaway stars from the Tetzlaff (2011) catalogue by combining Gaia DR2 data with lithium equivalent width measurements from FLECHAS and TRES spectroscopy. Contains 9 internal tables: 6 in the main body (giant classification, top Li EW targets, TRES/FLECHAS comparison, dwarf Li abundances, dwarf summary with ages, GJ 182 age comparison) and 3 in the appendix (observation log, full Li EW catalog, Gaia DR2 physical properties). External resources include the Tetzlaff VizieR catalogue, Fred L. Whipple Observatory page, E. Mamajek's reference data, and data-availability mention of spectra to be deposited at VizieR."
+  },
+  "internal_tables": [
+    {
+      "id": "table-giants",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Lists 7 targets classified as giants by comparing Gaia DR2 effective temperature and radius with known dwarf values. These objects are marked with Roman numerals in the HRD figure.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 101,
+          "end_line": 118,
+          "caption": "Targets that were identified as giants due to comparison of effective temperature $T_{\\text{eff}}$ and radius $R$ from \\textit{Gaia}\\,DR2 with those of known dwarfs. These objects are marked with Roman numerals in Figure\\,\\ref{fig:HRD}\\hspace{-2mm}.",
+          "label": "giants"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Roman numeral",
+          "meaning": "Identifier used to mark the target in Figure 1 (HRD)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Target",
+          "meaning": "HIP identifier of the target star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_eff [K]",
+          "meaning": "Effective temperature from Gaia DR2",
+          "unit_text": "K",
+          "source_of_definition": "table header + Section 3 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "R [R_⊙]",
+          "meaning": "Stellar radius from Gaia DR2 in solar units",
+          "unit_text": "R_⊙",
+          "source_of_definition": "table header + Section 3 text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Targets that were identified as giants due to comparison of effective temperature and radius from Gaia DR2 with those of known dwarfs. These objects are marked with Roman numerals in the HRD figure.",
+      "comments": "7 rows; table appears in Section 3."
+    },
+    {
+      "id": "table-topnine",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Lists the 9 targets with the largest measured equivalent widths of the Li 6708 Å line from FLECHAS spectra, along with their derived spectral types.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 139,
+          "end_line": 158,
+          "caption": "Targets with the largest measured equivalent widths of the Li\\,(6708\\,\\AA) line $EW_{\\text{Li}}$ detected with FLECHAS and their derived spectral types (SpT) using the $T_{\\text{eff}}$-SpT-correlations from \\cite{damiani}.",
+          "label": "topnine"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Target",
+          "meaning": "HIP identifier of the target star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW_Li [mÅ]",
+          "meaning": "Equivalent width of the Li I 6708 Å line measured in FLECHAS spectra",
+          "unit_text": "mÅ",
+          "source_of_definition": "table header + Section 4 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpT",
+          "meaning": "Spectral type derived from Teff-SpT relation of Damiani et al.",
+          "unit_text": "",
+          "source_of_definition": "table caption",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Targets with the largest measured equivalent widths of the Li 6708 Å line detected with FLECHAS. Section 4 describes the EW measurement methodology.",
+      "comments": "9 rows; table appears in Section 4."
+    },
+    {
+      "id": "table-tres",
+      "kind": "latex_table",
+      "asset_type": "follow_up_measurements",
+      "role_in_paper": "Compares Li 6708 Å equivalent widths measured in TRES and FLECHAS spectra for 16 targets observed by both instruments, validating consistency.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 164,
+          "end_line": 190,
+          "caption": "Comparison of the equivalent widths of the Li\\,(6708\\,\\AA) line, measured in the TRES and FLECHAS spectra. We list the median equivalent width $EW_{\\text{med}}$ and the number of used TRES measurements $N$ as well as the derived values from the FLECHAS spectra $EW_{\\text{FL}}$.",
+          "label": "tres"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Target",
+          "meaning": "HIP identifier of the target star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW_med [mÅ]",
+          "meaning": "Median equivalent width of Li 6708 Å from TRES spectra, with standard deviation as uncertainty",
+          "unit_text": "mÅ",
+          "source_of_definition": "table header + caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "N",
+          "meaning": "Number of TRES measurements used to compute the median",
+          "unit_text": "",
+          "source_of_definition": "table header + caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW_FL [mÅ]",
+          "meaning": "Equivalent width of Li 6708 Å from FLECHAS spectra",
+          "unit_text": "mÅ",
+          "source_of_definition": "table header + caption",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Comparison table validating TRES and FLECHAS measurements. Section 4 text states values are consistent within 1-3 sigma.",
+      "comments": "16 rows; table appears in Section 4."
+    },
+    {
+      "id": "table-abundance",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Lists the 13 identified dwarf stars with their Gaia DR2 temperatures, measured Li equivalent widths, and derived lithium abundances using curves of growth from Soderblom et al.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 194,
+          "end_line": 219,
+          "caption": "The identified dwarf stars with their numbers as shown in Figure\\,\\ref{fig:HRD}\\hspace{-2mm}, listed with their effective temperatures $T_{\\text{eff}}$ from \\textit{Gaia}\\,DR2 and the measured equivalent widths of the Li\\,(6708\\,\\AA) line $EW_{\\text{Li}}$. We list only measurements with $EW_{\\text{Li}}\\geq 3\\cdot \\sigma EW_{\\text{Li}}$. Based on these values we give the derived abundances $\\log_{10}(N_{\\text{Li}})$ according to \\cite{soderblom}.",
+          "label": "abundance"
+        }
+      ],
+      "columns": [
+        {
+          "name": "id. nr.",
+          "meaning": "Identifier number (1-13) matching labels in the HRD figure",
+          "unit_text": "",
+          "source_of_definition": "table caption + Figure reference",
+          "confidence": 1.0
+        },
+        {
+          "name": "Target",
+          "meaning": "HIP identifier of the target star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_eff [K]",
+          "meaning": "Effective temperature from Gaia DR2",
+          "unit_text": "K",
+          "source_of_definition": "table header + Section 3",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW_Li [mÅ]",
+          "meaning": "Equivalent width of Li 6708 Å line measured in FLECHAS spectra; only shown if EW ≥ 3σ",
+          "unit_text": "mÅ",
+          "source_of_definition": "table header + caption + Section 4",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(N_Li)",
+          "meaning": "Lithium abundance log10(N_Li) on scale log10(N_H)=12, from curves of growth by Soderblom et al.",
+          "unit_text": "dex",
+          "source_of_definition": "table caption + Section 4 text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Dwarf stars with lithium abundance measurements. Section 4 describes conversion from EW to abundance using Soderblom curves of growth.",
+      "comments": "13 rows; appears in Section 4. Some targets lack Li detection (HIP 59280, HIP 94761, HIP 45343)."
+    },
+    {
+      "id": "table-clearname",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Main results table. Lists all 13 dwarf stars with spectral types, Gaia DR2 distances, Hα and Li equivalent widths, and ages derived from HRD position (lower limit) and lithium test (upper limit), compared with Tetzlaff (2011) ages.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 250,
+          "end_line": 281,
+          "caption": "Our dwarf stars with their numbers as shown in Figure\\,\\ref{fig:HRD} and Figure\\,\\ref{fig:Li} listed with their SpT derived from their $T_{\\text{eff}}$ using the SpT-$T_{\\text{eff}}$-relation from \\cite{damiani}, their distances $d$ according to \\cite{bailerjones}, the measured equivalent width of the Hydrogen Balmer line $EW_{\\text{H}\\alpha}$ (all in absorption) and the measured equivalent width of Li\\,(6708\\,\\AA) $EW_{\\text{Li}}$. Furthermore, we list the estimated age derived from the position in the HRD \\textbf{(lower limit)}, as well as the age according to the lithium test \\textbf{(upper limit)} from this work and the age from \\cite{tetzlaff}.",
+          "label": "clearname"
+        }
+      ],
+      "columns": [
+        {
+          "name": "id. nr.",
+          "meaning": "Identifier number (1-13) matching labels in HRD and Li figures",
+          "unit_text": "",
+          "source_of_definition": "table header + figure references",
+          "confidence": 1.0
+        },
+        {
+          "name": "Target",
+          "meaning": "HIP identifier of the target star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpT",
+          "meaning": "Spectral type derived from Teff using Damiani et al. relation; asterisk indicates 'this work'",
+          "unit_text": "",
+          "source_of_definition": "table header + caption footnote",
+          "confidence": 1.0
+        },
+        {
+          "name": "d [pc]",
+          "meaning": "Distance in parsecs from Bailer-Jones et al. (Gaia DR2 based)",
+          "unit_text": "pc",
+          "source_of_definition": "table header + caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW_Hα [mÅ]",
+          "meaning": "Equivalent width of Hα Balmer line in absorption; asterisk indicates 'this work'",
+          "unit_text": "mÅ",
+          "source_of_definition": "table header + caption footnote",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW_Li [mÅ]",
+          "meaning": "Equivalent width of Li 6708 Å line; asterisk indicates 'this work'; dash indicates no significant detection",
+          "unit_text": "mÅ",
+          "source_of_definition": "table header + caption footnote",
+          "confidence": 1.0
+        },
+        {
+          "name": "age (HRD) [Myr]",
+          "meaning": "Lower limit on age from HRD isochrone fitting with PARSEC models; asterisk indicates 'this work'",
+          "unit_text": "Myr",
+          "source_of_definition": "table caption + Section 5",
+          "confidence": 1.0
+        },
+        {
+          "name": "age (EW_Li) [Myr]",
+          "meaning": "Age from lithium equivalent width method (upper limit); asterisk indicates 'this work'",
+          "unit_text": "Myr",
+          "source_of_definition": "table caption + Section 5",
+          "confidence": 1.0
+        },
+        {
+          "name": "age [Myr]",
+          "meaning": "Age estimate from Tetzlaff (2011) catalogue",
+          "unit_text": "Myr",
+          "source_of_definition": "table header + caption",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Main results table combining all age indicators. Sections 3-5 describe each column's methodology. Footnote explains asterisk = 'this work', dagger = spectroscopic binary with both Hα lines measured.",
+      "comments": "13 rows; appears in Section 5. HIP 45963 is a spectroscopic binary (†). This is the paper's primary results table."
+    },
+    {
+      "id": "table-gj182",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Lists literature age determinations for the young runaway star GJ 182 (HIP 23200), which is used as a comparison benchmark. Compiled from multiple references with various methods.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 328,
+          "end_line": 350,
+          "caption": "Ages and used determination methods for GJ\\,182 as well as their references.",
+          "label": "gj182"
+        }
+      ],
+      "columns": [
+        {
+          "name": "age [Myr]",
+          "meaning": "Age estimate for GJ 182 from the cited reference",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "method",
+          "meaning": "Method used for age determination (HRD isochrone fitting, kinematic/activity/rotation, lithium test)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ref.",
+          "meaning": "Abbreviated reference code; full citations in table footnote",
+          "unit_text": "",
+          "source_of_definition": "table header + footnote",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Compilation of literature ages for GJ 182 used as a comparison benchmark. Section 6 discusses GJ 182 as the previously nearest known young runaway star.",
+      "comments": "7 rows; appears in Section 6. References decoded in footnote: Z01=Zuckerman, T11=Tetzlaff, B14=Brandt, BJ14=Binks, B15=Bell."
+    },
+    {
+      "id": "table-obslog",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Appendix A1. Observation log for all 308 stars observed with FLECHAS. Lists the date (UT), exposure time, and signal-to-noise ratio at 6700 Å for each target.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 369,
+          "end_line": 695,
+          "caption": "Observation log. For each target we list the date and mid-time of the observation, as well as the individual exposure time (T_exp) of each FLECHAS spectrum and the signal-to-noise ratios (SNR) of the three combined spectra, as measured at λ = 6700 Å.",
+          "label": "tab:obslog"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Target",
+          "meaning": "HIP identifier of the target star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Date [UT]",
+          "meaning": "UT date of mid-observation",
+          "unit_text": "",
+          "source_of_definition": "table header + caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_exp [s]",
+          "meaning": "Individual exposure time per FLECHAS spectrum in seconds",
+          "unit_text": "s",
+          "source_of_definition": "table header + caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "SNR",
+          "meaning": "Signal-to-noise ratio of the three combined FLECHAS spectra measured at λ=6700 Å",
+          "unit_text": "",
+          "source_of_definition": "table header + caption + Section 2",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 2 describes the FLECHAS observations. Table uses supertabular environment spanning multiple pages. 308 rows for all observed stars.",
+      "comments": "308 rows; Appendix A1. Uses supertabular for multi-page layout. Observation dates range from Feb 2015 to Jun 2018."
+    },
+    {
+      "id": "table-Li_all",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Appendix A2. Complete catalog of Li 6708 Å equivalent width measurements for all 308 observed targets from FLECHAS spectra. Targets without significant detection (EW < 3σ) are listed with '-'.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 699,
+          "end_line": 871,
+          "caption": "Measured equivalent widths (EW_Li) of the Li (6708 Å) line. Targets without significant detection (EW_Li < 3·σEW_Li) are listed with '-'.",
+          "label": "tab:Li_all"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Target (col 1)",
+          "meaning": "HIP identifier of the target star (first of two columns)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW_Li [mÅ] (col 2)",
+          "meaning": "Measured equivalent width of Li 6708 Å line with uncertainty; '-' means no significant detection",
+          "unit_text": "mÅ",
+          "source_of_definition": "table header + caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "Target (col 3)",
+          "meaning": "HIP identifier of the target star (second of two columns)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW_Li [mÅ] (col 4)",
+          "meaning": "Measured equivalent width of Li 6708 Å line with uncertainty; '-' means no significant detection",
+          "unit_text": "mÅ",
+          "source_of_definition": "table header + caption",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 4 describes the EW measurement using IRAF splot with direct integration. The table presents results in a two-column format using supertabular.",
+      "comments": "308 targets in two-column paired format (~154 rows); Appendix A2. Uses supertabular. 208 stars show significant lithium detection."
+    },
+    {
+      "id": "table-gaia_infos",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Appendix A3. Physical properties of all 308 targets from Gaia DR2: distances from Bailer-Jones, apparent G magnitude, extinction AG, absolute G magnitude MG, effective temperature, stellar radius, luminosity, and remarks flags.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 876,
+          "end_line": 1203,
+          "caption": "Physical properties of the targets, as provided by Gaia DR2. We list the apparent brightness G, the extinction in the G-band AG, the effective temperature Teff, stellar radius R, and luminosity L of the target stars (if available). From these parameters together with the distances d by Bailer-Jones, the absolute G-band brightness MG of the targets was calculated. The last column yields further remarks, with details listed in the footnote of this table.",
+          "label": "tab:gaia_infos"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Target",
+          "meaning": "HIP identifier of the target star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d [pc]",
+          "meaning": "Distance from Bailer-Jones et al. (Gaia DR2 based)",
+          "unit_text": "pc",
+          "source_of_definition": "table header + caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "G [mag]",
+          "meaning": "Apparent Gaia G-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header + caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_G [mag]",
+          "meaning": "Extinction in Gaia G-band",
+          "unit_text": "mag",
+          "source_of_definition": "table header + caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_G [mag]",
+          "meaning": "Absolute Gaia G-band magnitude, computed from d and G with AG correction",
+          "unit_text": "mag",
+          "source_of_definition": "table header + caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_eff [K]",
+          "meaning": "Effective temperature from Gaia DR2",
+          "unit_text": "K",
+          "source_of_definition": "table header + caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "R [R_⊙]",
+          "meaning": "Stellar radius from Gaia DR2 in solar units",
+          "unit_text": "R_⊙",
+          "source_of_definition": "table header + caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "L [L_⊙]",
+          "meaning": "Stellar luminosity from Gaia DR2 in solar units",
+          "unit_text": "L_⊙",
+          "source_of_definition": "table header + caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "rem.",
+          "meaning": "Remark flags: a=Hipparcos parallax used, b=V/I to G conversion, c=median AV from literature, d=Teff from Hipparcos SpT, e=R/L rejected (no gold/silver flag), f=equal-mass spectroscopic binary (~0.75 mag fainter)",
+          "unit_text": "",
+          "source_of_definition": "table header + footnotes",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 3 describes how Gaia DR2 data were used. Table footnotes explain remark flags: a=Hipparcos parallax, b=V/I→G conversion, c=median AV from literature, d=Teff from Hipparcos SpT, e=R/L rejected, f=SB2.",
+      "comments": "308 rows; Appendix A3. Uses supertabular. Only entries with gold or silver Gaia flags were used. Some fields are missing (marked with '-') for certain targets."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://cdsarc.u-strasbg.fr/viz-bin/cat/J/MNRAS/410/190",
+      "local_path": "",
+      "description": "VizieR catalogue 'Young runaway stars within 3 kpc' by Tetzlaff et al. (2011, MNRAS 410, 190). The parent catalogue from which the 308 target stars were selected for this study.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 51,
+          "end_line": 51,
+          "context": "The results of their study were published in the catalogue Young runaway stars within 3 kpc which is available at the VizieR database."
+        }
+      ],
+      "evidence": "Section 1 states the sample was drawn from Tetzlaff's catalogue. URL given as footnote to VizieR.",
+      "comments": "The input catalogue for target selection. Contains 118,218 Hipparcos stars with age estimates."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://linmax.sao.arizona.edu/help/FLWO/whipple.html",
+      "local_path": "",
+      "description": "Fred L. Whipple Observatory information page. The 1.5 m Tillinghast reflector hosting the TRES spectrograph is located at this facility.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 71,
+          "end_line": 71,
+          "context": "The spectrograph is attached to the 1.5 m Tillinghast reflector at the Fred L. Whipple Observatory on Mount Hopkins (Arizona, USA)."
+        }
+      ],
+      "evidence": "Section 2 describes the TRES instrument and observatory. URL given as footnote.",
+      "comments": "Observatory website for FLWO."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "VizieR database used to collect V-band extinction measurements from the literature for 142 targets lacking Gaia DR2 AG values.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 86,
+          "end_line": 86,
+          "context": "142 of our targets have no estimation of the interstellar extinction in the G-band. For this reason, measurements of their V-band extinction from the literature, as listed in VizieR, were collected instead."
+        }
+      ],
+      "evidence": "Section 3 describes using VizieR to collect V-band extinction data as a substitute for missing Gaia AG values.",
+      "comments": "Generic VizieR query for extinction data; no specific catalogue URL given."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "http://www.pas.rochester.edu/~emamajek/EEM_dwarf_UBVIJHK_colors_Teff.dat",
+      "local_path": "",
+      "description": "E. Mamajek's compilation of dwarf star colors and effective temperatures. Used as a reference to distinguish giants from dwarfs by comparing stellar radii at given Teff.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 99,
+          "end_line": 99,
+          "context": "At comparable temperatures, the radii of those targets are too large compared to those of known dwarfs as given by E. Mamajek or Torres et al. (2010)."
+        }
+      ],
+      "evidence": "Section 3 describes using Mamajek's dwarf reference data to classify ambiguous targets as giants.",
+      "comments": "Reference data table for dwarf Teff-radius relation."
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "StarHorse catalogue (Anders et al.) and VizieR metallicity databases. Used to verify solar metallicity of dwarf targets and check for metallicity effects on isochrone fitting.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 223,
+          "end_line": 223,
+          "context": "All of these targets have metallicities listed in the StarHorse catalogue which are consistent within 2σ with solar metallicity. Furthermore, we searched for additional information about the metallicity of our dwarf targets in the VizieR database."
+        }
+      ],
+      "evidence": "Section 5 describes using StarHorse and VizieR to verify solar metallicity assumption for isochrone fitting. Lists 18 literature catalogues consulted.",
+      "comments": "StarHorse provides log(g) values that independently confirm dwarf/giant classification. 18 VizieR catalogues listed for metallicity data."
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "http://www.pas.rochester.edu/~emamajek/images/li.jpg",
+      "local_path": "",
+      "description": "E. Mamajek's plot of lithium equivalent width vs. Teff for clusters of known ages (α Per at 90 Myr, Hyades at 625 Myr, etc.). Used as the lithium age calibration for this study.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 239,
+          "end_line": 239,
+          "context": "The curves are polynomial fits to observed Teff vs. log10(EW_Li) data of each cluster. E. Mamajek's plot can be found online."
+        }
+      ],
+      "evidence": "Section 5 describes using Mamajek's lithium-age curves as the primary age indicator. URL given as footnote.",
+      "comments": "Key calibration data for the lithium age method. Based on Neuhaeuser et al."
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "StarHorse catalogue (Anders et al.) used for independent confirmation of dwarf/giant classification via surface gravity log(g) values.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 294,
+          "end_line": 294,
+          "context": "The identification of the 13 dwarfs as such is consistent with the results of Anders et al. given in the StarHorse catalogue, where all these objects are listed with a surface gravity log(g) > 3.8."
+        }
+      ],
+      "evidence": "Section 6 uses StarHorse log(g) values to independently validate the dwarf/giant classification from HRD analysis.",
+      "comments": "StarHorse catalogue provides independent confirmation. Dwarfs have log(g) > 3.8, giants have log(g) < 3.8."
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Spectra and Li equivalent width measurements to be made available at the VizieR database after publication, as stated in the Discussion section.",
+      "source_refs": [
+        {
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 352,
+          "end_line": 352,
+          "context": "This study provides a large database of spectra which will be made available in the VizieR database together with the measured equivalent widths of the Li (6708 Å) line, after publication."
+        }
+      ],
+      "evidence": "Section 6 explicitly states that all spectra and measurements will be deposited at VizieR.",
+      "comments": "Future data availability statement. No URL given as data may not have been deposited yet."
+    }
+  ]
+}

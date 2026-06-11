@@ -1,0 +1,490 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:47:23",
+  "paper": {
+    "arxiv_id": "2108.11393",
+    "title": "Central kinematics of the Galactic globular cluster M80",
+    "month": "2021-08"
+  },
+  "review": {
+    "path": "literature/2108.11393/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084723",
+    "started_at": "2026-06-07T08:47:23",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2108.11393",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-observations",
+      "internal_table_id": "table-tab-observations",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+        "start_line": 565,
+        "end_line": 595,
+        "caption": "MUSE observations of \\ngc6093.",
+        "label": "tab:observations"
+      },
+      "source_path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+      "excerpt_path": "literature/2108.11393/catalog_sources/table-tab-observations/excerpt.tex",
+      "sha256": "0ca9e66198dae4fc42b75abe0857cd392195bcabe9215373bb011cf6b69a1678",
+      "line_count": 31,
+      "error": ""
+    },
+    {
+      "id": "table-tab-priors",
+      "internal_table_id": "table-tab-priors",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+        "start_line": 598,
+        "end_line": 620,
+        "caption": "Priors used in the Jeans model MCMC.",
+        "label": "tab:priors"
+      },
+      "source_path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+      "excerpt_path": "literature/2108.11393/catalog_sources/table-tab-priors/excerpt.tex",
+      "sha256": "6401be5fd2c43731b6b4dd4a4901da8cff7fbed94bc72dc2b82492685f685b04",
+      "line_count": 23,
+      "error": ""
+    },
+    {
+      "id": "table-tab-fits_north",
+      "internal_table_id": "table-tab-fits_north",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+        "start_line": 623,
+        "end_line": 641,
+        "caption": "Fit statistics for $N$-body models around the northern centre. `RV' refers to fits of the binned radial velocities, `SB' to fits of the surface brightness profile, and `total' to simultaneous fits to both.",
+        "label": "tab:fits_north"
+      },
+      "source_path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+      "excerpt_path": "literature/2108.11393/catalog_sources/table-tab-fits_north/excerpt.tex",
+      "sha256": "99ad91f417a98017c708adc07358bb47648764da339bf4a9d5947c5d90199632",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-fits_south",
+      "internal_table_id": "table-tab-fits_south",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+        "start_line": 643,
+        "end_line": 661,
+        "caption": "Similar to Table~\\ref{tab:fits_south} but for $N$-body models around the southern centre.",
+        "label": "tab:fits_south"
+      },
+      "source_path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+      "excerpt_path": "literature/2108.11393/catalog_sources/table-tab-fits_south/excerpt.tex",
+      "sha256": "a92c1bcc9967ac1fe487e32790d49eea048936018534a27f2a9a7f7fa146d36c",
+      "line_count": 19,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-observations",
+      "internal_table_id": "table-tab-observations",
+      "status": "success",
+      "ecsv_path": "literature/2108.11393/catalog_tables/table-tab-observations.ecsv",
+      "caption": "MUSE observations of \\ngc6093.",
+      "label": "tab:observations",
+      "row_count": 16,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Pointing",
+          "Obs. date",
+          "Inst. mode",
+          "Exp. time",
+          "Prog. ID"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Pointing",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Obs. date",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Inst. mode",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Exp. time",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Prog. ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpft94ksyk/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2108.11393/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpft94ksyk/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2108.11393/catalog_sources/table-tab-observations/wrapped.tex",
+            "html": "literature/2108.11393/catalog_sources/table-tab-observations/latexml.html",
+            "stdout": "literature/2108.11393/catalog_sources/table-tab-observations/latexml.stdout.txt",
+            "stderr": "literature/2108.11393/catalog_sources/table-tab-observations/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0ca9e66198dae4fc42b75abe0857cd392195bcabe9215373bb011cf6b69a1678"
+    },
+    {
+      "id": "table-tab-priors",
+      "internal_table_id": "table-tab-priors",
+      "status": "success",
+      "ecsv_path": "literature/2108.11393/catalog_tables/table-tab-priors.ecsv",
+      "caption": "Priors used in the Jeans model MCMC.",
+      "label": "tab:priors",
+      "row_count": 10,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Prior",
+          "Unit",
+          "Description"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Prior",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Unit",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Description",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgr2_l0p5/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2108.11393/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgr2_l0p5/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2108.11393/catalog_sources/table-tab-priors/wrapped.tex",
+            "html": "literature/2108.11393/catalog_sources/table-tab-priors/latexml.html",
+            "stdout": "literature/2108.11393/catalog_sources/table-tab-priors/latexml.stdout.txt",
+            "stderr": "literature/2108.11393/catalog_sources/table-tab-priors/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6401be5fd2c43731b6b4dd4a4901da8cff7fbed94bc72dc2b82492685f685b04"
+    },
+    {
+      "id": "table-tab-fits_north",
+      "internal_table_id": "table-tab-fits_north",
+      "status": "success",
+      "ecsv_path": "literature/2108.11393/catalog_tables/table-tab-fits_north.ecsv",
+      "caption": "Fit statistics for $N$-body models around the northern centre. `RV' refers to fits of the binned radial velocities, `SB' to fits of the surface brightness profile, and `total' to simultaneous fits to both.",
+      "label": "tab:fits_north",
+      "row_count": 8,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "m_IMBH [ \\msol ]",
+          "SBH retention frac. [%]",
+          "\\chi_r^2 RV",
+          "\\chi_r^2 SB",
+          "\\chi_r^2 total"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "m_IMBH [ \\msol ]",
+          "unit_text": "m_IMBH [ \\msol ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "SBH retention frac. [%]",
+          "unit_text": "SBH retention frac. [%]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\chi_r^2 RV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\chi_r^2 SB",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\chi_r^2 total",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpede3vf2b/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2108.11393/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpede3vf2b/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2108.11393/catalog_sources/table-tab-fits_north/wrapped.tex",
+            "html": "literature/2108.11393/catalog_sources/table-tab-fits_north/latexml.html",
+            "stdout": "literature/2108.11393/catalog_sources/table-tab-fits_north/latexml.stdout.txt",
+            "stderr": "literature/2108.11393/catalog_sources/table-tab-fits_north/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "99ad91f417a98017c708adc07358bb47648764da339bf4a9d5947c5d90199632"
+    },
+    {
+      "id": "table-tab-fits_south",
+      "internal_table_id": "table-tab-fits_south",
+      "status": "success",
+      "ecsv_path": "literature/2108.11393/catalog_tables/table-tab-fits_south.ecsv",
+      "caption": "Similar to Table~\\ref{tab:fits_south} but for $N$-body models around the southern centre.",
+      "label": "tab:fits_south",
+      "row_count": 8,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "m_IMBH [ \\msol ]",
+          "SBH retention frac. [%]",
+          "\\chi_r^2 RV",
+          "\\chi_r^2 SB",
+          "\\chi_r^2 total"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "m_IMBH [ \\msol ]",
+          "unit_text": "m_IMBH [ \\msol ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "SBH retention frac. [%]",
+          "unit_text": "SBH retention frac. [%]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\chi_r^2 RV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\chi_r^2 SB",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\chi_r^2 total",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpme9knmi5/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2108.11393/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpme9knmi5/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2108.11393/catalog_sources/table-tab-fits_south/wrapped.tex",
+            "html": "literature/2108.11393/catalog_sources/table-tab-fits_south/latexml.html",
+            "stdout": "literature/2108.11393/catalog_sources/table-tab-fits_south/latexml.stdout.txt",
+            "stderr": "literature/2108.11393/catalog_sources/table-tab-fits_south/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a92c1bcc9967ac1fe487e32790d49eea048936018534a27f2a9a7f7fa146d36c"
+    }
+  ]
+}

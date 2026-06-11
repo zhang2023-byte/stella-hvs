@@ -1,0 +1,1488 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:44:35",
+  "paper": {
+    "arxiv_id": "2011.10206",
+    "title": "591 high velocity stars in the Galactic halo selected from LAMOST DR7 and Gaia DR2",
+    "month": "2020-11"
+  },
+  "review": {
+    "path": "literature/2011.10206/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084435",
+    "started_at": "2026-06-07T08:44:35",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2011.10206",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 9,
+      "work_count": 9,
+      "table_count": 9,
+      "success_count": 9,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 9,
+      "file_success_count": 9,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-001",
+      "internal_table_id": "table-001",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+        "start_line": 308,
+        "end_line": 374,
+        "caption": "Basic parameters for the 20 fastest High velocity star candidates (HiVelSCs)",
+        "label": "tab:basic"
+      },
+      "source_path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+      "excerpt_path": "literature/2011.10206/catalog_sources/table-001/excerpt.tex",
+      "sha256": "f736e9e370be124737b5e7c738ad410484042fcca1cfbef4033090de10c69215",
+      "line_count": 67,
+      "error": ""
+    },
+    {
+      "id": "table-002",
+      "internal_table_id": "table-002",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+        "start_line": 376,
+        "end_line": 433,
+        "caption": "Spatial Positions and Velocities of the 20 fastest HiVelSCs",
+        "label": "tab:kinematic"
+      },
+      "source_path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+      "excerpt_path": "literature/2011.10206/catalog_sources/table-002/excerpt.tex",
+      "sha256": "87a0d125570a854d1e1e27e9a913b060a0ba7be4d329313085964521bb56c69f",
+      "line_count": 58,
+      "error": ""
+    },
+    {
+      "id": "table-003",
+      "internal_table_id": "table-003",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+        "start_line": 487,
+        "end_line": 497,
+        "caption": "The number of HiVelSCs with probabilities of being unbound larger than 50% in each of the seven potential models",
+        "label": "tab:punbound_50"
+      },
+      "source_path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+      "excerpt_path": "literature/2011.10206/catalog_sources/table-003/excerpt.tex",
+      "sha256": "dc3db01a5c4865632f7c89b0ac6f9d916ad231ec1ab17a83153a205fc304bc96",
+      "line_count": 11,
+      "error": ""
+    },
+    {
+      "id": "table-004",
+      "internal_table_id": "table-004",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+        "start_line": 709,
+        "end_line": 722,
+        "caption": "The classification criteria of HiVelSCs",
+        "label": "tab:origin"
+      },
+      "source_path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+      "excerpt_path": "literature/2011.10206/catalog_sources/table-004/excerpt.tex",
+      "sha256": "efca3dbca57a3ff3d7da860227ff2a13369490d4da806e470cc8eda56d347251",
+      "line_count": 14,
+      "error": ""
+    },
+    {
+      "id": "table-005",
+      "internal_table_id": "table-005",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+        "start_line": 786,
+        "end_line": 808,
+        "caption": "The results using more stringent selection criteria",
+        "label": "tab:strict_criteria"
+      },
+      "source_path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+      "excerpt_path": "literature/2011.10206/catalog_sources/table-005/excerpt.tex",
+      "sha256": "e8e94eeeb9a53de99fd0237d2f7b3b5b66c2ce6fd791062d2d7821aaa1142509",
+      "line_count": 23,
+      "error": ""
+    },
+    {
+      "id": "table-006",
+      "internal_table_id": "table-006",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+        "start_line": 927,
+        "end_line": 987,
+        "caption": "Escape velocities of the 20 fastest HiVelSCs in the seven Galactic potential models",
+        "label": "tab:vesc"
+      },
+      "source_path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+      "excerpt_path": "literature/2011.10206/catalog_sources/table-006/excerpt.tex",
+      "sha256": "97acc059459b0d47ee07b708b5a64542341645c0111734e79c4b23ce3d18f633",
+      "line_count": 61,
+      "error": ""
+    },
+    {
+      "id": "table-007",
+      "internal_table_id": "table-007",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+        "start_line": 991,
+        "end_line": 1053,
+        "caption": "Unbound probabilities of the 20 fastest HiVelSCs in the seven potential models",
+        "label": "tab:unbound"
+      },
+      "source_path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+      "excerpt_path": "literature/2011.10206/catalog_sources/table-007/excerpt.tex",
+      "sha256": "4d132b9927e14b5659748485057b237f8e73e495487c85f5d67e02b373135792",
+      "line_count": 63,
+      "error": ""
+    },
+    {
+      "id": "table-008",
+      "internal_table_id": "table-008",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+        "start_line": 1056,
+        "end_line": 1116,
+        "caption": "Atmospheric parameters for the 20 fastest HiVelSCs",
+        "label": "tab:atmospheric"
+      },
+      "source_path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+      "excerpt_path": "literature/2011.10206/catalog_sources/table-008/excerpt.tex",
+      "sha256": "086223112f01959e4c43a5de2f130210de97fd4459c9dae9727793a1eaf81157",
+      "line_count": 61,
+      "error": ""
+    },
+    {
+      "id": "table-009",
+      "internal_table_id": "table-009",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+        "start_line": 1159,
+        "end_line": 1278,
+        "caption": "Description of our HiVelSCs catalog",
+        "label": "tab:general_catalog"
+      },
+      "source_path": "literature/2011.10206/arxiv_source/LAMOST_II_HVS.tex",
+      "excerpt_path": "literature/2011.10206/catalog_sources/table-009/excerpt.tex",
+      "sha256": "2500ffdd3e10a26c19907a1cb4619d4dcb993a2b72c5e5e26255a7cdaa76feae",
+      "line_count": 120,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-001",
+      "internal_table_id": "table-001",
+      "status": "success",
+      "ecsv_path": "literature/2011.10206/catalog_tables/table-001.ecsv",
+      "caption": "Basic parameters for the 20 fastest High velocity star candidates (HiVelSCs)",
+      "label": "tab:basic",
+      "row_count": 20,
+      "column_count": 13,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "R.A.",
+          "decl.",
+          "S/N _r a",
+          "Class b",
+          "RV_\\rm LASP^c",
+          "pmra d",
+          "pmdec d",
+          "parallax e",
+          "G^f",
+          "G_\\rm BP^f",
+          "G_\\rm RP^f",
+          "astrometric_flag g"
+        ],
+        [
+          "",
+          "(deg)",
+          "(deg)",
+          "",
+          "",
+          "(km s -1 )",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(mas)",
+          "(mag)",
+          "(mag)",
+          "(mag)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R.A. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "decl. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "S/N _r a",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Class b",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "RV_\\rm LASP^c | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "pmra d | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "pmdec d | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "parallax e | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "G^f | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "G_\\rm BP^f | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "G_\\rm RP^f | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "astrometric_flag g",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpo4xuwalq/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2011.10206/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpo4xuwalq/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2011.10206/catalog_sources/table-001/wrapped.tex",
+            "html": "literature/2011.10206/catalog_sources/table-001/latexml.html",
+            "stdout": "literature/2011.10206/catalog_sources/table-001/latexml.stdout.txt",
+            "stderr": "literature/2011.10206/catalog_sources/table-001/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f736e9e370be124737b5e7c738ad410484042fcca1cfbef4033090de10c69215"
+    },
+    {
+      "id": "table-002",
+      "internal_table_id": "table-002",
+      "status": "success",
+      "ecsv_path": "literature/2011.10206/catalog_tables/table-002.ecsv",
+      "caption": "Spatial Positions and Velocities of the 20 fastest HiVelSCs",
+      "label": "tab:kinematic",
+      "row_count": 20,
+      "column_count": 13,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "x a",
+          "y a",
+          "z a",
+          "r_\\rm GC b",
+          "V_\\rm x c",
+          "V_\\rm y c",
+          "V_\\rm z c",
+          "V_\\rm GC d",
+          "e^e",
+          "Z_\\rm max f",
+          "r_\\rm min g",
+          "E- \\Phi ( \\infty ) h"
+        ],
+        [
+          "",
+          "(kpc)",
+          "(kpc)",
+          "(kpc)",
+          "(kpc)",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )",
+          "",
+          "(kpc)",
+          "(kpc)",
+          "(kpc 2 Myr -2 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "x a | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "y a | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "z a | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "r_\\rm GC b | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V_\\rm x c | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "V_\\rm y c | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "V_\\rm z c | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "V_\\rm GC d | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "e^e",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Z_\\rm max f | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "r_\\rm min g | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "E- \\Phi ( \\infty ) h | (kpc 2 Myr -2 )",
+          "unit_text": "(kpc 2 Myr -2 )",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpy0252qc7/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2011.10206/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpy0252qc7/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2011.10206/catalog_sources/table-002/wrapped.tex",
+            "html": "literature/2011.10206/catalog_sources/table-002/latexml.html",
+            "stdout": "literature/2011.10206/catalog_sources/table-002/latexml.stdout.txt",
+            "stderr": "literature/2011.10206/catalog_sources/table-002/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "87a0d125570a854d1e1e27e9a913b060a0ba7be4d329313085964521bb56c69f"
+    },
+    {
+      "id": "table-003",
+      "internal_table_id": "table-003",
+      "status": "success",
+      "ecsv_path": "literature/2011.10206/catalog_tables/table-003.ecsv",
+      "caption": "The number of HiVelSCs with probabilities of being unbound larger than 50% in each of the seven potential models",
+      "label": "tab:punbound_50",
+      "row_count": 1,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "Watkins+2019",
+          "Gnedin+2005",
+          "Kenyon+2014",
+          "Koposov+2010",
+          "Paczynski+1990",
+          "MWPotential2014",
+          "Xue+2008"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Watkins+2019",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Gnedin+2005",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Kenyon+2014",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Koposov+2010",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Paczynski+1990",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "MWPotential2014",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Xue+2008",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppe_uyroo/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2011.10206/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppe_uyroo/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2011.10206/catalog_sources/table-003/wrapped.tex",
+            "html": "literature/2011.10206/catalog_sources/table-003/latexml.html",
+            "stdout": "literature/2011.10206/catalog_sources/table-003/latexml.stdout.txt",
+            "stderr": "literature/2011.10206/catalog_sources/table-003/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "dc3db01a5c4865632f7c89b0ac6f9d916ad231ec1ab17a83153a205fc304bc96"
+    },
+    {
+      "id": "table-004",
+      "internal_table_id": "table-004",
+      "status": "success",
+      "ecsv_path": "literature/2011.10206/catalog_tables/table-004.ecsv",
+      "caption": "The classification criteria of HiVelSCs",
+      "label": "tab:origin",
+      "row_count": 4,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Class",
+          "P_\\rm gc",
+          "P_\\rm MW",
+          "P_\\rm ub"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Class",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "P_\\rm gc",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "P_\\rm MW",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "P_\\rm ub",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvvo31aac/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2011.10206/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvvo31aac/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2011.10206/catalog_sources/table-004/wrapped.tex",
+            "html": "literature/2011.10206/catalog_sources/table-004/latexml.html",
+            "stdout": "literature/2011.10206/catalog_sources/table-004/latexml.stdout.txt",
+            "stderr": "literature/2011.10206/catalog_sources/table-004/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "efca3dbca57a3ff3d7da860227ff2a13369490d4da806e470cc8eda56d347251"
+    },
+    {
+      "id": "table-005",
+      "internal_table_id": "table-005",
+      "status": "success",
+      "ecsv_path": "literature/2011.10206/catalog_tables/table-005.ecsv",
+      "caption": "The results using more stringent selection criteria",
+      "label": "tab:strict_criteria",
+      "row_count": 5,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Criteria a",
+          "N1 b",
+          "N2 c",
+          "N3 d",
+          "N4 e",
+          "Maximum V _\\rm GC^f"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "(km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Criteria a",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "N1 b",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "N2 c",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "N3 d",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "N4 e",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Maximum V _\\rm GC^f | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp35ljrbpa/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2011.10206/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp35ljrbpa/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2011.10206/catalog_sources/table-005/wrapped.tex",
+            "html": "literature/2011.10206/catalog_sources/table-005/latexml.html",
+            "stdout": "literature/2011.10206/catalog_sources/table-005/latexml.stdout.txt",
+            "stderr": "literature/2011.10206/catalog_sources/table-005/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e8e94eeeb9a53de99fd0237d2f7b3b5b66c2ce6fd791062d2d7821aaa1142509"
+    },
+    {
+      "id": "table-006",
+      "internal_table_id": "table-006",
+      "status": "success",
+      "ecsv_path": "literature/2011.10206/catalog_tables/table-006.ecsv",
+      "caption": "Escape velocities of the 20 fastest HiVelSCs in the seven Galactic potential models",
+      "label": "tab:vesc",
+      "row_count": 20,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "r_\\rm GC a",
+          "V_\\rm GC a",
+          "V_\\rm esc (W) b",
+          "V_\\rm esc (G) b",
+          "V_\\rm esc (Ke) b",
+          "V_\\rm esc (Ko) b",
+          "V_\\rm esc (P) b",
+          "V_\\rm esc (M) b",
+          "V_\\rm esc (X) b"
+        ],
+        [
+          "",
+          "(kpc)",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "r_\\rm GC a | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "V_\\rm GC a | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "V_\\rm esc (W) b | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V_\\rm esc (G) b | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V_\\rm esc (Ke) b | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "V_\\rm esc (Ko) b | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "V_\\rm esc (P) b | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "V_\\rm esc (M) b | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "V_\\rm esc (X) b | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4d_fq15o/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2011.10206/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4d_fq15o/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2011.10206/catalog_sources/table-006/wrapped.tex",
+            "html": "literature/2011.10206/catalog_sources/table-006/latexml.html",
+            "stdout": "literature/2011.10206/catalog_sources/table-006/latexml.stdout.txt",
+            "stderr": "literature/2011.10206/catalog_sources/table-006/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "97acc059459b0d47ee07b708b5a64542341645c0111734e79c4b23ce3d18f633"
+    },
+    {
+      "id": "table-007",
+      "internal_table_id": "table-007",
+      "status": "success",
+      "ecsv_path": "literature/2011.10206/catalog_tables/table-007.ecsv",
+      "caption": "Unbound probabilities of the 20 fastest HiVelSCs in the seven potential models",
+      "label": "tab:unbound",
+      "row_count": 20,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "P_\\rm gc a",
+          "P_\\rm MW b",
+          "P_\\rm ub (W) c",
+          "P_\\rm ub (G) c",
+          "P_\\rm ub (Ke) c",
+          "P_\\rm ub (Ko) c",
+          "P_\\rm ub (P) c",
+          "P_\\rm ub (M) c",
+          "P_\\rm ub (X) c",
+          "Origin _ Class d"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "P_\\rm gc a",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "P_\\rm MW b",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "P_\\rm ub (W) c",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "P_\\rm ub (G) c",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "P_\\rm ub (Ke) c",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "P_\\rm ub (Ko) c",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "P_\\rm ub (P) c",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "P_\\rm ub (M) c",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "P_\\rm ub (X) c",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Origin _ Class d",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpow_r9hqu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2011.10206/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpow_r9hqu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2011.10206/catalog_sources/table-007/wrapped.tex",
+            "html": "literature/2011.10206/catalog_sources/table-007/latexml.html",
+            "stdout": "literature/2011.10206/catalog_sources/table-007/latexml.stdout.txt",
+            "stderr": "literature/2011.10206/catalog_sources/table-007/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4d132b9927e14b5659748485057b237f8e73e495487c85f5d67e02b373135792"
+    },
+    {
+      "id": "table-008",
+      "internal_table_id": "table-008",
+      "status": "success",
+      "ecsv_path": "literature/2011.10206/catalog_tables/table-008.ecsv",
+      "caption": "Atmospheric parameters for the 20 fastest HiVelSCs",
+      "label": "tab:atmospheric",
+      "row_count": 20,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "T_\\rm eff _LASP a",
+          "log g _LASP a",
+          "[Fe/H] _ LASP a",
+          "T_\\rm eff _DD-Payne b",
+          "log g _DD-Payne b",
+          "[Fe/H] _ DD-Payne b",
+          "[ \\alpha /Fe] _ DD-Payne b"
+        ],
+        [
+          "",
+          "(K)",
+          "(dex)",
+          "(dex)",
+          "(K)",
+          "(dex)",
+          "(dex)",
+          "(dex)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "T_\\rm eff _LASP a | (K)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "log g _LASP a | (dex)",
+          "unit_text": "(dex)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "[Fe/H] _ LASP a | (dex)",
+          "unit_text": "[Fe/H] _ LASP a",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "T_\\rm eff _DD-Payne b | (K)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "log g _DD-Payne b | (dex)",
+          "unit_text": "(dex)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "[Fe/H] _ DD-Payne b | (dex)",
+          "unit_text": "[Fe/H] _ DD-Payne b",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "[ \\alpha /Fe] _ DD-Payne b | (dex)",
+          "unit_text": "[ \\alpha /Fe] _ DD-Payne b",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9d2_hyr5/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2011.10206/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9d2_hyr5/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2011.10206/catalog_sources/table-008/wrapped.tex",
+            "html": "literature/2011.10206/catalog_sources/table-008/latexml.html",
+            "stdout": "literature/2011.10206/catalog_sources/table-008/latexml.stdout.txt",
+            "stderr": "literature/2011.10206/catalog_sources/table-008/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "086223112f01959e4c43a5de2f130210de97fd4459c9dae9727793a1eaf81157"
+    },
+    {
+      "id": "table-009",
+      "internal_table_id": "table-009",
+      "status": "success",
+      "ecsv_path": "literature/2011.10206/catalog_tables/table-009.ecsv",
+      "caption": "Description of our HiVelSCs catalog",
+      "label": "tab:general_catalog",
+      "row_count": 93,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Column",
+          "Name",
+          "Units",
+          "Description"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Column",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Units",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Description",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7v09va98/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2011.10206/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7v09va98/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2011.10206/catalog_sources/table-009/wrapped.tex",
+            "html": "literature/2011.10206/catalog_sources/table-009/latexml.html",
+            "stdout": "literature/2011.10206/catalog_sources/table-009/latexml.stdout.txt",
+            "stderr": "literature/2011.10206/catalog_sources/table-009/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2500ffdd3e10a26c19907a1cb4619d4dcb993a2b72c5e5e26255a7cdaa76feae"
+    }
+  ]
+}

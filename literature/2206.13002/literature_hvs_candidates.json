@@ -1,0 +1,361 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-23T11:47:48",
+  "paper": {
+    "arxiv_id": "2206.13002",
+    "bibcode": "2022ApJ...933L..13L",
+    "title": "60 candidate high-velocity stars originating from the Sagittarius dwarf spheroidal galaxy in Gaia EDR3",
+    "month": "2022-06",
+    "source_note_json": "notes/2022/2022-06/2022-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2206.13002",
+      "pdf": "https://arxiv.org/pdf/2206.13002"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2206.13002",
+    "audit_path": "literature/2206.13002/audit.json",
+    "catalog_review_path": "literature/2206.13002/catalog_review.json",
+    "catalog_extraction_path": "literature/2206.13002/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2206.13002/catalog_tables/table-tab-correction.ecsv",
+      "literature/2206.13002/catalog_tables/table-tab-results.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "source_missing",
+    "extracted_at": "2026-05-23T11:47:48",
+    "extractor": "agent",
+    "summary": "The paper explicitly identifies 60 candidate high-velocity stars (including 2 hypervelocity stars) likely originating from the Sagittarius dwarf spheroidal galaxy. However, the candidate catalog table body (tab.tex) is missing from the archived arXiv source; the LaTeX table environment is commented out and references \\input{tab.tex}, which was not included in the arXiv upload or the extracted source. The ECSV extraction reflects only a placeholder row. Consequently, no individual candidate identifiers (paper IDs, Gaia EDR3 source IDs) or per-candidate quantitative values (r_GC, v_GC, P_ub, etc.) are available from the internal archive. The paper text does not name individual objects. Individual candidate records cannot be populated without the missing source table or an external catalog download."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia EDR3 astrometry and photometry combined with radial velocities from nine spectroscopic surveys: Gaia DR2 RVs, Gaia-ESO DR4, GALAH DR3, LAMOST DR9 (LRS and MRS), RAVE DR6, SDSS DR17, APOGEE DR17, and S^5 DR1.",
+      "inputs": [
+        "Gaia EDR3",
+        "Gaia DR2 radial velocities",
+        "Gaia-ESO DR4",
+        "GALAH DR3",
+        "LAMOST DR9 LRS",
+        "LAMOST DR9 MRS",
+        "RAVE DR6",
+        "SDSS DR17",
+        "APOGEE DR17",
+        "S^5 DR1"
+      ],
+      "outputs": [
+        "Merged catalog with positions, proper motions, parallaxes, and multi-survey radial velocities"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 65,
+          "end_line": 66,
+          "context": "Description of input catalogs and cross-matching strategy"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "cross_match",
+      "summary": "Cross-match Gaia EDR3 with spectroscopic survey catalogs to supplement radial velocity information.",
+      "inputs": [
+        "Gaia EDR3 source catalog",
+        "Spectroscopic survey catalogs"
+      ],
+      "outputs": [
+        "Cross-matched catalog with astrometry and radial velocities from multiple surveys"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 65,
+          "end_line": 66,
+          "context": "Cross-matching Gaia EDR3 with spectroscopic surveys"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "quality_filter",
+      "summary": "Quality cuts: RUWE < 1.4, Lindegren et al. (2020) parallax correction, removal of stars with parallax < 5 sigma_parallax, spectroscopic S/N > 10, and retention of only stars with at least 4 radial velocity epochs (n_rv >= 4).",
+      "inputs": [
+        "Cross-matched catalog"
+      ],
+      "outputs": [
+        "Quality-filtered sample with reliable astrometry and systemic radial velocities"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 67,
+          "end_line": 68,
+          "context": "Astrometric quality cuts and parallax filtering"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 104,
+          "end_line": 104,
+          "context": "Requirement of at least 4 radial velocity epochs"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "radial_velocity_measurement",
+      "summary": "Homogenize multi-survey radial velocities using median offset correction relative to Gaia and a mixture model for error correction (Equation 1). Weight RV means by inverse variance and clip observations deviating by more than 3 sigma.",
+      "inputs": [
+        "Multi-survey radial velocities",
+        "Correction parameters from Table 1"
+      ],
+      "outputs": [
+        "Homogenized systemic radial velocities with corrected errors"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 69,
+          "end_line": 77,
+          "context": "Radial velocity offset and error correction methodology"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 97,
+          "end_line": 104,
+          "context": "Application of RV corrections and outlier clipping"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Bayesian distance estimation using a three-parameter Generalized Gamma Distribution prior and MCMC sampling with emcee. Generate 2000 Monte Carlo realizations per object; report median and 16th/84th percentiles. Similar method applied to dwarf galaxies and globular clusters with uniform distance priors.",
+      "inputs": [
+        "Gaia EDR3 parallaxes",
+        "Quality-filtered astrometry"
+      ],
+      "outputs": [
+        "Heliocentric distances with uncertainties"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 108,
+          "end_line": 108,
+          "context": "Bayesian distance estimation with MCMC"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-04",
+        "step-05"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Compute velocity components v_alpha and v_delta from the Bayesian posterior, then derive 3D Galactic rest-frame velocities (U, V, W) and Galactocentric total velocity v_GC using heliocentric distances, proper motions, and radial velocities in a right-handed Cartesian system. Adopt R_sun = 8.122 kpc and z_sun = 25 pc.",
+      "inputs": [
+        "Distances",
+        "Proper motions",
+        "Radial velocities"
+      ],
+      "outputs": [
+        "Galactocentric positions and total velocities v_GC"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 110,
+          "end_line": 111,
+          "context": "Galactocentric coordinate system and 3D velocity calculation"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "Adopt the Eilers et al. (2019) Milky Way potential model, including a Plummer bulge, two Miyamoto-Nagai disks, and an NFW dark matter halo.",
+      "inputs": [
+        "Literature potential parameters"
+      ],
+      "outputs": [
+        "Galactic potential model for escape velocity and orbit integration"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 112,
+          "end_line": 112,
+          "context": "Adopted Milky Way potential model"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 119,
+          "end_line": 120,
+          "context": "Potential model used for orbit integration"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [
+        "step-06",
+        "step-07"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Select high-velocity stars with sigma_v_GC / v_GC < 30% and v_GC > 0.75 v_esc(r) using the Eilers et al. potential. This yields 1049 sample stars.",
+      "inputs": [
+        "Galactocentric velocities",
+        "Escape velocity curve from potential model"
+      ],
+      "outputs": [
+        "1049 high-velocity star candidates above 75% escape velocity threshold"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 112,
+          "end_line": 112,
+          "context": "Selection criteria for high-velocity sample"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": [
+        "step-06",
+        "step-07"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Backward orbit integration for 1 Gyr using galpy with the Eilers et al. potential, initially ignoring dwarf galaxy and globular cluster gravity. Additional tests include Sgr gravity with GIZMO (Keplerian potential, 0.5 Gyr) and LMC gravity effects.",
+      "inputs": [
+        "Galactocentric positions and velocities",
+        "Milky Way potential model"
+      ],
+      "outputs": [
+        "Orbital histories and closest approaches to Sgr and other objects"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 119,
+          "end_line": 120,
+          "context": "Orbit integration setup with galpy"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 134,
+          "end_line": 134,
+          "context": "Sgr gravity test with GIZMO"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 136,
+          "end_line": 136,
+          "context": "LMC gravity influence test"
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "depends_on": [
+        "step-09"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Calculate Sgr-origin probability P_Sgr as the fraction of Monte Carlo realizations with Delta r_min* < 2.5. Identify 60 stars with P_Sgr > 50%. Two stars have ejection velocity ~740 km/s, consistent with the Hills mechanism.",
+      "inputs": [
+        "Orbital integration results",
+        "Sgr parameters and half-light radius"
+      ],
+      "outputs": [
+        "P_Sgr and P_ub for 60 candidate stars",
+        "2 hypervelocity star candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 130,
+          "end_line": 132,
+          "context": "Definition of P_Sgr and identification of 60 Sgr-origin stars"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 138,
+          "end_line": 138,
+          "context": "Final sample of 60 stars with P_Sgr > 50%"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 160,
+          "end_line": 160,
+          "context": "Two hypervelocity stars with ejection velocity ~740 km/s"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 205,
+          "end_line": 205,
+          "context": "Summary of 2 hypervelocity stars and Hills mechanism"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-results",
+      "description": "60 candidate high-velocity stars with P_Sgr > 50% from the Sagittarius dwarf spheroidal galaxy, presented in Table 2. The table includes paper IDs, Gaia EDR3 source IDs, Galactocentric distances r_GC, total velocities v_GC, traceback times t_trace, normalized minimum approach distances Delta r_min*, velocity differences Delta v_GC, Sgr-origin probabilities P_Sgr, and unbound probabilities P_ub. Among these, 2 stars are explicitly identified as hypervelocity stars with ejection velocity ~740 km/s.",
+      "decision": "blocked",
+      "reason": "The candidate catalog table body (tab.tex) is missing from the archived arXiv source. The LaTeX table environment is commented out and references \\input{tab.tex}, which was not included in the arXiv upload or the extracted arxiv_source directory. The ECSV extraction contains only a placeholder row (\\inputtab.tex). No individual candidate identifiers (paper IDs, Gaia EDR3 source IDs) or per-candidate quantitative values are available from the internal archive. The paper text explicitly identifies 60 candidate high-velocity stars and 2 hypervelocity stars, but does not name individual objects in the body text. Individual candidate records cannot be populated without the missing source table or downloading the external catalog.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 41,
+          "end_line": 43,
+          "context": "Abstract identifying 60 candidate high-velocity stars and 2 hypervelocity stars from Sgr"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 235,
+          "end_line": 252,
+          "context": "Table 2 caption and commented-out table environment referencing missing tab.tex"
+        }
+      ]
+    }
+  ]
+}

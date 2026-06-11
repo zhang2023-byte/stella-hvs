@@ -1,0 +1,739 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:45:19",
+  "paper": {
+    "arxiv_id": "2101.01694",
+    "title": "The young massive star cluster Westerlund 2 observed with MUSE. III. A cluster in motion -- the complex internal dynamics",
+    "month": "2021-01"
+  },
+  "review": {
+    "path": "literature/2101.01694/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084519",
+    "started_at": "2026-06-07T08:45:19",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2101.01694",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-spat_dist",
+      "internal_table_id": "table-tab-spat_dist",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2101.01694/arxiv_source/main.tex",
+        "start_line": 290,
+        "end_line": 302,
+        "caption": "The best-fit surface density parameters",
+        "label": "tab:spat_dist"
+      },
+      "source_path": "literature/2101.01694/arxiv_source/main.tex",
+      "excerpt_path": "literature/2101.01694/catalog_sources/table-tab-spat_dist/excerpt.tex",
+      "sha256": "15f933497bc9f6523a3fcfcf771f8695ffef26be99d0c114e65856831b7cc9d1",
+      "line_count": 13,
+      "error": ""
+    },
+    {
+      "id": "table-tab-RV_stars_comp",
+      "internal_table_id": "table-tab-RV_stars_comp",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2101.01694/arxiv_source/main.tex",
+        "start_line": 397,
+        "end_line": 415,
+        "caption": "The stellar RV components",
+        "label": "tab:RV_stars_comp"
+      },
+      "source_path": "literature/2101.01694/arxiv_source/main.tex",
+      "excerpt_path": "literature/2101.01694/catalog_sources/table-tab-RV_stars_comp/excerpt.tex",
+      "sha256": "996342641f45f6d1ec690588897405598555fd9a7ad5a71833aa84181e997097",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-KS",
+      "internal_table_id": "table-tab-KS",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2101.01694/arxiv_source/main.tex",
+        "start_line": 445,
+        "end_line": 461,
+        "caption": "The KS-test of the stellar spatial distributions",
+        "label": "tab:KS"
+      },
+      "source_path": "literature/2101.01694/arxiv_source/main.tex",
+      "excerpt_path": "literature/2101.01694/catalog_sources/table-tab-KS/excerpt.tex",
+      "sha256": "c71b6fbfda7b46499065f0e01d27d0c27db8a6f545951a1979b1adf9218034ca",
+      "line_count": 17,
+      "error": ""
+    },
+    {
+      "id": "table-tab-runaways",
+      "internal_table_id": "table-tab-runaways",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2101.01694/arxiv_source/main.tex",
+        "start_line": 691,
+        "end_line": 720,
+        "caption": "The runaway star candidates",
+        "label": "tab:runaways"
+      },
+      "source_path": "literature/2101.01694/arxiv_source/main.tex",
+      "excerpt_path": "literature/2101.01694/catalog_sources/table-tab-runaways/excerpt.tex",
+      "sha256": "c6af0f69b779eae45b88b9a9c83c470e7a715efe82e1efa80d9a4745e261b37d",
+      "line_count": 30,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-spat_dist",
+      "internal_table_id": "table-tab-spat_dist",
+      "status": "success",
+      "ecsv_path": "literature/2101.01694/catalog_tables/table-tab-spat_dist.ecsv",
+      "caption": "The best-fit surface density parameters",
+      "label": "tab:spat_dist",
+      "row_count": 4,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "Region",
+          "R.A.",
+          "Dec.",
+          "\\Sigma_0",
+          "\\Sigma_bck",
+          "a",
+          "r_c",
+          "\\gamma"
+        ],
+        [
+          "",
+          "",
+          "(J2000)",
+          "(J2000)",
+          "(\\rm arcmin^-2)",
+          "(\\rm arcmin^-2)",
+          "(pc)",
+          "(pc)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Region",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "R.A. | (J2000)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Dec. | (J2000)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\Sigma_0 | (\\rm arcmin^-2)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\Sigma_bck | (\\rm arcmin^-2)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "a | (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "r_c | (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\gamma",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdc2tc4aa/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2101.01694/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdc2tc4aa/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2101.01694/catalog_sources/table-tab-spat_dist/wrapped.tex",
+            "html": "literature/2101.01694/catalog_sources/table-tab-spat_dist/latexml.html",
+            "stdout": "literature/2101.01694/catalog_sources/table-tab-spat_dist/latexml.stdout.txt",
+            "stderr": "literature/2101.01694/catalog_sources/table-tab-spat_dist/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "15f933497bc9f6523a3fcfcf771f8695ffef26be99d0c114e65856831b7cc9d1"
+    },
+    {
+      "id": "table-tab-RV_stars_comp",
+      "internal_table_id": "table-tab-RV_stars_comp",
+      "status": "success",
+      "ecsv_path": "literature/2101.01694/catalog_tables/table-tab-RV_stars_comp.ecsv",
+      "caption": "The stellar RV components",
+      "label": "tab:RV_stars_comp",
+      "row_count": 10,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "name",
+          "RV",
+          "\\sigma RV",
+          "n (stars)",
+          ""
+        ],
+        [
+          "",
+          "( \\rm km s^-1 )",
+          "( \\rm km s^-1 )",
+          "all",
+          "Wd2"
+        ],
+        [
+          "O-stars",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "name | O-stars",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RV | ( \\rm km s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma RV | ( \\rm km s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "n (stars) | all",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Wd2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpn32rf9qm/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2101.01694/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpn32rf9qm/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2101.01694/catalog_sources/table-tab-RV_stars_comp/wrapped.tex",
+            "html": "literature/2101.01694/catalog_sources/table-tab-RV_stars_comp/latexml.html",
+            "stdout": "literature/2101.01694/catalog_sources/table-tab-RV_stars_comp/latexml.stdout.txt",
+            "stderr": "literature/2101.01694/catalog_sources/table-tab-RV_stars_comp/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "996342641f45f6d1ec690588897405598555fd9a7ad5a71833aa84181e997097"
+    },
+    {
+      "id": "table-tab-KS",
+      "internal_table_id": "table-tab-KS",
+      "status": "success",
+      "ecsv_path": "literature/2101.01694/catalog_tables/table-tab-KS.ecsv",
+      "caption": "The KS-test of the stellar spatial distributions",
+      "label": "tab:KS",
+      "row_count": 10,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "HST",
+          "MUSE",
+          "O1",
+          "B1",
+          "B2",
+          "PMS1",
+          "PMS2",
+          "PMS3",
+          "PMS4",
+          "PMS5"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "HST",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "MUSE",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "O1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "B1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "B2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "PMS1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "PMS2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "PMS3",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "PMS4",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "PMS5",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp30lmf64h/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2101.01694/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp30lmf64h/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2101.01694/catalog_sources/table-tab-KS/wrapped.tex",
+            "html": "literature/2101.01694/catalog_sources/table-tab-KS/latexml.html",
+            "stdout": "literature/2101.01694/catalog_sources/table-tab-KS/latexml.stdout.txt",
+            "stderr": "literature/2101.01694/catalog_sources/table-tab-KS/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c71b6fbfda7b46499065f0e01d27d0c27db8a6f545951a1979b1adf9218034ca"
+    },
+    {
+      "id": "table-tab-runaways",
+      "internal_table_id": "table-tab-runaways",
+      "status": "success",
+      "ecsv_path": "literature/2101.01694/catalog_tables/table-tab-runaways.ecsv",
+      "caption": "The runaway star candidates",
+      "label": "tab:runaways",
+      "row_count": 22,
+      "column_count": 13,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "coordinates",
+          "",
+          "F555W",
+          "F814W",
+          "v_\\rm pec",
+          "\\sigma v_\\rm pec",
+          "RV",
+          "\\sigma RV",
+          "\\mu_\\alpha\\ast",
+          "\\sigma_\\alpha\\ast",
+          "\\mu_\\delta",
+          "\\sigma_\\delta"
+        ],
+        [
+          "",
+          "r.a.",
+          "dec.",
+          "(mag)",
+          "(mag)",
+          "( \\rm km s^-1 )",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "coordinates | r.a.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "dec.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "F555W | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "F814W | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v_\\rm pec | ( \\rm km s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma v_\\rm pec",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "RV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma RV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\mu_\\alpha\\ast",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\sigma_\\alpha\\ast",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\mu_\\delta",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "\\sigma_\\delta",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcmin4cez/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2101.01694/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcmin4cez/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2101.01694/catalog_sources/table-tab-runaways/wrapped.tex",
+            "html": "literature/2101.01694/catalog_sources/table-tab-runaways/latexml.html",
+            "stdout": "literature/2101.01694/catalog_sources/table-tab-runaways/latexml.stdout.txt",
+            "stderr": "literature/2101.01694/catalog_sources/table-tab-runaways/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c6af0f69b779eae45b88b9a9c83c470e7a715efe82e1efa80d9a4745e261b37d"
+    }
+  ]
+}

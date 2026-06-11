@@ -1,0 +1,308 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2003.12766",
+    "title": "Hypervelocity Stars in the Gaia era. Revisiting the most extreme stars from the MMT survey",
+    "month": "2020-03",
+    "source_note_json": "notes/2020/2020-03/2020-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2003.12766",
+      "pdf": "https://arxiv.org/pdf/2003.12766"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2003.12766",
+    "audit_path": "literature/2003.12766/audit.json",
+    "source_dir": "literature/2003.12766/arxiv_source",
+    "tex_root": "literature/2003.12766/arxiv_source/aa.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T11:32:00",
+    "reviewer": "agent",
+    "summary": "The paper reanalyzes 40 B-type stars from the MMT Hypervelocity Star survey using updated model spectra and Gaia DR2 astrometry. Six internal LaTeX tables are present: (1) spectroscopic analysis results for 40 stars with Teff, log(g), v_rad, v sin(i); (2-3) detailed atmospheric parameters for two individual objects (B1085, HVS5); (4) stellar parameters (mass, age, reddening, rotation, radius, luminosity, distance) for 40 stars; (5-6) kinematic quantities for two Galactic potential models including Galactic rest-frame velocities (v_Grf), escape velocity excess (v_Grf - v_esc), and bound probability (P_b). The paper presents a rich kinematic catalog of HVS candidates with direct assessment of bound/unbound status."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-atmos-results",
+      "kind": "latex_table",
+      "asset_type": "",
+      "role_in_paper": "",
+      "source_refs": [
+        {
+          "path": "literature/2003.12766/arxiv_source/aa.tex",
+          "start_line": 110,
+          "end_line": 128,
+          "caption": "Results of the spectroscopic analysis.",
+          "label": "tab:atmos-results"
+        }
+      ],
+      "columns": [],
+      "evidence": "Results of the spectroscopic analysis.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-B1085",
+      "kind": "latex_table",
+      "asset_type": "",
+      "role_in_paper": "",
+      "source_refs": [
+        {
+          "path": "literature/2003.12766/arxiv_source/aa.tex",
+          "start_line": 154,
+          "end_line": 173,
+          "caption": "Atmospheric and derived stellar parameters for B1085 based on two different sets of spectra. \\label{tab:B1085}",
+          "label": "tab:B1085"
+        }
+      ],
+      "columns": [
+        {
+          "name": "T_eff (K) | \\log(g) (cgs) | \\varv_rad (km s^-1) | \\varv\\sin(i) (km s^-1)",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "MMT | 11 020+/-120 | 3.79+/-0.05 | 484^+4_-3 | 319^+10_-15",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "X-shooter | 10 890+/-120 | 3.85+/-0.05 | 491+/-2 | 290+/-1",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Atmospheric and derived stellar parameters for B1085 based on two different sets of spectra. \\label{tab:B1085}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-hvs5",
+      "kind": "latex_table",
+      "asset_type": "",
+      "role_in_paper": "",
+      "source_refs": [
+        {
+          "path": "literature/2003.12766/arxiv_source/aa.tex",
+          "start_line": 186,
+          "end_line": 206,
+          "caption": "Atmospheric and derived stellar parameters for HVS\\,5 based on two different sets of spectra. \\label{tab:hvs5}",
+          "label": "tab:hvs5"
+        }
+      ],
+      "columns": [
+        {
+          "name": "T_eff (K) | \\log(g) (cgs) | \\varv_rad (km s^-1) | \\varv\\sin(i) (km s^-1)",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "MMT | 12 550^+160_-150 | 4.09+/-0.06 | 542^+7_-6 | 123 +/- 19",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "HIRES | 12 190^+290_-260 | 4.11^+0.11_-0.12 | 552+/-3 | 132^+3_-2",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Brown+ (2012) | 12 000 +/- 350 | 3.89 +/- 0.13 | 552 +/- 3 | 133 +/- 7",
+          "meaning": "",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Atmospheric and derived stellar parameters for HVS\\,5 based on two different sets of spectra. \\label{tab:hvs5}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-stellar_params",
+      "kind": "latex_table",
+      "asset_type": "",
+      "role_in_paper": "",
+      "source_refs": [
+        {
+          "path": "literature/2003.12766/arxiv_source/aa.tex",
+          "start_line": 239,
+          "end_line": 246,
+          "caption": "\\label{tab:stellar_params}Stellar parameters of the program stars.",
+          "label": "tab:stellar_params"
+        }
+      ],
+      "columns": [],
+      "evidence": "\\label{tab:stellar_params}Stellar parameters of the program stars.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-kinematic-AS",
+      "kind": "latex_table",
+      "asset_type": "",
+      "role_in_paper": "",
+      "source_refs": [
+        {
+          "path": "literature/2003.12766/arxiv_source/aa.tex",
+          "start_line": 486,
+          "end_line": 490,
+          "caption": "Kinematic quantities for the program stars based on Model I.",
+          "label": "tab:kinematic-AS"
+        }
+      ],
+      "columns": [],
+      "evidence": "Kinematic quantities for the program stars based on Model I.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-kinematic-TF",
+      "kind": "latex_table",
+      "asset_type": "",
+      "role_in_paper": "",
+      "source_refs": [
+        {
+          "path": "literature/2003.12766/arxiv_source/aa.tex",
+          "start_line": 492,
+          "end_line": 496,
+          "caption": "Kinematic quantities for the program stars based on Model II.",
+          "label": "tab:kinematic-TF"
+        }
+      ],
+      "columns": [],
+      "evidence": "Kinematic quantities for the program stars based on Model II.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "",
+      "source_refs": [
+        {
+          "path": "literature/2003.12766/arxiv_source/aa.tex",
+          "start_line": 99,
+          "end_line": 99,
+          "context": "Because B-type HVSs are so far away, mostly beyond 30\\,kpc, {\\it Gaia} parallaxes are too uncertain to draw firm conclusions and will remain so even at the end of the {\\it Gaia} mission. Therefore, spectrophotometric distances are and will be crucial to understand the kinematics of HVSs. This requires high-quality spectra, sophisticated model atmospheres and synthetic spectra, as well as an objective analysis strategy. Over the past years, those tools have been developed \\citep{2011JPhCS.328a2015P,2014A&A...565A..63I}. Recently, we applied them to 14 out of the 42 highest velocity stars of the MMT HVS sample \\citep{2018ApJ...866...39B} to derive their spectrophotometric distances \\citep[][henceforth \\citetalias{2018A&A...615L...5I}]{2018A&A...615L...5I}. Combining these distances with {\\it Gaia} DR2 proper motions, we studied the kinematic properties and sites of origin of those 14 stars \\citep[][henceforth \\citetalias{2018A&A...620A..48I}]{2018A&A...620A..48I}. This particular subsample was chosen because HST proper motions are available that allowed a cross-check to be made, which showed that proper motions from both sources are consistent.\n\nIn this work, which we regard as Paper~III in this series, we extend the spectrophotometric analysis to 40 out of the 42 high-velocity outliers of the MMT HVS sample. We did not have access to the spectra of the two missing object. Complete astrometric data is available for 37 of them, allowing us to carry out a subsequent kinematic analysis as well. In Sect.~\\ref{sec:models}, we describe our model atmospheres and synthetic spectra. Section~\\ref{sec:spectral-analysis} illustrates how these models are used to fit the observed MMT spectra and derive atmospheric parameters as well as radial and rotational velocities. In Sect.~\\ref{sec:spec-distances}, spectral energy distributions (SEDs) are constructed and spectrophotometric distances and stellar parameters are derived. Those are then used to perform the kinematic analysis presented in Sect.~\\ref{sec:kinematics}. In Sect.~\\ref{sec:results}, we discuss our results. Finally, we present our conclusions and our outlook in Sect.~\\ref{sec:conclusion}."
+        }
+      ],
+      "evidence": "Because B-type HVSs are so far away, mostly beyond 30\\,kpc, {\\it Gaia} parallaxes are too uncertain to draw firm conclusions and will remain so even at the end of the {\\it Gaia} mission. Therefore, spectrophotometric distances are and will be crucial to understand the kinematics of HVSs. This requires high-quality spectra, sophisticated model atmospheres and synthetic spectra, as well as an objective analysis strategy. Over the past years, those tools have been developed \\citep{2011JPhCS.328a2015P,2014A&A...565A..63I}. Recently, we applied them to 14 out of the 42 highest velocity stars of the MMT HVS sample \\citep{2018ApJ...866...39B} to derive their spectrophotometric distances \\citep[][henceforth \\citetalias{2018A&A...615L...5I}]{2018A&A...615L...5I}. Combining these distances with {\\it Gaia} DR2 proper motions, we studied the kinematic properties and sites of origin of those 14 stars \\citep[][henceforth \\citetalias{2018A&A...620A..48I}]{2018A&A...620A..48I}. This particular subsample was chosen because HST proper motions are available that allowed a cross-check to be made, which showed that proper motions from both sources are consistent.\n\nIn this work, which we regard as Paper~III in this series, we extend the spectrophotometric analysis to 40 out of the 42 high-velocity outliers of the MMT HVS sample. We did not have access to the spectra of the two missing object. Complete astrometric data is available for 37 of them, allowing us to carry out a subsequent kinematic analysis as well. In Sect.~\\ref{sec:models}, we describe our model atmospheres and synthetic spectra. Section~\\ref{sec:spectral-analysis} illustrates how these models are used to fit the observed MMT spectra and derive atmospheric parameters as well as radial and rotational velocities. In Sect.~\\ref{sec:spec-distances}, spectral energy distributions (SEDs) are constructed and spectrophotometric distances and stellar parameters are derived. Those are then used to perform the kinematic analysis presented in Sect.~\\ref{sec:kinematics}. In Sect.~\\ref{sec:results}, we discuss our results. Finally, we present our conclusions and our outlook in Sect.~\\ref{sec:conclusion}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://vizier.u-strasbg.fr/viz-bin/VizieR",
+      "local_path": "",
+      "description": "",
+      "source_refs": [
+        {
+          "path": "literature/2003.12766/arxiv_source/aa.tex",
+          "start_line": 272,
+          "end_line": 272,
+          "context": "\\subsection{Photometric data}\\label{sec:photometric_data}\n\nPhotometric data were compiled from a variety of surveys covering the ultraviolet, the optical, and the infrared mainly using the \\texttt{VizieR}\\footnote{\\url{http://vizier.u-strasbg.fr/viz-bin/VizieR}} catalog access tool. The following catalogs were queried: For ultraviolet magnitudes the GALEX catalog \\citep[][with corrections from \\citealt{2019MNRAS.489.5046W} for the brightest targets]{2017yCat.2335....0B}. Optical photometry came from {\\it Gaia} DR2 \\citep[][with corrections and calibrations from \\citealt{2018A&A...619A.180M}]{2018A&A...616A...4E}, SDSS DR12 \\citep{2015ApJS..219...12A}, Pan-STARRS1 \\citep{2016arXiv161205560C}, SkyMapper DR1.1 \\citep{2019yCat.2358....0W}, BATC \\citep{2005JKAS...38..203Z}, VST-ATLAS-DR3 \\citep[without the $u$-band due to known zero-point calibration issues]{2015MNRAS.451.4238S}, VST-KiDS-DR3 \\citep{2017A&A...604A.134D}, and APASS-DR9 \\citep{2015AAS...22533616H}. Infrared magnitudes were taken from UKIDSS-DR9 \\citep{2013yCat.2319....0L} and VISTA \\citep{2012A&A...548A.119C}. Measurements with large or unknown uncertainties as well as measurements that turned out to be obvious outliers during the fitting with synthetic SEDs have been omitted.\n\n\\subsection{Angular diameter and interstellar extinction}\\label{sec:sed}"
+        }
+      ],
+      "evidence": "\\subsection{Photometric data}\\label{sec:photometric_data}\n\nPhotometric data were compiled from a variety of surveys covering the ultraviolet, the optical, and the infrared mainly using the \\texttt{VizieR}\\footnote{\\url{http://vizier.u-strasbg.fr/viz-bin/VizieR}} catalog access tool. The following catalogs were queried: For ultraviolet magnitudes the GALEX catalog \\citep[][with corrections from \\citealt{2019MNRAS.489.5046W} for the brightest targets]{2017yCat.2335....0B}. Optical photometry came from {\\it Gaia} DR2 \\citep[][with corrections and calibrations from \\citealt{2018A&A...619A.180M}]{2018A&A...616A...4E}, SDSS DR12 \\citep{2015ApJS..219...12A}, Pan-STARRS1 \\citep{2016arXiv161205560C}, SkyMapper DR1.1 \\citep{2019yCat.2358....0W}, BATC \\citep{2005JKAS...38..203Z}, VST-ATLAS-DR3 \\citep[without the $u$-band due to known zero-point calibration issues]{2015MNRAS.451.4238S}, VST-KiDS-DR3 \\citep{2017A&A...604A.134D}, and APASS-DR9 \\citep{2015AAS...22533616H}. Infrared magnitudes were taken from UKIDSS-DR9 \\citep{2013yCat.2319....0L} and VISTA \\citep{2012A&A...548A.119C}. Measurements with large or unknown uncertainties as well as measurements that turned out to be obvious outliers during the fitting with synthetic SEDs have been omitted.\n\n\\subsection{Angular diameter and interstellar extinction}\\label{sec:sed}",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "http://gaia.ari.uni-heidelberg.de/",
+      "local_path": "",
+      "description": "",
+      "source_refs": [
+        {
+          "path": "literature/2003.12766/arxiv_source/aa.tex",
+          "start_line": 288,
+          "end_line": 288,
+          "context": "\\subsection{Proper motions}\n\nProper motions were mainly taken from {\\it Gaia} DR2 \\citep{2018A&A...616A...2L}. We used the ``renormalized unit weight error'' (RUWE, see \\citealt{RUWE}) as given in the ARI {\\it Gaia} Data Service\\footnote{\\url{http://gaia.ari.uni-heidelberg.de/}} as primary indicator for the quality of the astrometric solution. Unlike other quality indicators, RUWE is by design independent of the color of the object, which makes it the best choice when studying blue stars as done here. For all objects in the sample, RUWE is below the recommended value of $1.4$, indicating that the astrometric solutions are well-behaved. For a subsample of 15 stars, pre-{\\it Gaia} proper motions measured with the HST instruments WFC3 and ACS were available \\citep{2015ApJ...804...49B}. As discussed in \\citetalias{2018A&A...620A..48I}, proper motions from both sources are consistent with each other --~except for the outlier B711~-- suggesting that the {\\it Gaia} DR2 proper motions of the other 22 program stars are reliable as well. In analogy to \\citetalias{2018A&A...620A..48I}, we chose the more precise measurement when {\\it Gaia} as well as HST proper motions were available, which implies that we used HST data for HVS\\,1, HVS\\,10, HVS\\,12, and HVS\\,13 and {\\it Gaia} DR2 data for B711.\n\n\\subsection{Galactic gravitational potentials}\\label{sec:gravitational_potentials}"
+        }
+      ],
+      "evidence": "\\subsection{Proper motions}\n\nProper motions were mainly taken from {\\it Gaia} DR2 \\citep{2018A&A...616A...2L}. We used the ``renormalized unit weight error'' (RUWE, see \\citealt{RUWE}) as given in the ARI {\\it Gaia} Data Service\\footnote{\\url{http://gaia.ari.uni-heidelberg.de/}} as primary indicator for the quality of the astrometric solution. Unlike other quality indicators, RUWE is by design independent of the color of the object, which makes it the best choice when studying blue stars as done here. For all objects in the sample, RUWE is below the recommended value of $1.4$, indicating that the astrometric solutions are well-behaved. For a subsample of 15 stars, pre-{\\it Gaia} proper motions measured with the HST instruments WFC3 and ACS were available \\citep{2015ApJ...804...49B}. As discussed in \\citetalias{2018A&A...620A..48I}, proper motions from both sources are consistent with each other --~except for the outlier B711~-- suggesting that the {\\it Gaia} DR2 proper motions of the other 22 program stars are reliable as well. In analogy to \\citetalias{2018A&A...620A..48I}, we chose the more precise measurement when {\\it Gaia} as well as HST proper motions were available, which implies that we used HST data for HVS\\,1, HVS\\,10, HVS\\,12, and HVS\\,13 and {\\it Gaia} DR2 data for B711.\n\n\\subsection{Galactic gravitational potentials}\\label{sec:gravitational_potentials}",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "",
+      "source_refs": [
+        {
+          "path": "literature/2003.12766/arxiv_source/aa.tex",
+          "start_line": 469,
+          "end_line": 469,
+          "context": "This research has made use of the Keck Observatory Archive (KOA), which is operated by the W.\\ M.\\ Keck Observatory and the NASA Exoplanet Science Institute (NExScI), under contract with the National Aeronautics and Space Administration. % HIRES spectrum of HVS5\nThis research has made use of NASA’s Astrophysics Data System.\nThis research has made use of the VizieR catalogue access tool, CDS, Strasbourg, France.\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. % Gaia\nFunding for SDSS-III has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, and the U.S.\\ Department of Energy Office of Science. The SDSS-III web site is \\url{http://www.sdss3.org/}. SDSS-III is managed by the Astrophysical Research Consortium for the Participating Institutions of the SDSS-III Collaboration including the University of Arizona, the Brazilian Participation Group, Brookhaven National Laboratory, University of Cambridge, University of Florida, the French Participation Group, the German Participation Group, the Instituto de Astrofisica de Canarias, the Michigan State/Notre Dame/JINA Participation Group, Johns Hopkins University, Lawrence Berkeley National Laboratory, Max Planck Institute for Astrophysics, New Mexico State University, New York University, Ohio State University, Pennsylvania State University, University of Portsmouth, Princeton University, the Spanish Participation Group, University of Tokyo, University of Utah, Vanderbilt University, University of Virginia, University of Washington, and Yale University. % SDSS 12"
+        }
+      ],
+      "evidence": "This research has made use of the Keck Observatory Archive (KOA), which is operated by the W.\\ M.\\ Keck Observatory and the NASA Exoplanet Science Institute (NExScI), under contract with the National Aeronautics and Space Administration. % HIRES spectrum of HVS5\nThis research has made use of NASA’s Astrophysics Data System.\nThis research has made use of the VizieR catalogue access tool, CDS, Strasbourg, France.\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. % Gaia\nFunding for SDSS-III has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, and the U.S.\\ Department of Energy Office of Science. The SDSS-III web site is \\url{http://www.sdss3.org/}. SDSS-III is managed by the Astrophysical Research Consortium for the Participating Institutions of the SDSS-III Collaboration including the University of Arizona, the Brazilian Participation Group, Brookhaven National Laboratory, University of Cambridge, University of Florida, the French Participation Group, the German Participation Group, the Instituto de Astrofisica de Canarias, the Michigan State/Notre Dame/JINA Participation Group, Johns Hopkins University, Lawrence Berkeley National Laboratory, Max Planck Institute for Astrophysics, New Mexico State University, New York University, Ohio State University, Pennsylvania State University, University of Portsmouth, Princeton University, the Spanish Participation Group, University of Tokyo, University of Utah, Vanderbilt University, University of Virginia, University of Washington, and Yale University. % SDSS 12",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "",
+      "source_refs": [
+        {
+          "path": "literature/2003.12766/arxiv_source/aa.tex",
+          "start_line": 470,
+          "end_line": 470,
+          "context": "This research has made use of NASA’s Astrophysics Data System.\nThis research has made use of the VizieR catalogue access tool, CDS, Strasbourg, France.\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. % Gaia\nFunding for SDSS-III has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, and the U.S.\\ Department of Energy Office of Science. The SDSS-III web site is \\url{http://www.sdss3.org/}. SDSS-III is managed by the Astrophysical Research Consortium for the Participating Institutions of the SDSS-III Collaboration including the University of Arizona, the Brazilian Participation Group, Brookhaven National Laboratory, University of Cambridge, University of Florida, the French Participation Group, the German Participation Group, the Instituto de Astrofisica de Canarias, the Michigan State/Notre Dame/JINA Participation Group, Johns Hopkins University, Lawrence Berkeley National Laboratory, Max Planck Institute for Astrophysics, New Mexico State University, New York University, Ohio State University, Pennsylvania State University, University of Portsmouth, Princeton University, the Spanish Participation Group, University of Tokyo, University of Utah, Vanderbilt University, University of Virginia, University of Washington, and Yale University. % SDSS 12\nThe Pan-STARRS1 Surveys were made possible through contributions by the Institute for Astronomy, the University of Hawaii, the Pan-STARRS Project Office, the Max-Planck Society and its participating institutes, the Max Planck Institute for Astronomy, Heidelberg and the Max Planck Institute for Extraterrestrial Physics, Garching, The Johns Hopkins University, Durham University, the University of Edinburgh, the Queen's University Belfast, the Harvard-Smithsonian Center for Astrophysics, the Las Cumbres Observatory Global Telescope Network Incorporated, the National Central University of Taiwan, the Space Telescope Science Institute, and the National Aeronautics and Space Administration under Grant No. NNX08AR22G issued through the Planetary Science Division of the NASA Science Mission Directorate, the National Science Foundation Grant No. AST-1238877, the University of Maryland, Eotvos Lorand University (ELTE), and the Los Alamos National Laboratory.The Pan-STARRS1 Surveys are archived at the Space Telescope Science Institute (STScI) and can be accessed through MAST, the Mikulski Archive for Space Telescopes. Additional support for the Pan-STARRS1 public science archive is provided by the Gordon and Betty Moore Foundation. % Pan-STARRS1"
+        }
+      ],
+      "evidence": "This research has made use of NASA’s Astrophysics Data System.\nThis research has made use of the VizieR catalogue access tool, CDS, Strasbourg, France.\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. % Gaia\nFunding for SDSS-III has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, and the U.S.\\ Department of Energy Office of Science. The SDSS-III web site is \\url{http://www.sdss3.org/}. SDSS-III is managed by the Astrophysical Research Consortium for the Participating Institutions of the SDSS-III Collaboration including the University of Arizona, the Brazilian Participation Group, Brookhaven National Laboratory, University of Cambridge, University of Florida, the French Participation Group, the German Participation Group, the Instituto de Astrofisica de Canarias, the Michigan State/Notre Dame/JINA Participation Group, Johns Hopkins University, Lawrence Berkeley National Laboratory, Max Planck Institute for Astrophysics, New Mexico State University, New York University, Ohio State University, Pennsylvania State University, University of Portsmouth, Princeton University, the Spanish Participation Group, University of Tokyo, University of Utah, Vanderbilt University, University of Virginia, University of Washington, and Yale University. % SDSS 12\nThe Pan-STARRS1 Surveys were made possible through contributions by the Institute for Astronomy, the University of Hawaii, the Pan-STARRS Project Office, the Max-Planck Society and its participating institutes, the Max Planck Institute for Astronomy, Heidelberg and the Max Planck Institute for Extraterrestrial Physics, Garching, The Johns Hopkins University, Durham University, the University of Edinburgh, the Queen's University Belfast, the Harvard-Smithsonian Center for Astrophysics, the Las Cumbres Observatory Global Telescope Network Incorporated, the National Central University of Taiwan, the Space Telescope Science Institute, and the National Aeronautics and Space Administration under Grant No. NNX08AR22G issued through the Planetary Science Division of the NASA Science Mission Directorate, the National Science Foundation Grant No. AST-1238877, the University of Maryland, Eotvos Lorand University (ELTE), and the Los Alamos National Laboratory.The Pan-STARRS1 Surveys are archived at the Space Telescope Science Institute (STScI) and can be accessed through MAST, the Mikulski Archive for Space Telescopes. Additional support for the Pan-STARRS1 public science archive is provided by the Gordon and Betty Moore Foundation. % Pan-STARRS1",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "",
+      "source_refs": [
+        {
+          "path": "literature/2003.12766/arxiv_source/aa.tex",
+          "start_line": 470,
+          "end_line": 470,
+          "context": "This research has made use of NASA’s Astrophysics Data System.\nThis research has made use of the VizieR catalogue access tool, CDS, Strasbourg, France.\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. % Gaia\nFunding for SDSS-III has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, and the U.S.\\ Department of Energy Office of Science. The SDSS-III web site is \\url{http://www.sdss3.org/}. SDSS-III is managed by the Astrophysical Research Consortium for the Participating Institutions of the SDSS-III Collaboration including the University of Arizona, the Brazilian Participation Group, Brookhaven National Laboratory, University of Cambridge, University of Florida, the French Participation Group, the German Participation Group, the Instituto de Astrofisica de Canarias, the Michigan State/Notre Dame/JINA Participation Group, Johns Hopkins University, Lawrence Berkeley National Laboratory, Max Planck Institute for Astrophysics, New Mexico State University, New York University, Ohio State University, Pennsylvania State University, University of Portsmouth, Princeton University, the Spanish Participation Group, University of Tokyo, University of Utah, Vanderbilt University, University of Virginia, University of Washington, and Yale University. % SDSS 12\nThe Pan-STARRS1 Surveys were made possible through contributions by the Institute for Astronomy, the University of Hawaii, the Pan-STARRS Project Office, the Max-Planck Society and its participating institutes, the Max Planck Institute for Astronomy, Heidelberg and the Max Planck Institute for Extraterrestrial Physics, Garching, The Johns Hopkins University, Durham University, the University of Edinburgh, the Queen's University Belfast, the Harvard-Smithsonian Center for Astrophysics, the Las Cumbres Observatory Global Telescope Network Incorporated, the National Central University of Taiwan, the Space Telescope Science Institute, and the National Aeronautics and Space Administration under Grant No. NNX08AR22G issued through the Planetary Science Division of the NASA Science Mission Directorate, the National Science Foundation Grant No. AST-1238877, the University of Maryland, Eotvos Lorand University (ELTE), and the Los Alamos National Laboratory.The Pan-STARRS1 Surveys are archived at the Space Telescope Science Institute (STScI) and can be accessed through MAST, the Mikulski Archive for Space Telescopes. Additional support for the Pan-STARRS1 public science archive is provided by the Gordon and Betty Moore Foundation. % Pan-STARRS1"
+        }
+      ],
+      "evidence": "This research has made use of NASA’s Astrophysics Data System.\nThis research has made use of the VizieR catalogue access tool, CDS, Strasbourg, France.\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. % Gaia\nFunding for SDSS-III has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, and the U.S.\\ Department of Energy Office of Science. The SDSS-III web site is \\url{http://www.sdss3.org/}. SDSS-III is managed by the Astrophysical Research Consortium for the Participating Institutions of the SDSS-III Collaboration including the University of Arizona, the Brazilian Participation Group, Brookhaven National Laboratory, University of Cambridge, University of Florida, the French Participation Group, the German Participation Group, the Instituto de Astrofisica de Canarias, the Michigan State/Notre Dame/JINA Participation Group, Johns Hopkins University, Lawrence Berkeley National Laboratory, Max Planck Institute for Astrophysics, New Mexico State University, New York University, Ohio State University, Pennsylvania State University, University of Portsmouth, Princeton University, the Spanish Participation Group, University of Tokyo, University of Utah, Vanderbilt University, University of Virginia, University of Washington, and Yale University. % SDSS 12\nThe Pan-STARRS1 Surveys were made possible through contributions by the Institute for Astronomy, the University of Hawaii, the Pan-STARRS Project Office, the Max-Planck Society and its participating institutes, the Max Planck Institute for Astronomy, Heidelberg and the Max Planck Institute for Extraterrestrial Physics, Garching, The Johns Hopkins University, Durham University, the University of Edinburgh, the Queen's University Belfast, the Harvard-Smithsonian Center for Astrophysics, the Las Cumbres Observatory Global Telescope Network Incorporated, the National Central University of Taiwan, the Space Telescope Science Institute, and the National Aeronautics and Space Administration under Grant No. NNX08AR22G issued through the Planetary Science Division of the NASA Science Mission Directorate, the National Science Foundation Grant No. AST-1238877, the University of Maryland, Eotvos Lorand University (ELTE), and the Los Alamos National Laboratory.The Pan-STARRS1 Surveys are archived at the Space Telescope Science Institute (STScI) and can be accessed through MAST, the Mikulski Archive for Space Telescopes. Additional support for the Pan-STARRS1 public science archive is provided by the Gordon and Betty Moore Foundation. % Pan-STARRS1",
+      "comments": ""
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "http://www.sdss3.org/",
+      "local_path": "",
+      "description": "",
+      "source_refs": [
+        {
+          "path": "literature/2003.12766/arxiv_source/aa.tex",
+          "start_line": 471,
+          "end_line": 471,
+          "context": "This research has made use of the VizieR catalogue access tool, CDS, Strasbourg, France.\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. % Gaia\nFunding for SDSS-III has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, and the U.S.\\ Department of Energy Office of Science. The SDSS-III web site is \\url{http://www.sdss3.org/}. SDSS-III is managed by the Astrophysical Research Consortium for the Participating Institutions of the SDSS-III Collaboration including the University of Arizona, the Brazilian Participation Group, Brookhaven National Laboratory, University of Cambridge, University of Florida, the French Participation Group, the German Participation Group, the Instituto de Astrofisica de Canarias, the Michigan State/Notre Dame/JINA Participation Group, Johns Hopkins University, Lawrence Berkeley National Laboratory, Max Planck Institute for Astrophysics, New Mexico State University, New York University, Ohio State University, Pennsylvania State University, University of Portsmouth, Princeton University, the Spanish Participation Group, University of Tokyo, University of Utah, Vanderbilt University, University of Virginia, University of Washington, and Yale University. % SDSS 12\nThe Pan-STARRS1 Surveys were made possible through contributions by the Institute for Astronomy, the University of Hawaii, the Pan-STARRS Project Office, the Max-Planck Society and its participating institutes, the Max Planck Institute for Astronomy, Heidelberg and the Max Planck Institute for Extraterrestrial Physics, Garching, The Johns Hopkins University, Durham University, the University of Edinburgh, the Queen's University Belfast, the Harvard-Smithsonian Center for Astrophysics, the Las Cumbres Observatory Global Telescope Network Incorporated, the National Central University of Taiwan, the Space Telescope Science Institute, and the National Aeronautics and Space Administration under Grant No. NNX08AR22G issued through the Planetary Science Division of the NASA Science Mission Directorate, the National Science Foundation Grant No. AST-1238877, the University of Maryland, Eotvos Lorand University (ELTE), and the Los Alamos National Laboratory.The Pan-STARRS1 Surveys are archived at the Space Telescope Science Institute (STScI) and can be accessed through MAST, the Mikulski Archive for Space Telescopes. Additional support for the Pan-STARRS1 public science archive is provided by the Gordon and Betty Moore Foundation. % Pan-STARRS1\nThe national facility capability for SkyMapper has been funded through ARC LIEF grant LE130100104 from the Australian Research Council, awarded to the University of Sydney, the Australian National University, Swinburne University of Technology, the University of Queensland, the University of Western Australia, the University of Melbourne, Curtin University of Technology, Monash University and the Australian Astronomical Observatory. SkyMapper is owned and operated by The Australian National University's Research School of Astronomy and Astrophysics. The survey data were processed and provided by the SkyMapper Team at ANU. The SkyMapper node of the All-Sky Virtual Observatory (ASVO) is hosted at the National Computational Infrastructure (NCI). Development and support the SkyMapper node of the ASVO has been funded in part by Astronomy Australia Limited (AAL) and the Australian Government through the Commonwealth's Education Investment Fund (EIF) and National Collaborative Research Infrastructure Strategy (NCRIS), particularly the National eResearch Collaboration Tools and Resources (NeCTAR) and the Australian National Data Service Projects (ANDS). % Skymapper"
+        }
+      ],
+      "evidence": "This research has made use of the VizieR catalogue access tool, CDS, Strasbourg, France.\nThis work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. % Gaia\nFunding for SDSS-III has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, and the U.S.\\ Department of Energy Office of Science. The SDSS-III web site is \\url{http://www.sdss3.org/}. SDSS-III is managed by the Astrophysical Research Consortium for the Participating Institutions of the SDSS-III Collaboration including the University of Arizona, the Brazilian Participation Group, Brookhaven National Laboratory, University of Cambridge, University of Florida, the French Participation Group, the German Participation Group, the Instituto de Astrofisica de Canarias, the Michigan State/Notre Dame/JINA Participation Group, Johns Hopkins University, Lawrence Berkeley National Laboratory, Max Planck Institute for Astrophysics, New Mexico State University, New York University, Ohio State University, Pennsylvania State University, University of Portsmouth, Princeton University, the Spanish Participation Group, University of Tokyo, University of Utah, Vanderbilt University, University of Virginia, University of Washington, and Yale University. % SDSS 12\nThe Pan-STARRS1 Surveys were made possible through contributions by the Institute for Astronomy, the University of Hawaii, the Pan-STARRS Project Office, the Max-Planck Society and its participating institutes, the Max Planck Institute for Astronomy, Heidelberg and the Max Planck Institute for Extraterrestrial Physics, Garching, The Johns Hopkins University, Durham University, the University of Edinburgh, the Queen's University Belfast, the Harvard-Smithsonian Center for Astrophysics, the Las Cumbres Observatory Global Telescope Network Incorporated, the National Central University of Taiwan, the Space Telescope Science Institute, and the National Aeronautics and Space Administration under Grant No. NNX08AR22G issued through the Planetary Science Division of the NASA Science Mission Directorate, the National Science Foundation Grant No. AST-1238877, the University of Maryland, Eotvos Lorand University (ELTE), and the Los Alamos National Laboratory.The Pan-STARRS1 Surveys are archived at the Space Telescope Science Institute (STScI) and can be accessed through MAST, the Mikulski Archive for Space Telescopes. Additional support for the Pan-STARRS1 public science archive is provided by the Gordon and Betty Moore Foundation. % Pan-STARRS1\nThe national facility capability for SkyMapper has been funded through ARC LIEF grant LE130100104 from the Australian Research Council, awarded to the University of Sydney, the Australian National University, Swinburne University of Technology, the University of Queensland, the University of Western Australia, the University of Melbourne, Curtin University of Technology, Monash University and the Australian Astronomical Observatory. SkyMapper is owned and operated by The Australian National University's Research School of Astronomy and Astrophysics. The survey data were processed and provided by the SkyMapper Team at ANU. The SkyMapper node of the All-Sky Virtual Observatory (ASVO) is hosted at the National Computational Infrastructure (NCI). Development and support the SkyMapper node of the ASVO has been funded in part by Astronomy Australia Limited (AAL) and the Australian Government through the Commonwealth's Education Investment Fund (EIF) and National Collaborative Research Infrastructure Strategy (NCRIS), particularly the National eResearch Collaboration Tools and Resources (NeCTAR) and the Australian National Data Service Projects (ANDS). % Skymapper",
+      "comments": ""
+    }
+  ]
+}

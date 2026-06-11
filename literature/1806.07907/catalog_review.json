@@ -1,0 +1,343 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1806.07907",
+    "title": "The Fastest Travel Together: Chemical Tagging of the Fastest Stars in Gaia DR2 to the Stellar Halo",
+    "month": "2018-06",
+    "source_note_json": "notes/2018/2018-06/2018-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1806.07907",
+      "pdf": "https://arxiv.org/pdf/1806.07907"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1806.07907",
+    "audit_path": "literature/1806.07907/audit.json",
+    "source_dir": "literature/1806.07907/arxiv_source",
+    "tex_root": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T08:05:00",
+    "reviewer": "agent",
+    "summary": "Paper reports high-resolution spectroscopic follow-up (APO/ARCES, R~31500) of five late-type hypervelocity star candidates selected from Marchetti et al. (2018) Gaia DR2 sample, with V_tot 500-600 km/s and P_ub > 50%. The study also identifies four additional extreme-velocity stars serendipitously observed by APOGEE, LAMOST, and RAVE surveys. Stellar parameters and chemical abundances for 22 species (α, Fe-peak, odd-Z, neutron-capture elements) are derived using BACCHUS with MARCS atmosphere models under LTE. Key findings: all five stars are metal-poor giants (-2 ≤ [Fe/H] ≤ -1 dex), chemically indistinguishable from typical halo stars, ruling out Galactic center and LMC origins. The paper includes 4 internal tables: (1) Table tab:obsprops — observational properties of the 5 APO targets + 2 RV standards (7 data rows × 11 columns); (2) Table tab:obspropsothers — properties of 4 additional stars from survey cross-matches (4 rows × 11 columns); (3) Table tab:results — stellar atmospheric parameters and [X/Fe] abundances for 22 elements across the 5 APO stars (5 columns × 27 rows, transposed format); (4) Appendix Table tab:online — line-by-line chemical abundances and atomic line data for all measured absorption features (extended online-only table, partial sample in print). No external data resources (CDS/VizieR links) are provided. The two Gaia URLs in the acknowledgments are institutional links, not data resources."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-obsprops",
+      "kind": "latex_table",
+      "asset_type": "object_measurement_table",
+      "role_in_paper": "Primary observational data table presenting the basic properties of the five candidate extreme-velocity stars observed at Apache Point Observatory, plus two radial velocity standard stars. Lists Gaia DR2 source IDs, coordinates, G-band magnitudes, Gaia radial velocities, APO radial velocities, total Galactic rest-frame velocities, probabilities of Milky Way disk origin (P_MW) and of being unbound (P_ub) from Marchetti et al. (2018), spectral SNR, and exposure times. This table is used to confirm (or refute) Gaia DR2 radial velocities and establish the observational context for the subsequent chemical analysis.",
+      "source_refs": [
+        {
+          "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+          "start_line": 236,
+          "end_line": 274,
+          "caption": "Observational Properties of Candidate Extreme-velocity Stars and Radial Velocity Standards",
+          "label": "tab:obsprops"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Gaia DR2 source identifier for each star. Five HV candidates: 1508756353921427328, 1364548016594914560, 4593398670455374592, 4248140165233284352, 2233912206910720000. Two RV standards: HD 122563 and HD 84937.",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA",
+          "meaning": "Right Ascension in decimal degrees (J2000.0).",
+          "unit_text": "deg",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DEC",
+          "meaning": "Declination in decimal degrees (J2000.0).",
+          "unit_text": "deg",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia DR2 G-band apparent magnitude. Range: 11.93–13.21 mag for HV candidates, 5.85–8.19 for standards.",
+          "unit_text": "mag",
+          "source_of_definition": "column header / Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_Gaia",
+          "meaning": "Heliocentric radial velocity from Gaia DR2 with 1-sigma uncertainty. Values range from −358.10 to +128.22 km/s for HV candidates.",
+          "unit_text": "km/s",
+          "source_of_definition": "column header / Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_APO",
+          "meaning": "Heliocentric radial velocity measured from APO/ARCES high-resolution spectra with 1-sigma uncertainty. Used to validate Gaia DR2 radial velocities.",
+          "unit_text": "km/s",
+          "source_of_definition": "column header / Section 2.2",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_tot",
+          "meaning": "Total Galactic rest-frame velocity (3D space motion) from Marchetti et al. (2018). Values for HV candidates range 515–567 km/s. Standards have no values ('...').",
+          "unit_text": "km/s",
+          "source_of_definition": "column header / Marchetti et al. 2018",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_MW",
+          "meaning": "Probability of originating in the Milky Way disk, from the orbit analysis of Marchetti et al. (2018). Values for HV candidates range 0.42–1.00 (dimensionless probability).",
+          "unit_text": "",
+          "source_of_definition": "column header / Marchetti et al. 2018",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_ub",
+          "meaning": "Probability of being unbound to the Galaxy from Marchetti et al. (2018). Values for HV candidates range 0.56–0.76. Footnote: Hattori et al. (2018) derive P_ub = 0.84 for star 2233912206910720000.",
+          "unit_text": "",
+          "source_of_definition": "column header / Marchetti et al. 2018",
+          "confidence": 1.0
+        },
+        {
+          "name": "SNR",
+          "meaning": "Signal-to-noise ratio measured in the λ ~ 5300–5400 Å spectral range of the APO spectra. Values 34–46 for HV candidates, 150–210 for standards.",
+          "unit_text": "",
+          "source_of_definition": "column header / Section 2.2",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_obs",
+          "meaning": "Exposure time in seconds required to achieve the reported SNR. 1800 s for all HV candidates, 60–600 s for standards.",
+          "unit_text": "s",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The basic observational properties of these stars (plus the standard stars) are given in Table tab:obsprops, including coordinates, Gaia G band magnitude, radial velocity as measured in both Gaia and this study, and the typical SNR.",
+      "comments": "7 data rows (5 HV candidates + 2 RV standards) × 11 columns. Table printed in full using table* environment (double-column width). The RV standards section is separated by a horizontal line and serves to validate the radial velocity measurement pipeline. One additional commented-out standard (HD 168009) suggests original plans for a third standard."
+    },
+    {
+      "id": "table-tab-obspropsothers",
+      "kind": "latex_table",
+      "asset_type": "object_measurement_table",
+      "role_in_paper": "Supplementary observational data table presenting the basic properties of four additional extreme-velocity star candidates from the Marchetti et al. (2018) sample that were found to have serendipitous observations in public large spectroscopic surveys (APOGEE DR14, LAMOST DR3, RAVE DR5). Same column structure as Table tab:obsprops with an added Survey identifier column. These stars provide independent radial velocity confirmation and additional stellar parameter/metallicity information that supports the main chemical conclusions.",
+      "source_refs": [
+        {
+          "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+          "start_line": 309,
+          "end_line": 332,
+          "caption": "Observational Properties of Extreme-velocity Star Candidates from other surveys",
+          "label": "tab:obspropsothers"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Gaia DR2 source identifier. Four stars: 1268023196461923712, 6639557580310606976, 5212817273334550016, 4916199478888664320.",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA",
+          "meaning": "Right Ascension in decimal degrees (J2000.0).",
+          "unit_text": "deg",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DEC",
+          "meaning": "Declination in decimal degrees (J2000.0). Includes southern hemisphere targets (DEC down to −76.2°).",
+          "unit_text": "deg",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia DR2 G-band apparent magnitude. Range 10.89–13.00 mag.",
+          "unit_text": "mag",
+          "source_of_definition": "column header / Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_Gaia",
+          "meaning": "Heliocentric radial velocity from Gaia DR2 with 1-sigma uncertainty. Values: −276.84, −257.08, +159.87, +86.87 km/s.",
+          "unit_text": "km/s",
+          "source_of_definition": "column header / Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_survey",
+          "meaning": "Heliocentric radial velocity from the external survey with 1-sigma uncertainty. Surveys: APOGEE for 1268023196461923712, RAVE for the other three. All agree with Gaia to within a few km/s.",
+          "unit_text": "km/s",
+          "source_of_definition": "column header / Section 2.3",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_tot",
+          "meaning": "Total Galactic rest-frame velocity from Marchetti et al. (2018). Values range 538–581 km/s.",
+          "unit_text": "km/s",
+          "source_of_definition": "column header / Marchetti et al. 2018",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_MW",
+          "meaning": "Probability of Milky Way disk origin from Marchetti et al. (2018). Values 0.35–0.49.",
+          "unit_text": "",
+          "source_of_definition": "column header / Marchetti et al. 2018",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_ub",
+          "meaning": "Probability of being unbound from Marchetti et al. (2018). Values 0.62–0.79.",
+          "unit_text": "",
+          "source_of_definition": "column header / Marchetti et al. 2018",
+          "confidence": 1.0
+        },
+        {
+          "name": "SNR",
+          "meaning": "Signal-to-noise ratio from the external survey spectra. Values 63–119 for APOGEE/RAVE stars; missing for RAVE star 4916199478888664320.",
+          "unit_text": "",
+          "source_of_definition": "column header / survey data",
+          "confidence": 1.0
+        },
+        {
+          "name": "Survey",
+          "meaning": "Abbreviation of the survey providing the data: A = APOGEE DR14, L = LAMOST DR3, R = RAVE DR5. Gaia DR2 1268023196461923712 appears in both APOGEE and LAMOST.",
+          "unit_text": "",
+          "source_of_definition": "column header / Section 2.3",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "We cross matched the extreme-velocity candidate sample from Table 1 of Marchetti et al. (2018) with the public databases of four large spectroscopic surveys... The basic observational data for these stars are given in Table tab:obspropsothers.",
+      "comments": "4 data rows × 11 columns. One commented-out star (1400950785006036224 from Hattori et al.) suggests additional cross-matching was considered. No GALAH DR2 overlaps were found. Survey abbreviations: A=APOGEE, L=LAMOST, R=RAVE."
+    },
+    {
+      "id": "table-tab-results",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Core science results table presenting stellar atmospheric parameters and chemical abundances for the five candidate extreme-velocity stars observed at APO. Lists T_eff (spectroscopic and photometric), log g, [Fe/H], microturbulent velocity ξ, and [X/Fe] abundance ratios for 22 elements grouped into α-elements (Mg, Si, Ca, Ti), odd-Z elements (Na, Al, K, V, Cu, Sc), Fe-peak elements (Cr, Mn, Co, Ni, Zn), and neutron-capture elements (Sr, Y, Zr, Ba, La, Nd, Eu). This table is the primary data product of the paper from which all chemical tagging conclusions are drawn.",
+      "source_refs": [
+        {
+          "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+          "start_line": 349,
+          "end_line": 394,
+          "caption": "Stellar parameters and chemical abundances for 5 Candidate Extreme-velocity Stars",
+          "label": "tab:results"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Parameter label for each row: Teff, Teff_phot, logg, [Fe/H], ξ (vmicro), and [X/Fe] for 22 elements (Na, Mg, Al, Si, K, Ca, Sc, Ti, V, Cr, Mn, Co, Ni, Cu, Zn, Sr, Y, Zr, Ba, La, Nd, Eu). 27 row labels total (5 atmospheric parameters + 22 abundance ratios).",
+          "unit_text": "",
+          "source_of_definition": "table row labels",
+          "confidence": 1.0
+        },
+        {
+          "name": "1508756353921427328",
+          "meaning": "Gaia DR2 1508756353921427328 — stellar parameters and [X/Fe] abundances with 1-sigma internal uncertainties. T_eff = 4699±85 K, log g = 0.90±0.43, [Fe/H] = −1.93±0.09. Notable: [Mg/Fe]=0.64, [Ca/Fe]=0.50, [Eu/Fe]=0.77. Strong α-element enhancement, consistent with metal-poor halo.",
+          "unit_text": "K (Teff), dex (logg, [Fe/H], abundances), km/s (ξ)",
+          "source_of_definition": "column values / Section 4",
+          "confidence": 1.0
+        },
+        {
+          "name": "1364548016594914560",
+          "meaning": "Gaia DR2 1364548016594914560 — least metal-poor of the sample. T_eff = 4640±98 K, log g = 1.37±0.49, [Fe/H] = −1.21±0.12. Lower α-enhancement: [Mg/Fe]=0.23, [Si/Fe]=0.08. Could be consistent with metal-weak thick disk.",
+          "unit_text": "K (Teff), dex (logg, [Fe/H], abundances), km/s (ξ)",
+          "source_of_definition": "column values / Section 4",
+          "confidence": 1.0
+        },
+        {
+          "name": "4593398670455374592",
+          "meaning": "Gaia DR2 4593398670455374592. T_eff = 4868±65 K, log g = 1.47±0.28, [Fe/H] = −1.67±0.13. Notable: [Ba/Fe]=0.56 (somewhat elevated). Higher photometric T_eff (5469 K) but with large uncertainty.",
+          "unit_text": "K (Teff), dex (logg, [Fe/H], abundances), km/s (ξ)",
+          "source_of_definition": "column values / Section 4",
+          "confidence": 1.0
+        },
+        {
+          "name": "4248140165233284352",
+          "meaning": "Gaia DR2 4248140165233284352. T_eff = 4718±49 K, log g = 1.41±0.36, [Fe/H] = −1.82±0.15. Notable: [Zr/Fe]=0.90, [Nd/Fe]=0.74 (enhanced neutron-capture). Strong [Na/Fe]=0.34.",
+          "unit_text": "K (Teff), dex (logg, [Fe/H], abundances), km/s (ξ)",
+          "source_of_definition": "column values / Section 4",
+          "confidence": 1.0
+        },
+        {
+          "name": "2233912206910720000",
+          "meaning": "Gaia DR2 2233912206910720000. T_eff = 5070±7 K, log g = 1.30±0.26, [Fe/H] = −1.72±0.16. Notable: [Si/Fe]=0.77, [Co/Fe]=1.30 (high), [Eu/Fe]=1.11. Several elements (Na, Al, K, V, Sr) unmeasured.",
+          "unit_text": "K (Teff), dex (logg, [Fe/H], abundances), km/s (ξ)",
+          "source_of_definition": "column values / Section 4",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The derived values of the stellar atmospheric parameters (and the associated uncertainties) for the observed extreme-velocity candidates are given in the top 4 rows of Table tab:results... The chemical abundances, reported as [X/H], were derived for each element and each absorption feature... resulting in abundances for 22 species.",
+      "comments": "Transposed format: 5 columns (star identifiers) × 27 rows (parameters + abundances). The table is presented sideways compared to conventional format — each star is a column and each measured quantity is a row. Internal uncertainties only — systematic uncertainties estimated at ~0.10 dex in [Fe/H]. One commented-out section shows the original parameter layout before the data were filled in. The photometric T_eff row includes asymmetric uncertainties (separate + and −). '...' indicates unmeasured elements for some stars."
+    },
+    {
+      "id": "table-tab-online",
+      "kind": "latex_table",
+      "asset_type": "individual_measurements",
+      "role_in_paper": "Online appendix table providing the complete line-by-line chemical abundance measurements and atomic reference data for all absorption features analyzed in each of the five program stars. Lists the Gaia DR2 source ID, element symbol, wavelength, oscillator strength (log gf), excitation potential, and the derived log abundance for each individual spectral line. This table provides the raw measurement-level data that support the summary abundances in Table tab:results and enables independent reproduction or reanalysis.",
+      "source_refs": [
+        {
+          "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+          "start_line": 536,
+          "end_line": 569,
+          "caption": "Line-By-Line Chemical Abundances and Atomic Information",
+          "label": "tab:online"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Gaia DR2 source identifier identifying which of the 5 program stars the line measurement belongs to.",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Element",
+          "meaning": "Chemical element and ionization state (e.g., Ca I, Na I). Covers 22 species across the 5 stars.",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "lambda",
+          "meaning": "Rest-frame wavelength of the absorption line in Ångströms. Range spans the ARCES coverage (~3800–9200 Å).",
+          "unit_text": "Å",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(gf)",
+          "meaning": "Logarithm of the oscillator strength (gf-value) for the transition. Atomic data sourced from the fifth version of the Gaia-ESO linelist.",
+          "unit_text": "",
+          "source_of_definition": "column header / Section 3",
+          "confidence": 1.0
+        },
+        {
+          "name": "Excitation Pot.",
+          "meaning": "Excitation potential of the lower level of the transition in electron volts.",
+          "unit_text": "eV",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(epsilon)",
+          "meaning": "Derived logarithmic abundance log(ε_X) for the individual absorption line. Abundances are on the scale where log(ε_H) = 12. The per-star summary abundance [X/Fe] is derived from the median of these line-by-line values.",
+          "unit_text": "dex",
+          "source_of_definition": "column header / Section 3",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "We provide an online table, a section of which is shown in Table tab:online for reference. This table includes the line-by-line abundances for each star, line and elemental species. The table also includes the atomic data, specifically the oscillator strength (log gf), the wavelength (Å), and excitation potential (in eV) for each line.",
+      "comments": "Extended online-only table; only a partial sample (first 10 lines for 2 stars) is shown in the print/arXiv version, with '...' indicating the continuation. The full table would contain line-by-line measurements for all absorption features used to derive the 22 elemental abundances across 5 stars (estimated hundreds of rows). Atomic data sourced from Gaia-ESO linelist v5."
+    }
+  ],
+  "external_resources": []
+}

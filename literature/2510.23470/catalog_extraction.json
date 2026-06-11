@@ -1,0 +1,725 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:12",
+  "paper": {
+    "arxiv_id": "2510.23470",
+    "title": "A targeted radio survey of infrared-selected bow shock candidates",
+    "month": "2025-10"
+  },
+  "review": {
+    "path": "literature/2510.23470/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124012",
+    "started_at": "2026-05-17T12:40:12",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2510.23470",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-obsvla",
+      "internal_table_id": "table-tab-obsvla",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+        "start_line": 221,
+        "end_line": 239,
+        "caption": "Summary of observational runs, targets, and calibrators.",
+        "label": "tab:obsvla"
+      },
+      "source_path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+      "excerpt_path": "literature/2510.23470/catalog_sources/table-tab-obsvla/excerpt.tex",
+      "sha256": "63da4428cfa3d4062e607104c4ccf604cf69a98d7284fc771098b52a582ceeec",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-ne",
+      "internal_table_id": "table-tab-ne",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+        "start_line": 515,
+        "end_line": 561,
+        "caption": "Estimation of $n_e$ based on size and brightness of bow shock (or RMS noise level of the map for non-detections) using Eq.~\\ref{eq:ne}.",
+        "label": "tab:ne"
+      },
+      "source_path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+      "excerpt_path": "literature/2510.23470/catalog_sources/table-tab-ne/excerpt.tex",
+      "sha256": "2c61c660169b3e874b2d5b0758dcae767323280a452e2c92d1ac4ad768f7b78f",
+      "line_count": 47,
+      "error": ""
+    },
+    {
+      "id": "table-tab-targets",
+      "internal_table_id": "table-tab-targets",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+        "start_line": 712,
+        "end_line": 1005,
+        "caption": "List of VLA targets and their driving star, sorted according to right ascension.",
+        "label": "tab:targets"
+      },
+      "source_path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+      "excerpt_path": "literature/2510.23470/catalog_sources/table-tab-targets/excerpt.tex",
+      "sha256": "454c7b3ad53fcaca4497052f4805ad1abb2307fed0e16d127b3ee0dfa02642aa",
+      "line_count": 294,
+      "error": ""
+    },
+    {
+      "id": "table-tab-app-mdot",
+      "internal_table_id": "table-tab-app-mdot",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+        "start_line": 1018,
+        "end_line": 1045,
+        "caption": "Estimation of mass-loss rates, $\\dot{M}$, and wind velocities, $v_\\infty$, from spectral types in Table~\\ref{tab:targets} of 17 of the 24 target bow shocks and the derived ISM electron density, $n_{e,0}$.",
+        "label": "tab:app:mdot"
+      },
+      "source_path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+      "excerpt_path": "literature/2510.23470/catalog_sources/table-tab-app-mdot/excerpt.tex",
+      "sha256": "cdab6debe4f503b93a13b23c2403857c50874bfaf602a68970fb47fe73649e60",
+      "line_count": 28,
+      "error": ""
+    },
+    {
+      "id": "table-tab-eff-names",
+      "internal_table_id": "table-tab-eff-names",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+        "start_line": 1158,
+        "end_line": 1176,
+        "caption": "List of targets observed with Effelsberg with the associated name in the Effelbserg proposal and in Figure~\\ref{fig:eff-bow}.",
+        "label": "tab:eff-names"
+      },
+      "source_path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+      "excerpt_path": "literature/2510.23470/catalog_sources/table-tab-eff-names/excerpt.tex",
+      "sha256": "ffcb3585cf05ca0635f1fbd4cc5717e9c4b508fa5176171cb02c9d51a570e76a",
+      "line_count": 19,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-obsvla",
+      "internal_table_id": "table-tab-obsvla",
+      "status": "success",
+      "ecsv_path": "literature/2510.23470/catalog_tables/table-tab-obsvla.ecsv",
+      "caption": "Summary of observational runs, targets, and calibrators.",
+      "label": "tab:obsvla",
+      "row_count": 8,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Observation ID",
+          "Observed Targets",
+          "Flux/Bandpass Calibrator",
+          "Phase/Amplitude Calibrators"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Observation ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Observed Targets",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Flux/Bandpass Calibrator",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Phase/Amplitude Calibrators",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp1xc8w1e/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2510.23470/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp1xc8w1e/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2510.23470/catalog_sources/table-tab-obsvla/wrapped.tex",
+            "html": "literature/2510.23470/catalog_sources/table-tab-obsvla/latexml.html",
+            "stdout": "literature/2510.23470/catalog_sources/table-tab-obsvla/latexml.stdout.txt",
+            "stderr": "literature/2510.23470/catalog_sources/table-tab-obsvla/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "63da4428cfa3d4062e607104c4ccf604cf69a98d7284fc771098b52a582ceeec"
+    },
+    {
+      "id": "table-tab-ne",
+      "internal_table_id": "table-tab-ne",
+      "status": "success",
+      "ecsv_path": "literature/2510.23470/catalog_tables/table-tab-ne.ecsv",
+      "caption": "Estimation of $n_e$ based on size and brightness of bow shock (or RMS noise level of the map for non-detections) using Eq.~\\ref{eq:ne}.",
+      "label": "tab:ne",
+      "row_count": 24,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Source",
+          "d",
+          "method",
+          "R_0",
+          "RMS",
+          "I_\\nu",
+          "UL?",
+          "n_e"
+        ],
+        [
+          "",
+          "(kpc)",
+          "",
+          "(pc)",
+          "(mJy beam -1 )",
+          "(mJy beam -1 )",
+          "",
+          "(cm -3 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "d | (kpc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "method",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "R_0 | (pc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "RMS | (mJy beam -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "I_\\nu | (mJy beam -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "UL?",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "n_e | (cm -3 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsfs7ywls/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2510.23470/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsfs7ywls/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2510.23470/catalog_sources/table-tab-ne/wrapped.tex",
+            "html": "literature/2510.23470/catalog_sources/table-tab-ne/latexml.html",
+            "stdout": "literature/2510.23470/catalog_sources/table-tab-ne/latexml.stdout.txt",
+            "stderr": "literature/2510.23470/catalog_sources/table-tab-ne/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2c61c660169b3e874b2d5b0758dcae767323280a452e2c92d1ac4ad768f7b78f"
+    },
+    {
+      "id": "table-tab-targets",
+      "internal_table_id": "table-tab-targets",
+      "status": "success",
+      "ecsv_path": "literature/2510.23470/catalog_tables/table-tab-targets.ecsv",
+      "caption": "List of VLA targets and their driving star, sorted according to right ascension.",
+      "label": "tab:targets",
+      "row_count": 24,
+      "column_count": 13,
+      "environment": "",
+      "header_rows": [
+        [
+          "Bow Shock",
+          "Driving Star",
+          "R.A. _J2000",
+          "Dec. _J2000",
+          "spec. type",
+          "Det?",
+          "Env. PM ( km s^-1 )",
+          "",
+          "Peculiar PM ( km s^-1 )",
+          "",
+          "parallax",
+          "ref.",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "R.A.",
+          "Dec",
+          "R.A.",
+          "Dec",
+          "(mas)",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Bow Shock",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Driving Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "R.A. _J2000",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Dec. _J2000",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "spec. type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Det?",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Env. PM ( km s^-1 ) | R.A.",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Dec",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Peculiar PM ( km s^-1 ) | R.A.",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Dec",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "parallax | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "ref.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdz61vo1c/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2510.23470/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdz61vo1c/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2510.23470/catalog_sources/table-tab-targets/wrapped.tex",
+            "html": "literature/2510.23470/catalog_sources/table-tab-targets/latexml.html",
+            "stdout": "literature/2510.23470/catalog_sources/table-tab-targets/latexml.stdout.txt",
+            "stderr": "literature/2510.23470/catalog_sources/table-tab-targets/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "454c7b3ad53fcaca4497052f4805ad1abb2307fed0e16d127b3ee0dfa02642aa"
+    },
+    {
+      "id": "table-tab-app-mdot",
+      "internal_table_id": "table-tab-app-mdot",
+      "status": "success",
+      "ecsv_path": "literature/2510.23470/catalog_tables/table-tab-app-mdot.ecsv",
+      "caption": "Estimation of mass-loss rates, $\\dot{M}$, and wind velocities, $v_\\infty$, from spectral types in Table~\\ref{tab:targets} of 17 of the 24 target bow shocks and the derived ISM electron density, $n_{e,0}$.",
+      "label": "tab:app:mdot",
+      "row_count": 18,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Bow Shock",
+          "\\dotM",
+          "v_\\infty",
+          "n_e,0"
+        ],
+        [
+          "",
+          "( 10^-6 M_\\odot yr^-1 )",
+          "(km s -1 )",
+          "(cm -3 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Bow Shock",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\dotM | ( 10^-6 M_\\odot yr^-1 )",
+          "unit_text": "( 10^-6 M_\\odot yr^-1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "v_\\infty | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "n_e,0 | (cm -3 )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4ojdboub/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2510.23470/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4ojdboub/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2510.23470/catalog_sources/table-tab-app-mdot/wrapped.tex",
+            "html": "literature/2510.23470/catalog_sources/table-tab-app-mdot/latexml.html",
+            "stdout": "literature/2510.23470/catalog_sources/table-tab-app-mdot/latexml.stdout.txt",
+            "stderr": "literature/2510.23470/catalog_sources/table-tab-app-mdot/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "cdab6debe4f503b93a13b23c2403857c50874bfaf602a68970fb47fe73649e60"
+    },
+    {
+      "id": "table-tab-eff-names",
+      "internal_table_id": "table-tab-eff-names",
+      "status": "success",
+      "ecsv_path": "literature/2510.23470/catalog_tables/table-tab-eff-names.ecsv",
+      "caption": "List of targets observed with Effelsberg with the associated name in the Effelbserg proposal and in Figure~\\ref{fig:eff-bow}.",
+      "label": "tab:eff-names",
+      "row_count": 7,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Target name",
+          "Name in Effelsberg proposal 86-20"
+        ],
+        [
+          "\\bdforty",
+          "\\bdforty"
+        ],
+        [
+          "\\bdsixty",
+          "\\bdsixty"
+        ],
+        [
+          "\\zoph",
+          "\\zoph"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Target name | \\bdforty | \\bdsixty | \\zoph",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Name in Effelsberg proposal 86-20 | \\bdforty | \\bdsixty | \\zoph",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8i28hdp3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2510.23470/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8i28hdp3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2510.23470/catalog_sources/table-tab-eff-names/wrapped.tex",
+            "html": "literature/2510.23470/catalog_sources/table-tab-eff-names/latexml.html",
+            "stdout": "literature/2510.23470/catalog_sources/table-tab-eff-names/latexml.stdout.txt",
+            "stderr": "literature/2510.23470/catalog_sources/table-tab-eff-names/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ffcb3585cf05ca0635f1fbd4cc5717e9c4b508fa5176171cb02c9d51a570e76a"
+    }
+  ]
+}

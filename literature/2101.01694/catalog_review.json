@@ -1,0 +1,394 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2101.01694",
+    "title": "The young massive star cluster Westerlund 2 observed with MUSE. III. A cluster in motion -- the complex internal dynamics",
+    "month": "2021-01",
+    "source_note_json": "notes/2021/2021-01/2021-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2101.01694",
+      "pdf": "https://arxiv.org/pdf/2101.01694"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2101.01694",
+    "audit_path": "literature/2101.01694/audit.json",
+    "source_dir": "literature/2101.01694/arxiv_source",
+    "tex_root": "literature/2101.01694/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:32:46",
+    "reviewer": "agent",
+    "summary": "论文利用VLT/MUSE积分场光谱数据和Gaia DR2自行数据，对年轻大质量星团Westerlund 2（Wd2）进行了详细的内部动力学分析。核心结果包括：（1）HII区域RCW49的气体视向速度中值为15.9 km/s，支持云-云碰撞形成机制，且HII区域正以~15 km/s的速度膨胀；（2）恒星视向速度分布揭示速度弥散随恒星质量减小而增大，符合高度质量分层特征，并且低质量PMS星呈现五个明显的速度群，空间上与星团的两个子团（MC和NC）相关；（3）动力学质量估计M_dyn = (7.5±1.9)×10⁴ 至 (4.4±1.1)×10⁵ M_⊙，超过光度质量至少两倍，表明Wd2不足以维持引力束缚，将经历「婴儿死亡率」；（4）识别出22颗速逃星候选体，其本动速度在30至546 km/s之间。论文含四张LaTeX表格：Table 1（tab:spat_dist）列出EFF表面密度模型的最佳拟合参数；Table 2（tab:RV_stars_comp）列出恒星视向速度分量（O星、B星、PMS星）；Table 3（tab:KS）为速度群空间分布的2D KS检验p值矩阵；Table 4（tab:runaways）列出22颗速逃星候选体的坐标、星等、本动速度及各速度分量。外部资源包括MUSEpack软件包（GitHub仓库和Zenodo DOI）及Gaia任务相关URL。致谢中包含Gaia、DPAC、HST等设施/任务的通用致谢，非结构化数据资产。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-spat_dist",
+      "kind": "latex_table",
+      "asset_type": "fitted_model_parameters",
+      "role_in_paper": "列出Wd2两个子团（MC和NC）在数量密度和質量密度下的EFF（Elson-Fall-Freeman）表面密度剖面最佳拟合参数，包括中心坐标、峰值密度、背景密度、尺度参数a、核心半径r_c和幂律指数γ，为后续动力学分析提供关键的空间结构参数。",
+      "source_refs": [
+        {
+          "path": "literature/2101.01694/arxiv_source/main.tex",
+          "start_line": 290,
+          "end_line": 302,
+          "caption": "The best-fit surface density parameters",
+          "label": "tab:spat_dist"
+        }
+      ],
+      "columns": [
+        {
+          "name": "(row label)",
+          "meaning": "行标识：Σ_num（数量密度拟合）或 Σ_mass（质量密度拟合），分别对应MC和NC两个子团",
+          "unit_text": "",
+          "source_of_definition": "table structure and main text Section 3",
+          "confidence": 1.0
+        },
+        {
+          "name": "Region",
+          "meaning": "子团标识：MC（主团）或 NC（北团）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A.",
+          "meaning": "EFF剖面拟合中心的赤经坐标（J2000）",
+          "unit_text": "h m s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec.",
+          "meaning": "EFF剖面拟合中心的赤纬坐标（J2000）",
+          "unit_text": "° ′ ″",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Σ₀",
+          "meaning": "峰值表面密度：数量密度（arcmin⁻²）或质量密度（M_⊙·arcmin⁻²）",
+          "unit_text": "arcmin⁻² or M_⊙·arcmin⁻²",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Σ_bck",
+          "meaning": "背景（晕）密度，为两个子团共同拟合的偏移量",
+          "unit_text": "arcmin⁻² or M_⊙·arcmin⁻²",
+          "source_of_definition": "table header and main text",
+          "confidence": 1.0
+        },
+        {
+          "name": "a",
+          "meaning": "EFF剖面的尺度参数，决定密度分布的空间延展",
+          "unit_text": "pc",
+          "source_of_definition": "table header and Equation (1)",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_c",
+          "meaning": "核心半径，由EFF参数a和γ通过公式r_c = a(2^(2/γ)−1)^(1/2)计算",
+          "unit_text": "pc",
+          "source_of_definition": "table header and Equation (2)",
+          "confidence": 1.0
+        },
+        {
+          "name": "γ",
+          "meaning": "EFF剖面的幂律指数，描述密度分布的外部斜率（γ_MC≈7.6, γ_NC≈7.6，远大于典型值2-3，反映了质量分层和只拟合50%完备极限以上恒星的影响）",
+          "unit_text": "",
+          "source_of_definition": "table header and Equation (1)",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 3: 'After running extensive Markov-Chain Monte Carlo (MCMC) fitting of the two density distributions to the data, the Akaike information criterion (AIC), the Bayesian information criterion (BIC), and the Watanabe–Akaike information criterion (WAIC) clearly favors the EFF model over a Gaussian distribution. The best-fit parameters for the mass and number density distributions are shown in Tab. 1 and Fig. 1.' 表注说明在4.16 kpc距离处，50 arcsec = 1 pc。",
+      "comments": "MC和NC的数量密度和质量密度的EFF参数分别列出，各两行。核心半径r_c和半质量半径r_hm（文中Eq. 3给出r_hm,MC=0.23 pc, r_hm,NC=0.31 pc）用于后续动力学质量计算。γ值异常陡峭（~7.6 vs 典型2-3）反映了Wd2的复合结构和高度的质量分层。"
+    },
+    {
+      "id": "table-tab-RV_stars_comp",
+      "kind": "latex_table",
+      "asset_type": "derived_kinematic_parameters",
+      "role_in_paper": "列出MCMC拟合得到的恒星视向速度分量：O星（1个分量）、B星（2个分量）和PMS星（5个分量）的均值RV、速度弥散σRV和每群的恒星数量（全部和Wd2团内），是论文核心结果——低质量星速度群的结构化呈现。",
+      "source_refs": [
+        {
+          "path": "literature/2101.01694/arxiv_source/main.tex",
+          "start_line": 397,
+          "end_line": 415,
+          "caption": "The stellar RV components",
+          "label": "tab:RV_stars_comp"
+        }
+      ],
+      "columns": [
+        {
+          "name": "name",
+          "meaning": "速度群名称：O1（O星，紫色）、B1（B星暗蓝）、B2（B星浅蓝）、PMS1-PMS5（PMS星，黄/绿/红/棕/黑），颜色对应文中图示",
+          "unit_text": "",
+          "source_of_definition": "table header and Figure 5",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "各速度分量的平均视向速度（相对Wd2系统速度15.9 km/s已减除），由MCMC拟合的高斯分布均值给出，不确定性为1σ",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σRV",
+          "meaning": "各速度分量的速度弥散（1σ标准差），由MCMC拟合的高斯分布宽度给出",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "n (all)",
+          "meaning": "位于各速度分量1σ范围内的恒星总数（包括整个MUSE巡天区域）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "n (Wd2)",
+          "meaning": "位于各速度分量1σ范围内且同时位于Wd2星团区域内的恒星数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 4.3: 'The three distributions are best described by a single Gaussian for the O-stars, a combination of two Gaussians for the B-stars, and five Gaussians for the PMS stars. ... The results of the fits are also shown in Fig. 5 and listed in Tab. 2.' 表注说明列出的颜色对应文中图示、第4和第5列分别为所有巡天区域和Wd2团内1σ范围内的恒星数。",
+      "comments": "O星群仅一个分量（O1），均速0.21 km/s，弥散1.99 km/s。B星两分量B1（-5.18 km/s）和B2（3.90 km/s）间距约9 km/s。PMS星五分量中PMS1弥散最大（5.18 km/s），其余约2 km/s。PMS2-PMS4和PMS3-PMS5的速度差相似（~11.5和~12.9 km/s），暗示成对的空间关联。"
+    },
+    {
+      "id": "table-tab-KS",
+      "kind": "latex_table",
+      "asset_type": "statistical_test_results",
+      "role_in_paper": "以矩阵形式列出HST测光星表、MUSE光谱星表和各速度群（O1, B1, B2, PMS1-PMS5）之间空间分布的2D Kolmogorov-Smirnov检验p值，用于定量评估各速度群的空间相关性，支持MC/NC双团结构与速度群的关联结论。",
+      "source_refs": [
+        {
+          "path": "literature/2101.01694/arxiv_source/main.tex",
+          "start_line": 445,
+          "end_line": 461,
+          "caption": "The KS-test of the stellar spatial distributions",
+          "label": "tab:KS"
+        }
+      ],
+      "columns": [
+        {
+          "name": "row/column labels",
+          "meaning": "行和列的标签均为：HST（HST测光星表全部成员星）、MUSE（MUSE光谱星表）、O1、B1、B2、PMS1-PMS5（各速度群）。矩阵元为这两个群体空间分布的2D KS检验的p值",
+          "unit_text": "",
+          "source_of_definition": "table headers and main text Section 4.3.3",
+          "confidence": 1.0
+        },
+        {
+          "name": "p-value",
+          "meaning": "2D KS检验的p值：显著性水平α=0.05，p>0.05表示不能拒绝两群体具有相同空间分布的原假设（在95%置信度下空间相关）。粗体标记p>0.05，斜体标记p略低于0.05的值",
+          "unit_text": "",
+          "source_of_definition": "table comments and Section 4.3.3",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 4.3.3: 'To quantify the spatial correlation we use a 2D Kolmogorov-Smirnov (KS) test. ... The resulting p-values are presented in Tab 3.' 表注说明粗体p值>0.05，斜体p值略低于0.05。",
+      "comments": "关键结果：HST vs MUSE的p=0.274，表明两个星表空间分布一致。O1/B1/B2群之间以及它们与MUSE全样本空间相关。PMS2-PMS4的p=0.045为边际显著。PMS3-PMS5与O1/B1/B2/PMS1空间相关。这些结果支持PMS2/PMS4与NC相关、PMS3/PMS5与MC相关的结论。"
+    },
+    {
+      "id": "table-tab-runaways",
+      "kind": "latex_table",
+      "asset_type": "results_catalog",
+      "role_in_paper": "列出22颗速逃星候选体的完整数据：HST星表ID、坐标、F555W和F814W星等、本动速度及其不确定性、三个速度分量（视向速度RV和两个自行方向的速度μ_α*和μ_δ）及其各自的不确定性。这是论文的核心数据产出，为后续分析高速度星的弹射机制和星团动力学演化提供观测约束。",
+      "source_refs": [
+        {
+          "path": "literature/2101.01694/arxiv_source/main.tex",
+          "start_line": 691,
+          "end_line": 720,
+          "caption": "The runaway star candidates",
+          "label": "tab:runaways"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "HST测光星表中的唯一目标标识符（4-5位数字）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r.a.",
+          "meaning": "赤经坐标（J2000），以时角分秒表示",
+          "unit_text": "h m s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "dec.",
+          "meaning": "赤纬坐标（J2000），以度角分角秒表示",
+          "unit_text": "° ′ ″",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "F555W",
+          "meaning": "HST WFC3 F555W波段（近似V波段）视星等。'---'表示该星在HST观测中饱和（ID 7834），其F814W星等从MUSE数据立方体恢复",
+          "unit_text": "mag",
+          "source_of_definition": "table header and footnotes",
+          "confidence": 1.0
+        },
+        {
+          "name": "F814W",
+          "meaning": "HST ACS/WFC3 F814W波段（近似I波段）视星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_pec",
+          "meaning": "本动速度（peculiar velocity），由三个速度分量（RV, μ_α*, μ_δ）合成的总速度，已减去系统速度",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σv_pec",
+          "meaning": "本动速度的不确定性（1σ），由三个速度分量的误差传播得出",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "日心视向速度（已减去系统RV_sys=15.9 km/s），由MUSE光谱通过RV_spectrum方法测量",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σRV",
+          "meaning": "视向速度的不确定性（1σ）",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_α*",
+          "meaning": "赤经方向的自行速度（已减去系统μ_α*,sys=-101.9 km/s），μ_α* = μ_α·cos(δ)，由Gaia DR2提供",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ_α*",
+          "meaning": "赤经自行速度的不确定性（1σ）",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_δ",
+          "meaning": "赤纬方向的自行速度（已减去系统μ_δ,sys=59.1 km/s），由Gaia DR2提供",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ_δ",
+          "meaning": "赤纬自行速度的不确定性（1σ）",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 6 Runaways: 'To analyze these runaway candidates we calculate their peculiar velocities based on the three velocity components (RV, μ_α*, μ_δ). ... The parameters of all 22 sources are listed in Tab. 4.' 表注详细说明了各列定义、系统速度减除值及饱和星的处理。",
+      "comments": "22颗星中1颗为O9.5V星（ID 10198），1颗为B型星（ID 10048）。三颗星的v_pec超过100 km/s：ID-13587 (123.2 km/s)、ID-16306 (245.8 km/s)、ID-14542 (546.1 km/s，样本中最极端目标)。星等范围：F814W从12.094至18.882 mag。v_pec误差范围0.9-34.6 km/s。未检测到优势弹射方向，与双体相互作用的弹射机制一致。"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "res-musepack-github",
+      "kind": "software_repository",
+      "url": "https://github.com/pzeidler89/MUSEpack.git",
+      "local_path": "",
+      "description": "MUSEpack软件包的GitHub源代码仓库，用于MUSE数据的提取和分析，包含musereduce（数据减除）和RV_spectrum（视向速度测量）模块",
+      "source_refs": [
+        {
+          "path": "literature/2101.01694/arxiv_source/main.tex",
+          "start_line": 266,
+          "end_line": 269,
+          "context": "The data was reduced with the \\texttt{musereduce} module of the python package \\MUSEpack ... is made available for download on Github \\url{https://github.com/pzeidler89/MUSEpack.git}"
+        }
+      ],
+      "evidence": "Section 2 Data: 'The data was reduced with the musereduce module of the python package MUSEpack ... is made available for download on Github https://github.com/pzeidler89/MUSEpack.git'",
+      "comments": ""
+    },
+    {
+      "id": "res-musepack-zenodo",
+      "kind": "data_archive",
+      "url": "https://doi.org/10.5281/zenodo.3433996",
+      "local_path": "",
+      "description": "MUSEpack软件包在Zenodo上的存档版本，提供DOI永久引用",
+      "source_refs": [
+        {
+          "path": "literature/2101.01694/arxiv_source/main.tex",
+          "start_line": 98,
+          "end_line": 100,
+          "context": "\\newcommand{\\MUSEpack}{\\dataset[MUSEpack]{\\doi{10.5281/zenodo.3433996}}}"
+        }
+      ],
+      "evidence": "Preamble line 99 and Section 2 line 268: \\MUSEpack is defined with DOI 10.5281/zenodo.3433996",
+      "comments": "该DOI在导言区定义为\\MUSEpack宏，在正文第2节和第4节引用。"
+    },
+    {
+      "id": "res-spectral-cube",
+      "kind": "software_documentation",
+      "url": "https://spectral-cube.readthedocs.io/en/latest/",
+      "local_path": "",
+      "description": "Python软件包spectral_cube的官方文档，用于天文光谱数据立方体的分析和可视化，本文中用于气体速度测量时的谱线叠加",
+      "source_refs": [
+        {
+          "path": "literature/2101.01694/arxiv_source/main.tex",
+          "start_line": 101,
+          "end_line": 102,
+          "context": "\\newcommand{\\spectralcube}{\\texttt{spectral\\_cube}\\footnote{\\url{https://spectral-cube.readthedocs.io/en/latest/}}}"
+        }
+      ],
+      "evidence": "Preamble line 101-102: \\spectralcube defined with URL. Section 4.2: 'We used the python packages pyspeckit and spectral_cube to combine the Hα... emission lines.'",
+      "comments": "作为软件工具在气体速度分析中使用"
+    },
+    {
+      "id": "res-gaia-esa",
+      "kind": "mission_website",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia任务官方网站，提供Gaia卫星及其数据产品的信息",
+      "source_refs": [
+        {
+          "path": "literature/2101.01694/arxiv_source/main.tex",
+          "start_line": 590,
+          "end_line": 591,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia})"
+        }
+      ],
+      "evidence": "Acknowledgments: 'This work has made use of data from the European Space Agency (ESA) mission Gaia (https://www.cosmos.esa.int/gaia)'",
+      "comments": "Gaia DR2自行数据是本文自行信息的主要来源。"
+    },
+    {
+      "id": "res-gaia-dpac",
+      "kind": "consortium_website",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "Gaia数据处理和分析联盟（DPAC）官方网站",
+      "source_refs": [
+        {
+          "path": "literature/2101.01694/arxiv_source/main.tex",
+          "start_line": 590,
+          "end_line": 591,
+          "context": "processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium})"
+        }
+      ],
+      "evidence": "Acknowledgments: 'processed by the Gaia Data Processing and Analysis Consortium (DPAC, https://www.cosmos.esa.int/web/gaia/dpac/consortium)'",
+      "comments": "致谢部分提及，非核心科学数据资源。"
+    }
+  ]
+}

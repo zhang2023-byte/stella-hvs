@@ -1,0 +1,372 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:13",
+  "paper": {
+    "arxiv_id": "2407.01037",
+    "title": "Runaway BN supergiant star HD 93840: Progenitor of an imminent core-collapse supernova above the Galactic plane",
+    "month": "2024-07"
+  },
+  "review": {
+    "path": "literature/2407.01037/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123913",
+    "started_at": "2026-05-17T12:39:13",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2407.01037",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-parameters",
+      "internal_table_id": "table-tab-parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.01037/arxiv_source/AAS_submission/BNLetter.tex",
+        "start_line": 309,
+        "end_line": 358,
+        "caption": "Atmospheric and stellar parameters of HD~93840.",
+        "label": "tab:parameters"
+      },
+      "source_path": "literature/2407.01037/arxiv_source/AAS_submission/BNLetter.tex",
+      "excerpt_path": "literature/2407.01037/catalog_sources/table-tab-parameters/excerpt.tex",
+      "sha256": "97dd69af6070b2610b11b0f3369b80dadbbf9a5c0db847d27ead1e91c2c2b265",
+      "line_count": 50,
+      "error": ""
+    },
+    {
+      "id": "table-tab-parameters-2",
+      "internal_table_id": "table-tab-parameters-2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.01037/arxiv_source/HD93840.tex",
+        "start_line": 122,
+        "end_line": 177,
+        "caption": "Atmospheric and stellar parameters of HD~93840.",
+        "label": "tab:parameters"
+      },
+      "source_path": "literature/2407.01037/arxiv_source/HD93840.tex",
+      "excerpt_path": "literature/2407.01037/catalog_sources/table-tab-parameters-2/excerpt.tex",
+      "sha256": "02add2306a9a1ef871c5f71b47fd7b2a49c454f27d024a786b4bc47b445940fa",
+      "line_count": 56,
+      "error": ""
+    },
+    {
+      "id": "table-tab-distanceeffects",
+      "internal_table_id": "table-tab-distanceeffects",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2407.01037/arxiv_source/HD93840.tex",
+        "start_line": 366,
+        "end_line": 400,
+        "caption": "Distance effects on stellar parameters of HD~93840.",
+        "label": "tab:distanceeffects"
+      },
+      "source_path": "literature/2407.01037/arxiv_source/HD93840.tex",
+      "excerpt_path": "literature/2407.01037/catalog_sources/table-tab-distanceeffects/excerpt.tex",
+      "sha256": "ce8c46c5ae99cbad402b96cd959b74b05578ae5127318de9535fb8a1270e4e27",
+      "line_count": 35,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-parameters",
+      "internal_table_id": "table-tab-parameters",
+      "status": "success",
+      "ecsv_path": "literature/2407.01037/catalog_tables/table-tab-parameters.ecsv",
+      "caption": "Atmospheric and stellar parameters of HD~93840.",
+      "label": "tab:parameters",
+      "row_count": 38,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "General information:",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "General information:",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9us8fmvg/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.01037/arxiv_source/AAS_submission",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9us8fmvg/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.01037/catalog_sources/table-tab-parameters/wrapped.tex",
+            "html": "literature/2407.01037/catalog_sources/table-tab-parameters/latexml.html",
+            "stdout": "literature/2407.01037/catalog_sources/table-tab-parameters/latexml.stdout.txt",
+            "stderr": "literature/2407.01037/catalog_sources/table-tab-parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "97dd69af6070b2610b11b0f3369b80dadbbf9a5c0db847d27ead1e91c2c2b265"
+    },
+    {
+      "id": "table-tab-parameters-2",
+      "internal_table_id": "table-tab-parameters-2",
+      "status": "success",
+      "ecsv_path": "literature/2407.01037/catalog_tables/table-tab-parameters-2.ecsv",
+      "caption": "Atmospheric and stellar parameters of HD~93840.",
+      "label": "tab:parameters",
+      "row_count": 31,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "General information:",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "General information:",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq36i_pdk/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.01037/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq36i_pdk/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.01037/catalog_sources/table-tab-parameters-2/wrapped.tex",
+            "html": "literature/2407.01037/catalog_sources/table-tab-parameters-2/latexml.html",
+            "stdout": "literature/2407.01037/catalog_sources/table-tab-parameters-2/latexml.stdout.txt",
+            "stderr": "literature/2407.01037/catalog_sources/table-tab-parameters-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "02add2306a9a1ef871c5f71b47fd7b2a49c454f27d024a786b4bc47b445940fa"
+    },
+    {
+      "id": "table-tab-distanceeffects",
+      "internal_table_id": "table-tab-distanceeffects",
+      "status": "success",
+      "ecsv_path": "literature/2407.01037/catalog_tables/table-tab-distanceeffects.ecsv",
+      "caption": "Distance effects on stellar parameters of HD~93840.",
+      "label": "tab:distanceeffects",
+      "row_count": 9,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Ads",
+          "Fastwind"
+        ],
+        [
+          "M_V (mag)",
+          "-5.72^+0.22_-0.21",
+          "-6.38^+0.33_-0.30"
+        ],
+        [
+          "M_V (mag)",
+          "-5.18^+0.46_-0.54",
+          "-5.12^+0.46_-0.54"
+        ],
+        [
+          "M_V (mag)",
+          "-4.97^+0.23_-0.25",
+          "-4.91^+0.23_-0.25"
+        ],
+        [
+          "M_bol (mag)",
+          "-7.75^+0.23_-0.22",
+          "-8.62^+0.34_-0.30"
+        ],
+        [
+          "M_bol (mag)",
+          "-7.20^+0.46_-0.55",
+          "-7.36^+0.46_-0.55"
+        ],
+        [
+          "M_bol (mag)",
+          "-7.00^+0.24_-0.26",
+          "-7.15^+0.24_-0.26"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter | M_V (mag) | M_V (mag) | M_V (mag) | M_bol (mag) | M_bol (mag) | M_bol (mag)",
+          "unit_text": "M_V (mag)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Ads | -5.72^+0.22_-0.21 | -5.18^+0.46_-0.54 | -4.97^+0.23_-0.25 | -7.75^+0.23_-0.22 | -7.20^+0.46_-0.55 | -7.00^+0.24_-0.26",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Fastwind | -6.38^+0.33_-0.30 | -5.12^+0.46_-0.54 | -4.91^+0.23_-0.25 | -8.62^+0.34_-0.30 | -7.36^+0.46_-0.55 | -7.15^+0.24_-0.26",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp14nzw_9t/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.01037/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp14nzw_9t/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.01037/catalog_sources/table-tab-distanceeffects/wrapped.tex",
+            "html": "literature/2407.01037/catalog_sources/table-tab-distanceeffects/latexml.html",
+            "stdout": "literature/2407.01037/catalog_sources/table-tab-distanceeffects/latexml.stdout.txt",
+            "stderr": "literature/2407.01037/catalog_sources/table-tab-distanceeffects/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ce8c46c5ae99cbad402b96cd959b74b05578ae5127318de9535fb8a1270e4e27"
+    }
+  ]
+}

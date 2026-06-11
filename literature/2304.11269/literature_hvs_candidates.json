@@ -1,0 +1,73 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:22:53",
+  "paper": {
+    "arxiv_id": "2304.11269",
+    "bibcode": "2023A&A...674A.215F",
+    "title": "High-velocity CP2 stars in the Galactic halo",
+    "month": "2023-04",
+    "source_note_json": "notes/2023/2023-04/2023-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2304.11269",
+      "pdf": "https://arxiv.org/pdf/2304.11269"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2304.11269",
+    "audit_path": "literature/2304.11269/audit.json",
+    "catalog_review_path": "literature/2304.11269/catalog_review.json",
+    "catalog_extraction_path": "literature/2304.11269/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2304.11269/catalog_tables/table-table1_astrometry.ecsv",
+      "literature/2304.11269/catalog_tables/table-table_SpT.ecsv",
+      "literature/2304.11269/catalog_tables/table-table_period_analysis.ecsv",
+      "literature/2304.11269/catalog_tables/table-table2_kinematics.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:22:53",
+    "extractor": "agent",
+    "summary": "This paper studies high-velocity CP2 stars (chemically peculiar stars) in the Galactic halo. Based on Gaia EDR3 astrometry, LAMOST/SDSS radial velocities, and ZTF/ATLAS photometric data, 6 CP2 stars with halo kinematics were selected from the initial sample. Orbital calculations for these stars indicate they originated in the Galactic disk and were ejected via dynamical interactions or binary supernova ejection mechanisms, making them the first known runaway CP2 stars. The paper explicitly classifies these stars as 'runaway stars' — they were ejected from the Galactic disk but remain gravitationally bound to the Milky Way, exhibiting typical halo orbits and repeatedly crossing the disk. The paper never discusses escape velocity, hypervelocity stars (HVS), gravitational unbinding, or Galactic escape. These stars are disk runaway stars, not HVS candidates. No HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2304.11269:group-01",
+      "description": "Six spectroscopically confirmed halo CP2 stars (Table 2, Table SpT). Using Gaia EDR3 astrometry + LAMOST/SDSS radial velocities to compute Galactocentric positions and velocities, halo candidates were selected with |V-V_LSR|>233 km/s (Bonaca et al. 2017 criterion). After spectral classification excluded metal-weak stars and non-CP stars, 6 stars were spectroscopically confirmed as CP2 stars. Orbits were integrated backward 200 Myr using the galpy/MWPotential2014 potential; all stars exhibit typical halo orbits with multiple disk crossings.",
+      "decision": "rejected",
+      "reason": "These 6 stars are disk runaway stars — they were ejected from the Galactic disk through dynamical interactions or the binary supernova mechanism, currently reside in the Galactic halo but remain gravitationally bound to the Milky Way. The paper explicitly uses the 'runaway' terminology; orbital analysis shows they repeatedly cross the Galactic disk (t_cross is much shorter than the CP2 star lifetime), rather than being hypervelocity stars escaping the Milky Way. The paper never discusses escape velocity, HVS, gravitational unbinding, or Galactic escape. No HVS candidates are included.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+          "start_line": 58,
+          "end_line": 58,
+          "context": "Abstract: '...making them the first runaway CP2 stars known.' - 明确归类为 runaway 星而非 HVS。"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+          "start_line": 336,
+          "end_line": 342,
+          "context": "Section 6: 'All objects exhibit typical halo-like orbits and seem to have crossed the Galactic plane at least once within these 200 Myr, with most objects crossing it several times.' - 典型束缚轨道，反复穿越银盘。"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+          "start_line": 342,
+          "end_line": 342,
+          "context": "Section 6: 'the stars do not approach the Galactic center region ... or seem to have an extragalactic origin. Most likely, they originate in the Galactic disk where they were imparted runaway velocities by some process' - 起源于银盘，非银河系外来源，非脱束缚。"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+          "start_line": 364,
+          "end_line": 364,
+          "context": "Section 7: 'these CP2 stars probably belong to the population of runaway stars that were ejected through dynamical interactions or in the binary supernova scenario from the Galactic disk' - 明确 runaway 星归类，被抛射出银盘但束缚于银河系。"
+        }
+      ]
+    }
+  ]
+}

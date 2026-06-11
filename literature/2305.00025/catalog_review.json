@@ -1,0 +1,325 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2305.00025",
+    "title": "The rocket effect mechanism in neutron stars in supernova remnants",
+    "month": "2023-04",
+    "source_note_json": "notes/2023/2023-04/2023-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2305.00025",
+      "pdf": "https://arxiv.org/pdf/2305.00025"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2305.00025",
+    "audit_path": "literature/2305.00025/audit.json",
+    "source_dir": "literature/2305.00025/arxiv_source",
+    "tex_root": "literature/2305.00025/arxiv_source/mnras_template.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:34:45",
+    "reviewer": "agent",
+    "summary": "This is a theoretical/modelling paper that applies the electromagnetic rocket effect model to a sample of 13 pulsars associated with SNRs. It contains 6 internal LaTeX tables: a summary of kick mechanisms (review), a sample population table of 13 pulsars with observed parameters, a braking index catalogue of 16 pulsars, derived kick velocity results from two models, calculated magnetic axis displacement values, and a table of characteristic quantities for two case-study pulsars (J0030+0451 and J0538+2817). No external data resources (URLs) are provided — the data availability statement indicates data are available upon request. The paper uses public catalogues (ATNF, SIMBAD, SNRcat) as data sources but does not provide direct URLs to machine-readable versions."
+  },
+  "internal_tables": [
+    {
+      "id": "table-kicks",
+      "kind": "latex_table",
+      "asset_type": "review_summary",
+      "role_in_paper": "Summary of the three main kick mechanisms for neutron stars (hydrodynamical, neutrino-driven, rocket effect), providing context for the paper's focus on the electromagnetic rocket effect.",
+      "source_refs": [
+        {
+          "path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+          "start_line": 125,
+          "end_line": 139,
+          "caption": "The main kick mechanisms for neutron stars.",
+          "label": "kicks"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Mechanism",
+          "meaning": "Name of the kick mechanism (Hydrodynamical, Neutrino Driven, Rocket effect)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Velocity",
+          "meaning": "Typical kick velocity imparted to the neutron star, in km/s",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Alignment of kick-spin",
+          "meaning": "Whether spin-kick alignment is expected for this mechanism",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Natal/Post-natal",
+          "meaning": "Whether the kick occurs at birth (natal) or after birth (post-natal)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Timescale",
+          "meaning": "Duration over which the kick mechanism operates",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Requirements",
+          "meaning": "Physical conditions required for the mechanism to be effective",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 1 Introduction, paragraph discussing kick mechanisms. The table summarizes hydrodynamical, neutrino-driven, and rocket effect kicks.",
+      "comments": "This is a qualitative review/summary table, not a data catalogue."
+    },
+    {
+      "id": "table-sample-population",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Primary sample definition — presents the 13 neutron stars associated with supernova remnants that are analysed in this work, with their observed physical parameters sourced from the ATNF pulsar catalogue and SNR catalogues.",
+      "source_refs": [
+        {
+          "path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+          "start_line": 226,
+          "end_line": 254,
+          "caption": "The sample population of 13 neutron stars associated with supernova remnants.",
+          "label": "table:1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "PSR NAME",
+          "meaning": "Pulsar J-name identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SNR",
+          "meaning": "Associated supernova remnant name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P",
+          "meaning": "Current spin period of the pulsar",
+          "unit_text": "ms",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Pdot",
+          "meaning": "Period derivative (spin-down rate)",
+          "unit_text": "10^{-13} s/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "B",
+          "meaning": "Surface magnetic field strength inferred from spin-down",
+          "unit_text": "10^{12} G",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_t",
+          "meaning": "Transverse space velocity of the pulsar",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 2.3 Sample of pulsars. Data sourced from ATNF catalogue (Manchester et al. 2005), SNRcat (Ferrand & Safi-Harb 2012), and SIMBAD (Wenger et al. 2000).",
+      "comments": "This is the core sample table. Parameters P, Pdot, B, V_t are taken from the ATNF catalogue. SNR associations from SNRcat and SIMBAD."
+    },
+    {
+      "id": "table-braking-indices",
+      "kind": "latex_table",
+      "asset_type": "followup_measurements",
+      "role_in_paper": "Catalogue of measured braking indices n for 16 pulsars (some overlap with the main sample), compiled from literature, used to assess whether the rocket effect can explain deviations from the canonical value n=3.",
+      "source_refs": [
+        {
+          "path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+          "start_line": 320,
+          "end_line": 349,
+          "caption": "Braking index of the 16 pulsars of our catalogue along with the corresponding references.",
+          "label": "3.1t"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Pulsar Name",
+          "meaning": "Pulsar J-name identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "n",
+          "meaning": "Measured braking index (dimensionless parameter describing spin-down law: ωdot ∝ ω^n)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Article",
+          "meaning": "Reference for the braking index measurement",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 2.5 Braking indices. Values compiled from various literature sources cited in the table.",
+      "comments": "16 pulsars with measured braking indices, used to compare against theoretical predictions of the rocket effect model."
+    },
+    {
+      "id": "table-kick-velocities",
+      "kind": "latex_table",
+      "asset_type": "model_fit_parameters",
+      "role_in_paper": "Primary results table — presents the kick velocities computed from two models (Harrison-Tademaru HT and the authors' time-dependent alternative AL) for each of the 13 pulsars, showing initial spin period and SNR age used in calculations.",
+      "source_refs": [
+        {
+          "path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+          "start_line": 368,
+          "end_line": 392,
+          "caption": "The results of the kick velocity for our population of 13 pulsars. The velocities are in km/s, and they have been measured by both models.",
+          "label": "3.3"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Pulsar Name",
+          "meaning": "Pulsar J-name identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_in",
+          "meaning": "Initial spin period, calculated from Equation (tau_c) using SNR age instead of characteristic age",
+          "unit_text": "ms",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "tau_snr",
+          "meaning": "Age of the associated supernova remnant",
+          "unit_text": "kyr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_kick^HT",
+          "meaning": "Kick velocity computed using the Harrison & Tademaru (1975) model (Eq. 1 of paper)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_kick^AL",
+          "meaning": "Kick velocity computed using the authors' alternative time-dependent model (Eq. 10 of paper)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 3.1 Kick Velocities. Calculations assume R=12 km, M=1.44 M_sun, s=10 km. P_in derived following Igoshev et al. (2022) methodology.",
+      "comments": "Key result table. For pulsars where characteristic age > SNR age (leading to negative square root), P_in is assumed to be 1-2 ms."
+    },
+    {
+      "id": "table-displacement-s",
+      "kind": "latex_table",
+      "asset_type": "model_fit_parameters",
+      "role_in_paper": "Shows the required magnetic axis displacement s (distance from star centre) needed for the rocket effect to produce a kick equal to the observed transverse velocity, assuming P_in = 1 ms for all pulsars.",
+      "source_refs": [
+        {
+          "path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+          "start_line": 397,
+          "end_line": 421,
+          "caption": "In this table is shown the value of the displacement s of the axis of the magnetic field and the center of the star, so that the star has a kick velocity equal to the transverse component of the current space velocity V_t. For these calculations we take into consideration an initial spin period of 1 ms for all pulsars.",
+          "label": "3.5t"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Pulsar Name",
+          "meaning": "Pulsar J-name identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_t",
+          "meaning": "Observed transverse space velocity of the pulsar",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "s",
+          "meaning": "Required distance of the magnetic axis from the star's centre so that the rocket effect kick equals V_t",
+          "unit_text": "km",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 3.1, end of subsection. Equation (10) is solved for s with P_in = 1 ms fixed.",
+      "comments": "All s values fall within the allowable range (0-10 km given R=12 km). Largest s=9.77 km for J1809-1917."
+    },
+    {
+      "id": "table-case-study-params",
+      "kind": "latex_table",
+      "asset_type": "followup_measurements",
+      "role_in_paper": "Compiles the characteristic observed quantities for the two case-study pulsars J0538+2817 and J0030+0451, including period, period derivative, characteristic age, parallax, proper motion, transverse velocity, distance, magnetic field, mass, and radius — used as inputs for individual MCMC analyses.",
+      "source_refs": [
+        {
+          "path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+          "start_line": 476,
+          "end_line": 499,
+          "caption": "Characteristic quantities of the pulsars J0538+2817 and J0030+0451 that are used in the MCMC analysis.",
+          "label": "4.2t"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Physical parameter name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J0538+2817",
+          "meaning": "Value of the parameter for pulsar J0538+2817",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J0030+0451",
+          "meaning": "Value of the parameter for pulsar J0030+0451",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 3.3 Case studies. Parameters from literature: period and period derivative from timing solutions; parallax and proper motion from astrometry; V_t derived from proper motion and distance; B from spin-down formula.",
+      "comments": "Rows include: Period (ms), Period Derivative (s/s), τ_c (yrs), π (mas), μ (mas/yr), V_t (km/s), D (kpc), B (G), Mass (M_sun), R (km). Some values only available for J0538+2817."
+    }
+  ],
+  "external_resources": []
+}

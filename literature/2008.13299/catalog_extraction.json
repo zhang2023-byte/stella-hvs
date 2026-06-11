@@ -1,0 +1,717 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T11:29:58",
+  "paper": {
+    "arxiv_id": "2008.13299",
+    "title": "High-resolution spectroscopic study of massive blue and red supergiants in Perseus OB1. I. Definition of the sample, membership, and kinematics",
+    "month": "2020-08"
+  },
+  "review": {
+    "path": "literature/2008.13299/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T112958",
+    "started_at": "2026-06-07T11:29:58",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2008.13299",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 9,
+      "work_count": 9,
+      "table_count": 9,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 5,
+      "file_count": 9,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-001",
+      "internal_table_id": "table-001",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+        "start_line": 286,
+        "end_line": 305,
+        "caption": "Mean and standard deviation of parallaxes and proper motions for different groups of stars located at increased distance from the center of h and χ Persei.",
+        "label": "table.radiplxpm"
+      },
+      "source_path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+      "excerpt_path": "literature/2008.13299/catalog_sources/table-001/excerpt.tex",
+      "sha256": "5c50e7cd607beb4f78cf25e89ce131396c970736e2d8cde7d5da9e7f7fe1a7a0",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-002",
+      "internal_table_id": "table-002",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+        "start_line": 402,
+        "end_line": 421,
+        "caption": "Summary of detected variability (mean and maximum of peak-to-peak amplitude of RV in each SpT group) for the sample of 15 stars.",
+        "label": "table.variab"
+      },
+      "source_path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+      "excerpt_path": "literature/2008.13299/catalog_sources/table-002/excerpt.tex",
+      "sha256": "a04b7bca01c61fd5d6fb985e45e1855700f234ac3815ab0e95df55b7b1271e70",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-003",
+      "internal_table_id": "table-003",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+        "start_line": 529,
+        "end_line": 550,
+        "caption": "Summary of the number of outliers in proper motion and RV that are used for the final identification of runaway stars.",
+        "label": "table.rw"
+      },
+      "source_path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+      "excerpt_path": "literature/2008.13299/catalog_sources/table-003/excerpt.tex",
+      "sha256": "5afb76aeca0c742aba598b3bda47940a424d4e3d03bec39b9265ff5267c4c164",
+      "line_count": 22,
+      "error": ""
+    },
+    {
+      "id": "table-004",
+      "internal_table_id": "table-004",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+        "start_line": 567,
+        "end_line": 590,
+        "caption": "Summary of the number of binary stars in the sample.",
+        "label": "table.bin"
+      },
+      "source_path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+      "excerpt_path": "literature/2008.13299/catalog_sources/table-004/excerpt.tex",
+      "sha256": "cde503e729d67ac7e1e570e76e71700cd00f1ba5d39b9a0e420e25179fb3c375",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-005",
+      "internal_table_id": "table-005",
+      "kind": "latex_longtable",
+      "status": "deferred",
+      "source_ref": {},
+      "source_path": "",
+      "excerpt_path": "",
+      "sha256": "",
+      "line_count": 0,
+      "error": "only latex_table internal_tables are extracted"
+    },
+    {
+      "id": "table-006",
+      "internal_table_id": "table-006",
+      "kind": "latex_longtable",
+      "status": "deferred",
+      "source_ref": {},
+      "source_path": "",
+      "excerpt_path": "",
+      "sha256": "",
+      "line_count": 0,
+      "error": "only latex_table internal_tables are extracted"
+    },
+    {
+      "id": "table-007",
+      "internal_table_id": "table-007",
+      "kind": "latex_longtable",
+      "status": "deferred",
+      "source_ref": {},
+      "source_path": "",
+      "excerpt_path": "",
+      "sha256": "",
+      "line_count": 0,
+      "error": "only latex_table internal_tables are extracted"
+    },
+    {
+      "id": "table-008",
+      "internal_table_id": "table-008",
+      "kind": "latex_longtable",
+      "status": "deferred",
+      "source_ref": {},
+      "source_path": "",
+      "excerpt_path": "",
+      "sha256": "",
+      "line_count": 0,
+      "error": "only latex_table internal_tables are extracted"
+    },
+    {
+      "id": "table-009",
+      "internal_table_id": "table-009",
+      "kind": "latex_longtable",
+      "status": "deferred",
+      "source_ref": {},
+      "source_path": "",
+      "excerpt_path": "",
+      "sha256": "",
+      "line_count": 0,
+      "error": "only latex_table internal_tables are extracted"
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-001",
+      "internal_table_id": "table-001",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2008.13299/catalog_tables/table-001.ecsv",
+      "caption": "Mean and standard deviation of parallaxes and proper motions for different groups of stars located at increased distance from the center of h and χ Persei.",
+      "label": "table.radiplxpm",
+      "row_count": 5,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Radius [deg]",
+          "N stars",
+          "\\varpi [mas]",
+          "\\mu [mas/yr]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Radius [deg]",
+          "unit_text": "Radius [deg]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "N stars",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\varpi [mas]",
+          "unit_text": "\\varpi [mas]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu [mas/yr]",
+          "unit_text": "\\mu [mas/yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplyqwrvac/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2008.13299/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplyqwrvac/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2008.13299/catalog_sources/table-001/wrapped.tex",
+            "html": "literature/2008.13299/catalog_sources/table-001/latexml.html",
+            "stdout": "literature/2008.13299/catalog_sources/table-001/latexml.stdout.txt",
+            "stderr": "literature/2008.13299/catalog_sources/table-001/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5c50e7cd607beb4f78cf25e89ce131396c970736e2d8cde7d5da9e7f7fe1a7a0"
+    },
+    {
+      "id": "table-002",
+      "internal_table_id": "table-002",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2008.13299/catalog_tables/table-002.ecsv",
+      "caption": "Summary of detected variability (mean and maximum of peak-to-peak amplitude of RV in each SpT group) for the sample of 15 stars.",
+      "label": "table.variab",
+      "row_count": 4,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "SpT group",
+          "N stars",
+          "\\overline\\rm N_\\rm spectra",
+          "\\overlineRV_\\rm PP",
+          "RV PP,max"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "SpT group",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "N stars",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\overline\\rm N_\\rm spectra",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\overlineRV_\\rm PP",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "RV PP,max",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8li9slta/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2008.13299/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8li9slta/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2008.13299/catalog_sources/table-002/wrapped.tex",
+            "html": "literature/2008.13299/catalog_sources/table-002/latexml.html",
+            "stdout": "literature/2008.13299/catalog_sources/table-002/latexml.stdout.txt",
+            "stderr": "literature/2008.13299/catalog_sources/table-002/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a04b7bca01c61fd5d6fb985e45e1855700f234ac3815ab0e95df55b7b1271e70"
+    },
+    {
+      "id": "table-003",
+      "internal_table_id": "table-003",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2008.13299/catalog_tables/table-003.ecsv",
+      "caption": "Summary of the number of outliers in proper motion and RV that are used for the final identification of runaway stars.",
+      "label": "table.rw",
+      "row_count": 5,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "SpT",
+          "PM",
+          "",
+          "",
+          "",
+          "RV",
+          "",
+          "",
+          "Runaways",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "SpT",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "PM",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "RV",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Runaways",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgtbclhtd/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2008.13299/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgtbclhtd/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2008.13299/catalog_sources/table-003/wrapped.tex",
+            "html": "literature/2008.13299/catalog_sources/table-003/latexml.html",
+            "stdout": "literature/2008.13299/catalog_sources/table-003/latexml.stdout.txt",
+            "stderr": "literature/2008.13299/catalog_sources/table-003/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5afb76aeca0c742aba598b3bda47940a424d4e3d03bec39b9265ff5267c4c164"
+    },
+    {
+      "id": "table-004",
+      "internal_table_id": "table-004",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2008.13299/catalog_tables/table-004.ecsv",
+      "caption": "Summary of the number of binary stars in the sample.",
+      "label": "table.bin",
+      "row_count": 5,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "SpT",
+          "SB1",
+          "SB2",
+          "Lit.",
+          "SB1?",
+          "N All",
+          "% bin."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "SpT",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "SB1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "SB2",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Lit.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "SB1?",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "N All",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "% bin.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpecqppes3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2008.13299/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpecqppes3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2008.13299/catalog_sources/table-004/wrapped.tex",
+            "html": "literature/2008.13299/catalog_sources/table-004/latexml.html",
+            "stdout": "literature/2008.13299/catalog_sources/table-004/latexml.stdout.txt",
+            "stderr": "literature/2008.13299/catalog_sources/table-004/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "cde503e729d67ac7e1e570e76e71700cd00f1ba5d39b9a0e420e25179fb3c375"
+    },
+    {
+      "id": "table-005",
+      "internal_table_id": "table-005",
+      "status": "deferred",
+      "ecsv_path": "",
+      "caption": "",
+      "label": "",
+      "row_count": 0,
+      "column_count": 0,
+      "environment": "",
+      "header_rows": [],
+      "error": "only latex_table internal_tables are extracted",
+      "columns": [],
+      "warnings": [],
+      "extraction_method": "",
+      "conversion_attempts": [],
+      "source_sha256": ""
+    },
+    {
+      "id": "table-006",
+      "internal_table_id": "table-006",
+      "status": "deferred",
+      "ecsv_path": "",
+      "caption": "",
+      "label": "",
+      "row_count": 0,
+      "column_count": 0,
+      "environment": "",
+      "header_rows": [],
+      "error": "only latex_table internal_tables are extracted",
+      "columns": [],
+      "warnings": [],
+      "extraction_method": "",
+      "conversion_attempts": [],
+      "source_sha256": ""
+    },
+    {
+      "id": "table-007",
+      "internal_table_id": "table-007",
+      "status": "deferred",
+      "ecsv_path": "",
+      "caption": "",
+      "label": "",
+      "row_count": 0,
+      "column_count": 0,
+      "environment": "",
+      "header_rows": [],
+      "error": "only latex_table internal_tables are extracted",
+      "columns": [],
+      "warnings": [],
+      "extraction_method": "",
+      "conversion_attempts": [],
+      "source_sha256": ""
+    },
+    {
+      "id": "table-008",
+      "internal_table_id": "table-008",
+      "status": "deferred",
+      "ecsv_path": "",
+      "caption": "",
+      "label": "",
+      "row_count": 0,
+      "column_count": 0,
+      "environment": "",
+      "header_rows": [],
+      "error": "only latex_table internal_tables are extracted",
+      "columns": [],
+      "warnings": [],
+      "extraction_method": "",
+      "conversion_attempts": [],
+      "source_sha256": ""
+    },
+    {
+      "id": "table-009",
+      "internal_table_id": "table-009",
+      "status": "deferred",
+      "ecsv_path": "",
+      "caption": "",
+      "label": "",
+      "row_count": 0,
+      "column_count": 0,
+      "environment": "",
+      "header_rows": [],
+      "error": "only latex_table internal_tables are extracted",
+      "columns": [],
+      "warnings": [],
+      "extraction_method": "",
+      "conversion_attempts": [],
+      "source_sha256": ""
+    }
+  ]
+}

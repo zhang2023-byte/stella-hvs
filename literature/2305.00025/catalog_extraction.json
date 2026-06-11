@@ -1,0 +1,755 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:57:01",
+  "paper": {
+    "arxiv_id": "2305.00025",
+    "title": "The rocket effect mechanism in neutron stars in supernova remnants",
+    "month": "2023-04"
+  },
+  "review": {
+    "path": "literature/2305.00025/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225701",
+    "started_at": "2026-05-22T22:57:01",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2305.00025",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 6,
+      "work_count": 6,
+      "table_count": 6,
+      "success_count": 6,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 6,
+      "file_success_count": 6,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-kicks",
+      "internal_table_id": "table-kicks",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+        "start_line": 125,
+        "end_line": 139,
+        "caption": "The main kick mechanisms for neutron stars.",
+        "label": "kicks"
+      },
+      "source_path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+      "excerpt_path": "literature/2305.00025/catalog_sources/table-kicks/excerpt.tex",
+      "sha256": "f095b4d2947c6689911b885ddb18b6e72f64031a0886072d0798a036eb96167a",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-sample-population",
+      "internal_table_id": "table-sample-population",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+        "start_line": 226,
+        "end_line": 254,
+        "caption": "The sample population of 13 neutron stars associated with supernova remnants.",
+        "label": "table:1"
+      },
+      "source_path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+      "excerpt_path": "literature/2305.00025/catalog_sources/table-sample-population/excerpt.tex",
+      "sha256": "9b74b62bfddc89699e7e0582642e38a2c7588e09d00532325302a30c3a451724",
+      "line_count": 29,
+      "error": ""
+    },
+    {
+      "id": "table-braking-indices",
+      "internal_table_id": "table-braking-indices",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+        "start_line": 320,
+        "end_line": 349,
+        "caption": "Braking index of the 16 pulsars of our catalogue along with the corresponding references.",
+        "label": "3.1t"
+      },
+      "source_path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+      "excerpt_path": "literature/2305.00025/catalog_sources/table-braking-indices/excerpt.tex",
+      "sha256": "5625bf61aa6296995e37881d73b04fd8e68e62c70e2453ea5fc11e95c00f5262",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-kick-velocities",
+      "internal_table_id": "table-kick-velocities",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+        "start_line": 368,
+        "end_line": 392,
+        "caption": "The results of the kick velocity for our population of 13 pulsars. The velocities are in km/s, and they have been measured by both models.",
+        "label": "3.3"
+      },
+      "source_path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+      "excerpt_path": "literature/2305.00025/catalog_sources/table-kick-velocities/excerpt.tex",
+      "sha256": "653761ac5b4cbf924d67edecf989ef73f2bef47d24c53f9fda071f9d1e749677",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-displacement-s",
+      "internal_table_id": "table-displacement-s",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+        "start_line": 397,
+        "end_line": 421,
+        "caption": "In this table is shown the value of the displacement s of the axis of the magnetic field and the center of the star, so that the star has a kick velocity equal to the transverse component of the current space velocity V_t. For these calculations we take into consideration an initial spin period of 1 ms for all pulsars.",
+        "label": "3.5t"
+      },
+      "source_path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+      "excerpt_path": "literature/2305.00025/catalog_sources/table-displacement-s/excerpt.tex",
+      "sha256": "9ad4a2938a6efa1bfecd2ac61b7739b4e51590796039b840bb928302a4b30746",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-case-study-params",
+      "internal_table_id": "table-case-study-params",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+        "start_line": 476,
+        "end_line": 499,
+        "caption": "Characteristic quantities of the pulsars J0538+2817 and J0030+0451 that are used in the MCMC analysis.",
+        "label": "4.2t"
+      },
+      "source_path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+      "excerpt_path": "literature/2305.00025/catalog_sources/table-case-study-params/excerpt.tex",
+      "sha256": "0b313a810f170e41f3e4b9c9d756aba0b485b360f355af7869198dafd08becce",
+      "line_count": 24,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-kicks",
+      "internal_table_id": "table-kicks",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2305.00025/catalog_tables/table-kicks.ecsv",
+      "caption": "The main kick mechanisms for neutron stars.",
+      "label": "kicks",
+      "row_count": 3,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Mechanism",
+          "Velocity ( km/s)",
+          "Alignment of kick-spin",
+          "Natal/Post-natal",
+          "Timescale",
+          "Requirements"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Mechanism",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Velocity ( km/s)",
+          "unit_text": "Velocity ( km/s)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Alignment of kick-spin",
+          "unit_text": "Alignment of kick-spin",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Natal/Post-natal",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Timescale",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Requirements",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp42p65qna/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2305.00025/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp42p65qna/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2305.00025/catalog_sources/table-kicks/wrapped.tex",
+            "html": "literature/2305.00025/catalog_sources/table-kicks/latexml.html",
+            "stdout": "literature/2305.00025/catalog_sources/table-kicks/latexml.stdout.txt",
+            "stderr": "literature/2305.00025/catalog_sources/table-kicks/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f095b4d2947c6689911b885ddb18b6e72f64031a0886072d0798a036eb96167a"
+    },
+    {
+      "id": "table-sample-population",
+      "internal_table_id": "table-sample-population",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2305.00025/catalog_tables/table-sample-population.ecsv",
+      "caption": "The sample population of 13 neutron stars associated with supernova remnants.",
+      "label": "table:1",
+      "row_count": 16,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "NAME",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "\\rm(ms)",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "NAME | \\rm(ms)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "pandoc",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpw9lqcx6e/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2305.00025/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpw9lqcx6e/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2305.00025/catalog_sources/table-sample-population/wrapped.tex",
+            "html": "literature/2305.00025/catalog_sources/table-sample-population/latexml.html",
+            "stdout": "literature/2305.00025/catalog_sources/table-sample-population/latexml.stdout.txt",
+            "stderr": "literature/2305.00025/catalog_sources/table-sample-population/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpoe9pu3c6/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpoe9pu3c6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2305.00025/catalog_sources/table-sample-population/wrapped.tex",
+            "html": "literature/2305.00025/catalog_sources/table-sample-population/pandoc.html",
+            "stdout": "literature/2305.00025/catalog_sources/table-sample-population/pandoc.stdout.txt",
+            "stderr": "literature/2305.00025/catalog_sources/table-sample-population/pandoc.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9b74b62bfddc89699e7e0582642e38a2c7588e09d00532325302a30c3a451724"
+    },
+    {
+      "id": "table-braking-indices",
+      "internal_table_id": "table-braking-indices",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2305.00025/catalog_tables/table-braking-indices.ecsv",
+      "caption": "Braking index of the 16 pulsars of our catalogue along with the corresponding references.",
+      "label": "3.1t",
+      "row_count": 14,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Pulsar Name",
+          "n",
+          "Article"
+        ],
+        [
+          "J0534+2200 (Crab)",
+          "2.51",
+          "[ 10.1093/mnras/233.3.667 ]"
+        ],
+        [
+          "J0537-6910",
+          "7.4",
+          "[ Ferdman2017TheGA ]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Pulsar Name | J0534+2200 (Crab) | J0537-6910",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "n | 2.51 | 7.4",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Article | [ 10.1093/mnras/233.3.667 ] | [ Ferdman2017TheGA ]",
+          "unit_text": "[ 10.1093/mnras/233.3.667 ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphjkg45pg/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2305.00025/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphjkg45pg/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2305.00025/catalog_sources/table-braking-indices/wrapped.tex",
+            "html": "literature/2305.00025/catalog_sources/table-braking-indices/latexml.html",
+            "stdout": "literature/2305.00025/catalog_sources/table-braking-indices/latexml.stdout.txt",
+            "stderr": "literature/2305.00025/catalog_sources/table-braking-indices/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5625bf61aa6296995e37881d73b04fd8e68e62c70e2453ea5fc11e95c00f5262"
+    },
+    {
+      "id": "table-kick-velocities",
+      "internal_table_id": "table-kick-velocities",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2305.00025/catalog_tables/table-kick-velocities.ecsv",
+      "caption": "The results of the kick velocity for our population of 13 pulsars. The velocities are in km/s, and they have been measured by both models.",
+      "label": "3.3",
+      "row_count": 13,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Pulsar Name",
+          "\\thead \\rmP_in",
+          "",
+          "",
+          ""
+        ],
+        [
+          "\\rm(ms)",
+          "\\thead \\rm\\tau_snr",
+          "",
+          "",
+          ""
+        ],
+        [
+          "(\\rmkyr)",
+          "\\thead \\rmV_kick^HT",
+          "",
+          "",
+          ""
+        ],
+        [
+          "(\\rmkm/s)",
+          "\\thead \\rmV_kick^AL",
+          "",
+          "",
+          ""
+        ],
+        [
+          "(\\rmkm/s)",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Pulsar Name | \\rm(ms) | (\\rmkyr) | (\\rmkm/s) | (\\rmkm/s)",
+          "unit_text": "(\\rmkyr)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\thead \\rmP_in | \\thead \\rm\\tau_snr | \\thead \\rmV_kick^HT | \\thead \\rmV_kick^AL",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpts9_79uy/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2305.00025/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpts9_79uy/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2305.00025/catalog_sources/table-kick-velocities/wrapped.tex",
+            "html": "literature/2305.00025/catalog_sources/table-kick-velocities/latexml.html",
+            "stdout": "literature/2305.00025/catalog_sources/table-kick-velocities/latexml.stdout.txt",
+            "stderr": "literature/2305.00025/catalog_sources/table-kick-velocities/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "653761ac5b4cbf924d67edecf989ef73f2bef47d24c53f9fda071f9d1e749677"
+    },
+    {
+      "id": "table-displacement-s",
+      "internal_table_id": "table-displacement-s",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2305.00025/catalog_tables/table-displacement-s.ecsv",
+      "caption": "In this table is shown the value of the displacement s of the axis of the magnetic field and the center of the star, so that the star has a kick velocity equal to the transverse component of the current space velocity V_t. For these calculations we take into consideration an initial spin period of 1 ms for all pulsars.",
+      "label": "3.5t",
+      "row_count": 13,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Pulsar Name",
+          "\\thead Vt",
+          ""
+        ],
+        [
+          "( \\rmkm/s )",
+          "\\thead s",
+          ""
+        ],
+        [
+          "\\rm(km)",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Pulsar Name | ( \\rmkm/s ) | \\rm(km)",
+          "unit_text": "( \\rmkm/s )",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\thead Vt | \\thead s",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyacvryxj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2305.00025/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyacvryxj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2305.00025/catalog_sources/table-displacement-s/wrapped.tex",
+            "html": "literature/2305.00025/catalog_sources/table-displacement-s/latexml.html",
+            "stdout": "literature/2305.00025/catalog_sources/table-displacement-s/latexml.stdout.txt",
+            "stderr": "literature/2305.00025/catalog_sources/table-displacement-s/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9ad4a2938a6efa1bfecd2ac61b7739b4e51590796039b840bb928302a4b30746"
+    },
+    {
+      "id": "table-case-study-params",
+      "internal_table_id": "table-case-study-params",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2305.00025/catalog_tables/table-case-study-params.ecsv",
+      "caption": "Characteristic quantities of the pulsars J0538+2817 and J0030+0451 that are used in the MCMC analysis.",
+      "label": "4.2t",
+      "row_count": 11,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpexlkk6na/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2305.00025/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpexlkk6na/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2305.00025/catalog_sources/table-case-study-params/wrapped.tex",
+            "html": "literature/2305.00025/catalog_sources/table-case-study-params/latexml.html",
+            "stdout": "literature/2305.00025/catalog_sources/table-case-study-params/latexml.stdout.txt",
+            "stderr": "literature/2305.00025/catalog_sources/table-case-study-params/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0b313a810f170e41f3e4b9c9d756aba0b485b360f355af7869198dafd08becce"
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:58:00",
+  "paper": {
+    "arxiv_id": "2310.03204",
+    "title": "An Extremely Massive White Dwarf Escaped From the Hyades Star Cluster",
+    "month": "2023-10"
+  },
+  "review": {
+    "path": "literature/2310.03204/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225800",
+    "started_at": "2026-05-22T22:58:00",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2310.03204",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-wd_derived",
+      "internal_table_id": "table-tab-wd_derived",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2310.03204/arxiv_source/main.tex",
+        "start_line": 283,
+        "end_line": 362,
+        "caption": "WD1 astrometric and photometric quantities from Gaia EDR3 (top row), additional photometry from Galex and Pan-STARRS1 (middle row), along with derived and spectroscopic quantities (bottom row). Spectroscopic estimates for radius, mass and age obtained with the assumption of an ONe core composition.",
+        "label": "tab:wd_derived"
+      },
+      "source_path": "literature/2310.03204/arxiv_source/main.tex",
+      "excerpt_path": "literature/2310.03204/catalog_sources/table-tab-wd_derived/excerpt.tex",
+      "sha256": "a9d5bfbd0956879a12647836dde366861cb1a6b8c471f7b81490e9dfbf4e18f7",
+      "line_count": 80,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-wd_derived",
+      "internal_table_id": "table-tab-wd_derived",
+      "status": "success",
+      "ecsv_path": "literature/2310.03204/catalog_tables/table-tab-wd_derived.ecsv",
+      "caption": "WD1 astrometric and photometric quantities from Gaia EDR3 (top row), additional photometry from Galex and Pan-STARRS1 (middle row), along with derived and spectroscopic quantities (bottom row). Spectroscopic estimates for radius, mass and age obtained with the assumption of an ONe core composition.",
+      "label": "tab:wd_derived",
+      "row_count": 3,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv8bz9x02/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2310.03204/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv8bz9x02/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2310.03204/catalog_sources/table-tab-wd_derived/wrapped.tex",
+            "html": "literature/2310.03204/catalog_sources/table-tab-wd_derived/latexml.html",
+            "stdout": "literature/2310.03204/catalog_sources/table-tab-wd_derived/latexml.stdout.txt",
+            "stderr": "literature/2310.03204/catalog_sources/table-tab-wd_derived/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a9d5bfbd0956879a12647836dde366861cb1a6b8c471f7b81490e9dfbf4e18f7"
+    }
+  ]
+}

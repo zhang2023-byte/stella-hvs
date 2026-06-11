@@ -1,0 +1,248 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1907.06348",
+    "title": "New nearby hypervelocity stars and their spatial distribution from Gaia DR2",
+    "month": "2019-07",
+    "source_note_json": "notes/2019/2019-07/2019-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1907.06348",
+      "pdf": "https://arxiv.org/pdf/1907.06348"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1907.06348",
+    "audit_path": "literature/1907.06348/audit.json",
+    "source_dir": "literature/1907.06348/arxiv_source",
+    "tex_root": "literature/1907.06348/arxiv_source/HVS_spatial.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:35:00",
+    "reviewer": "agent",
+    "summary": "Paper presents 28 nearby late-type HVSs (P_ub > 0.99) from Gaia DR2 5D tangential velocity selection, plus 28 stars (P_ub > 0.5) from 6D total velocity selection. Contains 3 structured data tables: a classification criteria table (Table 1), a 28-row 5D-unbound HVS catalog (Table 2), and a 28-row 6D sample catalog categorized by origin class (Table 3). No external data resources or machine-readable files are mentioned beyond the in-paper tables. The DUST URL in the source is commented out; generic Gaia/DPAC URLs in acknowledgements are excluded per fidelity rules."
+  },
+  "internal_tables": [
+    {
+      "id": "table-001",
+      "kind": "latex_table",
+      "asset_type": "classification_criteria",
+      "role_in_paper": "Defines the classification criteria used to categorize HVS candidates by origin based on orbit integration. Stars are classified as HS (Galactic center origin, P_gc > 0.16), OUT (extragalactic origin, P_gc < 0.16 and P_MW < 0.5), or HRS (hyper-runaway star, P_gc < 0.16 and P_MW > 0.5). Used to categorize the 28 stars in Table 3.",
+      "source_refs": [
+        {
+          "path": "literature/1907.06348/arxiv_source/HVS_spatial.tex",
+          "start_line": 263,
+          "end_line": 273,
+          "caption": "The probability of stars are used as the classified criteria",
+          "label": "class"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Class",
+          "meaning": "Origin classification of the star based on orbit integration probabilities",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_gc",
+          "meaning": "Probability that the star originated from the Galactic center (R_min < 1 kpc), computed from MCMC orbit realizations integrated backward over 5 Gyr",
+          "unit_text": "",
+          "source_of_definition": "paper text Section 4",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_MW",
+          "meaning": "Probability that the star originated from within the Milky Way (R_min < 25 kpc), computed from MCMC orbit realizations integrated backward over 5 Gyr",
+          "unit_text": "",
+          "source_of_definition": "paper text Section 4",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 4: 'For each 6D-unbound HVS, we use the MCMC realizations discussed above and integrate each orbit back in a total time of 5 Gyr. Then we define the probability that a star is derived from the Galactic center P_gc (R_min < 1 kpc) and from the Galaxy P_MW (R_min < 25 kpc). The classified criteria of stars' origin are shown in Table 1.'",
+      "comments": "Table 1 (label: class). This is a short reference table defining classification thresholds, not a data catalog."
+    },
+    {
+      "id": "table-002",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Primary data table listing 28 nearby (d < 6 kpc) late-type hypervelocity stars with unbound probability P_ub > 0.99 identified from Gaia DR2 5D information (parallax + proper motions, no radial velocities). These are the main '5D-unbound' HVS sample used to study spatial anisotropy. Superscripts B, H, M, S mark sources also listed in Bromley18, Hattori18, Marchetti18, and Scholz18 respectively.",
+      "source_refs": [
+        {
+          "path": "literature/1907.06348/arxiv_source/HVS_spatial.tex",
+          "start_line": 680,
+          "end_line": 716,
+          "caption": "HVS identified from tangential velocity selection of Gaia DR2 5D information",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "source_id",
+          "meaning": "Gaia DR2 source identifier",
+          "unit_text": "",
+          "source_of_definition": "Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "l",
+          "meaning": "Galactic longitude",
+          "unit_text": "deg",
+          "source_of_definition": "Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "b",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "varpi",
+          "meaning": "Parallax with uncertainty",
+          "unit_text": "mas",
+          "source_of_definition": "Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_alpha_star",
+          "meaning": "Proper motion in right ascension (mu_alpha * cos(delta)) with uncertainty",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_delta",
+          "meaning": "Proper motion in declination with uncertainty",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "Heliocentric distance derived via Bayesian inference with an exponentially decreasing space density prior, reported with asymmetric uncertainties",
+          "unit_text": "kpc",
+          "source_of_definition": "paper text Section 2.2",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_gc",
+          "meaning": "Projected Galactocentric distance in cylindrical coordinates, computed from coordinate transformations",
+          "unit_text": "kpc",
+          "source_of_definition": "paper text Section 2.3",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_gc",
+          "meaning": "Total velocity in the Galactic rest frame (Galactocentric total tangential velocity corrected for solar motion), reported with asymmetric uncertainties from MCMC",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper text Section 2.4",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 2.4: 'There are 28 stars with the probability of unbound P_ub > 0.99 (red star) from 5D information... In the appendix, Table 2 provides Gaia identifiers, position, parallaxes, proper motions, distances and the Galaxy's velocity of HVSs with the probability of unbound P_ub > 0.99 from Gaia DR2 5D information'",
+      "comments": "Table 2 in the paper appendix. Contains 28 rows of HVS data. This is the main 5D sample. Superscripts on source_id entries indicate cross-matches: S=Scholz18 (4 stars), B=Bromley18 (1 star). No radial velocity measurements available for these stars."
+    },
+    {
+      "id": "table-003",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Primary data table listing 28 stars with unbound probability P_ub > 0.5 identified from Gaia DR2 6D information (parallax + proper motions + radial velocities). Stars are organized into three origin classes: 3 HS candidates (Galactic center origin), 12 OUT candidates (extragalactic origin), and 13 HRS candidates (hyper-runaway stars from the disk). Includes the unbound probability P_ub for each star. Superscripts B, H, M mark sources also listed in Bromley18, Hattori18, and Marchetti18.",
+      "source_refs": [
+        {
+          "path": "literature/1907.06348/arxiv_source/HVS_spatial.tex",
+          "start_line": 720,
+          "end_line": 761,
+          "caption": "HVS identified from total velocity selection of Gaia DR2 6D information",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "source_id",
+          "meaning": "Gaia DR2 source identifier",
+          "unit_text": "",
+          "source_of_definition": "Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "l",
+          "meaning": "Galactic longitude",
+          "unit_text": "deg",
+          "source_of_definition": "Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "b",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "varpi",
+          "meaning": "Parallax with uncertainty",
+          "unit_text": "mas",
+          "source_of_definition": "Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_alpha_star",
+          "meaning": "Proper motion in right ascension (mu_alpha * cos(delta)) with uncertainty",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_delta",
+          "meaning": "Proper motion in declination with uncertainty",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "rv",
+          "meaning": "Heliocentric radial velocity with uncertainty, from Gaia DR2 (rv_nb_transits > 5 quality cut applied)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "Heliocentric distance derived via Bayesian inference with an exponentially decreasing space density prior, reported with asymmetric uncertainties",
+          "unit_text": "kpc",
+          "source_of_definition": "paper text Section 2.2",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_gc",
+          "meaning": "Projected Galactocentric distance in cylindrical coordinates",
+          "unit_text": "kpc",
+          "source_of_definition": "paper text Section 2.3",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_gc",
+          "meaning": "Total velocity in the Galactic rest frame, computed from full 6D phase space information, reported with asymmetric uncertainties from MCMC",
+          "unit_text": "km s^-1",
+          "source_of_definition": "paper text Section 2.4",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_ub",
+          "meaning": "Probability of being unbound from the Galaxy, computed as the fraction of MCMC realizations (10000 samples) resulting in V_gc >= V_esc at the star's position",
+          "unit_text": "",
+          "source_of_definition": "paper text Section 2.4",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 2.4: '28 stars with P_ub > 0.5 (red hexagon) from 6D information... Table 3 provides the same parameters (the last column is the probability of unbound) with P_ub > 0.5 from Gaia DR2 6D information.' Section 4: 'We find 3 hypervelocity stars (HS) that could originate in the Galactic center, 12 stars with extragalactic origin (OUT) and 13 hyper-runaway star (HRS) candidates.'",
+      "comments": "Table 3 in the paper appendix. Contains 28 rows organized by origin class (HS/OUT/HRS). Superscripts on source_id entries: B=Bromley18 (5 stars), H=Hattori18 (2 stars), M=Marchetti18 (4 stars). Only 3 stars have P_ub near 0.99; the majority are in the 0.5-0.9 range."
+    }
+  ],
+  "external_resources": [
+  ]
+}

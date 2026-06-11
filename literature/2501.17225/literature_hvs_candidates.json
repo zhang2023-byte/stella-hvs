@@ -1,0 +1,99 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T18:18:54",
+  "paper": {
+    "arxiv_id": "2501.17225",
+    "bibcode": "2025A&A...694A.258R",
+    "title": "Tidal tails of nearby open clusters I. Mapping with Gaia DR3",
+    "month": "2025-01",
+    "source_note_json": "notes/2025/2025-01/2025-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2501.17225",
+      "pdf": "https://arxiv.org/pdf/2501.17225"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2501.17225",
+    "audit_path": "literature/2501.17225/audit.json",
+    "catalog_review_path": "literature/2501.17225/catalog_review.json",
+    "catalog_extraction_path": "literature/2501.17225/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2501.17225/catalog_tables/table-clone_basic_params.ecsv",
+      "literature/2501.17225/catalog_tables/table-clone_results.ecsv",
+      "literature/2501.17225/catalog_tables/table-Table-phi_org_pole.ecsv",
+      "literature/2501.17225/catalog_tables/table-Table-Clusters_basics_params.ecsv",
+      "literature/2501.17225/catalog_tables/table-Table-Tidal-tails.ecsv",
+      "literature/2501.17225/catalog_tables/table-Table-Moving_Groups.ecsv",
+      "literature/2501.17225/catalog_tables/table-Table-phi_org_pole-2.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T18:18:54",
+    "extractor": "agent",
+    "summary": "This paper maps tidal tails of nearby open clusters using Gaia DR3. All objects discussed are cluster escapers or co-moving tail members that remain bound to the Galactic potential. The paper does not present any object as possibly unbound from the Milky Way."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-Table-Tidal-tails",
+      "description": "Tidal tail members of 19 open clusters identified with the CP and SCCP methods.",
+      "decision": "excluded",
+      "reason": "The paper presents these stars as having escaped from the cluster potential into tidal tails, but they explicitly remain within the Galactic gravitational field. The paper does not discuss any of them as possibly unbound from the Milky Way.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 101,
+          "end_line": 102,
+          "context": "paper discussion of cluster escape and tidal tail formation in the Galactic gravitational field"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 283,
+          "end_line": 285,
+          "context": "results summary of tidal tail detection and CDS catalogue availability"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 457,
+          "end_line": 457,
+          "context": "discussion of radial velocities and escape from the cluster potential, not the Galaxy"
+        }
+      ]
+    },
+    {
+      "group_id": "table-Table-Moving_Groups",
+      "description": "Moving groups associated with open clusters and their tidal tails.",
+      "decision": "excluded",
+      "reason": "The paper identifies these overdensities as kinematically associated with cluster tidal tails or as separate but nearby co-moving groups. They are not presented as Galactic-unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 471,
+          "end_line": 473,
+          "context": "discussion of moving groups within tidal tails and their association with clusters"
+        }
+      ]
+    },
+    {
+      "group_id": "hyades-white-dwarf-candidates",
+      "description": "19 probable white dwarf candidates identified in Hyades and its tidal tails.",
+      "decision": "excluded",
+      "reason": "The paper discusses these white dwarfs as dynamically ejected from the cluster, but they are located in the tidal tails and are not presented as unbound from the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+          "start_line": 382,
+          "end_line": 382,
+          "context": "discussion of white dwarf deficit and probable white dwarf candidates in the tails"
+        }
+      ]
+    }
+  ]
+}

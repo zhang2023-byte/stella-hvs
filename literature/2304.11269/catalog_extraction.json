@@ -1,0 +1,535 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:56:47",
+  "paper": {
+    "arxiv_id": "2304.11269",
+    "title": "High-velocity CP2 stars in the Galactic halo",
+    "month": "2023-04"
+  },
+  "review": {
+    "path": "literature/2304.11269/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225647",
+    "started_at": "2026-05-22T22:56:47",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2304.11269",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table1_astrometry",
+      "internal_table_id": "table-table1_astrometry",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+        "start_line": 177,
+        "end_line": 204,
+        "caption": "Astrometric data for the candidate halo objects. The star Gaia DR3 3907547639444408064 (LAMOST 122746.05+113635.3) is from the sample of candidate halo CP2 stars from \\citet{huemmerich_2020}; all other objects are from the unpublished sample of CP star candidates by Paunzen et al. (in prep.).",
+        "label": "table1_astrometry"
+      },
+      "source_path": "literature/2304.11269/arxiv_source/45464corr.tex",
+      "excerpt_path": "literature/2304.11269/catalog_sources/table-table1_astrometry/excerpt.tex",
+      "sha256": "5ddcd73544cc5de8acc898002b0881c7008e5fa9afda1179ed837704d7ca10c4",
+      "line_count": 28,
+      "error": ""
+    },
+    {
+      "id": "table-table_SpT",
+      "internal_table_id": "table-table_SpT",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+        "start_line": 228,
+        "end_line": 258,
+        "caption": "Spectral types derived in this study (see Section \\ref{spectral_classification} for details). Stars are ordered first by type and then by increasing right ascension. The classification for Gaia DR3 3907547639444408064 was adopted from \\citet{huemmerich_2020}.",
+        "label": "table_SpT"
+      },
+      "source_path": "literature/2304.11269/arxiv_source/45464corr.tex",
+      "excerpt_path": "literature/2304.11269/catalog_sources/table-table_SpT/excerpt.tex",
+      "sha256": "acded0936d46f1102d769fd0cecaff98cfa1f13119570d992d54257e082d5419",
+      "line_count": 31,
+      "error": ""
+    },
+    {
+      "id": "table-table_period_analysis",
+      "internal_table_id": "table-table_period_analysis",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+        "start_line": 279,
+        "end_line": 296,
+        "caption": "Variability periods of the five halo CP2 stars, derived from an analysis of ZTF and ATLAS data with the Lomb-Scargle GLS algorithm. Periods are given to the last significant digit. Data sources are indicated in the remarks.",
+        "label": "table_period_analysis"
+      },
+      "source_path": "literature/2304.11269/arxiv_source/45464corr.tex",
+      "excerpt_path": "literature/2304.11269/catalog_sources/table-table_period_analysis/excerpt.tex",
+      "sha256": "890b111530fb02d4181775eef38b95b58209a3d1f1c2f217b1ff34090be5513b",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-table2_kinematics",
+      "internal_table_id": "table-table2_kinematics",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+        "start_line": 302,
+        "end_line": 320,
+        "caption": "Positions and kinematical properties of the halo CP stars.",
+        "label": "table2_kinematics"
+      },
+      "source_path": "literature/2304.11269/arxiv_source/45464corr.tex",
+      "excerpt_path": "literature/2304.11269/catalog_sources/table-table2_kinematics/excerpt.tex",
+      "sha256": "9c3954c600b3443c4156388895331cc669c857519b24566b4b604bad99152460",
+      "line_count": 19,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table1_astrometry",
+      "internal_table_id": "table-table1_astrometry",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2304.11269/catalog_tables/table-table1_astrometry.ecsv",
+      "caption": "Astrometric data for the candidate halo objects. The star Gaia DR3 3907547639444408064 (LAMOST 122746.05+113635.3) is from the sample of candidate halo CP2 stars from \\citet{huemmerich_2020}; all other objects are from the unpublished sample of CP star candidates by Paunzen et al. (in prep.).",
+      "label": "table1_astrometry",
+      "row_count": 15,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "GDR3 source_id",
+          "RA",
+          "Dec",
+          "v_r",
+          "\\varpi",
+          "\\mu_\\alpha^\\star",
+          "\\mu_\\delta"
+        ],
+        [
+          "",
+          "(deg)",
+          "(deg)",
+          "( \\mathrmkm s^-1 )",
+          "(mas)",
+          "( \\mathrmmas yr^-1 )",
+          "( \\mathrmmas yr^-1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "GDR3 source_id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "v_r | ( \\mathrmkm s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\varpi | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_\\alpha^\\star | ( \\mathrmmas yr^-1 )",
+          "unit_text": "( \\mathrmmas yr^-1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_\\delta | ( \\mathrmmas yr^-1 )",
+          "unit_text": "( \\mathrmmas yr^-1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjbc0kfcp/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2304.11269/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjbc0kfcp/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2304.11269/catalog_sources/table-table1_astrometry/wrapped.tex",
+            "html": "literature/2304.11269/catalog_sources/table-table1_astrometry/latexml.html",
+            "stdout": "literature/2304.11269/catalog_sources/table-table1_astrometry/latexml.stdout.txt",
+            "stderr": "literature/2304.11269/catalog_sources/table-table1_astrometry/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5ddcd73544cc5de8acc898002b0881c7008e5fa9afda1179ed837704d7ca10c4"
+    },
+    {
+      "id": "table-table_SpT",
+      "internal_table_id": "table-table_SpT",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2304.11269/catalog_tables/table-table_SpT.ecsv",
+      "caption": "Spectral types derived in this study (see Section \\ref{spectral_classification} for details). Stars are ordered first by type and then by increasing right ascension. The classification for Gaia DR3 3907547639444408064 was adopted from \\citet{huemmerich_2020}.",
+      "label": "table_SpT",
+      "row_count": 16,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp04753_gb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2304.11269/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp04753_gb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2304.11269/catalog_sources/table-table_SpT/wrapped.tex",
+            "html": "literature/2304.11269/catalog_sources/table-table_SpT/latexml.html",
+            "stdout": "literature/2304.11269/catalog_sources/table-table_SpT/latexml.stdout.txt",
+            "stderr": "literature/2304.11269/catalog_sources/table-table_SpT/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "acded0936d46f1102d769fd0cecaff98cfa1f13119570d992d54257e082d5419"
+    },
+    {
+      "id": "table-table_period_analysis",
+      "internal_table_id": "table-table_period_analysis",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2304.11269/catalog_tables/table-table_period_analysis.ecsv",
+      "caption": "Variability periods of the five halo CP2 stars, derived from an analysis of ZTF and ATLAS data with the Lomb-Scargle GLS algorithm. Periods are given to the last significant digit. Data sources are indicated in the remarks.",
+      "label": "table_period_analysis",
+      "row_count": 6,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "GDR3 source_id",
+          "P (d)",
+          "remark"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "GDR3 source_id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "P (d)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "remark",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcx_9pz1z/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2304.11269/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcx_9pz1z/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2304.11269/catalog_sources/table-table_period_analysis/wrapped.tex",
+            "html": "literature/2304.11269/catalog_sources/table-table_period_analysis/latexml.html",
+            "stdout": "literature/2304.11269/catalog_sources/table-table_period_analysis/latexml.stdout.txt",
+            "stderr": "literature/2304.11269/catalog_sources/table-table_period_analysis/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "890b111530fb02d4181775eef38b95b58209a3d1f1c2f217b1ff34090be5513b"
+    },
+    {
+      "id": "table-table2_kinematics",
+      "internal_table_id": "table-table2_kinematics",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2304.11269/catalog_tables/table-table2_kinematics.ecsv",
+      "caption": "Positions and kinematical properties of the halo CP stars.",
+      "label": "table2_kinematics",
+      "row_count": 6,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "GDR3 source_id",
+          "X",
+          "Y",
+          "Z",
+          "V_X",
+          "V_Y",
+          "V_Z",
+          "t_cross"
+        ],
+        [
+          "",
+          "(kpc)",
+          "(kpc)",
+          "(kpc)",
+          "( \\mathrmkm s^-1 )",
+          "( \\mathrmkm s^-1 )",
+          "( \\mathrmkm s^-1 )",
+          "(Myr)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "GDR3 source_id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "X | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Y | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Z | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V_X | ( \\mathrmkm s^-1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V_Y | ( \\mathrmkm s^-1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "V_Z | ( \\mathrmkm s^-1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "t_cross | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp05tlitse/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2304.11269/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp05tlitse/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2304.11269/catalog_sources/table-table2_kinematics/wrapped.tex",
+            "html": "literature/2304.11269/catalog_sources/table-table2_kinematics/latexml.html",
+            "stdout": "literature/2304.11269/catalog_sources/table-table2_kinematics/latexml.stdout.txt",
+            "stderr": "literature/2304.11269/catalog_sources/table-table2_kinematics/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9c3954c600b3443c4156388895331cc669c857519b24566b4b604bad99152460"
+    }
+  ]
+}

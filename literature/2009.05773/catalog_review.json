@@ -1,0 +1,544 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2009.05773",
+    "title": "The Villafranca catalog of Galactic OB groups: I. Systems with O2-O3.5 stars",
+    "month": "2020-09",
+    "source_note_json": "notes/2020/2020-09/2020-09.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2009.05773",
+      "pdf": "https://arxiv.org/pdf/2009.05773"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2009.05773",
+    "audit_path": "literature/2009.05773/audit.json",
+    "source_dir": "literature/2009.05773/arxiv_source",
+    "tex_root": "literature/2009.05773/arxiv_source/ms.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:50:00",
+    "reviewer": "agent",
+    "summary": "本文为Villafranca星表系列首篇，利用GOSSS光谱分类和Gaia DR2天体测量/测光数据，确定了16个含O2-O3.5型星的银河系OB星群（Villafranca O-001至O-016）的距离和成员星。论文采用有监督方法，结合Gaia DR2位置、自行、视差和CMD筛选成员星，并修正视差零点后计算各星群距离。论文含10个LaTeX数据表：Table sample（t:sample）列出16个星群的样本信息（ID、别名、O/WR型成员星及光谱型、参考文献）；Table filters（t:filters）列出各星群的视场大小和筛选参数（Nf、d_CC、中心坐标、半径、自行范围和颜色筛选）；Table results（t:results）为全文核心结果表，列出各星群成员数（N_*,0、N_*）、统计检验值（t_ϖ、t_μα*、t_μδ）、平均自行/视差及最终距离；Table North_America_sample（t:North_America_sample）列出VO{014}（北美洲星云）特殊处理的12颗Gaia DR2候选成员星；Table diststat（t:diststat）为距离统计汇总表，按年份范围、星群、方法和第一作者分组列出本文距离与文献距离的偏差统计（ε均值/标准差/数量、d_n均值/标准差/数量）；Table literature（t:literature）为全文最长的数据表，跨5个LaTeX页面列出全部16个星群的226条文献距离测量（ID、距离、目标、方法描述、参考文献）；Table runaways（t:runaways）列出各星群的可能速逃星候选体（Gaia DR2 ID、别名、视差、G星等、颜色）。致谢中Gaia、SIMBAD、VizieR等为通用巡天/数据库致谢，非结构化数据资产。外部资源仅GOSC星表网站（https://gosc.cab.inta-csic.es），为GOSSS光谱分类数据的公开获取地址。未发现CDS或其他外部数据URL。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-diststat",
+      "kind": "latex_table",
+      "asset_type": "derived_statistics",
+      "role_in_paper": "文献距离统计汇总表，按年份范围、星群、方法和第一作者四个维度分组，列出本文距离与226条文献距离之间的偏差统计量（ε和d_n的均值、标准差、数量），用于评估不同时期/方法/作者距离测量的精度和偏差趋势，是论文第4.1节距离比较分析的核心支撑表。",
+      "source_refs": [
+        {
+          "path": "literature/2009.05773/arxiv_source/diststat.tex",
+          "start_line": 1,
+          "end_line": 71,
+          "caption": "Distance statistics as a function of year range, stellar group, method, and first author. For the latter, only those with four or more measurements are listed.",
+          "label": "diststat"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Type",
+          "meaning": "分组类型标签：年份范围（Year range，如1952-1970等9个时段）、星群（Group，O-001至O-016共14个条目）、方法（Method，Gaia/VLBI/NIR+CMD/Optical-only CMD/Spectro-photometry/Kinematic/Other共7类）、第一作者（First author，限定测量数≥4的作者共15人）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\overline\\varepsilon",
+          "meaning": "分数距离偏差ε=(d-d_r)/max(d,d_r)的平均值，正值表示文献距离系统偏大（d_r为本文距离）",
+          "unit_text": "",
+          "source_of_definition": "table header and Sect. 4.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_\\varepsilon",
+          "meaning": "分数距离偏差ε的标准差，衡量该分组内距离测量的精度/离散度",
+          "unit_text": "",
+          "source_of_definition": "table header and Sect. 4.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_\\varepsilon",
+          "meaning": "该分组内包含的文献距离测量总数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\overline{d_{\\rm n}}",
+          "meaning": "归一化偏差d_n=(d-d_r)/σ_t的平均值，σ_t为组合不确定度√(σ_d²+σ_dr²)，理想无偏测量应接近0",
+          "unit_text": "",
+          "source_of_definition": "table header and Sect. 4.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_{d_{\\rm n}}",
+          "meaning": "归一化偏差d_n的标准差，理想独立测量且不确定度正确估计时应接近1",
+          "unit_text": "",
+          "source_of_definition": "table header and Sect. 4.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_{d_{\\rm n}}",
+          "meaning": "该分组内具有不确定度信息的文献距离测量数量（部分文献测量无不确定度，故此数≤N_ε）",
+          "unit_text": "",
+          "source_of_definition": "table header and Sect. 4.1 text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 4.1: 'In Table diststat we display the basic statistics of ε and d_n (average, standard deviation, and number of measurements) as a function of publication year range, stellar group, method, and first author.' 表中定义了ε=(d-d_r)/max(d,d_r)和d_n=(d-d_r)/σ_t。",
+      "comments": "该表为元分析/汇总统计表，不包含具体恒星数据。N_ε总计226条测量（不含Q06的极端离群值），其中145条带不确定度用于d_n计算。Gaia DR2结果因非独立导致σ_d_n<1。"
+    },
+    {
+      "id": "table-sample",
+      "kind": "latex_table",
+      "asset_type": "source_catalog",
+      "role_in_paper": "Villafranca星表样本总览，列出本文研究的16个银河系O型星群（VO{001}至VO{016}）的基本信息：编号、常用别名、所含O型和WR型成员星及其GOSSS光谱型、分类参考文献。作为全文的样本定义表，为后续各星群单独分析提供索引和参考框架。",
+      "source_refs": [
+        {
+          "path": "literature/2009.05773/arxiv_source/ms.tex",
+          "start_line": 290,
+          "end_line": 366,
+          "caption": "Sample of Galactic O-type stellar groups in this paper. The other IDs may refer to the cluster or the associated H II region.",
+          "label": "sample"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Villafranca星表编号（VO{001}至VO{016}），按星群丰富度大致排序，O-012/016含南北子群",
+          "unit_text": "",
+          "source_of_definition": "table header and Sect. 2.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "Other ID(s)",
+          "meaning": "星群的常用别名，可指星团名（如NGC 3603、Trumpler 14）或关联H II区（如RCW 57、Sh 2-311）",
+          "unit_text": "",
+          "source_of_definition": "table header and caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "O- and WR-type stars",
+          "meaning": "星群中已知的O型和WR型成员星名称（含HD编号、ALS编号等），†标记可能速逃星、††标记前景污染",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "GOSSS或文献中该星的MK光谱型，注明双星/聚星系统的各分量光谱型",
+          "unit_text": "",
+          "source_of_definition": "table header and GOSSS papers",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ref.",
+          "meaning": "光谱分类的文献来源缩写（C78=Crampton+1978至M20=Maíz Apellániz & Barbá 2020，共18条引用，详细展开于表注中）",
+          "unit_text": "",
+          "source_of_definition": "table header and table footnotes",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 2.1: 'The sample is shown in Table sample.' 表注列出全部参考文献缩写对应关系。VO{012}含Haffner 18/19双星群，HD 64568和HD 64315 AB被标记为可能速逃星（†）。",
+      "comments": "16个星群中包含VO{015}（Collinder 419）和VO{016}（NGC 2264），这两个来自MA19论文作为补充。VO{012}~N=Haffner 19, VO{012}~S=Haffner 18。VO{016}~N和~S为NGC 2264的南北双核。"
+    },
+    {
+      "id": "table-filters",
+      "kind": "latex_table",
+      "asset_type": "method_parameters",
+      "role_in_paper": "成员星筛选参数表，列出对每个星群（含子群）应用的Gaia DR2数据筛选条件：视场大小、d_CC阈值、场中心坐标、空间半径、自行范围和颜色筛选。RUWE<1.4和σ_ϖc<0.1 mas为全局筛选。该表提供了全文距离测量方法的可复现参数，确保每个星群成员星选取的透明性。",
+      "source_refs": [
+        {
+          "path": "literature/2009.05773/arxiv_source/ms.tex",
+          "start_line": 433,
+          "end_line": 466,
+          "caption": "Field sizes and filters applied to the O-type stellar groups and subgroups in this paper. RUWE is filtered as <1.4 and \\sigma_{\\varpi_{\\rm c}} as <0.1 mas in all cases. For VO{014} the coordinates correspond to those of the Bajamar star.",
+          "label": "filters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Villafranca星群编号（O-001至O-016），含O-012~N/S和O-016~N/S子群",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_{\\rm f}",
+          "meaning": "视场内Gaia DR2源总数（应用RUWE和σ_ϖc全局筛选前的原始下载数量）",
+          "unit_text": "",
+          "source_of_definition": "table header and Sect. 2.2 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "field",
+          "meaning": "视场大小（角分×角分），从20'×20'到120'×120'不等",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_{\\rm CC}",
+          "meaning": "颜色-颜色距离筛选阈值，基于GBP和GRP测光的污染程度指标（<0.4或<0.2），剔除受星云污染或拥挤影响的源",
+          "unit_text": "",
+          "source_of_definition": "table header and Maíz Apellániz & Weiler (2018)",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\alpha | (deg)",
+          "meaning": "星群中心赤经（J2000历元，度），用于空间圆形筛选",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\delta | (deg)",
+          "meaning": "星群中心赤纬（J2000历元，度），用于空间圆形筛选",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r | (arcsec)",
+          "meaning": "空间筛选半径（角秒），以星群中心为圆心的选取半径",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "+/-ra | (mas/a)",
+          "meaning": "赤经方向自行筛选范围的中心值（mas/yr），设±区间选择自行成员星",
+          "unit_text": "mas/a",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "+/-dec | (mas/a)",
+          "meaning": "赤纬方向自行筛选范围的中心值（mas/yr），设±区间选择自行成员星",
+          "unit_text": "mas/a",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_\\mu | (mas/a)",
+          "meaning": "自行空间筛选半径（mas/yr），以中心自行值为圆心的选取半径",
+          "unit_text": "mas/a",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\Delta(G_{\\rm BP}-G_{\\rm RP})",
+          "meaning": "CMD颜色筛选范围，以参考等龄线为中心的颜色跨度限制，---表示未应用颜色筛选",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 2.2: 'The field sizes and filters used for each group are given in Table filters, where N_f is the number of Gaia DR2 sources in the field.' 表注说明RUWE<1.4和σ_ϖc<0.1 mas为所有星群共用的全局筛选。",
+      "comments": "VO{014}（北美洲星云）采用特殊策略，坐标对应Bajamar星，无空间半径筛选（---），视场最大（120'×120'）。O-012及其子群共用同一大视场下载但用不同空间筛选半径。O-016子群类似处理。"
+    },
+    {
+      "id": "table-results",
+      "kind": "latex_table",
+      "asset_type": "source_catalog",
+      "role_in_paper": "全文核心结果表，列出16个星群（含子群）的成员星数量和距离测定结果：初步成员数N_*,0、最终成员数N_*、三个统计检验值（t_ϖ/t_μα*/t_μδ）、群平均自行和视差（ϖ_g, μ_α*,g, μ_δ,g）、零点改正后视差ϖ_g,c、以及贝叶斯先验改正后的最终距离d。这是论文的主要数据产出，为每个星群提供了定量化的成员判据和距离。",
+      "source_refs": [
+        {
+          "path": "literature/2009.05773/arxiv_source/ms.tex",
+          "start_line": 777,
+          "end_line": 811,
+          "caption": "Membership and distance results.",
+          "label": "results"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Villafranca星群编号（O-001至O-016），含O-012~N/S和O-016~N/S子群",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_{*,0}",
+          "meaning": "初步成员星数量：应用空间、自行和CMD筛选后（归一化视差筛选前）的候选成员星数",
+          "unit_text": "",
+          "source_of_definition": "table header and MA19/ Sect. 2.2",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_*",
+          "meaning": "最终成员星数量：进一步剔除归一化视差异常值后的确定成员星数",
+          "unit_text": "",
+          "source_of_definition": "table header and MA19/ Sect. 2.2",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_\\varpi",
+          "meaning": "视差统计检验值：衡量成员星视差分布与正态分布的偏离程度，接近1表示无显著内部弥散（见MA19定义）",
+          "unit_text": "",
+          "source_of_definition": "table header and MA19",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_{\\mu_{\\alpha *}}",
+          "meaning": "赤经方向自行统计检验值：衡量成员星在赤经自行方向的内部速度弥散，值越大表示内部运动越显著",
+          "unit_text": "",
+          "source_of_definition": "table header and MA19",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_{\\mu_{\\delta}}",
+          "meaning": "赤纬方向自行统计检验值：衡量成员星在赤纬自行方向的内部速度弥散",
+          "unit_text": "",
+          "source_of_definition": "table header and MA19",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\varpi_{\\rm g} | (mas)",
+          "meaning": "星群加权平均视差（Gaia DR2原始值，未经零点改正），误差已含空间协方差项（Campbell+2019 Eq.5方法）",
+          "unit_text": "mas",
+          "source_of_definition": "table header and Sect. 2.2",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_{\\alpha *,{\\rm g}} | (mas/a)",
+          "meaning": "星群平均赤经方向自行（Gaia DR2测量值，已含cosδ因子）",
+          "unit_text": "mas/a",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_{\\delta,{\\rm g}} | (mas/a)",
+          "meaning": "星群平均赤纬方向自行（Gaia DR2测量值）",
+          "unit_text": "mas/a",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\varpi_{\\rm g,c} | (mas)",
+          "meaning": "零点改正后视差：ϖ_g,c = ϖ_g + 0.040 mas，不确定度σ²_ϖ_g,c = σ²_ϖ_g + 0.010² mas²（零点改正40±10 μas）",
+          "unit_text": "mas",
+          "source_of_definition": "table header and Eq.1 in Sect. 2.2",
+          "confidence": 1.0
+        },
+        {
+          "name": "d | (pc)",
+          "meaning": "最终贝叶斯距离（pc）：对ϖ_g,c应用Maíz Apellániz (2001, 2005)贝叶斯先验（银河系年轻盘模型，Maíz Apellániz+2008参数）后得到的星群距离及68%置信区间",
+          "unit_text": "pc",
+          "source_of_definition": "table header and Sect. 2.2 text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 3 intro: 'The membership and distance results which constitute the main output of this paper are given in Table results, see Maíz Apellániz (2019) for the definition of t_ϖ, t_μα*, t_μδ, μ_α*,g, and μ_δ,g.' Section 2.2 describes the parallax zero point correction and Bayesian prior.",
+      "comments": "距离范围从VO{014}（714 pc，最近的含早O型星星群）到VO{001}（NGC 3603，8000 pc）。置信区间不对称反映贝叶斯先验效应。VO{012}~N/S和VO{016}~N/S子群分别独立计算，距离在误差范围内一致。"
+    },
+    {
+      "id": "table-North_America_sample",
+      "kind": "latex_table",
+      "asset_type": "source_catalog",
+      "role_in_paper": "VO{014}（北美洲星云）的Gaia DR2成员星列表。由于该星群的特殊性（Bajamar星近乎孤立、无致密星团），无法使用标准圆形筛选方法，改用自定义多边形孔径和G'<18.5星等截断选出12颗候选成员星。该表为VO{014}距离测定（714 pc）提供直接数据支撑，是论证大质量星可在近孤立环境中形成这一关键结论的依据。",
+      "source_refs": [
+        {
+          "path": "literature/2009.05773/arxiv_source/ms.tex",
+          "start_line": 1152,
+          "end_line": 1176,
+          "caption": "Gaia DR2-selected stars in VO{014}.",
+          "label": "North_America_sample"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 ID",
+          "meaning": "Gaia DR2 19位源标识符，用于在Gaia星表中唯一标识该恒星",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\varpi | (mas)",
+          "meaning": "Gaia DR2视差测量值及其不确定度",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "other ID",
+          "meaning": "其他名称标识：Bajamar star为唯一已知O型星，其余---表示该星在文献中无特殊命名（TeX注释含2MASS编号）",
+          "unit_text": "",
+          "source_of_definition": "table header and Sect. 3.10 text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 3.10: 'The resulting sample are the 12 stars in Table North_America_sample.' 文中说明用自定义多边形孔径（沿大西洋+墨西哥湾分子云核心）和G'<18.5星等截断选出。",
+      "comments": "12颗星中Bajamar星（Gaia DR2 2162889493831375488）是唯一已知O型星（O3.5 III(f*)+O8:），也是消光最严重的成员。第2和第3颗星距Bajamar星分别约9 pc和6 pc，属于同一分子云但不构成束缚星团。V2493 Cyg等4颗星虽未入选但文中确认为可能的额外成员。"
+    },
+    {
+      "id": "table-literature",
+      "kind": "latex_table",
+      "asset_type": "derived_literature_compilation",
+      "role_in_paper": "文献距离汇编表，跨5个LaTeX页面列出全部16个星群的226条历史距离测量结果。每条记录含星群ID、距离值及不确定度、测量目标（星团/H II区/分子云/单星）、方法简述（Gaia视差/VLBI视差/CMD/分光光度/运动学等）和参考文献缩写。该表是第4.1节距离比较分析和Table diststat统计汇总的基础数据来源，也是本文距离结果与文献的一致性验证依据。",
+      "source_refs": [
+        {
+          "path": "literature/2009.05773/arxiv_source/ms.tex",
+          "start_line": 1556,
+          "end_line": 1624,
+          "caption": "Literature distances. The specific target and a brief description of the method is given. Note that 'spectro-photometry' indicates a combination of spectroscopic and photometric methods. For simplicity, random and systematic uncertainties have been combined.",
+          "label": "literature"
+        },
+        {
+          "path": "literature/2009.05773/arxiv_source/ms.tex",
+          "start_line": 1628,
+          "end_line": 1697,
+          "caption": "(Continued).",
+          "label": ""
+        },
+        {
+          "path": "literature/2009.05773/arxiv_source/ms.tex",
+          "start_line": 1701,
+          "end_line": 1768,
+          "caption": "(Continued).",
+          "label": ""
+        },
+        {
+          "path": "literature/2009.05773/arxiv_source/ms.tex",
+          "start_line": 1772,
+          "end_line": 1833,
+          "caption": "(Continued).",
+          "label": ""
+        },
+        {
+          "path": "literature/2009.05773/arxiv_source/ms.tex",
+          "start_line": 1837,
+          "end_line": 1905,
+          "caption": "(Continued).",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Villafranca星群编号（O-001至O-016），O-002+O-003和O-007+O-008表示合并处理（物理关联星群统一比较）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "distance | (pc)",
+          "meaning": "文献报道的距离值及不确定度（pc），上下标格式表示非对称误差；无误差标注表示原始文献未报告不确定度。随机和系统误差已按表注合并",
+          "unit_text": "pc",
+          "source_of_definition": "table header and caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "target",
+          "meaning": "距离测量的具体目标：星群名（如NGC 3603）、H II区气体、分子云、脉泽源、食双星、或单个恒星（如η Car、Bajamar star）",
+          "unit_text": "",
+          "source_of_definition": "table header and caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "description",
+          "meaning": "测距方法简短描述：Gaia DR2 parallax（含/不含协方差项）、VLBI parallax、Visible/NIR CMD、Spectro-photometry（分光+测光组合）、Kinematic distance（运动学距离）、Spectroscopic eclipsing binaries（光谱食双星）、Statistical parallaxes等",
+          "unit_text": "",
+          "source_of_definition": "table header and caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ref.",
+          "meaning": "参考文献缩写（通常为第一作者首字母+年份，如C18=Cantat-Gaudin+2018），完整引用对应关系在表末详尽列出",
+          "unit_text": "",
+          "source_of_definition": "table header and table footnotes",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 2.4: 'We have searched the literature for previous distance measurements to the VO{001} to VO{016} stellar groups and show them in Table literature.' Section 4.1: 'we have collected 226 literature distances d (i.e. an average of 16.1 measurements per stellar group)...' 表注解释了'spectro-photometry'含义和误差合并方式。",
+      "comments": "5页续表通过\\addtocounter{table}{-1}连接。每页表头重复列标题但数据连续。226条测量中145条带不确定度。星群间测量数不均（O-002+O-003最多41条，O-015最少3条）。最老测量可追溯至1952年（Sharpless & Osterbrock），最新为2020年Gaia DR2结果。Q06的M17运动学距离（14550 pc）作为极端离群值被排除在统计分析外。"
+    },
+    {
+      "id": "table-runaways",
+      "kind": "latex_table",
+      "asset_type": "source_catalog",
+      "role_in_paper": "可能速逃星候选体列表，通过搜索各星群附近视差相容且自行方向背离星群中心的亮星得出。列出各候选体的Gaia DR2 ID、别名、视差、G星等和GBP-GRP颜色。该表为后续速逃星起源分析（动力学抛射vs.超新星抛射）提供候选体样本，含HD 64568和HD 64315 AB这对可能同时从Haffner 18抛射的O型星。",
+      "source_refs": [
+        {
+          "path": "literature/2009.05773/arxiv_source/ms.tex",
+          "start_line": 2145,
+          "end_line": 2220,
+          "caption": "Possible runaway stars.",
+          "label": "runaways"
+        }
+      ],
+      "columns": [
+        {
+          "name": "group | ID",
+          "meaning": "所属Villafranca星群编号（O-001至O-016），标识候选体起源星群",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia DR2 ID",
+          "meaning": "Gaia DR2 19位源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "other ID",
+          "meaning": "恒星常用别名：HD编号（如HD 64568）、2MASS编号或其他星表标识（如Cyg OB2-24、BD -16 4826等）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\varpi | (mas)",
+          "meaning": "Gaia DR2视差及不确定度，用于判断候选体与星群的距离一致性",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia G波段视星等，指示候选体的亮度/质量",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G_{\\rm BP}-G_{\\rm RP}",
+          "meaning": "Gaia BP-RP颜色指数，用于估计恒星的消光和光谱型",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 2.2: 'In addition to the strategy described in MA19, we have also searched in the vicinity for possible runaways from each group... The search has been carried out only for the brightest targets in each field i.e. the possible massive runaways.' Section 3 results mention specific runaway candidates linked to this table.",
+      "comments": "共列出约58颗候选体（含HD 64315 AB标记†为RUWE不佳）。O-012星群含HD 64568（O3 V((f*))z）和HD 64315 AB（O5.5 V+O7 V），可能同时从Haffner 18抛射（飞行时标~400 ka，方向近相反）。VO{014}因无明确星群中心，采用不同策略搜索。O-009（M17）候选体最多（7颗），含已确认的SB2系统BD -16 4826。"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-gosc",
+      "kind": "external_url",
+      "url": "https://gosc.cab.inta-csic.es",
+      "local_path": "",
+      "description": "Galactic O-Star Catalog (GOSC)：银河系O星光谱巡天（GOSSS）的数据和光谱分类公开发布网站，提供数千颗O型和B型星的均匀光谱分类和元数据。本文的样本选择基于GOSC中的GOSSS光谱分类。",
+      "source_refs": [
+        {
+          "path": "literature/2009.05773/arxiv_source/ms.tex",
+          "start_line": 226,
+          "end_line": 228,
+          "context": "The data and spectral classifications from GOSSS are available from the Galactic O-Star Catalog \n(GOSC, \\url{https://gosc.cab.inta-csic.es}, \\citealt{Maizetal04b})."
+        }
+      ],
+      "evidence": "Section 1.2: 'The data and spectral classifications from GOSSS are available from the Galactic O-Star Catalog (GOSC, https://gosc.cab.inta-csic.es, Maíz Apellániz et al. 2004).' 该URL为GOSSS巡天数据的具体获取地址。",
+      "comments": "GOSC由CAB（西班牙天体生物学中心）维护。该URL在正文Section 1.2中明确给出，非致谢中的通用提及。"
+    }
+  ]
+}

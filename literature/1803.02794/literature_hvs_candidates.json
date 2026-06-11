@@ -1,0 +1,50 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:06:18",
+  "paper": {
+    "arxiv_id": "1803.02794",
+    "bibcode": "2018ApJ...856...74K",
+    "title": "Demonstration of a novel method for measuring mass-loss rates for massive stars",
+    "month": "2018-03",
+    "source_note_json": "notes/2018/2018-03/2018-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1803.02794",
+      "pdf": "https://arxiv.org/pdf/1803.02794"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1803.02794",
+    "audit_path": "literature/1803.02794/audit.json",
+    "catalog_review_path": "literature/1803.02794/catalog_review.json",
+    "catalog_extraction_path": "literature/1803.02794/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1803.02794/catalog_tables/table-tab-basic.ecsv",
+      "literature/1803.02794/catalog_tables/table-tab-derived.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:06:18",
+    "extractor": "agent",
+    "summary": "No HVS candidates found. This paper demonstrates a novel method for measuring mass-loss rates of massive stars using infrared bowshock nebulae around high-velocity stars. The 'high-velocity' stars here are O- and early-B stars moving supersonically through the ambient ISM, producing bowshocks — their velocities (tens of km/s relative to the ISM) are far below Galactic escape speed. The paper does not select for, discuss, or claim any hypervelocity stars, unbound stars, or Galactic escape trajectories. Zero HVS-related keywords appear in the text."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "bowshock-stars",
+      "description": "Twenty O- and early-B stars with infrared bowshock nebulae, used to demonstrate a mass-loss rate measurement technique. These are 'high-velocity' in the sense of supersonic motion through the ISM (producing bowshocks), not in the sense of hypervelocity or unbound trajectories.",
+      "decision": "excluded",
+      "reason": "No HVS candidates present. The paper's 'high-velocity stars' are massive stars moving fast enough through the ambient ISM to produce bowshock nebulae — typical velocities are ~10-100 km/s relative to the local ISM, far below Galactic escape speed. The paper focuses on mass-loss rate measurements via pressure equilibrium between stellar wind and ISM; it does not discuss hypervelocity stars, unbound trajectories, or Galactic escape. Full paper text reviewed — zero mentions of HVS, hypervelocity, unbound, or escaping stars.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1803.02794/arxiv_source/ms.tex",
+          "start_line": 39,
+          "end_line": 55,
+          "context": "The rate at which massive stars eject mass in stellar winds significantly influences their evolutionary path. Cosmic rates of nucleosynthesis, explosive stellar phenomena, and compact object genesis depend on this poorly known facet of stellar evolution. We employ an unexploited observational technique for measuring the mass-loss rates of O- and early-B stars. Our approach, which has no adjustable parameters, uses the principle of pressure equilibrium between the stellar wind and the ambient interstellar medium for a high-velocity star generating an infrared bowshock nebula. Results for twenty bowshock-generating stars show good agreement with two sets of theoretical predictions for O5--O9.5 main-sequence stars."
+        }
+      ]
+    }
+  ]
+}

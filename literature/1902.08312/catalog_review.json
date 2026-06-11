@@ -1,0 +1,141 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1902.08312",
+    "title": "Asteroseismology of massive stars with the TESS mission: the runaway Beta Cep pulsator PHL 346 = HN Aqr",
+    "month": "2019-02",
+    "source_note_json": "notes/2019/2019-02/2019-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1902.08312",
+      "pdf": "https://arxiv.org/pdf/1902.08312"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1902.08312",
+    "audit_path": "literature/1902.08312/audit.json",
+    "source_dir": "literature/1902.08312/arxiv_source",
+    "tex_root": "literature/1902.08312/arxiv_source/hnaqr_final.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:45:00",
+    "reviewer": "agent",
+    "summary": "本文利用TESS卫星星震学观测数据研究逃逸星PHL 346 = HN Aqr的脉动特性。该星是首个被TESS观测的β Cep型脉动星，检测到至少34个独立振荡模式（12个g模、22个p模）。运动学分析给出年龄约束23±1 Myr，推断的银盘弹射速度约420 km/s。论文包含2个内部表格：Table tab:frequencies列出TESS测光数据的多频率解（38个频率成分的ID、频率值、振幅和信噪比），Table tab:parameters汇总了文献中和本文对PHL 346基本参数（有效温度Teff、表面重力log g）的测定结果及所用方法。外部资源为MAST门户URL（TESS测光数据下载来源）。TESS为NASA公开任务数据，ESO VLT/UVES光谱数据为ESO档案数据（项目编号383.D-0909(A)）。论文无独立机器可读数据文件。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-frequencies",
+      "kind": "latex_table",
+      "asset_type": "object_measurement_table",
+      "role_in_paper": "列出HN Aqr的TESS测光数据多频率正弦波拟合结果，包含38个频率成分（34个独立频率加4个组合/谐波频率），其中f1–f12为g模域（0.22–1.49 c/d），f13–f34为p模域（5.46–11.27 c/d），另有谐波2f18和组合频率f18+f19、f18+f20、f18+f21。这是本文核心观测产出——星震学频率表，用于后续脉动建模。",
+      "source_refs": [
+        {
+          "path": "literature/1902.08312/arxiv_source/hnaqr_final.tex",
+          "start_line": 519,
+          "end_line": 587,
+          "caption": "Multifrequency solution for our {\\it TESS} photometry of HN~Aqr. Error estimates for the independent frequencies are given in braces in units of the last significant digit; the errors on the amplitudes are about $\\pm0.03$\\,mmag.",
+          "label": "tab:frequencies"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "频率成分标识符（f1–f34为独立频率，含组合频率如2f18、f18+f19等）。带(a)(b)上标的频率可能为密近双线",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Freq.",
+          "meaning": "频率值（cycles per day, c/d），独立频率的误差以括号中最后一位有效数字的单位给出",
+          "unit_text": "c/d",
+          "source_of_definition": "table header + table caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ampl.",
+          "meaning": "振幅（毫星等），振幅测量误差约为±0.03 mmag",
+          "unit_text": "mmag",
+          "source_of_definition": "table header + table caption",
+          "confidence": 1.0
+        },
+        {
+          "name": "S/N",
+          "meaning": "信噪比（signal-to-noise ratio），由频率域噪声水平a(ν)计算",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table tab:frequencies使用deluxetable环境（lccr列格式），标题为'Multifrequency solution for our TESS photometry of HN~Aqr'。表头列出ID、Freq.(c/d)、Ampl.(mmag)、S/N四列。全部38行数据位于LaTeX源码第531-581行（第530行为注释行f1的备选）。表注(a)说明f9可能为密近双线(0.679/0.715 c/d)，(b)说明f18可能为密近双线(6.555/6.5666 c/d)。数据来自TESS Sector 2观测（2018年8月23日至9月20日，2-min cadence，18317个测光点）。正文第486-514行详细描述了频率检测和筛选方法（5种独立方法交叉验证，S/N阈值5（独立信号）和3.5（组合频率））。",
+      "comments": "该表为本文核心数据资产，是TESS对β Cep星首次星震学观测的科学产出。独立频率的误差估计来自贝叶斯方法（Kallinger & Weiss 2016），已考虑密近频率的系统不确定性。11个注释掉的频率行（如f1 0.1287 c/d等）表示未通过≥3种方法交叉验证的低显著性信号。f18=6.5653 c/d为历史上已知的单一主导脉动频率，振幅20.65 mmag，S/N达349.4为表中最高。"
+    },
+    {
+      "id": "table-tab-parameters",
+      "kind": "latex_table",
+      "asset_type": "literature_comparison_table",
+      "role_in_paper": "汇总文献和本文对PHL 346基本大气参数（有效温度Teff和表面重力log g）的历次测定结果，用于确定星震学建模的参数空间范围。该表为在线附录表格（online table），列出11组独立测定（1977–2019），为后续脉动建模提供基本参数约束。",
+      "source_refs": [
+        {
+          "path": "literature/1902.08312/arxiv_source/hnaqr_final.tex",
+          "start_line": 1052,
+          "end_line": 1085,
+          "caption": "Determinations of basic parameters of PHL~346.",
+          "label": "tab:parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "T_eff (K)",
+          "meaning": "有效温度（开尔文），含±测量不确定度",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log g",
+          "meaning": "表面重力（常用对数，cgs单位），含±测量不确定度",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ref.",
+          "meaning": "参数测定来源的参考文献引用",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Method",
+          "meaning": "测定方法（Strömgren测光、Geneva测光、Walraven测光、光学光谱、紫外光谱等）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table tab:parameters位于附录（第1047行\\appendix后），使用deluxetable环境（ccll列格式），标题为'Determinations of basic parameters of PHL~346'。表头列出T_eff(K)、log g、Ref.、Method四列。11行数据位于第1062-1072行，涵盖1977年Kilkenny+至本文（2019年）的9篇文献和2组本文新测定。11条表注（a–l）说明各测定的附加信息如M_v、E(b-y)、v sin i、金属丰度[M/H]、宏湍流ζ等。正文第387-396行和第708-716行引用此表，汇总得出参数空间Teff=22300±900 K、log g=3.75±0.15、M_bol=-5.2±0.3、[M/H]=0.2±0.1。",
+      "comments": "该表为文献汇编表格，非新观测数据产出。表格汇集了过去40年间对PHL 346的多项独立光谱/测光研究结果。本文新增的两组测定（表注k和l）基于ESO VLT/UVES高分辨率光谱（R≈35000，2009年8月27日观测，项目编号383.D-0909(A)），使用两种独立分析方法（Irrgang+2014和Hubeny & Lanz 2017非LTE模型）。该附录表为'Online table'，标明仅在线发表。"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-tess-mast",
+      "kind": "external_url",
+      "url": "https://mast.stsci.edu/portal/Mashup/Clients/Mast/Portal.html",
+      "local_path": "",
+      "description": "MAST（Mikulski Archive for Space Telescopes）门户网站，TESS测光数据的下载来源。HN Aqr的TESS Sector 2（2018-08-23至2018-09-20）2-min cadence光变曲线（PDC_SAP流量）从此处下载。",
+      "source_refs": [
+        {
+          "path": "literature/1902.08312/arxiv_source/hnaqr_final.tex",
+          "start_line": 421,
+          "end_line": 423,
+          "context": "The photometry was downloaded from MAST\\footnote{\\url{https://mast.stsci.edu/portal/Mashup/Clients/Mast/Portal.html}}, and the PDC_SAP fluxes were converted into magnitude."
+        }
+      ],
+      "evidence": "第421-423行正文以脚注形式给出MAST门户URL，声明TESS测光数据从此处下载。TESS为NASA公开巡天任务，MAST为官方数据档案。",
+      "comments": "TESS为NASA公开任务，MAST为TESS官方数据档案。本论文的分析数据（TESS光变曲线）来自公开档案查询，非本文独立产出的数据产品。根据审查边界规则，公开巡天数据不列为本文外部数据资产的核心部分，但MAST作为数据获取渠道记录在此。"
+    }
+  ]
+}

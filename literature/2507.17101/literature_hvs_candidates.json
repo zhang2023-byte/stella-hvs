@@ -1,0 +1,252 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T19:48:52",
+  "paper": {
+    "arxiv_id": "2507.17101",
+    "bibcode": "2025A&A...700L..23B",
+    "title": "Ancient, eclipsing, tidally-locked: A blue lurker progenitor in the population of extreme-velocity star candidates",
+    "month": "2025-07",
+    "source_note_json": "notes/2025/2025-07/2025-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2507.17101",
+      "pdf": "https://arxiv.org/pdf/2507.17101"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2507.17101",
+    "audit_path": "literature/2507.17101/audit.json",
+    "catalog_review_path": "literature/2507.17101/catalog_review.json",
+    "catalog_extraction_path": "literature/2507.17101/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2507.17101/catalog_tables/table-tab-params1.ecsv",
+      "literature/2507.17101/catalog_tables/table-tab-lc_parameters.ecsv",
+      "literature/2507.17101/catalog_tables/table-tab-params2.ecsv",
+      "literature/2507.17101/catalog_tables/table-Tab-compspec.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T19:48:52",
+    "extractor": "agent",
+    "summary": "The paper selected J1903-0023 (Gaia DR3 4265540383431508736) as a late-type HVS candidate from Gaia DR3 and performed follow-up spectroscopy and kinematic analysis. Both J1903-0023 and the comparison star WISE J072543.88-235119.7 were explicitly concluded to be bound to the Galaxy. No objects are presented as possibly unbound from the Milky Way."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR3 catalog query for fast stars.",
+      "inputs": ["Gaia DR3"],
+      "outputs": ["Astrometry, photometry, and proper motions"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 150,
+          "end_line": 152,
+          "context": "Gaia DR3 catalog query and target selection"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": ["step-01"],
+      "step_type": "sample_selection",
+      "summary": "Selection of late-type HVS candidates with 1-sigma lower tangential velocity limit of 800 km/s and colour criterion GBP-GRP > 0.7 mag.",
+      "inputs": ["Gaia DR3 catalog"],
+      "outputs": ["J1903-0023 as high-priority candidate"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 150,
+          "end_line": 152,
+          "context": "Sample selection criteria and candidate identification"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": ["step-02"],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Atmospheric parameter determination from X-shooter spectroscopy using ATLAS12/SYNTHE model grids and global chi-squared minimization.",
+      "inputs": ["X-shooter spectra"],
+      "outputs": ["Teff, log g, [Fe/H], [alpha/Fe], v sin i, radial velocity"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 160,
+          "end_line": 165,
+          "context": "Spectroscopic analysis method"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": ["step-02"],
+      "step_type": "photometric_or_sed_modeling",
+      "summary": "SED fitting with synthetic models to derive angular diameter, reddening, and stellar temperature from combined photometric magnitudes.",
+      "inputs": ["Photometric magnitudes"],
+      "outputs": ["Angular diameter, colour excess E(44-55), effective temperature"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 154,
+          "end_line": 154,
+          "context": "SED fitting method description"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": ["step-02"],
+      "step_type": "radial_velocity_measurement",
+      "summary": "Radial velocity measurements from X-shooter, NOT/ALFOSC, and SOAR/Goodman spectrographs.",
+      "inputs": ["Optical spectra from three instruments"],
+      "outputs": ["Heliocentric radial velocities"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 156,
+          "end_line": 158,
+          "context": "Radial velocity follow-up spectroscopy with X-shooter, NOT/ALFOSC, and SOAR/Goodman"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": ["step-03", "step-04"],
+      "step_type": "distance_estimation",
+      "summary": "Spectro-photometric distances derived from angular diameter and spectroscopic radius.",
+      "inputs": ["Angular diameter, spectroscopic radius"],
+      "outputs": ["Spectroscopic distances"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 289,
+          "end_line": 291,
+          "context": "Distance derivation from angular diameter and radius"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": ["step-05", "step-06"],
+      "step_type": "velocity_calculation",
+      "summary": "Calculation of Galactocentric velocities from spectroscopic distances, radial velocities, and proper motions.",
+      "inputs": ["Distances, radial velocities, proper motions"],
+      "outputs": ["Galactocentric velocities, tangential velocities"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 296,
+          "end_line": 298,
+          "context": "Trajectory calculation from spectroscopic distances, radial velocities, and proper motions"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "Adopted Model 1, a revised version of the Allen (1991) Galactic potential.",
+      "inputs": ["Published Galactic potential model"],
+      "outputs": ["Galactic potential for orbit integration"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 296,
+          "end_line": 298,
+          "context": "Galactic potential model description"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": ["step-07", "step-08"],
+      "step_type": "orbit_integration",
+      "summary": "Numerical orbit integration using a 4th-order Runge-Kutta solver back in time for 15 Gyr.",
+      "inputs": ["Galactocentric velocities, Galactic potential"],
+      "outputs": ["Galactic orbits, eccentricity, maximum radius"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 296,
+          "end_line": 298,
+          "context": "Numerical integration of equations of motion using a 4th-order Runge-Kutta solver"
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "depends_on": ["step-07", "step-08", "step-09"],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Bound/unbound assessment from orbital integration and velocity comparison against Galactic escape velocity.",
+      "inputs": ["Orbits, velocities, Galactic potential"],
+      "outputs": ["Bound status for both stars"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 299,
+          "end_line": 304,
+          "context": "Bound/unbound assessment and conclusion"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "j1903-0023-gaia-s",
+      "description": "J1903-0023 (Gaia DR3 4265540383431508736), the primary target selected as a late-type HVS candidate from Gaia DR3 with high tangential velocity.",
+      "decision": "excluded",
+      "reason": "The paper explicitly concludes that J1903-0023 is bound to the Galaxy. The spectroscopic distance is significantly smaller than the Gaia parallax-based distance, resulting in a lower tangential velocity (585 +/- 40 km/s) and a bound orbit.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 124,
+          "end_line": 131,
+          "context": "Abstract stating the star is bound to the Galaxy"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 299,
+          "end_line": 304,
+          "context": "Kinematic section concluding the star is bound"
+        }
+      ]
+    },
+    {
+      "group_id": "j0725-2351-wise",
+      "description": "WISE J072543.88-235119.7 (J0725-2351), an extreme-velocity sdF star analysed as a twin comparison star.",
+      "decision": "excluded",
+      "reason": "The paper presents WISE J0725-2351 as a bound halo comparison star, not as a candidate possibly unbound from the Galaxy. Its Galactic rest-frame velocity is 240 km/s and its orbit is typical for halo stars.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 301,
+          "end_line": 304,
+          "context": "Kinematic description of WISE J0725-2351 as a halo star with 240 km/s rest-frame velocity"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 306,
+          "end_line": 307,
+          "context": "Orbit description as typical for halo stars"
+        }
+      ]
+    }
+  ]
+}

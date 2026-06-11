@@ -1,0 +1,815 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:33:08",
+  "paper": {
+    "arxiv_id": "1810.09501",
+    "title": "SB 796: a high-velocity RRc star",
+    "month": "2018-10"
+  },
+  "review": {
+    "path": "literature/1810.09501/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083308",
+    "started_at": "2026-06-07T08:33:08",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1810.09501",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 8,
+      "work_count": 8,
+      "table_count": 8,
+      "success_count": 8,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 8,
+      "file_success_count": 8,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-Sys_Parameters",
+      "internal_table_id": "table-Sys_Parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.09501/arxiv_source/SB796.tex",
+        "start_line": 172,
+        "end_line": 186,
+        "caption": "Basic information of SB 796.",
+        "label": "table:Sys_Parameters"
+      },
+      "source_path": "literature/1810.09501/arxiv_source/SB796.tex",
+      "excerpt_path": "literature/1810.09501/catalog_sources/table-Sys_Parameters/excerpt.tex",
+      "sha256": "461a6fa2df39bb86b1a8e087e2b994db127e1703417629caf538a9584b18b9a1",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-Photometry",
+      "internal_table_id": "table-Photometry",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.09501/arxiv_source/SB796.tex",
+        "start_line": 246,
+        "end_line": 267,
+        "caption": "Parameters of the photometric analysis of WASP light curve. Note the large Root-Mean-Square (RMS) of residuals in the r' photometry relative to the $V_W$ photometry.",
+        "label": "table:Photometry"
+      },
+      "source_path": "literature/1810.09501/arxiv_source/SB796.tex",
+      "excerpt_path": "literature/1810.09501/catalog_sources/table-Photometry/excerpt.tex",
+      "sha256": "f4f8fb80ab21cae71d635f02bb1464b787fa3b842382d2954f28881e1fc5c240",
+      "line_count": 22,
+      "error": ""
+    },
+    {
+      "id": "table-Template",
+      "internal_table_id": "table-Template",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.09501/arxiv_source/SB796.tex",
+        "start_line": 314,
+        "end_line": 326,
+        "caption": "Parameters of the adopted template with their uncertainties.",
+        "label": "table:Template"
+      },
+      "source_path": "literature/1810.09501/arxiv_source/SB796.tex",
+      "excerpt_path": "literature/1810.09501/catalog_sources/table-Template/excerpt.tex",
+      "sha256": "f9da8fe167553867d06f2699e36ac417e5e1032041444b23a9ff4e5ae421854c",
+      "line_count": 13,
+      "error": ""
+    },
+    {
+      "id": "table-RV_data",
+      "internal_table_id": "table-RV_data",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.09501/arxiv_source/SB796.tex",
+        "start_line": 343,
+        "end_line": 381,
+        "caption": "Derived radial-velocities of SpUpNIC (upper part) and CORALIE (lower part).",
+        "label": "table:RV_data"
+      },
+      "source_path": "literature/1810.09501/arxiv_source/SB796.tex",
+      "excerpt_path": "literature/1810.09501/catalog_sources/table-RV_data/excerpt.tex",
+      "sha256": "455890ebd20936fa972ef9022994685f147af23ff8768c51957267c8b2d222e4",
+      "line_count": 39,
+      "error": ""
+    },
+    {
+      "id": "table-RV_sol",
+      "internal_table_id": "table-RV_sol",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.09501/arxiv_source/SB796.tex",
+        "start_line": 407,
+        "end_line": 419,
+        "caption": "Parameters of the RV solution of SB 796 with the more accurate photometric period P = 0.2658523 d, where $T_{0}$ is the time of maximum RV.",
+        "label": "table:RV_sol"
+      },
+      "source_path": "literature/1810.09501/arxiv_source/SB796.tex",
+      "excerpt_path": "literature/1810.09501/catalog_sources/table-RV_sol/excerpt.tex",
+      "sha256": "5bc208e7ff04e52cd8e17344ad56c52b21f0af913c47e7f43c0f5d3ae3dc76f8",
+      "line_count": 13,
+      "error": ""
+    },
+    {
+      "id": "table-GAIA",
+      "internal_table_id": "table-GAIA",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.09501/arxiv_source/SB796.tex",
+        "start_line": 456,
+        "end_line": 496,
+        "caption": "{\\it Gaia} parameters of SB 796. The color uncertainties were calculated using the average signal uncertainty of each band.",
+        "label": "table:GAIA"
+      },
+      "source_path": "literature/1810.09501/arxiv_source/SB796.tex",
+      "excerpt_path": "literature/1810.09501/catalog_sources/table-GAIA/excerpt.tex",
+      "sha256": "bdecb7a095a8edd950ec6fa2a3c3ae0fdcafd4bbb3c933908a37c15b380a5221",
+      "line_count": 41,
+      "error": ""
+    },
+    {
+      "id": "table-SB796-loc",
+      "internal_table_id": "table-SB796-loc",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.09501/arxiv_source/SB796.tex",
+        "start_line": 524,
+        "end_line": 544,
+        "caption": "Equatorial coordinates, parallax, proper motions, mean radial-velocity and corresponding Galactic position and rest-frame velocity of SB 796.",
+        "label": "table:SB796-loc"
+      },
+      "source_path": "literature/1810.09501/arxiv_source/SB796.tex",
+      "excerpt_path": "literature/1810.09501/catalog_sources/table-SB796-loc/excerpt.tex",
+      "sha256": "05ba60dfae0f49378d31cfcd36bd44d4cdb93ba20a2543a4006f749794ed1129",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-Gal-Model",
+      "internal_table_id": "table-Gal-Model",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.09501/arxiv_source/SB796.tex",
+        "start_line": 548,
+        "end_line": 572,
+        "caption": "Model components adopted for the Milky-Way.",
+        "label": "table:Gal-Model"
+      },
+      "source_path": "literature/1810.09501/arxiv_source/SB796.tex",
+      "excerpt_path": "literature/1810.09501/catalog_sources/table-Gal-Model/excerpt.tex",
+      "sha256": "5d620fa412aff04f04c81116065ceb0e2fea42779844786330ed595f57e66d1d",
+      "line_count": 25,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-Sys_Parameters",
+      "internal_table_id": "table-Sys_Parameters",
+      "status": "success",
+      "ecsv_path": "literature/1810.09501/catalog_tables/table-Sys_Parameters.ecsv",
+      "caption": "Basic information of SB 796.",
+      "label": "table:Sys_Parameters",
+      "row_count": 6,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqjgaw75o/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.09501/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqjgaw75o/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.09501/catalog_sources/table-Sys_Parameters/wrapped.tex",
+            "html": "literature/1810.09501/catalog_sources/table-Sys_Parameters/latexml.html",
+            "stdout": "literature/1810.09501/catalog_sources/table-Sys_Parameters/latexml.stdout.txt",
+            "stderr": "literature/1810.09501/catalog_sources/table-Sys_Parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "461a6fa2df39bb86b1a8e087e2b994db127e1703417629caf538a9584b18b9a1"
+    },
+    {
+      "id": "table-Photometry",
+      "internal_table_id": "table-Photometry",
+      "status": "success",
+      "ecsv_path": "literature/1810.09501/catalog_tables/table-Photometry.ecsv",
+      "caption": "Parameters of the photometric analysis of WASP light curve. Note the large Root-Mean-Square (RMS) of residuals in the r' photometry relative to the $V_W$ photometry.",
+      "label": "table:Photometry",
+      "row_count": 5,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "V_W photometry",
+          "r’ photometry"
+        ],
+        [
+          "P [day]",
+          "0.2658523 +/- 0.0000033",
+          ""
+        ],
+        [
+          "T_0 [HJD]",
+          "2453983.5984 +/- 0.0027",
+          "2453983.5697 +/- 0.0071"
+        ],
+        [
+          "A_1 [mag]",
+          "0.1109 +/- 0.0016",
+          "0.0592 +/- 0.0027"
+        ],
+        [
+          "A_2 [mag]",
+          "0.01144 +/- 0.00043",
+          "0.00737 +/- 0.00090"
+        ],
+        [
+          "A_3 [mag]",
+          "0.00223 +/- 0.00043",
+          "0.00240 +/- 0.00065"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter | P [day] | T_0 [HJD] | A_1 [mag] | A_2 [mag] | A_3 [mag]",
+          "unit_text": "P [day]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "V_W photometry | 0.2658523 +/- 0.0000033 | 2453983.5984 +/- 0.0027 | 0.1109 +/- 0.0016 | 0.01144 +/- 0.00043 | 0.00223 +/- 0.00043",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "r’ photometry | 2453983.5697 +/- 0.0071 | 0.0592 +/- 0.0027 | 0.00737 +/- 0.00090 | 0.00240 +/- 0.00065",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqfjl_kr5/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.09501/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqfjl_kr5/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.09501/catalog_sources/table-Photometry/wrapped.tex",
+            "html": "literature/1810.09501/catalog_sources/table-Photometry/latexml.html",
+            "stdout": "literature/1810.09501/catalog_sources/table-Photometry/latexml.stdout.txt",
+            "stderr": "literature/1810.09501/catalog_sources/table-Photometry/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f4f8fb80ab21cae71d635f02bb1464b787fa3b842382d2954f28881e1fc5c240"
+    },
+    {
+      "id": "table-Template",
+      "internal_table_id": "table-Template",
+      "status": "success",
+      "ecsv_path": "literature/1810.09501/catalog_tables/table-Template.ecsv",
+      "caption": "Parameters of the adopted template with their uncertainties.",
+      "label": "table:Template",
+      "row_count": 2,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value"
+        ],
+        [
+          "Teff [K]",
+          "8200 +/- 600"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter | Teff [K]",
+          "unit_text": "Teff [K]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value | 8200 +/- 600",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjfifr307/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.09501/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjfifr307/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.09501/catalog_sources/table-Template/wrapped.tex",
+            "html": "literature/1810.09501/catalog_sources/table-Template/latexml.html",
+            "stdout": "literature/1810.09501/catalog_sources/table-Template/latexml.stdout.txt",
+            "stderr": "literature/1810.09501/catalog_sources/table-Template/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f9da8fe167553867d06f2699e36ac417e5e1032041444b23a9ff4e5ae421854c"
+    },
+    {
+      "id": "table-RV_data",
+      "internal_table_id": "table-RV_data",
+      "status": "success",
+      "ecsv_path": "literature/1810.09501/catalog_tables/table-RV_data.ecsv",
+      "caption": "Derived radial-velocities of SpUpNIC (upper part) and CORALIE (lower part).",
+      "label": "table:RV_data",
+      "row_count": 24,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Time [JD - 2450000]",
+          "RV [km/s]",
+          "\\sigma [km/s]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Time [JD - 2450000]",
+          "unit_text": "Time [JD - 2450000]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RV [km/s]",
+          "unit_text": "RV [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma [km/s]",
+          "unit_text": "\\sigma [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6v51oyfb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.09501/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6v51oyfb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.09501/catalog_sources/table-RV_data/wrapped.tex",
+            "html": "literature/1810.09501/catalog_sources/table-RV_data/latexml.html",
+            "stdout": "literature/1810.09501/catalog_sources/table-RV_data/latexml.stdout.txt",
+            "stderr": "literature/1810.09501/catalog_sources/table-RV_data/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "455890ebd20936fa972ef9022994685f147af23ff8768c51957267c8b2d222e4"
+    },
+    {
+      "id": "table-RV_sol",
+      "internal_table_id": "table-RV_sol",
+      "status": "success",
+      "ecsv_path": "literature/1810.09501/catalog_tables/table-RV_sol.ecsv",
+      "caption": "Parameters of the RV solution of SB 796 with the more accurate photometric period P = 0.2658523 d, where $T_{0}$ is the time of maximum RV.",
+      "label": "table:RV_sol",
+      "row_count": 3,
+      "column_count": 2,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\gamma",
+        "unresolved LaTeX macro preserved: \\scalebox"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpn2pa3zxb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.09501/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpn2pa3zxb/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.09501/catalog_sources/table-RV_sol/wrapped.tex",
+            "html": "literature/1810.09501/catalog_sources/table-RV_sol/latexml.html",
+            "stdout": "literature/1810.09501/catalog_sources/table-RV_sol/latexml.stdout.txt",
+            "stderr": "literature/1810.09501/catalog_sources/table-RV_sol/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmb8z12mc/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmb8z12mc/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.09501/catalog_sources/table-RV_sol/wrapped.tex",
+            "html": "literature/1810.09501/catalog_sources/table-RV_sol/pandoc.html",
+            "stdout": "literature/1810.09501/catalog_sources/table-RV_sol/pandoc.stdout.txt",
+            "stderr": "literature/1810.09501/catalog_sources/table-RV_sol/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "5bc208e7ff04e52cd8e17344ad56c52b21f0af913c47e7f43c0f5d3ae3dc76f8"
+    },
+    {
+      "id": "table-GAIA",
+      "internal_table_id": "table-GAIA",
+      "status": "success",
+      "ecsv_path": "literature/1810.09501/catalog_tables/table-GAIA.ecsv",
+      "caption": "{\\it Gaia} parameters of SB 796. The color uncertainties were calculated using the average signal uncertainty of each band.",
+      "label": "table:GAIA",
+      "row_count": 24,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3h670psv/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.09501/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3h670psv/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.09501/catalog_sources/table-GAIA/wrapped.tex",
+            "html": "literature/1810.09501/catalog_sources/table-GAIA/latexml.html",
+            "stdout": "literature/1810.09501/catalog_sources/table-GAIA/latexml.stdout.txt",
+            "stderr": "literature/1810.09501/catalog_sources/table-GAIA/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "bdecb7a095a8edd950ec6fa2a3c3ae0fdcafd4bbb3c933908a37c15b380a5221"
+    },
+    {
+      "id": "table-SB796-loc",
+      "internal_table_id": "table-SB796-loc",
+      "status": "success",
+      "ecsv_path": "literature/1810.09501/catalog_tables/table-SB796-loc.ecsv",
+      "caption": "Equatorial coordinates, parallax, proper motions, mean radial-velocity and corresponding Galactic position and rest-frame velocity of SB 796.",
+      "label": "table:SB796-loc",
+      "row_count": 2,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value"
+        ],
+        [
+          "RA a [deg]",
+          "30.6212071184 +/- 3.7 \\cdot 10^-9"
+        ],
+        [
+          "DEC a [deg]",
+          "-40.3739311288 +/- 3.9 \\cdot 10^-9"
+        ],
+        [
+          "parallax a [mas]",
+          "0.26 +/- 0.02"
+        ],
+        [
+          "pm in RA a [mas/yr]",
+          "17.113 +/- 0.024"
+        ],
+        [
+          "pm in DEC a [mas/yr]",
+          "-0.499 +/- 0.027"
+        ],
+        [
+          "RV b [km/s]",
+          "248.44 +/- 0.22"
+        ],
+        [
+          "Gal position (X,Y,Z) [kpc]",
+          "(8.242,-1.31,-3.70) +/- (0.019,0.11,0.30)"
+        ],
+        [
+          "Gal velocity (Vx,Vy,Vz) [km/s]",
+          "(229,-59,-138.1) +/- (18,17,7.1)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter | RA a [deg] | DEC a [deg] | parallax a [mas] | pm in RA a [mas/yr] | pm in DEC a [mas/yr] | RV b [km/s] | Gal position (X,Y,Z) [kpc] | Gal velocity (Vx,Vy,Vz) [km/s]",
+          "unit_text": "RA a [deg]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value | 30.6212071184 +/- 3.7 \\cdot 10^-9 | -40.3739311288 +/- 3.9 \\cdot 10^-9 | 0.26 +/- 0.02 | 17.113 +/- 0.024 | -0.499 +/- 0.027 | 248.44 +/- 0.22 | (8.242,-1.31,-3.70) +/- (0.019,0.11,0.30) | (229,-59,-138.1) +/- (18,17,7.1)",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7j4k9cl6/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.09501/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7j4k9cl6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.09501/catalog_sources/table-SB796-loc/wrapped.tex",
+            "html": "literature/1810.09501/catalog_sources/table-SB796-loc/latexml.html",
+            "stdout": "literature/1810.09501/catalog_sources/table-SB796-loc/latexml.stdout.txt",
+            "stderr": "literature/1810.09501/catalog_sources/table-SB796-loc/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "05ba60dfae0f49378d31cfcd36bd44d4cdb93ba20a2543a4006f749794ed1129"
+    },
+    {
+      "id": "table-Gal-Model",
+      "internal_table_id": "table-Gal-Model",
+      "status": "success",
+      "ecsv_path": "literature/1810.09501/catalog_tables/table-Gal-Model.ecsv",
+      "caption": "Model components adopted for the Milky-Way.",
+      "label": "table:Gal-Model",
+      "row_count": 9,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value"
+        ],
+        [
+          "Buldge component a",
+          ""
+        ],
+        [
+          "mass [10^10M_\\odot ]",
+          "0.5 +/- 0.25"
+        ],
+        [
+          "cut-off radius [kpc]",
+          "1.9"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter | Buldge component a | mass [10^10M_\\odot ] | cut-off radius [kpc]",
+          "unit_text": "mass [10^10M_\\odot ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value | 0.5 +/- 0.25 | 1.9",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprmnwmtpe/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.09501/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprmnwmtpe/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.09501/catalog_sources/table-Gal-Model/wrapped.tex",
+            "html": "literature/1810.09501/catalog_sources/table-Gal-Model/latexml.html",
+            "stdout": "literature/1810.09501/catalog_sources/table-Gal-Model/latexml.stdout.txt",
+            "stderr": "literature/1810.09501/catalog_sources/table-Gal-Model/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5d620fa412aff04f04c81116065ceb0e2fea42779844786330ed595f57e66d1d"
+    }
+  ]
+}

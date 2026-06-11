@@ -1,0 +1,1279 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2102.10210",
+    "title": "Bayesian Cross-Matching of High Proper Motion Stars in Gaia DR2 and Photometric Metallicities for $\\\\sim$1.7 million K and M Dwarfs",
+    "month": "2021-02",
+    "source_note_json": "notes/2021/2021-02/2021-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2102.10210",
+      "pdf": "https://arxiv.org/pdf/2102.10210"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2102.10210",
+    "audit_path": "literature/2102.10210/audit.json",
+    "source_dir": "literature/2102.10210/arxiv_source",
+    "tex_root": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:30:00",
+    "reviewer": "agent",
+    "summary": "本文提出了一个贝叶斯交叉匹配方法，将 Gaia DR2 中 5,827,988 颗高自行恒星（μ>40 mas/yr）与 2MASS、AllWISE、GALEX、RAVE、SDSS 和 Pan-STARRS 等测光星表进行匹配。论文包含 13 个内部表格：1 个匹配率汇总表、1 个最佳匹配星表列描述表、6 个全部可能的交叉匹配候选表（每个外部星表一个）、1 个匹配率对比表、2 个多项式拟合参数表（K/M 矮星单星主序带拟合）、2 个测光金属丰度星表（716,651 颗 K/早 M 矮星和 1,030,761 颗 M 矮星）。外部资源包括 3 个 GitHub 代码仓库（交叉匹配代码、GPR 金属丰度回归器代码、Davenport 2019 回归器代码）以及 2 个方法文档链接。所有含数据的机器可读表格均以电子版形式随论文发表。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-best_match_results",
+      "kind": "latex_table",
+      "asset_type": "summary_statistics_table",
+      "role_in_paper": "汇总各外部星表的高概率（>95%）交叉匹配成功率",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 280,
+          "end_line": 291,
+          "caption": "Number of sources matched with a total probability $>95\\%$\\label{tab:best_match_results}",
+          "label": "tab:best_match_results"
+        }
+      ],
+      "columns": [
+        {
+          "name": "External Catalog",
+          "meaning": "外部测光星表名称",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "% Matched",
+          "meaning": "总概率 >95% 的匹配源所占百分比",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Table 1 展示了 2MASS (75.40%), AllWISE (75.17%), GALEX DR5 (8.36%), RAVE DR5 (0.63%), SDSS DR12 (30.69%), Pan-STARRS (68.63%) 的匹配率。",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-best_match_results_descrip",
+      "kind": "latex_table",
+      "asset_type": "column_description_table",
+      "role_in_paper": "描述最佳匹配机器可读星表的 82 列数据格式与含义",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 296,
+          "end_line": 408,
+          "caption": "Best matches found in this study with a Bayesian probability greater than 95\\% for all cross matches in this study.\\label{tab:best_match_results_descrip}",
+          "label": "tab:best_match_results_descrip"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Column Number",
+          "meaning": "列序号（1-82）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Label",
+          "meaning": "列标签（如 GaiaDR2_ID, Gmag_GaiaDR2 等）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Units",
+          "meaning": "列数据的物理单位",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Column Description",
+          "meaning": "列内容的详细描述",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Table 2 详细列出了包含 Gaia DR2 ID、Gaia 测光/天体测量、以及六个外部星表（SDSS, 2MASS, AllWISE, GALEX, Pan-STARRS, RAVE）的匹配 ID、星等及其误差、坐标、贝叶斯概率和角距离等 82 列信息。",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-2MASS_all_matches",
+      "kind": "latex_table",
+      "asset_type": "object_cross_match_table",
+      "role_in_paper": "Gaia 与 2MASS 全部可能的交叉匹配候选星表（机器可读格式），含贝叶斯概率",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 413,
+          "end_line": 431,
+          "caption": "All of the possible matches for the cross match between \\textit{Gaia} and 2MASS. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:2MASS_all_matches}",
+          "label": "tab:2MASS_all_matches"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia ID",
+          "meaning": "Gaia DR2 源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "G | [mag]",
+          "meaning": "Gaia G 波段星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\alpha_Gaia | [deg]",
+          "meaning": "Gaia 源在 J2015.5 历元的赤经",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\delta_Gaia | [deg]",
+          "meaning": "Gaia 源在 J2015.5 历元的赤纬",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "2MASS ID",
+          "meaning": "2MASS 源标识符（hhmmssss+ddmmsss 格式）",
+          "unit_text": "2MASS ID",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "J | [mag]",
+          "meaning": "2MASS J 波段默认星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_J | [mag]",
+          "meaning": "2MASS J 波段综合测光误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "H | [mag]",
+          "meaning": "2MASS H 波段默认星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_H | [mag]",
+          "meaning": "2MASS H 波段综合测光误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "K | [mag]",
+          "meaning": "2MASS Ks 波段默认星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_K | [mag]",
+          "meaning": "2MASS Ks 波段综合测光误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\alpha_2MASS | [deg]",
+          "meaning": "2MASS 源赤经（J2000）",
+          "unit_text": "\\colhead\\alpha_2MASS",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\delta_2MASS | [deg]",
+          "meaning": "2MASS 源赤纬（J2000）",
+          "unit_text": "\\colhead\\delta_2MASS",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Bayes Prob.",
+          "meaning": "2MASS 源与 Gaia 源匹配的总贝叶斯概率",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\Delta\\theta | [arcsec]",
+          "meaning": "2MASS 源与 Gaia 源在 2MASS 平均历元处的角距离",
+          "unit_text": "[arcsec]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Table 3 列出了 Gaia ID、G 星等、Gaia 坐标、2MASS ID、J/H/Ks 星等及误差、2MASS 坐标、贝叶斯概率和角距离。论文说明此表以机器可读格式完整发布。",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-ALLWISE_all_matches",
+      "kind": "latex_table",
+      "asset_type": "object_cross_match_table",
+      "role_in_paper": "Gaia 与 AllWISE 全部可能的交叉匹配候选星表（机器可读格式），含贝叶斯概率",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 437,
+          "end_line": 456,
+          "caption": "All of the possible matches for the cross match between \\textit{Gaia} and AllWISE. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:ALLWISE_all_matches}",
+          "label": "tab:ALLWISE_all_matches"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia ID",
+          "meaning": "Gaia DR2 源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "G | [mag]",
+          "meaning": "Gaia G 波段星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\alpha_Gaia | [deg]",
+          "meaning": "Gaia 源赤经（J2015.5）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\delta_Gaia | [deg]",
+          "meaning": "Gaia 源赤纬（J2015.5）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "AllWISE ID",
+          "meaning": "AllWISE 源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "W1 | [mag]",
+          "meaning": "AllWISE W1 波段（3.4 μm）星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_W1 | [mag]",
+          "meaning": "AllWISE W1 波段星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "W2 | [mag]",
+          "meaning": "AllWISE W2 波段（4.6 μm）星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_W2 | [mag]",
+          "meaning": "AllWISE W2 波段星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "W3 | [mag]",
+          "meaning": "AllWISE W3 波段（12 μm）星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_W3 | [mag]",
+          "meaning": "AllWISE W3 波段星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "W4 | [mag]",
+          "meaning": "AllWISE W4 波段（22 μm）星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_W4 | [mag]",
+          "meaning": "AllWISE W4 波段星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\alpha_AllWISE | [deg]",
+          "meaning": "AllWISE 源赤经（J2000）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\delta_AllWISE | [deg]",
+          "meaning": "AllWISE 源赤纬（J2000）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Bayes Prob.",
+          "meaning": "AllWISE 源与 Gaia 源匹配的总贝叶斯概率",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\Delta\\theta | [arcsec]",
+          "meaning": "AllWISE 源与 Gaia 源在 AllWISE 平均历元处的角距离",
+          "unit_text": "[arcsec]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Table 4 列出了 Gaia ID、G 星等、Gaia 坐标、AllWISE ID、W1/W2/W3/W4 星等及误差、AllWISE 坐标、贝叶斯概率和角距离。",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-GALEX_all_matches",
+      "kind": "latex_table",
+      "asset_type": "object_cross_match_table",
+      "role_in_paper": "Gaia 与 GALEX DR5 全部可能的交叉匹配候选星表（机器可读格式），含贝叶斯概率",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 460,
+          "end_line": 478,
+          "caption": "All of the possible matches for the cross match between \\textit{Gaia} and GALEX DR5. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:GALEX_all_matches}",
+          "label": "tab:GALEX_all_matches"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia ID",
+          "meaning": "Gaia DR2 源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "G | [mag]",
+          "meaning": "Gaia G 波段星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\alpha_Gaia | [deg]",
+          "meaning": "Gaia 源赤经（J2015.5）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\delta_Gaia | [deg]",
+          "meaning": "Gaia 源赤纬（J2015.5）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "GALEX DR5 ID",
+          "meaning": "GALEX DR5 源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "FUV | [mag]",
+          "meaning": "GALEX FUV 波段（1344-1786 Å）星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_FUV | [mag]",
+          "meaning": "GALEX FUV 波段星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "NUV | [mag]",
+          "meaning": "GALEX NUV 波段（1771-2831 Å）星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_NUV | [mag]",
+          "meaning": "GALEX NUV 波段星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\alpha_GALEX | [deg]",
+          "meaning": "GALEX 源赤经（J2000）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\delta_GALEX | [deg]",
+          "meaning": "GALEX 源赤纬（J2000）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Bayes Prob.",
+          "meaning": "GALEX 源与 Gaia 源匹配的总贝叶斯概率",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\Delta\\theta | [arcsec]",
+          "meaning": "GALEX 源与 Gaia 源在 GALEX 平均历元处的角距离",
+          "unit_text": "[arcsec]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Table 5 列出了 Gaia ID、G 星等、Gaia 坐标、GALEX DR5 ID、FUV/NUV 星等及误差、GALEX 坐标、贝叶斯概率和角距离。",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-PS1_all_matches",
+      "kind": "latex_table",
+      "asset_type": "object_cross_match_table",
+      "role_in_paper": "Gaia 与 Pan-STARRS 全部可能的交叉匹配候选星表（机器可读格式），含贝叶斯概率",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 484,
+          "end_line": 503,
+          "caption": "All of the possible matches for the cross match between \\textit{Gaia} and Pan-STARRS. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:PS1_all_matches}",
+          "label": "tab:PS1_all_matches"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia ID",
+          "meaning": "Gaia DR2 源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "G | [mag]",
+          "meaning": "Gaia G 波段星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\alpha_Gaia | [deg]",
+          "meaning": "Gaia 源赤经（J2015.5）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\delta_Gaia | [deg]",
+          "meaning": "Gaia 源赤纬（J2015.5）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Pan-STARRS ID",
+          "meaning": "Pan-STARRS 源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "g | [mag]",
+          "meaning": "Pan-STARRS g 波段星等（AB 星等系统）",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_g | [mag]",
+          "meaning": "Pan-STARRS g 波段星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "r | [mag]",
+          "meaning": "Pan-STARRS r 波段星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_r | [mag]",
+          "meaning": "Pan-STARRS r 波段星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "i | [mag]",
+          "meaning": "Pan-STARRS i 波段星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_i | [mag]",
+          "meaning": "Pan-STARRS i 波段星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "z | [mag]",
+          "meaning": "Pan-STARRS z 波段星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_z | [mag]",
+          "meaning": "Pan-STARRS z 波段星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "y | [mag]",
+          "meaning": "Pan-STARRS y 波段星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_y | [mag]",
+          "meaning": "Pan-STARRS y 波段星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\alpha_PS1 | [deg]",
+          "meaning": "Pan-STARRS 源赤经（J2000）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\delta_PS1 | [deg]",
+          "meaning": "Pan-STARRS 源赤纬（J2000）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Bayes Prob.",
+          "meaning": "Pan-STARRS 源与 Gaia 源匹配的总贝叶斯概率",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\Delta\\theta | [arcsec]",
+          "meaning": "Pan-STARRS 源与 Gaia 源在 Pan-STARRS 平均历元处的角距离",
+          "unit_text": "[arcsec]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Table 6 列出了 Gaia ID、G 星等、Gaia 坐标、Pan-STARRS ID、g/r/i/z/y 星等及误差、Pan-STARRS 坐标、贝叶斯概率和角距离。",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-SDSS_all_matches",
+      "kind": "latex_table",
+      "asset_type": "object_cross_match_table",
+      "role_in_paper": "Gaia 与 SDSS DR12 全部可能的交叉匹配候选星表（机器可读格式），含贝叶斯概率",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 509,
+          "end_line": 528,
+          "caption": "All of the possible matches for the cross match between \\textit{Gaia} and SDSS DR12. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:SDSS_all_matches}",
+          "label": "tab:SDSS_all_matches"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia ID",
+          "meaning": "Gaia DR2 源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "G | [mag]",
+          "meaning": "Gaia G 波段星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\alpha_Gaia | [deg]",
+          "meaning": "Gaia 源赤经（J2015.5）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\delta_Gaia | [deg]",
+          "meaning": "Gaia 源赤纬（J2015.5）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "SDSS DR12 ID",
+          "meaning": "SDSS DR12 源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "u | [mag]",
+          "meaning": "SDSS u 波段星等（AB 星等系统）",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_u | [mag]",
+          "meaning": "SDSS u 波段星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "g | [mag]",
+          "meaning": "SDSS g 波段星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_g | [mag]",
+          "meaning": "SDSS g 波段星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "r | [mag]",
+          "meaning": "SDSS r 波段星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_r | [mag]",
+          "meaning": "SDSS r 波段星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "i | [mag]",
+          "meaning": "SDSS i 波段星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_i | [mag]",
+          "meaning": "SDSS i 波段星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "z | [mag]",
+          "meaning": "SDSS z 波段星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_z | [mag]",
+          "meaning": "SDSS z 波段星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\alpha_SDSS | [deg]",
+          "meaning": "SDSS 源赤经（ICRS）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\delta_SDSS | [deg]",
+          "meaning": "SDSS 源赤纬（ICRS）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Bayes Prob.",
+          "meaning": "SDSS 源与 Gaia 源匹配的总贝叶斯概率",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\Delta\\theta | [arcsec]",
+          "meaning": "SDSS 源与 Gaia 源在 SDSS 平均历元处的角距离",
+          "unit_text": "[arcsec]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Table 7 列出了 Gaia ID、G 星等、Gaia 坐标、SDSS DR12 ID、u/g/r/i/z 星等及误差、SDSS 坐标、贝叶斯概率和角距离。",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-RAVE_all_matches",
+      "kind": "latex_table",
+      "asset_type": "object_cross_match_table",
+      "role_in_paper": "Gaia 与 RAVE DR5 全部可能的交叉匹配候选星表（机器可读格式），含贝叶斯概率",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 533,
+          "end_line": 552,
+          "caption": "All of the possible matches for the cross match between \\textit{Gaia} and RAVE DR5. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:RAVE_all_matches}",
+          "label": "tab:RAVE_all_matches"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia ID",
+          "meaning": "Gaia DR2 源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "G | [mag]",
+          "meaning": "Gaia G 波段星等",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\alpha_Gaia | [deg]",
+          "meaning": "Gaia 源赤经（J2015.5）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\delta_Gaia | [deg]",
+          "meaning": "Gaia 源赤纬（J2015.5）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "RAVE DR5 ID",
+          "meaning": "RAVE DR5 源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "B_T | [mag]",
+          "meaning": "Tycho-2 BT 星等（取自 RAVE DR5）",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_B_T | [mag]",
+          "meaning": "Tycho-2 BT 星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "V_T | [mag]",
+          "meaning": "Tycho-2 VT 星等（取自 RAVE DR5）",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_V_T | [mag]",
+          "meaning": "Tycho-2 VT 星等误差",
+          "unit_text": "[mag]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\alpha_RAVE | [deg]",
+          "meaning": "RAVE 源赤经（J2000）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\delta_RAVE | [deg]",
+          "meaning": "RAVE 源赤纬（J2000）",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Bayes Prob.",
+          "meaning": "RAVE 源与 Gaia 源匹配的总贝叶斯概率",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\Delta\\theta | [arcsec]",
+          "meaning": "RAVE 源与 Gaia 源在 RAVE 平均历元处的角距离",
+          "unit_text": "[arcsec]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Table 8 列出了 Gaia ID、G 星等、Gaia 坐标、RAVE DR5 ID、BT/VT 星等及误差、RAVE 坐标、贝叶斯概率和角距离。",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-KM_poly",
+      "kind": "latex_table",
+      "asset_type": "fitting_parameters_table",
+      "role_in_paper": "K 和早 M 矮星在 13 个金属丰度区间内的单星主序带四次多项式拟合系数，用于剔除未分辨双星",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 568,
+          "end_line": 587,
+          "caption": "Polynomial fits to the single star main sequence for thirteen bins of metallicity for K and early M dwarfs. Coefficients of the polynomial fits describe the relationship $y=a_0+a_1x+a_2x^2+a_3x^3+a_4x^4$ where $y=M_{K}$ and $x=g-W1$. The last two columns of the table give the mean offset and standard deviation, in absolute magnitude, from the relationship; these are used to identify stars deemed over- or under-luminous. \\label{tab:KM_poly}",
+          "label": "tab:KM_poly"
+        }
+      ],
+      "columns": [
+        {
+          "name": "M/H Range",
+          "meaning": "金属丰度 bin 范围（[M/H] dex）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "a_0",
+          "meaning": "多项式常数项系数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "a_1",
+          "meaning": "多项式一次项系数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "a_2",
+          "meaning": "多项式二次项系数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "a_3",
+          "meaning": "多项式三次项系数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "a_4",
+          "meaning": "多项式四次项系数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\overlined_M",
+          "meaning": "该 bin 内恒星相对拟合关系的平均绝对星等偏移",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_d_M",
+          "meaning": "该 bin 内恒星相对拟合关系的绝对星等标准差",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Table 9 给出了 y=M_K 与 x=g-W1 关系中各金属丰度 bin（-0.8 到 +0.5 dex）的多项式系数 a0-a4，以及用于判定过亮/过暗星的 d_M 均值和标准差。",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-M_poly",
+      "kind": "latex_table",
+      "asset_type": "fitting_parameters_table",
+      "role_in_paper": "M 矮星在 13 个金属丰度区间内的单星主序带四次多项式拟合系数，用于剔除未分辨双星",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 612,
+          "end_line": 630,
+          "caption": "Polynomial fits to the single star main sequence for thirteen bins of metallicity for M dwarfs. Coefficients of the polynomial fits describe the relationship $y=a_0+a_1x+a_2x^2+a_3x^3+a_4x^4$ where $y=M_{W1}$ and $x=g-W1$. The last two columns of the table give the mean offset and standard deviation, in absolute magnitude, from the relationship; these are used to identify stars deemed over- or under-luminous.\\label{tab:M_poly}",
+          "label": "tab:M_poly"
+        }
+      ],
+      "columns": [
+        {
+          "name": "M/H Range",
+          "meaning": "金属丰度 bin 范围（[M/H] dex）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "a_0",
+          "meaning": "多项式常数项系数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "a_1",
+          "meaning": "多项式一次项系数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "a_2",
+          "meaning": "多项式二次项系数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "a_3",
+          "meaning": "多项式三次项系数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "a_4",
+          "meaning": "多项式四次项系数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\overlined_M",
+          "meaning": "该 bin 内恒星相对拟合关系的平均绝对星等偏移",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_d_M",
+          "meaning": "该 bin 内恒星相对拟合关系的绝对星等标准差",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Table 10 给出了 y=M_W1 与 x=g-W1 关系中各金属丰度 bin 的多项式系数 a0-a4，以及 d_M 均值和标准差。论文指出金属贫乏 bin 的拟合未完全收敛。",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-best_match_results_compare",
+      "kind": "latex_table",
+      "asset_type": "comparison_table",
+      "role_in_paper": "将本研究的交叉匹配成功率与 Gaia DR2 内部交叉匹配（gaia_cross_match）进行对比",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 654,
+          "end_line": 666,
+          "caption": "Number of high proper motion sources matched with a total probability $>95\\%$\\label{tab:best_match_results_compare}",
+          "label": "tab:best_match_results_compare"
+        }
+      ],
+      "columns": [
+        {
+          "name": "External Catalog",
+          "meaning": "外部星表名称",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "% Matched | \\colhead[\\citetgaia_cross_match]",
+          "meaning": "Gaia DR2 内部交叉匹配的匹配率",
+          "unit_text": "\\colhead[\\citetgaia_cross_match]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "% Matched | [This Study]",
+          "meaning": "本研究贝叶斯方法的匹配率",
+          "unit_text": "[This Study]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Table 11 显示本方法在 Pan-STARRS（68.63% vs 14.3%）和 SDSS（30.69% vs 27.9%）上有显著改进，在 2MASS 和 AllWISE 上略有提升，RAVE 略低。",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-K_metals",
+      "kind": "latex_table",
+      "asset_type": "object_measurement_table",
+      "role_in_paper": "使用高斯过程回归器预测的 716,651 颗 K 和早 M 矮星的测光金属丰度星表（机器可读格式）",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 735,
+          "end_line": 751,
+          "caption": "List of predicted metallicities for 716,651 K and early M dwarfs using the Gaussian Process Regressor outlined in Section \\ref{sec:KM_metals}. The regressor uses the following data inputs, $M_g$, $g-y$, $y-W2$, $J-W2$, $W1-W2$, and stars are included only if they pass the single star polynomial cuts outline in Table \\ref{tab:KM_poly}.\\label{tab:K_metals}",
+          "label": "tab:K_metals"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia ID",
+          "meaning": "Gaia DR2 源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\alpha_Gaia | [deg]",
+          "meaning": "Gaia 源赤经",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\delta_Gaia | [deg]",
+          "meaning": "Gaia 源赤纬",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "M/H | [dex]",
+          "meaning": "高斯过程回归器预测的金属丰度",
+          "unit_text": "[dex]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_M/H | [dex]",
+          "meaning": "预测金属丰度的标准偏差",
+          "unit_text": "[dex]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Table 12 包含 Gaia ID、Gaia 坐标、预测金属丰度 [M/H] 及误差 σ_M/H。回归器输入为 M_g, g-y, y-W2, J-W2, W1-W2，仅包含通过单星多项式筛选的源。",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-M_metals",
+      "kind": "latex_table",
+      "asset_type": "object_measurement_table",
+      "role_in_paper": "使用高斯过程回归器预测的 1,030,761 颗 M 矮星的测光金属丰度星表（机器可读格式）",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 754,
+          "end_line": 770,
+          "caption": "List of predicted metallicities for 1,030,761 M dwarfs using the Gaussian Process Regressor outlined in Section \\ref{sec:M_metals}. The regressor uses the following data inputs, $M_r$, $r-W1$ and $i-K$, and stars are included only if they pass the single star polynomial cuts outline in Table \\ref{tab:M_poly}.\\label{tab:M_metals}",
+          "label": "tab:M_metals"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia ID",
+          "meaning": "Gaia DR2 源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\alpha_Gaia | [deg]",
+          "meaning": "Gaia 源赤经",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\delta_Gaia | [deg]",
+          "meaning": "Gaia 源赤纬",
+          "unit_text": "[deg]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "M/H | [dex]",
+          "meaning": "高斯过程回归器预测的金属丰度",
+          "unit_text": "[dex]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\colhead\\sigma_M/H | [dex]",
+          "meaning": "预测金属丰度的标准偏差",
+          "unit_text": "[dex]",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Table 13 包含 Gaia ID、Gaia 坐标、预测金属丰度 [M/H] 及误差 σ_M/H。回归器输入为 M_r, r-W1, i-K，训练集基于宽双星系统中的 M 矮星伴星。",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://wise2.ipac.caltech.edu/docs/release/allwise/expsup/sec2_1.html",
+      "local_path": "",
+      "description": "AllWISE 数据发布说明文档：W1<8 和 W2<7 时的饱和问题说明",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 83,
+          "end_line": 83,
+          "context": "\\subsubsection{AllWISE}\n\nThe  Wide-field  Infrared Survey  Explorer  (WISE) operated between January 2010 and July 2010 and collected photometry for the entirety of the sky in four infrared bands: $W1$ (3.4 $\\mu$m), $W2$ (4.6 $\\mu$m), $W3$ (12 $\\mu$m), and $W4$ (22 $\\mu$m) \\citep{wise}. For this study, we have opted to use the updated version of the catalog, AllWISE, which has enhanced sensitivity and accuracy compared with earlier WISE data releases \\citep{allwise}. This release consists of 747,634,026 individual sources. Readers should be aware that the AllWISE release results in saturation issues for photometric measurements of W1 $<8$ and W2 $<7$\\footnote{\\url{https://wise2.ipac.caltech.edu/docs/release/allwise/expsup/sec2_1.html}}. For the high proper motion sample used in this study, such stars make up a small portion of the overall sample ($<1.5\\%$).\n\n\\subsubsection{GALEX DR5}"
+        }
+      ],
+      "evidence": "论文脚注说明 AllWISE 在亮端存在饱和问题，引用此官方文档。",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://skyserver.sdss.org/dr12/en/tools/chart/listinfo.aspx",
+      "local_path": "",
+      "description": "SDSS DR12 在线图像工具（Skyserver），用于展示亮源 PSF 的'盲区'效应",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 176,
+          "end_line": 176,
+          "context": "Frequency distributions are also determined for stars in the true sample, but, as mentioned, these distributions are contaminated by the presence of random field stars. In order to account for the components of the distribution due to these random field stars, the frequency distributions of the displaced samples are used. Under ideal circumstances, the number of random field stars should be the same in both samples, and simple subtraction of the two distributions should suffice in inferring the component of the distribution for the true cross-match that is equivalent to $P(\\vec{x}|H_1)$.\n\nThis is not necessarily the case for our distributions though. When performing the search for the displaced sample, all pointings are randomized and are most likely not falling in the immediate vicinity of a bright source. This is however not the case for the true cross-match, since many of the $Gaia$ sources are matched with bright sources in these external catalogs. In these cases, the PSFs of these bright sources outshines some of these random field stars and leaves them missing from the catalog and from our inferred statistical distribution. This ``blind spot\" effect can be seen in Figure \\ref{fig:bright_source_ex}, which shows an SDSS image made using the SDSS DR12 Image Tool\\footnote{https://skyserver.sdss.org/dr12/en/tools/chart/listinfo.aspx}. In this image, the PSF effectively extends nearly 10 arcseconds from the center of the object. This effect is present in all external catalogs and has an obvious effect on the frequency distributions for the true cross-match. An example of the resulting effect is shown in Figure \\ref{fig:zone_ex}, where, when comparing the two distributions, a large gap in dim stars at short angular separations is observed. In Figure \\ref{fig:zone_ex}, the median and 68th percentile of $W1-G$ as a function of $\\theta$ is shown, where quantiles are found using COBS \\citep{cobs}. These quantiles demonstrate that only at very large angular separations does the distribution of the true sample begin to match that of the displaced sample due to this ``outshining\" effect.\n\n\\begin{figure}"
+        }
+      ],
+      "evidence": "论文通过该工具生成的 SDSS 图像（Figure 2）展示亮源 PSF 如何掩盖周围的暗弱场星。",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://github.com/imedan/bayes_match",
+      "local_path": "",
+      "description": "论文交叉匹配方法的 GitHub 代码仓库（imedan/bayes_match），包含可复现交叉匹配结果的代码",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 293,
+          "end_line": 293,
+          "context": "\\end{deluxetable}\n\nThe catalog of ``best matches\", i.e. where the \\textit{Gaia} sources have a counterpart with total probability $>95\\%$, is presented in Table \\ref{tab:best_match_results_descrip}. As a supplement, Tables \\ref{tab:2MASS_all_matches}-\\ref{tab:RAVE_all_matches} give all possible matches for each of the cross matches such that the user can vary the tolerances and obtain alternate and/or additional matches to the \\textit{Gaia} sources. The code needed to reproduce these results, or perform additional cross-matches, can also be found on our GitHub repository\\footnote{\\url{https://github.com/imedan/bayes_match}}.\n\n\\begin{longrotatetable}"
+        }
+      ],
+      "evidence": "论文指出交叉匹配代码可在该 GitHub 仓库获取。",
+      "comments": ""
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "https://github.com/imedan/gpr_metallicity_relationship",
+      "local_path": "",
+      "description": "训练好的高斯过程回归器（scikit-learn）及示例代码仓库（imedan/gpr_metallicity_relationship）",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 604,
+          "end_line": 604,
+          "context": "\\end{figure*}\n\nThe actual regressor can be loaded via a Python script; the file with the trained \\textit{scikit-learn} regressor, along with example code to load and use the regressor to predict metallicites, are hosted on our GitHub repository (\\url{https://github.com/imedan/gpr_metallicity_relationship}).\n\n\\subsection{M Dwarf Relationship}\\label{sec:M_metals}"
+        }
+      ],
+      "evidence": "论文说明训练好的回归器文件及加载/使用示例代码托管在此 GitHub 仓库。",
+      "comments": ""
+    },
+    {
+      "id": "resource-009",
+      "kind": "external_url",
+      "url": "https://github.com/jradavenport/ingot",
+      "local_path": "",
+      "description": "Davenport 2019 的 k-最近邻回归器代码仓库（jradavenport/ingot），用于对比验证",
+      "source_refs": [
+        {
+          "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+          "start_line": 720,
+          "end_line": 720,
+          "context": "\\end{figure*}\n\n\\citet{davenport2019} also used a machine learning technique, with a k-nearest neighbors regressor, in order to estimate photometric metallicities. They have provided their code and data set used for training\\footnote{https://github.com/jradavenport/ingot}, and we have used these to predict metallicites for their training sample. We have also included $M_G$ as part of the inputs for their regressor, which they note improves the final results. The results from the \\citet{davenport2019} regressor are shown in Figure \\ref{fig:KM_regress_results_davenport} for comparison. The scatter in the distribution is found to be comparable to that from our own regressor, although the tails of our scatter distribution are much lower, the systematic trend of the metallicities of metal-poor stars being over-estimated, and the metallicities of metal-rich stars being underestimated is however stronger in the \\citet{davenport2019} regressor results, suggesting that the sample used for training includes contaminates in the form of unresolved binaries which are skewing the results.\n\n\\begin{figure*}"
+        }
+      ],
+      "evidence": "论文使用该仓库的代码和数据对训练样本进行金属丰度预测以作对比（Figure 17）。",
+      "comments": ""
+    }
+  ]
+}

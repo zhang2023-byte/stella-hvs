@@ -1,0 +1,1187 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:39:00",
+  "paper": {
+    "arxiv_id": "1804.10607",
+    "title": "Gaia DR2 in 6D: Searching for the fastest stars in the Galaxy",
+    "month": "2018-04"
+  },
+  "review": {
+    "path": "literature/1804.10607/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083900",
+    "started_at": "2026-06-07T08:39:00",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1804.10607",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 9,
+      "work_count": 9,
+      "table_count": 9,
+      "success_count": 9,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 9,
+      "file_success_count": 9,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-potential",
+      "internal_table_id": "table-tab-potential",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.10607/arxiv_source/GaiaDR2_highV.tex",
+        "start_line": 244,
+        "end_line": 263,
+        "caption": "Parameters for the \\textsc{Gala} potential \\emph{MilkyWayPotential}.",
+        "label": "tab:potential"
+      },
+      "source_path": "literature/1804.10607/arxiv_source/GaiaDR2_highV.tex",
+      "excerpt_path": "literature/1804.10607/catalog_sources/table-tab-potential/excerpt.tex",
+      "sha256": "5f9a88256e1f87c3cfada93ca0f7a64aedf7c967609c45732c371a8647a98c5a",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-candidates",
+      "internal_table_id": "table-tab-candidates",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.10607/arxiv_source/tab_candidates.tex",
+        "start_line": 2,
+        "end_line": 57,
+        "caption": "Observed and derived properties for the $20$ \"clean\" high velocity star candidates with a probability $> 80\\%$ of being unbound from the Galaxy. Stars are sorted by decreasing $P_\\mathrm{ub}$.",
+        "label": "tab:candidates"
+      },
+      "source_path": "literature/1804.10607/arxiv_source/tab_candidates.tex",
+      "excerpt_path": "literature/1804.10607/catalog_sources/table-tab-candidates/excerpt.tex",
+      "sha256": "ed42b342569d557fcf86ebd85bea4d8e5f0c178ed15e33a604d43fff0eccb578",
+      "line_count": 56,
+      "error": ""
+    },
+    {
+      "id": "table-tab-candidates_0.5",
+      "internal_table_id": "table-tab-candidates_0.5",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.10607/arxiv_source/tab_candidates_0.5.tex",
+        "start_line": 1,
+        "end_line": 68,
+        "caption": "Distances and total velocities in the Galactic rest frame for the $105$ ``clean\" high velocity star candidates with $0.5 < P_\\mathrm{ub} \\leq 0.8$. Sources are sorted by decreasing $P_\\mathrm{ub}$.",
+        "label": "tab:candidates_0.5"
+      },
+      "source_path": "literature/1804.10607/arxiv_source/tab_candidates_0.5.tex",
+      "excerpt_path": "literature/1804.10607/catalog_sources/table-tab-candidates_0.5/excerpt.tex",
+      "sha256": "8e5d5e34869e5aa7a4fa7249970a4457256773a9bd3ff0215fdb8f38797af185",
+      "line_count": 68,
+      "error": ""
+    },
+    {
+      "id": "table-tab-candidates_0.5-2",
+      "internal_table_id": "table-tab-candidates_0.5-2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.10607/arxiv_source/tab_candidates_0.5_cont.tex",
+        "start_line": 1,
+        "end_line": 69,
+        "caption": "",
+        "label": "tab:candidates_0.5"
+      },
+      "source_path": "literature/1804.10607/arxiv_source/tab_candidates_0.5_cont.tex",
+      "excerpt_path": "literature/1804.10607/catalog_sources/table-tab-candidates_0.5-2/excerpt.tex",
+      "sha256": "175fe9c80e72d4d2f87a879efeb8c1e7505d2b4a52882c234f626622605e3bd0",
+      "line_count": 69,
+      "error": ""
+    },
+    {
+      "id": "table-tab-candidates_0.5-3",
+      "internal_table_id": "table-tab-candidates_0.5-3",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.10607/arxiv_source/tab_candidates_0.5_cont_2.tex",
+        "start_line": 1,
+        "end_line": 42,
+        "caption": "",
+        "label": "tab:candidates_0.5"
+      },
+      "source_path": "literature/1804.10607/arxiv_source/tab_candidates_0.5_cont_2.tex",
+      "excerpt_path": "literature/1804.10607/catalog_sources/table-tab-candidates_0.5-3/excerpt.tex",
+      "sha256": "78787f8b34b5c4f0ee2955c9196456285faa71b1543c354ea77ca3ee59354d7c",
+      "line_count": 42,
+      "error": ""
+    },
+    {
+      "id": "table-tab-candidates_inflated_erros",
+      "internal_table_id": "table-tab-candidates_inflated_erros",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.10607/arxiv_source/tab_candidates_inflated_errors.tex",
+        "start_line": 1,
+        "end_line": 49,
+        "caption": "Distances and total velocities in the Galactic rest frame for the $20$ ``clean\" high velocity star candidates with $P_\\mathrm{ub} > 0.8$ presented in Table \\ref{tab:candidates}. Parallax uncertainties are inflated according to equation \\eqref{eq:inflated_errors}. For comparison, stars are sorted as in Table \\ref{tab:candidates}.",
+        "label": "tab:candidates_inflated_erros"
+      },
+      "source_path": "literature/1804.10607/arxiv_source/tab_candidates_inflated_errors.tex",
+      "excerpt_path": "literature/1804.10607/catalog_sources/table-tab-candidates_inflated_erros/excerpt.tex",
+      "sha256": "638796e9552f6f44b07a617c6cb82eb4329ca4e537c2d1d703f204eccce5ad78",
+      "line_count": 49,
+      "error": ""
+    },
+    {
+      "id": "table-tab-candidates-2",
+      "internal_table_id": "table-tab-candidates-2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.10607/arxiv_source/tab_candidates_old.tex",
+        "start_line": 2,
+        "end_line": 67,
+        "caption": "Observed and derived properties for the $28$ \"clean\" high velocity star candidates with a probability $> 50\\%$ of being unbound from the Galaxy.",
+        "label": "tab:candidates"
+      },
+      "source_path": "literature/1804.10607/arxiv_source/tab_candidates_old.tex",
+      "excerpt_path": "literature/1804.10607/catalog_sources/table-tab-candidates-2/excerpt.tex",
+      "sha256": "335d6879b59dffdda20591e5472a8a73c2dc2b0604011c335de7830f743a34ea",
+      "line_count": 66,
+      "error": ""
+    },
+    {
+      "id": "table-tab-candidates_zp",
+      "internal_table_id": "table-tab-candidates_zp",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.10607/arxiv_source/tab_candidates_zp.tex",
+        "start_line": 1,
+        "end_line": 49,
+        "caption": "Distances and total velocities in the Galactic rest frame for the $20$ ``clean\" high velocity star candidates with $P_\\mathrm{ub} > 0.8$ presented in Table \\ref{tab:candidates}, including the $-0.029$ mas global parallax offset. For comparison, stars are sorted as in Table \\ref{tab:candidates}.",
+        "label": "tab:candidates_zp"
+      },
+      "source_path": "literature/1804.10607/arxiv_source/tab_candidates_zp.tex",
+      "excerpt_path": "literature/1804.10607/catalog_sources/table-tab-candidates_zp/excerpt.tex",
+      "sha256": "e1aa8314d7a84968dea334129f705ddcc5c9b9e4e91f7b5be44e152cf1dd46f1",
+      "line_count": 49,
+      "error": ""
+    },
+    {
+      "id": "table-tab-catalogue",
+      "internal_table_id": "table-tab-catalogue",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.10607/arxiv_source/tab_catalogue.tex",
+        "start_line": 1,
+        "end_line": 81,
+        "caption": "Catalogue description. Derived distances and velocities correspond to the median of the distribution, and lower and upper uncertainties are derived, respectively, from the $16$th and $84$th percentiles of the distribution function. Entries labelled $^1$ are derived in this paper, while entries labelled $^2$ are taken from the \\Gaia DR2 catalogue \\citep{gaiadr2}.",
+        "label": "tab:catalogue"
+      },
+      "source_path": "literature/1804.10607/arxiv_source/tab_catalogue.tex",
+      "excerpt_path": "literature/1804.10607/catalog_sources/table-tab-catalogue/excerpt.tex",
+      "sha256": "fa9b2f4ab2a1a7c016aa8472673ccf80322fac9cbe739359f0329e2d07410094",
+      "line_count": 81,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-potential",
+      "internal_table_id": "table-tab-potential",
+      "status": "success",
+      "ecsv_path": "literature/1804.10607/catalog_tables/table-tab-potential.ecsv",
+      "caption": "Parameters for the \\textsc{Gala} potential \\emph{MilkyWayPotential}.",
+      "label": "tab:potential",
+      "row_count": 9,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Component",
+          "Parameters"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Component",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Parameters",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxn81diy0/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.10607/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxn81diy0/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.10607/catalog_sources/table-tab-potential/wrapped.tex",
+            "html": "literature/1804.10607/catalog_sources/table-tab-potential/latexml.html",
+            "stdout": "literature/1804.10607/catalog_sources/table-tab-potential/latexml.stdout.txt",
+            "stderr": "literature/1804.10607/catalog_sources/table-tab-potential/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5f9a88256e1f87c3cfada93ca0f7a64aedf7c967609c45732c371a8647a98c5a"
+    },
+    {
+      "id": "table-tab-candidates",
+      "internal_table_id": "table-tab-candidates",
+      "status": "success",
+      "ecsv_path": "literature/1804.10607/catalog_tables/table-tab-candidates.ecsv",
+      "caption": "Observed and derived properties for the $20$ \"clean\" high velocity star candidates with a probability $> 80\\%$ of being unbound from the Galaxy. Stars are sorted by decreasing $P_\\mathrm{ub}$.",
+      "label": "tab:candidates",
+      "row_count": 21,
+      "column_count": 12,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\Gaia DR2 ID",
+          "(RA, Dec.)",
+          "\\varpi",
+          "\\mu_\\alpha*",
+          "\\mu_\\delta",
+          "v_rad",
+          "G",
+          "d",
+          "r_GC",
+          "v_GC",
+          "P_MW",
+          "P_ub"
+        ],
+        [
+          "",
+          "( ∘ )",
+          "(mas)",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(km s -1 )",
+          "(mag)",
+          "(pc)",
+          "(pc)",
+          "(km s^-1)",
+          "",
+          ""
+        ],
+        [
+          "Galactic",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\Gaia DR2 ID | Galactic",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "(RA, Dec.) | ( ∘ )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\varpi | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\alpha* | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\delta | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v_rad | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "G | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "d | (pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "r_GC | (pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "v_GC | (km s^-1)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "P_MW",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "P_ub",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp28zvtgkj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.10607/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp28zvtgkj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.10607/catalog_sources/table-tab-candidates/wrapped.tex",
+            "html": "literature/1804.10607/catalog_sources/table-tab-candidates/latexml.html",
+            "stdout": "literature/1804.10607/catalog_sources/table-tab-candidates/latexml.stdout.txt",
+            "stderr": "literature/1804.10607/catalog_sources/table-tab-candidates/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ed42b342569d557fcf86ebd85bea4d8e5f0c178ed15e33a604d43fff0eccb578"
+    },
+    {
+      "id": "table-tab-candidates_0.5",
+      "internal_table_id": "table-tab-candidates_0.5",
+      "status": "success",
+      "ecsv_path": "literature/1804.10607/catalog_tables/table-tab-candidates_0.5.ecsv",
+      "caption": "Distances and total velocities in the Galactic rest frame for the $105$ ``clean\" high velocity star candidates with $0.5 < P_\\mathrm{ub} \\leq 0.8$. Sources are sorted by decreasing $P_\\mathrm{ub}$.",
+      "label": "tab:candidates_0.5",
+      "row_count": 44,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\Gaia DR2 ID",
+          "d",
+          "v_GC",
+          "P_ub"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\Gaia DR2 ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "d",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "v_GC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "P_ub",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpysa5pnmc/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.10607/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpysa5pnmc/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.10607/catalog_sources/table-tab-candidates_0.5/wrapped.tex",
+            "html": "literature/1804.10607/catalog_sources/table-tab-candidates_0.5/latexml.html",
+            "stdout": "literature/1804.10607/catalog_sources/table-tab-candidates_0.5/latexml.stdout.txt",
+            "stderr": "literature/1804.10607/catalog_sources/table-tab-candidates_0.5/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8e5d5e34869e5aa7a4fa7249970a4457256773a9bd3ff0215fdb8f38797af185"
+    },
+    {
+      "id": "table-tab-candidates_0.5-2",
+      "internal_table_id": "table-tab-candidates_0.5-2",
+      "status": "success",
+      "ecsv_path": "literature/1804.10607/catalog_tables/table-tab-candidates_0.5-2.ecsv",
+      "caption": "",
+      "label": "tab:candidates_0.5",
+      "row_count": 45,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\Gaia DR2 ID",
+          "d",
+          "v_GC",
+          "P_ub"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\Gaia DR2 ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "d",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "v_GC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "P_ub",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7i8icd9c/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.10607/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7i8icd9c/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.10607/catalog_sources/table-tab-candidates_0.5-2/wrapped.tex",
+            "html": "literature/1804.10607/catalog_sources/table-tab-candidates_0.5-2/latexml.html",
+            "stdout": "literature/1804.10607/catalog_sources/table-tab-candidates_0.5-2/latexml.stdout.txt",
+            "stderr": "literature/1804.10607/catalog_sources/table-tab-candidates_0.5-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "175fe9c80e72d4d2f87a879efeb8c1e7505d2b4a52882c234f626622605e3bd0"
+    },
+    {
+      "id": "table-tab-candidates_0.5-3",
+      "internal_table_id": "table-tab-candidates_0.5-3",
+      "status": "success",
+      "ecsv_path": "literature/1804.10607/catalog_tables/table-tab-candidates_0.5-3.ecsv",
+      "caption": "",
+      "label": "tab:candidates_0.5",
+      "row_count": 19,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\Gaia DR2 ID",
+          "d",
+          "v_GC",
+          "P_ub"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\Gaia DR2 ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "d",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "v_GC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "P_ub",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm1smw34g/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.10607/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm1smw34g/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.10607/catalog_sources/table-tab-candidates_0.5-3/wrapped.tex",
+            "html": "literature/1804.10607/catalog_sources/table-tab-candidates_0.5-3/latexml.html",
+            "stdout": "literature/1804.10607/catalog_sources/table-tab-candidates_0.5-3/latexml.stdout.txt",
+            "stderr": "literature/1804.10607/catalog_sources/table-tab-candidates_0.5-3/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "78787f8b34b5c4f0ee2955c9196456285faa71b1543c354ea77ca3ee59354d7c"
+    },
+    {
+      "id": "table-tab-candidates_inflated_erros",
+      "internal_table_id": "table-tab-candidates_inflated_erros",
+      "status": "success",
+      "ecsv_path": "literature/1804.10607/catalog_tables/table-tab-candidates_inflated_erros.ecsv",
+      "caption": "Distances and total velocities in the Galactic rest frame for the $20$ ``clean\" high velocity star candidates with $P_\\mathrm{ub} > 0.8$ presented in Table \\ref{tab:candidates}. Parallax uncertainties are inflated according to equation \\eqref{eq:inflated_errors}. For comparison, stars are sorted as in Table \\ref{tab:candidates}.",
+      "label": "tab:candidates_inflated_erros",
+      "row_count": 21,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\Gaia DR2 ID",
+          "d",
+          "v_GC",
+          "P_ub"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\Gaia DR2 ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "d",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "v_GC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "P_ub",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpn85gyxeu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.10607/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpn85gyxeu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.10607/catalog_sources/table-tab-candidates_inflated_erros/wrapped.tex",
+            "html": "literature/1804.10607/catalog_sources/table-tab-candidates_inflated_erros/latexml.html",
+            "stdout": "literature/1804.10607/catalog_sources/table-tab-candidates_inflated_erros/latexml.stdout.txt",
+            "stderr": "literature/1804.10607/catalog_sources/table-tab-candidates_inflated_erros/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "638796e9552f6f44b07a617c6cb82eb4329ca4e537c2d1d703f204eccce5ad78"
+    },
+    {
+      "id": "table-tab-candidates-2",
+      "internal_table_id": "table-tab-candidates-2",
+      "status": "success",
+      "ecsv_path": "literature/1804.10607/catalog_tables/table-tab-candidates-2.ecsv",
+      "caption": "Observed and derived properties for the $28$ \"clean\" high velocity star candidates with a probability $> 50\\%$ of being unbound from the Galaxy.",
+      "label": "tab:candidates",
+      "row_count": 29,
+      "column_count": 12,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\Gaia DR2 ID",
+          "(RA, Dec.)",
+          "\\varpi",
+          "\\mu_\\alpha*",
+          "\\mu_\\delta",
+          "v_rad",
+          "G",
+          "d",
+          "r_GC",
+          "v_GC",
+          "P_MW",
+          "P_ub"
+        ],
+        [
+          "",
+          "( ∘ )",
+          "(mas)",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(km s -1 )",
+          "(mag)",
+          "(pc)",
+          "(pc)",
+          "(km s^-1)",
+          "",
+          ""
+        ],
+        [
+          "HVS candidates",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\Gaia DR2 ID | HVS candidates",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "(RA, Dec.) | ( ∘ )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\varpi | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\alpha* | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\delta | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v_rad | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "G | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "d | (pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "r_GC | (pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "v_GC | (km s^-1)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "P_MW",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "P_ub",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpx49gpp6a/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.10607/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpx49gpp6a/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.10607/catalog_sources/table-tab-candidates-2/wrapped.tex",
+            "html": "literature/1804.10607/catalog_sources/table-tab-candidates-2/latexml.html",
+            "stdout": "literature/1804.10607/catalog_sources/table-tab-candidates-2/latexml.stdout.txt",
+            "stderr": "literature/1804.10607/catalog_sources/table-tab-candidates-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "335d6879b59dffdda20591e5472a8a73c2dc2b0604011c335de7830f743a34ea"
+    },
+    {
+      "id": "table-tab-candidates_zp",
+      "internal_table_id": "table-tab-candidates_zp",
+      "status": "success",
+      "ecsv_path": "literature/1804.10607/catalog_tables/table-tab-candidates_zp.ecsv",
+      "caption": "Distances and total velocities in the Galactic rest frame for the $20$ ``clean\" high velocity star candidates with $P_\\mathrm{ub} > 0.8$ presented in Table \\ref{tab:candidates}, including the $-0.029$ mas global parallax offset. For comparison, stars are sorted as in Table \\ref{tab:candidates}.",
+      "label": "tab:candidates_zp",
+      "row_count": 21,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\Gaia DR2 ID",
+          "d",
+          "v_GC",
+          "P_ub"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\Gaia DR2 ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "d",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "v_GC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "P_ub",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptbu6kjnf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.10607/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptbu6kjnf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.10607/catalog_sources/table-tab-candidates_zp/wrapped.tex",
+            "html": "literature/1804.10607/catalog_sources/table-tab-candidates_zp/latexml.html",
+            "stdout": "literature/1804.10607/catalog_sources/table-tab-candidates_zp/latexml.stdout.txt",
+            "stderr": "literature/1804.10607/catalog_sources/table-tab-candidates_zp/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e1aa8314d7a84968dea334129f705ddcc5c9b9e4e91f7b5be44e152cf1dd46f1"
+    },
+    {
+      "id": "table-tab-catalogue",
+      "internal_table_id": "table-tab-catalogue",
+      "status": "success",
+      "ecsv_path": "literature/1804.10607/catalog_tables/table-tab-catalogue.ecsv",
+      "caption": "Catalogue description. Derived distances and velocities correspond to the median of the distribution, and lower and upper uncertainties are derived, respectively, from the $16$th and $84$th percentiles of the distribution function. Entries labelled $^1$ are derived in this paper, while entries labelled $^2$ are taken from the \\Gaia DR2 catalogue \\citep{gaiadr2}.",
+      "label": "tab:catalogue",
+      "row_count": 49,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Column",
+          "Units",
+          "Name",
+          "Description"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Column",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Units",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Description",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfuq81huu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.10607/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfuq81huu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.10607/catalog_sources/table-tab-catalogue/wrapped.tex",
+            "html": "literature/1804.10607/catalog_sources/table-tab-catalogue/latexml.html",
+            "stdout": "literature/1804.10607/catalog_sources/table-tab-catalogue/latexml.stdout.txt",
+            "stderr": "literature/1804.10607/catalog_sources/table-tab-catalogue/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "fa9b2f4ab2a1a7c016aa8472673ccf80322fac9cbe739359f0329e2d07410094"
+    }
+  ]
+}

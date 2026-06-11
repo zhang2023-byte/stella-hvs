@@ -1,0 +1,134 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:31:40",
+  "paper": {
+    "arxiv_id": "1804.10179",
+    "title": "Revisiting hypervelocity stars after Gaia DR2",
+    "month": "2018-04"
+  },
+  "review": {
+    "path": "literature/1804.10179/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083140",
+    "started_at": "2026-06-07T08:31:40",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1804.10179",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-candidates",
+      "internal_table_id": "table-tab-candidates",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.10179/arxiv_source/paper.tex",
+        "start_line": 187,
+        "end_line": 202,
+        "caption": "The hypervelocity candidates with $P_{\\mathrm{bound}}<0.5$ subdivided by original discovery survey or paper. The Hypervelocity Star Survey \\citep{brown_discovery_2005,brown_hypervelocity_2007,brown_mmt_2014} has remarkably discovered 32 of these 41 stars, while the LAMOST HVS Survey \\citep{zheng_first_2014,huang_discovery_2017} contributes a further 3.",
+        "label": "tab:candidates"
+      },
+      "source_path": "literature/1804.10179/arxiv_source/paper.tex",
+      "excerpt_path": "literature/1804.10179/catalog_sources/table-tab-candidates/excerpt.tex",
+      "sha256": "dab41981f0d6a064cdfab09baad7632487ffa4bcd764e8e831d2f8affca526a1",
+      "line_count": 16,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-candidates",
+      "internal_table_id": "table-tab-candidates",
+      "status": "success",
+      "ecsv_path": "literature/1804.10179/catalog_tables/table-tab-candidates.ecsv",
+      "caption": "The hypervelocity candidates with $P_{\\mathrm{bound}}<0.5$ subdivided by original discovery survey or paper. The Hypervelocity Star Survey \\citep{brown_discovery_2005,brown_hypervelocity_2007,brown_mmt_2014} has remarkably discovered 32 of these 41 stars, while the LAMOST HVS Survey \\citep{zheng_first_2014,huang_discovery_2017} contributes a further 3.",
+      "label": "tab:candidates",
+      "row_count": 8,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Survey",
+          "#",
+          "Names"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Survey",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "#",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Names",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxjar8x3d/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.10179/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxjar8x3d/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.10179/catalog_sources/table-tab-candidates/wrapped.tex",
+            "html": "literature/1804.10179/catalog_sources/table-tab-candidates/latexml.html",
+            "stdout": "literature/1804.10179/catalog_sources/table-tab-candidates/latexml.stdout.txt",
+            "stderr": "literature/1804.10179/catalog_sources/table-tab-candidates/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "dab41981f0d6a064cdfab09baad7632487ffa4bcd764e8e831d2f8affca526a1"
+    }
+  ]
+}

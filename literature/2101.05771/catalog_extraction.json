@@ -1,0 +1,1338 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:45:34",
+  "paper": {
+    "arxiv_id": "2101.05771",
+    "title": "A search for runaway stars in twelve Galactic supernova remnants",
+    "month": "2021-01"
+  },
+  "review": {
+    "path": "literature/2101.05771/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084534",
+    "started_at": "2026-06-07T08:45:34",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2101.05771",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 9,
+      "work_count": 9,
+      "table_count": 9,
+      "success_count": 9,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 9,
+      "file_success_count": 9,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2101.05771/arxiv_source/Lux.tex",
+        "start_line": 75,
+        "end_line": 100,
+        "caption": "Properties of the SNRs studied in this work. The equatorial coordinates RA/DEC and angular diameters $\\Theta$ are taken from \\citet{Green2014}, the distances $d$ and ages $t$ from \\citet{Ferrand2012} and references therein, where the errors come from the range between the lowest and highest values in the given literature. For 3C58, Crab Nebula and SNR G347.3$-$00.5 the ages are accurately known (assuming that the associations to the historical SNe are correct). The last column gives the limiting stellar spectral type SpT$_{\\text{lim}}$ that could be observed at the corresponding nominal distance and a limiting magnitude of $m_G=17.0$\\,mag, as descibed above.",
+        "label": "tab1"
+      },
+      "source_path": "literature/2101.05771/arxiv_source/Lux.tex",
+      "excerpt_path": "literature/2101.05771/catalog_sources/table-tab1/excerpt.tex",
+      "sha256": "92f1551d0b5664b180c868ea661df3bce2d3bbc72047881460234fc717090f4b",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-veloc",
+      "internal_table_id": "table-veloc",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2101.05771/arxiv_source/Lux.tex",
+        "start_line": 228,
+        "end_line": 262,
+        "caption": "\\textit{Gaia} DR2 $G$ magnitudes, parallaxes $\\pi$ and kinematic parameters of the six Li-rich stars as well as the remaining early-type candidates in HB9, Monoceros Loop and Vela Jr. Parallaxes and proper motions are from \\textit{Gaia} DR2, the barycentric corrections ($BC$) were determined with \\textit{iSpec}. The radial velocities $v_r$ of the Li-rich stars were determined with \\textit{iSpec}, the $v_r$ of the early-type stars were determined with \\textit{IRAF}. For TYC159-251-1, we give the systemic RV $\\gamma$ of the binary, approximated using a mass ratio of $q=0.91^{+0.03}_{-0.05}$. The individual RVs of the binary components were derived with \\textit{IRAF}. For the spectral types, see Table~\\ref{Li}.",
+        "label": "veloc"
+      },
+      "source_path": "literature/2101.05771/arxiv_source/Lux.tex",
+      "excerpt_path": "literature/2101.05771/catalog_sources/table-veloc/excerpt.tex",
+      "sha256": "ef423400885a2976add1ebffbdab8de3baa0fb2bb40f6cf00c46b3a361567f01",
+      "line_count": 35,
+      "error": ""
+    },
+    {
+      "id": "table-params",
+      "internal_table_id": "table-params",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2101.05771/arxiv_source/Lux.tex",
+        "start_line": 283,
+        "end_line": 304,
+        "caption": "The atmospheric parameters of the six Li-rich stars determined with \\textit{iSpec}. The effective temperatures from \\textit{Gaia} DR2 are also shown for comparison. A missing error indicates that the parameter was kept constant for all iterations. The results for TYC159-251-1 are given for both components individually.",
+        "label": "params"
+      },
+      "source_path": "literature/2101.05771/arxiv_source/Lux.tex",
+      "excerpt_path": "literature/2101.05771/catalog_sources/table-params/excerpt.tex",
+      "sha256": "6347bfa3900e9e2198b538f59bcbf228f603fdaecab8c6655f5dd938b94705d7",
+      "line_count": 22,
+      "error": ""
+    },
+    {
+      "id": "table-Li",
+      "internal_table_id": "table-Li",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2101.05771/arxiv_source/Lux.tex",
+        "start_line": 317,
+        "end_line": 353,
+        "caption": "Temperatures, spectral types and magnitudes of the six Li-rich stars and the remaining observed early-type runaway star candidates. Effective Temperatures $T_{\\text{eff}}$ of the Li stars and the stars in HB9 are from our parameter fits and from \\citet{Bai2019}, respectively. The spectral types of the stars in Monoceros and Vela Jr. were taken from the \\textit{Skiff} catalogue (Vo85, \\citealt{Houk1978}). Conversion between $T_{\\text{eff}}$ and SpT was done with PM13. \\textit{G, BP} and \\textit{RP} magnitudes are from \\textit{Gaia} DR2, absolute $G$ magnitudes $M_G$ were calculated from \\textit{Gaia G}, extinction and parallax and $G$ band extinctions are from the \\textit{StarHorse} catalogue \\citep{Anders2019}. The last two columns show Li equivalent widths $EW_{\\text{Li}}$ and abundances $\\log(N_{\\text{Li}})$ for the six Li-rich stars.",
+        "label": "Li"
+      },
+      "source_path": "literature/2101.05771/arxiv_source/Lux.tex",
+      "excerpt_path": "literature/2101.05771/catalog_sources/table-Li/excerpt.tex",
+      "sha256": "adf76bd3cbccc10c3c4b4b4c3c40f88df3c9c8425ff5bb3cc94dcb3bd886e3e0",
+      "line_count": 37,
+      "error": ""
+    },
+    {
+      "id": "table-HRD_ages",
+      "internal_table_id": "table-HRD_ages",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2101.05771/arxiv_source/Lux.tex",
+        "start_line": 394,
+        "end_line": 434,
+        "caption": "Estimated HRD ages (see Figs.~\\ref{HRD} and \\ref{HRD_zoom}) for the six Li-rich stars, including both components of the SB2 TYC159-251-1, as well as for the remaining observed runaway star candidates in HB9, Monoceros Loop and Vela Jr. If a star is consistent with the zero-age main-sequence, only a lower limit is given in column 2. Otherwise, the values in column 2 represent the case that the star is on its pre-MS and the values in column 3 represent the case that the star is on its terminal-age- or post-MS.",
+        "label": "HRD_ages"
+      },
+      "source_path": "literature/2101.05771/arxiv_source/Lux.tex",
+      "excerpt_path": "literature/2101.05771/catalog_sources/table-HRD_ages/excerpt.tex",
+      "sha256": "ea3784e3282d0579bcf7f2e3c05948a80bc2843fd4497f2946d047155db6c01f",
+      "line_count": 41,
+      "error": ""
+    },
+    {
+      "id": "table-Mamajek_ages",
+      "internal_table_id": "table-Mamajek_ages",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2101.05771/arxiv_source/Lux.tex",
+        "start_line": 440,
+        "end_line": 457,
+        "caption": "Ages of the six Li-rich stars, including both components of the SB2 TYC159-251-1, estimated from Fig.~\\ref{Mamajek}.",
+        "label": "Mamajek_ages"
+      },
+      "source_path": "literature/2101.05771/arxiv_source/Lux.tex",
+      "excerpt_path": "literature/2101.05771/catalog_sources/table-Mamajek_ages/excerpt.tex",
+      "sha256": "8c74e827a55a76ca43fc3eec5677ac7cca7a9dec65013bb1c531323b41e82d71",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-cands",
+      "internal_table_id": "table-cands",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2101.05771/arxiv_source/Lux.tex",
+        "start_line": 486,
+        "end_line": 513,
+        "caption": "Numbers of runaway star candidates with $G<17$\\,mag in the SNRs covered in this work. Columns 2 and 3 give the numbers of candidates identified in \\textit{Gaia} DR1 TGAS and DR2, respectively. Column 4 gives the number of observed stars and if they were observed with UVES/VLT (U) or with HDS/Subaru (H). These observations are all based on the DR1 selection, whereupon \\text{Gaia} DR2 was used for the further characterisation of the targets. Column 5 gives the names of associated neutron stars and column 6 the numbers of remaining candidates that could not be excluded during the analysis.",
+        "label": "cands"
+      },
+      "source_path": "literature/2101.05771/arxiv_source/Lux.tex",
+      "excerpt_path": "literature/2101.05771/catalog_sources/table-cands/excerpt.tex",
+      "sha256": "8e4c2a605d71847fe3d7b12d62252860985944df26a5c7b028b70c82faf406c6",
+      "line_count": 28,
+      "error": ""
+    },
+    {
+      "id": "table-Obslist",
+      "internal_table_id": "table-Obslist",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2101.05771/arxiv_source/Lux.tex",
+        "start_line": 626,
+        "end_line": 677,
+        "caption": "List of observed stars. The columns give target name, instrument (U for UVES/VLT; H for HDS/Subaru), equatorial coordinates (J2000) calculated with \\textit{VizieR} from \\textit{Gaia} DR2 data, the SNR where the target is located, \\textit{Gaia} DR2 \\textit{G} magnitude, barycentric Julian date BJD, total on source integration time $t_{\\text{exp}}$ and the $S/N$ reached in the fully reduced and averaged spectra.",
+        "label": "Obslist"
+      },
+      "source_path": "literature/2101.05771/arxiv_source/Lux.tex",
+      "excerpt_path": "literature/2101.05771/catalog_sources/table-Obslist/excerpt.tex",
+      "sha256": "646cf27ead265c38c074c0a719cbeb7de686c720ac51a1cd61a95e36373db035",
+      "line_count": 52,
+      "error": ""
+    },
+    {
+      "id": "table-Runawaylist",
+      "internal_table_id": "table-Runawaylist",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2101.05771/arxiv_source/Lux.tex",
+        "start_line": 680,
+        "end_line": 783,
+        "caption": "List of identified runaway star candidates. Equatorial coordinates (J2000) were calculated with \\textit{VizieR} from \\textit{Gaia} DR2 data. The fifth column shows the angular distance $\\rho$ to the geometric centre at the time of the SN, except for the candidate in Vela (G263.9$-$03.3), where the distance to the location of the Vela pulsar at the time of the SN is given. The sixth column shows the $G$ magnitudes, taken from \\textit{Gaia} DR2, and the last column shows the spectral types SpT.",
+        "label": "Runawaylist"
+      },
+      "source_path": "literature/2101.05771/arxiv_source/Lux.tex",
+      "excerpt_path": "literature/2101.05771/catalog_sources/table-Runawaylist/excerpt.tex",
+      "sha256": "b6760c28802fa921d502e78d5c5d933a2ca7e752355f9ce8c884e28b05afe44d",
+      "line_count": 104,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "status": "success",
+      "ecsv_path": "literature/2101.05771/catalog_tables/table-tab1.ecsv",
+      "caption": "Properties of the SNRs studied in this work. The equatorial coordinates RA/DEC and angular diameters $\\Theta$ are taken from \\citet{Green2014}, the distances $d$ and ages $t$ from \\citet{Ferrand2012} and references therein, where the errors come from the range between the lowest and highest values in the given literature. For 3C58, Crab Nebula and SNR G347.3$-$00.5 the ages are accurately known (assuming that the associations to the historical SNe are correct). The last column gives the limiting stellar spectral type SpT$_{\\text{lim}}$ that could be observed at the corresponding nominal distance and a limiting magnitude of $m_G=17.0$\\,mag, as descibed above.",
+      "label": "tab1",
+      "row_count": 12,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "SNR Name",
+          "Alternative Name",
+          "RA [h:m:s]",
+          "DEC [d:m]",
+          "\\Theta [arcmin]",
+          "d [kpc]",
+          "t [kyr]",
+          "SpT _lim"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "SNR Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Alternative Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "RA [h:m:s]",
+          "unit_text": "RA [h:m:s]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "DEC [d:m]",
+          "unit_text": "DEC [d:m]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\Theta [arcmin]",
+          "unit_text": "\\Theta [arcmin]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "d [kpc]",
+          "unit_text": "d [kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "t [kyr]",
+          "unit_text": "t [kyr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "SpT _lim",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvg8hb_s0/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2101.05771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvg8hb_s0/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2101.05771/catalog_sources/table-tab1/wrapped.tex",
+            "html": "literature/2101.05771/catalog_sources/table-tab1/latexml.html",
+            "stdout": "literature/2101.05771/catalog_sources/table-tab1/latexml.stdout.txt",
+            "stderr": "literature/2101.05771/catalog_sources/table-tab1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "92f1551d0b5664b180c868ea661df3bce2d3bbc72047881460234fc717090f4b"
+    },
+    {
+      "id": "table-veloc",
+      "internal_table_id": "table-veloc",
+      "status": "success",
+      "ecsv_path": "literature/2101.05771/catalog_tables/table-veloc.ecsv",
+      "caption": "\\textit{Gaia} DR2 $G$ magnitudes, parallaxes $\\pi$ and kinematic parameters of the six Li-rich stars as well as the remaining early-type candidates in HB9, Monoceros Loop and Vela Jr. Parallaxes and proper motions are from \\textit{Gaia} DR2, the barycentric corrections ($BC$) were determined with \\textit{iSpec}. The radial velocities $v_r$ of the Li-rich stars were determined with \\textit{iSpec}, the $v_r$ of the early-type stars were determined with \\textit{IRAF}. For TYC159-251-1, we give the systemic RV $\\gamma$ of the binary, approximated using a mass ratio of $q=0.91^{+0.03}_{-0.05}$. The individual RVs of the binary components were derived with \\textit{IRAF}. For the spectral types, see Table~\\ref{Li}.",
+      "label": "veloc",
+      "row_count": 19,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "G",
+          "\\pi",
+          "\\mu_RA",
+          "\\mu_DEC",
+          "BC",
+          "v_r",
+          "v_pec"
+        ],
+        [
+          "",
+          "[mag]",
+          "[mas]",
+          "[mas yr -1 ]",
+          "[mas yr -1 ]",
+          "[km s -1 ]",
+          "[km s -1 ]",
+          "[km s -1 ]"
+        ],
+        [
+          "Li-rich stars",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name | Li-rich stars",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\pi | [mas]",
+          "unit_text": "[mas]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_RA | [mas yr -1 ]",
+          "unit_text": "[mas yr -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_DEC | [mas yr -1 ]",
+          "unit_text": "[mas yr -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "BC | [km s -1 ]",
+          "unit_text": "[km s -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_r | [km s -1 ]",
+          "unit_text": "[km s -1 ]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "v_pec | [km s -1 ]",
+          "unit_text": "[km s -1 ]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1v91p79d/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2101.05771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1v91p79d/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2101.05771/catalog_sources/table-veloc/wrapped.tex",
+            "html": "literature/2101.05771/catalog_sources/table-veloc/latexml.html",
+            "stdout": "literature/2101.05771/catalog_sources/table-veloc/latexml.stdout.txt",
+            "stderr": "literature/2101.05771/catalog_sources/table-veloc/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ef423400885a2976add1ebffbdab8de3baa0fb2bb40f6cf00c46b3a361567f01"
+    },
+    {
+      "id": "table-params",
+      "internal_table_id": "table-params",
+      "status": "success",
+      "ecsv_path": "literature/2101.05771/catalog_tables/table-params.ecsv",
+      "caption": "The atmospheric parameters of the six Li-rich stars determined with \\textit{iSpec}. The effective temperatures from \\textit{Gaia} DR2 are also shown for comparison. A missing error indicates that the parameter was kept constant for all iterations. The results for TYC159-251-1 are given for both components individually.",
+      "label": "params",
+      "row_count": 7,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "T_eff,Gaia",
+          "T_eff",
+          "\\log(g/cm s^-2)",
+          "[M/H]",
+          "v_t^mic",
+          "v_t^mac",
+          "v_rot\\sin(i)"
+        ],
+        [
+          "",
+          "[K]",
+          "[K]",
+          "",
+          "",
+          "[km s -1 ]",
+          "[km s -1 ]",
+          "[km s -1 ]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "T_eff,Gaia | [K]",
+          "unit_text": "[K]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "T_eff | [K]",
+          "unit_text": "[K]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\log(g/cm s^-2)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "[M/H]",
+          "unit_text": "[M/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v_t^mic | [km s -1 ]",
+          "unit_text": "[km s -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_t^mac | [km s -1 ]",
+          "unit_text": "[km s -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "v_rot\\sin(i) | [km s -1 ]",
+          "unit_text": "[km s -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprwhmvaf4/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2101.05771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprwhmvaf4/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2101.05771/catalog_sources/table-params/wrapped.tex",
+            "html": "literature/2101.05771/catalog_sources/table-params/latexml.html",
+            "stdout": "literature/2101.05771/catalog_sources/table-params/latexml.stdout.txt",
+            "stderr": "literature/2101.05771/catalog_sources/table-params/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6347bfa3900e9e2198b538f59bcbf228f603fdaecab8c6655f5dd938b94705d7"
+    },
+    {
+      "id": "table-Li",
+      "internal_table_id": "table-Li",
+      "status": "success",
+      "ecsv_path": "literature/2101.05771/catalog_tables/table-Li.ecsv",
+      "caption": "Temperatures, spectral types and magnitudes of the six Li-rich stars and the remaining observed early-type runaway star candidates. Effective Temperatures $T_{\\text{eff}}$ of the Li stars and the stars in HB9 are from our parameter fits and from \\citet{Bai2019}, respectively. The spectral types of the stars in Monoceros and Vela Jr. were taken from the \\textit{Skiff} catalogue (Vo85, \\citealt{Houk1978}). Conversion between $T_{\\text{eff}}$ and SpT was done with PM13. \\textit{G, BP} and \\textit{RP} magnitudes are from \\textit{Gaia} DR2, absolute $G$ magnitudes $M_G$ were calculated from \\textit{Gaia G}, extinction and parallax and $G$ band extinctions are from the \\textit{StarHorse} catalogue \\citep{Anders2019}. The last two columns show Li equivalent widths $EW_{\\text{Li}}$ and abundances $\\log(N_{\\text{Li}})$ for the six Li-rich stars.",
+      "label": "Li",
+      "row_count": 21,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "T_eff",
+          "SpT",
+          "G",
+          "BP",
+          "RP",
+          "M_G",
+          "A_G",
+          "EW_Li",
+          "\\log(N_Li)"
+        ],
+        [
+          "",
+          "[K]",
+          "",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mÅ]",
+          ""
+        ],
+        [
+          "Li-rich stars",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name | Li-rich stars",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "T_eff | [K]",
+          "unit_text": "[K]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "SpT",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "BP | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "RP | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "M_G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "A_G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "EW_Li | [mÅ]",
+          "unit_text": "[mÅ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\log(N_Li)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdu7b4vlu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2101.05771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdu7b4vlu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2101.05771/catalog_sources/table-Li/wrapped.tex",
+            "html": "literature/2101.05771/catalog_sources/table-Li/latexml.html",
+            "stdout": "literature/2101.05771/catalog_sources/table-Li/latexml.stdout.txt",
+            "stderr": "literature/2101.05771/catalog_sources/table-Li/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "adf76bd3cbccc10c3c4b4b4c3c40f88df3c9c8425ff5bb3cc94dcb3bd886e3e0"
+    },
+    {
+      "id": "table-HRD_ages",
+      "internal_table_id": "table-HRD_ages",
+      "status": "success",
+      "ecsv_path": "literature/2101.05771/catalog_tables/table-HRD_ages.ecsv",
+      "caption": "Estimated HRD ages (see Figs.~\\ref{HRD} and \\ref{HRD_zoom}) for the six Li-rich stars, including both components of the SB2 TYC159-251-1, as well as for the remaining observed runaway star candidates in HB9, Monoceros Loop and Vela Jr. If a star is consistent with the zero-age main-sequence, only a lower limit is given in column 2. Otherwise, the values in column 2 represent the case that the star is on its pre-MS and the values in column 3 represent the case that the star is on its terminal-age- or post-MS.",
+      "label": "HRD_ages",
+      "row_count": 20,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "t_HRD [Myr]",
+          "t_HRD [Myr]"
+        ],
+        [
+          "",
+          "if (pre-)MS",
+          "if post-MS"
+        ],
+        [
+          "Li-rich stars",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name | Li-rich stars",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "t_HRD [Myr] | if (pre-)MS",
+          "unit_text": "t_HRD [Myr]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "t_HRD [Myr] | if post-MS",
+          "unit_text": "t_HRD [Myr]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcahnfaha/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2101.05771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcahnfaha/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2101.05771/catalog_sources/table-HRD_ages/wrapped.tex",
+            "html": "literature/2101.05771/catalog_sources/table-HRD_ages/latexml.html",
+            "stdout": "literature/2101.05771/catalog_sources/table-HRD_ages/latexml.stdout.txt",
+            "stderr": "literature/2101.05771/catalog_sources/table-HRD_ages/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ea3784e3282d0579bcf7f2e3c05948a80bc2843fd4497f2946d047155db6c01f"
+    },
+    {
+      "id": "table-Mamajek_ages",
+      "internal_table_id": "table-Mamajek_ages",
+      "status": "success",
+      "ecsv_path": "literature/2101.05771/catalog_tables/table-Mamajek_ages.ecsv",
+      "caption": "Ages of the six Li-rich stars, including both components of the SB2 TYC159-251-1, estimated from Fig.~\\ref{Mamajek}.",
+      "label": "Mamajek_ages",
+      "row_count": 7,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "t_Li [Myr]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "t_Li [Myr]",
+          "unit_text": "t_Li [Myr]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpf_jaly8g/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2101.05771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpf_jaly8g/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2101.05771/catalog_sources/table-Mamajek_ages/wrapped.tex",
+            "html": "literature/2101.05771/catalog_sources/table-Mamajek_ages/latexml.html",
+            "stdout": "literature/2101.05771/catalog_sources/table-Mamajek_ages/latexml.stdout.txt",
+            "stderr": "literature/2101.05771/catalog_sources/table-Mamajek_ages/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8c74e827a55a76ca43fc3eec5677ac7cca7a9dec65013bb1c531323b41e82d71"
+    },
+    {
+      "id": "table-cands",
+      "internal_table_id": "table-cands",
+      "status": "success",
+      "ecsv_path": "literature/2101.05771/catalog_tables/table-cands.ecsv",
+      "caption": "Numbers of runaway star candidates with $G<17$\\,mag in the SNRs covered in this work. Columns 2 and 3 give the numbers of candidates identified in \\textit{Gaia} DR1 TGAS and DR2, respectively. Column 4 gives the number of observed stars and if they were observed with UVES/VLT (U) or with HDS/Subaru (H). These observations are all based on the DR1 selection, whereupon \\text{Gaia} DR2 was used for the further characterisation of the targets. Column 5 gives the names of associated neutron stars and column 6 the numbers of remaining candidates that could not be excluded during the analysis.",
+      "label": "cands",
+      "row_count": 12,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "SNR Name",
+          "DR1",
+          "DR2",
+          "Obs.",
+          "PSR",
+          "Rem. cands.",
+          "Additional info"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "SNR Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "DR1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "DR2",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Obs.",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "PSR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Rem. cands.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Additional info",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp05xj6fgb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2101.05771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp05xj6fgb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2101.05771/catalog_sources/table-cands/wrapped.tex",
+            "html": "literature/2101.05771/catalog_sources/table-cands/latexml.html",
+            "stdout": "literature/2101.05771/catalog_sources/table-cands/latexml.stdout.txt",
+            "stderr": "literature/2101.05771/catalog_sources/table-cands/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8e4c2a605d71847fe3d7b12d62252860985944df26a5c7b028b70c82faf406c6"
+    },
+    {
+      "id": "table-Obslist",
+      "internal_table_id": "table-Obslist",
+      "status": "success",
+      "ecsv_path": "literature/2101.05771/catalog_tables/table-Obslist.ecsv",
+      "caption": "List of observed stars. The columns give target name, instrument (U for UVES/VLT; H for HDS/Subaru), equatorial coordinates (J2000) calculated with \\textit{VizieR} from \\textit{Gaia} DR2 data, the SNR where the target is located, \\textit{Gaia} DR2 \\textit{G} magnitude, barycentric Julian date BJD, total on source integration time $t_{\\text{exp}}$ and the $S/N$ reached in the fully reduced and averaged spectra.",
+      "label": "Obslist",
+      "row_count": 39,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "Instr.",
+          "RA",
+          "DEC",
+          "SNR",
+          "G",
+          "BJD -2450000",
+          "t_exp",
+          "S/N"
+        ],
+        [
+          "",
+          "",
+          "[h:m:s]",
+          "[d:m:s]",
+          "",
+          "[mag]",
+          "[d]",
+          "[s]",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Instr.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "RA | [h:m:s]",
+          "unit_text": "[h:m:s]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "DEC | [d:m:s]",
+          "unit_text": "[d:m:s]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "SNR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "BJD -2450000 | [d]",
+          "unit_text": "[d]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "t_exp | [s]",
+          "unit_text": "[s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "S/N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7vuroo2w/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2101.05771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7vuroo2w/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2101.05771/catalog_sources/table-Obslist/wrapped.tex",
+            "html": "literature/2101.05771/catalog_sources/table-Obslist/latexml.html",
+            "stdout": "literature/2101.05771/catalog_sources/table-Obslist/latexml.stdout.txt",
+            "stderr": "literature/2101.05771/catalog_sources/table-Obslist/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "646cf27ead265c38c074c0a719cbeb7de686c720ac51a1cd61a95e36373db035"
+    },
+    {
+      "id": "table-Runawaylist",
+      "internal_table_id": "table-Runawaylist",
+      "status": "success",
+      "ecsv_path": "literature/2101.05771/catalog_tables/table-Runawaylist.ecsv",
+      "caption": "List of identified runaway star candidates. Equatorial coordinates (J2000) were calculated with \\textit{VizieR} from \\textit{Gaia} DR2 data. The fifth column shows the angular distance $\\rho$ to the geometric centre at the time of the SN, except for the candidate in Vela (G263.9$-$03.3), where the distance to the location of the Vela pulsar at the time of the SN is given. The sixth column shows the $G$ magnitudes, taken from \\textit{Gaia} DR2, and the last column shows the spectral types SpT.",
+      "label": "Runawaylist",
+      "row_count": 42,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR2",
+          "RA [h:m:s]",
+          "DEC [d:m:s]",
+          "SNR",
+          "\\rho [arcmin]",
+          "G [mag]",
+          "SpT"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR2",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA [h:m:s]",
+          "unit_text": "RA [h:m:s]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "DEC [d:m:s]",
+          "unit_text": "DEC [d:m:s]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "SNR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\rho [arcmin]",
+          "unit_text": "\\rho [arcmin]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "G [mag]",
+          "unit_text": "G [mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "SpT",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb0gld7k9/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2101.05771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb0gld7k9/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2101.05771/catalog_sources/table-Runawaylist/wrapped.tex",
+            "html": "literature/2101.05771/catalog_sources/table-Runawaylist/latexml.html",
+            "stdout": "literature/2101.05771/catalog_sources/table-Runawaylist/latexml.stdout.txt",
+            "stderr": "literature/2101.05771/catalog_sources/table-Runawaylist/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b6760c28802fa921d502e78d5c5d933a2ca7e752355f9ce8c884e28b05afe44d"
+    }
+  ]
+}

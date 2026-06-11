@@ -1,0 +1,709 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:37:21",
+  "paper": {
+    "arxiv_id": "2001.00899",
+    "title": "The Orion Protostellar Explosion and Runaway Stars Revisited: Stellar Masses, Disk Retention, and an Outflow from BN",
+    "month": "2020-01"
+  },
+  "review": {
+    "path": "literature/2001.00899/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083721",
+    "started_at": "2026-06-07T08:37:21",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2001.00899",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table1",
+      "internal_table_id": "table-table1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+        "start_line": 1101,
+        "end_line": 1122,
+        "caption": "Summary of Near-IR Data Used in this Study",
+        "label": "table1"
+      },
+      "source_path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+      "excerpt_path": "literature/2001.00899/catalog_sources/table-table1/excerpt.tex",
+      "sha256": "9a33f93e36bf053dcf5ecf22343e8b7580d835997e7d594d147d9ff3e3cff6b5",
+      "line_count": 22,
+      "error": ""
+    },
+    {
+      "id": "table-table2",
+      "internal_table_id": "table-table2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+        "start_line": 1128,
+        "end_line": 1188,
+        "caption": "Positions and proper motions of the runaway stars in OMC1",
+        "label": "table2"
+      },
+      "source_path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+      "excerpt_path": "literature/2001.00899/catalog_sources/table-table2/excerpt.tex",
+      "sha256": "07ddfc4df3afe446ef9250a36a47b72608063fd423b2f5d89bc15a3b539afd7c",
+      "line_count": 61,
+      "error": ""
+    },
+    {
+      "id": "table-table3",
+      "internal_table_id": "table-table3",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+        "start_line": 1193,
+        "end_line": 1213,
+        "caption": "Parameters for the Ejected Stars in the OMC1 Reference Frame",
+        "label": "table3"
+      },
+      "source_path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+      "excerpt_path": "literature/2001.00899/catalog_sources/table-table3/excerpt.tex",
+      "sha256": "f70908a67a9f5373efbc4605810e6b5e34c461abdcc29c00022f48fa1a63dd4b",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-table4",
+      "internal_table_id": "table-table4",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+        "start_line": 1219,
+        "end_line": 1250,
+        "caption": "Proper Motions of suspected BN Outflow Features Relative to BN.",
+        "label": "table4"
+      },
+      "source_path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+      "excerpt_path": "literature/2001.00899/catalog_sources/table-table4/excerpt.tex",
+      "sha256": "31436052f385195ac7416d46a55c988a1f5e29251f72b44b2414f0be9faefcfe",
+      "line_count": 32,
+      "error": ""
+    },
+    {
+      "id": "table-table5",
+      "internal_table_id": "table-table5",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+        "start_line": 1254,
+        "end_line": 1288,
+        "caption": "Parameters of the BN Radio Jet",
+        "label": "table5"
+      },
+      "source_path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+      "excerpt_path": "literature/2001.00899/catalog_sources/table-table5/excerpt.tex",
+      "sha256": "0c1ede72884007c1d1c6131500bb1480c7e413439d53041953f157b57eee56d3",
+      "line_count": 35,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table1",
+      "internal_table_id": "table-table1",
+      "status": "success",
+      "ecsv_path": "literature/2001.00899/catalog_tables/table-table1.ecsv",
+      "caption": "Summary of Near-IR Data Used in this Study",
+      "label": "table1",
+      "row_count": 5,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Telescope",
+          "Date",
+          "MJD",
+          "Wavelength",
+          "Reference"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Telescope",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Date",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "MJD",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Wavelength",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Reference",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpega0ya4i/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2001.00899/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpega0ya4i/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2001.00899/catalog_sources/table-table1/wrapped.tex",
+            "html": "literature/2001.00899/catalog_sources/table-table1/latexml.html",
+            "stdout": "literature/2001.00899/catalog_sources/table-table1/latexml.stdout.txt",
+            "stderr": "literature/2001.00899/catalog_sources/table-table1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9a33f93e36bf053dcf5ecf22343e8b7580d835997e7d594d147d9ff3e3cff6b5"
+    },
+    {
+      "id": "table-table2",
+      "internal_table_id": "table-table2",
+      "status": "success",
+      "ecsv_path": "literature/2001.00899/catalog_tables/table-table2.ecsv",
+      "caption": "Positions and proper motions of the runaway stars in OMC1",
+      "label": "table2",
+      "row_count": 25,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Source",
+          "R.A.",
+          "Dec.",
+          "\\mu(\\alpha) cos( \\delta )",
+          "\\mu(\\delta)",
+          "V",
+          "P.A.",
+          "Comments"
+        ],
+        [
+          "",
+          "J2000",
+          "J2000",
+          "mas",
+          "mas",
+          "km s^-1",
+          "°",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R.A. | J2000",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec. | J2000",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu(\\alpha) cos( \\delta ) | mas",
+          "unit_text": "mas",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu(\\delta) | mas",
+          "unit_text": "mas",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V | km s^-1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "P.A. | °",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Comments",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjoq_w8xs/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2001.00899/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjoq_w8xs/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2001.00899/catalog_sources/table-table2/wrapped.tex",
+            "html": "literature/2001.00899/catalog_sources/table-table2/latexml.html",
+            "stdout": "literature/2001.00899/catalog_sources/table-table2/latexml.stdout.txt",
+            "stderr": "literature/2001.00899/catalog_sources/table-table2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "07ddfc4df3afe446ef9250a36a47b72608063fd423b2f5d89bc15a3b539afd7c"
+    },
+    {
+      "id": "table-table3",
+      "internal_table_id": "table-table3",
+      "status": "success",
+      "ecsv_path": "literature/2001.00899/catalog_tables/table-table3.ecsv",
+      "caption": "Parameters for the Ejected Stars in the OMC1 Reference Frame",
+      "label": "table3",
+      "row_count": 5,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Quantity",
+          "Src I",
+          "BN",
+          "Src x",
+          "Unit"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Quantity",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Src I",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "BN",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Src x",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Unit",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp2jyfuz7/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2001.00899/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp2jyfuz7/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2001.00899/catalog_sources/table-table3/wrapped.tex",
+            "html": "literature/2001.00899/catalog_sources/table-table3/latexml.html",
+            "stdout": "literature/2001.00899/catalog_sources/table-table3/latexml.stdout.txt",
+            "stderr": "literature/2001.00899/catalog_sources/table-table3/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f70908a67a9f5373efbc4605810e6b5e34c461abdcc29c00022f48fa1a63dd4b"
+    },
+    {
+      "id": "table-table4",
+      "internal_table_id": "table-table4",
+      "status": "success",
+      "ecsv_path": "literature/2001.00899/catalog_tables/table-table4.ecsv",
+      "caption": "Proper Motions of suspected BN Outflow Features Relative to BN.",
+      "label": "table4",
+      "row_count": 5,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "\\mu_\\alpha\\cos(\\delta)",
+          "\\mu_\\delta",
+          "V_t",
+          "P.A.",
+          "Comments"
+        ],
+        [
+          "",
+          "(mas yr^-1)",
+          "(mas yr^-1)",
+          "(km s^-1)",
+          "(\\deg)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\mu_\\alpha\\cos(\\delta) | (mas yr^-1)",
+          "unit_text": "(mas yr^-1)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mu_\\delta | (mas yr^-1)",
+          "unit_text": "(mas yr^-1)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "V_t | (km s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "P.A. | (\\deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Comments",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpk8szk8jg/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2001.00899/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpk8szk8jg/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2001.00899/catalog_sources/table-table4/wrapped.tex",
+            "html": "literature/2001.00899/catalog_sources/table-table4/latexml.html",
+            "stdout": "literature/2001.00899/catalog_sources/table-table4/latexml.stdout.txt",
+            "stderr": "literature/2001.00899/catalog_sources/table-table4/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "31436052f385195ac7416d46a55c988a1f5e29251f72b44b2414f0be9faefcfe"
+    },
+    {
+      "id": "table-table5",
+      "internal_table_id": "table-table5",
+      "status": "success",
+      "ecsv_path": "literature/2001.00899/catalog_tables/table-table5.ecsv",
+      "caption": "Parameters of the BN Radio Jet",
+      "label": "table5",
+      "row_count": 7,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "Peak S ν",
+          "Total S ν",
+          "Size",
+          "D BN",
+          "n e",
+          "Comments"
+        ],
+        [
+          "",
+          "( \\mu Jy)",
+          "( \\mu Jy)",
+          "(″)",
+          "(″)",
+          "( \\times 10^4 cm -3 )",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Peak S ν | ( \\mu Jy)",
+          "unit_text": "Peak S ν",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Total S ν | ( \\mu Jy)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Size | (″)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "D BN | (″)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "n e | ( \\times 10^4 cm -3 )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Comments",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcrc_9jfj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2001.00899/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcrc_9jfj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2001.00899/catalog_sources/table-table5/wrapped.tex",
+            "html": "literature/2001.00899/catalog_sources/table-table5/latexml.html",
+            "stdout": "literature/2001.00899/catalog_sources/table-table5/latexml.stdout.txt",
+            "stderr": "literature/2001.00899/catalog_sources/table-table5/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0c1ede72884007c1d1c6131500bb1480c7e413439d53041953f157b57eee56d3"
+    }
+  ]
+}

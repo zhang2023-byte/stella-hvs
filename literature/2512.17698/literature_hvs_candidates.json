@@ -1,0 +1,76 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:17:42",
+  "paper": {
+    "arxiv_id": "2512.17698",
+    "bibcode": "2026MNRAS.545f2121Y",
+    "title": "A VLA search for compact radio sources in the explosive molecular outflows DR 21 and G5.89",
+    "month": "2025-12",
+    "source_note_json": "notes/2025/2025-12/2025-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2512.17698",
+      "pdf": "https://arxiv.org/pdf/2512.17698"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2512.17698",
+    "audit_path": "literature/2512.17698/audit.json",
+    "catalog_review_path": "literature/2512.17698/catalog_review.json",
+    "catalog_extraction_path": "literature/2512.17698/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2512.17698/catalog_tables/table-tab-obs.ecsv",
+      "literature/2512.17698/catalog_tables/table-tab-crsM.ecsv",
+      "literature/2512.17698/catalog_tables/table-tab-count.ecsv",
+      "literature/2512.17698/catalog_tables/table-tab-par_fit.ecsv",
+      "literature/2512.17698/catalog_tables/table-tab-crsGf.ecsv",
+      "literature/2512.17698/catalog_tables/table-tab-crsA.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T20:17:42",
+    "extractor": "agent",
+    "summary": "The paper reports compact radio sources in the star-forming regions DR21 and G5.89 associated with explosive molecular outflows. The objects are discussed as possible runaway stars in the context of cluster dynamical disintegration, but the paper never presents them as possibly unbound from the Milky Way or Galactic potential. No velocities, escape velocities, or bound/unbound assessments are provided. Therefore, no candidates meet the Stella Galactic-unbound HVS inclusion criteria."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "tab:crsM",
+      "description": "13 compact radio sources detected in the DR21 core and nearby ejection region (Table 2).",
+      "decision": "excluded",
+      "reason": "The paper discusses these sources as possible runaway stars from a dynamical cluster disintegration event, but never presents them as possibly unbound from the Milky Way or Galactic potential. No kinematic data, escape velocities, or bound/unbound assessments are reported.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+          "start_line": 113,
+          "end_line": 115,
+          "context": "Abstract states CRSs are good candidates for follow-up proper motion studies to confirm whether they are runaway stars, with no mention of Galactic unbound status."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+          "start_line": 783,
+          "end_line": 790,
+          "context": "Conclusions repeat that follow-up observations are needed to determine whether CRSs are runaway stars connected to the explosive event; no Galactic-unbound claim is made."
+        }
+      ]
+    },
+    {
+      "group_id": "tab:crsGf",
+      "description": "2 compact radio sources detected outside the G5.89 shell (Table 5).",
+      "decision": "excluded",
+      "reason": "The paper identifies these sources well beyond the G5.89 shell but does not discuss them as possible Galactic-unbound or HVS candidates. No velocity or bound/unbound information is provided.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2512.17698/arxiv_source/mnras_main.tex",
+          "start_line": 506,
+          "end_line": 508,
+          "context": "Text describes two CRSs identified outside the G5.89 shell, with no mention of runaway or unbound status."
+        }
+      ]
+    }
+  ]
+}

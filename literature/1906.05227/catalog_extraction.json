@@ -1,0 +1,1002 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:34:24",
+  "paper": {
+    "arxiv_id": "1906.05227",
+    "title": "Flying far and fast: the distribution of distant hypervelocity star candidates from Gaia DR2 data",
+    "month": "2019-06"
+  },
+  "review": {
+    "path": "literature/1906.05227/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083424",
+    "started_at": "2026-06-07T08:34:24",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1906.05227",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 7,
+      "work_count": 7,
+      "table_count": 7,
+      "success_count": 7,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 7,
+      "file_success_count": 7,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-valid",
+      "internal_table_id": "table-valid",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1906.05227/arxiv_source/farfast.tex",
+        "start_line": 502,
+        "end_line": 544,
+        "caption": "Processing pipeline validation. Results from \\citet{2018ApJ...868...25B}, BR18, and \\citet{2018MNRAS.tmp.2466M}, MA19, as well as ours, OURS, for four hypervelocity star candidates, which are not part of our primary sample, are presented here.",
+        "label": "valid"
+      },
+      "source_path": "literature/1906.05227/arxiv_source/farfast.tex",
+      "excerpt_path": "literature/1906.05227/catalog_sources/table-valid/excerpt.tex",
+      "sha256": "7110b6d64195f4a7338f9e4768a99af5a29cbd8c161d3d257c9dc8d21137cd95",
+      "line_count": 43,
+      "error": ""
+    },
+    {
+      "id": "table-best1",
+      "internal_table_id": "table-best1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1906.05227/arxiv_source/farfast.tex",
+        "start_line": 755,
+        "end_line": 801,
+        "caption": "Hypervelocity star candidates (I). Coordinates, parallaxes, proper motions, radial velocities, and their uncertainties from {\\it Gaia} DR2. The candidates here have uncertainties in parallax that are smaller than half the value of the parallax (first 10).",
+        "label": "best1"
+      },
+      "source_path": "literature/1906.05227/arxiv_source/farfast.tex",
+      "excerpt_path": "literature/1906.05227/catalog_sources/table-best1/excerpt.tex",
+      "sha256": "b696c8793404dc27e58709b831873c9e65162a48dae3506f32ef1ac4a20ac949",
+      "line_count": 47,
+      "error": ""
+    },
+    {
+      "id": "table-best2",
+      "internal_table_id": "table-best2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1906.05227/arxiv_source/farfast.tex",
+        "start_line": 808,
+        "end_line": 839,
+        "caption": "Hypervelocity star candidates (II). Galactocentric distance and velocity, and the angle between the position and velocity vectors (median values and uncertainties derived from the 16th and 84th percentiles) have been computed using the Monte Carlo approach described in the text. RUWE index from \\url{http://gaia.ari.uni-heidelberg.de/singlesource.html}.",
+        "label": "best2"
+      },
+      "source_path": "literature/1906.05227/arxiv_source/farfast.tex",
+      "excerpt_path": "literature/1906.05227/catalog_sources/table-best2/excerpt.tex",
+      "sha256": "5485f544d4432937504d07c5462f87f98bfa621d47793ce3aecf81d314d00d7e",
+      "line_count": 32,
+      "error": ""
+    },
+    {
+      "id": "table-vbest1",
+      "internal_table_id": "table-vbest1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1906.05227/arxiv_source/farfast.tex",
+        "start_line": 854,
+        "end_line": 892,
+        "caption": "Best hypervelocity star candidates (I). The candidates here belong to the sample of 174 sources, which are probably distant and have the best astrometric solutions. Only one star, {\\it Gaia}~DR2 2130229806599268480, is also included in Tables~\\ref{best1} and \\ref{best2}. Data source as in Table~\\ref{best1}.",
+        "label": "vbest1"
+      },
+      "source_path": "literature/1906.05227/arxiv_source/farfast.tex",
+      "excerpt_path": "literature/1906.05227/catalog_sources/table-vbest1/excerpt.tex",
+      "sha256": "1e87e9a56f8fdd96ff30e8d5b0ff0c3ab40d5b79f1e162cfd1291285cafcad3d",
+      "line_count": 39,
+      "error": ""
+    },
+    {
+      "id": "table-vbest2",
+      "internal_table_id": "table-vbest2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1906.05227/arxiv_source/farfast.tex",
+        "start_line": 899,
+        "end_line": 923,
+        "caption": "Best hypervelocity star candidates (II). Data source as in Table~\\ref{best2}.",
+        "label": "vbest2"
+      },
+      "source_path": "literature/1906.05227/arxiv_source/farfast.tex",
+      "excerpt_path": "literature/1906.05227/catalog_sources/table-vbest2/excerpt.tex",
+      "sha256": "7b767470a6b37f784bf0b76ce243397e49bb548ec248882ceb3884bff045bc86",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-vbesth1",
+      "internal_table_id": "table-vbesth1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1906.05227/arxiv_source/farfast.tex",
+        "start_line": 986,
+        "end_line": 1023,
+        "caption": "Best high Galactic latitude ($|b|>30\\degr$) hypervelocity star candidates (I). The candidates here belong to the sample of 174 sources, which are probably distant and have the best astrometric solutions. Data source as in Table~\\ref{best1}.",
+        "label": "vbesth1"
+      },
+      "source_path": "literature/1906.05227/arxiv_source/farfast.tex",
+      "excerpt_path": "literature/1906.05227/catalog_sources/table-vbesth1/excerpt.tex",
+      "sha256": "76dffc4366d9f583a1fd09dd1f309af2fc2d8874f119f79d260786fd3653ba9d",
+      "line_count": 38,
+      "error": ""
+    },
+    {
+      "id": "table-vbesth2",
+      "internal_table_id": "table-vbesth2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1906.05227/arxiv_source/farfast.tex",
+        "start_line": 1030,
+        "end_line": 1054,
+        "caption": "Best high Galactic latitude ($|b|>30\\degr$) hypervelocity star candidates (II). Data source as in Table~\\ref{best2}.",
+        "label": "vbesth2"
+      },
+      "source_path": "literature/1906.05227/arxiv_source/farfast.tex",
+      "excerpt_path": "literature/1906.05227/catalog_sources/table-vbesth2/excerpt.tex",
+      "sha256": "4fdd6801e8503abf1cfda52d5f9477b345492ef47c19fe710d88a2001458aff2",
+      "line_count": 25,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-valid",
+      "internal_table_id": "table-valid",
+      "status": "success",
+      "ecsv_path": "literature/1906.05227/catalog_tables/table-valid.ecsv",
+      "caption": "Processing pipeline validation. Results from \\citet{2018ApJ...868...25B}, BR18, and \\citet{2018MNRAS.tmp.2466M}, MA19, as well as ours, OURS, for four hypervelocity star candidates, which are not part of our primary sample, are presented here.",
+      "label": "valid",
+      "row_count": 12,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR2 designation",
+          "\\alpha",
+          "\\delta",
+          "d_\\rm GC",
+          "v_\\rm GC",
+          "\\theta",
+          "Source"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR2 designation",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "d_\\rm GC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "v_\\rm GC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\theta",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6hqh5uzs/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1906.05227/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6hqh5uzs/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1906.05227/catalog_sources/table-valid/wrapped.tex",
+            "html": "literature/1906.05227/catalog_sources/table-valid/latexml.html",
+            "stdout": "literature/1906.05227/catalog_sources/table-valid/latexml.stdout.txt",
+            "stderr": "literature/1906.05227/catalog_sources/table-valid/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7110b6d64195f4a7338f9e4768a99af5a29cbd8c161d3d257c9dc8d21137cd95"
+    },
+    {
+      "id": "table-best1",
+      "internal_table_id": "table-best1",
+      "status": "success",
+      "ecsv_path": "literature/1906.05227/catalog_tables/table-best1.ecsv",
+      "caption": "Hypervelocity star candidates (I). Coordinates, parallaxes, proper motions, radial velocities, and their uncertainties from {\\it Gaia} DR2. The candidates here have uncertainties in parallax that are smaller than half the value of the parallax (first 10).",
+      "label": "best1",
+      "row_count": 15,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptczmix80/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1906.05227/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptczmix80/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1906.05227/catalog_sources/table-best1/wrapped.tex",
+            "html": "literature/1906.05227/catalog_sources/table-best1/latexml.html",
+            "stdout": "literature/1906.05227/catalog_sources/table-best1/latexml.stdout.txt",
+            "stderr": "literature/1906.05227/catalog_sources/table-best1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b696c8793404dc27e58709b831873c9e65162a48dae3506f32ef1ac4a20ac949"
+    },
+    {
+      "id": "table-best2",
+      "internal_table_id": "table-best2",
+      "status": "success",
+      "ecsv_path": "literature/1906.05227/catalog_tables/table-best2.ecsv",
+      "caption": "Hypervelocity star candidates (II). Galactocentric distance and velocity, and the angle between the position and velocity vectors (median values and uncertainties derived from the 16th and 84th percentiles) have been computed using the Monte Carlo approach described in the text. RUWE index from \\url{http://gaia.ari.uni-heidelberg.de/singlesource.html}.",
+      "label": "best2",
+      "row_count": 15,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpropb5vj_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1906.05227/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpropb5vj_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1906.05227/catalog_sources/table-best2/wrapped.tex",
+            "html": "literature/1906.05227/catalog_sources/table-best2/latexml.html",
+            "stdout": "literature/1906.05227/catalog_sources/table-best2/latexml.stdout.txt",
+            "stderr": "literature/1906.05227/catalog_sources/table-best2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5485f544d4432937504d07c5462f87f98bfa621d47793ce3aecf81d314d00d7e"
+    },
+    {
+      "id": "table-vbest1",
+      "internal_table_id": "table-vbest1",
+      "status": "success",
+      "ecsv_path": "literature/1906.05227/catalog_tables/table-vbest1.ecsv",
+      "caption": "Best hypervelocity star candidates (I). The candidates here belong to the sample of 174 sources, which are probably distant and have the best astrometric solutions. Only one star, {\\it Gaia}~DR2 2130229806599268480, is also included in Tables~\\ref{best1} and \\ref{best2}. Data source as in Table~\\ref{best1}.",
+      "label": "vbest1",
+      "row_count": 10,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR2 designation",
+          "\\alpha",
+          "\\delta",
+          "l",
+          "b",
+          "\\pi",
+          "\\mu_\\alpha",
+          "\\mu_\\delta",
+          "V_r"
+        ],
+        [
+          "",
+          "( \\degr )",
+          "( \\degr )",
+          "( \\degr )",
+          "( \\degr )",
+          "(mas)",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR2 designation",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha | ( \\degr )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta | ( \\degr )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "l | ( \\degr )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "b | ( \\degr )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\pi | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_\\alpha | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\mu_\\delta | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "V_r | (km s -1 )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpeu3ycow7/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1906.05227/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpeu3ycow7/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1906.05227/catalog_sources/table-vbest1/wrapped.tex",
+            "html": "literature/1906.05227/catalog_sources/table-vbest1/latexml.html",
+            "stdout": "literature/1906.05227/catalog_sources/table-vbest1/latexml.stdout.txt",
+            "stderr": "literature/1906.05227/catalog_sources/table-vbest1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "1e87e9a56f8fdd96ff30e8d5b0ff0c3ab40d5b79f1e162cfd1291285cafcad3d"
+    },
+    {
+      "id": "table-vbest2",
+      "internal_table_id": "table-vbest2",
+      "status": "success",
+      "ecsv_path": "literature/1906.05227/catalog_tables/table-vbest2.ecsv",
+      "caption": "Best hypervelocity star candidates (II). Data source as in Table~\\ref{best2}.",
+      "label": "vbest2",
+      "row_count": 11,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR2 designation",
+          "d_\\rm GC",
+          "v_\\rm GC",
+          "\\theta",
+          "RUWE"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR2 designation",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "d_\\rm GC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "v_\\rm GC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\theta",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "RUWE",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp79_nlqu5/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1906.05227/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp79_nlqu5/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1906.05227/catalog_sources/table-vbest2/wrapped.tex",
+            "html": "literature/1906.05227/catalog_sources/table-vbest2/latexml.html",
+            "stdout": "literature/1906.05227/catalog_sources/table-vbest2/latexml.stdout.txt",
+            "stderr": "literature/1906.05227/catalog_sources/table-vbest2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7b767470a6b37f784bf0b76ce243397e49bb548ec248882ceb3884bff045bc86"
+    },
+    {
+      "id": "table-vbesth1",
+      "internal_table_id": "table-vbesth1",
+      "status": "success",
+      "ecsv_path": "literature/1906.05227/catalog_tables/table-vbesth1.ecsv",
+      "caption": "Best high Galactic latitude ($|b|>30\\degr$) hypervelocity star candidates (I). The candidates here belong to the sample of 174 sources, which are probably distant and have the best astrometric solutions. Data source as in Table~\\ref{best1}.",
+      "label": "vbesth1",
+      "row_count": 10,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR2 designation",
+          "\\alpha",
+          "\\delta",
+          "l",
+          "b",
+          "\\pi",
+          "\\mu_\\alpha",
+          "\\mu_\\delta",
+          "V_r"
+        ],
+        [
+          "",
+          "( \\degr )",
+          "( \\degr )",
+          "( \\degr )",
+          "( \\degr )",
+          "(mas)",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR2 designation",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha | ( \\degr )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta | ( \\degr )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "l | ( \\degr )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "b | ( \\degr )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\pi | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_\\alpha | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\mu_\\delta | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "V_r | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpeqv2tqyq/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1906.05227/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpeqv2tqyq/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1906.05227/catalog_sources/table-vbesth1/wrapped.tex",
+            "html": "literature/1906.05227/catalog_sources/table-vbesth1/latexml.html",
+            "stdout": "literature/1906.05227/catalog_sources/table-vbesth1/latexml.stdout.txt",
+            "stderr": "literature/1906.05227/catalog_sources/table-vbesth1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "76dffc4366d9f583a1fd09dd1f309af2fc2d8874f119f79d260786fd3653ba9d"
+    },
+    {
+      "id": "table-vbesth2",
+      "internal_table_id": "table-vbesth2",
+      "status": "success",
+      "ecsv_path": "literature/1906.05227/catalog_tables/table-vbesth2.ecsv",
+      "caption": "Best high Galactic latitude ($|b|>30\\degr$) hypervelocity star candidates (II). Data source as in Table~\\ref{best2}.",
+      "label": "vbesth2",
+      "row_count": 11,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR2 designation",
+          "d_\\rm GC",
+          "v_\\rm GC",
+          "\\theta",
+          "RUWE"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR2 designation",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "d_\\rm GC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "v_\\rm GC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\theta",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "RUWE",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7ff30e0q/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1906.05227/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7ff30e0q/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1906.05227/catalog_sources/table-vbesth2/wrapped.tex",
+            "html": "literature/1906.05227/catalog_sources/table-vbesth2/latexml.html",
+            "stdout": "literature/1906.05227/catalog_sources/table-vbesth2/latexml.stdout.txt",
+            "stderr": "literature/1906.05227/catalog_sources/table-vbesth2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4fdd6801e8503abf1cfda52d5f9477b345492ef47c19fe710d88a2001458aff2"
+    }
+  ]
+}

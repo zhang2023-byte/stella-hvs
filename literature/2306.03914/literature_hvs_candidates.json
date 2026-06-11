@@ -1,0 +1,1675 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:45:00",
+  "paper": {
+    "arxiv_id": "2306.03914",
+    "bibcode": "2023OJAp....6E..28E",
+    "title": "The fastest stars in the Galaxy",
+    "month": "2023-06",
+    "source_note_json": "notes/2023/2023-06/2023-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2306.03914",
+      "pdf": "https://arxiv.org/pdf/2306.03914"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2306.03914",
+    "audit_path": "literature/2306.03914/audit.json",
+    "catalog_review_path": "literature/2306.03914/catalog_review.json",
+    "catalog_extraction_path": "literature/2306.03914/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+      "literature/2306.03914/catalog_tables/table-tab-all_systems_flat_distanc.ecsv",
+      "literature/2306.03914/catalog_tables/table-tab-all_systems_EDSD.ecsv",
+      "literature/2306.03914/catalog_tables/table-tab-query.ecsv",
+      "literature/2306.03914/catalog_tables/table-tab-query2.ecsv",
+      "literature/2306.03914/catalog_tables/table-tab-sed.ecsv",
+      "literature/2306.03914/catalog_tables/table-tab-obslog.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-22T23:45:00",
+    "extractor": "agent",
+    "summary": "This paper searches for hypervelocity white dwarfs (D^6 stars) ejected from thermonuclear supernovae using Gaia DR3 astrometry and spectroscopic follow-up. ADQL queries selected 25 blue candidates with high tangential velocities; spectroscopy confirmed 6 new discoveries (4 hot D^6 + 2 LP 40-365), plus 3 known D^6 stars for a total of 16 thermonuclear runaway candidates. The paper explicitly states that D^6 star velocities significantly exceed the Milky Way's escape velocity ('These velocities significantly exceed the Milky Way's escape velocity'), and that 'all of the D^6 stars will leave the Milky Way'. A total of 7 D^6 stars are confirmed as Galactic-unbound HVS candidates: D6-1, D6-2, D6-3 (Shen 2018), J1235-3752, J0927-6335, J0546+0836, J1332-3541 (newly discovered). J0927 and J1235 have the fastest known stellar radial velocities (-2285 and -1694 km/s)."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "reported_value_adoption",
+      "summary": "Gaia DR3 ADQL query: selected candidates from gaiadr3.gaia_source. Conditions: G<20 mag, ruwe<1.4, pm>50 mas/yr, 4.74*pm/(parallax+parallax_error)>400 km/s, 4.74*pm/parallax>600 km/s, bp_rp<0.5 mag, parallax_over_error<5. Returned 25 candidates, excluded 2 sources with bright neighbors, 23 as highest priority. Also selected 21 sources with lower proper motion / higher parallax significance as a comparison sample.",
+      "inputs": [
+        "Gaia DR3 archive (gaiadr3.gaia_source)"
+      ],
+      "outputs": [
+        "25 primary candidates (Table tab:query)",
+        "21 secondary candidates (Table tab:query2)"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 194,
+          "end_line": 206,
+          "context": "ADQL query implementation and selection criteria"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "reported_value_adoption",
+      "summary": "Spectroscopic follow-up: used MagE (Magellan 6.5m, R~5500), LRIS (Keck-I 10m, R~1000-1500), ESI (Keck-II 10m, R~8000), SOAR/Goodman (4.1m), DBSP (Palomar 5m), GMOS (Gemini-South 8.1m), Kast (Lick 3m) for spectroscopic observations. Prioritized observing the brightest and highest tangential velocity candidates. RV measured via cross-correlation.",
+      "inputs": [
+        "MagE, LRIS, ESI, SOAR, DBSP, GMOS, Kast spectra"
+      ],
+      "outputs": [
+        "RV measurements",
+        "spectral classification for all 44 candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 245,
+          "end_line": 249,
+          "context": "Spectroscopic follow-up summary: 39 candidates observed"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "reported_value_adoption",
+      "summary": "Radial velocity measurement: RV measured by cross-correlation matching with synthetic spectra (ATLAS12/SYNTHE). Cross-correlation performed using MagE, LRIS, ESI, SOAR, DBSP, GMOS, Kast spectra.",
+      "inputs": [
+        "Observed spectra (MagE, LRIS, ESI, SOAR, DBSP, GMOS, Kast)",
+        "ATLAS12/SYNTHE synthetic spectra grid"
+      ],
+      "outputs": [
+        "RV measurements"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 272,
+          "end_line": 284,
+          "context": "Spectral modeling with ATLAS12/SYNTHE"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "reported_value_adoption",
+      "summary": "Spectral classification and stellar parameters: synthetic spectra computed using ATLAS12 (atmospheric structure) and SYNTHE (radiative transfer). C/O-dominated atmosphere (~70% C, 30% O, Mg/Si trace) and pure He atmosphere grids. Classification: 4 hot D6 (hydrogen-free, Teff=20000-130000K, |RV|>1000 km/s), 2 LP 40-365, the rest are DA WD/sdO/B/MS false positives. Teff and atmospheric composition estimated.",
+      "inputs": [
+        "Observed spectra",
+        "ATLAS12/SYNTHE synthetic spectra grid"
+      ],
+      "outputs": [
+        "Teff estimates",
+        "spectral classification",
+        "atmospheric composition"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 272,
+          "end_line": 284,
+          "context": "Spectral modeling with ATLAS12/SYNTHE"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-04"
+      ],
+      "step_type": "reported_value_adoption",
+      "summary": "Bayesian distance estimation: posterior sampling from (M_G,0, mu_alpha*, mu_delta, RV). M_G,0 flat prior (equivalent to p(d) proportional to 1/d). Parallax prediction: varpi=10^((M_G,0-G+10+A_G)/5). emcee sampling (64 walkers, 1000 burn-in + 1000 steps). Three distance priors tested (flat M_G,0 / exponentially decaying space density L=1.35 kpc / flat distance) as sensitivity analysis.",
+      "inputs": [
+        "Gaia DR3 astrometry",
+        "RV",
+        "3D dust map extinction"
+      ],
+      "outputs": [
+        "distance posterior"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 484,
+          "end_line": 515,
+          "context": "Kinematic modeling: Bayesian inference with emcee"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 524,
+          "end_line": 540,
+          "context": "Three distance priors tested"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-05"
+      ],
+      "step_type": "reported_value_adoption",
+      "summary": "3D velocity and trajectory calculation: ignoring the Galactic gravitational potential (extremely high velocities, flight time ~1 Myr), straight-line trajectories. 3D velocity posterior derived from distance posterior and proper motions/RV. Total space velocity v_tot computed.",
+      "inputs": [
+        "distance posterior",
+        "Gaia DR3 proper motions",
+        "RV"
+      ],
+      "outputs": [
+        "3D velocity posterior",
+        "v_tot"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 484,
+          "end_line": 515,
+          "context": "Kinematic modeling: Bayesian inference with emcee"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [
+        "step-06"
+      ],
+      "step_type": "reported_value_adoption",
+      "summary": "Ejection velocity calculation: v_ejection = |v - v_rot,birth|. v_rot,birth is the circular orbit velocity at the intersection of the trajectory with the Galactic disk (or at the current position), assuming a flat rotation curve v_circ=240 km/s. Prior: v_ejection < 3000 km/s. The paper states that D^6 star velocities significantly exceed the Milky Way's escape velocity, and all will leave the Milky Way for intergalactic space.",
+      "inputs": [
+        "3D velocity posterior",
+        "Galactic rotation model (flat, 240 km/s)"
+      ],
+      "outputs": [
+        "v_ejection",
+        "v_tot",
+        "z",
+        "t_disk"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 496,
+          "end_line": 506,
+          "context": "Ejection velocity calculation and Galactic rotation subtraction"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 152,
+          "end_line": 153,
+          "context": "These velocities significantly exceed the Milky Way's escape velocity"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 763,
+          "end_line": 764,
+          "context": "In the future, all of the D^6 stars will leave the Milky Way"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2306.03914:cand-001",
+        "paper_candidate_id": "J0927-6335",
+        "gaia_source_id": "Gaia DR3 5250394728194220800",
+        "all": [
+          {
+            "value": "J0927-6335",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 53,
+                "column": "col_001",
+                "column_header": "Name",
+                "raw_value": "J0927"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 5250394728194220800",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+                "start_line": 194,
+                "end_line": 206,
+                "context": "Gaia DR3 ADQL query used to select candidates"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "J0927-6335 is a newly discovered hot D^6 star in this paper, with the fastest stellar RV ever recorded (-2285+/-20 km/s). v_tot ~2753 km/s, v_ejection ~2519 km/s. The paper explicitly classifies it as a D^6 star and confirms its velocity far exceeds the Milky Way escape velocity. Carbon/oxygen-dominated atmosphere, Teff~60000K.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star",
+          "hyper_runaway_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The paper explicitly states that all D^6 stars exceed the Milky Way escape velocity and will leave the Galaxy. J0927 is one of the paper's core discoveries, with the fastest RV.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+            "start_line": 137,
+            "end_line": 138,
+            "context": "Abstract: two stars have RVs of -1694 and -2285 km/s -- the fastest systemic stellar RVs ever measured"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+            "start_line": 152,
+            "end_line": 153,
+            "context": "Velocities significantly exceed Milky Way's escape velocity, runaway WDs launched into intergalactic space"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+            "start_line": 215,
+            "end_line": 220,
+            "context": "Table tab:query shows J0927-6335 as new hot D^6 star discovery"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "4.53^+2.17_-1.71",
+            "value": "4.53",
+            "error": "",
+            "lower_error": "1.71",
+            "upper_error": "2.17",
+            "unit": "kpc",
+            "kind": "kinematic_distance",
+            "description": "Bayesian kinematic distance (flat M_G,0 prior). Flat distance prior variant: 5.40^+1.82_-1.99 kpc. EDSD prior variant: 4.35^+1.89_-1.41 kpc.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 53,
+                "column": "col_006",
+                "column_header": "d",
+                "raw_value": "4.53^+2.17_-1.71"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-2285+/- 20",
+            "value": "-2285",
+            "error": "20",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km/s",
+            "kind": "radial_velocity",
+            "description": "Fastest systemic stellar RV ever measured. Measured from MagE spectrum cross-correlation.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 53,
+                "column": "col_005",
+                "column_header": "RV",
+                "raw_value": "-2285+/- 20"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "2753^+271_-148",
+            "value": "2753",
+            "error": "",
+            "lower_error": "148",
+            "upper_error": "271",
+            "unit": "km/s",
+            "kind": "total_space_velocity",
+            "description": "Total 3D space velocity (heliocentric, straight-line trajectory, no Galactic potential).",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 53,
+                "column": "col_007",
+                "column_header": "v_tot",
+                "raw_value": "2753^+271_-148"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "2519^+271_-147",
+            "value": "2519",
+            "error": "",
+            "lower_error": "147",
+            "upper_error": "271",
+            "unit": "km/s",
+            "kind": "ejection_velocity",
+            "description": "Ejection velocity = |v - v_rot,birth|. Subtracts Galactic rotation (flat 240 km/s). Prior: v_ejection < 3000 km/s.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 53,
+                "column": "col_008",
+                "column_header": "v_ejection",
+                "raw_value": "2519^+271_-147"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [
+        {
+          "raw_value": "hot D^6 star",
+          "value": "hot D6 star",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "classification",
+          "description": "Hot D^6 star: hydrogen-free, carbon/oxygen-dominated atmosphere, Teff~60000K. Classified as thermonuclear supernova runaway donor (D^6 scenario).",
+          "measurement_type": "classification",
+          "spectral_type": "PG1159",
+          "line": "",
+          "instrument": "MagE",
+          "survey": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+              "start_line": 215,
+              "end_line": 220,
+              "context": "Table tab:query: J0927 classified as hot D^6 star, MagE instrument"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "hot D^6 star (PG1159-like)",
+          "value": "hot D6 star (PG1159-like)",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "spectral_type",
+          "description": "Carbon/oxygen atmosphere, Teff~60000K from Werner et al. (2024, A&A 682, A42) NLTE analysis.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+              "start_line": 761,
+              "end_line": 762,
+              "context": "Three objects with Teff above 60000K, one above 100000K"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {},
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2306.03914:cand-002",
+        "paper_candidate_id": "J1235-3752",
+        "gaia_source_id": "Gaia DR3 6156470924553703552",
+        "all": [
+          {
+            "value": "J1235-3752",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 52,
+                "column": "col_001",
+                "column_header": "Name",
+                "raw_value": "J1235"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 6156470924553703552",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+                "start_line": 194,
+                "end_line": 206,
+                "context": "Gaia DR3 ADQL query used to select candidates"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "J1235-3752 is a newly discovered hot D^6 star in this paper, with the second-fastest stellar RV (-1694+/-10 km/s). v_tot ~2670 km/s, v_ejection ~2471 km/s. Carbon-dominated atmosphere, Teff~20000-25000K, the coolest and most inflated among the hot D^6 stars. The paper clearly confirms its velocity far exceeds the Milky Way escape velocity.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star",
+          "hyper_runaway_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "One of the paper's core discoveries, with the second-fastest known stellar RV. The paper explicitly states all D^6 stars will leave the Milky Way.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+            "start_line": 137,
+            "end_line": 138,
+            "context": "Abstract: two stars have RVs of -1694 and -2285 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+            "start_line": 289,
+            "end_line": 290,
+            "context": "J1235-3752: RV=-1694±10 km/s, C II, O II, Mg II lines"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+            "start_line": 215,
+            "end_line": 215,
+            "context": "Table tab:query: J1235-3752 classified as hot D^6 star"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "4.07^+1.01_-1.19",
+            "value": "4.07",
+            "error": "",
+            "lower_error": "1.19",
+            "upper_error": "1.01",
+            "unit": "kpc",
+            "kind": "kinematic_distance",
+            "description": "Bayesian kinematic distance (flat M_G,0 prior).",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 52,
+                "column": "col_006",
+                "column_header": "d",
+                "raw_value": "4.07^+1.01_-1.19"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-1694+/- 10",
+            "value": "-1694",
+            "error": "10",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km/s",
+            "kind": "radial_velocity",
+            "description": "Second fastest systemic stellar RV ever measured. MagE spectrum cross-correlation.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 52,
+                "column": "col_005",
+                "column_header": "RV",
+                "raw_value": "-1694+/- 10"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "2670^+339_-350",
+            "value": "2670",
+            "error": "",
+            "lower_error": "350",
+            "upper_error": "339",
+            "unit": "km/s",
+            "kind": "total_space_velocity",
+            "description": "Total 3D space velocity.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 52,
+                "column": "col_007",
+                "column_header": "v_tot",
+                "raw_value": "2670^+339_-350"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "2471^+351_-345",
+            "value": "2471",
+            "error": "",
+            "lower_error": "345",
+            "upper_error": "351",
+            "unit": "km/s",
+            "kind": "ejection_velocity",
+            "description": "Ejection velocity relative to Galactic rotation.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 52,
+                "column": "col_008",
+                "column_header": "v_ejection",
+                "raw_value": "2471^+351_-345"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [
+        {
+          "raw_value": "hot D^6 star",
+          "value": "hot D6 star",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "classification",
+          "description": "Hot D^6 star: carbon-dominated atmosphere (C II, O II, Mg II, Si II/III). Teff 15000-25000K. Coolest of the new hot D^6 stars.",
+          "measurement_type": "classification",
+          "spectral_type": "carbon-atmosphere WD",
+          "line": "",
+          "instrument": "MagE",
+          "survey": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+              "start_line": 289,
+              "end_line": 290,
+              "context": "J1235-3752 individual discussion: carbon-dominated spectrum"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "hot D^6 star (carbon-atmosphere)",
+          "value": "hot D6 star (carbon-atmosphere)",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "spectral_type",
+          "description": "Carbon-dominated atmosphere. C II, O II, Mg II, Si II/III lines. Teff 15000-25000K.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+              "start_line": 289,
+              "end_line": 290,
+              "context": "J1235: C II, O II, Mg II lines, Si II and Si III, Teff 15-25 kK"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {},
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2306.03914:cand-003",
+        "paper_candidate_id": "D6-1",
+        "gaia_source_id": "Gaia DR3 5805243926609660032",
+        "all": [
+          {
+            "value": "D6-1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 49,
+                "column": "col_001",
+                "column_header": "Name",
+                "raw_value": "D6-1"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 5805243926609660032",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+                "start_line": 194,
+                "end_line": 206,
+                "context": "Gaia DR3 ADQL query used to select candidates"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "D6-1 is a known D^6 star discovered by Shen et al. (2018). RV=1200+/-40 km/s, v_tot~2045 km/s, v_ejection~2254 km/s. The paper confirms D^6 star velocities exceed the Milky Way escape velocity. Distance 1.91 kpc, one of the nearest D^6 stars.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star",
+          "hyper_runaway_candidate",
+          "other"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Known D^6 star, included in the paper's census table with confirmation that all D^6 stars will leave the Milky Way. Its hypervelocity nature was already confirmed in Shen 2018.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+            "start_line": 452,
+            "end_line": 453,
+            "context": "Table tab:all_systems: D6-1 listed as suspected D^6 star from Shen 2018"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+            "start_line": 154,
+            "end_line": 158,
+            "context": "Shen 2018 discovered three D^6 stars including D6-1"
+          }
+        ],
+        "citation": {
+          "bibkey": "Shen2018",
+          "authors": [
+            "Shen, K. J."
+          ],
+          "year": "2018b",
+          "doi": "10.3847/1538-4357/aad55b",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+              "start_line": 154,
+              "end_line": 158,
+              "context": "Shen2018 discovered three D6 stars with large apparent tangential velocities and well-constrained parallaxes."
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2306.03914/arxiv_source/manuscript.bbl",
+              "start_line": 602,
+              "end_line": 605,
+              "context": "Bibitem for Shen2018"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "1.91^+0.29_-0.22",
+            "value": "1.91",
+            "error": "",
+            "lower_error": "0.22",
+            "upper_error": "0.29",
+            "unit": "kpc",
+            "kind": "kinematic_distance",
+            "description": "Bayesian kinematic distance.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 49,
+                "column": "col_006",
+                "column_header": "d",
+                "raw_value": "1.91^+0.29_-0.22"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "1200+/- 40",
+            "value": "1200",
+            "error": "40",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km/s",
+            "kind": "radial_velocity",
+            "description": "Radial velocity from Shen 2018.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 49,
+                "column": "col_005",
+                "column_header": "RV",
+                "raw_value": "1200+/- 40"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "2045^+251_-187",
+            "value": "2045",
+            "error": "",
+            "lower_error": "187",
+            "upper_error": "251",
+            "unit": "km/s",
+            "kind": "total_space_velocity",
+            "description": "Total 3D space velocity.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 49,
+                "column": "col_007",
+                "column_header": "v_tot",
+                "raw_value": "2045^+251_-187"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "2254^+248_-185",
+            "value": "2254",
+            "error": "",
+            "lower_error": "185",
+            "upper_error": "248",
+            "unit": "km/s",
+            "kind": "ejection_velocity",
+            "description": "Ejection velocity relative to Galactic rotation.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 49,
+                "column": "col_008",
+                "column_header": "v_ejection",
+                "raw_value": "2254^+248_-185"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [
+        {
+          "raw_value": "D^6 star (Shen 2018)",
+          "value": "D6 star",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "classification",
+          "description": "Known D^6 star: cool and puffy, Teff~7000K, R~0.2 R_sun, metal-line spectrum, no hydrogen.",
+          "measurement_type": "classification",
+          "spectral_type": "cool D^6 star",
+          "line": "",
+          "instrument": "",
+          "survey": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+              "start_line": 154,
+              "end_line": 156,
+              "context": "D6-1: Teff~7000K, R~0.2 R_sun, metal-line atmosphere"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "cool D^6 star",
+          "value": "cool D6 star",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "spectral_type",
+          "description": "Cool and puffy D^6 star. Teff~7000K, R~0.2 R_sun.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+              "start_line": 736,
+              "end_line": 737,
+              "context": "Three D^6 stars from Shen 2018: Teff 6000-7000K, radii 0.2-0.4 R_sun"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {},
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2306.03914:cand-004",
+        "paper_candidate_id": "D6-3",
+        "gaia_source_id": "Gaia DR3 2156908318076164224",
+        "all": [
+          {
+            "value": "D6-3",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 51,
+                "column": "col_001",
+                "column_header": "Name",
+                "raw_value": "D6-3"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 2156908318076164224",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+                "start_line": 194,
+                "end_line": 206,
+                "context": "Gaia DR3 ADQL query used to select candidates"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "D6-3 is a known D^6 star discovered by Shen et al. (2018). RV near 0 (-20+/-80 km/s) but v_tot~2248 km/s, v_ejection~2393 km/s, driven by extremely high tangential velocity. The paper confirms D^6 star velocities exceed the Milky Way escape velocity.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star",
+          "hyper_runaway_candidate",
+          "other"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Known D^6 star. Despite low RV, its total space velocity and ejection velocity are extremely high (>2300 km/s), far exceeding the Milky Way escape velocity.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+            "start_line": 454,
+            "end_line": 455,
+            "context": "Table tab:all_systems: D6-3 with v_tot=2248, v_ejection=2393 km/s"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+            "start_line": 154,
+            "end_line": 158,
+            "context": "Shen 2018 discovered three D^6 stars including D6-3"
+          }
+        ],
+        "citation": {
+          "bibkey": "Shen2018",
+          "authors": [
+            "Shen, K. J."
+          ],
+          "year": "2018b",
+          "doi": "10.3847/1538-4357/aad55b",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+              "start_line": 154,
+              "end_line": 158,
+              "context": "Shen2018 discovered three D6 stars with large apparent tangential velocities and well-constrained parallaxes."
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2306.03914/arxiv_source/manuscript.bbl",
+              "start_line": 602,
+              "end_line": 605,
+              "context": "Bibitem for Shen2018"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "2.26^+0.34_-0.35",
+            "value": "2.26",
+            "error": "",
+            "lower_error": "0.35",
+            "upper_error": "0.34",
+            "unit": "kpc",
+            "kind": "kinematic_distance",
+            "description": "Bayesian kinematic distance.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 51,
+                "column": "col_006",
+                "column_header": "d",
+                "raw_value": "2.26^+0.34_-0.35"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "-20+/- 80",
+            "value": "-20",
+            "error": "80",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km/s",
+            "kind": "radial_velocity",
+            "description": "RV near zero but high tangential velocity drives total speed.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 51,
+                "column": "col_005",
+                "column_header": "RV",
+                "raw_value": "-20+/- 80"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "2248^+340_-353",
+            "value": "2248",
+            "error": "",
+            "lower_error": "353",
+            "upper_error": "340",
+            "unit": "km/s",
+            "kind": "total_space_velocity",
+            "description": "Total 3D space velocity.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 51,
+                "column": "col_007",
+                "column_header": "v_tot",
+                "raw_value": "2248^+340_-353"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "2393^+377_-391",
+            "value": "2393",
+            "error": "",
+            "lower_error": "391",
+            "upper_error": "377",
+            "unit": "km/s",
+            "kind": "ejection_velocity",
+            "description": "Ejection velocity relative to Galactic rotation.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 51,
+                "column": "col_008",
+                "column_header": "v_ejection",
+                "raw_value": "2393^+377_-391"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [
+        {
+          "raw_value": "D^6 star (Shen 2018)",
+          "value": "D6 star",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "classification",
+          "description": "Known D^6 star: cool and puffy, metal-line spectrum, no hydrogen.",
+          "measurement_type": "classification",
+          "spectral_type": "cool D^6 star",
+          "line": "",
+          "instrument": "",
+          "survey": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+              "start_line": 154,
+              "end_line": 156,
+              "context": "D6-3 is one of three original D^6 stars from Shen 2018"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "cool D^6 star",
+          "value": "cool D6 star",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "spectral_type",
+          "description": "Cool and puffy D^6 star.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+              "start_line": 736,
+              "end_line": 737,
+              "context": "Three D^6 stars from Shen 2018: Teff 6000-7000K"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {},
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2306.03914:cand-005",
+        "paper_candidate_id": "J0546+0836",
+        "gaia_source_id": "Gaia DR3 3335306915849417984",
+        "all": [
+          {
+            "value": "J0546+0836",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 54,
+                "column": "col_001",
+                "column_header": "Name",
+                "raw_value": "J0546"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 3335306915849417984",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+                "start_line": 194,
+                "end_line": 206,
+                "context": "Gaia DR3 ADQL query used to select candidates"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "J0546+0836 is a newly discovered hot D^6 star in this paper. RV=1200+/-20 km/s, v_tot~1699 km/s, v_ejection~1864 km/s. Distance poorly constrained (4.02^+2.25_-1.67 kpc). The paper confirms all D^6 star velocities exceed the Milky Way escape velocity.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star",
+          "hyper_runaway_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Core new discovery of the paper. Despite large distance uncertainty, the minimum ejection velocity far exceeds the Milky Way escape velocity.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+            "start_line": 217,
+            "end_line": 217,
+            "context": "Table tab:query: J0546+0836 classified as hot D^6 star"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+            "start_line": 217,
+            "end_line": 217,
+            "context": "J0546 listed as hot D^6 star discovery in Table tab:query"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "4.02^+2.25_-1.67",
+            "value": "4.02",
+            "error": "",
+            "lower_error": "1.67",
+            "upper_error": "2.25",
+            "unit": "kpc",
+            "kind": "kinematic_distance",
+            "description": "Bayesian kinematic distance. Large uncertainty due to poorly constrained parallax.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 54,
+                "column": "col_006",
+                "column_header": "d",
+                "raw_value": "4.02^+2.25_-1.67"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "1200+/- 20",
+            "value": "1200",
+            "error": "20",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km/s",
+            "kind": "radial_velocity",
+            "description": "RV from LRIS/ESI spectra.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 54,
+                "column": "col_005",
+                "column_header": "RV",
+                "raw_value": "1200+/- 20"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "1699^+670_-390",
+            "value": "1699",
+            "error": "",
+            "lower_error": "390",
+            "upper_error": "670",
+            "unit": "km/s",
+            "kind": "total_space_velocity",
+            "description": "Total 3D space velocity. Large uncertainty from distance.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 54,
+                "column": "col_007",
+                "column_header": "v_tot",
+                "raw_value": "1699^+670_-390"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "1864^+682_-416",
+            "value": "1864",
+            "error": "",
+            "lower_error": "416",
+            "upper_error": "682",
+            "unit": "km/s",
+            "kind": "ejection_velocity",
+            "description": "Ejection velocity relative to Galactic rotation.",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+                "line": 54,
+                "column": "col_008",
+                "column_header": "v_ejection",
+                "raw_value": "1864^+682_-416"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [
+        {
+          "raw_value": "hot D^6 star",
+          "value": "hot D6 star",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "classification",
+          "description": "Hot D^6 star: [WC]-PG1159 transition type, oxygen-rich atmosphere, Teff~95000K (Werner et al. 2024).",
+          "measurement_type": "classification",
+          "spectral_type": "[WC]-PG1159",
+          "line": "",
+          "instrument": "LRIS/ESI",
+          "survey": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+              "start_line": 217,
+              "end_line": 217,
+              "context": "J0546 classified as hot D^6 star, LRIS/ESI instrument"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "[WC]-PG1159 (hot D^6 star)",
+          "value": "[WC]-PG1159 (hot D6 star)",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "spectral_type",
+          "description": "Oxygen-rich atmosphere with wind emission lines. Teff=95000K from Werner et al. (2024) NLTE analysis.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+              "start_line": 761,
+              "end_line": 762,
+              "context": "One object with Teff above 100000K"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {},
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2306.03914:group-01",
+      "description": "D6-2 (Gaia DR3 1798008584396457088): known D^6 star from Shen 2018. Lowest velocity D^6: v_tot~1151 km/s, v_ejection~1051 km/s. Nearest D^6 at 0.84 kpc. Associated with supernova remnant G116.9+0.2 (flight time ~10^5 yr). Lowest-mass donor (0.15-0.5 M_sun). Still classified as Galactic-unbound per paper's statement that all D^6 stars will leave the Milky Way.",
+      "decision": "accepted",
+      "reason": "D6-2 is a known D^6 star. Although its velocity is the lowest (ejection ~1051 km/s), the paper explicitly states all D^6 stars will leave the Milky Way. Already included in the candidate list. Listed separately here for mass/velocity binning reference.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 763,
+          "end_line": 764,
+          "context": "In the future, all of the D^6 stars will leave the Milky Way"
+        }
+      ]
+    },
+    {
+      "group_id": "2306.03914:group-02",
+      "description": "J1332-3541 (Gaia DR3 6164642052589392512): new hot D^6 star. v_tot~1464 km/s, v_ejection~1619 km/s. Only D^6 with helium-dominated atmosphere. Lowest velocity among new discoveries. Paper classifies it as D^6 star, confirming unbound status.",
+      "decision": "accepted",
+      "reason": "J1332-3541 is a newly discovered hot D^6 star in this paper. The only helium-dominated atmosphere. Although its velocity is lower among the D^6 stars, the paper still classifies it as a D^6 star and confirms it is unbound. Already included in the candidate list.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 219,
+          "end_line": 219,
+          "context": "Table tab:query: J1332 classified as hot D^6 star"
+        }
+      ]
+    },
+    {
+      "group_id": "2306.03914:group-03",
+      "description": "LP 40-365 stars: partially burned runaway accretors. Includes LP 40-365 (known), J1603, J0905, J1825, J1311, J1109. Lower ejection velocities (~600-1300 km/s). Different abundance patterns and formation mechanism (possibly Type Iax SNe). Paper does not claim Galactic-unbound status.",
+      "decision": "rejected",
+      "reason": "LP 40-365 stars have lower velocities (ejection velocity ~600-1300 km/s), and their formation mechanism may differ from D^6 stars (Iax supernovae vs D^6). The paper does not explicitly claim they are Galactic-unbound. Their velocities may be below the Milky Way escape velocity, outside the HVS candidate range.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 159,
+          "end_line": 161,
+          "context": "LP 40-365 stars: slower velocities ~600 km/s, different from D^6 scenario"
+        }
+      ]
+    },
+    {
+      "group_id": "2306.03914:group-04",
+      "description": "US 708 (Gaia DR3 815106177700219392): known high-velocity helium star (sdO/B), v_tot~994 km/s, v_ejection~833 km/s. Not a WD. Previously known (Geier 2015).",
+      "decision": "rejected",
+      "reason": "US 708 is a helium star (sdO/B), not a white dwarf. Ejection velocity ~833 km/s. The paper lists it separately but it does not belong to the D^6 stars. Not considered an HVS candidate from this paper.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 467,
+          "end_line": 468,
+          "context": "Table tab:all_systems: US 708 listed as runaway helium star donor"
+        }
+      ]
+    },
+    {
+      "group_id": "2306.03914:group-05",
+      "description": "J1240 (oxygen-atmosphere WD) and J1637 (unknown classification): low and uncertain velocities. J1240: v_tot~239 km/s clearly bound. J1637: v_tot~1202 km/s but poorly constrained and not confirmed as thermonuclear runaway.",
+      "decision": "rejected",
+      "reason": "J1240 has too low a velocity (~240 km/s) and is clearly bound to the Milky Way. J1637 has extremely poor distance constraints and unclear classification. The paper does not claim they are Galactic-unbound.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 469,
+          "end_line": 471,
+          "context": "Table tab:all_systems: Other/unknown section"
+        }
+      ]
+    },
+    {
+      "group_id": "2306.03914:group-06",
+      "description": "Rejected candidates from primary ADQL query (Table tab:query): 12 sources classified as DA WD, sdO/B, or MS stars. All have |RV| < 500 km/s and normal hydrogen-line spectra. False positives from halo stars with underestimated parallaxes.",
+      "decision": "rejected",
+      "reason": "Spectroscopy confirmed these as false positives. They are halo stars (DA WD/sdO/B/MS) with normal spectra, where underestimated parallax caused artificially inflated apparent tangential velocities. All have RV < 500 km/s.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 249,
+          "end_line": 252,
+          "context": "False positives: halo stars with underestimated parallaxes"
+        }
+      ]
+    },
+    {
+      "group_id": "2306.03914:group-07",
+      "description": "Secondary candidates (Table tab:query2): 21 lower-priority candidates. All have |RV| < 500 km/s, almost all show hydrogen lines. None are thermonuclear runaway candidates.",
+      "decision": "rejected",
+      "reason": "All are normal-spectrum objects, |RV| < 500 km/s. The paper confirms none are good thermonuclear runaway candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+          "start_line": 1538,
+          "end_line": 1539,
+          "context": "None of these objects turned out to be good candidates"
+        }
+      ]
+    }
+  ]
+}

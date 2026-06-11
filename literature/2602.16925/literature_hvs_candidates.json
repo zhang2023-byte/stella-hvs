@@ -1,0 +1,72 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:23:08",
+  "paper": {
+    "arxiv_id": "2602.16925",
+    "bibcode": "2026ApJ..1000..145S",
+    "title": "Stellar Paternity Tests: Matching High-Latitude B Stars to the Open Clusters of their Birth",
+    "month": "2026-02",
+    "source_note_json": "notes/2026/2026-02/2026-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2602.16925",
+      "pdf": "https://arxiv.org/pdf/2602.16925"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2602.16925",
+    "audit_path": "literature/2602.16925/audit.json",
+    "catalog_review_path": "literature/2602.16925/catalog_review.json",
+    "catalog_extraction_path": "literature/2602.16925/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2602.16925/catalog_tables/table-tab-clusters.ecsv",
+      "literature/2602.16925/catalog_tables/table-tab-results.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T20:23:08",
+    "extractor": "agent",
+    "summary": "This paper traces runaway stars ejected from open clusters but does not present any object as possibly unbound from the Milky Way / Galactic potential. All discussed objects are ordinary runaway stars with ejection velocities (37-160 km/s) well below Galactic escape velocity. The paper does not claim any star is Galactic-unbound."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-results",
+      "description": "Ejection probabilities and characteristics of runaway star-cluster matches",
+      "decision": "excluded",
+      "reason": "The paper presents these objects as runaway stars ejected from open clusters (dynamical ejection or binary supernova scenarios), but does not discuss them as possibly unbound from the Milky Way / Galactic potential. Ejection velocities (37-160 km/s) are well below typical Galactic escape velocities.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.16925/arxiv_source/main.tex",
+          "start_line": 69,
+          "end_line": 71,
+          "context": "Abstract describes the study as tracing runaway stars back to open clusters of birth, not as Galactic-unbound candidates"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2602.16925/arxiv_source/main.tex",
+          "start_line": 277,
+          "end_line": 279,
+          "context": "Conclusions state the paper found runaway star candidates matched to parent clusters, with no mention of Galactic-unbound status"
+        }
+      ]
+    },
+    {
+      "group_id": "table-tab-clusters",
+      "description": "Calculated properties of open clusters used as potential parent systems",
+      "decision": "excluded",
+      "reason": "This table lists open cluster properties (positions, distances, densities, ages), not candidate high-velocity or Galactic-unbound stars. The clusters themselves are not presented as unbound objects.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.16925/arxiv_source/main.tex",
+          "start_line": 154,
+          "end_line": 161,
+          "context": "Table caption describes cluster properties, not candidate unbound stars"
+        }
+      ]
+    }
+  ]
+}

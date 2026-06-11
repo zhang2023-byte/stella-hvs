@@ -1,0 +1,46 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2002.02894",
+    "title": "A Massive Young Runaway Star in W49 North",
+    "month": "2020-02",
+    "source_note_json": "notes/2020/2020-02/2020-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2002.02894",
+      "pdf": "https://arxiv.org/pdf/2002.02894"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2002.02894",
+    "audit_path": "literature/2002.02894/audit.json",
+    "source_dir": "literature/2002.02894/arxiv_source",
+    "tex_root": "literature/2002.02894/arxiv_source/ms2.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:15:00",
+    "reviewer": "agent",
+    "summary": "该论文利用VLA 1998年和2016年两个历元的45.5 GHz高角分辨率图像，分析了W49 North大质量恒星形成区。主要发现是致密HII区成分C显示出显著自行，天球面速度76±6 km/s，被解释为一颗O6 ZAMS逃逸恒星产生的电离弓形激波，约6400年前从Welch环东边缘弹射出来。论文同时报告了B1、B2、G2a和G2c的流量密度增加。该论文为一篇简短快报（ApJ Letter），仅含5张图（fig1-fig5），无内部LaTeX数据表。所有测量结果（自行、速度、质量损失率、光谱型等）均在正文中直接报告。外部资源：文中脚注给出VLA数据处理流水线URL，致谢中提到使用了SIMBAD数据库。"
+  },
+  "internal_tables": [],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://science.nrao.edu/facilities/vla/data-processing/pipeline",
+      "local_path": "",
+      "description": "NRAO VLA数据处理流水线（CASA pipeline）。论文使用该流水线对2016.74历元VLA Q波段数据进行校准。",
+      "source_refs": [
+        {
+          "path": "literature/2002.02894/arxiv_source/ms2.tex",
+          "start_line": 71,
+          "end_line": 71,
+          "context": "the pipeline provided for VLA\\footnote{https://science.nrao.edu/facilities/vla/data-processing/pipeline} observations."
+        }
+      ],
+      "evidence": "论文第2节（Multiepoch Data）脚注中给出的VLA pipeline URL。2016.74历元数据使用CASA和NRAO提供的VLA观测流水线进行校准。",
+      "comments": "这是一个NRAO提供的通用数据校准工具URL，不是论文自身的数据产物。VLA原始观测数据存于NRAO档案中但论文未给出具体访问链接。"
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2301.03311",
+    "title": "Unbound stars hold the key to young star cluster history",
+    "month": "2023-01",
+    "source_note_json": "notes/2023/2023-01/2023-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2301.03311",
+      "pdf": "https://arxiv.org/pdf/2301.03311"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2301.03311",
+    "audit_path": "literature/2301.03311/audit.json",
+    "source_dir": "literature/2301.03311/arxiv_source",
+    "tex_root": "literature/2301.03311/arxiv_source/main_new.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:18:25",
+    "reviewer": "agent",
+    "summary": "Pure simulation and methodological paper. Two LaTeX tables: one simulation input parameter table, one observational subcluster summary table for Upper Sco. One external resource: Zenodo repository with simulation visualization movies. No machine-readable catalogs, data tables, or data-availability statement. The observational data (NGC 6530 and Upper Sco members) come from previously published catalogs (Wright2019, Luhman2020) - no direct URLs for those in the paper."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-cluster_parameters",
+      "kind": "latex_table",
+      "asset_type": "simulation_input_table",
+      "role_in_paper": "Documents the initial cluster parameters (N, mass, half-mass radius, total mass, embedded phase duration) used across the N-body simulation campaign.",
+      "source_refs": [
+        {
+          "path": "literature/2301.03311/arxiv_source/main_new.tex",
+          "start_line": 185,
+          "end_line": 204,
+          "caption": "Initial cluster parameters for the simulation campaign using mass-radius dependencies.",
+          "label": "tab:cluster_parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "N",
+          "meaning": "number of cluster member stars per simulation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_sim",
+          "meaning": "number of independent simulation realizations performed",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_c",
+          "meaning": "stellar mass of the cluster",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_hm",
+          "meaning": "half-mass radius",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_t",
+          "meaning": "total cluster mass (stars + gas)",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_emb",
+          "meaning": "duration of the embedded phase",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Initial cluster parameters for the simulation campaign using mass-radius dependencies. See table foot for detailed column descriptions.",
+      "comments": "Three cluster sizes simulated: N=200, 1000, 4000. Masses follow Kroupa IMF, sizes from Pfalzner+2016 mass-radius relation, SFE=30%."
+    },
+    {
+      "id": "table-tab-subgroups",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Summarizes the properties (N, sky position, kinematic age, half-mass radius) of subclusters identified in Upper Sco via backtracking, compared with groups H and I from Kerr+2021.",
+      "source_refs": [
+        {
+          "path": "literature/2301.03311/arxiv_source/main_new.tex",
+          "start_line": 597,
+          "end_line": 617,
+          "caption": "Information about the subclusters identified in this work (ID: 1,2) and the groups from \\cite{kerr_etal2021} (ID: H, I).",
+          "label": "tab:subgroups"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "subcluster identifier (1,2 from this work; H,I from Kerr+2021)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N",
+          "meaning": "number of member stars in the subcluster",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA",
+          "meaning": "right ascension of subcluster center",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec",
+          "meaning": "declination of subcluster center",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_K",
+          "meaning": "kinematic age (time since gas expulsion)",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_hm",
+          "meaning": "half-mass radius of subcluster at time of gas expulsion",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Information about the subclusters identified in this work (ID: 1,2) and the groups from Kerr+2021 (ID: H, I). Table foot: Number of stars (N) and mean positions (RA, Dec) are provided along with the time of gas expulsion (t_K, kinematic age) and half-mass radius of subcluster at the time of gas expulsion (r_hm).",
+      "comments": "Subclusters 1 and 2 are this work's results from backtracking Upper Sco members (Luhman2020 catalog). Groups H and I from Kerr+2021 HDBSCAN clustering for comparison. Negative t_K values indicate the backtracking places gas expulsion in the future relative to present, implying the method does not fully capture the cluster's true kinematic age."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://doi.org/10.5281/zenodo.6041920",
+      "local_path": "",
+      "description": "Zenodo repository containing films of the cluster dynamics simulations and backtracking visualizations for N=200 star clusters.",
+      "source_refs": [
+        {
+          "path": "literature/2301.03311/arxiv_source/main_new.tex",
+          "start_line": 234,
+          "end_line": 234,
+          "context": "A film of the cluster dynamics and the backtracking can be found at https://doi.org/10.5281/zenodo.6041920"
+        }
+      ],
+      "evidence": "Figure 1 caption states: 'A film of the cluster dynamics and the backtracking can be found at https://doi.org/10.5281/zenodo.6041920'. Also referenced in body text (Sec 4.1.1) as 'the corresponding video at https://doi.org/10.5281/zenodo.6041920'.",
+      "comments": "Visualization resource, not machine-readable data. Contains MP4 videos of N-body simulations."
+    }
+  ]
+}

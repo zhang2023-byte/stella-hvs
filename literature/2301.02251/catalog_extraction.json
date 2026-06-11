@@ -1,0 +1,334 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:55:52",
+  "paper": {
+    "arxiv_id": "2301.02251",
+    "title": "On the degree of stochastic asymmetry in the tidal tails of star clusters",
+    "month": "2023-01"
+  },
+  "review": {
+    "path": "literature/2301.02251/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225552",
+    "started_at": "2026-05-22T22:55:52",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2301.02251",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab_sc_data",
+      "internal_table_id": "table-tab_sc_data",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.02251/arxiv_source/paper3.tex",
+        "start_line": 265,
+        "end_line": 317,
+        "caption": "\\label{tab_sc_data} Data of the star clusters. ({\\it upper section}:) $d$: distance Sun--star cluster, $M$: current stellar mass within tidal radius $r_\\mathrm{t}$, $b_\\mathrm{Pl}$: Plummer parameter obtained from the observed half mass radius, $r_\\mathrm{t}$: observed tidal radius, $t$: average of published ages of the star clusters, $n$: total number of tidal tail members, $n_\\mathrm{l}$: number of members in the leading tidal tail, $n_\\mathrm{t}$: number of members in the trailing tidal tail, $n_\\mathrm{l,50-200}$: number of members in the leading tidal tail at a distance of 50--200\\,pc from the cluster centre, $n_\\mathrm{t,50-200}$: number of members in the trailing tidal tail at a distance of 50--200\\,pc from the cluster centre. ({\\it lower section}:) current position and velocity of the star clusters in the Galactic inertial rest frame used for the Monte Carlo simulations for an assumed Solar distance of 8.3 kpc to the Galactic centre, and 27\\,pc above the Galactic plane and a local rotational velocity of 225\\,km/s as in \\citet{jerabkova2021a}. The velocity components of the Sun in the Galactic rest frame are 11.1\\,km/s towards to the Galactic centre, 232.24\\,km/s into the direction of Galactic rotation and 7.25\\,km/s in positive vertical direction. Thus, the peculiar velocity of the Sun is [11.1, 7.24, 7.25]\\,km/s. See \\citet{kroupa2022a} for details.",
+        "label": "tab_sc_data"
+      },
+      "source_path": "literature/2301.02251/arxiv_source/paper3.tex",
+      "excerpt_path": "literature/2301.02251/catalog_sources/table-tab_sc_data/excerpt.tex",
+      "sha256": "b4393d4bfea9c474029da41d0edb05b23a1edec619ef68d698762afbc2112326",
+      "line_count": 53,
+      "error": ""
+    },
+    {
+      "id": "table-tab_monte_carlo",
+      "internal_table_id": "table-tab_monte_carlo",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.02251/arxiv_source/paper3.tex",
+        "start_line": 620,
+        "end_line": 643,
+        "caption": "\\label{tab_monte_carlo}Parameter of Gaussian fits of the asymmetry distribution of the different Monte Carlo models.",
+        "label": "tab_monte_carlo"
+      },
+      "source_path": "literature/2301.02251/arxiv_source/paper3.tex",
+      "excerpt_path": "literature/2301.02251/catalog_sources/table-tab_monte_carlo/excerpt.tex",
+      "sha256": "d30ca4b77a662d52bb82d13e0c0283e7f79d47dbfeebf7643a7fd02d94cb0419",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-tab_pot_value",
+      "internal_table_id": "table-tab_pot_value",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.02251/arxiv_source/paper3.tex",
+        "start_line": 949,
+        "end_line": 963,
+        "caption": "\\label{tab_pot_value} Parameters of the potential used in this work.",
+        "label": "tab_pot_value"
+      },
+      "source_path": "literature/2301.02251/arxiv_source/paper3.tex",
+      "excerpt_path": "literature/2301.02251/catalog_sources/table-tab_pot_value/excerpt.tex",
+      "sha256": "f8ae4addc29138909a3f0500f151d79e583e793ca7933f9562c504d732852b05",
+      "line_count": 15,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab_sc_data",
+      "internal_table_id": "table-tab_sc_data",
+      "status": "success",
+      "ecsv_path": "literature/2301.02251/catalog_tables/table-tab_sc_data.ecsv",
+      "caption": "\\label{tab_sc_data} Data of the star clusters. ({\\it upper section}:) $d$: distance Sun--star cluster, $M$: current stellar mass within tidal radius $r_\\mathrm{t}$, $b_\\mathrm{Pl}$: Plummer parameter obtained from the observed half mass radius, $r_\\mathrm{t}$: observed tidal radius, $t$: average of published ages of the star clusters, $n$: total number of tidal tail members, $n_\\mathrm{l}$: number of members in the leading tidal tail, $n_\\mathrm{t}$: number of members in the trailing tidal tail, $n_\\mathrm{l,50-200}$: number of members in the leading tidal tail at a distance of 50--200\\,pc from the cluster centre, $n_\\mathrm{t,50-200}$: number of members in the trailing tidal tail at a distance of 50--200\\,pc from the cluster centre. ({\\it lower section}:) current position and velocity of the star clusters in the Galactic inertial rest frame used for the Monte Carlo simulations for an assumed Solar distance of 8.3 kpc to the Galactic centre, and 27\\,pc above the Galactic plane and a local rotational velocity of 225\\,km/s as in \\citet{jerabkova2021a}. The velocity components of the Sun in the Galactic rest frame are 11.1\\,km/s towards to the Galactic centre, 232.24\\,km/s into the direction of Galactic rotation and 7.25\\,km/s in positive vertical direction. Thus, the peculiar velocity of the Sun is [11.1, 7.24, 7.25]\\,km/s. See \\citet{kroupa2022a} for details.",
+      "label": "tab_sc_data",
+      "row_count": 18,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpg97eupul/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.02251/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpg97eupul/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.02251/catalog_sources/table-tab_sc_data/wrapped.tex",
+            "html": "literature/2301.02251/catalog_sources/table-tab_sc_data/latexml.html",
+            "stdout": "literature/2301.02251/catalog_sources/table-tab_sc_data/latexml.stdout.txt",
+            "stderr": "literature/2301.02251/catalog_sources/table-tab_sc_data/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b4393d4bfea9c474029da41d0edb05b23a1edec619ef68d698762afbc2112326"
+    },
+    {
+      "id": "table-tab_monte_carlo",
+      "internal_table_id": "table-tab_monte_carlo",
+      "status": "success",
+      "ecsv_path": "literature/2301.02251/catalog_tables/table-tab_monte_carlo.ecsv",
+      "caption": "\\label{tab_monte_carlo}Parameter of Gaussian fits of the asymmetry distribution of the different Monte Carlo models.",
+      "label": "tab_monte_carlo",
+      "row_count": 12,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster",
+          "\\mu",
+          "\\sigma",
+          "|x_obs-\\mu|"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\mu",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "|x_obs-\\mu|",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgwrjicnj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.02251/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgwrjicnj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.02251/catalog_sources/table-tab_monte_carlo/wrapped.tex",
+            "html": "literature/2301.02251/catalog_sources/table-tab_monte_carlo/latexml.html",
+            "stdout": "literature/2301.02251/catalog_sources/table-tab_monte_carlo/latexml.stdout.txt",
+            "stderr": "literature/2301.02251/catalog_sources/table-tab_monte_carlo/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d30ca4b77a662d52bb82d13e0c0283e7f79d47dbfeebf7643a7fd02d94cb0419"
+    },
+    {
+      "id": "table-tab_pot_value",
+      "internal_table_id": "table-tab_pot_value",
+      "status": "success",
+      "ecsv_path": "literature/2301.02251/catalog_tables/table-tab_pot_value.ecsv",
+      "caption": "\\label{tab_pot_value} Parameters of the potential used in this work.",
+      "label": "tab_pot_value",
+      "row_count": 8,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "component",
+          "parameter"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "component",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpx63a5hoj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.02251/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpx63a5hoj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.02251/catalog_sources/table-tab_pot_value/wrapped.tex",
+            "html": "literature/2301.02251/catalog_sources/table-tab_pot_value/latexml.html",
+            "stdout": "literature/2301.02251/catalog_sources/table-tab_pot_value/latexml.stdout.txt",
+            "stderr": "literature/2301.02251/catalog_sources/table-tab_pot_value/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f8ae4addc29138909a3f0500f151d79e583e793ca7933f9562c504d732852b05"
+    }
+  ]
+}

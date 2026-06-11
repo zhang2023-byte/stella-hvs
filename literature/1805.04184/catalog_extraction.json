@@ -1,0 +1,321 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:39:15",
+  "paper": {
+    "arxiv_id": "1805.04184",
+    "title": "Gaia and the Galactic Center Origin of Hypervelocity Stars",
+    "month": "2018-05"
+  },
+  "review": {
+    "path": "literature/1805.04184/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083915",
+    "started_at": "2026-06-07T08:39:15",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1805.04184",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-sample",
+      "internal_table_id": "table-tab-sample",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1805.04184/arxiv_source/p2v3.tex",
+        "start_line": 110,
+        "end_line": 164,
+        "caption": "HVS Survey Stars with $v_{rf}>+275$ \\kms, Ordered by $v_{rf}$",
+        "label": "tab:sample"
+      },
+      "source_path": "literature/1805.04184/arxiv_source/p2v3.tex",
+      "excerpt_path": "literature/1805.04184/catalog_sources/table-tab-sample/excerpt.tex",
+      "sha256": "00e95a92257b0545b07406466b5b0b4317bba0783c67a5be399cdcba65f89d6e",
+      "line_count": 55,
+      "error": ""
+    },
+    {
+      "id": "table-tab-pval",
+      "internal_table_id": "table-tab-pval",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1805.04184/arxiv_source/p2v3.tex",
+        "start_line": 647,
+        "end_line": 699,
+        "caption": "Constraints on Origin",
+        "label": "tab:pval"
+      },
+      "source_path": "literature/1805.04184/arxiv_source/p2v3.tex",
+      "excerpt_path": "literature/1805.04184/catalog_sources/table-tab-pval/excerpt.tex",
+      "sha256": "ce94e02caba37c03f2ecf53929b78e9c2b196e424a5020e30d3e3b5b63e291a1",
+      "line_count": 53,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-sample",
+      "internal_table_id": "table-tab-sample",
+      "status": "success",
+      "ecsv_path": "literature/1805.04184/catalog_tables/table-tab-sample.ecsv",
+      "caption": "HVS Survey Stars with $v_{rf}>+275$ \\kms, Ordered by $v_{rf}$",
+      "label": "tab:sample",
+      "row_count": 39,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "RA",
+          "Dec",
+          "g",
+          "Gaia~(\\mu_\\alpha,\\mu_\\delta)",
+          "HST~(\\mu_\\alpha,\\mu_\\delta)",
+          "GPS1 (\\mu_\\alpha,\\mu_\\delta)"
+        ],
+        [
+          "",
+          "(J2000)",
+          "(J2000)",
+          "(mag)",
+          "( \\mas , \\mas )",
+          "( \\mas , \\mas )",
+          "( \\mas , \\mas )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA | (J2000)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec | (J2000)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "g | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Gaia~(\\mu_\\alpha,\\mu_\\delta) | ( \\mas , \\mas )",
+          "unit_text": "( \\mas , \\mas )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "HST~(\\mu_\\alpha,\\mu_\\delta) | ( \\mas , \\mas )",
+          "unit_text": "( \\mas , \\mas )",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "GPS1 (\\mu_\\alpha,\\mu_\\delta) | ( \\mas , \\mas )",
+          "unit_text": "( \\mas , \\mas )",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpeis4mban/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1805.04184/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpeis4mban/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1805.04184/catalog_sources/table-tab-sample/wrapped.tex",
+            "html": "literature/1805.04184/catalog_sources/table-tab-sample/latexml.html",
+            "stdout": "literature/1805.04184/catalog_sources/table-tab-sample/latexml.stdout.txt",
+            "stderr": "literature/1805.04184/catalog_sources/table-tab-sample/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "00e95a92257b0545b07406466b5b0b4317bba0783c67a5be399cdcba65f89d6e"
+    },
+    {
+      "id": "table-tab-pval",
+      "internal_table_id": "table-tab-pval",
+      "status": "success",
+      "ecsv_path": "literature/1805.04184/catalog_tables/table-tab-pval.ecsv",
+      "caption": "Constraints on Origin",
+      "label": "tab:pval",
+      "row_count": 39,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "v_rf",
+          "R",
+          "v_rf-v_esc",
+          "p_\\rm GC~HVS",
+          "p_\\rm Disk~Runaway"
+        ],
+        [
+          "",
+          "km s^-1",
+          "kpc",
+          "km s^-1",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "v_rf | km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "R | kpc",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "v_rf-v_esc | km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "p_\\rm GC~HVS",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "p_\\rm Disk~Runaway",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmph_0et_gf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1805.04184/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmph_0et_gf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1805.04184/catalog_sources/table-tab-pval/wrapped.tex",
+            "html": "literature/1805.04184/catalog_sources/table-tab-pval/latexml.html",
+            "stdout": "literature/1805.04184/catalog_sources/table-tab-pval/latexml.stdout.txt",
+            "stderr": "literature/1805.04184/catalog_sources/table-tab-pval/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ce94e02caba37c03f2ecf53929b78e9c2b196e424a5020e30d3e3b5b63e291a1"
+    }
+  ]
+}

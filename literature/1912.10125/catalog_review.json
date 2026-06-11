@@ -1,0 +1,1003 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1912.10125",
+    "title": "Unlocking Galactic Wolf-Rayet stars with Gaia DR2 I: Distances and absolute magnitudes",
+    "month": "2019-12",
+    "source_note_json": "notes/2019/2019-12/2019-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1912.10125",
+      "pdf": "https://arxiv.org/pdf/1912.10125"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1912.10125",
+    "audit_path": "literature/1912.10125/audit.json",
+    "source_dir": "literature/1912.10125/arxiv_source",
+    "tex_root": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:20:00",
+    "reviewer": "agent",
+    "summary": "本文利用Gaia DR2视差数据，采用贝叶斯方法（以HII区和尘埃消光为先验）计算了383颗银河系Wolf-Rayet恒星的距离，并推导了v^WR和Ks波段的绝对星等，识别出31颗潜在的逃逸星。论文包含9个内部LaTeX表格（含3个在线附录完整版大表），是WR星距离和绝对星等研究的重要数据集。Table 1（及其附录完整版table1_pc.tex）是核心数据表，给出383颗WR星的Gaia DR2天体测量、测光和视差参数。Table 2-4为方法学参考表（本征颜色、红外流量比、滤镜转换方程）。Table 5为各次型平均绝对星等汇总。Table 6-7（及其附录完整版）为单星Ks和v^WR波段绝对星等。Table 8为2 kpc内WR星列表。Table 9为候选逃逸星（|z|>3σ）列表。论文引用的Gaia DR2、2MASS、SIMBAD、VPHAS+、IPHAS、GOSC等均为公开巡天数据库的方法论引用，按照审查边界规则予以省略。论文提及的在线补充材料（MNRAS期刊网站）中的完整表格已包含在arxiv_source目录中。外部资源仅保留论文Introduction中脚注引用的Galactic WR Catalogue网站。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-table-final",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "论文核心数据表（Table 1），列出383颗银河系WR星的Gaia DR2天体测量、测光和视差参数，包括WR编号、光谱型、别名、坐标、零点和误差修正后的视差、贝叶斯距离、中平面距离、G波段星等、颜色指数、天体测量 excess noise、恒星光度及数据质量标志。该表是全文距离计算和绝对星等推导的基础输入数据，支撑了第3节绝对星等计算和第5节逃逸星识别。论文仅展示前10行示例，完整383行数据在在线补充材料中（本审查的table-010对应附录完整版）。",
+      "source_refs": [
+        {
+          "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+          "start_line": 275,
+          "end_line": 315,
+          "caption": "Gaia DR2 astrometric, photometric and parallax properties for 383 Galactic WR stars, including WR11 using a parallax and photometry from Hipparcos. The distance for WR11 was calculated in the same manner as WR with Gaia results, except the adjustments to calculate ω and σ_ω were not applied. Stellar luminosities, updated from Hamann et al. (2019) and Sander et al. (2019) according to our revised distances, are restricted to sources with no error flags. The full table is available in the online supplementary material.",
+          "label": "table:final"
+        }
+      ],
+      "columns": [
+        {
+          "name": "WR Number",
+          "meaning": "银河系WR星编号（基于van der Hucht 2001及后续增补目录）",
+          "unit_text": "",
+          "source_of_definition": "table header + column description",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral Type",
+          "meaning": "WR星光谱型（如WN4b, WC5, WN8h等，含双星标记如WC5+O7）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Alias",
+          "meaning": "WR星的替代名称（如HD编号、常用名等）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA J2015",
+          "meaning": "Gaia DR2历元J2015.5的赤经坐标",
+          "unit_text": "h m s",
+          "source_of_definition": "table header + column description",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec J2015",
+          "meaning": "Gaia DR2历元J2015.5的赤纬坐标",
+          "unit_text": "d m s",
+          "source_of_definition": "table header + column description",
+          "confidence": 1.0
+        },
+        {
+          "name": "ω ± σ_ω",
+          "meaning": "经零点修正（-0.029 mas）和误差膨胀校正后的Gaia DR2视差及其不确定度",
+          "unit_text": "mas",
+          "source_of_definition": "table header + column description",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "贝叶斯方法得出的最概然日心距离及其68%可信区间",
+          "unit_text": "kpc",
+          "source_of_definition": "table header + column description",
+          "confidence": 1.0
+        },
+        {
+          "name": "|z|",
+          "meaning": "距离银河系中平面的垂直距离（含太阳距中平面20.8 pc的修正）",
+          "unit_text": "pc",
+          "source_of_definition": "table header + column description",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia DR2 G波段视星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G_BP - G_RP",
+          "meaning": "Gaia DR2 BP-RP颜色指数",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Excess Noise",
+          "meaning": "Gaia DR2天体测量excess noise参数，>1 mas表示解算质量差",
+          "unit_text": "mas",
+          "source_of_definition": "table header + Section 2.3",
+          "confidence": 1.0
+        },
+        {
+          "name": "log L/L_⊙",
+          "meaning": "根据本文修正距离从Hamann et al. (2019)和Sander et al. (2019)更新的恒星光度（仅无错误标记的源）",
+          "unit_text": "dex",
+          "source_of_definition": "table header + column description",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flags",
+          "meaning": "Gaia数据质量标志：a=astrometric_excess_noise>1 mas; e=|σ_ω/ω|>1; n=ω<0（负视差）; g=无上述问题的好数据",
+          "unit_text": "",
+          "source_of_definition": "table header + Section 2.3",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 (table:final) 在paperI_amended.tex第275-315行，以13列table*环境展示。表头行包括：WR Number, Spectral Type, Alias, RA J2015, Dec J2015, ω±σ_ω (mas), d (kpc), |z| (pc), G (mag), G_BP-G_RP (mag), Excess Noise (mas), log L/L_⊙, Flags。表中展示WR1-WR12共10行示例数据（WR11使用Hipparcos视差）。第314行列说明（Columns are:...）详细描述了每列含义。全文383行完整数据在附录table1_pc.tex中。",
+      "comments": "该表为论文最重要的数据资产，包含383颗WR星的距离测定结果。论文中仅展示示例行，完整表见附录table1_pc.tex（本审查的table-010）。注意：WR11使用Hipparcos视差2.920±0.300 mas而非Gaia数据；log L列仅对无错误标记的源填写。"
+    },
+    {
+      "id": "table-table-powr_types",
+      "kind": "latex_table",
+      "asset_type": "model_parameters",
+      "role_in_paper": "Table 2，列出各WR次型的PoWR模型本征颜色，包括光学(b-v)_0^WR和近红外(J-Ks)_0、(H-Ks)_0、(J-K)^mono_0、(H-K)^mono_0。这些本征颜色用于第3.1-3.3节计算尘埃消光和绝对星等，是消光计算的关键输入参数。WN型来自Hamann & Gräfener (2004)和Todt et al. (2015)模型，WC型来自Sander et al. (2012)模型，宽带近红外颜色来自Rosslowe & Crowther (2015)。",
+      "source_refs": [
+        {
+          "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+          "start_line": 317,
+          "end_line": 356,
+          "caption": "Intrinsic colours of WR stars from PoWR models (Hamann & Gräfener 2004 and Todt et al. 2015 for WN, Sander et al. 2012 for WC) for (b-v)_0^WR and monochromatic (J-K)^mono_0 and (H-K)^mono_0, and Rosslowe & Crowther (2015) for (J-Ks)_0 and (H-Ks)_0.",
+          "label": "table:powr_types"
+        }
+      ],
+      "columns": [
+        {
+          "name": "WR subtype",
+          "meaning": "WR星光谱次型分类（WN3-4, WN4b-7b, WN5-6, WN7-9, WN6ha, WN7ha, WN8-9ha, Of/WN, WO2-3, WC4-7, WC8, WC9, WN/WC）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PoWR model",
+          "meaning": "对应的PoWR模型大气网格标识（如WNE 12-11, WNL 06-13等）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(T/k)",
+          "meaning": "PoWR模型有效温度的对数值（T为温度，k为K）",
+          "unit_text": "log(K)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(R_t)",
+          "meaning": "PoWR模型Rosseland半径的对数值（R_t以R_⊙为单位）",
+          "unit_text": "log(R_⊙)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(b-v)_0^WR",
+          "meaning": "窄带v^WR系统的本征(b-v)颜色（已扣除消光）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(J-Ks)_0",
+          "meaning": "2MASS J-Ks宽带本征颜色（来自Rosslowe & Crowther 2015）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(H-Ks)_0",
+          "meaning": "2MASS H-Ks宽带本征颜色（来自Rosslowe & Crowther 2015）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(J-K)^mono_0",
+          "meaning": "PoWR模型单色J-K本征颜色（不受发射线影响的连续谱数值）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(H-K)^mono_0",
+          "meaning": "PoWR模型单色H-K本征颜色（不受发射线影响的连续谱数值）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 2 (table:powr_types) 在paperI_amended.tex第317-356行。表头：WR subtype | PoWR model | log(T/k) | log(R_t) | (b-v)_0^WR | (J-Ks)_0 | (H-Ks)_0 | (J-K)^mono_0 | (H-K)^mono_0。共13行数据，涵盖WN和WC各次型及WN/WC过渡型。WN/WC行的PoWR model、log(T/k)、log(R_t)列为空，(J-K)^mono_0和(H-K)^mono_0列也为空（仅适用于特定模型）。",
+      "comments": "方法学参考表。WN/WC过渡型由于无单一模型对应，部分列为空。本文建议继续使用此表中的本征颜色而非从新距离反推，因为本文绝对星等的不确定度传播到本征颜色后误差更大。"
+    },
+    {
+      "id": "table-table-sed_ir",
+      "kind": "latex_table",
+      "asset_type": "model_parameters",
+      "role_in_paper": "Table 3，展示WR星相对于O型伴星在近红外波段的连续谱流量贡献比(F_WR/F_O)，用于第3.2节计算双星系统中WR分量的本征颜色修正。基于Kurucz ATLAS O星模型(T_eff=37500K, log g=5)作为伴星模板，假设V波段各贡献50%。该表说明WR星在红外波段的相对贡献显著高于光学波段，对双星绝对星等计算至关重要。",
+      "source_refs": [
+        {
+          "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+          "start_line": 426,
+          "end_line": 447,
+          "caption": "The relative continuum flux contribution of WR stars to O-type companions at near-IR wavelengths for various subtypes, adopting a Kurucz ATLAS O star model with T_eff = 37500K and log g = 5 for the companion, assuming each contribute 50% of the V-band continuum flux.",
+          "label": "table:sed_ir"
+        }
+      ],
+      "columns": [
+        {
+          "name": "WR subtypes",
+          "meaning": "WR星次型分类（WNE-w弱线早型WN, WNE-s强线早型WN, WN6ha, WN8, WN9, Of/WN, WC4-5, WC6-7, WC8, WC9）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V (F_WR/F_O)",
+          "meaning": "V波段WR相对于O型伴星的流量比（固定为1，因假设各贡献50%）",
+          "unit_text": "",
+          "source_of_definition": "table header + Section 3.2 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "J (F_WR/F_O)",
+          "meaning": "J波段（1.25μm）WR相对于O型伴星的流量比",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "H (F_WR/F_O)",
+          "meaning": "H波段（1.65μm）WR相对于O型伴星的流量比",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K (F_WR/F_O)",
+          "meaning": "K波段（2.2μm）WR相对于O型伴星的流量比",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 3 (table:sed_ir) 在paperI_amended.tex第426-447行。表头：WR subtypes | V | J | H | K (各列对应F_WR/F_O)。共10行数据。WNE-s（强线早型WN）在K波段的贡献比高达4.56倍，WC4-5达3.55倍，显著高于光学波段，证实红外波段WR星对双星总光度的贡献更大。",
+      "comments": "方法学参考表。该表的流量比用于第3.2节公式中加权求和双星系统的本征颜色，以获得修正后的双星消光和绝对星等。"
+    },
+    {
+      "id": "table-table-intrinsic_col",
+      "kind": "latex_table",
+      "asset_type": "model_parameters",
+      "role_in_paper": "Table 4，给出窄带v^WR系统和Gaia G波段滤镜之间的转换关系，包括各WR次型的本征颜色(G_BP-G_RP)_0，以及从A^WR_v到A_G消光的转换方程。基于Carrasco & Jordi（私人通讯）利用PoWR模板光谱人工红化计算的合成测光结果，适用于A_v<12。用于第3.3节计算Gaia绝对星等并构建颜色-星等图(CMD，Figure 10)。",
+      "source_refs": [
+        {
+          "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+          "start_line": 472,
+          "end_line": 491,
+          "caption": "Conversion equations between narrowband v^WR and Gaia G band filters for (G_BP-G_RP)_0 of different spectral types, using results from Carrasco & Jordi (valid for A_v < 12).",
+          "label": "table:intrinsic_col"
+        }
+      ],
+      "columns": [
+        {
+          "name": "WR class",
+          "meaning": "WR星光谱类别（WNE-w, WNE-s, WN6ha, WN8, WN9, WC5, WC7, WC8, WC9）及参考B0V SED",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(G_BP-G_RP)_0",
+          "meaning": "各WR次型在Gaia测光系统中的本征颜色（零消光时的BP-RP值）",
+          "unit_text": "mag",
+          "source_of_definition": "table header + Section 3.3 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "A^WR_v to A_G",
+          "meaning": "从窄带v^WR消光A^WR_v转换到Gaia G波段消光A_G的二次多项式方程系数",
+          "unit_text": "",
+          "source_of_definition": "table header + Carrasco & Jordi methodology",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 4 (table:intrinsic_col) 在paperI_amended.tex第472-491行。3列：WR class | (G_BP-G_RP)_0 | A^WR_v to A_G。共10行（9个WR次型+1行B0V SED参考）。转换方程形式为二次多项式：A_G = a·A_v² + b·A_v，其中A_v即A^WR_v。论文Section 3.3说明平均(G_BP-G_RP)_0=-0.35±0.14，所选B0V参考值-0.43在各次型不确定度范围内。",
+      "comments": "方法学参考表。B0V SED行仅列出(G_BP-G_RP)_0=-0.430，无转换方程（用作参照色）。该表数据来自Carrasco & Jordi私人通讯，非公开文献，但其方法基于Jordi et al. (2010)。"
+    },
+    {
+      "id": "table-table-avg_absmag",
+      "kind": "latex_table",
+      "asset_type": "results_summary",
+      "role_in_paper": "Table 5，论文核心结果汇总表，列出各WR次型在v^WR和Ks波段的平均绝对星等及其标准偏差，以及参与计算的样本数。这些平均值为第4.1节讨论的绝对星等定标提供了基准。v^WR波段WC9d合并到WC9，Ks波段WC9d单独列出因其红外超量。数据历经sigma clipping剔除异常值，仅保留最可靠的绝对星等结果。",
+      "source_refs": [
+        {
+          "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+          "start_line": 494,
+          "end_line": 518,
+          "caption": "Average absolute magnitudes for Galactic Wolf-Rayet subtypes in v^WR and K_s band filters. In the v^WR band, the WC9d sample has been combined with non dusty WC9 stars.",
+          "label": "table:avg_absmag"
+        }
+      ],
+      "columns": [
+        {
+          "name": "WR subtypes",
+          "meaning": "WR星光谱次型（WN3-4, WN5-6, WN6-7ha, WN4-6b, WN7, WN8, WN8-9ha, WN9, Of/WN, WO2-4, WC4-5, WC6-7, WC8, WC9, WC9d）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_vWR",
+          "meaning": "窄带v^WR波段的平均绝对星等及样本标准偏差",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N(v^WR)",
+          "meaning": "用于计算v^WR波段平均绝对星等的样本数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_Ks",
+          "meaning": "2MASS Ks波段的平均绝对星等及样本标准偏差",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N(K_s)",
+          "meaning": "用于计算Ks波段平均绝对星等的样本数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 5 (table:avg_absmag) 在paperI_amended.tex第494-518行。11列表格（含6个间隔列以提高可读性），实际上为5列数据。共15行：WN型10行（含Of/WN）、WO型1行、WC型4行（含WC9d仅Ks波段有值）。WN8-9ha最亮（M_vWR=-7.0±0.4, M_Ks=-6.8±0.4），WO2-4最暗（M_vWR=-3.1±1.4）。WC9d的v^WR列空白，因其已合并到WC9。",
+      "comments": "核心科学结果表。标准偏差范围0.1-1.4 mag（v^WR）和0.1-1.0 mag（Ks），大多在0.3-0.6 mag。论文建议使用这些平均值作定标时应考虑较大的本征弥散，推荐采用以平均值为中心的贝叶斯概率分布方法。"
+    },
+    {
+      "id": "table-table-final_absmagk",
+      "kind": "latex_table",
+      "asset_type": "derived_catalog",
+      "role_in_paper": "Table 6（摘要版），展示单颗WR星在Ks波段的绝对星等计算结果，包括视星等、距离模数、J-Ks和H-Ks颜色、Ks波段消光、双星系统绝对星等、WR分量流量比、WR分量绝对星等和测光质量标志。用于第4.1节验证距离结果并构建绝对星等定标。论文仅展示前10行，完整表在在线补充材料中（本审查的table-011对应附录完整版）。",
+      "source_refs": [
+        {
+          "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+          "start_line": 571,
+          "end_line": 605,
+          "caption": "Absolute K_s-band magnitudes for Galactic WR stars. The full table is available in the online supplementary material.",
+          "label": "table:final_absmagk"
+        }
+      ],
+      "columns": [
+        {
+          "name": "WR Number",
+          "meaning": "银河系WR星编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral Type",
+          "meaning": "WR星光谱型",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K_s",
+          "meaning": "2MASS Ks波段视星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ",
+          "meaning": "距离模数（由本文贝叶斯距离d计算，μ=5log10(d/pc)-5）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J-K_s",
+          "meaning": "2MASS J-Ks颜色（观测值，含消光影响）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "H-K_s",
+          "meaning": "2MASS H-Ks颜色（观测值，含消光影响）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_Ks",
+          "meaning": "Ks波段尘埃消光（由本征颜色和消光定律计算）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M^Sys_Ks",
+          "meaning": "双星系统的Ks波段绝对星等（含伴星贡献，单星为空）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "F^WR_Ks / F^Sys_Ks",
+          "meaning": "WR分量在Ks波段对双星系统总流量的贡献比例",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M^WR_Ks",
+          "meaning": "WR分量的Ks波段绝对星等（已从双星系统中分离）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flags",
+          "meaning": "测光质量标志：b=绝对星等在sigma clipping前就异常（highly implausible）；b:=绝对星等在最终平均值1σ之外但可接受；g=无问题；u=无绝对星等数据",
+          "unit_text": "",
+          "source_of_definition": "table header + Section 4.3 column descriptions",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 6 (table:final_absmagk) 在paperI_amended.tex第571-605行。11列表格。展示WR1-WR10共10行示例。第604-605行列说明详细描述了Flags含义（b/b:/g/u）。双星（如WR9 WC5+O7）填写M^Sys_Ks和F^WR_Ks/F^Sys_Ks列，单星这些列留空。",
+      "comments": "与Table 7同为论文最重要的衍生数据表。完整版见附录table6_amended.tex（本审查的table-011）。187颗星有可靠的绝对星等（b:或g标志），用于Table 5的平均值计算。"
+    },
+    {
+      "id": "table-table-final_absmagv",
+      "kind": "latex_table",
+      "asset_type": "derived_catalog",
+      "role_in_paper": "Table 7（摘要版），展示单颗WR星在窄带v^WR波段的绝对星等计算结果，包括v^WR视星等、距离模数、(b-v)^WR颜色、v^WR波段消光、双星系统绝对星等、WR分量流量比、WR分量绝对星等和测光质量标志。与Table 6互补，分别覆盖光学和近红外波段。论文仅展示前10行，完整表在在线补充材料中（本审查的table-012对应附录完整版）。",
+      "source_refs": [
+        {
+          "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+          "start_line": 607,
+          "end_line": 627,
+          "caption": "Absolute v^WR-band magnitudes for Galactic WR stars. The full table is available in the online supplementary material.",
+          "label": "table:final_absmagv"
+        }
+      ],
+      "columns": [
+        {
+          "name": "WR Number",
+          "meaning": "银河系WR星编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral Type",
+          "meaning": "WR星光谱型",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v^WR ± 0.1",
+          "meaning": "窄带v^WR视星等（测光精度±0.1 mag）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ",
+          "meaning": "距离模数",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(b-v)^WR",
+          "meaning": "窄带v^WR系统的观测(b-v)颜色（含消光影响）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A^WR_v",
+          "meaning": "窄带v^WR波段尘埃消光（由本征颜色(b-v)_0^WR和观测(b-v)^WR计算）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M^Sys_v",
+          "meaning": "双星系统的v^WR波段绝对星等（含伴星贡献，单星为空）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "F^WR_v / F^Sys_v",
+          "meaning": "WR分量在v^WR波段对双星系统总流量的贡献比例（由发射线等值宽度稀释法获得）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M^WR_v",
+          "meaning": "WR分量的v^WR波段绝对星等（已从双星系统中分离）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flags",
+          "meaning": "测光质量标志（同Table 6：b/b:/g/u）",
+          "unit_text": "",
+          "source_of_definition": "table header + Section 4.3 column descriptions",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 7 (table:final_absmagv) 在paperI_amended.tex第607-627行。10列表格。展示WR1-WR10共10行示例。第626行详细描述了Flags含义。与Table 6的μ值相同（使用相同距离），但消光和绝对星等系统不同。WR9等双星填写M^Sys_v和F^WR_v/F^Sys_v列。",
+      "comments": "与Table 6互为补充。完整版见附录table7_amended.tex（本审查的table-012）。v^WR波段星等来自Galactic WR Catalogue (van der Hucht 2001, Smith 1968)，测光精度±0.1 mag。"
+    },
+    {
+      "id": "table-table-in_2kpc",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Table 8，列出距太阳2 kpc以内的WR星（使用最可靠的g标志距离），包含别名、光谱型、距离、Gaia质量标志、色余E(B-V)、Ks波段消光A_Ks和每kpc消光量A_Ks/kpc。用于第4.2节分析邻近WR星样本并计算WR/O星比率（0.09）。该表也提供了邻近WR星的消光特性参考。",
+      "source_refs": [
+        {
+          "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+          "start_line": 640,
+          "end_line": 675,
+          "caption": "WR stars within 2 kpc of the Sun, including colour excess, K-band extinction and A_Ks/kpc, extinction per kpc.",
+          "label": "table:in_2kpc"
+        }
+      ],
+      "columns": [
+        {
+          "name": "WR Number",
+          "meaning": "银河系WR星编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Alias",
+          "meaning": "WR星别名/常用名",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral Type",
+          "meaning": "WR星光谱型（含双星标记）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Distance",
+          "meaning": "贝叶斯最概然距离及68%可信区间",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flags",
+          "meaning": "Gaia数据质量标志（同Table 1：a/e/n/g，...表示WR11使用Hipparcos数据故无Gaia标志）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "E(B-V)",
+          "meaning": "色余E(B-V) = (b-v)^WR - (b-v)_0^WR",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_Ks",
+          "meaning": "Ks波段尘埃消光",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_Ks/kpc",
+          "meaning": "每kpc的Ks波段消光量（消光密度指标）",
+          "unit_text": "mag/kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 8 (table:in_2kpc) 在paperI_amended.tex第640-675行。8列表格。列出25颗距离<2 kpc的WR星。最近的是WR11 (γ Vel) 距离0.34 kpc，使用Hipparcos视差；最远的是WR85距离1.99 kpc。平均A_Ks/kpc≈0.26 mag，但星间变化显著。",
+      "comments": "分析用汇总表。该表仅包含Gaia数据质量好的星（g标志）或Hipparcos数据（WR11）。WR144的E(B-V)为空（因无v^WR波段测光），但有A_Ks替代值。"
+    },
+    {
+      "id": "table-table-zheights",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Table 9，列出距离银河系中平面超过3σ（σ=52 pc, |z|≥156 pc）的31颗候选逃逸WR星，包含光谱型、距离、中平面距离|z|、HII区尺度高度σ倍数，以及是否为此前已知逃逸星。这是第5节（Distances from the Galactic disk）的核心产出，用于识别潜在的动力学弹射或超新星踢出的逃逸星。已扣除银河系翘曲效应。",
+      "source_refs": [
+        {
+          "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+          "start_line": 789,
+          "end_line": 829,
+          "caption": "Distance of WR stars from the midplane |z|, for which excesses exceed 3σ, where σ=52 pc, the HII region scale height of 52 pc. Previously identified runaways with |z| ≥300 pc according to Rosslowe & Crowther (2015) are also indicated.",
+          "label": "table:zheights"
+        }
+      ],
+      "columns": [
+        {
+          "name": "WR Number",
+          "meaning": "银河系WR星编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral Type",
+          "meaning": "WR星光谱型",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dist",
+          "meaning": "日心距离及68%可信区间",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "|z|",
+          "meaning": "距离银河系中平面的垂直距离（含翘曲修正）及不确定度",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "HII σ",
+          "meaning": "|z|与HII区尺度高度（σ=52 pc）的比值（即偏离中平面的σ数）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Known runaway",
+          "meaning": "是否此前已被Rosslowe & Crowther (2015)识别为|z|≥300 pc的逃逸星（Yes/No）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 9 (table:zheights) 在paperI_amended.tex第789-829行。6列表格。共31行数据（31颗候选逃逸星）。最远的是WR148 (|z|=1087 pc, 20.9σ, WN8h+)，最近满足3σ的是WR34 (|z|=159 pc, 3.1σ)。20颗为新发现的候选逃逸星。仅4颗为WN8-9次型，推翻了此前WN8-9在逃逸星中过度代表的结论。",
+      "comments": "逃逸星候选表，是该论文在HVS/runaway领域的核心贡献。已使用Li et al. (2019)的银河系翘曲模型修正中平面位置。表中按|z|降序排列。需要注意的是，该表仅基于中平面距离识别逃逸星，未使用切向速度或径向速度信息——这些需要Gaia自行数据。"
+    },
+    {
+      "id": "table-010",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "附录A（在线补充材料）：Table 1的完整版，包含383颗银河系WR星的完整Gaia DR2天体测量、测光和视差参数数据。与正文中table:final（仅展示前10行）内容一致但包含全部383行。是论文最大最重要的数据资产，包含全部WR星的距离、坐标、星等、消光和光度信息。位于独立tex文件table1_pc.tex中。",
+      "source_refs": [
+        {
+          "path": "literature/1912.10125/arxiv_source/table1_pc.tex",
+          "start_line": 114,
+          "end_line": 509,
+          "caption": "Gaia DR2 astrometric, photometric and parallax properties for 383 Galactic WR stars, including WR11 using a parallax and photometry from Hipparcos (van Leeuwen 2007). The distance for WR11 was calculated in the same manner as WR with Gaia results, except the adjustments to calculate ω and σ_ω were not applied. Stellar luminosities, updated from Hamann et al. (2019) and Sander et al. (2019) according to our revised distances, are restricted to sources with no error flags.",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "WR Number",
+          "meaning": "银河系WR星编号（同Table 1）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral Type",
+          "meaning": "WR星光谱型（同Table 1）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Alias",
+          "meaning": "WR星别名/常用名（同Table 1）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA J2015",
+          "meaning": "Gaia DR2 J2015.5赤经（同Table 1）",
+          "unit_text": "h m s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec J2015",
+          "meaning": "Gaia DR2 J2015.5赤纬（同Table 1）",
+          "unit_text": "d m s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ω ± σ_ω",
+          "meaning": "修正后的Gaia DR2视差及误差（同Table 1）",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "贝叶斯距离及68%可信区间（同Table 1）",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "|z|",
+          "meaning": "中平面距离（同Table 1）",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia G波段视星等（同Table 1）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G_BP - G_RP",
+          "meaning": "Gaia BP-RP颜色（同Table 1）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Excess noise",
+          "meaning": "Gaia天体测量excess noise（同Table 1）",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log L/L_⊙",
+          "meaning": "恒星光度对数（同Table 1）",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flags",
+          "meaning": "Gaia数据质量标志 a/e/n/g（同Table 1）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "table1_pc.tex第114-509行。与正文Table 1结构完全相同（13列），但包含全部383行WR星数据。作为独立tex文件通过\\input引入附录。行数范围114-509包含约395行LaTeX代码（含表头、\\hline等标记行），实际数据约383行。",
+      "comments": "这是正文Table 1 (table:final)的完整版。列定义与table:final完全一致，此处不再重复各列的详细含义。两个表的id分别保留以便区分正文摘要版和附录完整版。"
+    },
+    {
+      "id": "table-011",
+      "kind": "latex_table",
+      "asset_type": "derived_catalog",
+      "role_in_paper": "附录B（在线补充材料）：Table 6的完整版，包含所有WR星的Ks波段绝对星等完整数据（正文仅展示前10行）。位于独立tex文件table6_amended.tex中。提供每颗星的Ks波段视星等、距离模数、颜色、消光、双星系统/分量绝对星等及质量标志。",
+      "source_refs": [
+        {
+          "path": "literature/1912.10125/arxiv_source/table6_amended.tex",
+          "start_line": 116,
+          "end_line": 501,
+          "caption": "Absolute K_s-band magnitudes for Galactic WR stars.",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "WR Number",
+          "meaning": "银河系WR星编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral Type",
+          "meaning": "WR星光谱型",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K_s",
+          "meaning": "2MASS Ks视星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ",
+          "meaning": "距离模数",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J-K_s",
+          "meaning": "2MASS J-Ks颜色",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "H-K_s",
+          "meaning": "2MASS H-Ks颜色",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_Ks",
+          "meaning": "Ks波段消光",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M^Sys_Ks",
+          "meaning": "双星系统Ks波段绝对星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "F^WR_Ks / F^Sys_Ks",
+          "meaning": "WR分量Ks波段流量贡献比",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M^WR_Ks",
+          "meaning": "WR分量Ks波段绝对星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flags",
+          "meaning": "测光质量标志（b/b:/g/u）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "table6_amended.tex第116-501行。11列表格，与正文Table 6 (table:final_absmagk) 结构完全相同，但包含全部WR星数据（~385行LaTeX代码）。",
+      "comments": "正文Table 6的完整版。列定义与table:final_absmagk一致。包含所有有Ks波段数据的WR星，不论绝对星等是否可靠（有u标志的星也有视星等和距离模数数据）。"
+    },
+    {
+      "id": "table-012",
+      "kind": "latex_table",
+      "asset_type": "derived_catalog",
+      "role_in_paper": "附录C（在线补充材料）：Table 7的完整版，包含所有WR星的v^WR波段绝对星等完整数据（正文仅展示前10行）。位于独立tex文件table7_amended.tex中。提供每颗星的v^WR视星等、距离模数、(b-v)^WR颜色、消光、双星系统/分量绝对星等及质量标志。",
+      "source_refs": [
+        {
+          "path": "literature/1912.10125/arxiv_source/table7_amended.tex",
+          "start_line": 116,
+          "end_line": 501,
+          "caption": "Absolute v^WR-band magnitudes for Galactic WR stars.",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "WR Number",
+          "meaning": "银河系WR星编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral Type",
+          "meaning": "WR星光谱型",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v^WR ± 0.1",
+          "meaning": "窄带v^WR视星等（精度±0.1 mag）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ",
+          "meaning": "距离模数",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(b-v)^WR",
+          "meaning": "窄带v^WR观测(b-v)颜色",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A^WR_v",
+          "meaning": "窄带v^WR波段消光",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M^Sys_v",
+          "meaning": "双星系统v^WR波段绝对星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "F^WR_v / F^Sys_v",
+          "meaning": "WR分量v^WR波段流量贡献比",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M^WR_v",
+          "meaning": "WR分量v^WR波段绝对星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flags",
+          "meaning": "测光质量标志（b/b:/g/u）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "table7_amended.tex第116-501行。10列表格，与正文Table 7 (table:final_absmagv) 结构完全相同，但包含全部WR星数据（~385行LaTeX代码）。",
+      "comments": "正文Table 7的完整版。列定义与table:final_absmagv一致。v^WR波段星等测光精度±0.1 mag，来自Smith (1968)窄带v滤镜系统（标记为v^WR以区别于标准Johnson V）。"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-wrcat",
+      "kind": "external_url",
+      "url": "http://pacrowther.staff.shef.ac.uk/WRcat/index.php",
+      "local_path": "",
+      "description": "Galactic Wolf-Rayet Catalogue (v1.21)，由本文作者之一Paul Crowther维护的在线银河系WR星目录。论文Introduction中引用此目录作为已知WR星总数的来源，并用作Gaia交叉匹配的输入星表（van der Hucht 2001坐标主要来源）。该目录是WR星研究领域的核心社区资源。",
+      "source_refs": [
+        {
+          "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+          "start_line": 167,
+          "end_line": 167,
+          "context": "The Milky Way contains a rich population of WR stars, whose total has been estimated at 1200±200. Over half have been detected thus far\\footnote{\\url{http://pacrowther.staff.shef.ac.uk/WRcat/index.php}, v1.21}."
+        }
+      ],
+      "evidence": "论文Introduction第167行的脚注明确引用该URL：\\footnote{\\url{http://pacrowther.staff.shef.ac.uk/WRcat/index.php}, v1.21}。该目录是本文Gaia交叉匹配的WR星坐标输入来源之一。",
+      "comments": "该目录持续更新，论文使用时版本为v1.21。URL为论文原文中明确给出的唯一外部数据资源链接。Gaia、2MASS、SIMBAD等公开巡天数据库的引用按审查边界规则作为方法论引用予以省略。MNRAS在线补充材料中的完整表格已包含在本地arxiv_source目录中（table1_pc.tex, table6_amended.tex, table7_amended.tex），不存在独立的补充材料URL。"
+    }
+  ]
+}

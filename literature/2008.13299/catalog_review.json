@@ -1,0 +1,620 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2008.13299",
+    "title": "High-resolution spectroscopic study of massive blue and red supergiants in Perseus OB1. I. Definition of the sample, membership, and kinematics",
+    "month": "2020-08",
+    "source_note_json": "notes/2020/2020-08/2020-08.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2008.13299",
+      "pdf": "https://arxiv.org/pdf/2008.13299"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2008.13299",
+    "audit_path": "literature/2008.13299/audit.json",
+    "source_dir": "literature/2008.13299/arxiv_source",
+    "tex_root": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T11:24:00",
+    "reviewer": "agent",
+    "summary": "该论文对Per OB1星协(含h和χ Persei双星团)周围4.5度内的88颗大质量蓝/红超巨星候选体进行了高分辨率光谱观测(共405条光谱)，结合Gaia DR2天体测量数据，研究样本星的成员资格、双星性质和逃逸星(runaway)状态。主要发现：(1)79颗星被确认为可能成员；(2)O型星中约45%为逃逸星，而更演化恒星中逃逸比例<~5%；(3)O型星中光谱双星比例约15%，B超巨星中约10%，更冷超巨星中几乎为零。论文识别的是星协成员中的'runaway stars'(逃离星)——即从诞生星团中被动力学或超新星爆发弹射的恒星，但这些恒星仍在银河系束缚轨道上。论文未涉及银河系非束缚超高速星(HVS)的定义或搜寻，未将任何恒星识别为HVS候选体。论文含4个主文表格(Table 1-4，关于视差分布、RV变化性、逃逸星统计、双星统计)和5个附录长表格(Table A1-A5，完整星表、多历元RV、SB1星、成员资格汇总、所有RV测量)。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-001",
+      "kind": "latex_table",
+      "asset_type": "measurement_table",
+      "role_in_paper": "Table 1: 不同半径范围内恒星的视差和自行平均值及标准偏差。用于评估Per OB1星协的空间范围和成员星天体测量参数的一致性。",
+      "source_refs": [
+        {
+          "path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+          "start_line": 286,
+          "end_line": 305,
+          "caption": "Mean and standard deviation of parallaxes and proper motions for different groups of stars located at increased distance from the center of h and χ Persei.",
+          "label": "table.radiplxpm"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Radius",
+          "meaning": "Angular distance from cluster center in degrees",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_stars",
+          "meaning": "Number of stars in radial bin",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "varpi",
+          "meaning": "Mean parallax with standard deviation",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu",
+          "meaning": "Mean proper motion with standard deviation",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 in main text (Sec 2.3 Gaia observations). tabular environment within table float. 5 data rows.",
+      "comments": "5 radial bins from cluster center to 4.5 deg."
+    },
+    {
+      "id": "table-002",
+      "kind": "latex_table",
+      "asset_type": "measurement_table",
+      "role_in_paper": "Table 2: 多历元RV变化性统计——15颗有足够多历元恒星的分光谱型RV峰峰值振幅平均值和最大值。用于评估不同光谱型的本征RV变化性水平。",
+      "source_refs": [
+        {
+          "path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+          "start_line": 402,
+          "end_line": 421,
+          "caption": "Summary of detected variability (mean and maximum of peak-to-peak amplitude of RV in each SpT group) for the sample of 15 stars.",
+          "label": "table.variab"
+        }
+      ],
+      "columns": [
+        {
+          "name": "SpT group",
+          "meaning": "Spectral type group (O, B, A/F, K/M)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_stars",
+          "meaning": "Number of stars in group",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mean_N_spectra",
+          "meaning": "Mean number of spectra per star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mean_RV_PP",
+          "meaning": "Mean peak-to-peak RV amplitude",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_PP_max",
+          "meaning": "Maximum peak-to-peak RV amplitude",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 2 in main text (Sec 4.4). tabular within table float. 4 data rows.",
+      "comments": "Table 2 referenced in Section 4.4 when discussing RV variability."
+    },
+    {
+      "id": "table-003",
+      "kind": "latex_table",
+      "asset_type": "summary_table",
+      "role_in_paper": "Table 3: 逃逸星统计——按光谱型统计自行和RV超出2σ/4σ的离群星数目，以及最终确认为逃逸星的数量和百分比。核心科学产出表。",
+      "source_refs": [
+        {
+          "path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+          "start_line": 529,
+          "end_line": 550,
+          "caption": "Summary of the number of outliers in proper motion and RV that are used for the final identification of runaway stars.",
+          "label": "table.rw"
+        }
+      ],
+      "columns": [
+        {
+          "name": "SpT",
+          "meaning": "Spectral type group",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_alpha_outliers",
+          "meaning": "Number of μ_α cos δ outliers >2σ",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_delta_outliers",
+          "meaning": "Number of μ_δ outliers >2σ",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_total_outliers",
+          "meaning": "Number of total proper motion outliers >2σ",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_2sigma_outliers",
+          "meaning": "Number of RV outliers >2σ",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_4sigma_outliers",
+          "meaning": "Number of RV outliers >4σ",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "runaway_count",
+          "meaning": "Number of clearly identified runaway stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "runaway_pct",
+          "meaning": "Percentage of runaway stars relative to total in SpT group",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 3 in main text (Sec 4.5). table* float spanning two columns. 4 data rows for O, B, A/F, K/M types.",
+      "comments": "Key science table. Shows 45% of O stars are runaways vs ~5% for evolved stars."
+    },
+    {
+      "id": "table-004",
+      "kind": "latex_table",
+      "asset_type": "summary_table",
+      "role_in_paper": "Table 4: 双星统计——按光谱型统计SB1、SB2、文献双星、候选SB1数目，以及双星百分比。",
+      "source_refs": [
+        {
+          "path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+          "start_line": 567,
+          "end_line": 590,
+          "caption": "Summary of the number of binary stars in the sample.",
+          "label": "table.bin"
+        }
+      ],
+      "columns": [
+        {
+          "name": "SpT",
+          "meaning": "Spectral type group",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SB1",
+          "meaning": "Number of confirmed single-lined spectroscopic binaries (with percentage)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SB2",
+          "meaning": "Number of confirmed double-lined spectroscopic binaries (with percentage)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Lit",
+          "meaning": "Number of binary stars found in literature",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SB1_candidate",
+          "meaning": "Number of candidate SB1 stars (including LPV/SB1 ambiguous cases)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_All",
+          "meaning": "Total number of stars in SpT group",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pct_bin",
+          "meaning": "Percentage of confirmed + candidate binary stars",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 4 in main text (Sec 4.5). table* float. 4 data rows plus B I&II subgroup.",
+      "comments": "B stars split into giants and supergiants subgroups."
+    },
+    {
+      "id": "table-005",
+      "kind": "latex_longtable",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Table A1: 完整星表——88颗样本星的名称、光谱型、坐标、G星等、BP-RP颜色、Gaia DR2自行、视差、最佳S/N RV和注释。论文的核心数据表。",
+      "source_refs": [
+        {
+          "path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+          "start_line": 656,
+          "end_line": 845,
+          "caption": "Sample of (super-)giant stars within 4.5 degrees around the Perseus double cluster.",
+          "label": "table.A1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Star designation (HD/BD/etc.)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpC",
+          "meaning": "Spectral classification",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "alpha",
+          "meaning": "Right Ascension (J2000)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "delta",
+          "meaning": "Declination (J2000)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia G-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "BP-RP",
+          "meaning": "Gaia BP-RP color",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_alpha_cos_delta",
+          "meaning": "Proper motion in RA (cos δ corrected)",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_delta",
+          "meaning": "Proper motion in Declination",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "varpi",
+          "meaning": "Gaia DR2 parallax",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "Best S/N radial velocity measurement",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Notes",
+          "meaning": "References and additional notes",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Appendix Table A1. longtable environment. ~88 data rows spanning 6 pages. Referenced throughout the paper as the primary sample catalog.",
+      "comments": "Multi-page longtable. Includes footnote markers for special cases (SB2, alternative astrometry sources, etc.)."
+    },
+    {
+      "id": "table-006",
+      "kind": "latex_longtable",
+      "asset_type": "followup_measurements",
+      "role_in_paper": "Table A2: 多历元RV测量结果——≥5条光谱的非SB1/SB2星的逐历元RV。用于评估RV变化性。",
+      "source_refs": [
+        {
+          "path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+          "start_line": 848,
+          "end_line": 913,
+          "caption": "Results from the multi-epoch RV measurements for stars with five or more spectra, excluding confirmed SB1 and SB2 stars.",
+          "label": "table.A2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Star designation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpC",
+          "meaning": "Spectral classification",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "MJD",
+          "meaning": "Modified Julian Date of observation",
+          "unit_text": "d",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_spec",
+          "meaning": "Cumulative spectrum count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "Radial velocity measurement",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_RV",
+          "meaning": "RV uncertainty",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Appendix Table A2. longtable. Multi-epoch RV for 15 stars.",
+      "comments": "Showcases RV stability/variability of non-binary stars."
+    },
+    {
+      "id": "table-007",
+      "kind": "latex_longtable",
+      "asset_type": "followup_measurements",
+      "role_in_paper": "Table A3: 确认SB1星的多历元RV测量结果。",
+      "source_refs": [
+        {
+          "path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+          "start_line": 917,
+          "end_line": 953,
+          "caption": "Results from the multi-epoch RV measurements for all confirmed SB1 stars.",
+          "label": "table.A3"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Star designation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpC",
+          "meaning": "Spectral classification",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "MJD",
+          "meaning": "Modified Julian Date",
+          "unit_text": "d",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_spec",
+          "meaning": "Cumulative spectrum count",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "Radial velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_RV",
+          "meaning": "RV uncertainty",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Appendix Table A3. longtable. Multi-epoch RV for SB1 stars.",
+      "comments": "Demonstrates RV variability of confirmed spectroscopic binaries."
+    },
+    {
+      "id": "table-008",
+      "kind": "latex_longtable",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Table A4: 成员资格和特征汇总——每颗星在视差、自行、最佳RV和多历元RV等方面的离群状态，以及最终成员资格判定(是/候选/否)。",
+      "source_refs": [
+        {
+          "path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+          "start_line": 958,
+          "end_line": 1094,
+          "caption": "Membership and features of investigated stars.",
+          "label": "table.A4"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Star designation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "varpi_status",
+          "meaning": "Parallax outlier status (filled circle=within 2σ, empty circle=2-3σ outlier, cross=>3σ outlier)",
+          "unit_text": "",
+          "source_of_definition": "table header; explanation in footnote",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_status",
+          "meaning": "Proper motion outlier status",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_best_status",
+          "meaning": "Best-S/N RV outlier status",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_multi_status",
+          "meaning": "Multi-epoch mean RV outlier status",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "spec_variability",
+          "meaning": "Spectral variability classification (SB1, SB2, LPV, etc.)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "membership",
+          "meaning": "Final membership assessment (Y=member, C=candidate, N=non-member)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "comments",
+          "meaning": "Additional comments on astrometric quality or special cases",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Appendix Table A4. longtable. Full sample membership summary. ~88 rows.",
+      "comments": "Key summary table synthesizing all membership indicators. Uses visual symbols (●, ○, ×) for outlier status."
+    },
+    {
+      "id": "table-009",
+      "kind": "latex_longtable",
+      "asset_type": "followup_measurements",
+      "role_in_paper": "Table A5 (rvstable): 所有恒星的完整逐历元RV测量——论文最详尽的数据表，包含所有405条光谱的RV测量。",
+      "source_refs": [
+        {
+          "path": "literature/2008.13299/arxiv_source/39019corr_f.tex",
+          "start_line": 1112,
+          "end_line": 1563,
+          "caption": "All RV measurements for individual epochs in all the stars in the sample.",
+          "label": "table.rvstable"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Star designation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpC",
+          "meaning": "Spectral classification",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "MJD",
+          "meaning": "Modified Julian Date",
+          "unit_text": "d",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "Radial velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_RV",
+          "meaning": "RV uncertainty",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Appendix Table A5 (label: table.rvstable). longtable spanning ~450 lines. Contains all 405 spectra RV measurements.",
+      "comments": "Most comprehensive data table. Multi-page longtable."
+    }
+  ],
+  "external_resources": []
+}

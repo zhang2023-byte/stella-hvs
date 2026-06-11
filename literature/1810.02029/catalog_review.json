@@ -1,0 +1,328 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1810.02029",
+    "title": "Origin of a massive hyper-runaway subgiant star LAMOST-HVS1 -- implication from Gaia and follow-up spectroscopy",
+    "month": "2018-10",
+    "source_note_json": "notes/2018/2018-10/2018-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1810.02029",
+      "pdf": "https://arxiv.org/pdf/1810.02029"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1810.02029",
+    "audit_path": "literature/1810.02029/audit.json",
+    "source_dir": "literature/1810.02029/arxiv_source",
+    "tex_root": "literature/1810.02029/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T07:55:00",
+    "reviewer": "agent",
+    "summary": "Paper reports LAMOST-HVS1 as a massive (8.3 Msun) hyper-runaway subgiant star with super-Solar metallicity, ejected from the inner stellar disk of the Milky Way ~33 Myr ago with intrinsic ejection velocity 568 km/s (corrected for disk streaming), based on Gaia DR2 proper motions and Magellan/MIKE high-resolution follow-up spectroscopy. The authors reconstruct the orbit via Monte Carlo sampling (103,636 final orbits from 1,000,000 realizations), derive stellar parameters and chemical abundances (Si, Mg, C, N, O), rule out binary supernova ejection (BEM) in favor of dynamical ejection (DEM) via 3-body or 4-body interaction with massive objects (IMBH, VMS, or multiple ordinary massive stars), and locate the ejection agent near the Norma spiral arm, suggesting an undiscovered young massive cluster. The paper includes 2 internal tables: (1) Table 1 (table:stellar_parameters) is a 2-column parameter-value table listing Gaia DR2 astrometry (source_id, coordinates, G mag, parallax, proper motions), spectroscopic parameters (Teff, log g, vlos, v sin i, v_macro, v_micro, age, mass, radius, DM, d_spec), and orbital analysis results (posterior distance d). (2) Table 2 (table:abundances) is a 9-column chemical abundance table with [X/H] and A(X) for LAMOST-HVS1, plus comparison values for B stars at R=3kpc and R=8kpc (from Nieva & Przybilla 2012) and Solar abundances (Asplund et al. 2009). Key external resources: Gaia DR2 astrometry, Silva & Napiwotzki (2011) runaway B star catalog (46 stars with good Gaia parallax used for comparison), Magellan/MIKE spectra (available on request), LAMOST discovery data, Nieva & Przybilla (2012) B star abundance table, MWPotential2014, Ekström et al. (2012) evolutionary tracks, APASS DR9, 2MASS, and Luck & Lambert (2011) Cepheid abundances."
+  },
+  "internal_tables": [
+    {
+      "id": "table-table-stellar_parameters",
+      "kind": "latex_table",
+      "asset_type": "reference_table",
+      "role_in_paper": "Primary data table listing all observed and derived physical parameters for LAMOST-HVS1. Organized into three sections: Gaia DR2 astrometric data (source_id, coordinates, G magnitude, color, parallax with error, proper motions with errors), spectroscopic parameters from Magellan/MIKE analysis (Teff, log g, vlos, v sin i, macro/microturbulence, age, mass, radius, distance modulus, spectroscopic distance), and posterior distance from orbital analysis. This is the core observational dataset for the paper.",
+      "source_refs": [
+        {
+          "path": "literature/1810.02029/arxiv_source/tab1.tex",
+          "start_line": 2,
+          "end_line": 59,
+          "caption": "Basic properties of LAMOST-HVS1 \\label{table:stellar_parameters}",
+          "label": "table:stellar_parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Row label identifying each measured parameter: Gaia DR2 source_id, Galactic (l,b) and equatorial (alpha,delta) coordinates, G magnitude, BP-RP color, parallax and error, proper motions and errors in RA and Dec, then spectroscopic Teff, log g, heliocentric radial velocity vlos, projected rotational velocity v sin i, macroturbulence v_macro, microturbulence v_micro, age tau, current mass M*, current radius R*, distance modulus DM, spectroscopic distance d_spec, and posterior orbital distance d",
+          "unit_text": "",
+          "source_of_definition": "table header and row labels in column 1",
+          "confidence": 1.0
+        },
+        {
+          "name": "LAMOST-HVS1",
+          "meaning": "Measured or derived value for LAMOST-HVS1 with ±1σ uncertainties where applicable. Includes Gaia DR2 source_id=590511484409775360, (l,b)=(221.0995°, 35.4072°), G=13.06 mag, (BP-RP)=-0.2316 mag, varpi=-0.044±0.067 mas, (mu_alpha*, mu_delta)=(-3.54±0.11, -0.62±0.09) mas/yr, Teff=18100±400 K, log g=3.42±0.065, vlos=615±5 km/s, v sin i=130±20 km/s, v_macro=164±30 km/s, v_micro=6±1 km/s, age=37.4 Myr, M*=8.3 Msun, R*=9.3 Rsun, DM=16.40, d_spec=19.1 kpc, and posterior d=13.3 kpc",
+          "unit_text": "",
+          "source_of_definition": "table data cells and table comments",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The astrometric data for LAMOST-HVS1 provided by Gaia DR2 are summarized in Table 1. The proper motion of this star is precisely measured but the line-of-sight velocity is not measured by Gaia. The Gaia-DR2 parallax is negative and associated with a large error, and therefore we do not use this parallax information. For the distance and heliocentric line-of-sight velocity, we use our spectroscopic data.",
+      "comments": "Two-column table (parameter | value). The table is split into three topical sections: Gaia data, Spectroscopic data, and Result of orbital analysis. The posterior distance d=13.3 kpc (after orbital reconstruction) supersedes the spectroscopic d_spec=19.1 kpc. Table uses deluxetable environment from aastex62."
+    },
+    {
+      "id": "table-table-abundances",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Chemical abundance table for LAMOST-HVS1 showing [X/H] and A(X) for five elements (Si, Mg, C, N, O), compared with mean B-star abundances at Galactocentric radii R=3 kpc and R=8 kpc (from Nieva & Przybilla 2012 Table 9), and Solar abundances (Asplund et al. 2009). Used to demonstrate the super-Solar metallicity of HVS1, argue for its inner-disk origin (abundances match R~3 kpc B stars), and note the anomalous Si excess (A(Si)-A(Mg)=0.18±0.10) that may help chemically tag its natal cluster.",
+      "source_refs": [
+        {
+          "path": "literature/1810.02029/arxiv_source/tab2.tex",
+          "start_line": 2,
+          "end_line": 65,
+          "caption": "Chemical abundances of LAMOST-HVS1 \\label{table:abundances}",
+          "label": "table:abundances"
+        }
+      ],
+      "columns": [
+        {
+          "name": "X",
+          "meaning": "Chemical element symbol: Si, Mg, C, N, O",
+          "unit_text": "",
+          "source_of_definition": "table header (first column)",
+          "confidence": 1.0
+        },
+        {
+          "name": "[X/H]",
+          "meaning": "Logarithmic abundance relative to Solar for LAMOST-HVS1: [X/H] = A(X) - A_sun(X). Values: Si=0.60±0.06, Mg=0.33±0.10, C=0.26±0.07, N=0.35±0.07, O=0.17±0.07. All elements show super-Solar abundance.",
+          "unit_text": "dex",
+          "source_of_definition": "table header '\\colhead{[X/H]^(a)}' and table note a",
+          "confidence": 1.0
+        },
+        {
+          "name": "A(X)",
+          "meaning": "Absolute elemental abundance A(X) = log10(N_X/N_H) + 12 for LAMOST-HVS1. Values: Si=8.11, Mg=7.93, C=8.69, N=8.18, O=8.86 with ±1σ uncertainties.",
+          "unit_text": "dex",
+          "source_of_definition": "table header '\\colhead{A(X)}' and table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "<A_B^3kpc(X)>",
+          "meaning": "Mean abundance of B-type stars at Galactocentric radius R=3 kpc, derived from Nieva & Przybilla (2012) Table 9 and literature radial abundance gradients. Used as comparison to test inner-disk origin.",
+          "unit_text": "dex",
+          "source_of_definition": "table header and table comments referencing Nieva+2012",
+          "confidence": 1.0
+        },
+        {
+          "name": "<A_B^8kpc(X)>",
+          "meaning": "Mean abundance of B-type stars at Galactocentric radius R=8 kpc (Solar neighborhood), derived from Nieva & Przybilla (2012) Table 9 and literature radial abundance gradients. HVS1 abundance is systematically higher than this, supporting inner-disk origin.",
+          "unit_text": "dex",
+          "source_of_definition": "table header and table comments referencing Nieva+2012",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_sun(X)",
+          "meaning": "Solar photospheric abundance from Asplund et al. (2009, ARA&A). Values: Si=7.51±0.03, Mg=7.60±0.04, C=8.43±0.05, N=7.83±0.05, O=8.69±0.05.",
+          "unit_text": "dex",
+          "source_of_definition": "table comments referencing Asplund+2009ARAA",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "As seen in Table 2, the abundance of Mg, C, N, and O of LAMOST-HVS1 is systematically higher than that of the mean abundance of B stars at R=8 kpc, while it is consistent with that at R=3 kpc. The similarity in the chemical abundance pattern between LAMOST-HVS1 and B stars at R=3 kpc supports our estimation that the ejection radius was at R_ej ~ 2.9 kpc.",
+      "comments": "5 rows × 6 data columns (9 total columns including empty spacer columns from LaTeX cline formatting). The table notes explain that [X/H] depends on both A(X) and A_sun(X), so systematic errors in Solar abundances affect [X/H]. The Si excess (A(Si)-A(Mg)=0.18±0.10) is noted as possibly anomalous but not exceptionally so compared with Cepheid data from Luck & Lambert (2011)."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission, Data Release 2 (DR2). Primary source of astrometric data: proper motions (mu_alpha*, mu_delta) and their errors, plus G magnitude, BP-RP color, parallax, and quality indicators (ASTROMETRIC_CHI2_AL, ASTROMETRIC_N_GOOD_OBS_AL, RUWE). Used for orbit reconstruction of LAMOST-HVS1 and for deriving V_ej^int of 46 comparison runaway B stars from Silva & Napiwotzki (2011). The Gaia DR2 data for HVS1 are listed in Table 1.",
+      "source_refs": [
+        {
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 288,
+          "end_line": 2501,
+          "context": "The astrometric data for LAMOST-HVS1 provided by Gaia DR2 are summarized in Table 1... This work has made use of data from the European Space Agency (ESA) mission Gaia (http://www.cosmos.esa.int/gaia)"
+        }
+      ],
+      "evidence": "We use Gaia DR2 proper motions of LAMOST-HVS1 to reconstruct its orbit. The proper motion is (mu_alpha, mu_delta) = (-3.54 +/- 0.11, -0.62 +/- 0.09) mas/yr. Gaia DR2 provides high-precision proper motion measurements.",
+      "comments": "Gaia DR2 is the fundamental astrometric dataset. The Gaia parallax for HVS1 is negative (-0.044 mas) and not used; spectroscopic distance is used instead. Data accessed via ESA Gaia archive. RUWE=1.228 indicates a well-behaved astrometric solution."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dr2-known-issues",
+      "local_path": "",
+      "description": "Gaia DR2 known-issues look-up table providing the normalization factor u_0(G, BP-RP) used to compute the renormalized unit weight error (RUWE) for assessing astrometric solution quality. For HVS1, u_0(G=13.06, BP-RP=-0.2316) = 2.11399, yielding RUWE = 1.228 (Appendix A).",
+      "source_refs": [
+        {
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 2611,
+          "end_line": 2618,
+          "context": "The value of u_0 is obtained from the interpolation of the look-up table available at https://www.cosmos.esa.int/web/gaia/dr2-known-issues. We obtain RUWE = 1.228. The value of RUWE is close to 1.0 and smaller than 1.4, which is expected for a well-behaved astrometric solution."
+        }
+      ],
+      "evidence": "The value of u_0 is obtained from the interpolation of the look-up table available at https://www.cosmos.esa.int/web/gaia/dr2-known-issues. We obtain RUWE = 1.228.",
+      "comments": "Used only in Appendix A to validate Gaia astrometric quality for HVS1. The RUWE diagnostic was proposed by Lindegren (2018) as a better quality indicator than the earlier ASTROMETRIC_GOF_AL and ASTROMETRIC_EXCESS_NOISE_SIG flags."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Silva & Napiwotzki (2011, MNRAS, 411, 2596) catalog of 96 runaway B-type main-sequence stars with orbit analysis. The authors re-analyze the 46 stars from this sample with high-quality Gaia DR2 parallax (varpi/sigma_varpi > 5) to derive intrinsic ejection velocities V_ej^int for comparison with LAMOST-HVS1. Three stars (HIP 114569, HIP 11809, PG 1533+467) are found with V_ej^int consistent with >300 km/s; all are much lower than HVS1's 568 km/s.",
+      "source_refs": [
+        {
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 1063,
+          "end_line": 1088,
+          "context": "we also analyzed known runaway B-type massive stars in Silva & Napiwotzki (2011). We found that Gaia data is available for all of these stars. For the 46 stars in this sample with high quality parallax data, we derived the probability distribution of V_ej^int."
+        }
+      ],
+      "evidence": "we also analyzed known runaway B-type massive stars in Silva & Napiwotzki (2011). For the 46 stars in this sample with high quality parallax data (varpi/sigma_varpi>5), we derived the probability distribution of V_ej^int.",
+      "comments": "The SN2011 catalog is the primary comparison sample for establishing that HVS1's ejection velocity is exceptionally large. Their V_ej^int distributions are plotted in Figure 6 alongside HVS1. The comparison is limited because the parallax cut excludes distant runaway stars that might also have large V_ej^int."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Magellan/MIKE high-resolution echelle spectra of LAMOST-HVS1 obtained on 2018 Jan 12. R~30,000 (blue) and R~25,500 (red), covering 3350-9400 Å, S/N~50-200. Reduced with CarPy pipeline. Used for stellar atmosphere analysis (Teff, log g, abundances, vlos, v sin i). The spectra are available upon request to the authors.",
+      "source_refs": [
+        {
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 335,
+          "end_line": 367,
+          "context": "We observed LAMOST-HVS1 on 2018 January 12 using the Magellan Inamori Kyocera Echelle (MIKE) spectrograph. The spectra cover 3350 Å to 9400 Å. These spectra can be distributed upon request."
+        }
+      ],
+      "evidence": "We observed LAMOST-HVS1 on 2018 January 12 using the Magellan Inamori Kyocera Echelle (MIKE) spectrograph. These spectra can be distributed upon request.",
+      "comments": "The MIKE spectra are the primary new observational data of this paper. Data available from authors on request. The heliocentric RV from these spectra is vlos=615±5 km/s, consistent with LAMOST measurement of 611.65±4.63 km/s (Huang+2017), suggesting HVS1 is not in a binary."
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "LAMOST (Large Sky Area Multi-Object Fiber Spectroscopic Telescope) survey data. LAMOST-HVS1 was originally discovered as a luminous blue star with extremely large heliocentric RV (611.65±4.63 km/s) from LAMOST low-resolution spectra (Zheng+2014, Huang+2017). The LAMOST RV measurement is used to validate the MIKE RV and argue HVS1 is likely single.",
+      "source_refs": [
+        {
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 469,
+          "end_line": 475,
+          "context": "The heliocentric line-of-sight velocity of LAMOST-HVS1 derived from our spectroscopy is vlos = 615 +/- 5 km/s, which is consistent with the previous measurements by LAMOST, 611.65 +/- 4.63 km/s (Huang+2017)."
+        }
+      ],
+      "evidence": "The heliocentric line-of-sight velocity derived from our spectroscopy is vlos = 615 +/- 5 km/s, consistent with previous LAMOST measurements, 611.65 +/- 4.63 km/s (Huang+2017).",
+      "comments": "LAMOST provided the discovery data for HVS1 (Huang+2017, ApJL, 847, L9). The LAMOST data were also used in Zheng+2014 and Hattori+2018b for initial characterization."
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Nieva & Przybilla (2012, A&A, 539, A143) Table 9: mean abundance of B-type stars in the Solar neighborhood, plus radial abundance gradients from the literature (Carigi+2005, Esteban+2005, Cescutti+2007). Used to compute <A_B^3kpc(X)> and <A_B^8kpc(X)> comparison values in Table 2 for testing the inner-disk origin of LAMOST-HVS1.",
+      "source_refs": [
+        {
+          "path": "literature/1810.02029/arxiv_source/tab2.tex",
+          "start_line": 40,
+          "end_line": 48,
+          "context": "<A_B^3kpc(X)> and <A_B^8kpc(X)> denote the mean abundance of the B stars located at R=3 kpc and 8 kpc, respectively, derived from table 9 of Nieva+2012 and the literature values of the radial abundance gradient therein."
+        }
+      ],
+      "evidence": "The mean abundance of B stars at R=3 kpc and 8 kpc derived from table 9 of Nieva+2012 and literature radial abundance gradients.",
+      "comments": "This is the key reference for establishing that HVS1's chemical abundances are consistent with an inner-disk (R~3 kpc) origin and inconsistent with Solar-neighborhood (R~8 kpc) origin."
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Bovy (2015, ApJS, 216, 29) MWPotential2014 Galactic potential model. Used for orbit integration of LAMOST-HVS1 and its ejection agent. Spherical NFW dark matter halo with scale length a=16 kpc, virial radius r_200=183 kpc, virial mass M_200=0.7×10^12 Msun. Results confirmed insensitive to M_200 by testing with (a, r_200, M_200)=(28 kpc, 231 kpc, 1.4×10^12 Msun).",
+      "source_refs": [
+        {
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 620,
+          "end_line": 638,
+          "context": "We adopt a realistic Galactic potential model, MWPotential2014 (Bovy 2015). The result of this paper is not sensitive to the adopted virial mass M_200."
+        }
+      ],
+      "evidence": "We adopt a realistic Galactic potential model, MWPotential2014 (Bovy 2015). We have checked that the result of this paper is unchanged when we adopt a more massive halo.",
+      "comments": "The MWPotential2014 model is implemented in the galpy package. The paper also uses the Agama software package (Vasiliev 2018) for orbit calculations."
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Ekström et al. (2012, A&A, 537, A146) rotating stellar evolutionary tracks. Used to estimate stellar radius R* from (Teff, log g) and to derive stellar age, mass, and main-sequence lifetimes. The 8 Msun, 30 Msun, and 60 Msun main-sequence lifetimes (30 Myr, 6 Myr, 3 Myr respectively) are used throughout the ejection rate calculations in Section 7.",
+      "source_refs": [
+        {
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 481,
+          "end_line": 483,
+          "context": "we make a point-estimate of the stellar radius R_* based on the rotating evolutionary tracks published by Ekström+2012."
+        }
+      ],
+      "evidence": "We make a point-estimate of the stellar radius R_* based on the rotating evolutionary tracks published by Ekström+2012. The main-sequence lifetime of 8-, 30-, 60-Msun stars are 30 Myr, 6 Myr, and 3 Myr, respectively.",
+      "comments": "Used extensively: for spectroscopic distance estimation (R* from evolutionary tracks + SED), for age and mass estimates, for main-sequence lifetimes in ejection rate calculations."
+    },
+    {
+      "id": "resource-009",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "APASS DR9 (Henden et al. 2016, VizieR Online Data Catalog, 2336): B and V photometry for LAMOST-HVS1. Combined with 2MASS JHKs photometry and the FASTWIND synthetic SED to estimate spectroscopic distance d_spec via the Bayesian distance PDF method described in Section 3.2.",
+      "source_refs": [
+        {
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 485,
+          "end_line": 497,
+          "context": "we calculate the PDF of the distance given the observed optical and IR photometry (B and V from APASS DR9; J, H, K_s from 2MASS; all listed in table 1 of Hattori+2018b)."
+        }
+      ],
+      "evidence": "B and V from APASS DR9; J, H, K_s from 2MASS; all of these quantities are listed in table 1 of Hattori+2018b.",
+      "comments": "APASS DR9 optical photometry and 2MASS IR photometry are the observational inputs for the spectroscopic distance estimation. The adopted color excess is E(B-V)=0.085 with R_V=3.1 (Cardelli+1989 extinction law)."
+    },
+    {
+      "id": "resource-010",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "2MASS (Cutri et al. 2003, VizieR Online Data Catalog, 2246): J, H, Ks infrared photometry for LAMOST-HVS1. Used together with APASS DR9 optical photometry for spectroscopic distance estimation.",
+      "source_refs": [
+        {
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 487,
+          "end_line": 489,
+          "context": "J, H, K_s from 2MASS (Cutri+2003)."
+        }
+      ],
+      "evidence": "J, H, K_s from 2MASS (Cutri+2003).",
+      "comments": "See also resource-009 (APASS DR9). The combined optical+IR SED fitting yields d_spec = 19.1 kpc (prior) which is refined to d = 13.3 kpc by the orbital analysis."
+    },
+    {
+      "id": "resource-011",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Luck & Lambert (2011, AJ, 142, 136) Cepheid abundance catalog. Used to test whether the Si excess relative to Mg in LAMOST-HVS1 (A(Si)-A(Mg)=0.18±0.10) is anomalous. Out of 231 Cepheids with both [Si/H] and [Mg/H], 10 show A(Si)-A(Mg)>0.18 and 3 show >0.30, suggesting HVS1's Si excess is not exceptionally high.",
+      "source_refs": [
+        {
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 1330,
+          "end_line": 1343,
+          "context": "we used 231 Cepheids in Luck+2011 for which both [Si/H] and [Mg/H] are available. Among these 231 Cepheids, we found 10 stars that show A(Si)-A(Mg) > 0.18, and 3 stars with A(Si)-A(Mg) > 0.30."
+        }
+      ],
+      "evidence": "We used 231 Cepheids in Luck+2011 for which both [Si/H] and [Mg/H] are available. We found 10 stars that show A(Si)-A(Mg)>0.18.",
+      "comments": "This is a supporting reference used to demonstrate that HVS1's Si/Mg ratio is within the range of Galactic disk Cepheids, not an anomaly that would challenge the disk-origin interpretation."
+    },
+    {
+      "id": "resource-012",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Portegies Zwart, McMillan & Gieles (2010, ARA&A, 48, 431) review of young massive clusters (YMCs). Table 2 and Figure 3 provide the catalog of known YMCs with masses and ages, used to check whether any known YMC could be the natal cluster of HVS1. Only RSGC1-3 are marginally consistent in position but are too young (12-18 Myr vs. 33 Myr flight time) and have sub-Solar abundances inconsistent with HVS1's super-Solar metallicity. The cluster survival timescale formula (Eq. 19) and cluster mass function assumptions are also taken from this reference.",
+      "source_refs": [
+        {
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 1252,
+          "end_line": 1261,
+          "context": "According to equation (19) of PortegiesZwart+2010ARAA, the cluster can survive for ~1 Gyr. As shown in Figure 7(a), only three YMCs (RSGC1, RSGC2, and RSGC3) are marginally consistent."
+        }
+      ],
+      "evidence": "According to equation (19) of PortegiesZwart+2010ARAA... only three young massive clusters are marginally consistent with the region where the natal cluster of HVS1 can be located.",
+      "comments": "This reference provides both the YMC observational catalog and the theoretical framework (cluster mass function, survival timescales) used in the ejection rate calculations. The authors conclude that none of the known YMCs can be the natal cluster, implying an undiscovered YMC near the Norma spiral arm."
+    }
+  ]
+}

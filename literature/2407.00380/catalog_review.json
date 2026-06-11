@@ -1,0 +1,223 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2407.00380",
+    "title": "Particle acceleration at the bow shock of runaway star LS 2355: non-thermal radio emission but no $\\gamma$-ray counterpart",
+    "month": "2024-06",
+    "source_note_json": "notes/2024/2024-06/2024-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2407.00380",
+      "pdf": "https://arxiv.org/pdf/2407.00380"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2407.00380",
+    "audit_path": "literature/2407.00380/audit.json",
+    "source_dir": "literature/2407.00380/arxiv_source",
+    "tex_root": "literature/2407.00380/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:34:10",
+    "reviewer": "agent",
+    "summary": "This paper presents a multi-wavelength study of the bow shock driven by the runaway massive star LS 2355, reporting the third spectrally-confirmed non-thermal radio bow shock counterpart. The paper contains two internal LaTeX tables: a schema description of the four radio surveys used (EMU, RACS-low, RACS-mid, SUMSS) and a parameter table summarizing the observed and derived properties of LS 2355 and its bow shock. External resources include the SUMSS mosaic repository, CSIRO ASKAP Science Data Archive (CASDA), the Fermi-LAT 14-year source catalogue, the NASA/IPAC Infrared Science Archive (ALLWISE), and a GitHub reproduction repository with Jupyter notebooks and FITS images."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-surveys",
+      "kind": "latex_table",
+      "asset_type": "schema_description",
+      "role_in_paper": "Summarizes the observational properties (frequency, bandwidth, RMS sensitivity, beam size, position angle) of the four radio surveys consulted in this work: EMU, RACS-low, RACS-mid, and SUMSS.",
+      "source_refs": [
+        {
+          "path": "literature/2407.00380/arxiv_source/main.tex",
+          "start_line": 277,
+          "end_line": 295,
+          "caption": "Observational details of the four consulted radio surveys in this work. See Section \\ref{sec:data} for details and references.",
+          "label": "tab:surveys"
+        }
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "meaning": "Survey identifier or parameter category label",
+          "unit_text": "",
+          "source_of_definition": "table structure",
+          "confidence": 0.5
+        },
+        {
+          "name": "Quantity [unit]",
+          "meaning": "Physical quantity and its units",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EMU",
+          "meaning": "Value for the Evolutionary Map of the Universe (EMU) survey",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RACS | Low",
+          "meaning": "Value for the Rapid ASKAP Continuum Survey (RACS) low-frequency (UHF) band",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SUMSS | Mid",
+          "meaning": "Value for the Rapid ASKAP Continuum Survey (RACS) mid-frequency (L) band",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_006",
+          "meaning": "Value for the Sydney University Molonglo Sky Survey (SUMSS)",
+          "unit_text": "",
+          "source_of_definition": "table structure",
+          "confidence": 0.5
+        }
+      ],
+      "evidence": "Observational details of the four consulted radio surveys in this work.",
+      "comments": "The first column contains parameter names (Frequency, Bandwidth, RMS, Major beam, Minor beam, BPA); columns 3-6 contain the corresponding values for each survey."
+    },
+    {
+      "id": "table-tab-input",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Lists the parameters of LS 2355 and its bow shock, either observed or derived in this work, together with the data source underlying each measurement. These parameters are used as input for the modelling calculations in the Discussion section.",
+      "source_refs": [
+        {
+          "path": "literature/2407.00380/arxiv_source/main.tex",
+          "start_line": 297,
+          "end_line": 333,
+          "caption": "The parameters of LS 2355 and its bow shock, observed or derived in this work and used in the calculations in Section \\ref{sec:discussion}. The final column notes what data source underlies the measurement, including the region definition, if relevant.",
+          "label": "tab:input"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name or symbol of the physical parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Quantity",
+          "meaning": "Description of the physical quantity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Numerical value of the parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Reference / dataset",
+          "meaning": "Data source or reference from which the measurement was obtained",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The parameters of LS 2355 and its bow shock, observed or derived in this work and used in the calculations in Section \\ref{sec:discussion}.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://www.astrop.physics.usyd.edu.au/mosaics/",
+      "local_path": "",
+      "description": "University of Sydney repository of SUMSS image mosaics, used to access the J1130M64 mosaic covering the LS 2355 field.",
+      "source_refs": [
+        {
+          "path": "literature/2407.00380/arxiv_source/main.tex",
+          "start_line": 185,
+          "end_line": 185,
+          "context": "we use the SUMSS image mosaic J1130M64, accessed via the University of Sydney repository of mosaics\\footnote{\\url{http://www.astrop.physics.usyd.edu.au/mosaics/}}."
+        }
+      ],
+      "evidence": "we use the SUMSS image mosaic J1130M64, accessed via the University of Sydney repository of mosaics\\footnote{\\url{http://www.astrop.physics.usyd.edu.au/mosaics/}}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://data.csiro.au/domain/casdaObservation",
+      "local_path": "",
+      "description": "CSIRO ASKAP Science Data Archive (CASDA), used to access RACS-low, RACS-mid, and EMU survey images of the LS 2355 field.",
+      "source_refs": [
+        {
+          "path": "literature/2407.00380/arxiv_source/main.tex",
+          "start_line": 187,
+          "end_line": 187,
+          "context": "we access the currently released UHF and L band images of the field surrounding LS 2355 from the CSIRO ASKAP Science Data Archive (CASDA)\\footnote{\\url{https://data.csiro.au/domain/casdaObservation}}."
+        }
+      ],
+      "evidence": "we access the currently released UHF and L band images of the field surrounding LS 2355 from the CSIRO ASKAP Science Data Archive (CASDA)\\footnote{\\url{https://data.csiro.au/domain/casdaObservation}}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://fermi.gsfc.nasa.gov/ssc/data/access/lat/14yr\\_catalog/",
+      "local_path": "",
+      "description": "Direct URL to the Fermi-LAT 14-year Source Catalogue 4FGL-DR4.",
+      "source_refs": [
+        {
+          "path": "literature/2407.00380/arxiv_source/main.tex",
+          "start_line": 191,
+          "end_line": 191,
+          "context": "namely its 14-year Source Catalogue 4FGL-DR4\\footnote{Accessed via \\url{https://fermi.gsfc.nasa.gov/ssc/data/access/lat/14yr_catalog/}.}"
+        }
+      ],
+      "evidence": "namely its 14-year Source Catalogue 4FGL-DR4\\footnote{Accessed via \\url{https://fermi.gsfc.nasa.gov/ssc/data/access/lat/14yr_catalog/}.}",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://doi.org/10.26131/IRSA153",
+      "local_path": "",
+      "description": "NASA/IPAC Infrared Science Archive (IRSA) ALLWISE program, used to access WISE Band 3 and Band 4 images of the LS 2355 field for infrared analysis of the bow shock dust emission.",
+      "source_refs": [
+        {
+          "path": "literature/2407.00380/arxiv_source/main.tex",
+          "start_line": 193,
+          "end_line": 193,
+          "context": "we use the NASA/IPAC Infrared Science Archive to access \\textit{WISE} observations of the field containing LS 2355 from the ALLWISE program\\footnote{\\url{https://doi.org/10.26131/IRSA153}}."
+        }
+      ],
+      "evidence": "we use the NASA/IPAC Infrared Science Archive to access \\textit{WISE} observations of the field containing LS 2355 from the ALLWISE program\\footnote{\\url{https://doi.org/10.26131/IRSA153}}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://github.com/jvandeneijnden/LS2355",
+      "local_path": "",
+      "description": "GitHub reproduction repository containing Jupyter notebooks performing all calculations and reproducing all figures in the paper, along with FITS images from SUMSS, RACS, and WISE.",
+      "source_refs": [
+        {
+          "path": "literature/2407.00380/arxiv_source/main.tex",
+          "start_line": 417,
+          "end_line": 417,
+          "context": "A \\textsc{GitHub} reproduction repository for all analysis and calculations in this paper is available at \\url{https://github.com/jvandeneijnden/LS2355}."
+        }
+      ],
+      "evidence": "A \\textsc{GitHub} reproduction repository for all analysis and calculations in this paper is available at \\url{https://github.com/jvandeneijnden/LS2355}.",
+      "comments": ""
+    }
+  ]
+}

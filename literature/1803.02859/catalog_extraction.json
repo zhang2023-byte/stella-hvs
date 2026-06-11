@@ -1,0 +1,856 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:31:05",
+  "paper": {
+    "arxiv_id": "1803.02859",
+    "title": "A Runaway Yellow Supergiant Star in the Small Magellanic Cloud",
+    "month": "2018-03"
+  },
+  "review": {
+    "path": "literature/1803.02859/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083105",
+    "started_at": "2026-06-07T08:31:05",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1803.02859",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-obs",
+      "internal_table_id": "table-tab-obs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1803.02859/arxiv_source/ms.tex",
+        "start_line": 167,
+        "end_line": 181,
+        "caption": "\\label{tab:obs} Observations",
+        "label": "tab:obs"
+      },
+      "source_path": "literature/1803.02859/arxiv_source/ms.tex",
+      "excerpt_path": "literature/1803.02859/catalog_sources/table-tab-obs/excerpt.tex",
+      "sha256": "dc7f856e5494ee4249fae01a0a2101c2c8fa3fbaa850504b920df8040461556a",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-tab-stds",
+      "internal_table_id": "table-tab-stds",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1803.02859/arxiv_source/ms.tex",
+        "start_line": 183,
+        "end_line": 199,
+        "caption": "\\label{tab:stds} Radial Velocities of Classification Standards",
+        "label": "tab:stds"
+      },
+      "source_path": "literature/1803.02859/arxiv_source/ms.tex",
+      "excerpt_path": "literature/1803.02859/catalog_sources/table-tab-stds/excerpt.tex",
+      "sha256": "d878fd7f51b558597c22102c63bd50868cb2b6cc2142dcb204fb535852c61af7",
+      "line_count": 17,
+      "error": ""
+    },
+    {
+      "id": "table-tab-allobs",
+      "internal_table_id": "table-tab-allobs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1803.02859/arxiv_source/ms.tex",
+        "start_line": 201,
+        "end_line": 1240,
+        "caption": "\\label{tab:allobs} Properties of Observed Targets",
+        "label": "tab:allobs"
+      },
+      "source_path": "literature/1803.02859/arxiv_source/ms.tex",
+      "excerpt_path": "literature/1803.02859/catalog_sources/table-tab-allobs/excerpt.tex",
+      "sha256": "4a80df9fbae2436c902a9d5540a7a5f55bb825f890aa120ba2eec72dfd1ea268",
+      "line_count": 1040,
+      "error": ""
+    },
+    {
+      "id": "table-tab-temps",
+      "internal_table_id": "table-tab-temps",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1803.02859/arxiv_source/ms.tex",
+        "start_line": 1243,
+        "end_line": 1272,
+        "caption": "\\label{tab:temps} Effective Temperatures Derived from ATLAS9 Models",
+        "label": "tab:temps"
+      },
+      "source_path": "literature/1803.02859/arxiv_source/ms.tex",
+      "excerpt_path": "literature/1803.02859/catalog_sources/table-tab-temps/excerpt.tex",
+      "sha256": "6c8324773e91521a62fc1d2d05f64042201d9d9032e359b0f4cf48f956b5a9ba",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-tab-physprop",
+      "internal_table_id": "table-tab-physprop",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1803.02859/arxiv_source/ms.tex",
+        "start_line": 1274,
+        "end_line": 1291,
+        "caption": "\\label{tab:physprop} Physical Properties",
+        "label": "tab:physprop"
+      },
+      "source_path": "literature/1803.02859/arxiv_source/ms.tex",
+      "excerpt_path": "literature/1803.02859/catalog_sources/table-tab-physprop/excerpt.tex",
+      "sha256": "ee4801b8e798ca515ec7557afa0fb0a391988de57a016e338221a4eb6ce250b5",
+      "line_count": 18,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-obs",
+      "internal_table_id": "table-tab-obs",
+      "status": "success",
+      "ecsv_path": "literature/1803.02859/catalog_tables/table-tab-obs.ecsv",
+      "caption": "\\label{tab:obs} Observations",
+      "label": "tab:obs",
+      "row_count": 4,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Date",
+          "HJD",
+          "Telescope/Instrument",
+          "Wavelength",
+          "Resolution",
+          "Exp. time (s)",
+          "HRV (km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Date",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "HJD",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Telescope/Instrument",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Wavelength",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Resolution",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Exp. time (s)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "HRV (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_pjwflyu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1803.02859/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_pjwflyu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1803.02859/catalog_sources/table-tab-obs/wrapped.tex",
+            "html": "literature/1803.02859/catalog_sources/table-tab-obs/latexml.html",
+            "stdout": "literature/1803.02859/catalog_sources/table-tab-obs/latexml.stdout.txt",
+            "stderr": "literature/1803.02859/catalog_sources/table-tab-obs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "dc7f856e5494ee4249fae01a0a2101c2c8fa3fbaa850504b920df8040461556a"
+    },
+    {
+      "id": "table-tab-stds",
+      "internal_table_id": "table-tab-stds",
+      "status": "success",
+      "ecsv_path": "literature/1803.02859/catalog_tables/table-tab-stds.ecsv",
+      "caption": "\\label{tab:stds} Radial Velocities of Classification Standards",
+      "label": "tab:stds",
+      "row_count": 5,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "Type",
+          "MagE*",
+          "Published*",
+          "Ref",
+          "(MagE - Published)*"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "MagE*",
+          "unit_text": "MagE*",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Published*",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Ref",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "(MagE - Published)*",
+          "unit_text": "(MagE - Published)*",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpe87wyzg9/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1803.02859/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpe87wyzg9/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1803.02859/catalog_sources/table-tab-stds/wrapped.tex",
+            "html": "literature/1803.02859/catalog_sources/table-tab-stds/latexml.html",
+            "stdout": "literature/1803.02859/catalog_sources/table-tab-stds/latexml.stdout.txt",
+            "stderr": "literature/1803.02859/catalog_sources/table-tab-stds/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d878fd7f51b558597c22102c63bd50868cb2b6cc2142dcb204fb535852c61af7"
+    },
+    {
+      "id": "table-tab-allobs",
+      "internal_table_id": "table-tab-allobs",
+      "status": "success",
+      "ecsv_path": "literature/1803.02859/catalog_tables/table-tab-allobs.ecsv",
+      "caption": "\\label{tab:allobs} Properties of Observed Targets",
+      "label": "tab:allobs",
+      "row_count": 492,
+      "column_count": 15,
+      "environment": "deluxetable",
+      "header_rows": [
+        [
+          "2MASS",
+          "\\alpha(J2000)",
+          "\\delta(J2000)",
+          "K",
+          "J-K",
+          "V",
+          "B-V",
+          "\\colheadRef.\\tablenotemarkb",
+          "Vel",
+          "\\colheadr\\tablenotemarkc",
+          "\\colheadCategory\\tablenotemarkd",
+          "Hydra",
+          "Literature",
+          "\\colheadRef.\\tablenotemarke",
+          "\\colheadComments\\tablenotemarkf"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "\\colhead(km s^-1)",
+          "",
+          "",
+          "Class",
+          "Class",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "2MASS",
+          "unit_text": "2MASS",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha(J2000)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta(J2000)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "K",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "J-K",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "B-V",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\colheadRef.\\tablenotemarkb",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Vel | \\colhead(km s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\colheadr\\tablenotemarkc",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\colheadCategory\\tablenotemarkd",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "Hydra | Class",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "Literature | Class",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "\\colheadRef.\\tablenotemarke",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "\\colheadComments\\tablenotemarkf",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\alpha",
+        "unresolved LaTeX macro preserved: \\colhead",
+        "unresolved LaTeX macro preserved: \\colheadCategory",
+        "unresolved LaTeX macro preserved: \\colheadComments",
+        "unresolved LaTeX macro preserved: \\colheadRef",
+        "unresolved LaTeX macro preserved: \\colheadr",
+        "unresolved LaTeX macro preserved: \\delta",
+        "unresolved LaTeX macro preserved: \\tablenotemarkb",
+        "unresolved LaTeX macro preserved: \\tablenotemarkc",
+        "unresolved LaTeX macro preserved: \\tablenotemarkd",
+        "unresolved LaTeX macro preserved: \\tablenotemarke",
+        "unresolved LaTeX macro preserved: \\tablenotemarkf"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp82sub7_a/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1803.02859/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp82sub7_a/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/1803.02859/catalog_sources/table-tab-allobs/wrapped.tex",
+            "html": "literature/1803.02859/catalog_sources/table-tab-allobs/latexml.html",
+            "stdout": "literature/1803.02859/catalog_sources/table-tab-allobs/latexml.stdout.txt",
+            "stderr": "literature/1803.02859/catalog_sources/table-tab-allobs/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsdmplh2a/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsdmplh2a/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/1803.02859/catalog_sources/table-tab-allobs/wrapped.tex",
+            "html": "literature/1803.02859/catalog_sources/table-tab-allobs/pandoc.html",
+            "stdout": "literature/1803.02859/catalog_sources/table-tab-allobs/pandoc.stdout.txt",
+            "stderr": "literature/1803.02859/catalog_sources/table-tab-allobs/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "4a80df9fbae2436c902a9d5540a7a5f55bb825f890aa120ba2eec72dfd1ea268"
+    },
+    {
+      "id": "table-tab-temps",
+      "internal_table_id": "table-tab-temps",
+      "status": "success",
+      "ecsv_path": "literature/1803.02859/catalog_tables/table-tab-temps.ecsv",
+      "caption": "\\label{tab:temps} Effective Temperatures Derived from ATLAS9 Models",
+      "label": "tab:temps",
+      "row_count": 5,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "",
+          "E(B-V)=0.04",
+          "",
+          "",
+          "E(B-V)=0.09",
+          "",
+          "",
+          "E(B-V)=0.14",
+          ""
+        ],
+        [
+          "Color",
+          "Observed",
+          "Intrinsic",
+          "T_\\rm eff (K)",
+          "",
+          "Intrinsic",
+          "T_\\rm eff (K)",
+          "",
+          "Intrinsic",
+          "T_\\rm eff (K)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Color",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Observed",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "E(B-V)=0.04 | Intrinsic",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "T_\\rm eff (K)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "E(B-V)=0.09 | Intrinsic",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "T_\\rm eff (K)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "E(B-V)=0.14 | Intrinsic",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "T_\\rm eff (K)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzmqgylo8/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1803.02859/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzmqgylo8/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1803.02859/catalog_sources/table-tab-temps/wrapped.tex",
+            "html": "literature/1803.02859/catalog_sources/table-tab-temps/latexml.html",
+            "stdout": "literature/1803.02859/catalog_sources/table-tab-temps/latexml.stdout.txt",
+            "stderr": "literature/1803.02859/catalog_sources/table-tab-temps/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6c8324773e91521a62fc1d2d05f64042201d9d9032e359b0f4cf48f956b5a9ba"
+    },
+    {
+      "id": "table-tab-physprop",
+      "internal_table_id": "table-tab-physprop",
+      "status": "success",
+      "ecsv_path": "literature/1803.02859/catalog_tables/table-tab-physprop.ecsv",
+      "caption": "\\label{tab:physprop} Physical Properties",
+      "label": "tab:physprop",
+      "row_count": 5,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value"
+        ],
+        [
+          "Mass",
+          "9 M ⊙"
+        ],
+        [
+          "Age",
+          "30 Myr"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter | Mass | Age",
+          "unit_text": "Mass",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value | 9 M ⊙ | 30 Myr",
+          "unit_text": "30 Myr",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7koahj0x/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1803.02859/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7koahj0x/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1803.02859/catalog_sources/table-tab-physprop/wrapped.tex",
+            "html": "literature/1803.02859/catalog_sources/table-tab-physprop/latexml.html",
+            "stdout": "literature/1803.02859/catalog_sources/table-tab-physprop/latexml.stdout.txt",
+            "stderr": "literature/1803.02859/catalog_sources/table-tab-physprop/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ee4801b8e798ca515ec7557afa0fb0a391988de57a016e338221a4eb6ce250b5"
+    }
+  ]
+}

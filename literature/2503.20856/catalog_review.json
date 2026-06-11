@@ -1,0 +1,883 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2503.20856",
+    "title": "Spectroscopic Follow-Up of Candidate Runaway Stars",
+    "month": "2025-03",
+    "source_note_json": "notes/2025/2025-03/2025-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2503.20856",
+      "pdf": "https://arxiv.org/pdf/2503.20856"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2503.20856",
+    "audit_path": "literature/2503.20856/audit.json",
+    "source_dir": "literature/2503.20856/arxiv_source",
+    "tex_root": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T12:42:23",
+    "reviewer": "agent",
+    "summary": "This paper presents spectroscopic follow-up observations of candidate runaway stars. It contains nine internal tables: a sample summary with Gaia astrometry and spectral types; radial velocity observation logs for single-lined and double-lined objects; a summary of RV information with binary flags; orbital elements and derived properties for SB1 and SB2 systems; a table of \"Magnificent Seven\" neutron stars used for traceback calculations; and Gaia DR3 non-single star model parameters for comparison. Multiple tables are noted as available in machine-readable form. External resources include generic database acknowledgements (Gaia, SIMBAD, VizieR, WDS) that were removed, and a Gaia DR2 mission technical document URL retained."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-sample",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Presents the basic astrometric, photometric, and kinematic properties of the target sample observed spectroscopically.",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 249,
+          "end_line": 301,
+          "caption": "Sample of Targets. \\label{tab:sample}",
+          "label": "tab:sample"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Target name (HIP designation)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia ID",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colhead\\pi_\\rm DR3 | (mas)",
+          "meaning": "Gaia DR3 parallax",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\Delta\\pi | (mas)",
+          "meaning": "Additive zero-point parallax correction",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colhead\\mu_\\alpha\\cos\\delta | \\colhead(mas yr^-1)",
+          "meaning": "Proper motion in right ascension (cos delta corrected)",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colhead\\mu_\\delta | \\colhead(mas yr^-1)",
+          "meaning": "Proper motion in declination",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RUWE",
+          "meaning": "Renormalised Unit Weight Error from Gaia DR3",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G | (mag)",
+          "meaning": "Gaia DR3 G-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpT",
+          "meaning": "Spectral type from Tetzlaff+2011 or SIMBAD",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadV_\\rm LSR | \\colhead(km s^-1)",
+          "meaning": "Space velocity relative to the Local Standard of Rest",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Sample of Targets. \\label{tab:sample}",
+      "comments": "Table is noted as available in its entirety in machine-readable form."
+    },
+    {
+      "id": "table-tab-rvs1",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Lists individual radial velocity measurements for single-lined spectroscopic objects.",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 403,
+          "end_line": 425,
+          "caption": "Radial Velocities for the Single-lined Objects. \\label{tab:rvs1}",
+          "label": "tab:rvs1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Target name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "BJD | (2,400,000+)",
+          "meaning": "Barycentric Julian Date of observation",
+          "unit_text": "2,400,000+",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV | (\\kms)",
+          "meaning": "Radial velocity measurement",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma | (\\kms)",
+          "meaning": "Internal uncertainty on the radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Radial Velocities for the Single-lined Objects. \\label{tab:rvs1}",
+      "comments": "Table is noted as available in its entirety in machine-readable form."
+    },
+    {
+      "id": "table-tab-rvs2",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Lists individual radial velocity measurements for double-lined spectroscopic binaries.",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 431,
+          "end_line": 457,
+          "caption": "Radial Velocities for the Double-lined Objects. \\label{tab:rvs2}",
+          "label": "tab:rvs2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Target name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "BJD | (2,400,000+)",
+          "meaning": "Barycentric Julian Date of observation",
+          "unit_text": "2,400,000+",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_1 | (\\kms)",
+          "meaning": "Radial velocity of the primary component",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_2 | (\\kms)",
+          "meaning": "Radial velocity of the secondary component",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_1 | (\\kms)",
+          "meaning": "Internal uncertainty on the primary RV",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_2 | (\\kms)",
+          "meaning": "Internal uncertainty on the secondary RV",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Radial Velocities for the Double-lined Objects. \\label{tab:rvs2}",
+      "comments": "Table is noted as available in its entirety in machine-readable form."
+    },
+    {
+      "id": "table-tab-rvsummary",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Summarizes the radial-velocity information for the full sample, including binary classification flags used for selecting objects for orbit determination.",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 479,
+          "end_line": 526,
+          "caption": "Summary of Radial-Velocity Information. \\label{tab:rvsummary}",
+          "label": "tab:rvsummary"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Target name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Time Span | (days)",
+          "meaning": "Time span covered by the observations",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadN_\\rm obs",
+          "meaning": "Number of RV observations",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mean RV | (\\kms)",
+          "meaning": "Mean radial velocity (centre-of-mass for binaries with orbits)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Error | (\\kms)",
+          "meaning": "Uncertainty on the mean RV",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Notes",
+          "meaning": "Notes flagging binarity, variability, or visual companions",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Summary of Radial-Velocity Information. \\label{tab:rvsummary}",
+      "comments": "Table is noted as available in its entirety in machine-readable form."
+    },
+    {
+      "id": "table-tab-sb1",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Presents orbital elements and derived physical properties for single-lined spectroscopic binaries in the sample.",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 564,
+          "end_line": 618,
+          "caption": "Orbital Elements and Derived Properties for the Single-lined Binaries in the Sample. \\label{tab:sb1}",
+          "label": "tab:sb1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Target name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P | (days)",
+          "meaning": "Orbital period",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\gamma | (\\kms)",
+          "meaning": "Systemic (centre-of-mass) velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K_1 | (\\kms)",
+          "meaning": "Semi-amplitude of the primary radial velocity curve",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "e",
+          "meaning": "Orbital eccentricity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\omega_1 | (deg)",
+          "meaning": "Argument of periastron for the primary",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_0 (BJD) | (2,400,000+)",
+          "meaning": "Reference time of periastron passage (eccentric) or maximum primary velocity (circular)",
+          "unit_text": "BJD (2,400,000+)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "f(M) | \\colhead(M_\\sun)",
+          "meaning": "Binary mass function",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_2 \\sin i | \\colhead(M_\\sun)",
+          "meaning": "Coefficient of the minimum secondary mass (M2 sin i)",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "a_1 \\sin i | (10^6 km)",
+          "meaning": "Projected semi-major axis of the primary orbit",
+          "unit_text": "10^6 km",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma (\\kms) | \\colheadN_\\rm obs",
+          "meaning": "RMS residual velocity and number of observations",
+          "unit_text": "km s^-1; N_obs",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "F",
+          "meaning": "Multiplicative scale factor applied to internal errors to achieve reduced chi^2 near unity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Orbital Elements and Derived Properties for the Single-lined Binaries in the Sample. \\label{tab:sb1}",
+      "comments": "Table is noted as available in its entirety in machine-readable form."
+    },
+    {
+      "id": "table-tab-sb2a",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Presents orbital elements for double-lined spectroscopic binaries in the sample.",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 645,
+          "end_line": 694,
+          "caption": "Orbital Elements for the Double-lined Binaries in the Sample. \\label{tab:sb2a}",
+          "label": "tab:sb2a"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Target name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P | (days)",
+          "meaning": "Orbital period",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\gamma | (\\kms)",
+          "meaning": "Systemic (centre-of-mass) velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K_1 | (\\kms)",
+          "meaning": "Semi-amplitude of the primary radial velocity curve",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K_2 | (\\kms)",
+          "meaning": "Semi-amplitude of the secondary radial velocity curve",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "e",
+          "meaning": "Orbital eccentricity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\omega_1 | (deg)",
+          "meaning": "Argument of periastron for the primary",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_0 (BJD) | (2,400,000+)",
+          "meaning": "Reference time of periastron passage or maximum primary velocity",
+          "unit_text": "BJD (2,400,000+)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colhead\\Delta \\rm RV | (\\kms)",
+          "meaning": "Velocity zero-point offset between primary and secondary",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\ell_2/\\ell_1",
+          "meaning": "Flux ratio of secondary to primary at ~5187 Angstrom",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Orbital Elements for the Double-lined Binaries in the Sample. \\label{tab:sb2a}",
+      "comments": "Table is noted as available in its entirety in machine-readable form."
+    },
+    {
+      "id": "table-tab-sb2b",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Presents derived physical properties for double-lined spectroscopic binaries, including minimum masses and projected orbital sizes.",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 700,
+          "end_line": 749,
+          "caption": "Derived Properties for the Double-lined Binaries in the Sample. \\label{tab:sb2b}",
+          "label": "tab:sb2b"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Target name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_1 \\sin^3 i | \\colhead(M_\\sun)",
+          "meaning": "Minimum primary mass (M1 sin^3 i)",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_2 \\sin^3 i | \\colhead(M_\\sun)",
+          "meaning": "Minimum secondary mass (M2 sin^3 i)",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "a_1 \\sin i | (10^6 km)",
+          "meaning": "Projected semi-major axis of the primary",
+          "unit_text": "10^6 km",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "a_2 \\sin i | (10^6 km)",
+          "meaning": "Projected semi-major axis of the secondary",
+          "unit_text": "10^6 km",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheada_\\rm tot \\sin i | \\colhead(R_\\sun)",
+          "meaning": "Projected total semi-major axis (sum of a1 and a2)",
+          "unit_text": "R_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "q",
+          "meaning": "Mass ratio q = M2/M1",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_1 (\\kms) | N_1",
+          "meaning": "RMS residual velocity for primary and number of observations",
+          "unit_text": "km s^-1; N_obs",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_2 (\\kms) | N_2",
+          "meaning": "RMS residual velocity for secondary and number of observations",
+          "unit_text": "km s^-1; N_obs",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "F_1 | F_2",
+          "meaning": "Multiplicative scale factors for internal errors (primary and secondary)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Derived Properties for the Double-lined Binaries in the Sample. \\label{tab:sb2b}",
+      "comments": "Table is noted as available in its entirety in machine-readable form."
+    },
+    {
+      "id": "table-tab-magseven",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Lists astrometric properties of a subset of \"Magnificent Seven\" neutron stars used for traceback origin calculations with the runaway star sample.",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 957,
+          "end_line": 1003,
+          "caption": "Subset of `Magnificent Seven' Neutron Stars Examined Here. \\label{tab:magseven}",
+          "label": "tab:magseven"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Neutron star name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A. | (hh:mm:ss)",
+          "meaning": "Right ascension (J2000)",
+          "unit_text": "hh:mm:ss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec. | (dd:mm:ss)",
+          "meaning": "Declination (J2000)",
+          "unit_text": "dd:mm:ss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Distance | (pc)",
+          "meaning": "Distance estimate",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colhead\\mu_\\alpha \\cos\\delta | \\colhead(mas yr^-1)",
+          "meaning": "Proper motion in right ascension (cos delta corrected)",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colhead\\mu_\\delta | \\colhead(mas yr^-1)",
+          "meaning": "Proper motion in declination",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "References",
+          "meaning": "Bibliographic references for the listed values",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Subset of `Magnificent Seven' Neutron Stars Examined Here. \\label{tab:magseven}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-gaiaelem",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Collects Gaia DR3 non-single star model orbital parameters for the targets, for comparison with the authors' own spectroscopic orbits.",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 1443,
+          "end_line": 1546,
+          "caption": "Gaia DR3 Non-Single Star Models for our Targets. \\label{tab:gaiaelem}",
+          "label": "tab:gaiaelem"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Target name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia model",
+          "meaning": "Gaia DR3 non-single star model type (e.g. AstroSpectroSB1, Orbital, Acceleration)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "CfA",
+          "meaning": "CfA classification based on own RVs (SB1, SB2, VAR, etc.)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P | (day)",
+          "meaning": "Orbital period from Gaia model",
+          "unit_text": "day",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadT_\\rm peri | (BJD)",
+          "meaning": "Time of periastron passage",
+          "unit_text": "BJD",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "e",
+          "meaning": "Orbital eccentricity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K_1 | (\\kms)",
+          "meaning": "Semi-amplitude of the primary RV curve",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\gamma | (\\kms)",
+          "meaning": "Systemic velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheada_\\rm phot | (mas)",
+          "meaning": "Angular semi-major axis of the photocentre",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "i | (deg)",
+          "meaning": "Orbital inclination",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\omega_2 | (deg)",
+          "meaning": "Argument of periastron for the secondary in the astrometric orbit",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\Omega | (deg)",
+          "meaning": "Longitude of the ascending node",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\omega_1 | (deg)",
+          "meaning": "Argument of periastron for the primary from RVs",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Gaia DR3 Non-Single Star Models for our Targets. \\label{tab:gaiaelem}",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Machine-readable version of the full target sample table (Table 1).",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 300,
+          "end_line": 300,
+          "context": "beyond the range of applicability of the parallax adjustments\n  by \\cite{Lindegren:2021}, the correction $\\Delta\\pi$ is approximate.\n  (This table is available in its entirety in machine-readable form.)}\n\\end{deluxetable*}\n\\setlength{\\tabcolsep}{6pt}"
+        }
+      ],
+      "evidence": "beyond the range of applicability of the parallax adjustments\n  by \\cite{Lindegren:2021}, the correction $\\Delta\\pi$ is approximate.\n  (This table is available in its entirety in machine-readable form.)}\n\\end{deluxetable*}\n\\setlength{\\tabcolsep}{6pt}",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Machine-readable version of the single-lined object radial velocity table (Table 2).",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 424,
+          "end_line": 424,
+          "context": "HIP001008  &  56652.6610  &  $-$16.67  &  0.16 \n\\enddata\n\\tablecomments{(This table is available in its entirety in machine-readable form.)}\n\\end{deluxetable}\n\\setlength{\\tabcolsep}{6pt}"
+        }
+      ],
+      "evidence": "HIP001008  &  56652.6610  &  $-$16.67  &  0.16 \n\\enddata\n\\tablecomments{(This table is available in its entirety in machine-readable form.)}\n\\end{deluxetable}\n\\setlength{\\tabcolsep}{6pt}",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Machine-readable version of the double-lined object radial velocity table (Table 3).",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 456,
+          "end_line": 456,
+          "context": "HIP012297  &  56652.6923  &  $-$20.66     &  \\phs19.48     &  0.79  &  \\phn6.03 \n\\enddata\n\\tablecomments{(This table is available in its entirety in machine-readable form.)}\n\\end{deluxetable}\n\\setlength{\\tabcolsep}{6pt}"
+        }
+      ],
+      "evidence": "HIP012297  &  56652.6923  &  $-$20.66     &  \\phs19.48     &  0.79  &  \\phn6.03 \n\\enddata\n\\tablecomments{(This table is available in its entirety in machine-readable form.)}\n\\end{deluxetable}\n\\setlength{\\tabcolsep}{6pt}",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Machine-readable version of the radial velocity summary table (Table 4).",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 524,
+          "end_line": 524,
+          "context": "as `SB2*'.\n  HIP069848 is a $\\delta$~Sct star (see Appendix~A).\n  (This table is available in its entirety in machine-readable form)}\n\n\\end{deluxetable}"
+        }
+      ],
+      "evidence": "as `SB2*'.\n  HIP069848 is a $\\delta$~Sct star (see Appendix~A).\n  (This table is available in its entirety in machine-readable form)}\n\n\\end{deluxetable}",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Machine-readable version of the single-lined binary orbital elements table (Table 5).",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 616,
+          "end_line": 616,
+          "context": "multiplicative scale factor applied to the internal velocity errors\n  in order to reach reduced $\\chi^2$ values near unity.  (This\n  table is available in its entirety in machine-readable form.)}\n\n\\end{deluxetable*}"
+        }
+      ],
+      "evidence": "multiplicative scale factor applied to the internal velocity errors\n  in order to reach reduced $\\chi^2$ values near unity.  (This\n  table is available in its entirety in machine-readable form.)}\n\n\\end{deluxetable*}",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Machine-readable version of the double-lined binary orbital elements table (Table 6).",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 692,
+          "end_line": 692,
+          "context": "$\\ell_2/\\ell_1$ is the flux ratio at the mean wavelength of our\n  observations ($\\sim$5187~\\AA).\n  (This table is available in its entirety in machine-readable form.)}\n\n\\end{deluxetable*}"
+        }
+      ],
+      "evidence": "$\\ell_2/\\ell_1$ is the flux ratio at the mean wavelength of our\n  observations ($\\sim$5187~\\AA).\n  (This table is available in its entirety in machine-readable form.)}\n\n\\end{deluxetable*}",
+      "comments": ""
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Machine-readable version of the double-lined binary derived properties table (Table 7).",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 747,
+          "end_line": 747,
+          "context": "errors for the primary and secondary, in order to achieve reduced\n  $\\chi^2$ values of unity. (This table is available in its entirety\n  in machine-readable form.)}\n\n\\end{deluxetable*}"
+        }
+      ],
+      "evidence": "errors for the primary and secondary, in order to achieve reduced\n  $\\chi^2$ values of unity. (This table is available in its entirety\n  in machine-readable form.)}\n\n\\end{deluxetable*}",
+      "comments": ""
+    },
+    {
+      "id": "resource-012",
+      "kind": "external_url",
+      "url": "http://www.rssd.esa.int/doc_fetch.php?id=3757412",
+      "local_path": "",
+      "description": "Gaia DR2 mission document GAIA-C3-TN-LU-124 on re-normalising the astrometric chi-square.",
+      "source_refs": [
+        {
+          "path": "literature/2503.20856/arxiv_source/ms_arxiv_corr.tex",
+          "start_line": 1300,
+          "end_line": 1300,
+          "context": "Re-normalising the astrometric chi-square in Gaia DR2, Mission\nDocument GAIA-C3-TN-LU-124,\n\\url{http://www.rssd.esa.int/doc_fetch.php?id=3757412}\n\n\\bibitem[Lindegren et al.(2021)]{Lindegren:2021} Lindegren, L.,"
+        }
+      ],
+      "evidence": "Re-normalising the astrometric chi-square in Gaia DR2, Mission\nDocument GAIA-C3-TN-LU-124,\n\\url{http://www.rssd.esa.int/doc_fetch.php?id=3757412}\n\n\\bibitem[Lindegren et al.(2021)]{Lindegren:2021} Lindegren, L.,",
+      "comments": ""
+    }
+  ]
+}

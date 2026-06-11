@@ -1,0 +1,386 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:46:40",
+  "paper": {
+    "arxiv_id": "2106.00702",
+    "title": "RR Lyrae Stars In Stellar Streams with Gaia: The Escapers",
+    "month": "2021-06"
+  },
+  "review": {
+    "path": "literature/2106.00702/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084640",
+    "started_at": "2026-06-07T08:46:40",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2106.00702",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-RaDec1",
+      "internal_table_id": "table-RaDec1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2106.00702/arxiv_source/ms_onecolumn.tex",
+        "start_line": 246,
+        "end_line": 278,
+        "caption": "The Studied Globular Clusters",
+        "label": "GCTableSummary"
+      },
+      "source_path": "literature/2106.00702/arxiv_source/ms_onecolumn.tex",
+      "excerpt_path": "literature/2106.00702/catalog_sources/table-RaDec1/excerpt.tex",
+      "sha256": "8c9cedbc06d5dc6b4494d54804ecb323b3b6dbe27ae071599aff95ed6c2976ed",
+      "line_count": 33,
+      "error": ""
+    },
+    {
+      "id": "table-RaDec",
+      "internal_table_id": "table-RaDec",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2106.00702/arxiv_source/ms_onecolumn.tex",
+        "start_line": 644,
+        "end_line": 784,
+        "caption": "The Escapers: RRL Stars Originating from GCs",
+        "label": "TableEscapers"
+      },
+      "source_path": "literature/2106.00702/arxiv_source/ms_onecolumn.tex",
+      "excerpt_path": "literature/2106.00702/catalog_sources/table-RaDec/excerpt.tex",
+      "sha256": "95c540d15eadbd6235a48bc59571215c0c0eb60456b28950418701be34abe6d8",
+      "line_count": 141,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-RaDec1",
+      "internal_table_id": "table-RaDec1",
+      "status": "success",
+      "ecsv_path": "literature/2106.00702/catalog_tables/table-RaDec1.ecsv",
+      "caption": "The Studied Globular Clusters",
+      "label": "GCTableSummary",
+      "row_count": 7,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "GC",
+          "R.A. 1 1 1 Equatorial J2000.0 R.A. and Dec. are given in decimal degrees. (deg)",
+          "Dec. 1 (deg)",
+          "D GC 2 2 2 \\citet eugene2019 and \\citet harris1996. (kpc)",
+          "( \\mu_\\alpha , \\mu_\\delta ) 3 3 3 From \\citet eugene2019, not corrected for the solar reflex motion. mas.yr -1",
+          "err _(\\mu_\\alpha,\\mu_\\delta) 3 mas.yr -1",
+          "[Fe/H]",
+          "N RRL 4 4 4 Number of RRL stars that might have escaped from the assigned GC. See Table LABEL:TableEscapers for more info."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "GC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R.A. 1 1 1 Equatorial J2000.0 R.A. and Dec. are given in decimal degrees. (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec. 1 (deg)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "D GC 2 2 2 \\citet eugene2019 and \\citet harris1996. (kpc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "( \\mu_\\alpha , \\mu_\\delta ) 3 3 3 From \\citet eugene2019, not corrected for the solar reflex motion. mas.yr -1",
+          "unit_text": "( \\mu_\\alpha , \\mu_\\delta ) 3 3 3 From \\citet eugene2019, not corrected for the solar reflex motion. mas.yr -1",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "err _(\\mu_\\alpha,\\mu_\\delta) 3 mas.yr -1",
+          "unit_text": "err _(\\mu_\\alpha,\\mu_\\delta) 3 mas.yr -1",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "[Fe/H]",
+          "unit_text": "[Fe/H]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "N RRL 4 4 4 Number of RRL stars that might have escaped from the assigned GC. See Table LABEL:TableEscapers for more info.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptk1hdj_6/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2106.00702/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptk1hdj_6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2106.00702/catalog_sources/table-RaDec1/wrapped.tex",
+            "html": "literature/2106.00702/catalog_sources/table-RaDec1/latexml.html",
+            "stdout": "literature/2106.00702/catalog_sources/table-RaDec1/latexml.stdout.txt",
+            "stderr": "literature/2106.00702/catalog_sources/table-RaDec1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8c9cedbc06d5dc6b4494d54804ecb323b3b6dbe27ae071599aff95ed6c2976ed"
+    },
+    {
+      "id": "table-RaDec",
+      "internal_table_id": "table-RaDec",
+      "status": "success",
+      "ecsv_path": "literature/2106.00702/catalog_tables/table-RaDec.ecsv",
+      "caption": "The Escapers: RRL Stars Originating from GCs",
+      "label": "TableEscapers",
+      "row_count": 25,
+      "column_count": 14,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8d_njq9g/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2106.00702/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8d_njq9g/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2106.00702/catalog_sources/table-RaDec/wrapped.tex",
+            "html": "literature/2106.00702/catalog_sources/table-RaDec/latexml.html",
+            "stdout": "literature/2106.00702/catalog_sources/table-RaDec/latexml.stdout.txt",
+            "stderr": "literature/2106.00702/catalog_sources/table-RaDec/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "95c540d15eadbd6235a48bc59571215c0c0eb60456b28950418701be34abe6d8"
+    }
+  ]
+}

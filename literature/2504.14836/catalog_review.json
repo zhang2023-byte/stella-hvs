@@ -1,0 +1,379 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2504.14836",
+    "title": "Systematic search for blue hyper-velocity stars from LAMOST survey",
+    "month": "2025-04",
+    "source_note_json": "notes/2025/2025-04/2025-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2504.14836",
+      "pdf": "https://arxiv.org/pdf/2504.14836"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2504.14836",
+    "audit_path": "literature/2504.14836/audit.json",
+    "source_dir": "literature/2504.14836/arxiv_source",
+    "tex_root": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T12:43:00",
+    "reviewer": "agent",
+    "summary": "This paper reports a systematic search for blue hyper-velocity stars using LAMOST DR10 low-resolution spectra combined with Gaia DR3 astrometry. It contains five internal tables: a selection summary of 124 high-velocity candidates by velocity criteria and distance reliability; a catalog of 125 high-velocity candidates with positions, MK spectral classifications, rest-frame velocities, distances, and flags; and three object-by-object parameter tables presenting detailed properties (photometry, proper motions, radial velocities, Galactocentric coordinates, spectral types) for ten new unbound HVS candidates (LAMOST-HVS5 through HVS14). External resources include the Mamajek color-temperature-absolute-magnitude table, LAMOST DR10 data portals, and Gaia/DPAC acknowledgements (the latter removed as generic)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-selection",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Summarizes the selection result of high-velocity star candidates by velocity criterion and reliability of Gaia geometric distances.",
+      "source_refs": [
+        {
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 389,
+          "end_line": 410,
+          "caption": "Selection result of 124 high-velocity star candidates",
+          "label": "tab:selection"
+        }
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "meaning": "Selection criterion (velocity category)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "with reliable \\tt rgeo",
+          "meaning": "Number of objects with reliable Gaia geometric distance (rgeo)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "without reliable \\tt rgeo",
+          "meaning": "Number of objects without reliable rgeo",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Total number",
+          "meaning": "Total number of objects/spectra in the category",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Selection result of 124 high-velocity star candidates",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-hivel",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Presents the full catalog of 125 high-velocity candidates with astrometry, spectroscopic classification, kinematics, and quality flags.",
+      "source_refs": [
+        {
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 505,
+          "end_line": 542,
+          "caption": "125 high-velocity candidates from LAMOST DR10\\label{tab:hivel}",
+          "label": "tab:hivel"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Designation | \\nocolhead",
+          "meaning": "LAMOST target designation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Name | \\nocolhead",
+          "meaning": "Star name for previously known HVSs or runaways",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "MKCLASS | \\nocolhead",
+          "meaning": "MK spectral classification from the MKCLASS code",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA | (deg)",
+          "meaning": "Right ascension from Gaia DR3",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DEC | (deg)",
+          "meaning": "Declination from Gaia DR3",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gmag | (mag)",
+          "meaning": "Gaia DR3 G-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Vrf | \\colhead(km s^-1)",
+          "meaning": "Radial velocity in the Galactic rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Vtot | \\colhead(km s^-1)",
+          "meaning": "Total velocity in the Galactic rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r | (kpc)",
+          "meaning": "Galactocentric distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "dist_source | \\nocolhead",
+          "meaning": "Source of the stellar distance (rgeo, A_index, MK, Brown07, etc.)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_questionable | \\nocolhead",
+          "meaning": "Flag indicating questionable radial velocity measurement (Y if questionable)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Var | \\nocolhead",
+          "meaning": "Flag indicating significant periodic light variation from ZTF (Y if variable)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "125 high-velocity candidates from LAMOST DR10\\label{tab:hivel}",
+      "comments": "The complete version of this table is available online."
+    },
+    {
+      "id": "table-tab-hvs",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Presents detailed multi-band photometry, astrometry, radial and total velocities, Galactocentric coordinates, and spectral types for new HVS candidates LAMOST-HVS5 through HVS8.",
+      "source_refs": [
+        {
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 629,
+          "end_line": 723,
+          "caption": "Properties of the new unbound HVS candidates LAMOST-HVS5-8",
+          "label": "tab:hvs"
+        }
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "meaning": "Property name (e.g. LAMOST designation, position, magnitudes, velocities, spectral type)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "LAMOST-HVS5",
+          "meaning": "Property value for LAMOST-HVS5",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "LAMOST-HVS6",
+          "meaning": "Property value for LAMOST-HVS6",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "LAMOST-HVS7",
+          "meaning": "Property value for LAMOST-HVS7",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "LAMOST-HVS8",
+          "meaning": "Property value for LAMOST-HVS8",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Properties of the new unbound HVS candidates LAMOST-HVS5-8",
+      "comments": "Transverse layout: rows are properties, columns are individual objects."
+    },
+    {
+      "id": "table-tab-hvs9",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Presents detailed properties for new HVS candidates LAMOST-HVS9 through HVS12.",
+      "source_refs": [
+        {
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 725,
+          "end_line": 820,
+          "caption": "Properties of the new unbound HVS candidates LAMOST-HVS9-12",
+          "label": "tab:hvs9"
+        }
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "meaning": "Property name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "LAMOST-HVS9",
+          "meaning": "Property value for LAMOST-HVS9",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "LAMOST-HVS10",
+          "meaning": "Property value for LAMOST-HVS10",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "LAMOST-HVS11",
+          "meaning": "Property value for LAMOST-HVS11",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "LAMOST-HVS12",
+          "meaning": "Property value for LAMOST-HVS12",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Properties of the new unbound HVS candidates LAMOST-HVS9-12",
+      "comments": "Transverse layout: rows are properties, columns are individual objects."
+    },
+    {
+      "id": "table-tab-hvs13",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Presents detailed properties for new HVS candidates LAMOST-HVS13 and HVS14.",
+      "source_refs": [
+        {
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 822,
+          "end_line": 891,
+          "caption": "Properties of the new unbound HVS candidates LAMOST-HVS13 and LAMOST-HVS14",
+          "label": "tab:hvs13"
+        }
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "meaning": "Property name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "LAMOST-HVS13",
+          "meaning": "Property value for LAMOST-HVS13",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "LAMOST-HVS14",
+          "meaning": "Property value for LAMOST-HVS14",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Properties of the new unbound HVS candidates LAMOST-HVS13 and LAMOST-HVS14",
+      "comments": "Transverse layout: rows are properties, columns are individual objects."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://www.pas.rochester.edu/~emamajek/EEM_dwarf_UBVIJHK_colors_Teff.txt",
+      "local_path": "",
+      "description": "Table of dwarf star colors, effective temperatures, and absolute magnitudes provided by E. Mamajek, used to obtain G-band absolute magnitudes for main-sequence stars.",
+      "source_refs": [
+        {
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 414,
+          "end_line": 414,
+          "context": "\\subsection{Photometric distance} \\label{sec:ld}\n\nThe \\textsc{MKCALSS} code \\citep{2014AJ....147...80G} is capable of deriving the spectral and luminosity class in the MK system \\citep{1943assw.book.....M} for early-type stars. We apply the modified version \\citep{2019ApJ...884L...7H} based on the original \\textsc{MKCALSS} code to our HVS candidates to derive the best-fit MK classification of each LAMOST spectrum. For main-sequence (MS) stars, we utilize the table provided by Mamajek\\footnote{\\url{https://www.pas.rochester.edu/~emamajek/EEM_dwarf_UBVIJHK_colors_Teff.txt}} to obtain the $G$-band absolute magnitude $M_{G}$. The $1\\sigma$ uncertainty in $M_{G}$ is taken as half the difference in $M_{G}$ between two neighboring spectral types.\n\nFor stars with a luminosity class lower than V, as classified by MKCLASS, there is no fixed absolute magnitude like that of main-sequence stars."
+        }
+      ],
+      "evidence": "\\subsection{Photometric distance} \\label{sec:ld}\n\nThe \\textsc{MKCALSS} code \\citep{2014AJ....147...80G} is capable of deriving the spectral and luminosity class in the MK system \\citep{1943assw.book.....M} for early-type stars. We apply the modified version \\citep{2019ApJ...884L...7H} based on the original \\textsc{MKCALSS} code to our HVS candidates to derive the best-fit MK classification of each LAMOST spectrum. For main-sequence (MS) stars, we utilize the table provided by Mamajek\\footnote{\\url{https://www.pas.rochester.edu/~emamajek/EEM_dwarf_UBVIJHK_colors_Teff.txt}} to obtain the $G$-band absolute magnitude $M_{G}$. The $1\\sigma$ uncertainty in $M_{G}$ is taken as half the difference in $M_{G}$ between two neighboring spectral types.\n\nFor stars with a luminosity class lower than V, as classified by MKCLASS, there is no fixed absolute magnitude like that of main-sequence stars.",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "http://www.lamost.org/dr10/v1.0/catalogue",
+      "local_path": "",
+      "description": "LAMOST DR10 LRS Line-Index Catalog of A-type Stars, used to derive the Balmer line index - absolute magnitude relation.",
+      "source_refs": [
+        {
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 417,
+          "end_line": 417,
+          "context": "For stars with a luminosity class lower than V, as classified by MKCLASS, there is no fixed absolute magnitude like that of main-sequence stars. \nLuickly, the intensity of Balmer lines has been shown to serve as an indicator of absolute magnitude for A-type stars \\citep{1949AJ.....54..193P}. We thus select a low-extinction sample from the LAMOST LRS Line-Index Catalog of A-type Stars\\footnote{\\url{http://www.lamost.org/dr10/v1.0/catalogue}} and then examine the relation between the line indexes of various Balmer lines and the $G$-band absolute magnitudes $M_{G}$. We find that the relationship using the H$\\delta$ line indices with 48~\\AA~ band widths produced relatively small scatter in the residuals. Therefore, we adopted the H$\\delta$ 48~\\AA~ line indices from the catalog to infer $M_{G}$ (see Appendix~\\ref{sec:appendix} for details). Finally, we apply a two-segment linear fit, as described by the following equations:\n\\begin{equation}\n%\\begin{aligned}"
+        }
+      ],
+      "evidence": "For stars with a luminosity class lower than V, as classified by MKCLASS, there is no fixed absolute magnitude like that of main-sequence stars. \nLuickly, the intensity of Balmer lines has been shown to serve as an indicator of absolute magnitude for A-type stars \\citep{1949AJ.....54..193P}. We thus select a low-extinction sample from the LAMOST LRS Line-Index Catalog of A-type Stars\\footnote{\\url{http://www.lamost.org/dr10/v1.0/catalogue}} and then examine the relation between the line indexes of various Balmer lines and the $G$-band absolute magnitudes $M_{G}$. We find that the relationship using the H$\\delta$ line indices with 48~\\AA~ band widths produced relatively small scatter in the residuals. Therefore, we adopted the H$\\delta$ 48~\\AA~ line indices from the catalog to infer $M_{G}$ (see Appendix~\\ref{sec:appendix} for details). Finally, we apply a two-segment linear fit, as described by the following equations:\n\\begin{equation}\n%\\begin{aligned}",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://www.lamost.org/dr10/v1.0/catalogue",
+      "local_path": "",
+      "description": "LAMOST DR10 AFGK stellar parameter catalog portal, from which improved radial velocities were obtained.",
+      "source_refs": [
+        {
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 435,
+          "end_line": 435,
+          "context": "\\section{Results and Discussion} \\label{sec:result}\nWe present the properties of the sample of HVS candidates as well as individual objects in this section. After manually adding LAMOST-HVS2 to the search result, the final high-velocity candidate sample contains 125 stars, including 117 stars with $\\left| v_{\\rm{rf} } \\right| > 300$ km s$^{-1}$ and eight stars with $v_{\\rm{tot}} > 440$ km s$^{-1}$ but $\\left| v_{\\rm{rf} } \\right| < 300$ km s$^{-1}$. For more precise velocity measurements, we recalculated the velocities using the radial velocities from the LAMOST AFGK-stellar parameter catalog (which can be obtained from the LAMOST website\\footnote{\\url{https://www.lamost.org/dr10/v1.0/catalogue}}) with a radial velocity zero-point correction of +4.574 km s$^{-1}$ \\citep{2023RAA....23k5026L}. Four stars in the final sample are marked with questionable radial velocities measurement by eye check. In addition, 20 stars show significant periodic light variations in ZTF $g$/$r$ bands. The final sample containing the 125 high-velocity star candidates is presented in Table~\\ref{tab:hivel}. We demonstrate the Galactocentric distances and velocities for the final sample in Figure~\\ref{fig:v}. We begin by describing the properties of individual interesting stars, followed by a discussion of the overall distribution of the sample.\n\n\\begin{figure*}"
+        }
+      ],
+      "evidence": "\\section{Results and Discussion} \\label{sec:result}\nWe present the properties of the sample of HVS candidates as well as individual objects in this section. After manually adding LAMOST-HVS2 to the search result, the final high-velocity candidate sample contains 125 stars, including 117 stars with $\\left| v_{\\rm{rf} } \\right| > 300$ km s$^{-1}$ and eight stars with $v_{\\rm{tot}} > 440$ km s$^{-1}$ but $\\left| v_{\\rm{rf} } \\right| < 300$ km s$^{-1}$. For more precise velocity measurements, we recalculated the velocities using the radial velocities from the LAMOST AFGK-stellar parameter catalog (which can be obtained from the LAMOST website\\footnote{\\url{https://www.lamost.org/dr10/v1.0/catalogue}}) with a radial velocity zero-point correction of +4.574 km s$^{-1}$ \\citep{2023RAA....23k5026L}. Four stars in the final sample are marked with questionable radial velocities measurement by eye check. In addition, 20 stars show significant periodic light variations in ZTF $g$/$r$ bands. The final sample containing the 125 high-velocity star candidates is presented in Table~\\ref{tab:hivel}. We demonstrate the Galactocentric distances and velocities for the final sample in Figure~\\ref{fig:v}. We begin by describing the properties of individual interesting stars, followed by a discussion of the overall distribution of the sample.\n\n\\begin{figure*}",
+      "comments": ""
+    }
+  ]
+}

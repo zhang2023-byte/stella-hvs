@@ -1,0 +1,71 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:39:00",
+  "paper": {
+    "arxiv_id": "2306.15771",
+    "bibcode": "2023A&A...677A..96N",
+    "title": "A Multi-Year Photopolarimetric Study of the Semi-Regular Variable V CVn and Identification of Analogue Sources",
+    "month": "2023-09",
+    "source_note_json": "notes/2023/2023-09/2023-09.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2306.15771",
+      "pdf": "https://arxiv.org/pdf/2306.15771"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2306.15771",
+    "audit_path": "literature/2306.15771/audit.json",
+    "catalog_review_path": "literature/2306.15771/catalog_review.json",
+    "catalog_extraction_path": "literature/2306.15771/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2306.15771/catalog_tables/table-tab-journal_2022-2.ecsv",
+      "literature/2306.15771/catalog_tables/table-tab-journal_2022-1.ecsv",
+      "literature/2306.15771/catalog_tables/table-tab-journal_2021-2.ecsv",
+      "literature/2306.15771/catalog_tables/table-tab-journal_2021-1.ecsv",
+      "literature/2306.15771/catalog_tables/table-tab-journal_2020.ecsv",
+      "literature/2306.15771/catalog_tables/table-tab-var_stars.ecsv",
+      "literature/2306.15771/catalog_tables/table-tab4.ecsv",
+      "literature/2306.15771/catalog_tables/table-tab2.ecsv",
+      "literature/2306.15771/catalog_tables/table-tab1.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:39:00",
+    "extractor": "agent",
+    "summary": "The paper presents a multi-year photopolarimetric study of the semi-regular variable V CVn (HD 115898). V CVn is an evolved late-type AGB star (M4e-M6eIIIa); the paper focuses on the periodic variation of polarization degree with the light curve and the peculiar phenomenon of a nearly constant polarization position angle (PA). The paper notes that this polarization behavior occurs in stars with high tangential space velocities (i.e., 'runaway' stars), and suggests that the constant PA is related to circumstellar gas being shaped by the star's high-speed motion through the interstellar medium. V CVn is identified as a runaway star, but this only means it has a high velocity relative to the ISM (producing a bow shock), not that it is gravitationally unbound from the Galaxy. The paper never discusses hypervelocity stars (HVS), Galactic escape velocity, or Galactic unbinding. No HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2306.15771:group-01",
+      "description": "V CVn and similar polarization variables (V CVn, UZ Ari, AK Peg, RX Boo, Z UMa, L2 Pup) — identified as 'runaway' stars with high tangential space velocities, with polarization behavior linked to bow shocks.",
+      "decision": "rejected",
+      "reason": "The 'runaway' designation in this paper refers to stars having a high peculiar velocity relative to the interstellar medium (producing bow shocks to explain polarization features), not Galactic gravitational unbinding. V CVn is an ordinary AGB semi-regular variable located in the Galactic disk (d~501 pc), with a velocity far below the Galactic escape velocity (~500 km/s). The paper's topic is polarimetry and circumstellar medium structure, and it is entirely unrelated to the search for or confirmation of HVS candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2306.15771/arxiv_source/main_2.tex",
+          "start_line": 80,
+          "end_line": 80,
+          "context": "Abstract: 'We find this correlation occurs in stars with high tangential space velocities, i.e., 'runaway' stars, suggesting that the long-term constant PA is related to how the circumstellar gas is shaped by the star's high-speed motion through the interstellar medium.'"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2306.15771/arxiv_source/main_2.tex",
+          "start_line": 383,
+          "end_line": 383,
+          "context": "Discussion: 'the variable polarization is caused by a pulsation-driven dusty wind shell that collides with a stellar wind bow shock, which is expected since V CVn is a runaway star.'"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2306.15771/arxiv_source/main_2.tex",
+          "start_line": 387,
+          "end_line": 387,
+          "context": "Discussion: 'a supernova explosion or another dynamic event ejected the companion... the progenitor would evolve into a runaway red giant star with rapid rotation.' — discussing possible ejection from binary, not Galactic escape."
+        }
+      ]
+    }
+  ]
+}

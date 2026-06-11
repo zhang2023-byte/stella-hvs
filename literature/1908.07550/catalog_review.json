@@ -1,0 +1,118 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1908.07550",
+    "title": "Runaway Young Stars near the Orion Nebula",
+    "month": "2019-08",
+    "source_note_json": "notes/2019/2019-08/2019-08.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1908.07550",
+      "pdf": "https://arxiv.org/pdf/1908.07550"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1908.07550",
+    "audit_path": "literature/1908.07550/audit.json",
+    "source_dir": "literature/1908.07550/arxiv_source",
+    "tex_root": "literature/1908.07550/arxiv_source/OrionPMLetter.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:25:00",
+    "reviewer": "agent",
+    "summary": "本文利用Gaia DR2天体测量数据，在猎户座星云区（ONC）搜寻具有异常高自行的前主序星，以识别因不稳定三体系统或近距离三体交会而被动力学抛射的逃逸年轻恒星。论文首先从文献中汇编了Orion A分子云中已确认的5988颗年轻恒星成员星表（Table tab:sources），结合Gaia DR2测光和自行数据进行筛选，最终在ONC周围2°范围内识别出26颗高自行候选逃逸星，并将其按起源分类：9颗可追溯至Trapezium核心区，5颗与其他OB星有相互作用，7颗来自猎户座复合体内其他邻近年轻星群，5颗无法确定明确起源点。论文包含1个内部表格（Table tab:sources），列出Orion A已知成员的坐标、文献参考编号、Gaia DR2源ID、自行、视差、视向速度、高自行标志和SIMBAD标识符。该表为从22篇文献汇编而成的综合成员星表，是本文筛选逃逸星的基础输入数据。表注说明文内仅展示部分数据，完整电子版星表可通过期刊获取。Gaia DR2为ESA公开巡天数据，论文引用的各文献成员星表均为已发表数据源的方法论引用，非本文特有的结构化数据资产。外部URL（RUWE文档页面、Gaia致谢链接）为技术文档或基础设施引用，非本文数据产品。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab_sources",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "列出从22篇文献汇编的Orion A分子云中已确认的5988颗年轻恒星成员。包含J2000赤道坐标、文献参考编号（指示每颗星的年轻星分类来源）、Gaia DR2 Source ID、Gaia DR2自行（μα, μδ）、视差（π）、视向速度（RV，来自Kounkel+2016和Kounkel+2019的加权平均）、高自行标志（High PM?）和SIMBAD标识符。该表是本文筛选逃逸候选星的基础输入数据源，结合Gaia测光筛选（Section 2的HR图判据）后限定最终分析样本为1867颗星。",
+      "source_refs": [
+        {
+          "path": "literature/1908.07550/arxiv_source/OrionPMLetter.tex",
+          "start_line": 60,
+          "end_line": 75,
+          "caption": "Known members of the Orion A from the literature.\\label{tab:sources}",
+          "label": "tab:sources"
+        }
+      ],
+      "columns": [
+        {
+          "name": "α",
+          "meaning": "赤经（J2000历元，度）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "δ",
+          "meaning": "赤纬（J2000历元，度）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ref.",
+          "meaning": "文献参考编号，指示每颗星的年轻星分类来源。引用编号对应22篇文献：1=Kounkel+2018a, 2=Großschedl+2019, 3=Fang+2009, 4=Fang+2013, 5=Hsu+2012, 6=Hsu+2013, 7=Kounkel+2016, 8=Hasenberger+2016, 9=Pillitteri+2013, 10=Fang+2017, 11=Megeath+2012, 12=Kounkel+2017a, 13=Rebull+2006, 14=Furész+2008, 15=Getman+2005, 16=Hillenbrand+1997, 17=Da Rio+2010, 18=Da Rio+2012, 19=Kuhn+2014, 20=Getman+2014, 21=Getman+2014a, 22=Sicilia-Aguilar+2005。多编号表示多篇文献共同确认",
+          "unit_text": "",
+          "source_of_definition": "table note a",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia DR2 Source ID",
+          "meaning": "Gaia Data Release 2 源标识号（19位数字）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μα",
+          "meaning": "Gaia DR2赤经方向自行（mas/yr），含测量不确定度",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μδ",
+          "meaning": "Gaia DR2赤纬方向自行（mas/yr），含测量不确定度",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "π",
+          "meaning": "Gaia DR2视差（mas），含测量不确定度",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "视向速度（km/s），来自Kounkel+2016和Kounkel+2019的加权平均值",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header + table note b",
+          "confidence": 1.0
+        },
+        {
+          "name": "High PM?",
+          "meaning": "高自行标志：'r'表示该星满足高自行筛选标准（μα和μδ超出ONC速度弥散范围），'n'表示不满足，空白表示未评估",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Simbad ID",
+          "meaning": "SIMBAD天文数据库中的目标标识符（如变星星名、BD编号、2MASS编号等）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table tab:sources标题为'Known members of the Orion A from the literature'，使用deluxetable*环境，10列cccccccccc格式。表头列出α(J2000)、δ(J2000)、Ref.(文献参考编号，含脚注a标记)、Gaia DR2 Source ID、μα(mas/yr)、μδ(mas/yr)、π(mas)、RV(km/s，含脚注b标记)、High PM?、Simbad ID。示例数据行展示3颗星（[RHS2000] 1-121、BD-06 1239、V723 Ori）。表注说明'Only a portion shown here. Full table is available in an electronic form'，即文内仅展示部分，完整电子版星表可通过ApJ期刊获取。脚注a列出22篇参考文献编号对应关系，脚注b说明RV为Kounkel+2016和Kounkel+2019的加权平均。ADS元数据显示data字段包含'SIMBAD:5695'，表明该星表已收录至SIMBAD数据库。",
+      "comments": "该表为本文唯一的数据表格，汇编了Orion A分子云中5988颗已知年轻星成员。原始LaTeX位于OrionPMLetter.tex第60-75行。表注明确说明文内仅展示3行示例数据（第68-70行），完整星表以电子形式提供。根据ADS记录，该论文在ApJ发表（2019ApJ...884....6M），完整机器可读星表应可通过ApJ/IOP期刊网站获取。GAIA DR2数据和各文献成员星表为本文的数据来源和方法论基础，按照审查边界规则，这些外部公开数据集不列为本文的数据资产。"
+    }
+  ],
+  "external_resources": []
+}

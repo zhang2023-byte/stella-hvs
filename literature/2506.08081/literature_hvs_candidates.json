@@ -1,0 +1,1441 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T18:29:31",
+  "paper": {
+    "arxiv_id": "2506.08081",
+    "bibcode": "2025MNRAS.541.2231H",
+    "title": "Spectroscopic and kinematic analyses of a warm survivor of a D6 supernova",
+    "month": "2025-06",
+    "source_note_json": "notes/2025/2025-06/2025-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2506.08081",
+      "pdf": "https://arxiv.org/pdf/2506.08081"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2506.08081",
+    "audit_path": "literature/2506.08081/audit.json",
+    "catalog_review_path": "literature/2506.08081/catalog_review.json",
+    "catalog_extraction_path": "literature/2506.08081/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2506.08081/catalog_tables/table-tab-astromphot.ecsv",
+      "literature/2506.08081/catalog_tables/table-tab-spec.ecsv",
+      "literature/2506.08081/catalog_tables/table-tab-kinematics.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-22T18:29:31",
+    "extractor": "agent",
+    "summary": "One candidate hyper-runaway star (SDSS J1637+3631) is explicitly discussed as an unbound survivor of a D6 supernova, with Galactocentric velocity ~1870 km/s."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Adopt Gaia DR3 astrometry and multi-band photometry from Gaia, SDSS, and PanSTARRS.",
+      "inputs": [
+        "Gaia DR3 astrometry and photometry",
+        "SDSS photometry",
+        "PanSTARRS photometry"
+      ],
+      "outputs": [
+        "RA, Dec, parallax, proper motions",
+        "multi-band photometry"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 337,
+          "end_line": 345,
+          "context": "Table 1: astrometry and photometry for the target"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [],
+      "step_type": "radial_velocity_measurement",
+      "summary": "Measure heliocentric radial velocity from GTC OSIRIS spectroscopy.",
+      "inputs": [
+        "GTC OSIRIS spectrum"
+      ],
+      "outputs": [
+        "heliocentric radial velocity"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 358,
+          "end_line": 430,
+          "context": "Spectroscopic observations and radial velocity measurement"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Infer atmospheric parameters and chemical abundances via Koester white dwarf model atmosphere fitting.",
+      "inputs": [
+        "GTC OSIRIS spectrum"
+      ],
+      "outputs": [
+        "Teff",
+        "log g",
+        "chemical abundances"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 410,
+          "end_line": 559,
+          "context": "Spectroscopic analysis with Koester models"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "photometric_or_sed_modeling",
+      "summary": "Generate synthetic photometry from the best-fitting spectral model.",
+      "inputs": [
+        "best-fitting spectral model"
+      ],
+      "outputs": [
+        "synthetic photometry"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 464,
+          "end_line": 476,
+          "context": "Model scaling and synthetic photometry procedure"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-01",
+        "step-03",
+        "step-04"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Bayesian distance estimation combining Gaia parallax, spectroscopic log g, and photometry using pocoMC.",
+      "inputs": [
+        "Gaia DR3 parallax",
+        "spectroscopic log g",
+        "photometry",
+        "synthetic photometry"
+      ],
+      "outputs": [
+        "distance",
+        "reddening E(B-V)"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 756,
+          "end_line": 850,
+          "context": "Bayesian model for distance, mass, and radius"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-01",
+        "step-02",
+        "step-05"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Convert astrometry, distance, and radial velocity to Galactocentric velocity components and total speed.",
+      "inputs": [
+        "distance",
+        "proper motions",
+        "radial velocity"
+      ],
+      "outputs": [
+        "Galactocentric velocity components",
+        "total Galactocentric velocity v_gc"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 840,
+          "end_line": 850,
+          "context": "Heliocentric to Galactocentric velocity transformation"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "Adopt the MWPotential2014 Milky Way gravitational potential from galpy.",
+      "inputs": [
+        "galpy potential library"
+      ],
+      "outputs": [
+        "Milky Way gravitational potential model"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 875,
+          "end_line": 895,
+          "context": "Galactic potential model description"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [
+        "step-06",
+        "step-07"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Integrate the orbit backwards to constrain the ejection site and time of flight.",
+      "inputs": [
+        "current position and velocity",
+        "MWPotential2014"
+      ],
+      "outputs": [
+        "ejection site coordinates",
+        "time of flight",
+        "orbit trajectory"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 897,
+          "end_line": 974,
+          "context": "Extended Bayesian model with orbital integration"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": [
+        "step-06",
+        "step-07"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Assess unbound status from the extreme Galactocentric velocity (~1870 km/s).",
+      "inputs": [
+        "Galactocentric velocity v_gc"
+      ],
+      "outputs": [
+        "unbound status confirmation"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 847,
+          "end_line": 850,
+          "context": "Extreme velocity confirms ejected survivor status"
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "depends_on": [
+        "step-08"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Localise ejection site and compute disc/bulge origin probability and ejection velocity.",
+      "inputs": [
+        "ejection site",
+        "stellar density model",
+        "donor mass constraints"
+      ],
+      "outputs": [
+        "ejection velocity v_ej",
+        "disc/bulge origin probability",
+        "refined ejection site",
+        "time of flight"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 975,
+          "end_line": 1092,
+          "context": "Kinematic results and ejection site location"
+        }
+      ]
+    },
+    {
+      "id": "step-11",
+      "depends_on": [
+        "step-05"
+      ],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Infer stellar mass and radius from the Bayesian orbital fit model.",
+      "inputs": [
+        "distance posterior",
+        "spectroscopic log g",
+        "photometry"
+      ],
+      "outputs": [
+        "stellar mass",
+        "stellar radius"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 756,
+          "end_line": 850,
+          "context": "Bayesian model for distance, mass, and radius"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2506.08081:cand-001",
+        "paper_candidate_id": "SDSS J1637+3631",
+        "gaia_source_id": "Gaia DR3 1327920737357113088",
+        "all": [
+          {
+            "value": "SDSS J163712.21+363155.9",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2506.08081/arxiv_source/J1637.tex",
+                "start_line": 61,
+                "end_line": 62,
+                "context": "Paper macros defining the object name"
+              }
+            ]
+          },
+          {
+            "value": "SDSS J1637+3631",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2506.08081/arxiv_source/J1637.tex",
+                "start_line": 61,
+                "end_line": 61,
+                "context": "Short object name macro"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 1327920737357113088",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2506.08081/catalog_tables/table-tab-astromphot.ecsv",
+                "line": 8,
+                "column": "col_002",
+                "column_header": "col_002",
+                "raw_value": "1327920737357113088"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "SDSS J1637+3631 is explicitly presented as a candidate hyper-runaway star and the surviving donor of a D6 supernova. Its Galactocentric velocity of ~1870 km/s (Fit 1, adopted) far exceeds typical Galactic escape velocities, and the paper treats it as an ejected, unbound object.",
+        "paper_labels": [
+          "hyper_runaway_candidate",
+          "escaping_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "The paper explicitly labels the object as a candidate hyper-runaway star and ejected survivor of a D6 supernova, with detailed kinematic analysis supporting unbound status.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2506.08081/arxiv_source/J1637.tex",
+            "start_line": 115,
+            "end_line": 137,
+            "context": "Abstract: candidate hyper-runaway star, ejected donor from D6 supernova"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2506.08081/arxiv_source/J1637.tex",
+            "start_line": 847,
+            "end_line": 850,
+            "context": "Extreme Galactocentric velocity confirms ejected survivor of D6 explosion"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2506.08081/arxiv_source/J1637.tex",
+            "start_line": 288,
+            "end_line": 336,
+            "context": "Object first identified by Raddi et al. 2019; this paper reassesses with new spectroscopy and kinematics"
+          }
+        ],
+        "citation": {
+          "bibkey": "raddietal19-1",
+          "authors": [
+            "Raddi, R."
+          ],
+          "year": "2019",
+          "title": "",
+          "doi": "10.1093/mnras/stz1618",
+          "bibcode": "2019MNRAS.489.1489R",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2506.08081/arxiv_source/J1637.tex",
+              "start_line": 288,
+              "end_line": 336,
+              "context": "Raddi et al. 2019 discovery of the object via template fitting"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2506.08081/arxiv_source/J1637.bbl",
+              "start_line": 339,
+              "end_line": 343,
+              "context": "Bibliography entry for Raddi et al. 2019"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "16:37:12.214",
+            "value": "16h37m12.214s",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "hourangle",
+            "kind": "",
+            "description": "Gaia DR3 right ascension",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2506.08081/catalog_tables/table-tab-astromphot.ecsv",
+                "line": 9,
+                "column": "col_002",
+                "column_header": "col_002",
+                "raw_value": "16:37:12.214"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "sexagesimal_hms",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2506.08081/catalog_tables/table-tab-astromphot.ecsv",
+                  "line": 9,
+                  "column": "col_001",
+                  "column_header": "col_001",
+                  "raw_value": "RA (J2016)"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2506.08081/catalog_tables/table-tab-astromphot.ecsv",
+                  "line": 9,
+                  "column": "col_001",
+                  "column_header": "col_001",
+                  "raw_value": "RA (J2016)"
+                }
+              ]
+            }
+          },
+          "dec": {
+            "raw_value": "+36:31:55.91",
+            "value": "+36d31m55.91s",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "deg",
+            "kind": "",
+            "description": "Gaia DR3 declination",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2506.08081/catalog_tables/table-tab-astromphot.ecsv",
+                "line": 10,
+                "column": "col_002",
+                "column_header": "col_002",
+                "raw_value": "+36:31:55.91"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "sexagesimal_dms",
+            "reference_frame": {
+              "value": "ICRS",
+              "raw_value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2506.08081/catalog_tables/table-tab-astromphot.ecsv",
+                  "line": 10,
+                  "column": "col_001",
+                  "column_header": "col_001",
+                  "raw_value": "Dec (J2016)"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "raw_value": "J2016",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2506.08081/catalog_tables/table-tab-astromphot.ecsv",
+                  "line": 10,
+                  "column": "col_001",
+                  "column_header": "col_001",
+                  "raw_value": "Dec (J2016)"
+                }
+              ]
+            }
+          },
+          "distance": {
+            "raw_value": "5.4_-0.7^+0.9",
+            "value": "5.4",
+            "error": "",
+            "lower_error": "0.7",
+            "upper_error": "0.9",
+            "unit": "kpc",
+            "kind": "",
+            "description": "Adopted distance from Fit 1 (orbital fit with Galactic dynamics)",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2506.08081/catalog_tables/table-tab-kinematics.ecsv",
+                "line": 11,
+                "column": "col_003",
+                "column_header": "col_003",
+                "raw_value": "5.4_-0.7^+0.9"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "parallax": {
+            "raw_value": "0.3319+/- 0.4776",
+            "value": "0.3319",
+            "error": "0.4776",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "mas",
+            "kind": "",
+            "description": "Gaia DR3 parallax",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2506.08081/catalog_tables/table-tab-astromphot.ecsv",
+                "line": 11,
+                "column": "col_002",
+                "column_header": "col_002",
+                "raw_value": "0.3319+/- 0.4776"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-19.558+/- 0.587",
+            "value": "-19.558",
+            "error": "0.587",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "mas yr^-1",
+            "kind": "",
+            "description": "Gaia DR3 proper motion in RA",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2506.08081/catalog_tables/table-tab-astromphot.ecsv",
+                "line": 12,
+                "column": "col_002",
+                "column_header": "col_002",
+                "raw_value": "-19.558+/- 0.587"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "+64.159+/- 0.644",
+            "value": "64.159",
+            "error": "0.644",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "mas yr^-1",
+            "kind": "",
+            "description": "Gaia DR3 proper motion in Dec",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2506.08081/catalog_tables/table-tab-astromphot.ecsv",
+                "line": 13,
+                "column": "col_002",
+                "column_header": "col_002",
+                "raw_value": "+64.159+/- 0.644"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "384+/- 6 km s^-1",
+            "value": "384",
+            "error": "6",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Heliocentric radial velocity from GTC OSIRIS spectroscopy",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2506.08081/catalog_tables/table-tab-spec.ecsv",
+                "line": 10,
+                "column": "col_002",
+                "column_header": "col_002",
+                "raw_value": "384+/- 6 km s^-1"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_vx": {
+            "raw_value": "-1440_-260^+220",
+            "value": "-1440",
+            "error": "",
+            "lower_error": "260",
+            "upper_error": "220",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Galactocentric velocity component x from Fit 1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2506.08081/catalog_tables/table-tab-kinematics.ecsv",
+                "line": 12,
+                "column": "col_003",
+                "column_header": "col_003",
+                "raw_value": "-1440_-260^+220"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "930_-60^+70",
+            "value": "930",
+            "error": "",
+            "lower_error": "60",
+            "upper_error": "70",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Galactocentric velocity component y from Fit 1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2506.08081/catalog_tables/table-tab-kinematics.ecsv",
+                "line": 13,
+                "column": "col_003",
+                "column_header": "col_003",
+                "raw_value": "930_-60^+70"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "760_-70^+80",
+            "value": "760",
+            "error": "",
+            "lower_error": "70",
+            "upper_error": "80",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Galactocentric velocity component z from Fit 1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2506.08081/catalog_tables/table-tab-kinematics.ecsv",
+                "line": 14,
+                "column": "col_003",
+                "column_header": "col_003",
+                "raw_value": "760_-70^+80"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "1870_-220^+280",
+            "value": "1870",
+            "error": "",
+            "lower_error": "220",
+            "upper_error": "280",
+            "unit": "km s^-1",
+            "kind": "",
+            "description": "Total Galactocentric speed v_gc from Fit 1 (adopted)",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2506.08081/catalog_tables/table-tab-kinematics.ecsv",
+                "line": 27,
+                "column": "col_003",
+                "column_header": "col_003",
+                "raw_value": "1870_-220^+280"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": {
+            "raw_value": "extreme velocity essentially confirms ejected survivor of D6 explosion",
+            "value": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "qualitative_assessment",
+            "description": "Paper states the extreme Galactocentric velocity (~1870 km/s) essentially confirms the object is the ejected survivor of a D6 supernova, i.e. unbound from the Galaxy.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2506.08081/arxiv_source/J1637.tex",
+                "start_line": 847,
+                "end_line": 850,
+                "context": "Extreme velocity confirms unbound ejected survivor status"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        }
+      },
+      "photometry": [
+        {
+          "raw_value": "20.2549+/- 0.0063",
+          "value": "20.2549",
+          "error": "0.0063",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "mag",
+          "kind": "",
+          "description": "Gaia DR3 G-band magnitude",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-astromphot.ecsv",
+              "line": 14,
+              "column": "col_002",
+              "column_header": "col_002",
+              "raw_value": "20.2549+/- 0.0063"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "measurement_type": "magnitude",
+          "band": "G",
+          "system": "Gaia",
+          "survey": "Gaia"
+        },
+        {
+          "raw_value": "20.0409+/- 0.0698",
+          "value": "20.0409",
+          "error": "0.0698",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "mag",
+          "kind": "",
+          "description": "Gaia DR3 BP magnitude",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-astromphot.ecsv",
+              "line": 15,
+              "column": "col_002",
+              "column_header": "col_002",
+              "raw_value": "20.0409+/- 0.0698"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "measurement_type": "magnitude",
+          "band": "BP",
+          "system": "Gaia",
+          "survey": "Gaia"
+        },
+        {
+          "raw_value": "20.1670+/- 0.1319",
+          "value": "20.1670",
+          "error": "0.1319",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "mag",
+          "kind": "",
+          "description": "Gaia DR3 RP magnitude",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-astromphot.ecsv",
+              "line": 16,
+              "column": "col_002",
+              "column_header": "col_002",
+              "raw_value": "20.1670+/- 0.1319"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "measurement_type": "magnitude",
+          "band": "RP",
+          "system": "Gaia",
+          "survey": "Gaia"
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "radius": {
+          "raw_value": "0.114_-0.016^+0.019",
+          "value": "0.114",
+          "error": "",
+          "lower_error": "0.016",
+          "upper_error": "0.019",
+          "unit": "Rsun",
+          "kind": "",
+          "description": "Stellar radius from Fit 1 (adopted)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-kinematics.ecsv",
+              "line": 18,
+              "column": "col_003",
+              "column_header": "col_003",
+              "raw_value": "0.114_-0.016^+0.019"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        },
+        "mass": {
+          "raw_value": "0.42_-0.15^+0.17",
+          "value": "0.42",
+          "error": "",
+          "lower_error": "0.15",
+          "upper_error": "0.17",
+          "unit": "Msun",
+          "kind": "",
+          "description": "Stellar mass from Fit 1 (adopted)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-kinematics.ecsv",
+              "line": 29,
+              "column": "col_003",
+              "column_header": "col_003",
+              "raw_value": "0.42_-0.15^+0.17"
+            }
+          ],
+          "method_refs": [
+            "step-11"
+          ]
+        },
+        "teff": {
+          "raw_value": "15 680+/- 250 K",
+          "value": "15680",
+          "error": "250",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "K",
+          "kind": "",
+          "description": "Effective temperature from Koester model fitting",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-spec.ecsv",
+              "line": 8,
+              "column": "col_002",
+              "column_header": "col_002",
+              "raw_value": "15 680+/- 250 K"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "log_g": {
+          "raw_value": "6.3+/- 0.3 dex(cm s -2 )",
+          "value": "6.3",
+          "error": "0.3",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "dex(cm s^-2)",
+          "kind": "",
+          "description": "Surface gravity from Koester model fitting",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-spec.ecsv",
+              "line": 9,
+              "column": "col_002",
+              "column_header": "col_002",
+              "raw_value": "6.3+/- 0.3 dex(cm s -2 )"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        }
+      },
+      "abundances": [
+        {
+          "raw_value": "+0.27+/- 0.10 dex",
+          "value": "0.27",
+          "error": "0.10",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "dex",
+          "kind": "logarithmic_number_ratio",
+          "description": "Oxygen abundance relative to carbon",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-spec.ecsv",
+              "line": 14,
+              "column": "col_002",
+              "column_header": "col_002",
+              "raw_value": "+0.27+/- 0.10 dex"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ],
+          "element": "O",
+          "abundance_scale": "log(X/C)",
+          "reference_element": "C"
+        },
+        {
+          "raw_value": "-1.86+/- 0.25 dex",
+          "value": "-1.86",
+          "error": "0.25",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "dex",
+          "kind": "logarithmic_number_ratio",
+          "description": "Neon abundance relative to carbon",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-spec.ecsv",
+              "line": 15,
+              "column": "col_002",
+              "column_header": "col_002",
+              "raw_value": "-1.86+/- 0.25 dex"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ],
+          "element": "Ne",
+          "abundance_scale": "log(X/C)",
+          "reference_element": "C"
+        },
+        {
+          "raw_value": "-2.33+/- 0.15 dex",
+          "value": "-2.33",
+          "error": "0.15",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "dex",
+          "kind": "logarithmic_number_ratio",
+          "description": "Magnesium abundance relative to carbon",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-spec.ecsv",
+              "line": 16,
+              "column": "col_002",
+              "column_header": "col_002",
+              "raw_value": "-2.33+/- 0.15 dex"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ],
+          "element": "Mg",
+          "abundance_scale": "log(X/C)",
+          "reference_element": "C"
+        },
+        {
+          "raw_value": "-4.00+/- 0.30 dex",
+          "value": "-4.00",
+          "error": "0.30",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "dex",
+          "kind": "logarithmic_number_ratio",
+          "description": "Aluminium abundance relative to carbon",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-spec.ecsv",
+              "line": 17,
+              "column": "col_002",
+              "column_header": "col_002",
+              "raw_value": "-4.00+/- 0.30 dex"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ],
+          "element": "Al",
+          "abundance_scale": "log(X/C)",
+          "reference_element": "C"
+        },
+        {
+          "raw_value": "-1.76+/- 0.10 dex",
+          "value": "-1.76",
+          "error": "0.10",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "dex",
+          "kind": "logarithmic_number_ratio",
+          "description": "Silicon abundance relative to carbon",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-spec.ecsv",
+              "line": 18,
+              "column": "col_002",
+              "column_header": "col_002",
+              "raw_value": "-1.76+/- 0.10 dex"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ],
+          "element": "Si",
+          "abundance_scale": "log(X/C)",
+          "reference_element": "C"
+        },
+        {
+          "raw_value": "-2.84+/- 0.30 dex",
+          "value": "-2.84",
+          "error": "0.30",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "dex",
+          "kind": "logarithmic_number_ratio",
+          "description": "Sulphur abundance relative to carbon",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-spec.ecsv",
+              "line": 19,
+              "column": "col_002",
+              "column_header": "col_002",
+              "raw_value": "-2.84+/- 0.30 dex"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ],
+          "element": "S",
+          "abundance_scale": "log(X/C)",
+          "reference_element": "C"
+        },
+        {
+          "raw_value": "-2.85+/- 0.10 dex",
+          "value": "-2.85",
+          "error": "0.10",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "dex",
+          "kind": "logarithmic_number_ratio",
+          "description": "Calcium abundance relative to carbon",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-spec.ecsv",
+              "line": 20,
+              "column": "col_002",
+              "column_header": "col_002",
+              "raw_value": "-2.85+/- 0.10 dex"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ],
+          "element": "Ca",
+          "abundance_scale": "log(X/C)",
+          "reference_element": "C"
+        },
+        {
+          "raw_value": "-3.00+/- 0.20 dex",
+          "value": "-3.00",
+          "error": "0.20",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "dex",
+          "kind": "logarithmic_number_ratio",
+          "description": "Iron abundance relative to carbon",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-spec.ecsv",
+              "line": 21,
+              "column": "col_002",
+              "column_header": "col_002",
+              "raw_value": "-3.00+/- 0.20 dex"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ],
+          "element": "Fe",
+          "abundance_scale": "log(X/C)",
+          "reference_element": "C"
+        }
+      ],
+      "quality_flags": [],
+      "orbit": {
+        "flight_time": {
+          "raw_value": "4.5_-0.5^+0.4",
+          "value": "4.5",
+          "error": "",
+          "lower_error": "0.5",
+          "upper_error": "0.4",
+          "unit": "Myr",
+          "kind": "",
+          "description": "Time of flight from ejection site to current location (Fit 1)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-kinematics.ecsv",
+              "line": 15,
+              "column": "col_003",
+              "column_header": "col_003",
+              "raw_value": "4.5_-0.5^+0.4"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "other": [
+          {
+            "raw_value": "+0.4_-1.4^+2.0",
+            "value": "0.4",
+            "error": "",
+            "lower_error": "1.4",
+            "upper_error": "2.0",
+            "unit": "kpc",
+            "kind": "",
+            "description": "Ejection site Galactocentric coordinate X0 (Fit 1)",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2506.08081/catalog_tables/table-tab-kinematics.ecsv",
+                "line": 20,
+                "column": "col_003",
+                "column_header": "col_003",
+                "raw_value": "+0.4_-1.4^+2.0"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "name": "ejection_site_x0"
+          },
+          {
+            "raw_value": "-0.8_-0.3^+0.4",
+            "value": "-0.8",
+            "error": "",
+            "lower_error": "0.3",
+            "upper_error": "0.4",
+            "unit": "kpc",
+            "kind": "",
+            "description": "Ejection site Galactocentric coordinate Y0 (Fit 1)",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2506.08081/catalog_tables/table-tab-kinematics.ecsv",
+                "line": 21,
+                "column": "col_003",
+                "column_header": "col_003",
+                "raw_value": "-0.8_-0.3^+0.4"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "name": "ejection_site_y0"
+          },
+          {
+            "raw_value": "+0.1_-0.3^+0.4",
+            "value": "0.1",
+            "error": "",
+            "lower_error": "0.3",
+            "upper_error": "0.4",
+            "unit": "kpc",
+            "kind": "",
+            "description": "Ejection site Galactocentric coordinate Z0 (Fit 1)",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2506.08081/catalog_tables/table-tab-kinematics.ecsv",
+                "line": 22,
+                "column": "col_003",
+                "column_header": "col_003",
+                "raw_value": "+0.1_-0.3^+0.4"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ],
+            "name": "ejection_site_z0"
+          }
+        ]
+      },
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "inner few kpc of the Galactic disc (excluding Galactic centre)",
+          "value": "inner disc",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "",
+          "description": "Ejection site localised to inner few kpc of Galactic disc, with 83% probability of disc origin",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2506.08081/arxiv_source/J1637.tex",
+              "start_line": 1069,
+              "end_line": 1091,
+              "context": "Ejection site distribution and disc/bulge origin probability"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        "origin_classification": {
+          "raw_value": "surviving donor of a D6 type Ia supernova",
+          "value": "D6 supernova survivor",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "",
+          "description": "Object classified as the surviving donor from a dynamically-driven double-degenerate double-detonation (D6) supernova",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2506.08081/arxiv_source/J1637.tex",
+              "start_line": 1358,
+              "end_line": 1377,
+              "context": "Conclusions: established as surviving donor of a D6 supernova"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        "ejection_velocity": {
+          "raw_value": "1870_-300^+360",
+          "value": "1870",
+          "error": "",
+          "lower_error": "300",
+          "upper_error": "360",
+          "unit": "km s^-1",
+          "kind": "",
+          "description": "Ejection velocity after subtracting Galactic orbital velocity at ejection site (Fit 1)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-kinematics.ecsv",
+              "line": 28,
+              "column": "col_003",
+              "column_header": "col_003",
+              "raw_value": "1870_-300^+360"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        "travel_time": {
+          "raw_value": "4.5_-0.5^+0.4",
+          "value": "4.5",
+          "error": "",
+          "lower_error": "0.5",
+          "upper_error": "0.4",
+          "unit": "Myr",
+          "kind": "",
+          "description": "Time of flight since ejection (Fit 1)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2506.08081/catalog_tables/table-tab-kinematics.ecsv",
+              "line": 15,
+              "column": "col_003",
+              "column_header": "col_003",
+              "raw_value": "4.5_-0.5^+0.4"
+            }
+          ],
+          "method_refs": [
+            "step-10"
+          ]
+        },
+        "hypothesis_metrics": [
+          {
+            "raw_value": "0.83",
+            "value": "0.83",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "",
+            "description": "Probability of originating from the Galactic disc",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2506.08081/arxiv_source/J1637.tex",
+                "start_line": 1089,
+                "end_line": 1091,
+                "context": "Calculated disc origin probability"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "hypothesis": "Galactic_disc_origin",
+            "metric_type": "probability"
+          },
+          {
+            "raw_value": "0.17",
+            "value": "0.17",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "",
+            "kind": "",
+            "description": "Probability of originating from the Galactic bulge",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2506.08081/arxiv_source/J1637.tex",
+                "start_line": 1089,
+                "end_line": 1091,
+                "context": "Calculated bulge origin probability"
+              }
+            ],
+            "method_refs": [
+              "step-10"
+            ],
+            "hypothesis": "Galactic_bulge_origin",
+            "metric_type": "probability"
+          }
+        ],
+        "other": []
+      },
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "paper-target-SDSS-J1637",
+      "description": "The single target white dwarf SDSS J1637+3631 discussed throughout the paper across astrometric, spectroscopic, and kinematic tables.",
+      "decision": "included",
+      "reason": "The paper explicitly presents SDSS J1637+3631 as a candidate hyper-runaway star and the ejected surviving donor of a D6 supernova, with a Galactocentric velocity of ~1870 km/s confirming unbound status.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 115,
+          "end_line": 137,
+          "context": "Abstract presenting the object as candidate hyper-runaway star"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2506.08081/arxiv_source/J1637.tex",
+          "start_line": 847,
+          "end_line": 850,
+          "context": "Extreme velocity confirms ejected survivor status"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,417 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1804.08678",
+    "title": "HST astrometry in the 30 Doradus region: II. Runaway stars from new proper motions in the Large Magellanic Cloud",
+    "month": "2018-04",
+    "source_note_json": "notes/2018/2018-04/2018-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1804.08678",
+      "pdf": "https://arxiv.org/pdf/1804.08678"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1804.08678",
+    "audit_path": "literature/1804.08678/audit.json",
+    "source_dir": "literature/1804.08678/arxiv_source",
+    "tex_root": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T08:16:00",
+    "reviewer": "agent",
+    "summary": "Platais et al. (2018, AJ, 156, 98) present a catalog of relative proper motions for 368,787 stars in the 30 Doradus region of the LMC, based on a dedicated two-epoch HST survey (WFC3/UVIS and ACS/WFC) supplemented with archival WFPC2 data from Paper I. The paper identifies 17 candidate LMC runaway stars with proper motions exceeding 3-sigma. Among 183 VFTS OB stars with the best proper motions, none moves faster than ~0.3 mas/yr (~70 km/s) in each coordinate. Only one candidate OB runaway is found among the remaining 351 VFTS stars with less accurate proper motions. The key finding is 10 stars over a wide range of masses (O through F spectral types) that appear to be ejected from the massive star cluster R136, with tangential velocities correlated with apparent magnitude, indicating a possible mass dependence. The paper includes three internal tables: (1) Table 1 lists 7 candidate OB proper-motion runaway stars from the VFTS survey with astrometric and spectroscopic parameters, (2) Table 2 (label: tab:afrun) lists 11 candidate young A-F proper-motion runaways identified from the general proper motion catalog, and (3) Table 3 lists 10 likely-escaped stars from R136 with their positions relative to R136 and total proper motions. Key external resources include: HST observations from programs GO-12499, GO-12915, GO-13359 available at MAST; the VLT-FLAMES Tarantula Survey (VFTS) providing spectral types, radial velocities, and v sin i from Sana et al. (2013) and subsequent papers; VI photometry from Sabbi et al. (2016, ApJS, 222:11); Gaia DR1 used for astrometric reference catalog alignment; and the full proper motion catalog of 368,787 stars published as an electronic table with the journal."
+  },
+  "internal_tables": [
+    {
+      "id": "table-1-ob-runaways",
+      "kind": "latex_table",
+      "asset_type": "reference_table",
+      "role_in_paper": "Table listing 7 candidate OB proper-motion runaway stars identified from the VFTS survey. Each star has VFTS number, optical identifier, V magnitude, V-I color, spectral type (from the VFTS), line-of-sight velocity (v_LOS in km/s from VFTS), projected rotational velocity (v sin i in km/s from VFTS), proper motions in X and Y (mu_X, mu_Y in mas/yr), proper motion errors (sigma_mu_X, sigma_mu_Y in mas/yr), chi-squared statistics for the proper motion fit in each coordinate, goodness-of-fit probabilities (Q_X, Q_Y), and number of frames used (N_frame). This table supports the paper's conclusion that none of the OB stars with the best proper motions moves faster than ~0.3 mas/yr (~70 km/s) and provides the data for identifying OB runaway candidates.",
+      "source_refs": [
+        {
+          "path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+          "start_line": 1172,
+          "end_line": 1190,
+          "caption": "Candidate OB proper-motion runaway stars",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "VFTS",
+          "meaning": "VLT-FLAMES Tarantula Survey identifier number (Evans et al. 2011). Values: 8, 65, 219, 285, 290, 406, 838.",
+          "unit_text": "",
+          "source_of_definition": "Table header 'VFTS' from the VFTS catalog",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ident",
+          "meaning": "Optical identifier from the astrometric reference catalog. Six-digit numbers from the stellar catalog.",
+          "unit_text": "",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V",
+          "meaning": "Johnson V-band magnitude from Sabbi et al. (2016) VI photometry.",
+          "unit_text": "mag",
+          "source_of_definition": "Table header, Sabbi et al. 2016",
+          "confidence": 1.0
+        },
+        {
+          "name": "V-I",
+          "meaning": "V-I color index from Sabbi et al. (2016) photometry.",
+          "unit_text": "mag",
+          "source_of_definition": "Table header, Sabbi et al. 2016",
+          "confidence": 1.0
+        },
+        {
+          "name": "Sp. Type",
+          "meaning": "Spectral type from VFTS (Sana et al. 2013, Walborn et al. 2014, Evans et al. 2015a). Values: B0.5 V(n), O8 V(n), B3-5 III-V, O7.5 Vnnn, O9.5 IV, O6 Vnn, B1: II(n).",
+          "unit_text": "",
+          "source_of_definition": "VFTS papers",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_LOS",
+          "meaning": "Line-of-sight (radial) velocity from VFTS spectroscopy in km/s. Values range from 228 to 304 km/s.",
+          "unit_text": "km/s",
+          "source_of_definition": "Table header 'v_LOS', VFTS",
+          "confidence": 1.0
+        },
+        {
+          "name": "v sin i",
+          "meaning": "Projected rotational velocity from VFTS spectroscopy in km/s. VFTS 285 has a record-high 600 km/s.",
+          "unit_text": "km/s",
+          "source_of_definition": "Table header, VFTS",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_X",
+          "meaning": "Relative proper motion in the X coordinate (aligned with RA) in mas/yr. Negative values indicate motion westward.",
+          "unit_text": "mas/yr",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_Y",
+          "meaning": "Relative proper motion in the Y coordinate (aligned with Dec) in mas/yr.",
+          "unit_text": "mas/yr",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_mu_X",
+          "meaning": "Standard error of the proper motion in the X coordinate in mas/yr.",
+          "unit_text": "mas/yr",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_mu_Y",
+          "meaning": "Standard error of the proper motion in the Y coordinate in mas/yr.",
+          "unit_text": "mas/yr",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "chi2_X",
+          "meaning": "Reduced chi-squared statistic for the proper motion fit in the X direction.",
+          "unit_text": "",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "chi2_Y",
+          "meaning": "Reduced chi-squared statistic for the proper motion fit in the Y direction.",
+          "unit_text": "",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Q_X",
+          "meaning": "Goodness-of-fit probability Q for the proper motion fit in the X direction.",
+          "unit_text": "",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Q_Y",
+          "meaning": "Goodness-of-fit probability Q for the proper motion fit in the Y direction.",
+          "unit_text": "",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_frame",
+          "meaning": "Number of individual HST frames used to calculate the proper motion. Values: 3 to 6.",
+          "unit_text": "",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 is described in Section 5 as listing candidate OB proper-motion runaway stars based on proper motions exceeding the 3-sigma threshold.",
+      "comments": "15-column sidewaystable with 7 data rows. Uses tabular environment. The table compiles astrometric measurements from this study with spectroscopic parameters from VFTS. The proper motion errors are typically 0.04-0.20 mas/yr. The chi-squared values (chi2_X, chi2_Y) and Q probabilities provide quality assessment of the proper motion fits."
+    },
+    {
+      "id": "table-2-af-runaways",
+      "kind": "latex_table",
+      "asset_type": "reference_table",
+      "role_in_paper": "Table listing 11 candidate young A-F proper-motion runaway stars identified from the general proper motion catalog (not in VFTS). These are fainter stars that show significant proper motions exceeding the 3-sigma threshold. They are not OB stars but are likely young A-F type stars in the LMC, identified as candidate runaways based solely on their proper motions exceeding the 3-sigma error threshold. The table includes celestial coordinates (RA, Dec) and proper motion data. These candidates are potential BSE (binary supernova ejection) runaways or dynamically ejected stars from other clusters.",
+      "source_refs": [
+        {
+          "path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+          "start_line": 1192,
+          "end_line": 1214,
+          "caption": "Candidate young A-F proper-motion runaways",
+          "label": "tab:afrun"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Ident",
+          "meaning": "Optical identifier from the astrometric reference catalog. Six-digit numbers.",
+          "unit_text": "",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V",
+          "meaning": "Johnson V-band magnitude from Sabbi et al. (2016). Values range from 17.790 to 20.735 mag.",
+          "unit_text": "mag",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V-I",
+          "meaning": "V-I color index from Sabbi et al. (2016) photometry. Values range from -0.029 to 0.429 mag, consistent with A-F spectral types.",
+          "unit_text": "mag",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA",
+          "meaning": "Right Ascension in decimal degrees (J2000.0).",
+          "unit_text": "deg",
+          "source_of_definition": "Table header 'RA (deg)'",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec",
+          "meaning": "Declination in decimal degrees (J2000.0).",
+          "unit_text": "deg",
+          "source_of_definition": "Table header 'Dec (deg)'",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_X",
+          "meaning": "Relative proper motion in the X coordinate (aligned with RA) in mas/yr.",
+          "unit_text": "mas/yr",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_Y",
+          "meaning": "Relative proper motion in the Y coordinate (aligned with Dec) in mas/yr.",
+          "unit_text": "mas/yr",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_mu_X",
+          "meaning": "Standard error of the proper motion in the X coordinate in mas/yr.",
+          "unit_text": "mas/yr",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_mu_Y",
+          "meaning": "Standard error of the proper motion in the Y coordinate in mas/yr.",
+          "unit_text": "mas/yr",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "chi2_X",
+          "meaning": "Reduced chi-squared statistic for the proper motion fit in the X direction.",
+          "unit_text": "",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "chi2_Y",
+          "meaning": "Reduced chi-squared statistic for the proper motion fit in the Y direction.",
+          "unit_text": "",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Q_X",
+          "meaning": "Goodness-of-fit probability Q for the proper motion fit in the X direction.",
+          "unit_text": "",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Q_Y",
+          "meaning": "Goodness-of-fit probability Q for the proper motion fit in the Y direction.",
+          "unit_text": "",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_frame",
+          "meaning": "Number of individual HST frames used to calculate the proper motion. Values: 4 to 17.",
+          "unit_text": "",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 2 (label: tab:afrun) is described in the text as listing candidate young A-F proper-motion runaways that are not in the VFTS catalog. These stars have larger proper motions (0.3-0.7 mas/yr) than the OB runaways and are identified from the general proper motion catalog.",
+      "comments": "14-column sidewaystable with 11 data rows. Uses tabular environment. These stars are fainter (V~17.8-20.7) than the OB runaways and lack spectroscopic data, being identified solely by their proper motion excess. Their total proper motions range from ~0.30 to ~0.78 mas/yr (70-190 km/s at LMC distance), notably higher than the OB sample. The paper notes they are likely BSE (binary supernova ejection) runaways."
+    },
+    {
+      "id": "table-3-r136-escaped",
+      "kind": "latex_table",
+      "asset_type": "reference_table",
+      "role_in_paper": "Table listing 10 stars likely escaped from the massive star cluster R136. This is the paper's most significant finding. The table provides the positions of these stars relative to R136 (X and Y offsets in arcmin), the position angle of their motion relative to R136, and their total proper motion. The stars span a wide range of masses (O through F spectral types) and are found at angular distances from 35 arcsec to 407 arcsec (8-98 pc) from R136. The table demonstrates the mass-dependent escape velocity pattern.",
+      "source_refs": [
+        {
+          "path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+          "start_line": 1217,
+          "end_line": 1241,
+          "caption": "Likely-escaped stars from R136",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Ident",
+          "meaning": "Optical identifier from the astrometric reference catalog. Six-digit numbers. Some are also VFTS stars (e.g., 259107 = VFTS 65, 292849 = VFTS 290, 294979 = VFTS 285, 349614 = VFTS 219). Others are from Table 2 (A-F runaways).",
+          "unit_text": "",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "X",
+          "meaning": "Position offset in X coordinate (aligned with RA) relative to R136 in arcminutes. Negative values indicate westward of R136.",
+          "unit_text": "arcmin",
+          "source_of_definition": "Table header 'X (arcmin)'",
+          "confidence": 1.0
+        },
+        {
+          "name": "Y",
+          "meaning": "Position offset in Y coordinate (aligned with Dec) relative to R136 in arcminutes. Positive values indicate northward of R136.",
+          "unit_text": "arcmin",
+          "source_of_definition": "Table header 'Y (arcmin)'",
+          "confidence": 1.0
+        },
+        {
+          "name": "Angle",
+          "meaning": "Position angle of the proper motion vector measured from R136 in degrees. A positive angle indicates the direction of motion relative to the radial vector from R136 to the star. Values range from -20.8 to +35.9 degrees, indicating motions that are roughly radial from R136 within about ±36 degrees.",
+          "unit_text": "deg",
+          "source_of_definition": "Table header 'Angle (deg)'",
+          "confidence": 1.0
+        },
+        {
+          "name": "Total pm",
+          "meaning": "Total proper motion magnitude (sqrt(mu_X^2 + mu_Y^2)) in mas/yr. Values range from 0.20 to 0.54 mas/yr, corresponding to ~50-130 km/s at the LMC distance.",
+          "unit_text": "mas/yr",
+          "source_of_definition": "Table header 'Total pm (mas/yr)'",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 3 is described in the text (Section 5) and Figure 8 as showing that these 10 stars have proper motion vectors pointing back toward R136 within a tolerance. The text states: '10 runaway stars have proper motion directions consistent with an origin in the young and massive star cluster R136, albeit roughly one third of these may be chance alignments.'",
+      "comments": "5-column deluxetable with 10 data rows. Used deluxetable environment. This is the key result table. The stars span O through F spectral types. The total proper motions range from 0.20-0.54 mas/yr. The paper argues these are dynamically ejected stars from R136, with the escape velocities correlated with apparent magnitude (mass). The angle values (relative to the radial direction from R136) are mostly within ±21° of radial, consistent with ejection from R136. About 3 of 10 could be chance alignments."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://archive.stsci.edu",
+      "local_path": "",
+      "description": "Mikulski Archive for Space Telescopes (MAST) hosting all HST observations used in this study. The paper uses data from HST programs GO-12499, GO-12915, and GO-13359 (PI: D.J. Lennon). Instruments used: WFC3/UVIS (primary new observations, 2013-2015), ACS/WFC (parallel observations), and WFPC2 (archival from Paper I, GO-11694 and others). The MAST archive provides the raw FITS images that were processed to derive positions and proper motions for 368,787 stars.",
+      "source_refs": [
+        {
+          "path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+          "start_line": 934,
+          "end_line": 939,
+          "context": "grant support for programs GO-12499, GO-12915, and GO-13359, provided by NASA through grants from the Space Telescope Science Institute"
+        }
+      ],
+      "evidence": "The paper describes a dedicated two-epoch HST survey using WFC3/UVIS, ACS/WFC, and archival WFPC2 data. All raw HST data are available through MAST at https://archive.stsci.edu.",
+      "comments": "Three HST programs were used: GO-12499, GO-12915, GO-13359. The WFC3/UVIS observations were obtained 2013-2015, with short (35s) and long (699s) exposures in F775W filter. ACS/WFC parallel observations used 32s and 640s exposures. Archival WFPC2 data from Paper I (GO-11694 and others) spans 1999-2010."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "VLT-FLAMES Tarantula Survey (VFTS; Evans et al. 2011, A&A, 530, A108) — a multi-epoch spectroscopic survey of massive stars in 30 Doradus using the FLAMES/Giraffe and UVES spectrographs on the VLT. The VFTS provides spectral types (Sana et al. 2013; Walborn et al. 2014; Evans et al. 2015a), line-of-sight radial velocities (v_LOS), projected rotational velocities (v sin i), and stellar parameters for OB stars. VFTS data are used extensively in this paper to characterize the 534 VFTS stars with proper motion measurements, and to provide the spectral types and radial velocities in Table 1.",
+      "source_refs": [
+        {
+          "path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+          "start_line": 992,
+          "end_line": 993,
+          "context": "\\bibitem[\\protect\\citeauthoryear{Sana et al.}{2013}]{san13}Sana, H., de Koter, A., de Mink, S.~E., et al.\\ 2013, \\aap, 550, A107"
+        }
+      ],
+      "evidence": "The VFTS survey is referenced throughout the paper as the source of spectral types, radial velocities, and v sin i for the OB stars. Table 1 explicitly includes VFTS numbers and spectroscopic data. The paper states: 'Among a total of 481 measured VFTS stars' with proper motions.",
+      "comments": "VFTS data are publicly available through the ESO archive (http://archive.eso.org) and the VFTS collaboration publications. Key VFTS papers cited: Evans et al. 2011 (survey description), Sana et al. 2013 (spectral classification and radial velocities), Walborn et al. 2014 (spectral types), Evans et al. 2015a (additional spectroscopy), Ramirez-Agudelo et al. 2017 (rotational velocities)."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Sabbi et al. (2016, ApJS, 222:11) VI photometric catalog of the 30 Doradus region. This catalog provides Johnson V and I magnitudes for stars in the 30 Dor region, obtained from HST WFC3/UVIS observations. The VI photometry is used in this paper as ancillary data for all stars in the proper motion catalog, particularly for Tables 1 and 2 where V magnitude and V-I color are listed for the candidate runaways.",
+      "source_refs": [
+        {
+          "path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+          "start_line": 403,
+          "end_line": 403,
+          "context": "Ancillary data include $VI$ photometric data from \\citet{sa16}"
+        }
+      ],
+      "evidence": "The paper explicitly states that ancillary photometric data come from Sabbi et al. (2016). V and V-I values in Tables 1-2 are sourced from this catalog.",
+      "comments": "Sabbi et al. (2016) is the definitive HST photometric catalog for the 30 Dor region covering the same FOV as the proper motion catalog. The catalog is available through MAST and at CDS/VizieR."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/data",
+      "local_path": "",
+      "description": "Gaia Data Release 1 (DR1; Gaia Collaboration et al. 2016) used for astrometric calibration. The paper used a few thousand Gaia DR1 stars to derive absolute positions for the HST astrometric reference catalog, enabling transformation from relative to absolute coordinate systems. Gaia DR1 provides positions for ~1.1 billion stars at sub-arcsecond precision. The paper mentions Gaia DR2 (released April 2018) was used for a comparison of proper motions for relatively bright stars, showing unexpected scatter not explained by formal errors.",
+      "source_refs": [
+        {
+          "path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+          "start_line": 410,
+          "end_line": 411,
+          "context": "The all-sky {\\it Gaia} Data Release~1 \\citep[DR\\,1;][]{gaia} is an obvious dataset to compare with {\\it HST} measurements."
+        }
+      ],
+      "evidence": "The paper states: 'We retrieved a few thousand DR1 stars to estimate absolute coordinates for our astrometric reference catalog.' Gaia DR2 comparison is discussed later in the paper.",
+      "comments": "Gaia DR1 was used to anchor the relative HST proper motions to an absolute reference frame. The paper also notes that future work will use Gaia DR2 proper motions to augment the sample. The Gaia archive is at https://gea.esac.esa.int/archive/."
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Proper Motion Catalog — the paper's primary data product: relative proper motions for 368,787 stars in the 30 Doradus region, published as an electronic table accompanying the journal article (AJ, 156, 98). The catalog includes four sub-catalogs: (a) Paper I proper motions from WFPC2 (86,606 entries, suffix 'c'), (b) new ACS/WFC proper motions (210,745 entries, suffix 'a'), (c) new WFC3/UVIS proper motions (165,737 entries, suffix 'u'), and (d) combined proper motions (suffix 'm') representing weighted means where multiple measurements exist. Each entry includes: identifier, XY positions, proper motions and errors, number of data points, chi-squared, and goodness-of-fit probability Q. Ancillary VI photometry from Sabbi et al. (2016) is also included.",
+      "source_refs": [
+        {
+          "path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+          "start_line": 360,
+          "end_line": 366,
+          "context": "we provide four catalogs of proper motions that give an opportunity to examine their internal consistency and other properties (Proper Motion Catalog, electronic Table)"
+        }
+      ],
+      "evidence": "Section 3.2 (Catalogs of proper motions) describes the structure and content of the proper motion catalog in detail. The catalog is published as an electronic table with the AJ article.",
+      "comments": "Available at the AJ journal website (https://doi.org/10.3847/1538-3881/aad280) as machine-readable tables. Also likely available at CDS/VizieR. The paper notes that 'a number of brighter stars with the proper-motion measurement in Paper I are missing in the new catalogs' due to saturation limits."
+    }
+  ]
+}

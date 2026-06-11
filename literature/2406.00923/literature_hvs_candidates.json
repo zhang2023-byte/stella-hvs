@@ -1,0 +1,65 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T17:52:21",
+  "paper": {
+    "arxiv_id": "2406.00923",
+    "bibcode": "2025NSRev..12E.347H",
+    "title": "A high-velocity star recently ejected by an intermediate-mass black hole in M15",
+    "month": "2024-06",
+    "source_note_json": "notes/2024/2024-06/2024-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2406.00923",
+      "pdf": "https://arxiv.org/pdf/2406.00923"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2406.00923",
+    "audit_path": "literature/2406.00923/audit.json",
+    "catalog_review_path": "literature/2406.00923/catalog_review.json",
+    "catalog_extraction_path": "literature/2406.00923/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2406.00923/catalog_tables/table-table-Table1.ecsv",
+      "literature/2406.00923/catalog_tables/table-002.ecsv",
+      "literature/2406.00923/catalog_tables/table-003.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T17:52:21",
+    "extractor": "agent",
+    "summary": "The paper reports J0731+3717 as a high-velocity star ejected from globular cluster M15 via the Hills mechanism (V_GSR = 419 km/s, ejection velocity 548 km/s). However, the paper does not explicitly discuss J0731+3717 as possibly unbound from the Milky Way / Galactic potential. Throughout the text the object is consistently labelled a 'high-velocity star' (not a 'hypervelocity star'), and the paper explicitly contrasts 'hypervelocity stars from the Galactic center' with 'high-velocity stars from the IMBHs in the center of globular clusters'. No other objects are presented as Galactic-unbound candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "j0731-table1",
+      "description": "The main object J0731+3717 and its parameters in Table 1. The paper also discusses a sample of 934 high-velocity halo stars with V_GSR >= 400 km/s used for the systematic search, but only J0731+3717 is examined in detail.",
+      "decision": "excluded",
+      "reason": "The paper presents J0731+3717 as a high-velocity star ejected from the globular cluster M15, not as a candidate that is possibly unbound from the Milky Way. The paper explicitly distinguishes 'hypervelocity stars from the Galactic center' (unbound) from 'high-velocity stars from the IMBHs in the center of globular clusters' (this object). V_GSR = 419 km/s is reported without any bound/unbound assessment against the Galactic potential. The other 934 high-velocity stars in the search sample are likewise not presented as Galactic-unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2406.00923/arxiv_source/main.tex",
+          "start_line": 59,
+          "end_line": 67,
+          "context": "Abstract describes J0731+3717 as a high-velocity star ejected from M15; no Galactic-unbound claim is made."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2406.00923/arxiv_source/main.tex",
+          "start_line": 124,
+          "end_line": 137,
+          "context": "Results section labels J0731+3717 as a high-velocity star (V_GSR = 419 km/s) ejected from M15; discusses orbital intersection with M15, not Galactic escape."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2406.00923/arxiv_source/main.tex",
+          "start_line": 212,
+          "end_line": 219,
+          "context": "Paper explicitly contrasts Hills-mechanism hypervelocity stars from the Galactic center with high-velocity stars from globular-cluster IMBHs, using the latter label for J0731+3717."
+        }
+      ]
+    }
+  ]
+}

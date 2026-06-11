@@ -1,0 +1,408 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:38:54",
+  "paper": {
+    "arxiv_id": "2403.03311",
+    "title": "Verification of Hypervelocity Bulge Red Clump Stars",
+    "month": "2024-03"
+  },
+  "review": {
+    "path": "literature/2403.03311/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123854",
+    "started_at": "2026-05-17T12:38:54",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2403.03311",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table_34",
+      "internal_table_id": "table-table_34",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2403.03311/arxiv_source/publikacja.tex",
+        "start_line": 53,
+        "end_line": 98,
+        "caption": "List of 34 HVRCS candidates from \\citet{luna19}. Precise equatorial coordinates are extracted based on the $Gaia$ DR2 identifiers. Seven final HVRCS candidates from \\citet{luna19} are boldfaced in the first column. Distances (6th column) are taken from \\citet{luna19}.",
+        "label": "table_34"
+      },
+      "source_path": "literature/2403.03311/arxiv_source/publikacja.tex",
+      "excerpt_path": "literature/2403.03311/catalog_sources/table-table_34/excerpt.tex",
+      "sha256": "9c7deeccd51e4bb9044d8cad4d17ed42447e8a4a2f0f13bd18305086522538aa",
+      "line_count": 46,
+      "error": ""
+    },
+    {
+      "id": "table-table_luna",
+      "internal_table_id": "table-table_luna",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2403.03311/arxiv_source/publikacja.tex",
+        "start_line": 101,
+        "end_line": 119,
+        "caption": "Seven final HVRCS candidates selected by \\citet{luna19}. Tangential velocities (last column) are based on PMs and distances from VVV.",
+        "label": "table_luna"
+      },
+      "source_path": "literature/2403.03311/arxiv_source/publikacja.tex",
+      "excerpt_path": "literature/2403.03311/catalog_sources/table-table_luna/excerpt.tex",
+      "sha256": "e5b1a05f8389dbb472bf21d101abfb92aaa7c10e1fcfd1a1f6ea2d17a8e12447",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-propermotions",
+      "internal_table_id": "table-propermotions",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2403.03311/arxiv_source/publikacja.tex",
+        "start_line": 240,
+        "end_line": 280,
+        "caption": "Proper motions, parallaxes, and uncertainty to seeing ratios for the 30 analyzed stars. The second column gives the $I$-band brightness in the OGLE-IV photometry. The other values are derived from the OGLE-IV time-series astrometry. Seven final HVRCS candidates from \\citet{luna19} are boldfaced in the first column.",
+        "label": "propermotions"
+      },
+      "source_path": "literature/2403.03311/arxiv_source/publikacja.tex",
+      "excerpt_path": "literature/2403.03311/catalog_sources/table-propermotions/excerpt.tex",
+      "sha256": "76cbcc247a33438e80de0da5f80eb9eda1915febf4dddbdefa0b839ba33af6d1",
+      "line_count": 41,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table_34",
+      "internal_table_id": "table-table_34",
+      "status": "success",
+      "ecsv_path": "literature/2403.03311/catalog_tables/table-table_34.ecsv",
+      "caption": "List of 34 HVRCS candidates from \\citet{luna19}. Precise equatorial coordinates are extracted based on the $Gaia$ DR2 identifiers. Seven final HVRCS candidates from \\citet{luna19} are boldfaced in the first column. Distances (6th column) are taken from \\citet{luna19}.",
+      "label": "table_34",
+      "row_count": 34,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "no.",
+          "Gaia DR2 Source ID",
+          "G [mag]",
+          "R.A. [ ∘ ]",
+          "Dec. [ ∘ ]",
+          "d_L19 [kpc]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "no.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR2 Source ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "G [mag]",
+          "unit_text": "G [mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "R.A. [ ∘ ]",
+          "unit_text": "R.A. [ ∘ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Dec. [ ∘ ]",
+          "unit_text": "Dec. [ ∘ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "d_L19 [kpc]",
+          "unit_text": "d_L19 [kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4x66890d/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2403.03311/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4x66890d/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2403.03311/catalog_sources/table-table_34/wrapped.tex",
+            "html": "literature/2403.03311/catalog_sources/table-table_34/latexml.html",
+            "stdout": "literature/2403.03311/catalog_sources/table-table_34/latexml.stdout.txt",
+            "stderr": "literature/2403.03311/catalog_sources/table-table_34/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9c7deeccd51e4bb9044d8cad4d17ed42447e8a4a2f0f13bd18305086522538aa"
+    },
+    {
+      "id": "table-table_luna",
+      "internal_table_id": "table-table_luna",
+      "status": "success",
+      "ecsv_path": "literature/2403.03311/catalog_tables/table-table_luna.ecsv",
+      "caption": "Seven final HVRCS candidates selected by \\citet{luna19}. Tangential velocities (last column) are based on PMs and distances from VVV.",
+      "label": "table_luna",
+      "row_count": 7,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "no.",
+          "Gaia DR2 Source ID",
+          "d_L19 [kpc]",
+          "PM L19 [mas/yr]",
+          "v_T,L19 [km/s]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "no.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR2 Source ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "d_L19 [kpc]",
+          "unit_text": "d_L19 [kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "PM L19 [mas/yr]",
+          "unit_text": "PM L19 [mas/yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "v_T,L19 [km/s]",
+          "unit_text": "v_T,L19 [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgqqr_lkt/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2403.03311/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgqqr_lkt/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2403.03311/catalog_sources/table-table_luna/wrapped.tex",
+            "html": "literature/2403.03311/catalog_sources/table-table_luna/latexml.html",
+            "stdout": "literature/2403.03311/catalog_sources/table-table_luna/latexml.stdout.txt",
+            "stderr": "literature/2403.03311/catalog_sources/table-table_luna/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e5b1a05f8389dbb472bf21d101abfb92aaa7c10e1fcfd1a1f6ea2d17a8e12447"
+    },
+    {
+      "id": "table-propermotions",
+      "internal_table_id": "table-propermotions",
+      "status": "success",
+      "ecsv_path": "literature/2403.03311/catalog_tables/table-propermotions.ecsv",
+      "caption": "Proper motions, parallaxes, and uncertainty to seeing ratios for the 30 analyzed stars. The second column gives the $I$-band brightness in the OGLE-IV photometry. The other values are derived from the OGLE-IV time-series astrometry. Seven final HVRCS candidates from \\citet{luna19} are boldfaced in the first column.",
+      "label": "propermotions",
+      "row_count": 30,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "no.",
+          "I [mag]",
+          "\\mu_\\alpha~[mas/yr]",
+          "\\mu_\\delta~[mas/yr]",
+          "\\pi~[mas]",
+          "f [mas/pixel]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "no.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "I [mag]",
+          "unit_text": "I [mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mu_\\alpha~[mas/yr]",
+          "unit_text": "\\mu_\\alpha~[mas/yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\delta~[mas/yr]",
+          "unit_text": "\\mu_\\delta~[mas/yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\pi~[mas]",
+          "unit_text": "\\pi~[mas]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "f [mas/pixel]",
+          "unit_text": "f [mas/pixel]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpul3kd3dx/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2403.03311/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpul3kd3dx/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2403.03311/catalog_sources/table-propermotions/wrapped.tex",
+            "html": "literature/2403.03311/catalog_sources/table-propermotions/latexml.html",
+            "stdout": "literature/2403.03311/catalog_sources/table-propermotions/latexml.stdout.txt",
+            "stderr": "literature/2403.03311/catalog_sources/table-propermotions/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "76cbcc247a33438e80de0da5f80eb9eda1915febf4dddbdefa0b839ba33af6d1"
+    }
+  ]
+}

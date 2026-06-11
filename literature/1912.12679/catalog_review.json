@@ -1,0 +1,83 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1912.12679",
+    "title": "The tale of the tail -- disentangling the high transverse velocity stars in Gaia DR2",
+    "month": "2019-12",
+    "source_note_json": "",
+    "links": {
+      "abs": "https://arxiv.org/abs/1912.12679",
+      "pdf": "https://arxiv.org/pdf/1912.12679"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1912.12679",
+    "audit_path": "literature/1912.12679/audit.json",
+    "source_dir": "literature/1912.12679/arxiv_source",
+    "tex_root": "literature/1912.12679/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:15:00",
+    "reviewer": "agent",
+    "summary": "本文利用Gaia DR2天体测量数据，选取太阳1 kpc内横向速度vt>200 km/s的约77,000颗恒星样本，通过更新经典的Besançon/Galaxia星系模型（改进厚盘运动学描述以Schönrich & Binney (2012)的物理模型替代高斯分布，引入恒星晕的速度椭球随金属丰度变化），拟合高横向速度恒星的分布。结合LAMOST DR5光谱数据提供的[Fe/H]和[α/Fe]化学信息，深入分析了赫罗图(HR图)中蓝/红双序列的起源。论文包含1个内部表格（Table 1: tab_param），列出经典Galaxia模型与更新模型中厚盘和晕的速度参数及星族比例。该表为模型参数汇总表，是论文拟合分析的核心输入参数集。论文引用的Gaia DR2、LAMOST DR5、APOGEE DR12均为公开巡天数据库，Galaxia、emcee、Galpy、mwdust均为公开软件工具的方法论引用，非本文特有的结构化数据资产，按照审查边界规则予以省略。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab_param",
+      "kind": "latex_table",
+      "asset_type": "model_parameters",
+      "role_in_paper": "列出经典Galaxia模型与本文更新模型中厚盘(TD)和恒星晕(Halo)的速度弥散度及平均旋转速度参数，以及各星族在ϖ>1 mas样本中的比例(f_pop)。该表是论文Section 2拟合分析的核心输入，用于对比原始模型与更新模型在描述高vt恒星分布能力上的差异，支撑论文关于厚盘占高vt样本约13%的核心结论。",
+      "source_refs": [
+        {
+          "path": "literature/1912.12679/arxiv_source/sections/modeling2.tex",
+          "start_line": 19,
+          "end_line": 37,
+          "caption": "Parameters for the canonical Galaxia model and our updated model. \\newline * We do not use a Gaussian distribution to model $v_\\phi$ for the thick disc and so these numbers are just included to give an indication of the mean and spread of our distribution. See text for details.",
+          "label": "tab_param"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Velocity Component",
+          "meaning": "速度分量标识：⟨v_R⟩及弥散度σ_vR（径向速度平均值与弥散度）、⟨v_ϕ⟩及弥散度σ_vϕ（方位角速度平均值与弥散度）、⟨v_z⟩及弥散度σ_vz（垂直速度平均值与弥散度）、f_pop(ϖ>1)（视差大于1 mas的星族比例）。速度单位为km/s，比例单位为%。",
+          "unit_text": "",
+          "source_of_definition": "table row labels",
+          "confidence": 1.0
+        },
+        {
+          "name": "Galaxia TD",
+          "meaning": "经典Galaxia模型中厚盘的速度参数：径向速度[0;66] km/s（平均0，弥散66）；方位角速度[195;51] km/s（平均195，弥散51）；垂直速度[0;42] km/s（平均0，弥散42）；星族比例10.95%。",
+          "unit_text": "km/s / %",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Galaxia Halo",
+          "meaning": "经典Galaxia模型中恒星晕的速度参数：径向速度[0,135] km/s（平均0，弥散135）；方位角速度[11;85] km/s（平均11，弥散85）；垂直速度[0,84] km/s（平均0，弥散84）；星族比例0.11%。",
+          "unit_text": "km/s / %",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Model TD",
+          "meaning": "本文更新模型中厚盘的速度参数：径向速度[0;58] km/s（平均0，弥散58，采用Schönrich & Binney 2012物理模型替代高斯分布）；方位角速度[196,48]* km/s（*标注表示非高斯分布，数值仅为均值与散布的指示；基于APOGEE数据拟合得σ0=53.4 km/s, Rσ=12.3 kpc）；垂直速度[0;42] km/s（平均0，弥散42）；星族比例6.52%。",
+          "unit_text": "km/s / %",
+          "source_of_definition": "table header + paper Section 2.2",
+          "confidence": 1.0
+        },
+        {
+          "name": "Model Halo",
+          "meaning": "本文更新模型中恒星晕的速度参数：径向速度[0,140] km/s（平均0，弥散140，基于Belokurov et al. 2018的速度椭球各向异性随[Fe/H]变化的观测约束）；方位角速度[30,78] km/s（平均30，弥散78，体现了恒星晕的轻度旋转及金属丰度依赖性）；垂直速度[0,80] km/s（平均0，弥散80）；星族比例0.47%。",
+          "unit_text": "km/s / %",
+          "source_of_definition": "table header + paper Section 2.3",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 (tab_param) 以5列×4行列出经典Galaxia模型与更新模型的速度参数。列分别为：行标签（速度分量名称）、Galaxia TD、Galaxia Halo、Model TD、Model Halo。行包括：⟨v_R⟩;σ_vR[km/s]：Galaxia TD=[0;66], Galaxia Halo=[0,135], Model TD=[0;58], Model Halo=[0,140]；⟨v_ϕ⟩;σ_vϕ[km/s]：Galaxia TD=[195;51], Galaxia Halo=[11;85], Model TD=[196,48]*, Model Halo=[30,78]；⟨v_z⟩;σ_vz[km/s]：Galaxia TD=[0;42], Galaxia Halo=[0,84], Model TD=[0;42], Model Halo=[0,80]；f_pop(ϖ>1)[%]：Galaxia TD=10.95, Galaxia Halo=0.11, Model TD=6.52, Model Halo=0.47。表注说明*标注的厚盘v_ϕ采用非高斯分布。",
+      "comments": "该表为论文唯一的内部数据表格，总结了模型参数的更新前后对比。表格原始LaTeX位于sections/modeling2.tex第19-37行，使用tabular环境，列为{ccc|cc}格式。注意原始表头使用了multicolumn合并列，自动解析的column name可能不够精确，已根据论文正文(Section 2.2-2.3)和表格内容修正列含义。"
+    }
+  ],
+  "external_resources": []
+}

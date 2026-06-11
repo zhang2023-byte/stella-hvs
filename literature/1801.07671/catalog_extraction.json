@@ -1,0 +1,189 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:30:32",
+  "paper": {
+    "arxiv_id": "1801.07671",
+    "title": "Search for Stellar Streams Based on Data from the RAVE5 and Gaia TGAS Catalogues",
+    "month": "2018-01"
+  },
+  "review": {
+    "path": "literature/1801.07671/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083032",
+    "started_at": "2026-06-07T08:30:32",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1801.07671",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-1-bb17-3-clump-stars",
+      "internal_table_id": "table-1-bb17-3-clump-stars",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1801.07671/arxiv_source/Om_Cen-arxiv=2018.tex",
+        "start_line": 253,
+        "end_line": 294,
+        "caption": "Data on the stars of the BB17-3 clump",
+        "label": "t:01"
+      },
+      "source_path": "literature/1801.07671/arxiv_source/Om_Cen-arxiv=2018.tex",
+      "excerpt_path": "literature/1801.07671/catalog_sources/table-1-bb17-3-clump-stars/excerpt.tex",
+      "sha256": "15969e4ec775a59f9d0349201c92820e313c28a4b959220b7c7df1bdfa395559",
+      "line_count": 42,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-1-bb17-3-clump-stars",
+      "internal_table_id": "table-1-bb17-3-clump-stars",
+      "status": "success",
+      "ecsv_path": "literature/1801.07671/catalog_tables/table-1-bb17-3-clump-stars.ecsv",
+      "caption": "Data on the stars of the BB17-3 clump",
+      "label": "t:01",
+      "row_count": 28,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "TYC",
+          "l, deg.",
+          "b, deg.",
+          "T_\\hbox\\tiny\\rm eff, K",
+          "\\log~ g",
+          "[M/H], dex",
+          "\\pi_Gaia, mas",
+          "\\log t"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "TYC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "l, deg.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "b, deg.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "T_\\hbox\\tiny\\rm eff, K",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\log~ g",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "[M/H], dex",
+          "unit_text": "[M/H], dex",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\pi_Gaia, mas",
+          "unit_text": "\\pi_Gaia, mas",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\log t",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvbbhl13r/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1801.07671/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvbbhl13r/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1801.07671/catalog_sources/table-1-bb17-3-clump-stars/wrapped.tex",
+            "html": "literature/1801.07671/catalog_sources/table-1-bb17-3-clump-stars/latexml.html",
+            "stdout": "literature/1801.07671/catalog_sources/table-1-bb17-3-clump-stars/latexml.stdout.txt",
+            "stderr": "literature/1801.07671/catalog_sources/table-1-bb17-3-clump-stars/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "15969e4ec775a59f9d0349201c92820e313c28a4b959220b7c7df1bdfa395559"
+    }
+  ]
+}

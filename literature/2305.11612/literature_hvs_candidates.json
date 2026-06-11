@@ -1,0 +1,64 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:36:00",
+  "paper": {
+    "arxiv_id": "2305.11612",
+    "bibcode": "2023A&A...675A..22Z",
+    "title": "Sapaki: Galactic O3If* star possibly born in isolation",
+    "month": "2023-05",
+    "source_note_json": "notes/2023/2023-05/2023-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2305.11612",
+      "pdf": "https://arxiv.org/pdf/2305.11612"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2305.11612",
+    "audit_path": "literature/2305.11612/audit.json",
+    "catalog_review_path": "literature/2305.11612/catalog_review.json",
+    "catalog_extraction_path": "literature/2305.11612/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2305.11612/catalog_tables/table-tab-Sapaki_astrophot.ecsv",
+      "literature/2305.11612/catalog_tables/table-tab-Sapaki_vr.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:36:00",
+    "extractor": "agent",
+    "summary": "This paper reports spectroscopic observations and kinematic analysis of a Galactic O3If* star, Sapaki (WR67a). The star is located at the center of a nearly circular cavity within the giant molecular cloud RCW 91, with no clear cluster environment. Using Gaia DR3 proper motion data to compute the Delta parameter (=1.3 < 3.5, the runaway threshold), the paper explicitly rules out Sapaki's runaway status, supporting the hypothesis of isolated formation. The paper only addresses proper motions of ordinary Galactic field stars and never discusses Galactic escape velocity, hypervelocity stars (HVS), or Galactic gravitational unbinding. Sapaki's radial velocity is only Vr = -34.2 km/s, within the normal range for Galactic disk stars. No HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2305.11612:group-01",
+      "description": "Sapaki (WR67a), a single O3If* star. Medium-resolution spectroscopy (R=4100) with Magellan/MagE was used to obtain spectral type, extinction, and radial velocity; Gaia DR3 proper motion data were used to analyze its runaway status via the Delta parameter method. The surrounding GDR3 sources were also examined for proper motion and parallax, with only one star (S1) found to have compatible astrometric parameters.",
+      "decision": "rejected",
+      "reason": "Sapaki is explicitly not a runaway star: Delta = 1.3 < 3.5 threshold, and its proper motion is consistent with the surrounding field star distribution. The paper's purpose is to demonstrate that Sapaki is a non-runaway, isolated massive star formed in situ. Its proper motion and radial velocity (Vr = -34.2 +/- 15.6 km/s) are within the normal range for Galactic disk stars, far below the Galactic escape velocity. The 'runaway' discussed in the paper refers to OB stars escaping from their birth clusters (cluster runaway), not Galactic gravitational unbinding. Completely unrelated to HVS.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2305.11612/arxiv_source/WR67a_Draft.tex",
+          "start_line": 78,
+          "end_line": 83,
+          "context": "Abstract: 'We may also discard its runaway status solely based on its 2D kinematics.' 和 'Given its apparent non-runaway status and the absence of clustering, Sapaki appears to be a solid candidate for isolated high-mass star formation.' 论文结论明确指出非 runaway。"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2305.11612/arxiv_source/WR67a_Draft.tex",
+          "start_line": 229,
+          "end_line": 234,
+          "context": "Section 4: 计算 Δ = 1.3，低于 3.5 阈值，结论 'we find that Sapaki is not a runaway star.' 此 runaway 指从出生星团逃逸的 OB 星，速度远低于银河逃逸速度。"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2305.11612/arxiv_source/WR67a_Draft.tex",
+          "start_line": 249,
+          "end_line": 250,
+          "context": "Summary: 'we may discard a runaway status for Sapaki if we consider solely its 2D kinematics, which is consistent with the velocity distribution of Galactic O-type stars.' 确认其速度与银河系普通 O 型星一致，远未达到 HVS 水平。"
+        }
+      ]
+    }
+  ]
+}

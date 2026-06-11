@@ -1,0 +1,735 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2302.01349",
+    "title": "The IACOB project VIII. Searching for empirical signatures of binarity in fast-rotating O-type stars",
+    "month": "2023-02",
+    "source_note_json": "notes/2023/2023-02/2023-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2302.01349",
+      "pdf": "https://arxiv.org/pdf/2302.01349"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2302.01349",
+    "audit_path": "literature/2302.01349/audit.json",
+    "source_dir": "literature/2302.01349/arxiv_source",
+    "tex_root": "literature/2302.01349/arxiv_source/45145corr.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:27:00",
+    "reviewer": "agent",
+    "summary": "This paper (IACOB VIII) performs a complete multi-epoch spectroscopic search for binary signatures in 54 fast-rotating (vsini>200 km/s) Galactic O-type stars, complemented by Gaia proper motions, TESS photometry, and literature data. The paper contains 7 internal LaTeX tables: (1) main sample catalog of 50 fast rotators with vsini, RV variability, SB tags, TESS photometric variability, X-ray flux, visual companions, and final binary status (Table b_fast); (2) statistical comparison of slow vs fast rotators (Table fast_stat); (3) detailed orbital parameters for 9 confirmed SB1 systems (Table sb1_fast); (4) observation log with per-instrument spectrum counts (Table sample); (5) physical parameters (Teff, logL, R, vcrit, RUWE, distances) for the sample (Table phys_parameters); (6) visual companion details (Table info_imaging); (7) SB1 slow-rotator eclipsing/ellipsoidal variables (Table tab-app-eb-ev). External resources: CDS for RV measurements tables, TESS MAST archive, ESO-FEROS archive, and XMM-Newton source catalog."
+  },
+  "internal_tables": [
+    {
+      "id": "table-table-b_fast",
+      "kind": "latex_table",
+      "asset_type": "object_table",
+      "role_in_paper": "primary sample catalog — lists 50 fast-rotating O-type stars with compiled multi-epoch spectroscopic, TESS photometric, Gaia astrometric, X-ray, and visual companion information, ordered by increasing vsini",
+      "source_refs": [
+        {
+          "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+          "start_line": 225,
+          "end_line": 296,
+          "caption": "Basic information about working sample of fast-rotating O-type stars extracted from the multi-epoch spectroscopy, TESS and Gaia data, as well as some other specific studies from the literature. The list of targets is ordered by increasing vsini.",
+          "label": "table:b_fast"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Star identifier (HD, BD, or ALS designation)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpC",
+          "meaning": "Spectral classification from GOSC v4.1 (Maíz Apellániz et al. 2013, 2016; Sota et al. 2011, 2014)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vsini",
+          "meaning": "Projected rotational velocity from multi-epoch line-broadening analysis using iacob-broad tool; mean of all-epoch measurements",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_PP",
+          "meaning": "Peak-to-peak amplitude of radial velocity variability measured from He I 5875 line via cross-correlation",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_RV",
+          "meaning": "Standard deviation of all radial velocity measurements per star",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SB tag",
+          "meaning": "Spectroscopic binary classification from visual inspection of He I 5875 line-profile variability: LPV (line profile variable / likely single), SB1, SB2, LPV/SB1?, LPV/SB2?",
+          "unit_text": "",
+          "source_of_definition": "table header + caption notes",
+          "confidence": 1.0
+        },
+        {
+          "name": "Phot. var.",
+          "meaning": "TESS photometric variability type: SLF (stochastic low frequency), SPB/beta Cep (coherent pulsations), EB (eclipsing binary), EV (ellipsoidal variable), RM (reflection modulation), rot? (possible rotational modulation), PQ (poor quality), fr>5 (prominent peaks above 5/d), underscore (no data)",
+          "unit_text": "",
+          "source_of_definition": "table header + caption notes",
+          "confidence": 1.0
+        },
+        {
+          "name": "X-ray",
+          "meaning": "Relative X-ray flux log(L_X/L_BOL); references given in footnotes",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Contamination",
+          "meaning": "Number of detected visual companions within 1 arcmin and between 1-2 arcmin, separated by '+' sign; based on Gaia-EDR3, WDSC, SMASH, AstraLux",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Runaway?",
+          "meaning": "Runaway star status: yes/no from Gaia-EDR3 proper motions (v_t,lsr threshold 30 km/s) and literature",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Final binary status",
+          "meaning": "Final spectroscopic binary classification after combining all empirical information (spectroscopy, TESS, literature): LS (likely single), SB1, LPV/SB1?, LPV/SB2?; (*) marks revised status from column 5; (dagger) marks systems where Mahy+2022 detected faint secondary via disentangling",
+          "unit_text": "",
+          "source_of_definition": "table header + caption notes",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Primary data table spanning 50 fast-rotating O stars (vsini>200 km/s) with 11 columns integrating spectroscopic, photometric, astrometric, X-ray, and imaging information; this is the core observational catalog of the paper.",
+      "comments": "Three stars in this table excluded from final statistics (BD+60deg134, HD124979, ALS12370) due to V>10 or d>3 kpc. The 4 SB2 systems with at least one fast-rotating component are listed at bottom of Table sample, not in this table."
+    },
+    {
+      "id": "table-table-fast_stat",
+      "kind": "latex_table",
+      "asset_type": "statistics_table",
+      "role_in_paper": "statistical summary comparing number and percentage of SB1, SB2, LPV/SB2?, and LS stars (plus runaways) between slow-rotating (vsini<200 km/s) and fast-rotating (vsini>200 km/s) samples after distance/magnitude cleaning",
+      "source_refs": [
+        {
+          "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+          "start_line": 788,
+          "end_line": 815,
+          "caption": "Some statistics of interest for the cleaned slow- and fast-rotating samples (i.e. excluding three stars with V>10 and/or d>3 kpc from the initial sample, see text).",
+          "label": "table:fast_stat"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Category",
+          "meaning": "Row label: Total, SB1, SB2, LPV/SB2?, LS (likely single)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_slow_all",
+          "meaning": "Number of stars in slow-rotating sample (vsini<200 km/s, all)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pct_slow_all",
+          "meaning": "Percentage relative to total slow-rotating sample (268 stars)",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_fast_all",
+          "meaning": "Number of stars in fast-rotating sample (vsini>200 km/s, all)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pct_fast_all",
+          "meaning": "Percentage relative to total fast-rotating sample (51 stars)",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_fast_runaway",
+          "meaning": "Number of runaway stars among fast-rotating subsample",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pct_fast_runaway",
+          "meaning": "Percentage of runaways relative to fast-rotating subsample (51 total, or 9 for SB1, 38 for LS)",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Summary statistics table: 268 slow vs 51 fast rotators. Key results: SB1 13% vs 18%; SB2 33% vs 8%; LS 54% vs 70%; fast rotator runaways ~47% (64% of LS subgroup).",
+      "comments": "Slow-rotator percentages are lower/upper limits due to some stars having only 1-2 spectra; LPV/SB2? stars (n=2) not included in SB2 count."
+    },
+    {
+      "id": "table-table-sb1_fast",
+      "kind": "latex_table",
+      "asset_type": "object_table",
+      "role_in_paper": "detailed orbital and physical parameters for the 9 confirmed SB1 systems among fast rotators, including newly discovered ones; serves as follow-up characterization of binary subpopulation",
+      "source_refs": [
+        {
+          "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+          "start_line": 879,
+          "end_line": 928,
+          "caption": "Some information of interest for the nine 'bona fide' SB1 systems found among the fast-rotating sample, ordered by increasing vsini estimates.",
+          "label": "table:sb1_fast"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Target",
+          "meaning": "Star identifier (HD designation)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpC",
+          "meaning": "Spectral classification",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vsini",
+          "meaning": "Projected rotational velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RVpp",
+          "meaning": "Peak-to-peak radial velocity amplitude",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Teff",
+          "meaning": "Effective temperature",
+          "unit_text": "kK",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(L/Lsun)_spec",
+          "meaning": "Spectroscopic luminosity parameter log(L/Lsun) from Holgado+2020",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R",
+          "meaning": "Stellar radius from Gaia-EDR3 distances",
+          "unit_text": "Rsun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(L/Lsun)",
+          "meaning": "Bolometric luminosity",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_sp",
+          "meaning": "Spectroscopic mass from surface gravity and radius",
+          "unit_text": "Msun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vsini/vcrit",
+          "meaning": "Ratio of projected rotational velocity to critical velocity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Runaway tag",
+          "meaning": "Runaway status (y/n)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EB tag",
+          "meaning": "Eclipsing binary / photometric variability tag (EB, RM, ?, n)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P (orbital period)",
+          "meaning": "Orbital period from literature",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K1",
+          "meaning": "Semi-amplitude of primary radial velocity curve",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "e",
+          "meaning": "Orbital eccentricity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "f(m)",
+          "meaning": "Mass function",
+          "unit_text": "Msun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "i",
+          "meaning": "Orbital inclination angle",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_sync",
+          "meaning": "Surface velocity if spin-orbit synchronized",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_eq",
+          "meaning": "Estimated equatorial velocity assuming tabulated inclination",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M2_from_Msp",
+          "meaning": "Rough mass estimate of hidden secondary from spectroscopic mass, f(m), and i",
+          "unit_text": "Msun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M2_from_Mev",
+          "meaning": "Rough mass estimate of hidden secondary from evolutionary mass (~25+/-5 Msun), f(m), and i",
+          "unit_text": "Msun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table compiles orbital solutions from Mahy+2022, Johnston+2021, Cazorla+2017a, Trigueros Páez+2021, and this work; two newly confirmed SB1 systems (HD152200, HD46485).",
+      "comments": "Horizontal format: 9 stars across columns with parameters in rows. Orbital parameters sourced from Mahy+2022 except where noted."
+    },
+    {
+      "id": "table-table-sample",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "observation log listing number of available spectra per instrument (FEROS, FIES, HERMES, STELLA), total usable spectra (SNR_L>5), and time-span for all 54 fast rotators",
+      "source_refs": [
+        {
+          "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+          "start_line": 1301,
+          "end_line": 1368,
+          "caption": "Number of available spectra and total time-span of the compiled spectroscopic observations for the main working sample of 50 fast-rotating Galactic O-type stars ordered by increasing the vsini estimates. For completeness, the four SB2 systems identified as having at least one of the components with a vsini larger than 200 km/s are quoted at the bottom of the table.",
+          "label": "table:sample"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Star identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpC",
+          "meaning": "Spectral classification from Sota+2011,2014 and Maíz Apellániz+2016",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_FEROS",
+          "meaning": "Number of FEROS spectra obtained",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_FIES",
+          "meaning": "Number of FIES spectra obtained",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_HERMES",
+          "meaning": "Number of HERMES spectra obtained",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_STELLA",
+          "meaning": "Number of STELLA/SES spectra obtained",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_total",
+          "meaning": "Total number of spectra with SNR_L>5 (usable for RV analysis)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Time-span",
+          "meaning": "Total time baseline covered by multi-epoch observations",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Observations from FIES@NOT (R~46000/25000), HERMES@Mercator (R~85000), FEROS@MPG/ESO2.2m (R~48000), STELLA/SES@Izaña; supplemented with ESO-FEROS archive spectra.",
+      "comments": "Bottom 4 rows list the 4 clearly-detected SB2 systems with at least one fast-rotating component: HD175514, HD165921, HD100213, HDE228854."
+    },
+    {
+      "id": "table-table-phys_parameters",
+      "kind": "latex_table",
+      "asset_type": "physical_parameters_table",
+      "role_in_paper": "fundamental physical parameters for the 50 fast-rotating stars derived from spectroscopy and Gaia-EDR3 distances, used for sHRD placement and evolutionary interpretation",
+      "source_refs": [
+        {
+          "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+          "start_line": 1372,
+          "end_line": 1436,
+          "caption": "Basic information about fundamental physical parameters of our sample of fast-rotating O-type stars ordered by increasing the vsini estimates. Extracted from Holgado PhD and Holgado+2020.",
+          "label": "table:phys_parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Star identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Teff",
+          "meaning": "Effective temperature from iacob-gbat quantitative spectroscopic analysis (Holgado+2020)",
+          "unit_text": "kK",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(L/Lsun)",
+          "meaning": "Spectroscopic luminosity parameter L = Teff^4/g_c (g_c = surface gravity corrected for centrifugal forces); from Holgado+2020",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R",
+          "meaning": "Stellar radius derived from extinction-corrected V magnitude (Maíz Apellániz & Barbá 2018) and Gaia-EDR3 distance (Bailer-Jones+2021)",
+          "unit_text": "Rsun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(L/Lsun)_bol",
+          "meaning": "Bolometric luminosity",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_crit",
+          "meaning": "Critical rotational velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vsini/v_crit",
+          "meaning": "Ratio of projected rotational velocity to critical velocity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RUWE",
+          "meaning": "Gaia-EDR3 renormalised unit weight error (quality flag: >1.4 indicates problematic astrometric solution)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "distBJ",
+          "meaning": "Median geometric distance from Bailer-Jones+2021 using Gaia-EDR3 parallaxes",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Parameters extracted from Holgado PhD thesis and Holgado+2020; used throughout the paper for sHRD placement and evolutionary interpretation.",
+      "comments": "Uncertainties in brackets = distance uncertainty; those without brackets = iacob-gbat analysis uncertainty."
+    },
+    {
+      "id": "table-table-info_imaging",
+      "kind": "latex_table",
+      "asset_type": "auxiliary_table",
+      "role_in_paper": "supplementary table listing detected visual companions within 2 arcmin for TESS contamination assessment; includes SB, EB, and runaway status for cross-reference",
+      "source_refs": [
+        {
+          "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+          "start_line": 1440,
+          "end_line": 1481,
+          "caption": "Information about visible components for our sample of fast rotators. Only those cases with detected companions within 2 arcmin and having a difference in magnitude smaller than 3 mag are quoted in this table.",
+          "label": "table:info_imaging"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Star identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SB?",
+          "meaning": "Spectroscopic binary classification (LS, SB1, LPV/SB2?)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EB?",
+          "meaning": "Eclipsing binary status (EB or n)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RW?",
+          "meaning": "Runaway status (y or n)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_comp_inner",
+          "meaning": "Number of visual companions within 1 arcmin",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "deltaV_inner",
+          "meaning": "Difference in V magnitude for companion within 1 arcmin",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ang_dist_inner",
+          "meaning": "Angular distance for companion within 1 arcmin",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_comp_outer",
+          "meaning": "Number of visual companions between 1 and 2 arcmin",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "deltaV_outer",
+          "meaning": "Difference in V magnitude for companion between 1-2 arcmin",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ang_dist_outer",
+          "meaning": "Angular distance for companion between 1-2 arcmin",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Data compiled from Gaia-EDR3, Washington Double Star Catalog (Mason+2001), SMASH survey (Sana+2014), AstraLux, and FGS; used to assess TESS light curve contamination.",
+      "comments": "Companions with delta_mag>3 but separation<2 arcsec also included. Asterisk (*) marks companions detected by Sana+2014 (SMASH)."
+    },
+    {
+      "id": "table-tab-app-eb-ev",
+      "kind": "latex_table",
+      "asset_type": "object_table",
+      "role_in_paper": "supplementary comparison sample — lists 7 SB1 stars in the slow-rotating domain (vsini<200 km/s) with detected TESS eclipses or ellipsoidal/reflection modulation, used for companion nature discussion",
+      "source_refs": [
+        {
+          "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+          "start_line": 1483,
+          "end_line": 1503,
+          "caption": "Some information of interest for the SB1 stars in the low vsini sample for which we have detected signatures of eclipses or ellipsoidal/reflection modulation in their TESS light curves.",
+          "label": "tab-app-eb-ev"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Star identifier (HD or BD designation)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpC",
+          "meaning": "Spectral classification",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vsini",
+          "meaning": "Projected rotational velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RVpp",
+          "meaning": "Peak-to-peak radial velocity amplitude",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P",
+          "meaning": "Orbital period",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Phot. var. tag",
+          "meaning": "TESS photometric variability classification: EB (eclipsing binary), EV (ellipsoidal variable), EV/RM (ellipsoidal or reflection modulation)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Includes Cyg X-1 (HD226868), plus HD12323 and HD94024 proposed as quiescent black hole candidates; HD53975 needs more epochs for period determination.",
+      "comments": "This table supports the discussion about hidden companion nature (BH/NS candidates) in the slow-rotating domain."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-cds-rv",
+      "kind": "external_url",
+      "url": "https://cdsarc.cds.unistra.fr/cgi-bin/qcat?J/A+A/",
+      "local_path": "",
+      "description": "CDS VizieR catalog service for A&A journal — individual RV measurements and RVpp estimates for each star available in electronic form only",
+      "source_refs": [
+        {
+          "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+          "start_line": 398,
+          "end_line": 400,
+          "context": "Tables xx and xx with individual RV measurements for each star and RVpp estimates are only available in electronic form at the CDS via anonymous ftp to cdsarc.cds.unistra.fr (130.79.128.5) or via https://cdsarc.cds.unistra.fr/cgi-bin/qcat?J/A+A/"
+        }
+      ],
+      "evidence": "Paper explicitly states that electronic tables with individual RV measurements per star and per-epoch RVpp values are available at CDS.",
+      "comments": "The exact J/A+A/ catalog number is not specified in the paper text; final catalog ID determined upon publication."
+    },
+    {
+      "id": "resource-tess-mast",
+      "kind": "external_url",
+      "url": "https://archive.stsci.edu/",
+      "local_path": "",
+      "description": "Mikulski Archive for Space Telescopes (MAST) — source of TESS 2-min short-cadence and 30-min long-cadence light curves used for photometric variability analysis and eclipsing binary search",
+      "source_refs": [
+        {
+          "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+          "start_line": 516,
+          "end_line": 516,
+          "context": "we first searched and extracted the TESS 2-min short-cadence data from the Mikulski Archive for Space Telescopes (MAST, https://archive.stsci.edu/)"
+        }
+      ],
+      "evidence": "TESS data extracted from MAST using lightkurve package; 39 light curves obtained (20 from short-cadence, 21 from long-cadence via full-frame images).",
+      "comments": ""
+    },
+    {
+      "id": "resource-eso-feros",
+      "kind": "external_url",
+      "url": "http://archive.eso.org/wdb/wdb/adp/phase3_spectral/form",
+      "local_path": "",
+      "description": "ESO FEROS archive — supplementary high-resolution spectra downloaded to complement OWN survey observations for southern targets",
+      "source_refs": [
+        {
+          "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+          "start_line": 189,
+          "end_line": 189,
+          "context": "these observations were complemented with a few spectra downloaded from the ESO-FEROS archive (http://archive.eso.org/wdb/wdb/adp/phase3_spectral/form)"
+        }
+      ],
+      "evidence": "Paper states that FEROS archive spectra supplemented OWN survey multi-epoch data for southern targets.",
+      "comments": ""
+    },
+    {
+      "id": "resource-xmm-4xmm",
+      "kind": "external_url",
+      "url": "https://xcatdb.unistra.fr/4xmmdr10/index.html",
+      "local_path": "",
+      "description": "4XMM-DR10 X-ray source catalog — X-ray spectra downloaded and analyzed with Xspec for two newly-identified X-ray sources (HD76556, HD228841) to measure log(L_X/L_BOL)",
+      "source_refs": [
+        {
+          "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+          "start_line": 635,
+          "end_line": 635,
+          "context": "Two additional ones, HD76556 and HD228841, are listed in the 4XMM source catalog. Their spectra were downloaded (https://xcatdb.unistra.fr/4xmmdr10/index.html) and analyzed within Xspec."
+        }
+      ],
+      "evidence": "New X-ray analysis for 2 stars using 4XMM-DR10 data; both show soft emission consistent with embedded wind-shocks (log L_X/L_BOL ~ -7).",
+      "comments": ""
+    }
+  ]
+}

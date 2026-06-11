@@ -1,0 +1,58 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:38:00",
+  "paper": {
+    "arxiv_id": "2301.02251",
+    "bibcode": "2023A&A...671A..88P",
+    "title": "On the degree of stochastic asymmetry in the tidal tails of star clusters",
+    "month": "2023-01",
+    "source_note_json": "notes/2023/2023-01/2023-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2301.02251",
+      "pdf": "https://arxiv.org/pdf/2301.02251"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2301.02251",
+    "audit_path": "literature/2301.02251/audit.json",
+    "catalog_review_path": "literature/2301.02251/catalog_review.json",
+    "catalog_extraction_path": "literature/2301.02251/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2301.02251/catalog_tables/table-tab_sc_data.ecsv",
+      "literature/2301.02251/catalog_tables/table-tab_monte_carlo.ecsv",
+      "literature/2301.02251/catalog_tables/table-tab_pot_value.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:38:00",
+    "extractor": "agent",
+    "summary": "This paper studies the degree of stochastic asymmetry in the tidal tails of star clusters. Using N-body simulations and Monte Carlo methods, it investigates the statistical asymmetry of tidal tails within the Galactic tidal field. The paper is completely unrelated to hypervelocity stars (HVS), Galactic-unbound status, or Galactic escape velocity. The terms 'unbound', 'HVS', 'hypervelocity', and 'Galactic escape' do not appear anywhere in the paper (the only match containing 'unbound' is in a LaTeX style file). The paper's topic is tidal tail structure in star cluster dynamics. No HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2301.02251:group-01",
+      "description": "N-body simulation parameters and data (Tables tab:sc_data, tab:monte_carlo, tab:pot_value). Contains star cluster simulation parameters under different initial conditions, Monte Carlo sampling results, and Galactic potential parameters. These are N-body computation results for simulating tidal tail evolution of star clusters.",
+      "decision": "rejected",
+      "reason": "The paper is entirely focused on the stochastic asymmetry of tidal tails of star clusters, using N-body simulations to study mass loss and tail structure of clusters in the Galactic tidal field. All these cluster escapees leave the cluster via tidal stripping, with velocities far below the Galactic escape velocity (~500 km/s), and remain bound stars within the Galaxy. The paper never discusses hypervelocity stars (HVS), Galactic-unbound status, or Galactic escape. No HVS candidates at all.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2301.02251/arxiv_source/paper3.tex",
+          "start_line": 96,
+          "end_line": 100,
+          "context": "Introduction: 'In general, stars form spatially confined...' — paper studies stochastic asymmetry in tidal tails of star clusters. Stars escape through Lagrange points into tidal arms, not from the Galaxy."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2301.02251/arxiv_source/paper3.tex",
+          "start_line": 163,
+          "end_line": 172,
+          "context": "Introduction: 'it can not be predicted through which Lagrange point a star will escape from the star cluster into one of the tidal arms...' — escape from cluster, not Galactic. 'aim of this work to quantify the degree of asymmetry in tidal tails'."
+        }
+      ]
+    }
+  ]
+}

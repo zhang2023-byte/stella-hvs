@@ -1,0 +1,450 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2405.04750",
+    "title": "The Catalog of early-type Runaway stars from LAMOST-DR8",
+    "month": "2024-05",
+    "source_note_json": "notes/2024/2024-05/2024-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2405.04750",
+      "pdf": "https://arxiv.org/pdf/2405.04750"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2405.04750",
+    "audit_path": "literature/2405.04750/audit.json",
+    "source_dir": "literature/2405.04750/arxiv_source",
+    "tex_root": "literature/2405.04750/arxiv_source/runaway.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:34:05",
+    "reviewer": "agent",
+    "summary": "This paper presents a catalog of 229 runaway candidate stars identified from 4,432 early-type stars in the LAMOST MRS DR8 sample, using radial velocities from LAMOST and astrometry from Gaia DR3. The paper contains four internal LaTeX tables: a sample summary table with radial velocities and atmospheric parameters (shown in excerpt with full machine-readable form available), two object catalogs of runaway candidates (229 stars via space velocity and 480 stars via transverse velocity), and a parameter table with circular orbital elements for two binary candidate systems. External resources include the LAMOST DR8 dataset, a published LAMOST MRS RV survey GitHub repository, and machine-readable versions of the three main tables."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-RV-Catalogs",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Reports the Gaia source ID, equatorial coordinates, radial velocity, effective temperature, projected rotational velocity, and surface gravity for each of the 4,432 sample stars. The full table is available in machine-readable form; only the first eight entries are shown in print.",
+      "source_refs": [
+        {
+          "path": "literature/2405.04750/arxiv_source/runaway.tex",
+          "start_line": 240,
+          "end_line": 258,
+          "caption": "The Radial Velocity and atmospheric parameter of the sample stars \\label{tab:RV Catalogs}",
+          "label": "tab:RV Catalogs"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia | Source ID",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A. | (deg)",
+          "meaning": "Right Ascension in equatorial coordinates (J2000)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Decl. | (deg)",
+          "meaning": "Declination in equatorial coordinates (J2000)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_r | \\colhead(km s^-1)",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_r | \\colhead(km s^-1)",
+          "meaning": "Uncertainty in the radial velocity measurement",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadT_\\rm eff | (K)",
+          "meaning": "Effective temperature derived from SLAM",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadV\\sini | \\colhead(km s^-1)",
+          "meaning": "Projected rotational velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colhead\\logg | \\colhead(\\rm cm s^-2)",
+          "meaning": "Surface gravity in logarithmic form",
+          "unit_text": "cm s^-2",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The Radial Velocity and atmospheric parameter of the sample stars \\label{tab:RV Catalogs}",
+      "comments": "Full table available in machine-readable form per tablecomments."
+    },
+    {
+      "id": "table-tab-Runaway-Catalogs",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Object catalog of the 229 runaway candidate stars identified from the LAMOST MRS DR8 sample using the 3D peculiar space velocity criterion (V_Sp > 43 km/s). Reports astrometry, peculiar velocities, Galactic height, and Galactic space velocity components.",
+      "source_refs": [
+        {
+          "path": "literature/2405.04750/arxiv_source/runaway.tex",
+          "start_line": 314,
+          "end_line": 333,
+          "caption": "The Peculiar Velocities of the 229 Runaway Candidate Stars Identified from the LAMOST MRS DR8 Sample \\label{tab:Runaway Catalogs}",
+          "label": "tab:Runaway Catalogs"
+        }
+      ],
+      "columns": [
+        {
+          "name": "R.A. | (deg)",
+          "meaning": "Right Ascension in equatorial coordinates (J2000)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Decl. | (deg)",
+          "meaning": "Declination in equatorial coordinates (J2000)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha | \\colhead(mas yr^-1)",
+          "meaning": "Proper motion in right ascension direction (including cos delta factor)",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\beta | \\colhead(mas yr^-1)",
+          "meaning": "Proper motion in declination direction",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Parallax | (mas)",
+          "meaning": "Trigonometric parallax from Gaia DR3",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadV_Rp | \\colhead(km s^-1)",
+          "meaning": "Peculiar radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadV_Tp | \\colhead(km s^-1)",
+          "meaning": "Peculiar tangential velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadV_Sp | \\colhead(km s^-1)",
+          "meaning": "Peculiar space velocity (total 3D peculiar velocity)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "z | (pc)",
+          "meaning": "Height above the Galactic plane",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "U | \\colhead(km s^-1)",
+          "meaning": "Galactic space velocity component towards the Galactic center",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V | \\colhead(km s^-1)",
+          "meaning": "Galactic space velocity component in the direction of Galactic rotation",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "W | \\colhead(km s^-1)",
+          "meaning": "Galactic space velocity component towards the North Galactic Pole",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flag",
+          "meaning": "Flag indicating identification method overlap: S = identified by both space and transverse velocity methods, N = identified only by this method, B = possible binary",
+          "unit_text": "",
+          "source_of_definition": "text around table and Section 4.2",
+          "confidence": 0.5
+        }
+      ],
+      "evidence": "The Peculiar Velocities of the 229 Runaway Candidate Stars Identified from the LAMOST MRS DR8 Sample \\label{tab:Runaway Catalogs}",
+      "comments": "Full table available in machine-readable form. Overlap with Table 3 (transverse-velocity candidates) marked with Flag=S."
+    },
+    {
+      "id": "table-tab-Runaway-Catalogs-Rt",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Object catalog of the 480 runaway candidate stars identified using the transverse velocity criterion (V_Tp > 42 km/s). Columns are identical to Table 2 but for a larger sample identified via 2D kinematics alone.",
+      "source_refs": [
+        {
+          "path": "literature/2405.04750/arxiv_source/runaway.tex",
+          "start_line": 336,
+          "end_line": 355,
+          "caption": "The 480 Runaway Candidate Stars based on transverse velocity \\label{tab:Runaway Catalogs Rt}",
+          "label": "tab:Runaway Catalogs Rt"
+        }
+      ],
+      "columns": [
+        {
+          "name": "R.A. | (deg)",
+          "meaning": "Right Ascension in equatorial coordinates (J2000)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Decl. | (deg)",
+          "meaning": "Declination in equatorial coordinates (J2000)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha | \\colhead(mas yr^-1)",
+          "meaning": "Proper motion in right ascension direction (including cos delta factor)",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\beta | \\colhead(mas yr^-1)",
+          "meaning": "Proper motion in declination direction",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Parallax | (mas)",
+          "meaning": "Trigonometric parallax from Gaia DR3",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadV_Rp | \\colhead(km s^-1)",
+          "meaning": "Peculiar radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadV_Tp | \\colhead(km s^-1)",
+          "meaning": "Peculiar tangential velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colheadV_Sp | \\colhead(km s^-1)",
+          "meaning": "Peculiar space velocity (total 3D peculiar velocity)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "z | (pc)",
+          "meaning": "Height above the Galactic plane",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "U | \\colhead(km s^-1)",
+          "meaning": "Galactic space velocity component towards the Galactic center",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V | \\colhead(km s^-1)",
+          "meaning": "Galactic space velocity component in the direction of Galactic rotation",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "W | \\colhead(km s^-1)",
+          "meaning": "Galactic space velocity component towards the North Galactic Pole",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flag",
+          "meaning": "Flag indicating identification method overlap: S = identified by both space and transverse velocity methods, N = identified only by this method",
+          "unit_text": "",
+          "source_of_definition": "text around table",
+          "confidence": 0.5
+        }
+      ],
+      "evidence": "The 480 Runaway Candidate Stars based on transverse velocity \\label{tab:Runaway Catalogs Rt}",
+      "comments": "Full table available in machine-readable form. Common stars with Table 2 marked with Flag=S."
+    },
+    {
+      "id": "table-tab-orbit_binary",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Reports the circular orbital elements of two binary candidate systems among the runaway sample, derived from RV measurements using a global minimization technique.",
+      "source_refs": [
+        {
+          "path": "literature/2405.04750/arxiv_source/runaway.tex",
+          "start_line": 513,
+          "end_line": 535,
+          "caption": "Circular orbital elements of the two binary candidate systems \\label{tab:orbit_binary}",
+          "label": "tab:orbit_binary"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Element | \\cline2-3",
+          "meaning": "Orbital element name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value | A",
+          "meaning": "Value of the orbital element for binary candidate A (Gaia Source ID 454293469890174976)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "B",
+          "meaning": "Value of the orbital element for binary candidate B (Gaia Source ID 3453566198941548160)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Circular orbital elements of the two binary candidate systems \\label{tab:orbit_binary}",
+      "comments": "Rows include orbital period, epoch of superior conjunction, semi-amplitude, systemic velocity, mass function, projected semi-major axis, and rms residual."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://www.lamost.org/dr8/",
+      "local_path": "",
+      "description": "LAMOST DR8 dataset comprising 16.6 million spectra and 7.91 million sets of estimated stellar parameters.",
+      "source_refs": [
+        {
+          "path": "literature/2405.04750/arxiv_source/runaway.tex",
+          "start_line": 140,
+          "end_line": 140,
+          "context": "The eighth data release (DR8) dataset \\footnote{\\url{http://www.lamost.org/dr8/}} comprises 16.6 million spectra and provides 7.91 million sets of estimated stellar parameters."
+        }
+      ],
+      "evidence": "The MRS spectra are made with blue and red cameras. The eighth data release (DR8) dataset \\footnote{\\url{http://www.lamost.org/dr8/}} comprises 16.6 million spectra and provides 7.91 million sets of estimated stellar parameters.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://github.com/hypergravity/paperdata",
+      "local_path": "",
+      "description": "Published LAMOST MRS radial velocity survey released by Zhang et al. (2021), containing absolute RV measurements for more than 0.8 million stars.",
+      "source_refs": [
+        {
+          "path": "literature/2405.04750/arxiv_source/runaway.tex",
+          "start_line": 152,
+          "end_line": 152,
+          "context": "We cross-matched the published LAMOST MRS radial velocity (RV) survey\\footnote{\\url{https://github.com/hypergravity/paperdata}} released by \\citet{2021zhangboRV} to collect the Doppler shifts of the sample stars."
+        }
+      ],
+      "evidence": "We cross-matched the published LAMOST MRS radial velocity (RV) survey\\footnote{\\url{https://github.com/hypergravity/paperdata}} released by \\citet{2021zhangboRV} to collect the Doppler shifts of the sample stars.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Machine-readable version of Table 1 (The Radial Velocity and atmospheric parameter of the sample stars).",
+      "source_refs": [
+        {
+          "path": "literature/2405.04750/arxiv_source/runaway.tex",
+          "start_line": 257,
+          "end_line": 257,
+          "context": "\\tablecomments{This table is available in its entirety in machine-readable form. The first eight entries are shown here for guidance regarding its format and content.}"
+        }
+      ],
+      "evidence": "\\tablecomments{This table is available in its entirety in machine-readable form. The first eight entries are shown here for guidance regarding its format and content.}",
+      "comments": "No explicit URL given for the machine-readable table."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Machine-readable version of Table 2 (The Peculiar Velocities of the 229 Runaway Candidate Stars).",
+      "source_refs": [
+        {
+          "path": "literature/2405.04750/arxiv_source/runaway.tex",
+          "start_line": 332,
+          "end_line": 332,
+          "context": "\\tablecomments{This table is available in its entirety in machine-readable form. The first five entries are shown here for guidance regarding its format and content.}"
+        }
+      ],
+      "evidence": "\\tablecomments{This table is available in its entirety in machine-readable form. The first five entries are shown here for guidance regarding its format and content.}",
+      "comments": "No explicit URL given for the machine-readable table."
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Machine-readable version of Table 3 (The 480 Runaway Candidate Stars based on transverse velocity).",
+      "source_refs": [
+        {
+          "path": "literature/2405.04750/arxiv_source/runaway.tex",
+          "start_line": 354,
+          "end_line": 354,
+          "context": "\\tablecomments{This table is available in its entirety in machine-readable form. The first five entries are shown here for guidance regarding its format and content.}"
+        }
+      ],
+      "evidence": "\\tablecomments{This table is available in its entirety in machine-readable form. The first five entries are shown here for guidance regarding its format and content.}",
+      "comments": "No explicit URL given for the machine-readable table."
+    }
+  ]
+}

@@ -1,0 +1,463 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2112.07419",
+    "title": "Stars in the Local Galactic Thick Disk and Halo in Gaia EDR3: A catalogue of Half a Million Local Main-sequence Stars with Photometric Metallicities",
+    "month": "2021-12",
+    "source_note_json": "notes/2021/2021-12/2021-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2112.07419",
+      "pdf": "https://arxiv.org/pdf/2112.07419"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2112.07419",
+    "audit_path": "literature/2112.07419/audit.json",
+    "source_dir": "literature/2112.07419/arxiv_source",
+    "tex_root": "literature/2112.07419/arxiv_source/ms.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:01:35",
+    "reviewer": "agent",
+    "summary": "该论文构建了 Gaia EDR3 中 551,214 颗本地厚盘和晕主序星的星表。通过自行筛选（μ>40 mas/yr）和约化自行图（RPM diagram）选取晕候选体，利用 SDSS SEGUE/APOGEE、LAMOST DR6、GALAH DR3 等光谱巡天的 20,047 颗星的金属丰度构建了测光金属丰度网格，为所有候选体估计 [Fe/H]。论文包含 6 个 LaTeX 表格：Table 1 RPM 选取边界多项式系数，Table 2 M 矮星子型金属丰度范围，Table 3 测光金属丰度网格系数，Table 4 本地晕恒星计数统计，Table 5 星表列描述，Table 6 星表样本。数据产品：551,214 颗星的完整星表以机器可读格式随论文在线提供。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-tab1",
+      "kind": "latex_table",
+      "asset_type": "selection_boundary",
+      "role_in_paper": "Defines the empirical colour-RPM (reduced proper motion) boundaries used to separate halo main-sequence candidates from disk stars and white dwarfs in six sky zones. These third-degree polynomial boundaries are central to the paper's halo star selection method.",
+      "source_refs": [
+        {
+          "path": "literature/2112.07419/arxiv_source/ms.tex",
+          "start_line": 158,
+          "end_line": 183,
+          "caption": "Coefficients of the polynomials of the form: $H_{G} = c_0 + c_1(\\grp) + c_2(\\grp)^2 + c_3(\\grp)^3$ used as boundaries for the selection of halo main-sequence stars in the RPM diagram.",
+          "label": "tab:tab1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Zone",
+          "meaning": "Sky zone number and direction: 1=Galactic centre, 2=Solar Antapex, 3=Galactic Anti-centre, 4=Solar Apex, 5=Galactic North Pole, 6=Galactic South Pole",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "colour",
+          "meaning": "Boundary type: Blue (upper boundary separating halo from disk) or Red (lower boundary separating halo from white dwarfs)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "c_0",
+          "meaning": "Constant term (intercept) of the third-degree polynomial H_G = c_0 + c_1*(G-RP) + c_2*(G-RP)^2 + c_3*(G-RP)^3",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "c_1",
+          "meaning": "Linear coefficient of the selection boundary polynomial",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "c_2",
+          "meaning": "Quadratic coefficient of the selection boundary polynomial",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "c_3",
+          "meaning": "Cubic coefficient of the selection boundary polynomial",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Coefficients of the polynomials of the form: $H_{G} = c_0 + c_1(\\grp) + c_2(\\grp)^2 + c_3(\\grp)^3$ used as boundaries for the selection of halo main-sequence stars in the RPM diagram.",
+      "comments": "The blue and red boundaries are separately defined for each of the 6 sky zones to account for different line-of-sight kinematics and reddening effects."
+    },
+    {
+      "id": "table-tab-tab2",
+      "kind": "latex_table",
+      "asset_type": "calibration",
+      "role_in_paper": "Provides assumed [Fe/H] ranges for M dwarf spectral subtypes (dM, sdM, esdM, usdM) used to assign pseudo-metallicities to 3,020 SDSS M dwarfs that lack direct spectroscopic metallicity measurements. These pseudo-metallicities supplement the calibration dataset for the photometric metallicity grid.",
+      "source_refs": [
+        {
+          "path": "literature/2112.07419/arxiv_source/ms.tex",
+          "start_line": 224,
+          "end_line": 240,
+          "caption": "Metallicity boundaries for stellar subtypes.",
+          "label": "tab:tab2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Subtype",
+          "meaning": "M dwarf spectral subtype classification: M (dwarf), sdM (subdwarf), esdM (extreme subdwarf), usdM (ultra subdwarf)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]",
+          "meaning": "Adopted metallicity range for each subtype, based on the calibrated relationship between molecular indices (zeta_TiO/CaH) and metallicities from Woolf et al. (2009). Random uniformly distributed values are assigned within each range.",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Metallicity boundaries for stellar subtypes. Defined from the calibrated relationship between molecular indices, zeta_TiO/CaH, and metallicities (Woolf+2009).",
+      "comments": "Maximum and minimum values limited considering metallicity ranges of other calibration datasets. These are NOT direct spectroscopic measurements but empirically assigned ranges."
+    },
+    {
+      "id": "table-tab-tab3",
+      "kind": "latex_table",
+      "asset_type": "calibration_grid",
+      "role_in_paper": "Lists the coefficients of the fourth-degree polynomial fits that define the 12 photometric metallicity grid lines. This grid is the paper's primary tool for estimating photometric [Fe/H] from a star's Gaia absolute G magnitude (M_G) and G-RP colour. The grid spans [Fe/H] from -3.0 to +0.3 dex in 0.3 dex steps.",
+      "source_refs": [
+        {
+          "path": "literature/2112.07419/arxiv_source/ms.tex",
+          "start_line": 335,
+          "end_line": 363,
+          "caption": "Coefficients of the polynomials for the finalised photometric metallicity grid.",
+          "label": "tab:tab3"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Metallicity (dex)",
+          "meaning": "Grid line metallicity value [Fe/H]; the grid has 12 lines from -3.0 to +0.3 dex in 0.3 dex increments. The +0.3 dex line is extrapolated.",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "c_0",
+          "meaning": "Constant term (intercept) of the polynomial: (G-RP) = c_0 + c_1*M_G + c_2*M_G^2 + c_3*M_G^3 + c_4*M_G^4",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "c_1",
+          "meaning": "Linear coefficient of the grid polynomial",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "c_2",
+          "meaning": "Quadratic coefficient of the grid polynomial",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "c_3",
+          "meaning": "Cubic coefficient of the grid polynomial",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "c_4",
+          "meaning": "Quartic coefficient of the grid polynomial",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Coefficients of the polynomials for the finalised photometric metallicity grid. Each grid line is fit with: (G-RP) = c_0 + c_1(M_G) + c_2(M_G)^2 + c_3(M_G)^3 + c_4(M_G)^4. The grid was recalibrated by applying a -0.5 dex correction to M dwarf (M_G > 7.5) spectroscopic metallicities.",
+      "comments": "The [Fe/H] = +0.3 line is extrapolated beyond the calibration range. Grid lines with [Fe/H] from -2.7 to 0.0 are shown in 0.3 dex increments; [Fe/H] = -3.0 is the most metal-poor boundary."
+    },
+    {
+      "id": "table-tab-tab4",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Presents star counts and number ratios for metal-rich (-1.2 < [Fe/H]_grid < 0.3) and metal-poor (-3.0 < [Fe/H]_grid <= -1.2) populations in the local halo, broken down by intermediate-mass AFG stars (M_G <= 7.5) and low-mass KM stars (M_G > 7.5) at distance limits of 100, 300, and 500 pc. Used to derive the local halo luminosity function.",
+      "source_refs": [
+        {
+          "path": "literature/2112.07419/arxiv_source/ms.tex",
+          "start_line": 448,
+          "end_line": 478,
+          "caption": "Star Counts for stars in the Local Halo.",
+          "label": "tab:tab4"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Group",
+          "meaning": "Stellar population group: Metal-rich (-1.2 < [Fe/H]_grid < 0.3) or Metal-poor (-3.0 < [Fe/H]_grid <= -1.2)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_AFG (100 pc)",
+          "meaning": "Number of intermediate-mass AFG stars (M_G <= 7.5) within 100 pc",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_AFG (300 pc)",
+          "meaning": "Number of intermediate-mass AFG stars (M_G <= 7.5) within 300 pc",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_AFG (500 pc)",
+          "meaning": "Number of intermediate-mass AFG stars (M_G <= 7.5) within 500 pc",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_KM (100 pc)",
+          "meaning": "Number of low-mass KM stars (M_G > 7.5) within 100 pc",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_KM (300 pc)",
+          "meaning": "Number of low-mass KM stars (M_G > 7.5) within 300 pc",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_KM (500 pc)",
+          "meaning": "Number of low-mass KM stars (M_G > 7.5) within 500 pc",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_KM/N_tot (100 pc)",
+          "meaning": "Fraction of low-mass KM stars relative to total stars, within 100 pc",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_KM/N_tot (300 pc)",
+          "meaning": "Fraction of low-mass KM stars relative to total stars, within 300 pc",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_KM/N_tot (500 pc)",
+          "meaning": "Fraction of low-mass KM stars relative to total stars, within 500 pc",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Star Counts for stars in the Local Halo. Poisson errors assumed. Evolved stars removed using empirical cut (M_G)_evolved < 4.264*(G-RP) + 2.188.",
+      "comments": "The catalogue is statistically complete for M_G < 12.0 to d < 500 pc. Incompleteness begins to appear at d ~ 500 pc. Low-mass star dominance (>86% of total) is evident in both populations."
+    },
+    {
+      "id": "table-tab-tab5",
+      "kind": "latex_table",
+      "asset_type": "catalog_schema",
+      "role_in_paper": "Describes the 13 columns of the final catalogue of 551,214 halo main-sequence star candidates, including Gaia identifiers, astrometric parameters, photometry, extinction values, and two photometric metallicity estimates (KNN and grid).",
+      "source_refs": [
+        {
+          "path": "literature/2112.07419/arxiv_source/ms.tex",
+          "start_line": 498,
+          "end_line": 524,
+          "caption": "Columns in the catalogue",
+          "label": "tab:tab5"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Header",
+          "meaning": "Column name in the catalogue",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Description",
+          "meaning": "Description of the column content and units",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Columns in the catalogue: source_id, R.A., Dec., parallax+error, proper motions, G magnitude, G-RP colour, colour excess, extinction, and two photometric metallicity estimates.",
+      "comments": "The catalogue provides 13 columns: Gaia EDR3 source_id, position (R.A., Dec.), parallax and its error, proper motions in RA and Dec, G magnitude, G-RP colour, G-RP colour excess, G-band extinction, [Fe/H]_KNN, and [Fe/H]_grid."
+    },
+    {
+      "id": "table-tab-tab6",
+      "kind": "latex_table",
+      "asset_type": "catalog_sample",
+      "role_in_paper": "Displays the first 10 rows of the full 551,214-star catalogue as a sample, illustrating the data format with all 13 columns populated with real values.",
+      "source_refs": [
+        {
+          "path": "literature/2112.07419/arxiv_source/ms.tex",
+          "start_line": 526,
+          "end_line": 551,
+          "caption": "The Catalogue of Candidates in the Galactic Thick Disk and Halo in Gaia EDR3",
+          "label": "tab:tab6"
+        }
+      ],
+      "columns": [
+        {
+          "name": "source_id",
+          "meaning": "Gaia EDR3 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A. (deg)",
+          "meaning": "Right ascension in J2016.0",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec. (deg)",
+          "meaning": "Declination in J2016.0",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pi (mas)",
+          "meaning": "Parallax",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_pi (mas)",
+          "meaning": "Standard error of parallax",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_alpha (mas/yr)",
+          "meaning": "Proper motion in right ascension direction",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_delta (mas/yr)",
+          "meaning": "Proper motion in declination direction",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G (mag)",
+          "meaning": "Gaia G-band mean magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G-RP (mag)",
+          "meaning": "Gaia G - G_RP colour",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "E(G-RP) (mag)",
+          "meaning": "G-RP colour excess from the 3D reddening map of Green et al. (2019)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_G (mag)",
+          "meaning": "Gaia G-band extinction derived from the colour excess",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]_KNN (dex)",
+          "meaning": "Photometric metallicity estimate from the K-Nearest Neighbour regressor (k=20, distance weights)",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]_grid (dex)",
+          "meaning": "Photometric metallicity estimate from the calibrated colour-magnitude-metallicity grid (interpolated)",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The Catalogue of Candidates in the Galactic Thick Disk and Halo in Gaia EDR3. First 10 rows shown. Full machine-readable catalogue available as online supplementary material.",
+      "comments": "Table note indicates the full catalogue of 551,214 stars is available online in machine-readable format. Stars outside the grid boundaries are assigned [Fe/H]_grid = -3.0 or +0.3 dex."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://dr6.lamost.org/v2/",
+      "local_path": "",
+      "description": "LAMOST DR6 data release portal. Used to cross-match the halo candidate catalogue with LAMOST low-resolution (AFGK and M dwarf) and mid-resolution (MRS) spectroscopic catalogues, yielding 12,259 calibrator stars with [M/H] measurements (10,608 LRS-AFGK, 1,268 LRS-M, 383 MRS).",
+      "source_refs": [
+        {
+          "path": "literature/2112.07419/arxiv_source/ms.tex",
+          "start_line": 214,
+          "end_line": 214,
+          "context": "\\subsubsection{LAMOST DR6}\\nThe Large Sky Area Multi-Object Fiber Spectroscopic Telescope \\citep[LAMOST;][]{cui:12} has been conducting low-resolution ($R \\sim 1,800$) and moderate-resolution ($R \\sim 7,500$) spectroscopic surveys in optical wavelength. We cross-matched our catalogue with the low-resolution A, F, G, and K star (LRS-AFGK) catalogue, the low-resolution M star (LRS-M) catalogue, and the mid-resolution parameter (MRS) catalogue in LAMOST DR6\\footnote{\\url{http://dr6.lamost.org/v2/}}."
+        }
+      ],
+      "evidence": "LAMOST DR6 LRS-AFGK, LRS-M, and MRS catalogues used for spectroscopic metallicity calibration. 12,259 stars retained after quality cuts.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Full machine-readable catalogue of 551,214 main-sequence halo/thick-disk candidate stars. Contains Gaia EDR3 source_id, position, parallax, proper motions, G magnitude, G-RP colour, colour excess, extinction, [Fe/H]_KNN, and [Fe/H]_grid. Described in Section 4 and Tables 5-6. Available as online supplementary material with the MNRAS article (2022MNRAS.510.4308K, doi:10.1093/mnras/stab3671).",
+      "source_refs": [
+        {
+          "path": "literature/2112.07419/arxiv_source/ms.tex",
+          "start_line": 496,
+          "end_line": 496,
+          "context": "\\section{A catalogue of main-sequence stars in the local Galactic thick disk and halo in the Gaia EDR3}\\label{sec:catalogue}\\nWe present a final catalogue of $551,214$ main-sequence stars in the local Galactic thick disk and halo in the Gaia EDR3. Our catalogue provides basic information in Gaia EDR3, including source id, position (R.A., Dec.), kinematic parameters (parallax, proper motion in R.A. and Dec.) and their uncertainties, photometric magnitudes and colours ($G$ and $\\grp$ colour), and and the adopted extinction value ($A_V$) based on an application of the 3D reddening map of \\citet{green:19}. Finally, the catalogue lists our photometric metallicity estimates from both the KNN regressor and from the calibrated colour-magnitude-metallicity grid. Table~\\ref{tab:tab4} presents description of columns in the catalogue and Table~\\ref{tab:tab6} displays a portion of the catalogue with 10 sample stars. The full catalogue is provided electronically in a machine-readable format."
+        },
+        {
+          "path": "literature/2112.07419/arxiv_source/ms.tex",
+          "start_line": 549,
+          "end_line": 549,
+          "context": "... & ... & ... & ... & ... & ... & ... & ... & ... & ... & ... & ... & ... \\\\\\n\\hline\\n\\multicolumn{13}{l}{$^*$\\footnotesize{A full machine-readable catalogue is available online.}} \\\\\\n\\end{tabular}}\\n\\end{table*}"
+        },
+        {
+          "path": "literature/2112.07419/arxiv_source/ms.tex",
+          "start_line": 610,
+          "end_line": 612,
+          "context": "\\section*{Data Availability}\\nThe data underlying this article were accessed from the European Space Agency (ESA) mission {\\it Gaia}... The derived data generated in this research are available in the article and in its online supplementary material."
+        }
+      ],
+      "evidence": "The paper's primary data product: 551,214 stars with positions, astrometry, photometry, extinction, and photometric metallicities. Described as online supplementary material.",
+      "comments": "No explicit CDS/VizieR URL found in the paper source. The catalogue is available through MNRAS supplementary material. Also cross-referenced in SIMBAD (ADS data: SIMBAD:6)."
+    }
+  ]
+}

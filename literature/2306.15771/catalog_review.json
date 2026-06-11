@@ -1,0 +1,815 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2306.15771",
+    "title": "A Multi-Year Photopolarimetric Study of the Semi-Regular Variable V CVn and Identification of Analogue Sources",
+    "month": "2023-06",
+    "source_note_json": "notes/2023/2023-06/2023-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2306.15771",
+      "pdf": "https://arxiv.org/pdf/2306.15771"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2306.15771",
+    "audit_path": "literature/2306.15771/audit.json",
+    "source_dir": "literature/2306.15771/arxiv_source",
+    "tex_root": "literature/2306.15771/arxiv_source/main_2.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:37:52",
+    "reviewer": "agent",
+    "summary": "This paper presents new V-band photopolarimetric measurements of the semi-regular variable V CVn over three pulsation cycles (2020-2022), identifies analogue sources (L2 Pup, UZ Ari, AK Peg, RX Boo, Z UMa), and discusses models for the polarization variability. Data assets include: (1) 5 journal tables of original photopolarimetric measurements (JD, P_cal, PA_cal, Q_cal, U_cal with errors, mag(V) with errors, exposure time, observer) totaling 227 measurements over 227 nights; (2) one compilation table of 6 V CVn-type stars with literature stellar parameters; (3) two calibration tables (unpolarized standards, highly polarized standards); (4) one derived interstellar polarization estimate. Raw data also hosted on Zenodo (https://zenodo.org/record/7997101). External resources include Gaia mission acknowledgements. The journal tables (AppendB) are the primary original data product."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab1",
+      "kind": "latex_table",
+      "asset_type": "calibration_data",
+      "role_in_paper": "calibration",
+      "source_refs": [
+        {
+          "path": "literature/2306.15771/arxiv_source/main_2.tex",
+          "start_line": 159,
+          "end_line": 171,
+          "caption": "Unpolarized stars used as standards, and their polarization according to \\cite{Schmidt1992}\\label{tab1}",
+          "label": "tab1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Star name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mag(V)",
+          "meaning": "V-band apparent magnitude",
+          "unit_text": "mag(V)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P (%)",
+          "meaning": "Polarization fraction",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_P (%)",
+          "meaning": "Uncertainty on polarization fraction",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Observer",
+          "meaning": "Observer identifier (1=Steenken, 2=Simpson)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Unpolarized stars used as standards, and their polarization according to \\cite{Schmidt1992}\\label{tab1}",
+      "comments": "Calibration data from literature; used to determine instrumental zero-point offsets for Stokes parameters."
+    },
+    {
+      "id": "table-tab2",
+      "kind": "latex_table",
+      "asset_type": "calibration_data",
+      "role_in_paper": "calibration",
+      "source_refs": [
+        {
+          "path": "literature/2306.15771/arxiv_source/main_2.tex",
+          "start_line": 182,
+          "end_line": 209,
+          "caption": "Highly polarized stars measurements and comparison to reference",
+          "label": "tab2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Star name (phi Cas or 2H Cam)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "JD",
+          "meaning": "Julian Date of observation",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_cal",
+          "meaning": "Calibrated polarization fraction",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PA_cal",
+          "meaning": "Calibrated polarization position angle",
+          "unit_text": "degrees",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ob",
+          "meaning": "Observer identifier (1=Steenken, 2=Simpson) or reference",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Highly polarized stars measurements and comparison to reference",
+      "comments": "Calibration measurements of phi Cas and 2H Cam to verify instrumental PA offsets and reliability across observing seasons. Includes comparison to Hsu1982 reference values."
+    },
+    {
+      "id": "table-tab4",
+      "kind": "latex_table",
+      "asset_type": "derived_data",
+      "role_in_paper": "data_reduction",
+      "source_refs": [
+        {
+          "path": "literature/2306.15771/arxiv_source/main_2.tex",
+          "start_line": 220,
+          "end_line": 228,
+          "caption": "Estimate of interstellar polarization based on nearby star BD+46 1863 \\label{tab4}",
+          "label": "tab4"
+        }
+      ],
+      "columns": [
+        {
+          "name": "P_is",
+          "meaning": "Estimated interstellar polarization fraction",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PA_is",
+          "meaning": "Estimated interstellar polarization position angle",
+          "unit_text": "degrees",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Q_is",
+          "meaning": "Estimated interstellar Stokes Q parameter",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "U_is",
+          "meaning": "Estimated interstellar Stokes U parameter",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_Q",
+          "meaning": "Uncertainty on Q_is",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_U",
+          "meaning": "Uncertainty on U_is",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Estimate of interstellar polarization based on nearby star BD+46 1863 \\label{tab4}",
+      "comments": "Single-row table with interstellar polarization estimate derived from BD+46 1863 (located ~2 arcmin SW of V CVn at ~1670 pc). Used to compute intrinsic polarization via Q_intr = Q_cal - Q_is, U_intr = U_cal - U_is."
+    },
+    {
+      "id": "table-tab-var_stars",
+      "kind": "latex_table",
+      "asset_type": "literature_compilation",
+      "role_in_paper": "comparison_sample",
+      "source_refs": [
+        {
+          "path": "literature/2306.15771/arxiv_source/main_2.tex",
+          "start_line": 434,
+          "end_line": 474,
+          "caption": "\\label{tab:var_stars} V CVn type stars: semi-regular variables with significant variable polarization.",
+          "label": "tab:var_stars"
+        }
+      ],
+      "columns": [
+        {
+          "name": "(parameter)",
+          "meaning": "Stellar parameter name (row labels: Spectral Type, Galactic latitude, Period, Delta mag(V), Polarimetric data yr, Polarization range, Position angle range, PA stability, Distance, Proper motion mu, Tangential velocity V_t, Radial velocity V_r)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V CVn",
+          "meaning": "Values for V CVn",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "UZ Ari",
+          "meaning": "Values for UZ Ari",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "AK Peg",
+          "meaning": "Values for AK Peg",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RX Boo",
+          "meaning": "Values for RX Boo",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Z UMa",
+          "meaning": "Values for Z UMa",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "L_2 Pup",
+          "meaning": "Values for L2 Pup",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\label{tab:var_stars} V CVn type stars: semi-regular variables with significant variable polarization.",
+      "comments": "Literature compilation from multiple sources (GCVS, Kruszewski, Dyck, Serkowski, Magalhaes, Baug, Gaia DR2, etc.). Uses threeparttable with 13 numbered table notes. 12 stellar parameters for 6 stars. Intended to identify V CVn analogues with similar polarimetric behavior."
+    },
+    {
+      "id": "table-tab-journal_2020",
+      "kind": "latex_table",
+      "asset_type": "original_data",
+      "role_in_paper": "primary_results",
+      "source_refs": [
+        {
+          "path": "literature/2306.15771/arxiv_source/main_2.tex",
+          "start_line": 478,
+          "end_line": 543,
+          "caption": "\\label{tab:journal_2020} Photopolarimetry journal of pulsation cycle 1/2020.",
+          "label": "tab:journal_2020"
+        }
+      ],
+      "columns": [
+        {
+          "name": "JD (d)",
+          "meaning": "Julian Date of observation",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_cal (debiased)",
+          "meaning": "Calibrated and debiased polarization fraction",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PA_cal (°)",
+          "meaning": "Calibrated polarization position angle",
+          "unit_text": "degrees",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Q_cal",
+          "meaning": "Calibrated Stokes Q parameter",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_Q",
+          "meaning": "Uncertainty on Q_cal",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "U_cal",
+          "meaning": "Calibrated Stokes U parameter",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_U",
+          "meaning": "Uncertainty on U_cal",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mag(V)",
+          "meaning": "V-band apparent magnitude",
+          "unit_text": "mag(V)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_mag(V)",
+          "meaning": "Uncertainty on V-band magnitude",
+          "unit_text": "mag(V)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Exp. (sec)",
+          "meaning": "Exposure time",
+          "unit_text": "seconds",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ob.",
+          "meaning": "Observer identifier (1=Steenken/Munich, 2=Simpson/Scotland)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\label{tab:journal_2020} Photopolarimetry journal of pulsation cycle 1/2020.",
+      "comments": "Original data from Appendix B. Contains ~50 rows of photopolarimetric measurements covering JD 2458947.3 to 2459119.4 (pulsation cycle 1/2020). Both calibrated (Q_cal, U_cal) values shown; intrinsic values require subtraction of interstellar polarization from Table 4."
+    },
+    {
+      "id": "table-tab-journal_2021-1",
+      "kind": "latex_table",
+      "asset_type": "original_data",
+      "role_in_paper": "primary_results",
+      "source_refs": [
+        {
+          "path": "literature/2306.15771/arxiv_source/main_2.tex",
+          "start_line": 547,
+          "end_line": 612,
+          "caption": "\\label{tab:journal_2021-1} Journal of measurements from 2021, part 1.",
+          "label": "tab:journal_2021-1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "JD (d)",
+          "meaning": "Julian Date of observation",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_cal (debiased)",
+          "meaning": "Calibrated and debiased polarization fraction",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PA_cal (°)",
+          "meaning": "Calibrated polarization position angle",
+          "unit_text": "degrees",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Q_cal",
+          "meaning": "Calibrated Stokes Q parameter",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_Q",
+          "meaning": "Uncertainty on Q_cal",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "U_cal",
+          "meaning": "Calibrated Stokes U parameter",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_U",
+          "meaning": "Uncertainty on U_cal",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mag(V)",
+          "meaning": "V-band apparent magnitude",
+          "unit_text": "mag(V)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_mag(V)",
+          "meaning": "Uncertainty on V-band magnitude",
+          "unit_text": "mag(V)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Exp. (sec)",
+          "meaning": "Exposure time",
+          "unit_text": "seconds",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ob.",
+          "meaning": "Observer identifier (1=Steenken/Munich, 2=Simpson/Scotland)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\label{tab:journal_2021-1} Journal of measurements from 2021, part 1.",
+      "comments": "Original data from Appendix B. Part 1 of 2021 measurements covering JD 2459266.4 to 2459365.4 (first half of pulsation cycle 1/2021). ~50 rows."
+    },
+    {
+      "id": "table-tab-journal_2021-2",
+      "kind": "latex_table",
+      "asset_type": "original_data",
+      "role_in_paper": "primary_results",
+      "source_refs": [
+        {
+          "path": "literature/2306.15771/arxiv_source/main_2.tex",
+          "start_line": 616,
+          "end_line": 666,
+          "caption": "\\label{tab:journal_2021-2} Journal of measurements from 2021, part 2.",
+          "label": "tab:journal_2021-2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "JD (d)",
+          "meaning": "Julian Date of observation",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_cal (debiased)",
+          "meaning": "Calibrated and debiased polarization fraction",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PA_cal (°)",
+          "meaning": "Calibrated polarization position angle",
+          "unit_text": "degrees",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Q_cal",
+          "meaning": "Calibrated Stokes Q parameter",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_Q",
+          "meaning": "Uncertainty on Q_cal",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "U_cal",
+          "meaning": "Calibrated Stokes U parameter",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_U",
+          "meaning": "Uncertainty on U_cal",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mag(V)",
+          "meaning": "V-band apparent magnitude",
+          "unit_text": "mag(V)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_mag(V)",
+          "meaning": "Uncertainty on V-band magnitude",
+          "unit_text": "mag(V)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Exp. (sec)",
+          "meaning": "Exposure time",
+          "unit_text": "seconds",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ob.",
+          "meaning": "Observer identifier (1=Steenken/Munich, 2=Simpson/Scotland)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\label{tab:journal_2021-2} Journal of measurements from 2021, part 2.",
+      "comments": "Original data from Appendix B. Part 2 of 2021 measurements covering JD 2459367.4 to 2459487.4 (second half of pulsation cycle 1/2021). ~38 rows."
+    },
+    {
+      "id": "table-tab-journal_2022-1",
+      "kind": "latex_table",
+      "asset_type": "original_data",
+      "role_in_paper": "primary_results",
+      "source_refs": [
+        {
+          "path": "literature/2306.15771/arxiv_source/main_2.tex",
+          "start_line": 672,
+          "end_line": 729,
+          "caption": "\\label{tab:journal_2022-1} Journal of measurements from 2022, part 1.",
+          "label": "tab:journal_2022-1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "JD (d)",
+          "meaning": "Julian Date of observation",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_cal (debiased)",
+          "meaning": "Calibrated and debiased polarization fraction",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PA_cal (°)",
+          "meaning": "Calibrated polarization position angle",
+          "unit_text": "degrees",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Q_cal",
+          "meaning": "Calibrated Stokes Q parameter",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_Q",
+          "meaning": "Uncertainty on Q_cal",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "U_cal",
+          "meaning": "Calibrated Stokes U parameter",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_U",
+          "meaning": "Uncertainty on U_cal",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mag(V)",
+          "meaning": "V-band apparent magnitude",
+          "unit_text": "mag(V)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_mag(V)",
+          "meaning": "Uncertainty on V-band magnitude",
+          "unit_text": "mag(V)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Exp. (sec)",
+          "meaning": "Exposure time",
+          "unit_text": "seconds",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ob.",
+          "meaning": "Observer identifier (1=Steenken/Munich, 2=Simpson/Scotland)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\label{tab:journal_2022-1} Journal of measurements from 2022, part 1.",
+      "comments": "Original data from Appendix B. Part 1 of 2022 measurements covering JD 2459609.4 to 2459725.3 (first half of pulsation cycle 1/2022). ~45 rows."
+    },
+    {
+      "id": "table-tab-journal_2022-2",
+      "kind": "latex_table",
+      "asset_type": "original_data",
+      "role_in_paper": "primary_results",
+      "source_refs": [
+        {
+          "path": "literature/2306.15771/arxiv_source/main_2.tex",
+          "start_line": 732,
+          "end_line": 788,
+          "caption": "\\label{tab:journal_2022-2} Journal of measurements from 2022, part 2.",
+          "label": "tab:journal_2022-2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "JD (d)",
+          "meaning": "Julian Date of observation",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_cal (debiased)",
+          "meaning": "Calibrated and debiased polarization fraction",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PA_cal (°)",
+          "meaning": "Calibrated polarization position angle",
+          "unit_text": "degrees",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Q_cal",
+          "meaning": "Calibrated Stokes Q parameter",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_Q",
+          "meaning": "Uncertainty on Q_cal",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "U_cal",
+          "meaning": "Calibrated Stokes U parameter",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_U",
+          "meaning": "Uncertainty on U_cal",
+          "unit_text": "fraction",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mag(V)",
+          "meaning": "V-band apparent magnitude",
+          "unit_text": "mag(V)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma_mag(V)",
+          "meaning": "Uncertainty on V-band magnitude",
+          "unit_text": "mag(V)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Exp. (sec)",
+          "meaning": "Exposure time",
+          "unit_text": "seconds",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ob.",
+          "meaning": "Observer identifier (1=Steenken/Munich, 2=Simpson/Scotland)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\label{tab:journal_2022-2} Journal of measurements from 2022, part 2.",
+      "comments": "Original data from Appendix B. Part 2 of 2022 measurements covering JD 2459726.4 to 2459887.7 (second half of pulsation cycle 1/2022). ~46 rows."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://www.aanda.org/author-information/information-files/170-aaa-keywords",
+      "local_path": "",
+      "description": "A&A journal keywords reference page; used to select appropriate keywords for paper submission.",
+      "source_refs": [
+        {
+          "path": "literature/2306.15771/arxiv_source/main_2.tex",
+          "start_line": 84,
+          "end_line": 84,
+          "context": "% A&A Keywords: https://www.aanda.org/author-information/information-files/170-aaa-keywords"
+        }
+      ],
+      "evidence": "A&A Keywords reference URL in tex comments.",
+      "comments": "Informational reference only; not a data asset."
+    },
+    {
+      "id": "resource-002",
+      "kind": "data_repository",
+      "url": "https://zenodo.org/record/7997101",
+      "local_path": "",
+      "description": "Zenodo repository hosting all raw photopolarimetric data for V CVn (227 measurements over 2020-2022). The raw data complement the journal tables in Appendix B.",
+      "source_refs": [
+        {
+          "path": "literature/2306.15771/arxiv_source/main_2.tex",
+          "start_line": 263,
+          "end_line": 263,
+          "context": "footnote[4]: All raw data can be obtained from https://zenodo.org/record/7997101"
+        }
+      ],
+      "evidence": "Footnote [4] on line 263 and acknowledgements line 415.",
+      "comments": "Primary external data repository for this paper. Contains raw measurements that were processed into the calibrated values shown in Appendix B tables."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission homepage. Gaia data (DR2/EDR3) used for stellar distances, proper motions, tangential velocities in Table A.1 (tab:var_stars).",
+      "source_refs": [
+        {
+          "path": "literature/2306.15771/arxiv_source/main_2.tex",
+          "start_line": 419,
+          "end_line": 419,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission Gaia"
+        }
+      ],
+      "evidence": "Acknowledgements section lines 418-421.",
+      "comments": "Source of astrometric data used in the paper (distances, proper motions, velocities)."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "Gaia Data Processing and Analysis Consortium (DPAC) homepage. Acknowledged for data processing.",
+      "source_refs": [
+        {
+          "path": "literature/2306.15771/arxiv_source/main_2.tex",
+          "start_line": 421,
+          "end_line": 421,
+          "context": "Data Processing and Analysis Consortium (DPAC, https://www.cosmos.esa.int/web/gaia/dpac/consortium)"
+        }
+      ],
+      "evidence": "Acknowledgements section lines 420-421.",
+      "comments": "Informational acknowledgement URL; DPAC processed the Gaia data used in the paper."
+    }
+  ]
+}

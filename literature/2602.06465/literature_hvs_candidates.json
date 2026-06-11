@@ -1,0 +1,94 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:21:32",
+  "paper": {
+    "arxiv_id": "2602.06465",
+    "bibcode": "2026AJ....171..272R",
+    "title": "The Walkaway Star HP Tau/G2: Evidence for a Stellar Merger",
+    "month": "2026-02",
+    "source_note_json": "notes/2026/2026-02/2026-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2602.06465",
+      "pdf": "https://arxiv.org/pdf/2602.06465"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2602.06465",
+    "audit_path": "literature/2602.06465/audit.json",
+    "catalog_review_path": "literature/2602.06465/catalog_review.json",
+    "catalog_extraction_path": "literature/2602.06465/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2602.06465/catalog_tables/table-001.ecsv",
+      "literature/2602.06465/catalog_tables/table-002.ecsv",
+      "literature/2602.06465/catalog_tables/table-tab-comparison.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T20:21:32",
+    "extractor": "agent",
+    "summary": "The paper discusses walkaway stars (G2, KPNO 15, G1) ejected from the young HP Tau stellar group at velocities of 5-17 km/s. These are cluster escapers, not Galactic-unbound HVS candidates. No object is presented as possibly unbound from the Milky Way."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-001",
+      "description": "Young Stars in the HP Tau Group, containing three walkaway stars (KPNO 15, HP Tau/G1, HP Tau/G2) flagged in the Notes column.",
+      "decision": "excluded",
+      "reason": "The paper presents these objects as walkaway stars ejected from a young stellar group at velocities of 5-17 km/s. Walkaway stars are cluster escapers with velocities between 5 and 30 km/s (de Mink et al. 2014), not Galactic-unbound HVS candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+          "start_line": 845,
+          "end_line": 867,
+          "context": "Definition of walkaway stars as velocities between 5 and 30 km/s"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+          "start_line": 897,
+          "end_line": 902,
+          "context": "Four stars (G1, G2, KPNO 15, HP Tau) are identified as known or suspected walkaway stars"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+          "start_line": 622,
+          "end_line": 710,
+          "context": "Table 1: Young Stars in the HP Tau Group with walkaway star annotations"
+        }
+      ]
+    },
+    {
+      "group_id": "table-002",
+      "description": "Proper Motions within Rest Frame and Radial and Space Velocities for HP Tau group members.",
+      "decision": "excluded",
+      "reason": "The velocities reported (tangential velocities 5.65-8.44 km/s, space velocities ~17.5 km/s) are characteristic of walkaway stars ejected from a young stellar group. The paper does not discuss any object as possibly unbound from the Milky Way potential.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+          "start_line": 951,
+          "end_line": 956,
+          "context": "Tangential velocity of G2 (5.65 km/s) and KPNO 15 (8.44 km/s)"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+          "start_line": 978,
+          "end_line": 982,
+          "context": "G1 has a tangential velocity of 8.5 km/s and space velocity of about 17.5 km/s"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+          "start_line": 718,
+          "end_line": 785,
+          "context": "Table 2: Proper Motions and Velocities"
+        }
+      ]
+    }
+  ]
+}

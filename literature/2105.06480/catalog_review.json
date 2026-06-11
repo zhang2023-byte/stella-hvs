@@ -1,0 +1,63 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2105.06480",
+    "title": "8.9-hr Rotation in the Partly Burnt Runaway Stellar Remnant LP 40-365 (GD 492)",
+    "month": "2021-05",
+    "source_note_json": "notes/2021/2021-05/2021-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2105.06480",
+      "pdf": "https://arxiv.org/pdf/2105.06480"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2105.06480",
+    "audit_path": "literature/2105.06480/audit.json",
+    "source_dir": "literature/2105.06480/arxiv_source",
+    "tex_root": "literature/2105.06480/arxiv_source/ms.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:24:36",
+    "reviewer": "agent",
+    "summary": "This ApJ Letter reports 8.914-hr photometric variability in LP 40-365 detected from TESS, HST/STIS, and WISE light curves. No LaTeX tables are present in the source. Two external resources identified: the stistools Python package used to process HST/STIS time-tagged photon data, and the IRSA archive queried for AllWISE/NEOWISE photometry. The paper acknowledges TESS, HST, and WISE data but provides no concrete data-access URLs beyond these two resources."
+  },
+  "internal_tables": [],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://stistools.readthedocs.io",
+      "local_path": "",
+      "description": "Python package from STScI for interacting with HST/STIS data, used to bin time-tagged photon data into 3-min intervals and extract an ultraviolet light curve.",
+      "source_refs": [
+        {
+          "path": "literature/2105.06480/arxiv_source/ms.tex",
+          "start_line": 93,
+          "end_line": 93,
+          "context": "We interacted with these data using the python package \\texttt{stistools}\\footnote{\\href{https://stistools.readthedocs.io/}{https://stistools.readthedocs.io}} available from the Space Telescope Science Institute."
+        }
+      ],
+      "evidence": "Footnote in Section 2.2 (HST Observations): the URL is given explicitly in the \\href command linking to https://stistools.readthedocs.io/.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://irsa.ipac.caltech.edu",
+      "local_path": "",
+      "description": "NASA/IPAC Infrared Science Archive queried via AllWISE Multiepoch Photometry Table and NEOWISE-R Single Exposure Source Table to obtain W1 and W2 band photometry for LP 40-365 from 2010–2019.",
+      "source_refs": [
+        {
+          "path": "literature/2105.06480/arxiv_source/ms.tex",
+          "start_line": 99,
+          "end_line": 99,
+          "context": "We queried the AllWISE Multiepoch Photometry Table and NEOWISE-R Single Exposure Source Table\\footnote{Available at {\\href{https://irsa.ipac.caltech.edu}{irsa.ipac.caltech.edu}}}, obtaining photometry in the \\textit{W1} and \\textit{W2} bands, taken during the decade 2010--2019."
+        }
+      ],
+      "evidence": "Footnote in Section 2.3 (WISE Observations): the URL is given explicitly as irsa.ipac.caltech.edu.",
+      "comments": ""
+    }
+  ]
+}

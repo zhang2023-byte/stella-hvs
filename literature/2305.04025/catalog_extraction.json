@@ -1,0 +1,134 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:57:05",
+  "paper": {
+    "arxiv_id": "2305.04025",
+    "title": "Diverse Chemo-Dynamical Properties of Nitrogen-Rich Stars Identified From Low-Resolution Spectra",
+    "month": "2023-05"
+  },
+  "review": {
+    "path": "literature/2305.04025/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225705",
+    "started_at": "2026-05-22T22:57:05",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2305.04025",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2305.04025/arxiv_source/tab1.tex",
+        "start_line": 1,
+        "end_line": 59,
+        "caption": "List of IDs for N-rich Stars",
+        "label": "tab1"
+      },
+      "source_path": "literature/2305.04025/arxiv_source/tab1.tex",
+      "excerpt_path": "literature/2305.04025/catalog_sources/table-tab1/excerpt.tex",
+      "sha256": "1b8c5382f19ea2f411c09aa239ce67380f68d43b541a0e35d33e0d121dd7812f",
+      "line_count": 59,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "status": "success",
+      "ecsv_path": "literature/2305.04025/catalog_tables/table-tab1.ecsv",
+      "caption": "List of IDs for N-rich Stars",
+      "label": "tab1",
+      "row_count": 46,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "ID",
+          "ID"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsgfte_c3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2305.04025/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsgfte_c3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2305.04025/catalog_sources/table-tab1/wrapped.tex",
+            "html": "literature/2305.04025/catalog_sources/table-tab1/latexml.html",
+            "stdout": "literature/2305.04025/catalog_sources/table-tab1/latexml.stdout.txt",
+            "stderr": "literature/2305.04025/catalog_sources/table-tab1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "1b8c5382f19ea2f411c09aa239ce67380f68d43b541a0e35d33e0d121dd7812f"
+    }
+  ]
+}

@@ -1,0 +1,1236 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:57:24",
+  "paper": {
+    "arxiv_id": "2306.03914",
+    "title": "The fastest stars in the Galaxy",
+    "month": "2023-06"
+  },
+  "review": {
+    "path": "literature/2306.03914/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225724",
+    "started_at": "2026-05-22T22:57:24",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2306.03914",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 7,
+      "work_count": 7,
+      "table_count": 7,
+      "success_count": 7,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 7,
+      "file_success_count": 7,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-query",
+      "internal_table_id": "table-tab-query",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+        "start_line": 210,
+        "end_line": 243,
+        "caption": "All {\\it Gaia} sources returned by the ADQL query from Section~\\ref{sec:adql}, together with results from our follow-up spectroscopy. Sources are sorted by $4.74\\mu/\\left(\\varpi+\\sigma_{\\varpi}\\right)$, the $1\\sigma$ lower limit on their tangential velocity. ``D$^6$ stars'' are suspected runaway donors from WD+WD binaries with velocities $\\gtrsim 1000\\,\\rm km\\,s^{-1}$. ``LP 40-365 stars'' are suspected to be partially burned runaway accretors; they have lower velocities and different abundance patterns (see Section~\\ref{sec:lp40}). DA~WDs and main-sequence (MS) stars are false positives.",
+        "label": "tab:query"
+      },
+      "source_path": "literature/2306.03914/arxiv_source/manuscript.tex",
+      "excerpt_path": "literature/2306.03914/catalog_sources/table-tab-query/excerpt.tex",
+      "sha256": "0510316c8de615987c36805b4f6e8ba585fccec3e14617d6800c42bc6d2dde92",
+      "line_count": 34,
+      "error": ""
+    },
+    {
+      "id": "table-tab-sed",
+      "internal_table_id": "table-tab-sed",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+        "start_line": 412,
+        "end_line": 427,
+        "caption": "Constraints from our analysis of the spectra and broadband SEDs. Uncertainties are $1\\sigma$ (middle 68\\%).",
+        "label": "tab:sed"
+      },
+      "source_path": "literature/2306.03914/arxiv_source/manuscript.tex",
+      "excerpt_path": "literature/2306.03914/catalog_sources/table-tab-sed/excerpt.tex",
+      "sha256": "18b9fd26fea041605b4df655ec45a372858ed22f23db79d96273c792b414ead8",
+      "line_count": 16,
+      "error": ""
+    },
+    {
+      "id": "table-tab-all_systems",
+      "internal_table_id": "table-tab-all_systems",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+        "start_line": 444,
+        "end_line": 475,
+        "caption": "Known high-velocity objects suspected to be runaways from thermonuclear supernovae. Uncertainties are $1\\sigma$ (middle 68\\%). Objects in bold are new discoveries. We also list previously known $\\rm D^6$ stars (\\citetalias{Shen2018}) and LP~40-365 stars \\citep{Raddi2019}, as well as the one known high-velocity helium star US~708 \\citep{Geier2015}, the oxygen-atmosphere WD~J1240 \\citep{Gansicke2020}, and the object J1637 \\citep{Raddi2019}, which may be a $\\rm D^6$ star or in the same class as J1240.",
+        "label": "tab:all_systems"
+      },
+      "source_path": "literature/2306.03914/arxiv_source/manuscript.tex",
+      "excerpt_path": "literature/2306.03914/catalog_sources/table-tab-all_systems/excerpt.tex",
+      "sha256": "a89e0eb9574c8dd0794f3b02aa8d67089c571e9c932378b2af92454fcdcfd7a3",
+      "line_count": 32,
+      "error": ""
+    },
+    {
+      "id": "table-tab-query2",
+      "internal_table_id": "table-tab-query2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+        "start_line": 1540,
+        "end_line": 1571,
+        "caption": "Additional candidates we observed. Compared to those in Table~\\ref{tab:query}, these have lower proper motions and/or higher-significance parallaxes. None turned out to be strong thermonuclear runaway candidates.",
+        "label": "tab:query2"
+      },
+      "source_path": "literature/2306.03914/arxiv_source/manuscript.tex",
+      "excerpt_path": "literature/2306.03914/catalog_sources/table-tab-query2/excerpt.tex",
+      "sha256": "77d9d10d9d22c38edfc277c837faa29651556fccfc5e0ac2f8b0c7ef9d147458",
+      "line_count": 32,
+      "error": ""
+    },
+    {
+      "id": "table-tab-obslog",
+      "internal_table_id": "table-tab-obslog",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+        "start_line": 1593,
+        "end_line": 1611,
+        "caption": "Observing log for the six targets confirmed to be hydrogen-free.",
+        "label": "tab:obslog"
+      },
+      "source_path": "literature/2306.03914/arxiv_source/manuscript.tex",
+      "excerpt_path": "literature/2306.03914/catalog_sources/table-tab-obslog/excerpt.tex",
+      "sha256": "b8e9838806f10271097c1278355b602498ffebc9bd6e9139a46aa2f8f226aa36",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-all_systems_EDSD",
+      "internal_table_id": "table-tab-all_systems_EDSD",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+        "start_line": 1637,
+        "end_line": 1669,
+        "caption": "Same as Table~\\ref{tab:all_systems}, but inferred with an exponentially decreasing space density distance prior with $L=1.35$\\,kpc.",
+        "label": "tab:all_systems_EDSD"
+      },
+      "source_path": "literature/2306.03914/arxiv_source/manuscript.tex",
+      "excerpt_path": "literature/2306.03914/catalog_sources/table-tab-all_systems_EDSD/excerpt.tex",
+      "sha256": "e80a2c1a4a67bbd1f7b15d938a740085026ad7ee6f48ccc97434fc10c6f2463d",
+      "line_count": 33,
+      "error": ""
+    },
+    {
+      "id": "table-tab-all_systems_flat_distanc",
+      "internal_table_id": "table-tab-all_systems_flat_distanc",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.03914/arxiv_source/manuscript.tex",
+        "start_line": 1672,
+        "end_line": 1704,
+        "caption": "Same as Table~\\ref{tab:all_systems}, but inferred with a flat distance prior.",
+        "label": "tab:all_systems_flat_distanc"
+      },
+      "source_path": "literature/2306.03914/arxiv_source/manuscript.tex",
+      "excerpt_path": "literature/2306.03914/catalog_sources/table-tab-all_systems_flat_distanc/excerpt.tex",
+      "sha256": "42178305fb1a0059b72d03454a04c6988085ba19a6f03bb925e32c606151ee20",
+      "line_count": 33,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-query",
+      "internal_table_id": "table-tab-query",
+      "status": "success",
+      "ecsv_path": "literature/2306.03914/catalog_tables/table-tab-query.ecsv",
+      "caption": "All {\\it Gaia} sources returned by the ADQL query from Section~\\ref{sec:adql}, together with results from our follow-up spectroscopy. Sources are sorted by $4.74\\mu/\\left(\\varpi+\\sigma_{\\varpi}\\right)$, the $1\\sigma$ lower limit on their tangential velocity. ``D$^6$ stars'' are suspected runaway donors from WD+WD binaries with velocities $\\gtrsim 1000\\,\\rm km\\,s^{-1}$. ``LP 40-365 stars'' are suspected to be partially burned runaway accretors; they have lower velocities and different abundance patterns (see Section~\\ref{sec:lp40}). DA~WDs and main-sequence (MS) stars are false positives.",
+      "label": "tab:query",
+      "row_count": 25,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR3 Source ID",
+          "Name",
+          "G",
+          "\\varpi",
+          "\\mu",
+          "4.74\\mu/\\varpi",
+          "\\frac4.74\\mu\\varpi+\\sigma_\\varpi",
+          "RV",
+          "verdict",
+          "instrument"
+        ],
+        [
+          "",
+          "",
+          "[mag]",
+          "[mas]",
+          "[ \\rm mas yr^-1 ]",
+          "[ \\rm km s^-1 ]",
+          "[ \\rm km s^-1 ]",
+          "[ \\rm km s^-1 ]",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR3 Source ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\varpi | [mas]",
+          "unit_text": "[mas]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu | [ \\rm mas yr^-1 ]",
+          "unit_text": "[ \\rm mas yr^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "4.74\\mu/\\varpi | [ \\rm km s^-1 ]",
+          "unit_text": "[ \\rm km s^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\frac4.74\\mu\\varpi+\\sigma_\\varpi | [ \\rm km s^-1 ]",
+          "unit_text": "[ \\rm km s^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "RV | [ \\rm km s^-1 ]",
+          "unit_text": "[ \\rm km s^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "verdict",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "instrument",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb6v_8gr7/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.03914/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb6v_8gr7/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.03914/catalog_sources/table-tab-query/wrapped.tex",
+            "html": "literature/2306.03914/catalog_sources/table-tab-query/latexml.html",
+            "stdout": "literature/2306.03914/catalog_sources/table-tab-query/latexml.stdout.txt",
+            "stderr": "literature/2306.03914/catalog_sources/table-tab-query/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0510316c8de615987c36805b4f6e8ba585fccec3e14617d6800c42bc6d2dde92"
+    },
+    {
+      "id": "table-tab-sed",
+      "internal_table_id": "table-tab-sed",
+      "status": "success",
+      "ecsv_path": "literature/2306.03914/catalog_tables/table-tab-sed.ecsv",
+      "caption": "Constraints from our analysis of the spectra and broadband SEDs. Uncertainties are $1\\sigma$ (middle 68\\%).",
+      "label": "tab:sed",
+      "row_count": 6,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "\\alpha",
+          "\\delta",
+          "Classification",
+          "Elements detected",
+          "T_\\rm eff",
+          "R",
+          "E(B-V)",
+          "\\log\\left[g/\\left(\\rm cm s^-2\\right)\\right]"
+        ],
+        [
+          "",
+          "J2016.0",
+          "J2016.0",
+          "",
+          "",
+          "[\\rm K]",
+          "[R_\\odot]",
+          "[mag]",
+          "assuming M=1 M_\\odot"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha | J2016.0",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta | J2016.0",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Classification",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Elements detected",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "T_\\rm eff | [\\rm K]",
+          "unit_text": "[\\rm K]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "R | [R_\\odot]",
+          "unit_text": "[R_\\odot]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "E(B-V) | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\log\\left[g/\\left(\\rm cm s^-2\\right)\\right] | assuming M=1 M_\\odot",
+          "unit_text": "\\log\\left[g/\\left(\\rm cm s^-2\\right)\\right]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp0hutgly/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.03914/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp0hutgly/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.03914/catalog_sources/table-tab-sed/wrapped.tex",
+            "html": "literature/2306.03914/catalog_sources/table-tab-sed/latexml.html",
+            "stdout": "literature/2306.03914/catalog_sources/table-tab-sed/latexml.stdout.txt",
+            "stderr": "literature/2306.03914/catalog_sources/table-tab-sed/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "18b9fd26fea041605b4df655ec45a372858ed22f23db79d96273c792b414ead8"
+    },
+    {
+      "id": "table-tab-all_systems",
+      "internal_table_id": "table-tab-all_systems",
+      "status": "success",
+      "ecsv_path": "literature/2306.03914/catalog_tables/table-tab-all_systems.ecsv",
+      "caption": "Known high-velocity objects suspected to be runaways from thermonuclear supernovae. Uncertainties are $1\\sigma$ (middle 68\\%). Objects in bold are new discoveries. We also list previously known $\\rm D^6$ stars (\\citetalias{Shen2018}) and LP~40-365 stars \\citep{Raddi2019}, as well as the one known high-velocity helium star US~708 \\citep{Geier2015}, the oxygen-atmosphere WD~J1240 \\citep{Gansicke2020}, and the object J1637 \\citep{Raddi2019}, which may be a $\\rm D^6$ star or in the same class as J1240.",
+      "label": "tab:all_systems",
+      "row_count": 20,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "Gaia DR3 Source ID",
+          "G",
+          "G_\\rm BP-G_\\rm RP",
+          "\\rm RV",
+          "d",
+          "v_\\rm tot",
+          "v_\\rm ejection",
+          "z",
+          "t_\\rm disk=z/v_z"
+        ],
+        [
+          "",
+          "",
+          "[mag]",
+          "[mag]",
+          "\\rm[km s^-1]",
+          "[\\rm kpc]",
+          "[\\rm km s^-1]",
+          "[\\rm km s^-1]",
+          "[\\rm kpc]",
+          "[\\rm Myr]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR3 Source ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "G_\\rm BP-G_\\rm RP | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\rm RV | \\rm[km s^-1]",
+          "unit_text": "\\rm[km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "d | [\\rm kpc]",
+          "unit_text": "[\\rm kpc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_\\rm tot | [\\rm km s^-1]",
+          "unit_text": "[\\rm km s^-1]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "v_\\rm ejection | [\\rm km s^-1]",
+          "unit_text": "[\\rm km s^-1]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "z | [\\rm kpc]",
+          "unit_text": "[\\rm kpc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "t_\\rm disk=z/v_z | [\\rm Myr]",
+          "unit_text": "[\\rm Myr]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3bd4pgzz/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.03914/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3bd4pgzz/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.03914/catalog_sources/table-tab-all_systems/wrapped.tex",
+            "html": "literature/2306.03914/catalog_sources/table-tab-all_systems/latexml.html",
+            "stdout": "literature/2306.03914/catalog_sources/table-tab-all_systems/latexml.stdout.txt",
+            "stderr": "literature/2306.03914/catalog_sources/table-tab-all_systems/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a89e0eb9574c8dd0794f3b02aa8d67089c571e9c932378b2af92454fcdcfd7a3"
+    },
+    {
+      "id": "table-tab-query2",
+      "internal_table_id": "table-tab-query2",
+      "status": "success",
+      "ecsv_path": "literature/2306.03914/catalog_tables/table-tab-query2.ecsv",
+      "caption": "Additional candidates we observed. Compared to those in Table~\\ref{tab:query}, these have lower proper motions and/or higher-significance parallaxes. None turned out to be strong thermonuclear runaway candidates.",
+      "label": "tab:query2",
+      "row_count": 21,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR3 Source ID",
+          "G",
+          "G_\\rm BP-G_\\rm RP",
+          "\\varpi",
+          "\\mu",
+          "4.74\\mu/\\varpi",
+          "\\frac4.74\\mu\\varpi+\\sigma_\\varpi",
+          "RV",
+          "verdict",
+          "instrument"
+        ],
+        [
+          "",
+          "[mag]",
+          "[mag]",
+          "[mas]",
+          "[ \\rm mas yr^-1 ]",
+          "[ \\rm km s^-1 ]",
+          "[ \\rm km s^-1 ]",
+          "[ \\rm km s^-1 ]",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR3 Source ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "G_\\rm BP-G_\\rm RP | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\varpi | [mas]",
+          "unit_text": "[mas]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu | [ \\rm mas yr^-1 ]",
+          "unit_text": "[ \\rm mas yr^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "4.74\\mu/\\varpi | [ \\rm km s^-1 ]",
+          "unit_text": "[ \\rm km s^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\frac4.74\\mu\\varpi+\\sigma_\\varpi | [ \\rm km s^-1 ]",
+          "unit_text": "[ \\rm km s^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "RV | [ \\rm km s^-1 ]",
+          "unit_text": "[ \\rm km s^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "verdict",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "instrument",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6jv12fs6/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.03914/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6jv12fs6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.03914/catalog_sources/table-tab-query2/wrapped.tex",
+            "html": "literature/2306.03914/catalog_sources/table-tab-query2/latexml.html",
+            "stdout": "literature/2306.03914/catalog_sources/table-tab-query2/latexml.stdout.txt",
+            "stderr": "literature/2306.03914/catalog_sources/table-tab-query2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "77d9d10d9d22c38edfc277c837faa29651556fccfc5e0ac2f8b0c7ef9d147458"
+    },
+    {
+      "id": "table-tab-obslog",
+      "internal_table_id": "table-tab-obslog",
+      "status": "success",
+      "ecsv_path": "literature/2306.03914/catalog_tables/table-tab-obslog.ecsv",
+      "caption": "Observing log for the six targets confirmed to be hydrogen-free.",
+      "label": "tab:obslog",
+      "row_count": 9,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Target",
+          "Instrument",
+          "Resolution",
+          "MJD",
+          "Exposure time (s)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Target",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Instrument",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Resolution",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "MJD",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Exposure time (s)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4w5gx31_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.03914/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4w5gx31_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.03914/catalog_sources/table-tab-obslog/wrapped.tex",
+            "html": "literature/2306.03914/catalog_sources/table-tab-obslog/latexml.html",
+            "stdout": "literature/2306.03914/catalog_sources/table-tab-obslog/latexml.stdout.txt",
+            "stderr": "literature/2306.03914/catalog_sources/table-tab-obslog/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b8e9838806f10271097c1278355b602498ffebc9bd6e9139a46aa2f8f226aa36"
+    },
+    {
+      "id": "table-tab-all_systems_EDSD",
+      "internal_table_id": "table-tab-all_systems_EDSD",
+      "status": "success",
+      "ecsv_path": "literature/2306.03914/catalog_tables/table-tab-all_systems_EDSD.ecsv",
+      "caption": "Same as Table~\\ref{tab:all_systems}, but inferred with an exponentially decreasing space density distance prior with $L=1.35$\\,kpc.",
+      "label": "tab:all_systems_EDSD",
+      "row_count": 20,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "Gaia DR3 Source ID",
+          "G",
+          "G_\\rm BP-G_\\rm RP",
+          "\\rm RV",
+          "d",
+          "v_\\rm tot",
+          "v_\\rm ejection",
+          "z",
+          "t_\\rm disk=z/v_z"
+        ],
+        [
+          "",
+          "",
+          "[mag]",
+          "[mag]",
+          "\\rm[km s^-1]",
+          "[\\rm kpc]",
+          "[\\rm km s^-1]",
+          "[\\rm km s^-1]",
+          "[\\rm kpc]",
+          "[\\rm Myr]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR3 Source ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "G_\\rm BP-G_\\rm RP | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\rm RV | \\rm[km s^-1]",
+          "unit_text": "\\rm[km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "d | [\\rm kpc]",
+          "unit_text": "[\\rm kpc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_\\rm tot | [\\rm km s^-1]",
+          "unit_text": "[\\rm km s^-1]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "v_\\rm ejection | [\\rm km s^-1]",
+          "unit_text": "[\\rm km s^-1]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "z | [\\rm kpc]",
+          "unit_text": "[\\rm kpc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "t_\\rm disk=z/v_z | [\\rm Myr]",
+          "unit_text": "[\\rm Myr]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp52i_q1jv/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.03914/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp52i_q1jv/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.03914/catalog_sources/table-tab-all_systems_EDSD/wrapped.tex",
+            "html": "literature/2306.03914/catalog_sources/table-tab-all_systems_EDSD/latexml.html",
+            "stdout": "literature/2306.03914/catalog_sources/table-tab-all_systems_EDSD/latexml.stdout.txt",
+            "stderr": "literature/2306.03914/catalog_sources/table-tab-all_systems_EDSD/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e80a2c1a4a67bbd1f7b15d938a740085026ad7ee6f48ccc97434fc10c6f2463d"
+    },
+    {
+      "id": "table-tab-all_systems_flat_distanc",
+      "internal_table_id": "table-tab-all_systems_flat_distanc",
+      "status": "success",
+      "ecsv_path": "literature/2306.03914/catalog_tables/table-tab-all_systems_flat_distanc.ecsv",
+      "caption": "Same as Table~\\ref{tab:all_systems}, but inferred with a flat distance prior.",
+      "label": "tab:all_systems_flat_distanc",
+      "row_count": 20,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "Gaia DR3 Source ID",
+          "G",
+          "G_\\rm BP-G_\\rm RP",
+          "\\rm RV",
+          "d",
+          "v_\\rm tot",
+          "v_\\rm ejection",
+          "z",
+          "t_\\rm disk=z/v_z"
+        ],
+        [
+          "",
+          "",
+          "[mag]",
+          "[mag]",
+          "\\rm[km s^-1]",
+          "[\\rm kpc]",
+          "[\\rm km s^-1]",
+          "[\\rm km s^-1]",
+          "[\\rm kpc]",
+          "[\\rm Myr]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR3 Source ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "G_\\rm BP-G_\\rm RP | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\rm RV | \\rm[km s^-1]",
+          "unit_text": "\\rm[km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "d | [\\rm kpc]",
+          "unit_text": "[\\rm kpc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_\\rm tot | [\\rm km s^-1]",
+          "unit_text": "[\\rm km s^-1]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "v_\\rm ejection | [\\rm km s^-1]",
+          "unit_text": "[\\rm km s^-1]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "z | [\\rm kpc]",
+          "unit_text": "[\\rm kpc]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "t_\\rm disk=z/v_z | [\\rm Myr]",
+          "unit_text": "[\\rm Myr]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxjidfz00/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.03914/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxjidfz00/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.03914/catalog_sources/table-tab-all_systems_flat_distanc/wrapped.tex",
+            "html": "literature/2306.03914/catalog_sources/table-tab-all_systems_flat_distanc/latexml.html",
+            "stdout": "literature/2306.03914/catalog_sources/table-tab-all_systems_flat_distanc/latexml.stdout.txt",
+            "stderr": "literature/2306.03914/catalog_sources/table-tab-all_systems_flat_distanc/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "42178305fb1a0059b72d03454a04c6988085ba19a6f03bb925e32c606151ee20"
+    }
+  ]
+}

@@ -1,0 +1,1381 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:35:44",
+  "paper": {
+    "arxiv_id": "1910.06340",
+    "title": "Pristine IX: CFHT ESPaDOnS Spectroscopic Analysis of 115 Bright Metal-Poor Candidate Stars",
+    "month": "2019-10"
+  },
+  "review": {
+    "path": "literature/1910.06340/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083544",
+    "started_at": "2026-06-07T08:35:44",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1910.06340",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 7,
+      "work_count": 7,
+      "table_count": 7,
+      "success_count": 7,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 7,
+      "file_success_count": 7,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-targets",
+      "internal_table_id": "table-targets",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1910.06340/arxiv_source/Venn.tex",
+        "start_line": 1730,
+        "end_line": 1730,
+        "caption": "Metal-Poor Targets (115) from the original Pristine survey footprint.",
+        "label": "tab:targets"
+      },
+      "source_path": "literature/1910.06340/arxiv_source/Venn.tex",
+      "excerpt_path": "literature/1910.06340/catalog_sources/table-targets/excerpt.tex",
+      "sha256": "720d9289c7f249f5ca948df2be1224cf4ad9cd931bd4f4808f81086628dedea7",
+      "line_count": 1,
+      "error": ""
+    },
+    {
+      "id": "table-newfs",
+      "internal_table_id": "table-newfs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1910.06340/arxiv_source/Venn.tex",
+        "start_line": 1731,
+        "end_line": 1731,
+        "caption": "Gaia DR2 parallaxes, and the derived distances (D), temperatures (T), and surface gravities (log g) from the Bayesian inference method...",
+        "label": "tab:newfs"
+      },
+      "source_path": "literature/1910.06340/arxiv_source/Venn.tex",
+      "excerpt_path": "literature/1910.06340/catalog_sources/table-newfs/excerpt.tex",
+      "sha256": "07d27e8613351457a65a18b0db428e90d670fa76b4e76c2ebc442af6c87cba7d",
+      "line_count": 1,
+      "error": ""
+    },
+    {
+      "id": "table-iron",
+      "internal_table_id": "table-iron",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1910.06340/arxiv_source/Venn.tex",
+        "start_line": 1732,
+        "end_line": 1732,
+        "caption": "Iron-group and heavy element abundances in the new 28 metal-poor stars, and our analysis of HD122563.",
+        "label": "tab:iron"
+      },
+      "source_path": "literature/1910.06340/arxiv_source/Venn.tex",
+      "excerpt_path": "literature/1910.06340/catalog_sources/table-iron/excerpt.tex",
+      "sha256": "dd92caeb3c4f03e78c15d2a73dc9498ad6692b031d88fc96c0e47c1bbd97234d",
+      "line_count": 1,
+      "error": ""
+    },
+    {
+      "id": "table-alpha",
+      "internal_table_id": "table-alpha",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1910.06340/arxiv_source/Venn.tex",
+        "start_line": 1733,
+        "end_line": 1733,
+        "caption": "Light element abundances in the new 28 metal-poor stars (and our analysis of HD122563).",
+        "label": "tab:alpha"
+      },
+      "source_path": "literature/1910.06340/arxiv_source/Venn.tex",
+      "excerpt_path": "literature/1910.06340/catalog_sources/table-alpha/excerpt.tex",
+      "sha256": "e8f9d6b5550e5c4be12301ecd911d7aaea07b02ca5f26b79601715ddbadc5d5f",
+      "line_count": 1,
+      "error": ""
+    },
+    {
+      "id": "table-syserrs",
+      "internal_table_id": "table-syserrs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1910.06340/arxiv_source/Venn.tex",
+        "start_line": 1734,
+        "end_line": 1734,
+        "caption": "Total systematic errors (dX) per element species (X) due to the stellar parameters (T, logg, [Fe/H]) added in quadrature...",
+        "label": "tab:syserrs"
+      },
+      "source_path": "literature/1910.06340/arxiv_source/Venn.tex",
+      "excerpt_path": "literature/1910.06340/catalog_sources/table-syserrs/excerpt.tex",
+      "sha256": "310ad3322d38cbe7f182df844fba833565bdc98821ffb8e1ac0edb3026904f12",
+      "line_count": 1,
+      "error": ""
+    },
+    {
+      "id": "table-errsample",
+      "internal_table_id": "table-errsample",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1910.06340/arxiv_source/Venn.tex",
+        "start_line": 1735,
+        "end_line": 1735,
+        "caption": "Samples of the systematic errors from the individual stellar parameters per elemental species.",
+        "label": "tab:errsample"
+      },
+      "source_path": "literature/1910.06340/arxiv_source/Venn.tex",
+      "excerpt_path": "literature/1910.06340/catalog_sources/table-errsample/excerpt.tex",
+      "sha256": "7f10ba6acc47acd542a9c63583c271eb27aeba322adb2acee60e7cc7c2d4b4b5",
+      "line_count": 1,
+      "error": ""
+    },
+    {
+      "id": "table-orbits",
+      "internal_table_id": "table-orbits",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1910.06340/arxiv_source/Venn.tex",
+        "start_line": 1736,
+        "end_line": 1736,
+        "caption": "Orbit and Action parameters for the 70 metal-poor candidates from the Pristine survey.",
+        "label": "tab:orbits"
+      },
+      "source_path": "literature/1910.06340/arxiv_source/Venn.tex",
+      "excerpt_path": "literature/1910.06340/catalog_sources/table-orbits/excerpt.tex",
+      "sha256": "55cf8ddb26fe380fcb25a0c2e3931b7ff3834af945950863941add167d6759d0",
+      "line_count": 1,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-targets",
+      "internal_table_id": "table-targets",
+      "status": "success",
+      "ecsv_path": "literature/1910.06340/catalog_tables/table-targets.ecsv",
+      "caption": "Metal-Poor Targets (115) from the original Pristine survey footprint.",
+      "label": "tab:targets",
+      "row_count": 62,
+      "column_count": 15,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_y70r1re/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1910.06340/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_y70r1re/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1910.06340/catalog_sources/table-targets/wrapped.tex",
+            "html": "literature/1910.06340/catalog_sources/table-targets/latexml.html",
+            "stdout": "literature/1910.06340/catalog_sources/table-targets/latexml.stdout.txt",
+            "stderr": "literature/1910.06340/catalog_sources/table-targets/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "720d9289c7f249f5ca948df2be1224cf4ad9cd931bd4f4808f81086628dedea7"
+    },
+    {
+      "id": "table-newfs",
+      "internal_table_id": "table-newfs",
+      "status": "success",
+      "ecsv_path": "literature/1910.06340/catalog_tables/table-newfs.ecsv",
+      "caption": "Gaia DR2 parallaxes, and the derived distances (D), temperatures (T), and surface gravities (log g) from the Bayesian inference method...",
+      "label": "tab:newfs",
+      "row_count": 62,
+      "column_count": 16,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsl1g1hiq/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1910.06340/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsl1g1hiq/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1910.06340/catalog_sources/table-newfs/wrapped.tex",
+            "html": "literature/1910.06340/catalog_sources/table-newfs/latexml.html",
+            "stdout": "literature/1910.06340/catalog_sources/table-newfs/latexml.stdout.txt",
+            "stderr": "literature/1910.06340/catalog_sources/table-newfs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "07d27e8613351457a65a18b0db428e90d670fa76b4e76c2ebc442af6c87cba7d"
+    },
+    {
+      "id": "table-iron",
+      "internal_table_id": "table-iron",
+      "status": "success",
+      "ecsv_path": "literature/1910.06340/catalog_tables/table-iron.ecsv",
+      "caption": "Iron-group and heavy element abundances in the new 28 metal-poor stars, and our analysis of HD122563.",
+      "label": "tab:iron",
+      "row_count": 29,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "RA SDSS",
+          "[Fe/H] +/-\\delta",
+          "log(Fe I) +/-\\sigma (N)",
+          "log(Fe II) +/-\\sigma (N)",
+          "[Cr/Fe] +/-\\sigma (N)",
+          "[Ni/Fe] +/-\\sigma (N)",
+          "[Y/Fe] +/-\\sigma (N)",
+          "[Ba/Fe] +/-\\sigma (N)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "RA SDSS",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "[Fe/H] +/-\\delta",
+          "unit_text": "[Fe/H] +/-\\delta",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "log(Fe I) +/-\\sigma (N)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "log(Fe II) +/-\\sigma (N)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "[Cr/Fe] +/-\\sigma (N)",
+          "unit_text": "[Cr/Fe] +/-\\sigma (N)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "[Ni/Fe] +/-\\sigma (N)",
+          "unit_text": "[Ni/Fe] +/-\\sigma (N)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "[Y/Fe] +/-\\sigma (N)",
+          "unit_text": "[Y/Fe] +/-\\sigma (N)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "[Ba/Fe] +/-\\sigma (N)",
+          "unit_text": "[Ba/Fe] +/-\\sigma (N)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpe3o6mvsn/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1910.06340/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpe3o6mvsn/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1910.06340/catalog_sources/table-iron/wrapped.tex",
+            "html": "literature/1910.06340/catalog_sources/table-iron/latexml.html",
+            "stdout": "literature/1910.06340/catalog_sources/table-iron/latexml.stdout.txt",
+            "stderr": "literature/1910.06340/catalog_sources/table-iron/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "dd92caeb3c4f03e78c15d2a73dc9498ad6692b031d88fc96c0e47c1bbd97234d"
+    },
+    {
+      "id": "table-alpha",
+      "internal_table_id": "table-alpha",
+      "status": "success",
+      "ecsv_path": "literature/1910.06340/catalog_tables/table-alpha.ecsv",
+      "caption": "Light element abundances in the new 28 metal-poor stars (and our analysis of HD122563).",
+      "label": "tab:alpha",
+      "row_count": 29,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "RA SDSS",
+          "[Na/Fe] +/-\\sigma (N)",
+          "[Mg/Fe] +/-\\sigma (N)",
+          "[Ca/Fe] +/-\\sigma (N)",
+          "[Sc/Fe] +/-\\sigma (N)",
+          "[TiI/Fe] +/-\\sigma (N)",
+          "[TiII/Fe] +/-\\sigma (N)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "RA SDSS",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "[Na/Fe] +/-\\sigma (N)",
+          "unit_text": "[Na/Fe] +/-\\sigma (N)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "[Mg/Fe] +/-\\sigma (N)",
+          "unit_text": "[Mg/Fe] +/-\\sigma (N)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "[Ca/Fe] +/-\\sigma (N)",
+          "unit_text": "[Ca/Fe] +/-\\sigma (N)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "[Sc/Fe] +/-\\sigma (N)",
+          "unit_text": "[Sc/Fe] +/-\\sigma (N)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "[TiI/Fe] +/-\\sigma (N)",
+          "unit_text": "[TiI/Fe] +/-\\sigma (N)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "[TiII/Fe] +/-\\sigma (N)",
+          "unit_text": "[TiII/Fe] +/-\\sigma (N)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsglumytl/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1910.06340/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsglumytl/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1910.06340/catalog_sources/table-alpha/wrapped.tex",
+            "html": "literature/1910.06340/catalog_sources/table-alpha/latexml.html",
+            "stdout": "literature/1910.06340/catalog_sources/table-alpha/latexml.stdout.txt",
+            "stderr": "literature/1910.06340/catalog_sources/table-alpha/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e8f9d6b5550e5c4be12301ecd911d7aaea07b02ca5f26b79601715ddbadc5d5f"
+    },
+    {
+      "id": "table-syserrs",
+      "internal_table_id": "table-syserrs",
+      "status": "success",
+      "ecsv_path": "literature/1910.06340/catalog_tables/table-syserrs.ecsv",
+      "caption": "Total systematic errors (dX) per element species (X) due to the stellar parameters (T, logg, [Fe/H]) added in quadrature...",
+      "label": "tab:syserrs",
+      "row_count": 29,
+      "column_count": 13,
+      "environment": "",
+      "header_rows": [
+        [
+          "RA SDSS",
+          "dFeI",
+          "dFeII",
+          "dNa",
+          "dMg",
+          "dCa",
+          "dSc",
+          "dTiI",
+          "dTiII",
+          "dCrI",
+          "dNiI",
+          "dYII",
+          "dBaII"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "RA SDSS",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "dFeI",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "dFeII",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "dNa",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "dMg",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "dCa",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "dSc",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "dTiI",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "dTiII",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "dCrI",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "dNiI",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "dYII",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "dBaII",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa_sultf3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1910.06340/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa_sultf3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1910.06340/catalog_sources/table-syserrs/wrapped.tex",
+            "html": "literature/1910.06340/catalog_sources/table-syserrs/latexml.html",
+            "stdout": "literature/1910.06340/catalog_sources/table-syserrs/latexml.stdout.txt",
+            "stderr": "literature/1910.06340/catalog_sources/table-syserrs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "310ad3322d38cbe7f182df844fba833565bdc98821ffb8e1ac0edb3026904f12"
+    },
+    {
+      "id": "table-errsample",
+      "internal_table_id": "table-errsample",
+      "status": "success",
+      "ecsv_path": "literature/1910.06340/catalog_tables/table-errsample.ecsv",
+      "caption": "Samples of the systematic errors from the individual stellar parameters per elemental species.",
+      "label": "tab:errsample",
+      "row_count": 9,
+      "column_count": 14,
+      "environment": "",
+      "header_rows": [
+        [
+          "RA SDSS",
+          "Param +/- d",
+          "dFe I",
+          "dFe II",
+          "dNa I",
+          "dMg I",
+          "dCa I",
+          "dSc II",
+          "dTi I",
+          "dTi II",
+          "dCr I",
+          "dNi I",
+          "dY II",
+          "dBa II"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "RA SDSS",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Param +/- d",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "dFe I",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "dFe II",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "dNa I",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "dMg I",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "dCa I",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "dSc II",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "dTi I",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "dTi II",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "dCr I",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "dNi I",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "dY II",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "dBa II",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpirrs4kx5/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1910.06340/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpirrs4kx5/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1910.06340/catalog_sources/table-errsample/wrapped.tex",
+            "html": "literature/1910.06340/catalog_sources/table-errsample/latexml.html",
+            "stdout": "literature/1910.06340/catalog_sources/table-errsample/latexml.stdout.txt",
+            "stderr": "literature/1910.06340/catalog_sources/table-errsample/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7f10ba6acc47acd542a9c63583c271eb27aeba322adb2acee60e7cc7c2d4b4b5"
+    },
+    {
+      "id": "table-orbits",
+      "internal_table_id": "table-orbits",
+      "status": "success",
+      "ecsv_path": "literature/1910.06340/catalog_tables/table-orbits.ecsv",
+      "caption": "Orbit and Action parameters for the 70 metal-poor candidates from the Pristine survey.",
+      "label": "tab:orbits",
+      "row_count": 41,
+      "column_count": 14,
+      "environment": "",
+      "header_rows": [
+        [
+          "RA",
+          "DEC",
+          "pmra",
+          "pmdec",
+          "U",
+          "V",
+          "W",
+          "R apo",
+          "R peri",
+          "ecc",
+          "Z max",
+          "J ϕ /J ϕ⊙",
+          "J z /J z⊙",
+          "E/E ⊙"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "RA",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "DEC",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "pmra",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "pmdec",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "U",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "W",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "R apo",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "R peri",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "ecc",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Z max",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "J ϕ /J ϕ⊙",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "J z /J z⊙",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "E/E ⊙",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_86mbup1/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1910.06340/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_86mbup1/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1910.06340/catalog_sources/table-orbits/wrapped.tex",
+            "html": "literature/1910.06340/catalog_sources/table-orbits/latexml.html",
+            "stdout": "literature/1910.06340/catalog_sources/table-orbits/latexml.stdout.txt",
+            "stderr": "literature/1910.06340/catalog_sources/table-orbits/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "55cf8ddb26fe380fcb25a0c2e3931b7ff3834af945950863941add167d6759d0"
+    }
+  ]
+}

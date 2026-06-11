@@ -1,0 +1,1331 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:02:40",
+  "paper": {
+    "arxiv_id": "1902.05061",
+    "bibcode": "2019MNRAS.489.1489R",
+    "title": "Partly burnt runaway stellar remnants from peculiar thermonuclear supernovae",
+    "month": "2019-02",
+    "source_note_json": "notes/2019/2019-02/2019-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1902.05061",
+      "pdf": "https://arxiv.org/pdf/1902.05061"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1902.05061",
+    "audit_path": "literature/1902.05061/audit.json",
+    "catalog_review_path": "literature/1902.05061/catalog_review.json",
+    "catalog_extraction_path": "literature/1902.05061/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1902.05061/catalog_tables/table-t-gaia.ecsv",
+      "literature/1902.05061/catalog_tables/table-t-logs.ecsv",
+      "literature/1902.05061/catalog_tables/table-tab-sdss.ecsv",
+      "literature/1902.05061/catalog_tables/table-tab-fits_new.ecsv",
+      "literature/1902.05061/catalog_tables/table-t-kin.ecsv",
+      "literature/1902.05061/catalog_tables/table-tab-phys.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-06-07T11:02:40",
+    "extractor": "agent",
+    "summary": "论文发现并确认了3颗LP 40-365型热核超新星部分燃烧逃逸遗迹恒星（LP 40-365、J1603-6613、J1825-3757），并通过SDSS模板匹配识别了2颗候选体（J0905+2510、J1637+3631）。其中LP 40-365（v_rf=852±11 km/s）和J1603-6613（v_rf=804(+49/-32) km/s）明确为非束缚银河系超高速星（逃逸概率100%，e=1）。J0905+2510的静止系速度v_rf~730 km/s，论文明确声明其'likely unbound from the Milky Way'。J1825-3757为束缚星（v_rf=408 km/s, e=0.69, 逃逸概率<10%），J1637+3631缺乏运动学分析。3颗HVS候选体已提取。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR2 astrometry: parallax, proper motions. Spectroscopy from SOAR/Goodman, VLT/X-shooter, HST/STIS for RVs. SDSS template matching for candidates.",
+      "inputs": [
+        "Gaia DR2",
+        "SOAR/Goodman",
+        "VLT/X-shooter",
+        "HST/STIS",
+        "SDSS DR7"
+      ],
+      "outputs": [
+        "Astrometry and radial velocities"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 170,
+          "end_line": 428,
+          "context": "Sec 2: Observations and data"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "galpy MWPotential2014 Galactic potential. 10,000 MC realizations using Gaia DR2 covariance matrix. R_0=8.27±0.29 kpc, V_c=239±9 km/s. Escape velocity v_esc≈550 km/s at R_G≈7 kpc.",
+      "inputs": [
+        "Gaia DR2 astrometry",
+        "Radial velocities",
+        "Galactic potential model"
+      ],
+      "outputs": [
+        "Orbital parameters",
+        "Rest frame velocities",
+        "Escape probabilities"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 686,
+          "end_line": 750,
+          "context": "Sec 4: Kinematic analysis"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "bound_classification",
+      "summary": "HVS candidate classification: stars with v_rf > v_esc and escape probability near 100% classified as unbound. LP 40-365 (v_rf=852 km/s, P_esc=100%), J1603-6613 (v_rf=804 km/s, P_esc=100%), J0905+2510 (v_rf~730 km/s, 'likely unbound').",
+      "inputs": [
+        "Orbital parameters",
+        "Rest frame velocities",
+        "Escape velocity"
+      ],
+      "outputs": [
+        "HVS candidate classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 697,
+          "end_line": 700,
+          "context": "Unbound trajectory confirmation"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "1902.05061:cand-001",
+        "paper_candidate_id": "LP 40-365",
+        "gaia_source_id": "5405579151566448896",
+        "all": [
+          {
+            "value": "LP 40-365",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 89,
+                "end_line": 89,
+                "context": "Paper title and abstract"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR2 5405579151566448896",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 571,
+                "end_line": 673,
+                "context": "LP 40-365 re-analysis with new HST/STIS data"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "LP 40-365: v_rf=852±11 km/s > v_esc≈550 km/s at R_G≈8.5 kpc. Escape probability=100%, e=1. ONe-dominated partly burnt stellar remnant from thermonuclear supernova. Prototype star first reported in Raddi+2018a (Paper I), re-analyzed here with new HST/STIS NUV spectroscopy. Departing Galactic disc at positive latitude, grazing trajectory ~5 deg from plane.",
+        "paper_labels": [
+          "unbound_star",
+          "high_velocity_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Rest frame velocity 852 km/s well exceeds escape velocity 550 km/s. 10,000 MC realizations confirm 100% escape probability. Eccentricity e=1 confirms unbound hyperbolic orbit.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+            "start_line": 138,
+            "end_line": 140,
+            "context": "Paper abstract"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+            "start_line": 702,
+            "end_line": 753,
+            "context": "Tab t:kin - Orbital parameters"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+            "start_line": 686,
+            "end_line": 689,
+            "context": "galpy MWPotential2014, 10,000 MC, Gaia DR2 covariance"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_previous_paper",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+            "start_line": 139,
+            "end_line": 139,
+            "context": "at least two stars have rest-frame velocities indicating they are unbound to the Galaxy"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+            "start_line": 686,
+            "end_line": 696,
+            "context": "Sec 4: Kinematic analysis"
+          }
+        ],
+        "citation": {
+          "paper_title": "Raddi+2018a (Paper I) reported LP 40-365 prototype discovery. This paper (Paper III) re-analyzes with new HST/STIS data.",
+          "note": "First reported in Raddi et al. 2018a, MNRAS 479, L97 (arXiv:1808.00049)"
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "radial_velocity": {
+            "raw_value": "499±6",
+            "value": "499",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 574,
+                "end_line": 676,
+                "context": "Sec: radial velocity from spectroscopy"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "0.63±0.01",
+            "value": "0.63",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 708,
+                "end_line": 710,
+                "context": "Tab kin: LP 40-365 d=0.63±0.01 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_radius": {
+            "raw_value": "8.48",
+            "value": "8.48",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 706,
+                "end_line": 750,
+                "context": "Tab kin: R_G"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "852±11",
+            "value": "852",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 706,
+                "end_line": 750,
+                "context": "Tab kin: v_rf"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "852±11",
+            "value": "852",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 706,
+                "end_line": 750,
+                "context": "Tab kin: v_rf (rest frame)"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          },
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": {
+            "raw_value": "550",
+            "value": "550",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 700,
+                "end_line": 700,
+                "context": "v_esc≈550 km/s at R_G~7 kpc (MWPotential2014)"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          },
+          "unbound_probability": {
+            "raw_value": "100",
+            "value": "100",
+            "unit": "%",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 739,
+                "end_line": 740,
+                "context": "Tab kin: escape probability=100%"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          }
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "9800±300",
+          "value": "9800",
+          "unit": "K",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": []
+        },
+        "log_g": {
+          "raw_value": "5.50±0.30",
+          "value": "5.50",
+          "unit": "cgs",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": []
+        },
+        "mass": {
+          "raw_value": "0.28",
+          "value": "0.28",
+          "unit": "M_sun",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": []
+        },
+        "radius": {
+          "raw_value": "0.16",
+          "value": "0.16",
+          "unit": "R_sun",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": []
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "flight_time": {
+          "raw_value": "5.3±0.5",
+          "value": "5.3",
+          "unit": "Myr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+              "start_line": 743,
+              "end_line": 744,
+              "context": "Tab kin: flight time from plane crossing"
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ]
+        },
+        "eccentricity": {
+          "raw_value": "1",
+          "value": "1",
+          "unit": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+              "start_line": 720,
+              "end_line": 722,
+              "context": "Tab kin: e=1"
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ]
+        },
+        "pericenter": {
+          "raw_value": "6.15±0.25",
+          "value": "6.15",
+          "unit": "kpc",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+              "start_line": 730,
+              "end_line": 731,
+              "context": "Tab kin: pericentre"
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ]
+        },
+        "apocenter": null,
+        "zmax": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1902.05061:cand-002",
+        "paper_candidate_id": "J1603-6613",
+        "gaia_source_id": "5822236741381879040",
+        "all": [
+          {
+            "value": "J1603-6613",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 242,
+                "end_line": 245,
+                "context": "New LP 40-365 star J1603-6613"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR2 5822236741381879040",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 194,
+                "end_line": 194,
+                "context": "Tab gaia: Gaia DR2 designation"
+              },
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 244,
+                "end_line": 244,
+                "context": "Gaia DR2 5822236741381879040"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "J1603-6613: v_rf=804(+49/-32) km/s > v_esc≈550 km/s at R_G≈7.0 kpc. Escape probability=100%, e=1. New LP 40-365 star discovered in this work via Gaia DR2 + SOAR/Goodman + VLT/X-shooter spectroscopy. Gaia G=17.84, d=1.77(+0.40/-0.27) kpc. Escaping in southern Galactic hemisphere, blue-shifted spectrum. Grazing trajectory ~10 deg from Galactic plane. ONe-dominated atmosphere.",
+        "paper_labels": [
+          "unbound_star",
+          "high_velocity_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "high",
+        "confidence_reason": "Rest frame velocity 804 km/s exceeds escape velocity 550 km/s. 10,000 MC realizations confirm 100% escape probability. Parallax significance ϖ/σϖ≈5.7, distance uncertainty propagated via MC. Eccentricity e=1 confirms unbound hyperbolic orbit.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+            "start_line": 702,
+            "end_line": 753,
+            "context": "Tab t:kin - Orbital parameters"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+            "start_line": 697,
+            "end_line": 700,
+            "context": "Sec: The unbound trajectory of J1603-6613"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+            "start_line": 686,
+            "end_line": 689,
+            "context": "galpy MWPotential2014, 10,000 MC, Gaia DR2 covariance"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+            "start_line": 242,
+            "end_line": 246,
+            "context": "Discovery: J1603-6613 identified from Gaia DR2"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "16:03:04.06",
+            "value": "16:03:04.06",
+            "unit": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [],
+            "method_refs": [],
+            "description": "RA (hms)"
+          },
+          "dec": {
+            "raw_value": "-66:13:26.9",
+            "value": "-66:13:26.9",
+            "unit": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [],
+            "method_refs": [],
+            "description": "Dec (dms)"
+          },
+          "parallax": {
+            "raw_value": "0.57±0.10",
+            "value": "0.57",
+            "unit": "mas",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 396,
+                "end_line": 405,
+                "context": "Tab SDSS: parallax"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "+39.8±0.1",
+            "value": "+39.8",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 396,
+                "end_line": 405,
+                "context": "Tab SDSS: pmra"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-7.1±0.2",
+            "value": "-7.1",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 396,
+                "end_line": 405,
+                "context": "Tab SDSS: pmdec"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "-485±5",
+            "value": "-485",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 574,
+                "end_line": 676,
+                "context": "Sec: radial velocity from spectroscopy"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "1.77",
+            "value": "1.77",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 708,
+                "end_line": 710,
+                "context": "Tab kin: J1603 d=1.77 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_radius": {
+            "raw_value": "7.00",
+            "value": "7.00",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 706,
+                "end_line": 750,
+                "context": "Tab kin: R_G"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "804",
+            "value": "804",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 706,
+                "end_line": 750,
+                "context": "Tab kin: v_rf"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "804",
+            "value": "804",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 706,
+                "end_line": 750,
+                "context": "Tab kin: v_rf (rest frame)"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          },
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": {
+            "raw_value": "550",
+            "value": "550",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 700,
+                "end_line": 700,
+                "context": "v_esc≈550 km/s at R_G~7 kpc (MWPotential2014)"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          },
+          "unbound_probability": {
+            "raw_value": "100",
+            "value": "100",
+            "unit": "%",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 739,
+                "end_line": 741,
+                "context": "Tab kin: escape probability=100%"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          }
+        }
+      },
+      "photometry": [
+        {
+          "band": "Gaia_G",
+          "value": "17.84",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+              "start_line": 406,
+              "end_line": 407,
+              "context": "Tab gaia: G mag"
+            }
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "10600±370",
+          "value": "10600",
+          "unit": "K",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": []
+        },
+        "log_g": {
+          "raw_value": "5.34±0.20",
+          "value": "5.34",
+          "unit": "cgs",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": []
+        },
+        "mass": {
+          "raw_value": "0.20",
+          "value": "0.20",
+          "unit": "M_sun",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": []
+        },
+        "radius": {
+          "raw_value": "0.16",
+          "value": "0.16",
+          "unit": "R_sun",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": []
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "flight_time": {
+          "raw_value": "1.66±0.13",
+          "value": "1.66",
+          "unit": "Myr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+              "start_line": 743,
+              "end_line": 745,
+              "context": "Tab kin: flight time from plane crossing"
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ]
+        },
+        "eccentricity": {
+          "raw_value": "1",
+          "value": "1",
+          "unit": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+              "start_line": 720,
+              "end_line": 722,
+              "context": "Tab kin: e=1"
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ]
+        },
+        "pericenter": {
+          "raw_value": "6.87±0.31",
+          "value": "6.87",
+          "unit": "kpc",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+              "start_line": 730,
+              "end_line": 731,
+              "context": "Tab kin: pericentre"
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ]
+        },
+        "apocenter": null,
+        "zmax": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1902.05061:cand-003",
+        "paper_candidate_id": "J0905+2510",
+        "gaia_source_id": "688380457507044864",
+        "all": [
+          {
+            "value": "J0905+2510",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 383,
+                "end_line": 383,
+                "context": "SDSS candidate J0905+2510"
+              }
+            ]
+          },
+          {
+            "value": "SDSS J090535.55+251011.3",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 383,
+                "end_line": 383,
+                "context": "SDSS designation"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR2 688380457507044864",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 398,
+                "end_line": 398,
+                "context": "Tab SDSS: Gaia DR2 designation"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "J0905+2510: SDSS spectroscopic candidate identified via template matching. v_rf~730 km/s, 'making it likely unbound from the Milky Way' (paper text). Gaia DR2 has only 2-parameter solution (no parallax). Estimated distance ~4 kpc based on assumed M_G~6.5. Transverse velocity ~500 km/s from Pan-STARRS proper motions. Photometric Teff=10050±140 K from GALEX+SDSS SED fitting.",
+        "paper_labels": [
+          "unbound_star",
+          "high_velocity_star",
+          "spectroscopic_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_table",
+        "extraction_confidence": "medium",
+        "confidence_reason": "Paper explicitly states 'making it likely unbound from the Milky Way' with v_rf~730 km/s exceeding estimated escape velocity ~550 km/s. However, distance is estimated (no Gaia parallax), proper motions from Pan-STARRS-SDSS cross-match (lower precision), and radial velocity from low-S/N SDSS template matching. No full orbital integration performed unlike LP 40-365 and J1603-6613.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+            "start_line": 391,
+            "end_line": 428,
+            "context": "Tab tab:sdss - SDSS candidates"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+            "start_line": 694,
+            "end_line": 696,
+            "context": "J0905+2510 v_rf ~730 km/s, likely unbound"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+            "start_line": 431,
+            "end_line": 437,
+            "context": "Sec: J0905+2510 analysis"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+            "start_line": 371,
+            "end_line": 383,
+            "context": "SDSS template matching discovery of J0905+2510"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "09:05:35.55",
+            "value": "09:05:35.55",
+            "unit": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [],
+            "method_refs": [],
+            "description": "RA (hms)"
+          },
+          "dec": {
+            "raw_value": "+25:10:11.3",
+            "value": "+25:10:11.3",
+            "unit": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [],
+            "method_refs": [],
+            "description": "Dec (dms)"
+          },
+          "proper_motion_ra": {
+            "raw_value": "3.1±3.4",
+            "value": "3.1",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 396,
+                "end_line": 405,
+                "context": "Tab SDSS: pmra"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "24.7±3.0",
+            "value": "24.7",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 396,
+                "end_line": 405,
+                "context": "Tab SDSS: pmdec"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "+300",
+            "value": "+300",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 574,
+                "end_line": 676,
+                "context": "Sec: radial velocity from spectroscopy"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "distance": {
+            "raw_value": "~4",
+            "value": "4",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 434,
+                "end_line": 434,
+                "context": "estimated distance ~4 kpc assuming M_G~6.5"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ],
+            "description": "Estimated distance — no Gaia parallax available (2-parameter solution only)"
+          },
+          "parallax": null
+        },
+        "derived_kinematics": {
+          "galactic_rest_frame_velocity": {
+            "raw_value": "~730",
+            "value": "~730",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 706,
+                "end_line": 750,
+                "context": "Tab kin: v_rf"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          },
+          "total_velocity": null,
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": {
+            "raw_value": "~500",
+            "value": "500",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 434,
+                "end_line": 434,
+                "context": "transverse velocity ~500 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          },
+          "galactocentric_tangential_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": {
+            "raw_value": "~550",
+            "value": "550",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+                "start_line": 700,
+                "end_line": 700,
+                "context": "v_esc≈550 km/s (MWPotential2014)"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          },
+          "unbound_probability": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "Gaia_G",
+          "value": "19.62",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+              "start_line": 407,
+              "end_line": 407,
+              "context": "Tab SDSS: G mag"
+            }
+          ]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "10050±140",
+          "value": "10050",
+          "unit": "K",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [],
+          "method_refs": []
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "flight_time": null,
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "confirmed-lp40-stars-kinematics",
+      "description": "3颗光谱确认的LP 40-365型恒星（LP 40-365、J1603-6613、J1825-3757）的详细运动学分析。轨道计算使用galpy MWPotential2014势模型和Gaia DR2协方差矩阵的10,000次蒙特卡洛采样。",
+      "decision": "partially_included",
+      "reason": "LP 40-365 (v_rf=852±11 km/s, P_esc=100%, e=1) 和 J1603-6613 (v_rf=804 km/s, P_esc=100%, e=1) 明确为非束缚银河系HVS候选体。J1825-3757 (v_rf=408 km/s, e=0.69, P_esc<10%) 受银河系引力束缚，不满足HVS候选体标准。所有3颗星均非银心弹射起源（未穿越银心附近银面），论文认为来自双星系统中热核超新星爆炸弹射。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 702,
+          "end_line": 753,
+          "context": "Tab t:kin - Orbital parameters"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 686,
+          "end_line": 689,
+          "context": "galpy MWPotential2014, 10,000 MC, Gaia DR2 covariance"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 697,
+          "end_line": 700,
+          "context": "Sec: The unbound trajectory of J1603-6613"
+        }
+      ]
+    },
+    {
+      "group_id": "sdss-candidates",
+      "description": "2颗SDSS光谱模板匹配候选体（J0905+2510、J1637+3631）。J0905+2510通过SDSS低分辨率光谱（S/N=5.3）与LP 40-365模板匹配识别，具有高置信度的光谱相似性。J1637+3631此前被分类为DBQ白矮星，本文重新识别为可能的LP 40-365候选体或DOx白矮星。",
+      "decision": "partially_included",
+      "reason": "J0905+2510 (v_rf~730 km/s) 论文明确声明'likely unbound from the Milky Way'，纳入HVS候选体但标注为中等置信度（无Gaia视差，距离为估计值，自行来自Pan-STARRS-SDSS交叉匹配）。J1637+3631缺乏运动学分析（仅Gaia 5参数解但视差0.39±0.60 mas无约束力），论文倾向于其为DOx白矮星而非LP 40-365型恒星，不纳入HVS候选体。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 391,
+          "end_line": 428,
+          "context": "Tab tab:sdss - SDSS candidates"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 694,
+          "end_line": 696,
+          "context": "J0905+2510 v_rf ~730 km/s, likely unbound"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 431,
+          "end_line": 437,
+          "context": "Sec: J0905+2510 analysis"
+        }
+      ]
+    }
+  ]
+}

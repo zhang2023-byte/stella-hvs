@@ -1,0 +1,144 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1804.10179",
+    "title": "Revisiting hypervelocity stars after Gaia DR2",
+    "month": "2018-04",
+    "source_note_json": "notes/2018/2018-04/2018-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1804.10179",
+      "pdf": "https://arxiv.org/pdf/1804.10179"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1804.10179",
+    "audit_path": "literature/1804.10179/audit.json",
+    "source_dir": "literature/1804.10179/arxiv_source",
+    "tex_root": "literature/1804.10179/arxiv_source/paper.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T08:15:00",
+    "reviewer": "agent",
+    "summary": "Boubert et al. (2018, MNRAS 479, 2789) re-evaluate ~500 previously-claimed hypervelocity star candidates using Gaia DR2 proper motions and parallaxes. The paper finds that almost all previously-known late-type (FGKM) high-velocity candidates are bound to the Milky Way after Gaia DR2 astrometry, with only one late-type object (LAMOST J115209.12+120258.0, a.k.a. Li10) having a reasonably high probability of being unbound. Of 524 candidates in the Open Fast Stars Catalog (OFSC), 514 have Gaia DR2 photometry and 501 have astrometry. After DR2, 41 candidates have P_bound < 0.5 (mostly early-type OBA stars), compared to 71 before DR2. The paper includes one internal table: (1) Table 1 (table:tab-candidates) is a 3-column summary table listing the 41 hypervelocity candidates with P_bound < 0.5 after Gaia DR2, subdivided by original discovery survey or paper (Survey, count, and Names). Key external resources: the Open Fast Stars Catalog at https://faststars.space (the paper's primary data product, containing 524 candidates with compiled historical measurements and Gaia DR2 data), Gaia DR2 astrometry accessed via https://www.cosmos.esa.int/web/gaia/data, the AstroCats Open Astronomy Catalogs framework at https://astrocats.space, and a new SOAR/Goodman spectrum of Li10 obtained for this paper (2018 Apr 29, R~7000, single 1800s exposure). The paper also presents the OFSC 'graveyard' concept: 159 candidates confirmed as bound in all 10^4 MC samples are moved to a separate section but can be resurrected with future data. Orbit integration for Li10 uses Galpy with MWPotential2014."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-candidates",
+      "kind": "latex_table",
+      "asset_type": "reference_table",
+      "role_in_paper": "Summary table listing the 41 hypervelocity candidates with P_bound < 0.5 after Gaia DR2, subdivided by their original discovery survey or paper. This table provides a high-level inventory showing which surveys contributed how many of the post-DR2 confirmed hypervelocity candidates and identifies the specific stars. It demonstrates that the Hypervelocity Star Survey discovered 32 of the 41 candidates, with the remainder from individual papers and the LAMOST HVS Survey. The table supports the paper's main conclusion that the surviving candidates are overwhelmingly early-type OBA stars previously identified by radial-velocity surveys.",
+      "source_refs": [
+        {
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 187,
+          "end_line": 202,
+          "caption": "The hypervelocity candidates with $P_{\\mathrm{bound}}<0.5$ subdivided by original discovery survey or paper. The Hypervelocity Star Survey \\citep{brown_discovery_2005,brown_hypervelocity_2007,brown_mmt_2014} has remarkably discovered 32 of these 41 stars, while the LAMOST HVS Survey \\citep{zheng_first_2014,huang_discovery_2017} contributes a further 3.",
+          "label": "tab:candidates"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Survey",
+          "meaning": "The original discovery survey or paper that first proposed the hypervelocity candidates. Values: Hypervelocity Star Survey (Brown 2005, 2007, 2014), Hirsch et al. (2005), Edelmann et al. (2005), Heber et al. (2008), Tillich et al. (2009), LAMOST HVS Survey (Zheng 2014, Huang 2017), Li et al. (2015), Vennes et al. (2017).",
+          "unit_text": "",
+          "source_of_definition": "table header and embedded \\citet commands",
+          "confidence": 1.0
+        },
+        {
+          "name": "#",
+          "meaning": "Number of hypervelocity candidates from that survey or paper with P_bound < 0.5 after Gaia DR2. Values: 32 (Hypervelocity Star Survey), 1 each for Hirsch+2005, Edelmann+2005, Heber+2008, Tillich+2009, Li+2015, and Vennes+2017; 3 for LAMOST HVS Survey. Total: 41 candidates.",
+          "unit_text": "",
+          "source_of_definition": "table header '\\#'",
+          "confidence": 1.0
+        },
+        {
+          "name": "Names",
+          "meaning": "Identifying names of the hypervelocity candidates from each survey, as used in the literature. Hypervelocity Star Survey: HVS1, 4-10, 12-24 and others. Hirsch+2005: US708 (a.k.a. HVS2). Edelmann+2005: HE 0437-5439 (a.k.a. HVS3). Heber+2008: HD 271791. Tillich+2009: SDSS J013655.91+242546.0. LAMOST HVS Survey: LAMOST-HVS1-3. Li+2015: Li10 (F9 dwarf). Vennes+2017: GD 492 (white dwarf).",
+          "unit_text": "",
+          "source_of_definition": "table data cells",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "In Tab. \\ref{tab:candidates}, we list all candidates which have $P_{\\mathrm{bound}}<0.5$. This list of candidates comprises 38 B/A dwarfs, one subdwarf O star, one F9 dwarf and one white dwarf.",
+      "comments": "Three-column table (Survey | # | Names). Only 8 rows of data. Uses tabular environment with lll column alignment. The table is a high-level summary; detailed per-star data (astrometry, photometry, radial velocities, bound probabilities) reside in the online Open Fast Stars Catalog, not in the paper itself. The paper notes that 5 stars are missing a radial velocity or proper motion, so their P_bound values are upper limits only."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://faststars.space",
+      "local_path": "",
+      "description": "The Open Fast Stars Catalog (OFSC), created by the authors and described in Appendix A. A curated collection of every measurement of all high-velocity star candidates in the literature, with each measurement having a citable origin. Contains 524 candidate hypervelocity stars with compiled historical data (spectral types, radial velocities, photometry from discovery papers), Gaia DR2 astrometry and photometry (501 stars), and automatically computed derived quantities: extinction, velocities in various reference frames, observability, and posterior probability of being bound to the Milky Way (P_bound). Includes an interactive sky map (https://faststars.space/sky-locations/). Built using the AstroCats framework.",
+      "source_refs": [
+        {
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 120,
+          "end_line": 120,
+          "context": "The number of candidate hypervelocity stars has ballooned in the years since the discovery of HVS1 and today there are more than 500 candidates in the literature\\footnote{\\url{https://faststars.space}} (see Fig. \\ref{fig:skymap})."
+        },
+        {
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 285,
+          "end_line": 287,
+          "context": "To that end, we have created the Open Fast Stars Catalog (OFSC)\\footnote{\\url{https://faststars.space}} utilizing the AstroCats framework \\citep{guillochon_open_2017}."
+        }
+      ],
+      "evidence": "The Open Fast Stars Catalog (presented in detail in Appendix \\ref{sec:open}) automatically queries Gaia DR2 and calculates the posterior probability that each star is bound $P_{\\mathrm{bound}}$. Of the 524 candidate hypervelocity stars in our catalogue, 514 have Gaia photometry and 501 have Gaia astrometry in DR2.",
+      "comments": "The OFSC is the primary data product of this paper. It uses the AstroCats framework (https://astrocats.space) and implements a 'graveyard' system: 159 candidates confirmed bound in all 10^4 Monte Carlo samples are moved to a separate section (as of 2018-06-01) but can be resurrected with future data. The catalog automatically queries Gaia, SDSS, LAMOST, PPMXL, SIMBAD, and dustmaps (Green 2015/2018, Schlegel 1998). At the time of writing, fast star spectroscopy was available from SDSS and LAMOST only."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/data",
+      "local_path": "",
+      "description": "Gaia Data Release 2 (DR2), released 2018 April 25. Provides astrometry (positions, parallaxes, proper motions) and photometry for 1,692,919,135 sources, with proper motions and parallaxes for 1,331,909,727 sources at sub-milliarcsecond precision. This is the foundational dataset of the paper: 501 of the 524 OFSC candidates have Gaia DR2 astrometry, enabling precise tangential velocity calculations for all late-type hypervelocity candidates. A global parallax offset of -0.029 mas (Lindegren et al. 2018) was accounted for.",
+      "source_refs": [
+        {
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 125,
+          "end_line": 125,
+          "context": "The European Space Agency's Gaia space telescope was launched in 2013 and on the 25$^{\\mathrm{th}}$ April 2018 delivered its second date release \\citep[Gaia DR2,][]{gaia_collaboration_gaia_2016,2018arXiv180409365G}  containing astrometry and photometry for 1,692,919,135 sources, based on the first 22 months of operation. This catalogue includes parallaxes and proper motions for an unprecendented 1,331,909,727 sources, typically with sub-milliarcsecond precision\\footnote{\\url{https://www.cosmos.esa.int/web/gaia/data}}."
+        }
+      ],
+      "evidence": "Gaia can thus revolutionise the study of late-type hypervelocity stars. It will allow accurate tangential velocities to be obtained for all extant late-type hypervelocity candidates. Before Gaia DR2, there were 71 candidates with P_bound<0.5 ... After Gaia DR2, these numbers dramatically changed with 41 candidates with P_bound<0.5.",
+      "comments": "The paper uses Gaia DR2 proper motions and parallaxes. The Gaia covariance matrix between positions, parallax, and proper motions is propagated into the P_bound calculation. Distance estimation uses the Bailer-Jones prior (Astraatmadja & Bailer-Jones 2016, with spatially-varying scale-length from Bailer-Jones et al. 2018 for DR2). Gaia DR1 is also mentioned for comparison (only 472 stars had photometry and 18 had astrometry in DR1)."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://astrocats.space",
+      "local_path": "",
+      "description": "The Open Astronomy Catalogs (AstroCats) framework (Guillochon et al. 2017), which provides the infrastructure for the Open Fast Stars Catalog. A collection of open, version-controlled astronomical catalogs that add value to existing data through automated computation of derived quantities. Other catalogs in this ecosystem include the Open Supernova Catalog. The framework handles automatic querying of external catalogs (Gaia, SDSS, PPMXL), extinction calculation (via dustmaps), SIMBAD cross-identification, and provides object-level web interfaces.",
+      "source_refs": [
+        {
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 287,
+          "end_line": 287,
+          "context": "Like the other Open Astronomy Catalogs\\footnote{See \\url{https://astrocats.space}}, the OFSC adds value to the existent data by providing derived quantities to the community."
+        }
+      ],
+      "evidence": "We have created the Open Fast Stars Catalog (OFSC) utilizing the AstroCats framework. Like the other Open Astronomy Catalogs, the OFSC adds value to the existent data by providing derived quantities.",
+      "comments": "The AstroCats framework provides: automatic extinction computation, velocity calculation in multiple reference frames, observability computation, probability of boundedness, and correlations between observed/derived quantities. It also implements the 'graveyard' pattern used by the OFSC to separate objects no longer of interest while preserving their data."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "SOAR/Goodman Spectrograph observation of LAMOST J115209.12+120258.0 (Li10), the only confirmed late-type hypervelocity candidate. Obtained on UT 2018 Apr 29 with 0.95 arcsec slit and 1200 l/mm grating (R~7000 at ~1.7 Å resolution), single 1800-second exposure. The spectrum was reduced and barycentric radial velocity measured via cross-correlation with a template of similar spectral type: v_r = 234±5 km/s. This new observation was used to test the close binary hypothesis for Li10 and to validate the LAMOST DR1 radial velocity (206±15 km/s, re-derived as 223±5 km/s using the Ca triplet region).",
+      "source_refs": [
+        {
+          "path": "literature/1804.10179/arxiv_source/paper.tex",
+          "start_line": 241,
+          "end_line": 241,
+          "context": "To test the close binary hypothesis we obtained a spectrum of LAMOST J115209.12+120258.0 with the Goodman Spectrograph \\citep{2004SPIE.5492..331C} on the SOAR telescope on UT 2018 Apr 29. We used a 0.95\\arcsec slit and a 1200 l mm$^{-1}$ grating, giving a spectral resolution of about 1.7\\AA. A single 1800-sec exposure was obtained."
+        }
+      ],
+      "evidence": "We determined the barycentric radial velocity of the star through cross-correlation with a template of similar spectral type taken with the same setup, finding a value of v_r = 234±5 km/s which we use throughout this work.",
+      "comments": "This is the only new observational data obtained specifically for this paper. The spectrum is not publicly archived with a URL; available from the authors on request. The observation was motivated by the possibility that the LAMOST DR1 RV could have a binary orbital contribution; the new measurement rules out a significant RV shift between the two epochs (~3 years apart)."
+    }
+  ]
+}

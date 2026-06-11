@@ -1,0 +1,205 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1801.03949",
+    "title": "The Need for Speed: Escape velocity and dynamical mass measurements of the Andromeda galaxy",
+    "month": "2018-01",
+    "source_note_json": "notes/2018/2018-01/2018-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1801.03949",
+      "pdf": "https://arxiv.org/pdf/1801.03949"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1801.03949",
+    "audit_path": "literature/1801.03949/audit.json",
+    "source_dir": "literature/1801.03949/arxiv_source",
+    "tex_root": "literature/1801.03949/arxiv_source/paper.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T08:25:58",
+    "reviewer": "agent",
+    "summary": "Kafle et al. (2018, MNRAS, 475, 4043) measure the escape velocity curve and dynamical mass of the Andromeda galaxy (M31) using a hierarchical Bayesian model applied to high-velocity Planetary Nebulae (PNe). The paper uses PNe data from Merrett et al. (2006) and Halliday et al. (2006), comprising 2637 PNe after culling contaminants, of which 86 are classified as high-velocity stars (|v_pec| > 300 km/s). Using a Metropolis-within-Gibbs sampler (bmcmc), the authors derive the escape velocity v_esc = 470 ± 40 km/s at 15 kpc galactocentric radius with a power-law slope gamma = 0.26 ± 0.07. They fit a three-component mass model (Hernquist bulge, Miyamoto-Nagai disk, NFW dark matter halo) to the derived potential and infer the virial mass M_vir = 0.8 ± 0.1 × 10^12 M_sun (M_200 = 0.7 ± 0.1 × 10^12 M_sun) and virial radius r_vir = 240 ± 10 kpc (r_200 = 188^{+7}_{-11} kpc). The paper contains three structured internal tables: (1) Table 1 presenting estimated model parameters from 14 different analysis cases including systematic variations; (2) an inline coordinate/reference-frame table listing M31 central properties (RA, Dec, position angle, inclination, distance, heliocentric radial velocity); and (3) an inline bulge/disk parameters table listing fixed mass model components. External resources include the public PNe catalogue URL and the bmcmc MCMC sampler software. A software credit URL for daft (plotting library in acknowledgements) is not considered a structured data asset and is omitted."
+  },
+  "internal_tables": [
+    {
+      "id": "table-table-pneresult",
+      "kind": "latex_table",
+      "asset_type": "results_table",
+      "role_in_paper": "Primary results table summarizing the estimated model parameters from the escape velocity and mass modelling for 14 different analysis cases. Each row represents a variation of model assumptions (default, different M31 distances, heliocentric velocities, threshold velocities v_min, escape velocity scale-lengths r_s, outlier model parameters sigma_g, and solar tangential velocities). The table reports: the case label, number of PNe in the high-velocity sample, escape velocity at r_s (v_esc,0), power-law slope of the escape velocity profile (gamma), outlier fraction (eta), power-law index of the velocity distribution (k), virial mass in two over-density definitions M_vir and M_200 (in 10^12 M_sun), and virial radius in two over-density definitions r_vir and r_200 (in kpc). This is the central results table of the paper, supporting the claim that M31's dynamical mass measurements are robust against systematic variations in model assumptions.",
+      "source_refs": [
+        {
+          "path": "literature/1801.03949/arxiv_source/paper.tex",
+          "start_line": 378,
+          "end_line": 401,
+          "caption": "Estimated model parameters from different analysis. When unspecified, the default values for the model parameters are assumed, i.e., v_min=300 km/s, r_s=15 kpc, d_M31=780 kpc, v_M31,h=-301 km/s, sigma_g=1000 km/s and nu_g=1.",
+          "label": "table:pneresult"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cases",
+          "meaning": "Label identifying the analysis case. Includes 'Default' (default parameter assumptions), variations in M31 distance (d_M31 = 790, 770 kpc), M31 heliocentric radial velocity (v_M31,h = -296, -306 km/s), threshold velocity (v_min = 290, 310 km/s), escape velocity scale-length (r_s = 14, 16 kpc), outlier width (sigma_g = 800 km/s), and solar tangential velocity (V_sun + V_LSR = 240, 260 km/s). Default case and several variants are highlighted with grey rows in the original table.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Number of PNe",
+          "meaning": "Number of Planetary Nebulae in the high-velocity sample for each analysis case. Default case has 86 PNe. Varies with v_min changes: 111 PNe for v_min=290 km/s, 65 PNe for v_min=310 km/s. Slight variations with heliocentric velocity changes (87-90 PNe).",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_esc,0",
+          "meaning": "Escape velocity at the scale radius r_s = 15 kpc (or as varied). Best estimate for the default case: 470^{+40}_{-40} km/s. Varies between 470-490 km/s across all cases, demonstrating robustness against systematic assumptions.",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "gamma",
+          "meaning": "Logarithmic power-law slope of the escape velocity profile v_esc(r) = v_esc,0 (r/r_s)^{-gamma}. Default value: 0.26^{+0.07}_{-0.07}. Ranges from 0.24 to 0.27 across cases. Indicates a shallow radial decline of escape velocity.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "eta",
+          "meaning": "Outlier fraction parameter from the two-component mixture model (high-velocity + outlier populations). Default value: 0.99^{+0.02}_{-0.01}, approaching 1.0 in all cases, indicating that effectively only a tiny fraction of tracers are drawn from the outlier/background model and most PNe are genuine high-velocity tracers.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "k",
+          "meaning": "Power-law index of the stellar velocity distribution function near the escape boundary: f(v_pec|r) ∝ (v_esc - |v_pec|)^{k+1}. Default value: 3^{+1}_{-1}. Remains unconstrained across all cases (equal to 3 ± 1), a known limitation due to the small number of high-velocity stars (86 PNe in default case).",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.8
+        },
+        {
+          "name": "M_vir (M_200)",
+          "meaning": "Virial mass of the M31 dark matter halo in units of 10^12 M_sun. Two definitions reported: M_vir (using spherical collapse over-density Δ = Omega_m * delta_th ≈ 100) shown first, and M_200 (using Δ = 200) in parentheses. Default: 0.8^{+0.1}_{-0.1} (0.7^{+0.1}_{-0.1}) × 10^12 M_sun. M_vir values range from 0.73 to 0.9 across cases. The mass is on the low side of the literature range, supporting a lower expected mass for the M31-MW system from timing and momentum arguments.",
+          "unit_text": "10^12 M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_vir (r_200)",
+          "meaning": "Virial radius of the M31 dark matter halo in kpc, derived from the virial mass via r_vir = [3 M_vir / (4π Δ ρ_c)]^{1/3}. Two definitions: r_vir (Δ ≈ 100) shown first, r_200 (Δ = 200) in parentheses. Default: 240^{+10}_{-10} (188^{+7}_{-11}) kpc. r_vir is always larger than r_200 because lower over-density corresponds to larger enclosing radius.",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 (table:pneresult) is the main results table, introduced in Section 4 (Results) and referenced throughout Sections 4.2 (Virial properties) and 4.3 (Relaxing the assumptions). The table presents results for 14 analysis cases exploring systematic uncertainties in M31 central properties, threshold velocity v_min, escape velocity scale-length r_s, outlier model parameters, and solar motion parameters. The default case (first row) corresponds to v_min=300 km/s, r_s=15 kpc, d_M31=780 kpc, v_M31,h=-301 km/s, sigma_g=1000 km/s, nu_g=1 with uniform priors.",
+      "comments": "8-column table* with 14 data rows plus header. Highlighted rows (lightgray) mark the default case and key systematic variations. Note that gamma values range narrowly (0.24-0.27), v_esc,0 values are stable (470-490 km/s), and M_vir varies by at most ~12% (0.73-0.9). The k parameter is unconstrained throughout (always 3±1). The eta parameter consistently approaches 1.0, indicating effective outlier identification. The table demonstrates the robustness of the mass measurement against systematic assumptions."
+    },
+    {
+      "id": "table-m31-central-properties",
+      "kind": "latex_table",
+      "asset_type": "reference_table",
+      "role_in_paper": "Reference table listing the assumed central properties of the Andromeda galaxy (M31) used for coordinate transformations and frame-of-reference calculations. Provides the fundamental astrometric and kinematic parameters: Right Ascension, Declination, position angle, inclination angle, heliocentric distance (d_M31 = 780 kpc), and heliocentric radial velocity (v_M31,h = -301 km/s). These values are used throughout the paper to convert observed heliocentric coordinates and velocities into the M31-centric reference frame needed for escape velocity modelling.",
+      "source_refs": [
+        {
+          "path": "literature/1801.03949/arxiv_source/paper.tex",
+          "start_line": 119,
+          "end_line": 133,
+          "caption": "M31 central properties table (inline within equation* environment, no formal caption)",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Property",
+          "meaning": "Name of the M31 central property: Right Ascension (J2000), Declination (J2000), Position angle, Inclination angle, Distance from the Sun (d_M31), and Heliocentric radial velocity (v_M31,h).",
+          "unit_text": "",
+          "source_of_definition": "table row labels",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Adopted value for each property. RA = 00h42m44.33s, Dec = +41°16'07.5'', Position angle = 37.7° (from de Vaucouleurs 1958), Inclination angle = 77.5° (from Hodge 1992), Distance = 780 kpc (from Holland 1998, Stanek & Garnavich 1998, McConnachie et al. 2005, Conn et al. 2012), Heliocentric radial velocity = -301 km/s (from de Vaucouleurs et al. 1991, van der Marel & Guhathakurta 2008).",
+          "unit_text": "",
+          "source_of_definition": "table values with footnoted literature references",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "This inline tabular appears in Section 2.2 (Frame of references and coordinate transformations) and establishes the coordinate system used to transform observed heliocentric PNe coordinates/velocities into the M31-centric frame. The footnotes cite: position angle from de Vaucouleurs (1958), inclination from Hodge (1992), distance from multiple sources (Holland 1998; Stanek & Garnavich 1998; McConnachie et al. 2005; Conn et al. 2012), and heliocentric velocity from de Vaucouleurs et al. (1991) and van der Marel & Guhathakurta (2008).",
+      "comments": "2-column inline tabular with 6 data rows, rendered inside an equation* environment in the LaTeX source. No formal \\label or \\caption. The distance d_M31 = 780 kpc and velocity v_M31,h = -301 km/s are the key parameters whose systematic variations are explored in Table 1 (rows 2-5)."
+    },
+    {
+      "id": "table-bulge-disk-parameters",
+      "kind": "latex_table",
+      "asset_type": "reference_table",
+      "role_in_paper": "Reference table listing the fixed baryonic component parameters of the M31 mass model. Provides the bulge scale-length (q = 0.7 kpc), bulge mass (M_b = 3.4 × 10^10 M_sun), disk scale-length (a = 6.5 kpc), disk scale-height (b = 0.26 kpc), and disk mass (M_d = 6.9 × 10^10 M_sun). These values are adopted from literature and kept fixed during the dark matter halo fitting, with only the halo concentration (c) and virial mass (M_vir) remaining free parameters. The table appears in the methodology section to document the three-component (Hernquist bulge + Miyamoto-Nagai disk + NFW halo) mass model.",
+      "source_refs": [
+        {
+          "path": "literature/1801.03949/arxiv_source/paper.tex",
+          "start_line": 330,
+          "end_line": 339,
+          "caption": "Bulge and disk model parameters table (inline within equation environment, no formal caption)",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name of the baryonic model parameter: Bulge scale-length (q), Bulge mass (M_b), Disk scale-length (a), Disk scale-height (b), and Disk mass (M_d).",
+          "unit_text": "",
+          "source_of_definition": "table row labels",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Adopted fixed value for each parameter. Bulge scale-length q = 0.7 kpc (from Bekki et al. 2001 and Font et al. 2006), Bulge mass M_b = 3.4 × 10^10 M_sun (average of recent estimates from Geehan et al. 2006 [3.2], Seigar et al. 2008 [3.5], Chemin et al. 2009 [2.32], Corbelli et al. 2010 [3.8], and Tamm et al. 2012 [4.4]), Disk scale-length a = 6.5 kpc and scale-height b = 0.26 kpc (from Bekki et al. 2001 and Font et al. 2006), Disk mass M_d = 6.9 × 10^10 M_sun (straight average of the same five literature sources: Geehan et al. 2006 [7.2], Seigar et al. 2008 [5.8], Chemin et al. 2009 [7.1], Corbelli et al. 2010 [8.8], Tamm et al. 2012 [5.7]). All masses in units of 10^10 M_sun.",
+          "unit_text": "",
+          "source_of_definition": "table values, described in surrounding text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "This inline tabular appears in Section 3.2 (Mass modelling) as equation (30). The surrounding text explicitly states these seven parameters complete the bulge-disk-halo model and that the baryonic parameters are fixed while c and M_vir remain free. The masses are described as a 'straight average of the most recent estimates' from five cited works.",
+      "comments": "2-column inline tabular with 5 data rows, rendered inside an equation environment. No formal \\label or \\caption. The combined stellar mass of bulge + disk = 10.3 × 10^10 M_sun. These fixed parameters are used throughout the mass modelling in Section 3.2 and the virial property inference in Section 4.2."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://www.strw.leidenuniv.nl/pns/PNS_public_web/PN.S_data.html",
+      "local_path": "",
+      "description": "Public online repository hosting the Planetary Nebulae (PNe) catalogue used as the primary dynamical tracer dataset in this paper. The catalogue was constructed by Merrett et al. (2006) and Halliday et al. (2006) from observations with the Planetary Nebula Spectrograph on the William Herschel Telescope in La Palma. The published catalogue provides 3300 emission-line objects, of which 2730 are identified as PNe. After removing extragalactic contaminants and satellite galaxy members, the authors use 2637 M31 PNe as the starting sample, of which 86 are classified as high-velocity stars (|v_pec| > 300 km/s) for the escape velocity analysis. The catalogue includes positions and line-of-sight velocities with typical uncertainties of sigma_v ~ 14 km/s.",
+      "source_refs": [
+        {
+          "path": "literature/1801.03949/arxiv_source/paper.tex",
+          "start_line": 111,
+          "end_line": 111,
+          "context": "The data were observed using the Planetary Nebula Spectrograph on the William Herschel Telescope in La Palma and were made publicly available on-line\\footnote{\\url{http://www.strw.leidenuniv.nl/pns/PNS_public_web/PN.S_data.html}}."
+        }
+      ],
+      "evidence": "Section 2.1 (Planetary Nebulae) describes the PNe catalogue and provides the URL in a footnote. The catalogue is cited as the largest publicly available sample of M31 dynamical tracers with accurate line-of-sight velocities.",
+      "comments": "The URL points to the Leiden Observatory PNS public data page. The dataset is the primary observational input for the entire paper. The authors cull contaminants (extragalactic objects and satellite members) from the published catalogue and use only confirmed M31 PNe. Heliocentric distances to individual PNe are unknown and are treated as latent parameters in the hierarchical Bayesian model, marginalized over the range 600-1100 kpc."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://github.com/sanjibs/bmcmc",
+      "local_path": "",
+      "description": "bmcmc (Bayesian MCMC) software package used as the Metropolis-within-Gibbs sampler for the hierarchical Bayesian inference in this paper. The software implements a multi-level inference scheme where latent variables (heliocentric distance s and true peculiar velocity v_pec^t of each tracer) are treated as hyper-parameters and sampled alongside the model parameters (v_esc,0, gamma, eta, alpha, k for parametric case; plus individual v_esc,j for non-parametric case). The software also handles the mass model fitting (c, M_vir) using standard Metropolis-Hastings. Developed by co-author Sanjib Sharma, the package is available on GitHub and described in Sharma (2017, ASCL) and Sharma (2017, ARA&A).",
+      "source_refs": [
+        {
+          "path": "literature/1801.03949/arxiv_source/paper.tex",
+          "start_line": 362,
+          "end_line": 362,
+          "context": "To sample the posterior we make use of the Metropolis within Gibbs sampler from bmcmc software\\footnote{\\url{https://github.com/sanjibs/bmcmc}} \\citep[][]{2017ascl.soft09009S,2017ARA&A..55..213S}."
+        }
+      ],
+      "evidence": "Section 3.3 (Inference: Metropolis within Gibbs) explicitly references bmcmc as the sampling software, provides the GitHub URL in a footnote, and cites the software papers.",
+      "comments": "This is a software tool rather than a data resource, but is central to the paper's methodology and explicitly referenced with a URL. The software handles the challenging numerical marginalization over latent variables required by the non-analytical likelihood function. The MCMC chains are run for sufficient autocorrelation time to ensure convergence, and the median of posterior distributions is reported as the best estimate with 16th and 84th percentiles as uncertainties."
+    }
+  ]
+}

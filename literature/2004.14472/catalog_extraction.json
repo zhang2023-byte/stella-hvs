@@ -1,0 +1,669 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:41:18",
+  "paper": {
+    "arxiv_id": "2004.14472",
+    "title": "HST astrometry in the Orion Nebula Cluster: census of low-mass runaways",
+    "month": "2020-04"
+  },
+  "review": {
+    "path": "literature/2004.14472/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084118",
+    "started_at": "2026-06-07T08:41:18",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2004.14472",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-catal",
+      "internal_table_id": "table-tab-catal",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2004.14472/arxiv_source/ms.tex",
+        "start_line": 467,
+        "end_line": 502,
+        "caption": "Proper Motion Catalog",
+        "label": "tab:catal"
+      },
+      "source_path": "literature/2004.14472/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2004.14472/catalog_sources/table-tab-catal/excerpt.tex",
+      "sha256": "f301e58b3731d39264e726f1ccd97f4ab90c5417c18886e84d903b98f81ce6e6",
+      "line_count": 36,
+      "error": ""
+    },
+    {
+      "id": "table-tab-ivd_plat",
+      "internal_table_id": "table-tab-ivd_plat",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2004.14472/arxiv_source/ms.tex",
+        "start_line": 618,
+        "end_line": 643,
+        "caption": "Samples of Internal Velocity Dispersion in mas yr⁻¹",
+        "label": "tab:ivd_plat"
+      },
+      "source_path": "literature/2004.14472/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2004.14472/catalog_sources/table-tab-ivd_plat/excerpt.tex",
+      "sha256": "35ca16e020bf3b896013c77bb5787c29b3634a3dd22f6c6bbcdc5bb24dfd3a98",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-tab-ivd_all",
+      "internal_table_id": "table-tab-ivd_all",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2004.14472/arxiv_source/ms.tex",
+        "start_line": 646,
+        "end_line": 669,
+        "caption": "Internal Velocity Dispersion in mas yr⁻¹",
+        "label": "tab:ivd_all"
+      },
+      "source_path": "literature/2004.14472/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2004.14472/catalog_sources/table-tab-ivd_all/excerpt.tex",
+      "sha256": "557bb7ff4c7f2eacb5a90b6c773ee6d945e8e4a186da486b39288764fa3159fd",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-tab-run_oricat",
+      "internal_table_id": "table-tab-run_oricat",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2004.14472/arxiv_source/ms.tex",
+        "start_line": 874,
+        "end_line": 893,
+        "caption": "",
+        "label": "tab:run_oricat"
+      },
+      "source_path": "literature/2004.14472/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2004.14472/catalog_sources/table-tab-run_oricat/excerpt.tex",
+      "sha256": "b944c9a7c629e035d8ed18066f41a9acddc450c6a6ff48fc0491433360e3f1c0",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-run_gaia",
+      "internal_table_id": "table-tab-run_gaia",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2004.14472/arxiv_source/ms.tex",
+        "start_line": 1015,
+        "end_line": 1036,
+        "caption": "",
+        "label": "tab:run_gaia"
+      },
+      "source_path": "literature/2004.14472/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2004.14472/catalog_sources/table-tab-run_gaia/excerpt.tex",
+      "sha256": "62971be189cbf4d205f09e06072414b7ad76058b6c4ae98ffa7c22fa4534d056",
+      "line_count": 22,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-catal",
+      "internal_table_id": "table-tab-catal",
+      "status": "success",
+      "ecsv_path": "literature/2004.14472/catalog_tables/table-tab-catal.ecsv",
+      "caption": "Proper Motion Catalog",
+      "label": "tab:catal",
+      "row_count": 20,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Unit",
+          "Label",
+          "Explanations"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Unit",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Label",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Explanations",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpw78ipffh/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2004.14472/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpw78ipffh/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2004.14472/catalog_sources/table-tab-catal/wrapped.tex",
+            "html": "literature/2004.14472/catalog_sources/table-tab-catal/latexml.html",
+            "stdout": "literature/2004.14472/catalog_sources/table-tab-catal/latexml.stdout.txt",
+            "stderr": "literature/2004.14472/catalog_sources/table-tab-catal/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f301e58b3731d39264e726f1ccd97f4ab90c5417c18886e84d903b98f81ce6e6"
+    },
+    {
+      "id": "table-tab-ivd_plat",
+      "internal_table_id": "table-tab-ivd_plat",
+      "status": "success",
+      "ecsv_path": "literature/2004.14472/catalog_tables/table-tab-ivd_plat.ecsv",
+      "caption": "Samples of Internal Velocity Dispersion in mas yr⁻¹",
+      "label": "tab:ivd_plat",
+      "row_count": 7,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Sample #",
+          "Area a",
+          "Magnitude range",
+          "\\sigma_v,x",
+          "\\sigma_v,y",
+          "N stars"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Sample #",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Area a",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Magnitude range",
+          "unit_text": "Magnitude range",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\sigma_v,x",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_v,y",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "N stars",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9m0ditnk/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2004.14472/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9m0ditnk/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2004.14472/catalog_sources/table-tab-ivd_plat/wrapped.tex",
+            "html": "literature/2004.14472/catalog_sources/table-tab-ivd_plat/latexml.html",
+            "stdout": "literature/2004.14472/catalog_sources/table-tab-ivd_plat/latexml.stdout.txt",
+            "stderr": "literature/2004.14472/catalog_sources/table-tab-ivd_plat/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "35ca16e020bf3b896013c77bb5787c29b3634a3dd22f6c6bbcdc5bb24dfd3a98"
+    },
+    {
+      "id": "table-tab-ivd_all",
+      "internal_table_id": "table-tab-ivd_all",
+      "status": "success",
+      "ecsv_path": "literature/2004.14472/catalog_tables/table-tab-ivd_all.ecsv",
+      "caption": "Internal Velocity Dispersion in mas yr⁻¹",
+      "label": "tab:ivd_all",
+      "row_count": 6,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Source",
+          "\\sigma_v,x",
+          "\\sigma_v,y",
+          "Spatial extent",
+          "N stars"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\sigma_v,x",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma_v,y",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Spatial extent",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "N stars",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmt8q1b5a/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2004.14472/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmt8q1b5a/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2004.14472/catalog_sources/table-tab-ivd_all/wrapped.tex",
+            "html": "literature/2004.14472/catalog_sources/table-tab-ivd_all/latexml.html",
+            "stdout": "literature/2004.14472/catalog_sources/table-tab-ivd_all/latexml.stdout.txt",
+            "stderr": "literature/2004.14472/catalog_sources/table-tab-ivd_all/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "557bb7ff4c7f2eacb5a90b6c773ee6d945e8e4a186da486b39288764fa3159fd"
+    },
+    {
+      "id": "table-tab-run_oricat",
+      "internal_table_id": "table-tab-run_oricat",
+      "status": "success",
+      "ecsv_path": "literature/2004.14472/catalog_tables/table-tab-run_oricat.ecsv",
+      "caption": "",
+      "label": "tab:run_oricat",
+      "row_count": 9,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Table 4. Candidate low-mass runaways from ONC",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Table 4. Candidate low-mass runaways from ONC",
+          "unit_text": "Table 4. Candidate low-mass runaways from ONC",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzggphekj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2004.14472/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzggphekj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2004.14472/catalog_sources/table-tab-run_oricat/wrapped.tex",
+            "html": "literature/2004.14472/catalog_sources/table-tab-run_oricat/latexml.html",
+            "stdout": "literature/2004.14472/catalog_sources/table-tab-run_oricat/latexml.stdout.txt",
+            "stderr": "literature/2004.14472/catalog_sources/table-tab-run_oricat/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b944c9a7c629e035d8ed18066f41a9acddc450c6a6ff48fc0491433360e3f1c0"
+    },
+    {
+      "id": "table-tab-run_gaia",
+      "internal_table_id": "table-tab-run_gaia",
+      "status": "success",
+      "ecsv_path": "literature/2004.14472/catalog_tables/table-tab-run_gaia.ecsv",
+      "caption": "",
+      "label": "tab:run_gaia",
+      "row_count": 11,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwsfz5n_8/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2004.14472/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwsfz5n_8/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2004.14472/catalog_sources/table-tab-run_gaia/wrapped.tex",
+            "html": "literature/2004.14472/catalog_sources/table-tab-run_gaia/latexml.html",
+            "stdout": "literature/2004.14472/catalog_sources/table-tab-run_gaia/latexml.stdout.txt",
+            "stderr": "literature/2004.14472/catalog_sources/table-tab-run_gaia/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "62971be189cbf4d205f09e06072414b7ad76058b6c4ae98ffa7c22fa4534d056"
+    }
+  ]
+}

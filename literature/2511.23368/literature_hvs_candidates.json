@@ -1,0 +1,56 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:17:13",
+  "paper": {
+    "arxiv_id": "2511.23368",
+    "bibcode": "2026OJAp....955625O",
+    "title": "The Kinematic Properties of T\\.ZO Candidate HV 11417 with Gaia DR3",
+    "month": "2025-11",
+    "source_note_json": "notes/2025/2025-11/2025-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2511.23368",
+      "pdf": "https://arxiv.org/pdf/2511.23368"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2511.23368",
+    "audit_path": "literature/2511.23368/audit.json",
+    "catalog_review_path": "literature/2511.23368/catalog_review.json",
+    "catalog_extraction_path": "literature/2511.23368/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2511.23368/catalog_tables/table-tab-kinematics.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T20:17:13",
+    "extractor": "agent",
+    "summary": "The paper studies HV 11417, a runaway star candidate in the Small Magellanic Cloud (SMC), and compares it to other massive and evolved stars in the SMC. No objects are discussed as possibly unbound from the Milky Way Galaxy."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-kinematics",
+      "description": "HV 11417 and RIOTS4 comparison stars from the kinematics table.",
+      "decision": "excluded",
+      "reason": "The paper presents these objects as runaway stars within the SMC (v_loc >= 30 km/s), not as candidates possibly unbound from the Milky Way Galaxy. HV 11417 is located in the SMC at ~62 kpc, and the paper never discusses Galactic escape or unbound status.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2511.23368/arxiv_source/main.tex",
+          "start_line": 33,
+          "end_line": 35,
+          "context": "Abstract states HV 11417 qualifies as a runaway star (v_loc >= 30 km/s) in the SMC, with no mention of Galactic unbound status."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2511.23368/arxiv_source/main.tex",
+          "start_line": 151,
+          "end_line": 156,
+          "context": "Conclusion explicitly states HV 11417 meets the criterion of a runaway star within the SMC and does not discuss Milky Way escape."
+        }
+      ]
+    }
+  ]
+}

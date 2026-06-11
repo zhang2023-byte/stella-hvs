@@ -1,0 +1,963 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:43:09",
+  "paper": {
+    "arxiv_id": "2009.02123",
+    "title": "Identification of young nearby runaway stars based on Gaia data and the lithium test",
+    "month": "2020-09"
+  },
+  "review": {
+    "path": "literature/2009.02123/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084309",
+    "started_at": "2026-06-07T08:43:09",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2009.02123",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 9,
+      "work_count": 9,
+      "table_count": 9,
+      "success_count": 6,
+      "failed_count": 3,
+      "deferred_count": 0,
+      "file_count": 9,
+      "file_success_count": 9,
+      "file_failed_count": 0
+    },
+    "status": "partial"
+  },
+  "files": [
+    {
+      "id": "table-giants",
+      "internal_table_id": "table-giants",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+        "start_line": 101,
+        "end_line": 118,
+        "caption": "Targets that were identified as giants due to comparison of effective temperature $T_{\\text{eff}}$ and radius $R$ from \\textit{Gaia}\\,DR2 with those of known dwarfs. These objects are marked with Roman numerals in Figure\\,\\ref{fig:HRD}\\hspace{-2mm}.",
+        "label": "giants"
+      },
+      "source_path": "literature/2009.02123/arxiv_source/bischoff.tex",
+      "excerpt_path": "literature/2009.02123/catalog_sources/table-giants/excerpt.tex",
+      "sha256": "330dfdda2cf0720cc15e464bd9a93aef2e95cc562604251cb9a26cabfb4a1f9c",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-topnine",
+      "internal_table_id": "table-topnine",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+        "start_line": 139,
+        "end_line": 158,
+        "caption": "Targets with the largest measured equivalent widths of the Li\\,(6708\\,\\AA) line $EW_{\\text{Li}}$ detected with FLECHAS and their derived spectral types (SpT) using the $T_{\\text{eff}}$-SpT-correlations from \\cite{damiani}.",
+        "label": "topnine"
+      },
+      "source_path": "literature/2009.02123/arxiv_source/bischoff.tex",
+      "excerpt_path": "literature/2009.02123/catalog_sources/table-topnine/excerpt.tex",
+      "sha256": "463764959107163ea41279ca1a40333e9c373a491c306c3810aa21523693b342",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tres",
+      "internal_table_id": "table-tres",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+        "start_line": 164,
+        "end_line": 190,
+        "caption": "Comparison of the equivalent widths of the Li\\,(6708\\,\\AA) line, measured in the TRES and FLECHAS spectra. We list the median equivalent width $EW_{\\text{med}}$ and the number of used TRES measurements $N$ as well as the derived values from the FLECHAS spectra $EW_{\\text{FL}}$.",
+        "label": "tres"
+      },
+      "source_path": "literature/2009.02123/arxiv_source/bischoff.tex",
+      "excerpt_path": "literature/2009.02123/catalog_sources/table-tres/excerpt.tex",
+      "sha256": "64c1002b0b875594e0cdf88781a33ccf4ebfe2d3f9256261c51a457186e84bf4",
+      "line_count": 27,
+      "error": ""
+    },
+    {
+      "id": "table-abundance",
+      "internal_table_id": "table-abundance",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+        "start_line": 194,
+        "end_line": 219,
+        "caption": "The identified dwarf stars with their numbers as shown in Figure\\,\\ref{fig:HRD}\\hspace{-2mm}, listed with their effective temperatures $T_{\\text{eff}}$ from \\textit{Gaia}\\,DR2 and the measured equivalent widths of the Li\\,(6708\\,\\AA) line $EW_{\\text{Li}}$. We list only measurements with $EW_{\\text{Li}}\\geq 3\\cdot \\sigma EW_{\\text{Li}}$. Based on these values we give the derived abundances $\\log_{10}(N_{\\text{Li}})$ according to \\cite{soderblom}.",
+        "label": "abundance"
+      },
+      "source_path": "literature/2009.02123/arxiv_source/bischoff.tex",
+      "excerpt_path": "literature/2009.02123/catalog_sources/table-abundance/excerpt.tex",
+      "sha256": "7b22644fd1132e29434acc89f5ebcc43c1806300f0f83928b1ff78be32ecc3e3",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-clearname",
+      "internal_table_id": "table-clearname",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+        "start_line": 250,
+        "end_line": 281,
+        "caption": "Our dwarf stars with their numbers as shown in Figure\\,\\ref{fig:HRD} and Figure\\,\\ref{fig:Li} listed with their SpT derived from their $T_{\\text{eff}}$ using the SpT-$T_{\\text{eff}}$-relation from \\cite{damiani}, their distances $d$ according to \\cite{bailerjones}, the measured equivalent width of the Hydrogen Balmer line $EW_{\\text{H}\\alpha}$ (all in absorption) and the measured equivalent width of Li\\,(6708\\,\\AA) $EW_{\\text{Li}}$. Furthermore, we list the estimated age derived from the position in the HRD \\textbf{(lower limit)}, as well as the age according to the lithium test \\textbf{(upper limit)} from this work and the age from \\cite{tetzlaff}.",
+        "label": "clearname"
+      },
+      "source_path": "literature/2009.02123/arxiv_source/bischoff.tex",
+      "excerpt_path": "literature/2009.02123/catalog_sources/table-clearname/excerpt.tex",
+      "sha256": "e8dc32540e8ac790788861350f3ebe19b95e491b4076de1a8282c4534e5e0849",
+      "line_count": 32,
+      "error": ""
+    },
+    {
+      "id": "table-gj182",
+      "internal_table_id": "table-gj182",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+        "start_line": 328,
+        "end_line": 350,
+        "caption": "Ages and used determination methods for GJ\\,182 as well as their references.",
+        "label": "gj182"
+      },
+      "source_path": "literature/2009.02123/arxiv_source/bischoff.tex",
+      "excerpt_path": "literature/2009.02123/catalog_sources/table-gj182/excerpt.tex",
+      "sha256": "255844472bcbe135e2c31cf1c9846097ce828ee536a18ea5382a03b7b4844e53",
+      "line_count": 23,
+      "error": ""
+    },
+    {
+      "id": "table-obslog",
+      "internal_table_id": "table-obslog",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+        "start_line": 369,
+        "end_line": 695,
+        "caption": "Observation log. For each target we list the date and mid-time of the observation, as well as the individual exposure time (T_exp) of each FLECHAS spectrum and the signal-to-noise ratios (SNR) of the three combined spectra, as measured at λ = 6700 Å.",
+        "label": "tab:obslog"
+      },
+      "source_path": "literature/2009.02123/arxiv_source/bischoff.tex",
+      "excerpt_path": "literature/2009.02123/catalog_sources/table-obslog/excerpt.tex",
+      "sha256": "16cf4295cad3c5b3b3261c8da2532b45fe6a07cfe8f748e239b746d637f06e7a",
+      "line_count": 327,
+      "error": ""
+    },
+    {
+      "id": "table-Li_all",
+      "internal_table_id": "table-Li_all",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+        "start_line": 699,
+        "end_line": 871,
+        "caption": "Measured equivalent widths (EW_Li) of the Li (6708 Å) line. Targets without significant detection (EW_Li < 3·σEW_Li) are listed with '-'.",
+        "label": "tab:Li_all"
+      },
+      "source_path": "literature/2009.02123/arxiv_source/bischoff.tex",
+      "excerpt_path": "literature/2009.02123/catalog_sources/table-Li_all/excerpt.tex",
+      "sha256": "a803f742ecfaaaeef8a78debe2f105f3cbc23721bcf3b5779989dde38ac569cd",
+      "line_count": 173,
+      "error": ""
+    },
+    {
+      "id": "table-gaia_infos",
+      "internal_table_id": "table-gaia_infos",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+        "start_line": 876,
+        "end_line": 1203,
+        "caption": "Physical properties of the targets, as provided by Gaia DR2. We list the apparent brightness G, the extinction in the G-band AG, the effective temperature Teff, stellar radius R, and luminosity L of the target stars (if available). From these parameters together with the distances d by Bailer-Jones, the absolute G-band brightness MG of the targets was calculated. The last column yields further remarks, with details listed in the footnote of this table.",
+        "label": "tab:gaia_infos"
+      },
+      "source_path": "literature/2009.02123/arxiv_source/bischoff.tex",
+      "excerpt_path": "literature/2009.02123/catalog_sources/table-gaia_infos/excerpt.tex",
+      "sha256": "fc4bfc505aee0a932a71e25830c383fbd542b09904237332e1894c933cae8187",
+      "line_count": 328,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-giants",
+      "internal_table_id": "table-giants",
+      "status": "success",
+      "ecsv_path": "literature/2009.02123/catalog_tables/table-giants.ecsv",
+      "caption": "Targets that were identified as giants due to comparison of effective temperature $T_{\\text{eff}}$ and radius $R$ from \\textit{Gaia}\\,DR2 with those of known dwarfs. These objects are marked with Roman numerals in Figure\\,\\ref{fig:HRD}\\hspace{-2mm}.",
+      "label": "giants",
+      "row_count": 7,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Roman numeral",
+          "Target",
+          "T_eff [K]",
+          "R [R ⊙ ]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Roman numeral",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Target",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "T_eff [K]",
+          "unit_text": "T_eff [K]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "R [R ⊙ ]",
+          "unit_text": "R [R ⊙ ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppy81xa6v/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.02123/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppy81xa6v/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.02123/catalog_sources/table-giants/wrapped.tex",
+            "html": "literature/2009.02123/catalog_sources/table-giants/latexml.html",
+            "stdout": "literature/2009.02123/catalog_sources/table-giants/latexml.stdout.txt",
+            "stderr": "literature/2009.02123/catalog_sources/table-giants/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "330dfdda2cf0720cc15e464bd9a93aef2e95cc562604251cb9a26cabfb4a1f9c"
+    },
+    {
+      "id": "table-topnine",
+      "internal_table_id": "table-topnine",
+      "status": "success",
+      "ecsv_path": "literature/2009.02123/catalog_tables/table-topnine.ecsv",
+      "caption": "Targets with the largest measured equivalent widths of the Li\\,(6708\\,\\AA) line $EW_{\\text{Li}}$ detected with FLECHAS and their derived spectral types (SpT) using the $T_{\\text{eff}}$-SpT-correlations from \\cite{damiani}.",
+      "label": "topnine",
+      "row_count": 9,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Target",
+          "EW_Li [mÅ]",
+          "SpT"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Target",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "EW_Li [mÅ]",
+          "unit_text": "EW_Li [mÅ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "SpT",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpr49ps10o/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.02123/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpr49ps10o/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.02123/catalog_sources/table-topnine/wrapped.tex",
+            "html": "literature/2009.02123/catalog_sources/table-topnine/latexml.html",
+            "stdout": "literature/2009.02123/catalog_sources/table-topnine/latexml.stdout.txt",
+            "stderr": "literature/2009.02123/catalog_sources/table-topnine/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "463764959107163ea41279ca1a40333e9c373a491c306c3810aa21523693b342"
+    },
+    {
+      "id": "table-tres",
+      "internal_table_id": "table-tres",
+      "status": "success",
+      "ecsv_path": "literature/2009.02123/catalog_tables/table-tres.ecsv",
+      "caption": "Comparison of the equivalent widths of the Li\\,(6708\\,\\AA) line, measured in the TRES and FLECHAS spectra. We list the median equivalent width $EW_{\\text{med}}$ and the number of used TRES measurements $N$ as well as the derived values from the FLECHAS spectra $EW_{\\text{FL}}$.",
+      "label": "tres",
+      "row_count": 16,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Target",
+          "EW_med [mÅ]",
+          "N",
+          "EW_FL [mÅ]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Target",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "EW_med [mÅ]",
+          "unit_text": "EW_med [mÅ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "EW_FL [mÅ]",
+          "unit_text": "EW_FL [mÅ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqs_a4o8r/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.02123/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqs_a4o8r/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.02123/catalog_sources/table-tres/wrapped.tex",
+            "html": "literature/2009.02123/catalog_sources/table-tres/latexml.html",
+            "stdout": "literature/2009.02123/catalog_sources/table-tres/latexml.stdout.txt",
+            "stderr": "literature/2009.02123/catalog_sources/table-tres/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "64c1002b0b875594e0cdf88781a33ccf4ebfe2d3f9256261c51a457186e84bf4"
+    },
+    {
+      "id": "table-abundance",
+      "internal_table_id": "table-abundance",
+      "status": "success",
+      "ecsv_path": "literature/2009.02123/catalog_tables/table-abundance.ecsv",
+      "caption": "The identified dwarf stars with their numbers as shown in Figure\\,\\ref{fig:HRD}\\hspace{-2mm}, listed with their effective temperatures $T_{\\text{eff}}$ from \\textit{Gaia}\\,DR2 and the measured equivalent widths of the Li\\,(6708\\,\\AA) line $EW_{\\text{Li}}$. We list only measurements with $EW_{\\text{Li}}\\geq 3\\cdot \\sigma EW_{\\text{Li}}$. Based on these values we give the derived abundances $\\log_{10}(N_{\\text{Li}})$ according to \\cite{soderblom}.",
+      "label": "abundance",
+      "row_count": 13,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "id. nr.",
+          "Target",
+          "T_eff [K]",
+          "EW_Li [mÅ]",
+          "\\log(N_Li)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "id. nr.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Target",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "T_eff [K]",
+          "unit_text": "T_eff [K]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "EW_Li [mÅ]",
+          "unit_text": "EW_Li [mÅ]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\log(N_Li)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0r5mdy6_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.02123/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0r5mdy6_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.02123/catalog_sources/table-abundance/wrapped.tex",
+            "html": "literature/2009.02123/catalog_sources/table-abundance/latexml.html",
+            "stdout": "literature/2009.02123/catalog_sources/table-abundance/latexml.stdout.txt",
+            "stderr": "literature/2009.02123/catalog_sources/table-abundance/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7b22644fd1132e29434acc89f5ebcc43c1806300f0f83928b1ff78be32ecc3e3"
+    },
+    {
+      "id": "table-clearname",
+      "internal_table_id": "table-clearname",
+      "status": "success",
+      "ecsv_path": "literature/2009.02123/catalog_tables/table-clearname.ecsv",
+      "caption": "Our dwarf stars with their numbers as shown in Figure\\,\\ref{fig:HRD} and Figure\\,\\ref{fig:Li} listed with their SpT derived from their $T_{\\text{eff}}$ using the SpT-$T_{\\text{eff}}$-relation from \\cite{damiani}, their distances $d$ according to \\cite{bailerjones}, the measured equivalent width of the Hydrogen Balmer line $EW_{\\text{H}\\alpha}$ (all in absorption) and the measured equivalent width of Li\\,(6708\\,\\AA) $EW_{\\text{Li}}$. Furthermore, we list the estimated age derived from the position in the HRD \\textbf{(lower limit)}, as well as the age according to the lithium test \\textbf{(upper limit)} from this work and the age from \\cite{tetzlaff}.",
+      "label": "clearname",
+      "row_count": 13,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "id. nr.",
+          "Target",
+          "SpT",
+          "d [pc]",
+          "EW_H\\alpha [mÅ]",
+          "EW_Li [mÅ]",
+          "age (HRD) [Myr]",
+          "age ( EW_Li ) [Myr]",
+          "age [Myr]"
+        ],
+        [
+          "",
+          "",
+          "\\ast",
+          "Bailer-Jones",
+          "\\ast",
+          "\\ast",
+          "\\ast",
+          "\\ast",
+          "Tetzlaff"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "id. nr.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Target",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "SpT | \\ast",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "d [pc] | Bailer-Jones",
+          "unit_text": "d [pc]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "EW_H\\alpha [mÅ] | \\ast",
+          "unit_text": "EW_H\\alpha [mÅ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "EW_Li [mÅ] | \\ast",
+          "unit_text": "EW_Li [mÅ]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "age (HRD) [Myr] | \\ast",
+          "unit_text": "age (HRD) [Myr]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "age ( EW_Li ) [Myr] | \\ast",
+          "unit_text": "age ( EW_Li ) [Myr]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "age [Myr] | Tetzlaff",
+          "unit_text": "age [Myr]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9ou1b1_9/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.02123/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9ou1b1_9/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.02123/catalog_sources/table-clearname/wrapped.tex",
+            "html": "literature/2009.02123/catalog_sources/table-clearname/latexml.html",
+            "stdout": "literature/2009.02123/catalog_sources/table-clearname/latexml.stdout.txt",
+            "stderr": "literature/2009.02123/catalog_sources/table-clearname/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e8dc32540e8ac790788861350f3ebe19b95e491b4076de1a8282c4534e5e0849"
+    },
+    {
+      "id": "table-gj182",
+      "internal_table_id": "table-gj182",
+      "status": "success",
+      "ecsv_path": "literature/2009.02123/catalog_tables/table-gj182.ecsv",
+      "caption": "Ages and used determination methods for GJ\\,182 as well as their references.",
+      "label": "gj182",
+      "row_count": 9,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "age [Myr]",
+          "method",
+          "ref."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "age [Myr]",
+          "unit_text": "age [Myr]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "method",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "ref.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpczun89f8/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.02123/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpczun89f8/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.02123/catalog_sources/table-gj182/wrapped.tex",
+            "html": "literature/2009.02123/catalog_sources/table-gj182/latexml.html",
+            "stdout": "literature/2009.02123/catalog_sources/table-gj182/latexml.stdout.txt",
+            "stderr": "literature/2009.02123/catalog_sources/table-gj182/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "255844472bcbe135e2c31cf1c9846097ce828ee536a18ea5382a03b7b4844e53"
+    },
+    {
+      "id": "table-obslog",
+      "internal_table_id": "table-obslog",
+      "status": "failed",
+      "ecsv_path": "literature/2009.02123/catalog_tables/table-obslog.ecsv",
+      "caption": "Observation log. For each target we list the date and mid-time of the observation, as well as the individual exposure time (T_exp) of each FLECHAS spectrum and the signal-to-noise ratios (SNR) of the three combined spectra, as measured at λ = 6700 Å.",
+      "label": "tab:obslog",
+      "row_count": 0,
+      "column_count": 0,
+      "environment": "",
+      "header_rows": [],
+      "columns": [],
+      "warnings": [],
+      "error": "no supported LaTeX table environment found",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphax90mgi/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.02123/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphax90mgi/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.02123/catalog_sources/table-obslog/wrapped.tex",
+            "html": "literature/2009.02123/catalog_sources/table-obslog/latexml.html",
+            "stdout": "literature/2009.02123/catalog_sources/table-obslog/latexml.stdout.txt",
+            "stderr": "literature/2009.02123/catalog_sources/table-obslog/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptggvolwy/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptggvolwy/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.02123/catalog_sources/table-obslog/wrapped.tex",
+            "html": "literature/2009.02123/catalog_sources/table-obslog/pandoc.html",
+            "stdout": "literature/2009.02123/catalog_sources/table-obslog/pandoc.stdout.txt",
+            "stderr": "literature/2009.02123/catalog_sources/table-obslog/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "failed",
+          "command": [],
+          "error": "no supported LaTeX table environment found",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "16cf4295cad3c5b3b3261c8da2532b45fe6a07cfe8f748e239b746d637f06e7a"
+    },
+    {
+      "id": "table-Li_all",
+      "internal_table_id": "table-Li_all",
+      "status": "failed",
+      "ecsv_path": "literature/2009.02123/catalog_tables/table-Li_all.ecsv",
+      "caption": "Measured equivalent widths (EW_Li) of the Li (6708 Å) line. Targets without significant detection (EW_Li < 3·σEW_Li) are listed with '-'.",
+      "label": "tab:Li_all",
+      "row_count": 0,
+      "column_count": 0,
+      "environment": "",
+      "header_rows": [],
+      "columns": [],
+      "warnings": [],
+      "error": "no supported LaTeX table environment found",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqxbkpez1/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.02123/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqxbkpez1/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.02123/catalog_sources/table-Li_all/wrapped.tex",
+            "html": "literature/2009.02123/catalog_sources/table-Li_all/latexml.html",
+            "stdout": "literature/2009.02123/catalog_sources/table-Li_all/latexml.stdout.txt",
+            "stderr": "literature/2009.02123/catalog_sources/table-Li_all/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9wkn642l/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9wkn642l/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.02123/catalog_sources/table-Li_all/wrapped.tex",
+            "html": "literature/2009.02123/catalog_sources/table-Li_all/pandoc.html",
+            "stdout": "literature/2009.02123/catalog_sources/table-Li_all/pandoc.stdout.txt",
+            "stderr": "literature/2009.02123/catalog_sources/table-Li_all/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "failed",
+          "command": [],
+          "error": "no supported LaTeX table environment found",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "a803f742ecfaaaeef8a78debe2f105f3cbc23721bcf3b5779989dde38ac569cd"
+    },
+    {
+      "id": "table-gaia_infos",
+      "internal_table_id": "table-gaia_infos",
+      "status": "failed",
+      "ecsv_path": "literature/2009.02123/catalog_tables/table-gaia_infos.ecsv",
+      "caption": "Physical properties of the targets, as provided by Gaia DR2. We list the apparent brightness G, the extinction in the G-band AG, the effective temperature Teff, stellar radius R, and luminosity L of the target stars (if available). From these parameters together with the distances d by Bailer-Jones, the absolute G-band brightness MG of the targets was calculated. The last column yields further remarks, with details listed in the footnote of this table.",
+      "label": "tab:gaia_infos",
+      "row_count": 0,
+      "column_count": 0,
+      "environment": "",
+      "header_rows": [],
+      "columns": [],
+      "warnings": [],
+      "error": "no supported LaTeX table environment found",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpll4iygia/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.02123/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpll4iygia/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.02123/catalog_sources/table-gaia_infos/wrapped.tex",
+            "html": "literature/2009.02123/catalog_sources/table-gaia_infos/latexml.html",
+            "stdout": "literature/2009.02123/catalog_sources/table-gaia_infos/latexml.stdout.txt",
+            "stderr": "literature/2009.02123/catalog_sources/table-gaia_infos/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpql238xdn/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpql238xdn/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.02123/catalog_sources/table-gaia_infos/wrapped.tex",
+            "html": "literature/2009.02123/catalog_sources/table-gaia_infos/pandoc.html",
+            "stdout": "literature/2009.02123/catalog_sources/table-gaia_infos/pandoc.stdout.txt",
+            "stderr": "literature/2009.02123/catalog_sources/table-gaia_infos/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "failed",
+          "command": [],
+          "error": "no supported LaTeX table environment found",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "fc4bfc505aee0a932a71e25830c383fbd542b09904237332e1894c933cae8187"
+    }
+  ]
+}

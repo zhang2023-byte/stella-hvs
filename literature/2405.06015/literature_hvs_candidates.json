@@ -1,0 +1,61 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T17:49:58",
+  "paper": {
+    "arxiv_id": "2405.06015",
+    "bibcode": "2024Natur.631..285H",
+    "title": "Fast-moving stars around an intermediate-mass black hole in Omega Centauri",
+    "month": "2024-05",
+    "source_note_json": "notes/2024/2024-05/2024-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2405.06015",
+      "pdf": "https://arxiv.org/pdf/2405.06015"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2405.06015",
+    "audit_path": "literature/2405.06015/audit.json",
+    "catalog_review_path": "literature/2405.06015/catalog_review.json",
+    "catalog_extraction_path": "literature/2405.06015/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T17:49:58",
+    "extractor": "agent",
+    "summary": "The paper reports seven fast-moving stars in the center of Omega Centauri with velocities above the cluster escape velocity. However, the paper explicitly interprets these stars as bound to an intermediate-mass black hole (IMBH), not as Galactic-unbound HVS candidates. The authors rule out ejection scenarios and state the stars' presence 'can only be explained by being bound to a massive black hole.' No objects are discussed as possibly escaping the Milky Way or being unbound from the Galactic potential."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "omega-cen-fast-stars",
+      "description": "Seven fast-moving stars (A-G) in the central 3 arcseconds of Omega Centauri with 2D proper motions above the cluster escape velocity of 62 km/s.",
+      "decision": "excluded",
+      "reason": "The paper explicitly interprets these stars as bound to an intermediate-mass black hole (IMBH), analogous to S-stars in the Galactic center. The authors rule out unbound/ejection scenarios (three-body interactions, IMBH ejections) and state their presence 'can only be explained by being bound to a massive black hole.' They are not presented as possibly unbound from the Milky Way Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2405.06015/arxiv_source/sn-article.tex",
+          "start_line": 100,
+          "end_line": 100,
+          "context": "Paper states fast-moving stars' presence can only be explained by being bound to a massive black hole, and rules out previous debates about lack of fast-moving stars above escape velocity."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2405.06015/arxiv_source/sn-article.tex",
+          "start_line": 115,
+          "end_line": 115,
+          "context": "Paper explicitly states fast stars are a predicted consequence of an IMBH, not expected from mass-segregated stellar-mass black holes, and would leave the central region in less than 1,000 years if no massive object was present."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2405.06015/arxiv_source/sn-article.tex",
+          "start_line": 207,
+          "end_line": 210,
+          "context": "Paper rules out alternative scenarios where stars are unbound from the cluster via three-body interactions or IMBH ejections, based on required ejection rates and absence of fast-moving stars at larger radii."
+        }
+      ]
+    }
+  ]
+}

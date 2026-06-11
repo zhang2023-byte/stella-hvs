@@ -1,0 +1,279 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:09",
+  "paper": {
+    "arxiv_id": "2407.00380",
+    "title": "Particle acceleration at the bow shock of runaway star LS 2355: non-thermal radio emission but no $\\gamma$-ray counterpart",
+    "month": "2024-06"
+  },
+  "review": {
+    "path": "literature/2407.00380/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123909",
+    "started_at": "2026-05-17T12:39:09",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2407.00380",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-surveys",
+      "internal_table_id": "table-tab-surveys",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2407.00380/arxiv_source/main.tex",
+        "start_line": 277,
+        "end_line": 295,
+        "caption": "Observational details of the four consulted radio surveys in this work. See Section \\ref{sec:data} for details and references.",
+        "label": "tab:surveys"
+      },
+      "source_path": "literature/2407.00380/arxiv_source/main.tex",
+      "excerpt_path": "literature/2407.00380/catalog_sources/table-tab-surveys/excerpt.tex",
+      "sha256": "6f4aa5af27b71dd0fd7000dc393df15f935b94a9badee9da0040c1b02f197790",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-input",
+      "internal_table_id": "table-tab-input",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2407.00380/arxiv_source/main.tex",
+        "start_line": 297,
+        "end_line": 333,
+        "caption": "The parameters of LS 2355 and its bow shock, observed or derived in this work and used in the calculations in Section \\ref{sec:discussion}. The final column notes what data source underlies the measurement, including the region definition, if relevant.",
+        "label": "tab:input"
+      },
+      "source_path": "literature/2407.00380/arxiv_source/main.tex",
+      "excerpt_path": "literature/2407.00380/catalog_sources/table-tab-input/excerpt.tex",
+      "sha256": "d9423773ac723d513e8c0065acec3c273352ced942a0a9c53cfde36b7913bf95",
+      "line_count": 37,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-surveys",
+      "internal_table_id": "table-tab-surveys",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2407.00380/catalog_tables/table-tab-surveys.ecsv",
+      "caption": "Observational details of the four consulted radio surveys in this work. See Section \\ref{sec:data} for details and references.",
+      "label": "tab:surveys",
+      "row_count": 6,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "Quantity [unit]",
+          "EMU",
+          "RACS",
+          "",
+          "SUMSS"
+        ],
+        [
+          "",
+          "",
+          "",
+          "Low",
+          "Mid",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Quantity [unit]",
+          "unit_text": "Quantity [unit]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "EMU",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RACS | Low",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Mid",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "SUMSS",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqcmm1dw7/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.00380/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqcmm1dw7/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.00380/catalog_sources/table-tab-surveys/wrapped.tex",
+            "html": "literature/2407.00380/catalog_sources/table-tab-surveys/latexml.html",
+            "stdout": "literature/2407.00380/catalog_sources/table-tab-surveys/latexml.stdout.txt",
+            "stderr": "literature/2407.00380/catalog_sources/table-tab-surveys/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6f4aa5af27b71dd0fd7000dc393df15f935b94a9badee9da0040c1b02f197790"
+    },
+    {
+      "id": "table-tab-input",
+      "internal_table_id": "table-tab-input",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2407.00380/catalog_tables/table-tab-input.ecsv",
+      "caption": "The parameters of LS 2355 and its bow shock, observed or derived in this work and used in the calculations in Section \\ref{sec:discussion}. The final column notes what data source underlies the measurement, including the region definition, if relevant.",
+      "label": "tab:input",
+      "row_count": 25,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Quantity",
+          "Value",
+          "Reference / dataset"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Quantity",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Reference / dataset",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjk6apdis/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2407.00380/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjk6apdis/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2407.00380/catalog_sources/table-tab-input/wrapped.tex",
+            "html": "literature/2407.00380/catalog_sources/table-tab-input/latexml.html",
+            "stdout": "literature/2407.00380/catalog_sources/table-tab-input/latexml.stdout.txt",
+            "stderr": "literature/2407.00380/catalog_sources/table-tab-input/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d9423773ac723d513e8c0065acec3c273352ced942a0a9c53cfde36b7913bf95"
+    }
+  ]
+}

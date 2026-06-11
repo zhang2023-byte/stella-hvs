@@ -1,0 +1,583 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2604.11988",
+    "title": "OB runaway stars originating in the Vel OB1 association",
+    "month": "2026-04",
+    "source_note_json": "notes/2026/2026-04/2026-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2604.11988",
+      "pdf": "https://arxiv.org/pdf/2604.11988"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2604.11988",
+    "audit_path": "literature/2604.11988/audit.json",
+    "source_dir": "literature/2604.11988/arxiv_source",
+    "tex_root": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:33:58",
+    "reviewer": "agent",
+    "summary": "Five internal tables: young cluster parameters in Vel OB1 (tab:parori), bow-shock parameters of runaway stars (tab:estpar1), literature candidate members (tab:par1), astrometric/kinematic properties of OB runaways (tab:parrun), and kinematical age estimates (tab:parrunori). One external resource: the CMD isochrone web tool used for age determination."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-parori",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Lists the astrometric, kinematic, and derived properties of six young stellar clusters identified in the Vel OB1 association based on Gaia DR3 membership analysis.",
+      "source_refs": [
+        {
+          "path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+          "start_line": 113,
+          "end_line": 140,
+          "caption": "Young stellar clusters in Vel~OB1.",
+          "label": "tab:parori"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\noalign Name | -",
+          "meaning": "Name of the cluster or region",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l | (deg)",
+          "meaning": "Galactic longitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b | (deg)",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N | -",
+          "meaning": "Number of member stars based on membership probability",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Parallax | (mas)",
+          "meaning": "Mean Gaia DR3 parallax with uncertainty",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_l^* | (mas yr^-1)",
+          "meaning": "Mean proper motion in Galactic longitude direction",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_b | (mas yr^-1)",
+          "meaning": "Mean proper motion in Galactic latitude direction",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_LSR | (km s^-1)",
+          "meaning": "Tangential velocity relative to the local standard of rest",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D | (pc)",
+          "meaning": "Heliocentric distance derived from parallax",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Age | (Myr)",
+          "meaning": "Age range from isochrone fitting",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_V | (mag)",
+          "meaning": "Visual extinction",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "p | -",
+          "meaning": "Membership probability from pyupmask analysis",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Young stellar clusters in Vel~OB1.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-estpar1",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Lists adopted stellar-wind parameters and empirically estimated ambient ISM number densities derived from observed bow shocks and putative Strömgren spheres around OB runaway stars in the Vel OB1 region.",
+      "source_refs": [
+        {
+          "path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+          "start_line": 336,
+          "end_line": 381,
+          "caption": "Adopted and estimated parameters of the observed bow shock around the runaway stars.",
+          "label": "tab:estpar1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\noalign \\centering Runaway | -",
+          "meaning": "Name of the runaway star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l | (deg)",
+          "meaning": "Galactic longitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b | (deg)",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_w | (km s^-1)",
+          "meaning": "Adopted terminal wind velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\dotM | (M_\\sun yr^-1)",
+          "meaning": "Adopted mass-loss rate",
+          "unit_text": "Msun yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "n_\\rm ISM^\\rm BS | (cm^-3)",
+          "meaning": "Ambient ISM number density from ram-pressure balance (bow-shock method)",
+          "unit_text": "cm^-3",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "n_\\rm ISM^\\rm St | (cm^-3)",
+          "meaning": "Ambient ISM number density from Strömgren-sphere relation",
+          "unit_text": "cm^-3",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R_\\rm St | (^\\circ)",
+          "meaning": "Angular radius of the putative Strömgren sphere from WISE 22 um image",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R | (arcsec)",
+          "meaning": "Standoff distance of the bow shock",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Adopted and estimated parameters of the observed bow shock around the runaway stars.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-par1",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Comprehensive catalog of candidate members of the Vel OB1 association compiled from the literature, with Gaia DR3 astrometry, kinematics, spectral types, and membership/runaway/bow-shock flags.",
+      "source_refs": [
+        {
+          "path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+          "start_line": 462,
+          "end_line": 576,
+          "caption": "Candidate members of Vel~OB1 according to literature.",
+          "label": "tab:par1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\noalign \\centering Star | -",
+          "meaning": "Stellar identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l | (deg)",
+          "meaning": "Galactic longitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b | (deg)",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Sp. Type | -",
+          "meaning": "Spectral type",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_r | (km s^-1)",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Parallax | (mas)",
+          "meaning": "Gaia DR3 corrected parallax",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_l^* | (mas yr^-1)",
+          "meaning": "Proper motion in Galactic longitude direction",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_b | (mas yr^-1)",
+          "meaning": "Proper motion in Galactic latitude direction",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G | (mag)",
+          "meaning": "Gaia G-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D | (pc)",
+          "meaning": "Heliocentric distance",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\multicolumn2cV_\\rm pec | LSR | (km s^-1)",
+          "meaning": "Peculiar or transverse velocity relative to the LSR",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Member | Vel OB1 | (km s^-1)",
+          "meaning": "Peculiar or transverse velocity relative to Vel OB1",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ref (SpT,V_r) | -",
+          "meaning": "Membership flag (Y=member, N=non-member, R=runaway, B=bow shock)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "-",
+          "meaning": "Literature reference for spectral type and radial velocity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Candidate members of Vel~OB1 according to literature.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-parrun",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Astrometric and kinematic properties of confirmed and candidate OB runaway stars in the Vel OB1 area, including peculiar velocities, Galactic-plane distances, bow-shock detections, and alignment angles.",
+      "source_refs": [
+        {
+          "path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+          "start_line": 594,
+          "end_line": 655,
+          "caption": "Astrometric and kinematic properties of the OB runaway stars in the area of Vel~OB1.",
+          "label": "tab:parrun"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\noalign \\centering Name | -",
+          "meaning": "Name of the star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l | (deg)",
+          "meaning": "Galactic longitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b | (deg)",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Sp. Type | -",
+          "meaning": "Spectral type",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Parallax | (mas)",
+          "meaning": "Gaia DR3 corrected parallax",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D | (pc)",
+          "meaning": "Heliocentric distance",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_l^* | (mas yr^-1)",
+          "meaning": "Proper motion in Galactic longitude direction",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_b | (mas yr^-1)",
+          "meaning": "Proper motion in Galactic latitude direction",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_r | (km s^-1)",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\multicolumn3cV_\\rm pec | 2D (LSR) | (km s^-1)",
+          "meaning": "2D transverse peculiar velocity relative to LSR",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Z | 3D (LSR) | (km s^-1)",
+          "meaning": "3D peculiar velocity relative to LSR",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Bow shock | (Vel OB1) | (km s^-1)",
+          "meaning": "Peculiar velocity relative to Vel OB1",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Aligned | (pc)",
+          "meaning": "Distance from the Galactic plane",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Angle | -",
+          "meaning": "Bow-shock detection flag (Y=detected, N=not detected, ISM?=uncertain)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "-",
+          "meaning": "Alignment status of the bow shock with the stellar proper-motion vector",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(deg)",
+          "meaning": "Misalignment angle between bow-shock axis and proper-motion direction",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Astrometric and kinematic properties of the OB runaway stars in the area of Vel~OB1.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-parrunori",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Kinematical age estimates of OB runaway stars in Vel OB1, derived from backward integration to the Galactic plane or to proposed parent clusters, with corresponding ejection velocities.",
+      "source_refs": [
+        {
+          "path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+          "start_line": 657,
+          "end_line": 715,
+          "caption": "Estimate of the kinematical age of the OB runaways in Vel~OB1.",
+          "label": "tab:parrunori"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\noalign \\centering Name | -",
+          "meaning": "Name of the OB runaway star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l | (deg)",
+          "meaning": "Galactic longitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b | (deg)",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D | (pc)",
+          "meaning": "Heliocentric distance with uncertainty",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_r | (km s^-1)",
+          "meaning": "Radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_pecLSR | (km s^-1)",
+          "meaning": "Transverse or peculiar velocity relative to LSR (bold when radial included)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Runaway direction | -",
+          "meaning": "Runaway direction: A=away from plane, P=parallel, T=toward plane",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Age_\\rm kinGP | (Myr)",
+          "meaning": "Kinematic age assuming origin at b=0, 1, or 2 degrees",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Parent | -",
+          "meaning": "Proposed parent cluster or association",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D_\\rm par | (pc)",
+          "meaning": "Distance of the proposed parent cluster",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Age_\\rm kinpar | (Myr)",
+          "meaning": "Kinematic age if ejected from the proposed parent cluster",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_\\rm pecpar | (km s^-1)",
+          "meaning": "Peculiar transverse velocity relative to the proposed parent cluster (bold when radial included)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Estimate of the kinematical age of the OB runaways in Vel~OB1.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://stev.oapd.inaf.it/cgi-bin/cmd",
+      "local_path": "",
+      "description": "Web interface to the PARSEC stellar evolution tracks and isochrones, used to determine cluster ages and extinctions via color-magnitude diagram fitting.",
+      "source_refs": [
+        {
+          "path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+          "start_line": 156,
+          "end_line": 156,
+          "context": "\\subsubsection{Age of the young clusters}\n\nFor each young cluster, the colour-absolute magnitude diagram is used to constrain the age (Appendix~\\ref{appA}, Fig.~\\ref{fig:isoch}). To estimate the age of the individual clusters, we generated \\texttt{PARSEC (v2.0) + COLIBRI (S\\_37 + S\\_35 + PR16)} (Padova and Trieste Stellar Evolution Code) isochrones\\footnote{\\url{http://stev.oapd.inaf.it/cgi-bin/cmd}} considering an age range from 0.2\\,Myr to 10\\,Myr with steps of 0.1\\,Myr \\citep{Bressan12,Marigo13,Rosenfield16,Marigo17,Pastorelli19,Pastorelli20,Nguyen22}. To identify the best-fit isochrone for our clusters, we used the statistical estimation and likelihood maximisation standard methods described in \\citet{vandermeij21}. To estimate the age dispersion for each cluster, we use a bootstrap method. We repeat the age determination 100 times on randomly selected samples, which contain 90\\% of all cluster members. Columns (10) and (11) of Tab.~\\ref{tab:parori} list the thus obtained age range based on 100 iterations and a fixed\nextinction; to estimate the (average) extinction A$_{\\rm V}$ we used the near-infrared counterparts of the members, and their colours (adopting R$_{\\rm V} = 3.1$). The derived ages are in accordance with previous estimates and range from 0.5 to 10~Myr. We defer a more detailed discussion on the young massive clusters included in Vel~OB1 to a future paper."
+        }
+      ],
+      "evidence": "\\subsubsection{Age of the young clusters}\n\nFor each young cluster, the colour-absolute magnitude diagram is used to constrain the age (Appendix~\\ref{appA}, Fig.~\\ref{fig:isoch}). To estimate the age of the individual clusters, we generated \\texttt{PARSEC (v2.0) + COLIBRI (S\\_37 + S\\_35 + PR16)} (Padova and Trieste Stellar Evolution Code) isochrones\\footnote{\\url{http://stev.oapd.inaf.it/cgi-bin/cmd}} considering an age range from 0.2\\,Myr to 10\\,Myr with steps of 0.1\\,Myr \\citep{Bressan12,Marigo13,Rosenfield16,Marigo17,Pastorelli19,Pastorelli20,Nguyen22}. To identify the best-fit isochrone for our clusters, we used the statistical estimation and likelihood maximisation standard methods described in \\citet{vandermeij21}. To estimate the age dispersion for each cluster, we use a bootstrap method. We repeat the age determination 100 times on randomly selected samples, which contain 90\\% of all cluster members. Columns (10) and (11) of Tab.~\\ref{tab:parori} list the thus obtained age range based on 100 iterations and a fixed\nextinction; to estimate the (average) extinction A$_{\\rm V}$ we used the near-infrared counterparts of the members, and their colours (adopting R$_{\\rm V} = 3.1$). The derived ages are in accordance with previous estimates and range from 0.5 to 10~Myr. We defer a more detailed discussion on the young massive clusters included in Vel~OB1 to a future paper.",
+      "comments": ""
+    }
+  ]
+}

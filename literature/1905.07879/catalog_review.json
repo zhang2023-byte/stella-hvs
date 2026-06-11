@@ -1,0 +1,590 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1905.07879",
+    "title": "Origin and Status of Low-Mass Candidate Hypervelocity Stars",
+    "month": "2019-05",
+    "source_note_json": "notes/2019/2019-05/2019-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1905.07879",
+      "pdf": "https://arxiv.org/pdf/1905.07879"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1905.07879",
+    "audit_path": "literature/1905.07879/audit.json",
+    "source_dir": "literature/1905.07879/arxiv_source",
+    "tex_root": "literature/1905.07879/arxiv_source/hvs_jkas_accepted.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:37:32",
+    "reviewer": "agent",
+    "summary": "Paper presents a chemodynamical analysis of six low-mass dwarf stars previously claimed as HVS candidates by Palladino et al. (2014). Contains 6 LaTeX tables: observation log, comparison star parameters, program star chemical abundances, proper motion comparisons, velocity/orbital parameters, and origin summary. Uses Gaia DR2 proper motions and moderate-resolution spectroscopy. All data products are self-contained in the paper's LaTeX tables; no external machine-readable data files are referenced. External resources are limited to infrastructure URLs (Gaia, SDSS, DSS, UKIDSS) cited in the text or acknowledgements."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab1",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Records the spectroscopic observation details (dates, exposure times, S/N) for the 6 program HVS candidates and 8 standard comparison stars.",
+      "source_refs": [
+        {
+          "path": "literature/1905.07879/arxiv_source/hvs_jkas_accepted.tex",
+          "start_line": 327,
+          "end_line": 359,
+          "caption": "Details of spectroscopic observations \\label{tab1}",
+          "label": "tab1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "Star identifier (SDSS name for program stars, HIP/HR name for standard stars)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Magnitude",
+          "meaning": "Reddening-corrected r-band magnitude (r_0) for program stars; V-band magnitude for standard stars",
+          "unit_text": "mag",
+          "source_of_definition": "table header + tabnote",
+          "confidence": 1.0
+        },
+        {
+          "name": "Date (UT)",
+          "meaning": "UT date(s) of spectroscopic observation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Exposure | Time (s)",
+          "meaning": "Individual exposure time(s) in seconds; multiple values separated by commas indicate multiple exposures",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_\\rmobs",
+          "meaning": "Number of individual spectroscopic observations co-added",
+          "unit_text": "",
+          "source_of_definition": "table header + tabnote",
+          "confidence": 1.0
+        },
+        {
+          "name": "S/N",
+          "meaning": "Signal-to-noise ratio of the co-added spectrum after data reduction",
+          "unit_text": "",
+          "source_of_definition": "table header + tabnote",
+          "confidence": 1.0
+        },
+        {
+          "name": "Pal14~ID",
+          "meaning": "Object identification number from Palladino et al. (2014) catalog",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table caption and tabnote describe all columns. Section 2 (Spectroscopic Observations and Reduction) provides additional context on the DIS instrument setup and observation strategy.",
+      "comments": "Table is split into two sections: program stars (6 objects) and standard/comparison stars (8 objects). Standard stars were observed at multiple S/N levels to calibrate systematic offsets."
+    },
+    {
+      "id": "table-tab2",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Lists the adopted (literature) stellar parameters and chemical abundances for the 8 comparison stars used to validate the abundance analysis pipeline.",
+      "source_refs": [
+        {
+          "path": "literature/1905.07879/arxiv_source/hvs_jkas_accepted.tex",
+          "start_line": 437,
+          "end_line": 464,
+          "caption": "Adopted stellar parameters and chemical abundances of the comparison stars from various literature \\label{tab2}",
+          "label": "tab2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Comparison star identifier (HIP/HR catalog name)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_\\rm eff (K)",
+          "meaning": "Effective temperature adopted from literature",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\log~g",
+          "meaning": "Surface gravity (logarithmic) adopted from literature",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]",
+          "meaning": "Iron abundance relative to solar adopted from literature",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Mg/H]",
+          "meaning": "Magnesium abundance relative to solar adopted from literature",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Si/H]",
+          "meaning": "Silicon abundance relative to solar adopted from literature",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Ca/H]",
+          "meaning": "Calcium abundance relative to solar adopted from literature",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Ti/H]",
+          "meaning": "Titanium abundance relative to solar adopted from literature",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Cr/H]",
+          "meaning": "Chromium abundance relative to solar adopted from literature",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Ni/H]",
+          "meaning": "Nickel abundance relative to solar adopted from literature",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "References",
+          "meaning": "Numeric codes for literature sources; decoded in tabnote (11 references, mainly Bensby+2003, Fulbright+2000, Lee+2011, etc.)",
+          "unit_text": "",
+          "source_of_definition": "table header + tabnote",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table caption, tabnote with reference key, and Section 3 text explaining that adopted values are averages from multiple literature sources.",
+      "comments": "References column uses numeric codes decoded in the table note. When multiple references were available, an average was taken."
+    },
+    {
+      "id": "table-tab3",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Presents the final derived stellar parameters and chemical abundances for the 6 program stars after systematic offset correction — this is the core data product of the paper.",
+      "source_refs": [
+        {
+          "path": "literature/1905.07879/arxiv_source/hvs_jkas_accepted.tex",
+          "start_line": 466,
+          "end_line": 487,
+          "caption": "Derived stellar parameters and chemical abundances for our program stars \\label{tab3}",
+          "label": "tab3"
+        }
+      ],
+      "columns": [
+        {
+          "name": "SDSS~ID",
+          "meaning": "SDSS object identifier (J2000 coordinate-based name)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Pal14~ID",
+          "meaning": "Object identification number from Palladino et al. (2014) HVS candidate catalog",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_\\rm eff (K)",
+          "meaning": "Effective temperature with uncertainty, corrected for systematic offset",
+          "unit_text": "K",
+          "source_of_definition": "table header + Section 3 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\log~g",
+          "meaning": "Surface gravity (logarithmic) with uncertainty, corrected for systematic offset",
+          "unit_text": "dex",
+          "source_of_definition": "table header + Section 3 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]",
+          "meaning": "Iron abundance relative to solar with uncertainty, corrected for systematic offset",
+          "unit_text": "dex",
+          "source_of_definition": "table header + Section 3 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Mg/Fe]",
+          "meaning": "Magnesium-to-iron abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Si/Fe]",
+          "meaning": "Silicon-to-iron abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Ca/Fe]",
+          "meaning": "Calcium-to-iron abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Ti/Fe]",
+          "meaning": "Titanium-to-iron abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Cr/Fe]",
+          "meaning": "Chromium-to-iron abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Ni/Fe]",
+          "meaning": "Nickel-to-iron abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[\\alpha/Fe]",
+          "meaning": "Mean alpha-element abundance ratio, average of [Mg/Fe], [Si/Fe], [Ca/Fe], and [Ti/Fe]",
+          "unit_text": "dex",
+          "source_of_definition": "table header + tabnote",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table caption and tabnote explicitly describe systematic offset corrections and typical abundance uncertainties. Section 3 (Estimation of Stellar Parameters and Chemical Abundances) fully documents the SP_Ace pipeline and correction procedure.",
+      "comments": "Values reported with ± uncertainties. Systematic offsets were derived from comparison stars at S/N < 50. Typical errors: σ[Mg/Fe]=0.27, σ[Si/Fe]=0.17, σ[Ca/Fe]=0.15, σ[Ti/Fe]=0.18, σ[Cr/Fe]=0.20, σ[Ni/Fe]=0.18 dex."
+    },
+    {
+      "id": "table-tab4",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Compares proper motions from three different sources (SDSS, Ziegerer+2015, Gaia DR2) for the 6 program stars, demonstrating why earlier HVS claims were incorrect.",
+      "source_refs": [
+        {
+          "path": "literature/1905.07879/arxiv_source/hvs_jkas_accepted.tex",
+          "start_line": 587,
+          "end_line": 606,
+          "caption": "Proper motions of our program stars from different catalogs \\label{tab4}",
+          "label": "tab4"
+        }
+      ],
+      "columns": [
+        {
+          "name": "SDSS~ID",
+          "meaning": "SDSS object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Pal14~ID",
+          "meaning": "Object identification number from Palladino et al. (2014)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SDSS | \\mu_\\alphacos\\delta | (mas~yr^-1)",
+          "meaning": "Proper motion in right ascension from SDSS catalog (used by Palladino+2014), with uncertainty",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ziegerer et al. (2015) | \\mu_\\delta | (mas~yr^-1)",
+          "meaning": "Proper motion in declination from SDSS, with uncertainty",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\multicolumn2c\\it Gaia~DR2 | \\mu_\\alphacos\\delta | (mas~yr^-1)",
+          "meaning": "Proper motion in right ascension from Ziegerer et al. (2015) re-measurement, with uncertainty",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta | (mas~yr^-1)",
+          "meaning": "Proper motion in declination from Ziegerer et al. (2015), with uncertainty",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alphacos\\delta | (mas~yr^-1)",
+          "meaning": "Proper motion in right ascension from Gaia DR2, with uncertainty",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta | (mas~yr^-1)",
+          "meaning": "Proper motion in declination from Gaia DR2, with uncertainty",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table caption and Section 4.1 (Kinematic Properties) text explicitly compare the three proper motion sources and explain the discrepancies. The multi-column header structure clearly groups sources.",
+      "comments": "The table uses multi-column headers to group measurements from SDSS, Ziegerer+2015, and Gaia DR2. Two stars (Pal14 IDs 7, 10) lack Ziegerer+2015 measurements. Gaia DR2 proper motions are significantly more precise and show the earlier SDSS-based values were inflated."
+    },
+    {
+      "id": "table-tab5",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Presents the derived space velocities (U,V,W), distances, orbital parameters, and Galactic rest-frame velocities for the 6 program stars — the key kinematic results.",
+      "source_refs": [
+        {
+          "path": "literature/1905.07879/arxiv_source/hvs_jkas_accepted.tex",
+          "start_line": 608,
+          "end_line": 630,
+          "caption": "Velocities and orbital parameters of our program stars \\label{tab5}",
+          "label": "tab5"
+        }
+      ],
+      "columns": [
+        {
+          "name": "SDSS~ID",
+          "meaning": "SDSS object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Pal14~ID",
+          "meaning": "Object identification number from Palladino et al. (2014)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_\\rm r | (km s^-1)",
+          "meaning": "Heliocentric radial velocity measured from the observed spectra, with uncertainty",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header + tabnote",
+          "confidence": 1.0
+        },
+        {
+          "name": "d | (kpc)",
+          "meaning": "Photometric distance estimated by the SEGUE Stellar Parameter Pipeline (SSPP), with uncertainty",
+          "unit_text": "kpc",
+          "source_of_definition": "table header + Section 4.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "U | (km s^-1)",
+          "meaning": "Space velocity component toward the Galactic anticenter (positive outward), with uncertainty",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header + tabnote + Section 4.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "V | (km s^-1)",
+          "meaning": "Space velocity component in the direction of Galactic rotation, with uncertainty",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header + tabnote + Section 4.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "W | (km s^-1)",
+          "meaning": "Space velocity component toward the North Galactic Pole, with uncertainty",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header + tabnote + Section 4.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_\\rm min | (kpc)",
+          "meaning": "Minimum Galactocentric distance reached during the orbit, with uncertainty",
+          "unit_text": "kpc",
+          "source_of_definition": "table header + Section 4.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_\\rm max | (kpc)",
+          "meaning": "Maximum Galactocentric distance reached during the orbit, with uncertainty",
+          "unit_text": "kpc",
+          "source_of_definition": "table header + Section 4.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "Z_\\rm max | (kpc)",
+          "meaning": "Maximum distance from the Galactic plane reached during the orbit, with uncertainty",
+          "unit_text": "kpc",
+          "source_of_definition": "table header + Section 4.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "e",
+          "meaning": "Orbital eccentricity, e = (r_max - r_min) / (r_max + r_min), with uncertainty",
+          "unit_text": "",
+          "source_of_definition": "table header + Section 4.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_\\rm GRF | (km s^-1)",
+          "meaning": "Galactic rest-frame velocity, with uncertainty",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header + tabnote + Section 4.1 text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table tabnote explains LSR velocity and solar peculiar motion assumptions. Section 4.1 fully documents the MWPotential2014 gravitational potential, distance estimation method, Monte Carlo error propagation, and coordinate definitions.",
+      "comments": "U, V, W computed assuming V_LSR=220 km/s and solar peculiar motion (-10.1, 4.0, 6.7) km/s. Orbital parameters derived under MWPotential2014 with R_sun=8.0 kpc. Uncertainties from 100-iteration Monte Carlo resampling. All six stars confirmed bound to the MW (V_GRF << V_esc=533 km/s)."
+    },
+    {
+      "id": "table-tab6",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Summary table assigning each program star to a likely Galactic component (thin/thick disk, bulge) and proposing possible origin scenarios based on combined chemical and kinematic evidence.",
+      "source_refs": [
+        {
+          "path": "literature/1905.07879/arxiv_source/hvs_jkas_accepted.tex",
+          "start_line": 914,
+          "end_line": 933,
+          "caption": "Possible origin of our program stars \\label{tab6}",
+          "label": "tab6"
+        }
+      ],
+      "columns": [
+        {
+          "name": "SDSS~ID",
+          "meaning": "SDSS object identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Pal14~ID",
+          "meaning": "Object identification number from Palladino et al. (2014)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Galactic component",
+          "meaning": "Assigned Galactic stellar population based on combined chemical abundance patterns and kinematic membership probabilities (Bulge, Thick disk, or Thin disk)",
+          "unit_text": "",
+          "source_of_definition": "table header + Sections 4-5",
+          "confidence": 0.9
+        },
+        {
+          "name": "Possible origin(s)",
+          "meaning": "Proposed astrophysical origin: Accreted or heated (from disrupted dwarf galaxy or dynamical heating), Runaway (ejected from disk), Runaway or heated (ambiguous), or typical disk star (no exotic origin)",
+          "unit_text": "",
+          "source_of_definition": "table header + Section 5",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Table caption. Section 5 (Discussion) provides detailed object-by-object justification for each assignment. Section 6 (Summary and Conclusions) recapitulates the assignments and origin hypotheses.",
+      "comments": "The Galactic component assignments combine kinematic probabilities (Bensby+2003 method) with chemical tagging (alpha-element and iron-peak abundance patterns vs. reference samples). Origin inferences are interpretive, not definitive. Two stars (Pal14 IDs 7, 17) are classified as typical disk stars with no exotic origin."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://skyserver.sdss3.org/public/en/tools/chart/navi.aspx",
+      "local_path": "",
+      "description": "SDSS SkyServer Navigate tool, cited as the image source used by Ziegerer et al. (2015) to re-measure proper motions for the Pal14 HVS candidates.",
+      "source_refs": [
+        {
+          "path": "literature/1905.07879/arxiv_source/hvs_jkas_accepted.tex",
+          "start_line": 291,
+          "end_line": 292,
+          "context": "motions for the 14 HVS candidates that Pal14 reported, using images from SDSS\\footnote{\\url{http://skyserver.sdss3.org/public/en/tools/chart/navi.aspx}},"
+        }
+      ],
+      "evidence": "Introduction text describing Ziegerer+2015's proper motion re-measurement methodology, with this URL as a footnote for the SDSS imaging source.",
+      "comments": "This resource was used by Ziegerer et al. (2015), not directly by the present paper. The URL appears as a LaTeX footnote."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "http://archive.stsci.edu/cgi-bin/dss_plate_finder",
+      "local_path": "",
+      "description": "Digitized Sky Survey (DSS) plate finder, cited as an image source used by Ziegerer et al. (2015) for proper motion measurements.",
+      "source_refs": [
+        {
+          "path": "literature/1905.07879/arxiv_source/hvs_jkas_accepted.tex",
+          "start_line": 293,
+          "end_line": 293,
+          "context": "Digitized Sky Survey\\footnote{\\url{http://archive.stsci.edu/cgi-bin/dss_plate_finder}} (DSS),"
+        }
+      ],
+      "evidence": "Introduction text footnote for DSS as one of three imaging sources used by Ziegerer+2015.",
+      "comments": "This resource was used by Ziegerer et al. (2015), not directly by the present paper."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "http://www.ukidss.org/",
+      "local_path": "",
+      "description": "UKIRT Infrared Deep Sky Survey (UKIDSS) website, cited as an image source used by Ziegerer et al. (2015) for proper motion measurements.",
+      "source_refs": [
+        {
+          "path": "literature/1905.07879/arxiv_source/hvs_jkas_accepted.tex",
+          "start_line": 294,
+          "end_line": 294,
+          "context": "and UKIDSS\\footnote{\\url{http://www.ukidss.org/}} \\citep{lawrence2007}."
+        }
+      ],
+      "evidence": "Introduction text footnote for UKIDSS as one of three imaging sources used by Ziegerer+2015.",
+      "comments": "This resource was used by Ziegerer et al. (2015), not directly by the present paper. The accompanying citation is to Lawrence et al. (2007)."
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission website. The paper uses Gaia Data Release 2 proper motions as the primary astrometric data source for kinematic analysis of the six program stars.",
+      "source_refs": [
+        {
+          "path": "literature/1905.07879/arxiv_source/hvs_jkas_accepted.tex",
+          "start_line": 1121,
+          "end_line": 1122,
+          "context": "Gaia}\\footnote{\\url{https://www.cosmos.esa.int/gaia}}, processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC)"
+        }
+      ],
+      "evidence": "Acknowledgements section footnote. The main body of the paper (Sections 1, 4, 5) explicitly uses Gaia DR2 proper motions (Gaia Collaboration et al. 2018) for all kinematic calculations.",
+      "comments": "Gaia DR2 is the primary data source underpinning the paper's kinematic conclusions (Tables 4 and 5). The URL appears as an acknowledgement footnote."
+    }
+  ]
+}

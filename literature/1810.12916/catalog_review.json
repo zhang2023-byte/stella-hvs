@@ -1,0 +1,489 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1810.12916",
+    "title": "CPD-64 2731: a massive spun-up and rejuvenated high-velocity runaway star",
+    "month": "2018-10",
+    "source_note_json": "",
+    "links": {
+      "abs": "https://arxiv.org/abs/1810.12916",
+      "pdf": "https://arxiv.org/pdf/1810.12916"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1810.12916",
+    "audit_path": "literature/1810.12916/audit.json",
+    "source_dir": "literature/1810.12916/arxiv_source",
+    "tex_root": "literature/1810.12916/arxiv_source/CPD.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T00:02:00",
+    "reviewer": "agent",
+    "summary": "Paper presents a detailed study of the high-velocity (~160 km/s) runaway O star CPD-64 2731, discovered as a massive spun-up and rejuvenated binary product. The paper includes 5 internal tables: (1) Table 1 (tab:det) lists basic observational properties (spectral type O5.5 Vn((f)), coordinates, multi-band photometry from 2MASS, APASS, and AllWISE); (2) Table 2 (tab:cno) compares CNO abundances in CPD-64 2731 with cosmic abundance standard and Brott et al. (2011) initial abundances; (3) Table 3 (tab:par) presents derived stellar parameters (L, R, M, v∞, Ṁ, Teff, log g, vsin i, radial velocity, element abundances, E(B-V)) for three distance estimates (6.3, 7.5, 11 kpc); (4) Table 4 (tab:pro) gives astrometric and kinematic data including peculiar velocity components and total space velocity, height from Galactic plane, and kinematic age (~6 Myr) for three distances; (5) Table 5 (tab:bro) compares CPD-64 2731 parameters with five evolutionary models from Brott et al. (2011) supporting the binary interaction scenario. Seven external resources are identified: SIMBAD, WEBDA, Gaia DR2, 2MASS, APASS, AllWISE, and VizieR/CDS. No machine-readable data files are included in the arXiv source; all data are presented as LaTeX tables only. The paper focuses on a single object (CPD-64 2731) and does not present a large survey catalog."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-det",
+      "kind": "latex_table",
+      "asset_type": "reference_table",
+      "role_in_paper": "Lists the basic observational properties of CPD-64 2731 including spectral type, coordinates, and multi-band photometry from 2MASS, APASS, and AllWISE surveys.",
+      "source_refs": [
+        {
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 159,
+          "end_line": 184,
+          "caption": "Details of CPD-64 2731. The spectral type, SpT, is based on our spectroscopic observations and spectral analysis. The coordinates and the JHKs photometry are from the 2MASS All-Sky Catalog of Point Sources (Cutri et al. 2003), the BV photometry is from the AAVSO Photometric All-Sky Survey (Henden et al. 2016), and the [3.4] and [4.6] magnitudes are from the AllWISE Data Release (Cutri et al. 2014).",
+          "label": "tab:det"
+        }
+      ],
+      "columns": [
+        {
+          "name": "SpT",
+          "meaning": "Spectral type classification based on spectroscopic observations and spectral analysis",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "alpha (J2000)",
+          "meaning": "Right Ascension of CPD-64 2731 (J2000 epoch)",
+          "unit_text": "h m s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "delta (J2000)",
+          "meaning": "Declination of CPD-64 2731 (J2000 epoch)",
+          "unit_text": "deg arcmin arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l",
+          "meaning": "Galactic longitude of CPD-64 2731",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b",
+          "meaning": "Galactic latitude of CPD-64 2731",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "B (mag)",
+          "meaning": "B-band magnitude from AAVSO Photometric All-Sky Survey (APASS)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V (mag)",
+          "meaning": "V-band magnitude from AAVSO Photometric All-Sky Survey (APASS)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J (mag)",
+          "meaning": "J-band magnitude from 2MASS All-Sky Catalog of Point Sources",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "H (mag)",
+          "meaning": "H-band magnitude from 2MASS All-Sky Catalog of Point Sources",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ks (mag)",
+          "meaning": "Ks-band magnitude from 2MASS All-Sky Catalog of Point Sources",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[3.4] (mag)",
+          "meaning": "WISE 3.4 micron band magnitude from AllWISE Data Release",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[4.6] (mag)",
+          "meaning": "WISE 4.6 micron band magnitude from AllWISE Data Release",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Details of CPD-64 2731. The spectral type, SpT, is based on our spectroscopic observations and spectral analysis. The coordinates and the JHKs photometry are from the 2MASS All-Sky Catalog of Point Sources (Cutri et al. 2003), the BV photometry is from the AAVSO Photometric All-Sky Survey (Henden et al. 2016), and the [3.4] and [4.6] magnitudes are from the AllWISE Data Release (Cutri et al. 2014).",
+      "comments": "Single-row table presenting the basic properties of CPD-64 2731. Spectral type is O5.5 Vn((f)), indicating a fast-rotating main-sequence O star with weak N III emission. Photometry from three surveys: 2MASS (JHKs), APASS (BV), and AllWISE ([3.4], [4.6])."
+    },
+    {
+      "id": "table-tab-cno",
+      "kind": "latex_table",
+      "asset_type": "intermediate_results",
+      "role_in_paper": "Compares the carbon, nitrogen, and oxygen abundances (by number) derived for CPD-64 2731 with the cosmic abundance standard (CAS) in the solar neighbourhood and the initial abundances adopted in the Brott et al. (2011) evolutionary models.",
+      "source_refs": [
+        {
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 286,
+          "end_line": 299,
+          "caption": "Comparison of the CNO abundances (by number) in CPD-64 2731 with the cosmic abundance standard (CAS; Nieva & Przybilla 2012) in the solar neighbourhood and initial abundances adopted in the evolutionary models by Brott et al. (2011).",
+          "label": "tab:cno"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Element",
+          "meaning": "Chemical element (Carbon, Nitrogen, Oxygen)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "CPD-64 2731 log(X/H)+12",
+          "meaning": "Logarithmic abundance by number (log(X/H)+12) for CPD-64 2731 derived from CMFGEN spectral modeling",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "CAS log(X/H)+12",
+          "meaning": "Cosmic abundance standard (CAS) value from Nieva & Przybilla (2012) for the solar neighbourhood",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Brott et al. log(X/H)+12",
+          "meaning": "Initial abundances adopted in the Brott et al. (2011) evolutionary models for Galactic O stars",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "In Table 2, we compare the CNO abundances (by number) of CPD-64 2731 with the cosmic abundance standard (CAS) in the solar neighbourhood (Nieva & Przybilla 2012) and the initial CNO abundances adopted in the evolutionary models of Galactic O stars by Brott et al. (2011). One can see that the nitrogen abundance in CPD-64 2731 is enhanced by a factor of 6-8.",
+      "comments": "Three elements compared: C, N, O. Key result: nitrogen enhanced by factor 6-8 relative to CAS (log(N/H)+12 = 8.54 vs 7.79) and Brott et al. initial value (7.64), supporting binary mass transfer or merger scenario. Carbon and oxygen are modestly depleted relative to CAS."
+    },
+    {
+      "id": "table-tab-par",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Primary results table presenting stellar parameters of CPD-64 2731 derived from CMFGEN atmospheric modeling for three adopted distances (6.3, 7.5, and 11 kpc), including luminosity, radius, mass, wind parameters, effective temperature, surface gravity, projected rotational velocity, radial velocity, and chemical abundances.",
+      "source_refs": [
+        {
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 328,
+          "end_line": 355,
+          "caption": "Stellar parameters of CPD-64 2731 for three distances (see text for details).",
+          "label": "tab:par"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Stellar parameter name (distance, luminosity, radius, mass, terminal wind velocity, mass-loss rate, effective temperature, surface gravity, velocity law exponent, clumping factor, projected rotational velocity, heliocentric radial velocity, mass fractions of H, He, C, N, O, and colour excess)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d=6.3 kpc",
+          "meaning": "Derived value assuming a distance of 6.3 kpc (from MV-spectral type calibration)",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d=7.5 kpc",
+          "meaning": "Derived value assuming a distance of 7.5 kpc (from Gaia DR2 Bayesian distance by Bailer-Jones et al. 2018)",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d=11 kpc",
+          "meaning": "Derived value assuming a distance of 11 kpc (from direct Gaia DR2 parallax inversion)",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "To determine the luminosity, we recomputed the fluxes for three values of d=6.3, 7.5 and 11 kpc. The resulting fluxes were corrected for the interstellar extinction, and then compared to the model spectra convolved with the transmission curves of the standard B and V filters. The obtained luminosity and other stellar parameters derived for three above values of d are listed in Table 3.",
+      "comments": "Adopted distance d=7.5 kpc. Key results: log(L/Lsun)=5.54-5.93, R=10-18 Rsun, M=23-78 Msun, Teff=40.0 kK, log g=3.8, vsin i=290 km/s (extremely high for O5.5), heliocentric radial velocity=-175.7 km/s, E(B-V)=0.56 mag. The 7.5 kpc distance gives M=38 Msun, which is most consistent with theoretical expectations for an unevolved O5.5 star."
+    },
+    {
+      "id": "table-tab-pro",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Presents astrometric and kinematic data for CPD-64 2731 computed using Gaia DR2 proper motions and SALT radial velocity. Includes peculiar velocity components (vl, vb, vr), transverse velocity (vtr), total space velocity (v*), height above the Galactic plane (z), and kinematic age (tkin) for three distance estimates.",
+      "source_refs": [
+        {
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 428,
+          "end_line": 441,
+          "caption": "Astrometric and kinematic data on CPD-64 2731 (see text for details).",
+          "label": "tab:pro"
+        }
+      ],
+      "columns": [
+        {
+          "name": "d (kpc)",
+          "meaning": "Adopted distance to CPD-64 2731",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vl (km/s)",
+          "meaning": "Peculiar velocity component along Galactic longitude",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vb (km/s)",
+          "meaning": "Peculiar velocity component along Galactic latitude",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vr (km/s)",
+          "meaning": "Peculiar radial velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "vtr (km/s)",
+          "meaning": "Peculiar transverse velocity, vtr=(vl^2+vb^2)^(1/2)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v* (km/s)",
+          "meaning": "Total space velocity relative to the local standard of rest",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "z (pc)",
+          "meaning": "Separation of CPD-64 2731 from the Galactic plane, z=d sin b",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "tkin (Myr)",
+          "meaning": "Kinematic age of CPD-64 2731, tkin=z/vb, assuming the star was born near the Galactic plane",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The Gaia DR2 provides high-precise proper motion measurements for CPD-64 2731: mu_alpha cos delta=-6.69+/-0.03 mas/yr and mu_delta=-4.83+/-0.04 mas/yr. Using these data and vr,hel from Table 3, we calculated the peculiar transverse velocity... For this, we adopted the solar Galactocentric distance of R0=8.0 kpc and the circular Galactic rotation velocity of Theta0=240 km/s (Reid et al. 2009), and the solar peculiar motion of (U,V,W)=(11.1,12.2,7.3) km/s (Schonrich et al. 2010).",
+      "comments": "At adopted distance d=7.5 kpc: total space velocity v*=162.5 km/s, confirming CPD-64 2731 as a high-velocity runaway star. Kinematic age tkin=5.7 Myr at 7.5 kpc, which is about twice the single-star evolutionary age (<3 Myr), supporting the rejuvenated binary product scenario. z=490 pc at 7.5 kpc, much larger than scale height of OB stars (~50-100 pc)."
+    },
+    {
+      "id": "table-tab-bro",
+      "kind": "latex_table",
+      "asset_type": "intermediate_results",
+      "role_in_paper": "Compares the observed parameters of CPD-64 2731 with five evolutionary models from Brott et al. (2011) for 40 and 50 Msun stars with different initial rotational velocities, supporting the argument that CPD-64 2731 is a spun-up and rejuvenated binary product.",
+      "source_refs": [
+        {
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 526,
+          "end_line": 554,
+          "caption": "Comparison of CPD-64 2731 with model stars from Brott et al. (2011).",
+          "label": "tab:bro"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Stellar parameter (initial mass, initial rotational velocity, age, current mass, effective temperature, luminosity, radius, surface gravity, surface rotational velocity, He/C/N/O mass fractions)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "CPD-64 2731",
+          "meaning": "Observed/derived values for CPD-64 2731",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Model 1",
+          "meaning": "Brott et al. model: Minit=40 Msun, vinit=0 km/s, age=2.1 Myr (non-rotating reference model)",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Model 2",
+          "meaning": "Brott et al. model: Minit=40 Msun, vinit=317 km/s, age=2.15 Myr",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Model 3",
+          "meaning": "Brott et al. model: Minit=40 Msun, vinit=367 km/s, age=2.8 Myr (N abundance matches CPD-64 2731)",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Model 4",
+          "meaning": "Brott et al. model: Minit=40 Msun, vinit=464 km/s, age=4.0 Myr (N too high, C/O too depleted)",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Model 5",
+          "meaning": "Brott et al. model: Minit=50 Msun, vinit=364 km/s, age=2.4 Myr (N abundance matches CPD-64 2731)",
+          "unit_text": "",
+          "source_of_definition": "column header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "In Table 5, we compile the main parameters of CPD-64 2731 and the corresponding parameters of several 40 and 50 Msun model stars from Brott et al. (2011) for the times when their effective temperatures decrease to 40 kK. One can see that... if CPD-64 2731 underwent effectively single-star evolution then its age should be <3 Myr, i.e. a factor of two younger than the kinematic age (see Table 4). This implies that CPD-64 2731 could be a rejuvenated and spun-up product of binary mass transfer or the result of a binary merger, i.e., a massive blue straggler.",
+      "comments": "Five models compared. Models 3 (40 Msun, vinit=367 km/s) and 5 (50 Msun, vinit=364 km/s) provide the best match for N abundance. Key result: single-star evolutionary age <3 Myr vs kinematic age ~6 Myr, age discrepancy factor of ~2. The models with vinit~400 km/s reproduce the enhanced N abundance seen in CPD-64 2731."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://simbad.harvard.edu/simbad/",
+      "local_path": "",
+      "description": "SIMBAD astronomical database at CDS, Strasbourg. Used to check the classification of the nebula around CPD-64 2731 (listed as possible planetary nebula PN Ra 7).",
+      "source_refs": [
+        {
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 136,
+          "end_line": 136,
+          "context": "base^{footnote}{http://simbad.harvard.edu/simbad/} as a possible planetary nebula 'NAME PN Ra 7' (Ferrero et al. 2015)"
+        }
+      ],
+      "evidence": "The nebula around CPD-64 2731 is listed in the SIMBAD data base as a possible planetary nebula.",
+      "comments": "SIMBAD database access point. Used for cross-referencing the nebula classification."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://webda.physics.muni.cz/",
+      "local_path": "",
+      "description": "WEBDA open cluster database, operated at Masaryk University. Used to search for known young (<10 Myr) star clusters in the region of the sky where CPD-64 2731's trajectory intersects the Galactic plane.",
+      "source_refs": [
+        {
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 509,
+          "end_line": 509,
+          "context": "using the WEBDA data base^{footnote}{http://webda.physics.muni.cz/} (Mermilliod 1995), but did not find any."
+        }
+      ],
+      "evidence": "We searched for known young star clusters in the region between Galactic longitudes 310 and 313 deg using the WEBDA data base, but did not find any.",
+      "comments": "WEBDA database access point. No young star clusters found in the region, suggesting the parent cluster may be dissolved or obscured."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission. Used for Gaia DR2 proper motion measurements (mu_alpha cos delta=-6.69+/-0.03 mas/yr, mu_delta=-4.83+/-0.04 mas/yr) and parallax data (0.091+/-0.026 mas) used to derive the distance and kinematic properties of CPD-64 2731.",
+      "source_refs": [
+        {
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 854,
+          "end_line": 855,
+          "context": "Gaia (https://www.cosmos.esa.int/gaia), processed by the Gaia Data Processing and Analysis Consortium (DPAC, https://www.cosmos.esa.int/web/gaia/dpac/consortium)."
+        }
+      ],
+      "evidence": "The Gaia DR2 provides high-precise proper motion measurements for CPD-64 2731: mu_alpha cos delta=-6.69+/-0.03 mas/yr and mu_delta=-4.83+/-0.04 mas/yr. A simple inversion of the observed parallax of 0.091+/-0.026 mas places this star at a distance of d=10.95 kpc. A shorter distance of d=7.54 kpc was derived from the DR2 data by Bailer-Jones et al. (2018) by using a Bayesian prior knowledge approach.",
+      "comments": "Gaia DR2 is the primary source of proper motions and parallax used for the kinematic analysis. Also acknowledged in the paper for providing fundamental astrometric data."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://irsa.ipac.caltech.edu/Missions/2mass.html",
+      "local_path": "",
+      "description": "2MASS (Two Micron All-Sky Survey) All-Sky Catalog of Point Sources (Cutri et al. 2003). Provides J, H, and Ks-band photometry for CPD-64 2731.",
+      "source_refs": [
+        {
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 162,
+          "end_line": 162,
+          "context": "the JHKs photometry are from the 2MASS All-Sky Catalog of Point Sources (Cutri et al. 2003)"
+        }
+      ],
+      "evidence": "JHKs photometry from 2MASS: J=10.053+/-0.024, H=9.998+/-0.025, Ks=9.990+/-0.023 mag.",
+      "comments": "2MASS near-infrared photometry used in the SED analysis and reddening determination."
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://www.aavso.org/apass",
+      "local_path": "",
+      "description": "AAVSO Photometric All-Sky Survey (APASS; Henden et al. 2016). Provides B and V-band photometry for CPD-64 2731.",
+      "source_refs": [
+        {
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 162,
+          "end_line": 163,
+          "context": "the BV photometry is from the AAVSO Photometric All-Sky Survey (Henden et al. 2016)"
+        }
+      ],
+      "evidence": "BV photometry from APASS: B=10.872+/-0.020, V=10.597+/-0.015 mag.",
+      "comments": "APASS optical photometry used for SED fitting and distance estimation via MV-spectral type calibration."
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://wise2.ipac.caltech.edu/docs/release/allwise/",
+      "local_path": "",
+      "description": "AllWISE Data Release (Cutri et al. 2014). Provides [3.4] and [4.6] micron mid-infrared photometry for CPD-64 2731. The WISE survey also provided the 22 and 12 micron images used to discover the horseshoe-shaped nebula around the star.",
+      "source_refs": [
+        {
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 163,
+          "end_line": 164,
+          "context": "the [3.4] and [4.6] magnitudes are from the AllWISE Data Release (Cutri et al. 2014)"
+        }
+      ],
+      "evidence": "WISE photometry: [3.4]=9.926+/-0.024, [4.6]=9.965+/-0.022 mag. The nebula was discovered with the Wide-field Infrared Survey Explorer.",
+      "comments": "AllWISE mid-infrared photometry. The WISE survey (Wright et al. 2010) was also instrumental in discovering the associated horseshoe-shaped nebula."
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "https://cdsweb.u-strasbg.fr/",
+      "local_path": "",
+      "description": "VizieR catalogue access tool and CDS, Strasbourg. Acknowledged for providing the SIMBAD database and VizieR service. The 2MASS, APASS, and AllWISE data used in the paper are available through VizieR.",
+      "source_refs": [
+        {
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 851,
+          "end_line": 852,
+          "context": "the SIMBAD data base and the VizieR catalogue access tool, both operated at CDS, Strasbourg, France"
+        }
+      ],
+      "evidence": "This work has made use of... the SIMBAD data base and the VizieR catalogue access tool, both operated at CDS, Strasbourg, France.",
+      "comments": "CDS/VizieR acknowledged as infrastructure. The paper's photometric data sources (2MASS, APASS, AllWISE) are all available through VizieR."
+    }
+  ]
+}

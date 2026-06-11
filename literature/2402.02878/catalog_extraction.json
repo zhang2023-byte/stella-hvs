@@ -1,0 +1,231 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:38:51",
+  "paper": {
+    "arxiv_id": "2402.02878",
+    "title": "The Gaia RVS benchmark stars II. A sample of stars selected for their Gaia high radial velocity",
+    "month": "2024-02"
+  },
+  "review": {
+    "path": "literature/2402.02878/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123851",
+    "started_at": "2026-05-17T12:38:51",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2402.02878",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-solarabbo",
+      "internal_table_id": "table-tab-solarabbo",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2402.02878/arxiv_source/48191corr_rev.tex",
+        "start_line": 304,
+        "end_line": 334,
+        "caption": "Solar abundances.",
+        "label": "tab:solarabbo"
+      },
+      "source_path": "literature/2402.02878/arxiv_source/48191corr_rev.tex",
+      "excerpt_path": "literature/2402.02878/catalog_sources/table-tab-solarabbo/excerpt.tex",
+      "sha256": "77e258169de1137a60bae708c9e0aa67931b21f3206441fc2221f6231bd93443",
+      "line_count": 31,
+      "error": ""
+    },
+    {
+      "id": "table-tab-snr",
+      "internal_table_id": "table-tab-snr",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2402.02878/arxiv_source/48191corr_rev.tex",
+        "start_line": 356,
+        "end_line": 413,
+        "caption": "Signal-to-noise ratio of the spectra.",
+        "label": "tab:snr"
+      },
+      "source_path": "literature/2402.02878/arxiv_source/48191corr_rev.tex",
+      "excerpt_path": "literature/2402.02878/catalog_sources/table-tab-snr/excerpt.tex",
+      "sha256": "9de145b1afcfc91a5c3394401e951b2eca1a24977d9629570c2a92667e85b37f",
+      "line_count": 58,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-solarabbo",
+      "internal_table_id": "table-tab-solarabbo",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2402.02878/catalog_tables/table-tab-solarabbo.ecsv",
+      "caption": "Solar abundances.",
+      "label": "tab:solarabbo",
+      "row_count": 21,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Element",
+          "A(X)",
+          "Reference"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Element",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "A(X)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Reference",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp16vpjzp9/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2402.02878/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp16vpjzp9/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2402.02878/catalog_sources/table-tab-solarabbo/wrapped.tex",
+            "html": "literature/2402.02878/catalog_sources/table-tab-solarabbo/latexml.html",
+            "stdout": "literature/2402.02878/catalog_sources/table-tab-solarabbo/latexml.stdout.txt",
+            "stderr": "literature/2402.02878/catalog_sources/table-tab-solarabbo/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "77e258169de1137a60bae708c9e0aa67931b21f3206441fc2221f6231bd93443"
+    },
+    {
+      "id": "table-tab-snr",
+      "internal_table_id": "table-tab-snr",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2402.02878/catalog_tables/table-tab-snr.ecsv",
+      "caption": "Signal-to-noise ratio of the spectra.",
+      "label": "tab:snr",
+      "row_count": 49,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppzzul538/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2402.02878/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppzzul538/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2402.02878/catalog_sources/table-tab-snr/wrapped.tex",
+            "html": "literature/2402.02878/catalog_sources/table-tab-snr/latexml.html",
+            "stdout": "literature/2402.02878/catalog_sources/table-tab-snr/latexml.stdout.txt",
+            "stderr": "literature/2402.02878/catalog_sources/table-tab-snr/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9de145b1afcfc91a5c3394401e951b2eca1a24977d9629570c2a92667e85b37f"
+    }
+  ]
+}

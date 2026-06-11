@@ -1,0 +1,546 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:08",
+  "paper": {
+    "arxiv_id": "2509.22605",
+    "title": "High Proper Motion Discoveries from the UKIRT Hemisphere Survey",
+    "month": "2025-09"
+  },
+  "review": {
+    "path": "literature/2509.22605/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124008",
+    "started_at": "2026-05-17T12:40:08",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2509.22605",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-props",
+      "internal_table_id": "table-tab-props",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2509.22605/arxiv_source/main.tex",
+        "start_line": 183,
+        "end_line": 265,
+        "caption": "UHS High Proper Motion Discovery Properties",
+        "label": "tab:props"
+      },
+      "source_path": "literature/2509.22605/arxiv_source/main.tex",
+      "excerpt_path": "literature/2509.22605/catalog_sources/table-tab-props/excerpt.tex",
+      "sha256": "21a96302b9636f481b9c47ff0a424886c2134969265cfd5716f7e9c377cbf110",
+      "line_count": 83,
+      "error": ""
+    },
+    {
+      "id": "table-tab-sds",
+      "internal_table_id": "table-tab-sds",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2509.22605/arxiv_source/main.tex",
+        "start_line": 308,
+        "end_line": 327,
+        "caption": "Median Gaia Absolute Magnitudes of M-type Subdwarfs",
+        "label": "tab:sds"
+      },
+      "source_path": "literature/2509.22605/arxiv_source/main.tex",
+      "excerpt_path": "literature/2509.22605/catalog_sources/table-tab-sds/excerpt.tex",
+      "sha256": "4fec41d68422edbf10e7412a680bf08bea212e2090eeed0fd7fe9c4bc4a8b18a",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-g_spt",
+      "internal_table_id": "table-tab-g_spt",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2509.22605/arxiv_source/main.tex",
+        "start_line": 329,
+        "end_line": 383,
+        "caption": "Spectral Type Estimates for Gaia Sources",
+        "label": "tab:g_spt"
+      },
+      "source_path": "literature/2509.22605/arxiv_source/main.tex",
+      "excerpt_path": "literature/2509.22605/catalog_sources/table-tab-g_spt/excerpt.tex",
+      "sha256": "931418d9599eea196c3b4ab6cdbef4ea7501e3c2b48013bfab6d151af0aa0258",
+      "line_count": 55,
+      "error": ""
+    },
+    {
+      "id": "table-tab-ng_spt",
+      "internal_table_id": "table-tab-ng_spt",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2509.22605/arxiv_source/main.tex",
+        "start_line": 413,
+        "end_line": 458,
+        "caption": "Properties of Non-Gaia Sources",
+        "label": "tab:ng_spt"
+      },
+      "source_path": "literature/2509.22605/arxiv_source/main.tex",
+      "excerpt_path": "literature/2509.22605/catalog_sources/table-tab-ng_spt/excerpt.tex",
+      "sha256": "8399b01e19d52d31d3a719db7de77706725ebb5131f24c87e8c9a4c671cc0c03",
+      "line_count": 46,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-props",
+      "internal_table_id": "table-tab-props",
+      "status": "success",
+      "ecsv_path": "literature/2509.22605/catalog_tables/table-tab-props.ecsv",
+      "caption": "UHS High Proper Motion Discovery Properties",
+      "label": "tab:props",
+      "row_count": 47,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Column Label",
+          "Description",
+          "Example",
+          "Units"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Column Label",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Description",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Example",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Units",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpo9m0j184/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.22605/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpo9m0j184/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.22605/catalog_sources/table-tab-props/wrapped.tex",
+            "html": "literature/2509.22605/catalog_sources/table-tab-props/latexml.html",
+            "stdout": "literature/2509.22605/catalog_sources/table-tab-props/latexml.stdout.txt",
+            "stderr": "literature/2509.22605/catalog_sources/table-tab-props/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "21a96302b9636f481b9c47ff0a424886c2134969265cfd5716f7e9c377cbf110"
+    },
+    {
+      "id": "table-tab-sds",
+      "internal_table_id": "table-tab-sds",
+      "status": "success",
+      "ecsv_path": "literature/2509.22605/catalog_tables/table-tab-sds.ecsv",
+      "caption": "Median Gaia Absolute Magnitudes of M-type Subdwarfs",
+      "label": "tab:sds",
+      "row_count": 10,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Spectral",
+          "M_\\rm G",
+          "M_\\rm BP",
+          "M_\\rm RP",
+          "N"
+        ],
+        [
+          "Type",
+          "(mag)",
+          "(mag)",
+          "(mag)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Spectral | Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "M_\\rm G | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "M_\\rm BP | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "M_\\rm RP | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvzuleg2l/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.22605/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvzuleg2l/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.22605/catalog_sources/table-tab-sds/wrapped.tex",
+            "html": "literature/2509.22605/catalog_sources/table-tab-sds/latexml.html",
+            "stdout": "literature/2509.22605/catalog_sources/table-tab-sds/latexml.stdout.txt",
+            "stderr": "literature/2509.22605/catalog_sources/table-tab-sds/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4fec41d68422edbf10e7412a680bf08bea212e2090eeed0fd7fe9c4bc4a8b18a"
+    },
+    {
+      "id": "table-tab-g_spt",
+      "internal_table_id": "table-tab-g_spt",
+      "status": "success",
+      "ecsv_path": "literature/2509.22605/catalog_tables/table-tab-g_spt.ecsv",
+      "caption": "Spectral Type Estimates for Gaia Sources",
+      "label": "tab:g_spt",
+      "row_count": 44,
+      "column_count": 4,
+      "environment": "deluxetable",
+      "header_rows": [
+        [
+          "UHS",
+          "Spectral",
+          "UHS",
+          "Spectral"
+        ],
+        [
+          "Name",
+          "\\colheadType\\tablenotemark*",
+          "Name",
+          "\\colheadType\\tablenotemark*"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "UHS | Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Spectral | \\colheadType\\tablenotemark*",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "UHS | Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Spectral | \\colheadType\\tablenotemark*",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\colheadType",
+        "unresolved LaTeX macro preserved: \\tablenotemark"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2r1szhyb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.22605/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2r1szhyb/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.22605/catalog_sources/table-tab-g_spt/wrapped.tex",
+            "html": "literature/2509.22605/catalog_sources/table-tab-g_spt/latexml.html",
+            "stdout": "literature/2509.22605/catalog_sources/table-tab-g_spt/latexml.stdout.txt",
+            "stderr": "literature/2509.22605/catalog_sources/table-tab-g_spt/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwns9x7cc/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwns9x7cc/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.22605/catalog_sources/table-tab-g_spt/wrapped.tex",
+            "html": "literature/2509.22605/catalog_sources/table-tab-g_spt/pandoc.html",
+            "stdout": "literature/2509.22605/catalog_sources/table-tab-g_spt/pandoc.stdout.txt",
+            "stderr": "literature/2509.22605/catalog_sources/table-tab-g_spt/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "931418d9599eea196c3b4ab6cdbef4ea7501e3c2b48013bfab6d151af0aa0258"
+    },
+    {
+      "id": "table-tab-ng_spt",
+      "internal_table_id": "table-tab-ng_spt",
+      "status": "success",
+      "ecsv_path": "literature/2509.22605/catalog_tables/table-tab-ng_spt.ecsv",
+      "caption": "Properties of Non-Gaia Sources",
+      "label": "tab:ng_spt",
+      "row_count": 35,
+      "column_count": 4,
+      "environment": "deluxetable*",
+      "header_rows": [
+        [
+          "UHS",
+          "Spectral",
+          "\\colheadd\\tablenotemarka",
+          "\\colheadV_\\rm tan\\tablenotemarka"
+        ],
+        [
+          "Name",
+          "Type",
+          "(pc)",
+          "\\colhead(km s^-1)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "UHS | Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Spectral | Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\colheadd\\tablenotemarka | (pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\colheadV_\\rm tan\\tablenotemarka | \\colhead(km s^-1)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\colhead",
+        "unresolved LaTeX macro preserved: \\colheadV",
+        "unresolved LaTeX macro preserved: \\colheadd",
+        "unresolved LaTeX macro preserved: \\rm",
+        "unresolved LaTeX macro preserved: \\tablenotemarka"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa6u2wxmo/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.22605/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa6u2wxmo/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.22605/catalog_sources/table-tab-ng_spt/wrapped.tex",
+            "html": "literature/2509.22605/catalog_sources/table-tab-ng_spt/latexml.html",
+            "stdout": "literature/2509.22605/catalog_sources/table-tab-ng_spt/latexml.stdout.txt",
+            "stderr": "literature/2509.22605/catalog_sources/table-tab-ng_spt/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8tqkrz1d/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8tqkrz1d/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.22605/catalog_sources/table-tab-ng_spt/wrapped.tex",
+            "html": "literature/2509.22605/catalog_sources/table-tab-ng_spt/pandoc.html",
+            "stdout": "literature/2509.22605/catalog_sources/table-tab-ng_spt/pandoc.stdout.txt",
+            "stderr": "literature/2509.22605/catalog_sources/table-tab-ng_spt/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "8399b01e19d52d31d3a719db7de77706725ebb5131f24c87e8c9a4c671cc0c03"
+    }
+  ]
+}

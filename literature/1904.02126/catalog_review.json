@@ -1,0 +1,227 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1904.02126",
+    "title": "On the origin of very massive stars around NGC 3603",
+    "month": "2019-04",
+    "source_note_json": "notes/2019/2019-04/2019-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1904.02126",
+      "pdf": "https://arxiv.org/pdf/1904.02126"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1904.02126",
+    "audit_path": "literature/1904.02126/audit.json",
+    "source_dir": "literature/1904.02126/arxiv_source",
+    "tex_root": "literature/1904.02126/arxiv_source/arxiv_try2.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:40:00",
+    "reviewer": "agent",
+    "summary": "本文利用Gaia DR2天体测量数据研究NGC 3603附近两颗特超巨星RFS7（~100 M☉，O2.5If*/WN6）和RFS8（~70 M☉，O3.5If*）的起源。通过高精度自行和视差数据分析，发现RFS7显示出从NGC 3603年轻星团中逃逸的特征（2D速度27.1 km/s，本动切向速度33.3 km/s，3σ高于逃逸星阈值），并探测到弓形激波结构，成为银河系中已知质量最大的逃逸星候选体。RFS8的自行与星团成员一致，本动切向速度仅10.2 km/s，低于逃逸星标准，未发现星团或弓形激波，表明其可能原位形成。论文包含2个LaTeX表格：Table 1为RFS7和RFS8的光谱型和坐标，Table 2为Gaia DR2自行、视差及导出运动量。所有数据来自Gaia DR2公开星表，无独立机器可读数据文件或CDS/VizieR归档数据产品。注：arxiv_try2.tex中\\end{document}之后的内容为A&A模板示例表格（超新星、YSO、长表等），不属于本文。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-001",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "目标星基本信息表。列出本文研究的两个特超巨星RFS7和RFS8的光谱型和J2000坐标，是全文分析的基础输入数据。坐标用于Gaia DR2交叉匹配和自行矢量计算。",
+      "source_refs": [
+        {
+          "path": "literature/1904.02126/arxiv_source/arxiv_try2.tex",
+          "start_line": 88,
+          "end_line": 108,
+          "caption": "Spectral type and positions of RFS7 and RFS8",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "恒星标识符：RFS7和RFS8来自Roman-Lopes et al. (2016)，括号内为Gaia DR2源标识号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpT",
+          "meaning": "光谱型分类：RFS7为O2.5If*/WN6（兼具Of和WN特征），RFS8为O3.5If*",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "α^1 | (°)",
+          "meaning": "赤经（J2000历元，度），Gaia DR2 2015.5历元坐标",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "δ^1 | (°)",
+          "meaning": "赤纬（J2000历元，度），Gaia DR2 2015.5历元坐标",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Spectral type and positions of RFS7 and RFS8",
+      "comments": "坐标采用2015.5历元（表注说明）。RFS7对应Gaia DR2 5337456262235600512，RFS8对应Gaia DR2 5337017247839725184。光谱型来自Roman-Lopes et al. (2016)。"
+    },
+    {
+      "id": "table-002",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "核心天体测量数据表。列出RFS7和RFS8的Gaia DR2绝对自行(μα, μδ)、视差(π)、相对NGC 3603 YC的自行(μ_relative)、银道坐标自行(μl, μb)、2D投影速度(v_2D)和本动切向速度(Pec. v_t)。该表是判断两颗星是否为逃逸星的核心定量依据，包含测量误差。",
+      "source_refs": [
+        {
+          "path": "literature/1904.02126/arxiv_source/arxiv_try2.tex",
+          "start_line": 140,
+          "end_line": 167,
+          "caption": "{\\it Gaia} DR2 proper motions, parallaxes and derived motions of RFS7 and RFS8",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "恒星标识符：RFS7和RFS8",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_α | (mas yr⁻¹)",
+          "meaning": "赤经方向绝对自行（毫角秒/年），Gaia DR2测量值，含±测量不确定度",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_δ | (mas yr⁻¹)",
+          "meaning": "赤纬方向绝对自行（毫角秒/年），Gaia DR2测量值，含±测量不确定度",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "π | (mas)",
+          "meaning": "视差（毫角秒），Gaia DR2测量值，含±测量不确定度。受Gaia DR2系统零点误差(~0.03 mas)影响，不能精确约束距离",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_relative | (mas yr⁻¹)",
+          "meaning": "相对NGC 3603 YC中心的自行大小（毫角秒/年），由绝对自行减去星团中心自行后取模得到。用于判断恒星是否在自行空间中偏离星团成员轨迹",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_l | (mas yr⁻¹)",
+          "meaning": "银经方向自行（毫角秒/年），由赤道坐标自行转换至银道坐标系",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_b | (mas yr⁻¹)",
+          "meaning": "银纬方向自行（毫角秒/年），由赤道坐标自行转换至银道坐标系",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_2D | (km s⁻¹)",
+          "meaning": "相对NGC 3603 YC的2D投影速度（km/s），由μ_relative和假设距离d=7.6 kpc导出",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Pec. v_t | (km s⁻¹)",
+          "meaning": "本动切向速度（km/s），已校正太阳运动和银河系旋转后的切向速度。逃逸星判据阈值为>28-30 km/s",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "{\\it Gaia} DR2 proper motions, parallaxes and derived motions of RFS7 and RFS8",
+      "comments": "自行采用2015.5参考架。2D速度和本动速度的误差仅包含自行误差，未包含距离误差。所有运动量假设d=7.6 kpc计算。RFS7的本动切向速度33.3±1.9 km/s，3σ高于逃逸星阈值(~28 km/s)；RFS8仅10.2±4.5 km/s，3σ低于阈值。"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/Gaia",
+      "local_path": "",
+      "description": "Gaia Data Release 2星表——本文所有自行、视差和位置数据的来源。通过Gaia archive查询获得RFS7、RFS8及NGC 3603 YC成员星的天体测量数据。",
+      "source_refs": [
+        {
+          "path": "literature/1904.02126/arxiv_source/arxiv_try2.tex",
+          "start_line": 237,
+          "end_line": 238,
+          "context": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/Gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/Gaia/dpac/consortium})."
+        }
+      ],
+      "evidence": "Acknowledgements: Gaia mission URL cited. All astrometric data (proper motions, parallaxes, positions) extracted from Gaia DR2 catalogue via Gaia archive.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "2MASS近红外JHKs测光巡天数据——用于搜索RFS8周围5角分范围内的年轻星团，探测极限约K=16.5 mag（对应A型星）。",
+      "source_refs": [
+        {
+          "path": "literature/1904.02126/arxiv_source/arxiv_try2.tex",
+          "start_line": 213,
+          "end_line": 213,
+          "context": "To investigate if there is a cluster around RFS8, we obtain Two Micron All Sky Survey (2MASS) near-infrared JHKs imaging (Cutri et al. 2003). Currently, this is the deepest photometry (allowing for extinction) available in the vicinity of RFS8."
+        }
+      ],
+      "evidence": "Section 3: 2MASS JHKs imaging used to search for a young cluster around RFS8. No cluster sequence found in color-color/color-magnitude diagrams.",
+      "comments": "2MASS数据通过文献引用（Cutri et al. 2003），论文中未给出具体数据访问URL。"
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "WISE中红外空间望远镜巡天数据（3.4/4.6/12/22 μm四个波段）——用于搜索RFS7和RFS8周围的弓形激波结构。在RFS7西北方向~1 pc处发现弓形激波，RFS8未发现。",
+      "source_refs": [
+        {
+          "path": "literature/1904.02126/arxiv_source/arxiv_try2.tex",
+          "start_line": 194,
+          "end_line": 194,
+          "context": "We searched for bow shocks using mid-infrared imaging (Cutri et al. 2012) from the WISE (Wide-field Infrared Survey Explorer) space telescope. The WISE imaging has spatial angular resolutions in the 3.4, 4.6, 12, and 22 μm bands (W1, W2, W3, W4) of 6.1'', 6.4'', 6.5'', & 12.0'' respectively."
+        }
+      ],
+      "evidence": "Section 2.3: WISE mid-infrared imaging used to search for bow shocks. Bow shock found for RFS7, not for RFS8.",
+      "comments": "WISE数据通过文献引用（Cutri et al. 2012），论文中未给出具体数据访问URL。"
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "SIMBAD和VizieR数据库（CDS斯特拉斯堡天文数据中心）——论文致谢中提及使用了这些服务进行文献和数据查询，但未产生独立的论文数据产品。",
+      "source_refs": [
+        {
+          "path": "literature/1904.02126/arxiv_source/arxiv_try2.tex",
+          "start_line": 236,
+          "end_line": 236,
+          "context": "This work has made use of SIMBAD and Vizier database, operated at CDS, Strasbourg, France. This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia}."
+        }
+      ],
+      "evidence": "Acknowledgements: paper acknowledges use of SIMBAD and VizieR databases at CDS Strasbourg.",
+      "comments": "仅作为文献/数据查询工具被致谢，无具体数据产品链接。"
+    }
+  ]
+}

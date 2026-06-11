@@ -1,0 +1,747 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2406.17776",
+    "title": "Spectroscopic and Dynamic Orbital Analyses of Metal-Poor and High Proper Motion Stars: I. HD\\,8724 and HD\\,195633",
+    "month": "2024-06",
+    "source_note_json": "notes/2024/2024-06/2024-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2406.17776",
+      "pdf": "https://arxiv.org/pdf/2406.17776"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2406.17776",
+    "audit_path": "literature/2406.17776/audit.json",
+    "source_dir": "literature/2406.17776/arxiv_source",
+    "tex_root": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:34:09",
+    "reviewer": "agent",
+    "summary": "This paper presents high-resolution spectroscopic analyses, kinematic calculations, and dynamical orbital analyses of two metal-poor high proper-motion stars (HD 8724 and HD 195633) to investigate their Galactic origins. The paper contains eight internal LaTeX tables covering observational metadata, model atmosphere parameters, literature parameter compilations, elemental abundances, abundance sensitivity tests, astrometric and spectroscopic data, Galactic space velocities and orbital parameters, and globular cluster encounter probabilities. External resources include the NIST and VALD atomic databases, the MOOG abundance analysis code, and the Baumgardt Milky Way globular cluster database."
+  },
+  "internal_tables": [
+    {
+      "id": "table-table-1",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Provides key characteristics of the ELODIE spectral observations for HD 8724 and HD 195633, including coordinates, spectral types, exposure times, signal-to-noise ratios, heliocentric radial velocities, and observation dates.",
+      "source_refs": [
+        {
+          "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+          "start_line": 78,
+          "end_line": 96,
+          "caption": "Equatorial coordinates, spectral types, and {\\sc ELODIE} spectral data were provided for HD\\,8724 and HD\\,195633, respectively. The corrected {\\sc ELODIE} spectra accounted for the reported heliocentric radial velocities, which were cross-checked by the Solar spectrum.",
+          "label": "table:1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Identifier of the observed star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\alpha | (hh:mm:ss)",
+          "meaning": "Right Ascension in sexagesimal format (J2000)",
+          "unit_text": "hh:mm:ss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\delta | (dd:mm:ss)",
+          "meaning": "Declination in sexagesimal format (J2000)",
+          "unit_text": "dd:mm:ss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral Type",
+          "meaning": "Spectral classification of the star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Exposure | (sec)",
+          "meaning": "Total exposure time of the ELODIE spectrum",
+          "unit_text": "sec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S/N^*",
+          "meaning": "Signal-to-noise ratio of the spectrum at approximately 5500 Angstroms",
+          "unit_text": "",
+          "source_of_definition": "table header and table note",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_\\rm Rad | (km s^\\rm -1)",
+          "meaning": "Heliocentric radial velocity derived from the ELODIE spectrum",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "MJD | (2400000+)",
+          "meaning": "Modified Julian Date of the observation",
+          "unit_text": "2400000+",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Equatorial coordinates, spectral types, and {\\sc ELODIE} spectral data were provided for HD\\,8724 and HD\\,195633, respectively.",
+      "comments": ""
+    },
+    {
+      "id": "table-modelparametreler",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Lists the model atmosphere parameters (effective temperature, surface gravity, metallicity, and microturbulence) calculated in this study for HD 8724, HD 195633, and the Sun.",
+      "source_refs": [
+        {
+          "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+          "start_line": 120,
+          "end_line": 135,
+          "caption": "Model atmosphere parameters calculated for HD\\,8724, HD\\,195633, and the Sun.",
+          "label": "modelparametreler"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Name of the star (HD 8724, HD 195633, or Sun)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_\\rm eff | (K)",
+          "meaning": "Effective temperature",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\log g | (cgs)",
+          "meaning": "Surface gravity in logarithmic cgs units",
+          "unit_text": "cgs",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H] | (dex)",
+          "meaning": "Iron abundance relative to the Sun in logarithmic dex units",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\xi | (km s^\\rm -1)",
+          "meaning": "Microturbulent velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Model atmosphere parameters calculated for HD\\,8724, HD\\,195633, and the Sun.",
+      "comments": ""
+    },
+    {
+      "id": "table-table-lit",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Compiles literature determinations of model atmosphere parameters for HD 8724 and HD 195633 from the 2020 version of the PASTEL catalog, alongside the afresh determinations from this study.",
+      "source_refs": [
+        {
+          "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+          "start_line": 146,
+          "end_line": 181,
+          "caption": "The model atmosphere parameters for HD\\,8724 and HD\\,195633 were compiled from the 2020 version of the PASTEL catalog \\citep{soubiran2016}. The results of the afresh determination of the model parameters in this study are also included.",
+          "label": "table:lit"
+        }
+      ],
+      "columns": [
+        {
+          "name": "HD 8724",
+          "meaning": "Parameter values and references for HD 8724 from the literature",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "HD 195633",
+          "meaning": "Parameter values and references for HD 195633 from the literature",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_003",
+          "meaning": "Literature reference code for HD 8724",
+          "unit_text": "",
+          "source_of_definition": "table structure",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_004",
+          "meaning": "Literature reference code for HD 195633",
+          "unit_text": "",
+          "source_of_definition": "table structure",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_005",
+          "meaning": "Additional literature parameter for HD 8724",
+          "unit_text": "",
+          "source_of_definition": "table structure",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_006",
+          "meaning": "Additional literature parameter for HD 195633",
+          "unit_text": "",
+          "source_of_definition": "table structure",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_007",
+          "meaning": "Reference or supplementary value for HD 8724",
+          "unit_text": "",
+          "source_of_definition": "table structure",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_008",
+          "meaning": "Reference or supplementary value for HD 195633",
+          "unit_text": "",
+          "source_of_definition": "table structure",
+          "confidence": 0.5
+        }
+      ],
+      "evidence": "The model atmosphere parameters for HD\\,8724 and HD\\,195633 were compiled from the 2020 version of the PASTEL catalog \\citep{soubiran2016}. The results of the afresh determination of the model parameters in this study are also included.",
+      "comments": "Columns are grouped by star; the exact column semantics are not fully clear from the header alone because the table uses a multi-column layout with interleaved parameter types and reference columns."
+    },
+    {
+      "id": "table-table-abund",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Presents the element abundances [X/Fe] calculated for HD 8724 and HD 195633, together with solar abundances from this study and from Asplund et al. (2009). Abundances in bold were calculated via spectrum synthesis.",
+      "source_refs": [
+        {
+          "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+          "start_line": 184,
+          "end_line": 228,
+          "caption": "The element abundances [$X$/Fe] calculated for stars HD\\,8724 and HD\\,195633 are shown. Simultaneously, the Solar abundances obtained in this study (TS) and those reported by \\citet{asplund2009}[ASP] are provided. Abundances in bold are those calculated via spectrum synthesis method.",
+          "label": "table:abund"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\cline2-4 \\cline5-8 \\cline9-13 Species | \\cline2-4 \\cline5-8 \\cline9-13",
+          "meaning": "Chemical species (element and ionization state)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "HD 8724 | [X/Fe]^\\rm \\ast | (dex)",
+          "meaning": "Abundance ratio [X/Fe] for HD 8724 from this study",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "HD 195633 | \\sigma_\\rm abs",
+          "meaning": "Absolute uncertainty in the abundance for HD 8724",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "Sun | n",
+          "meaning": "Number of lines used for the abundance determination for HD 8724",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "[X/Fe]^\\rm \\dag | (dex)",
+          "meaning": "Abundance ratio [X/Fe] for HD 8724 from Mishenina & Kovtyukh (2001)",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "[X/Fe]^\\rm \\ast \\sigma_\\rm abs | (dex)",
+          "meaning": "Abundance ratio [X/Fe] for HD 195633 from this study",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "n",
+          "meaning": "Number of lines used for the abundance determination for HD 195633",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "[X/Fe]^\\rm \\dag",
+          "meaning": "Abundance ratio [X/Fe] for HD 195633 from literature (Zhang & Zhao 2006 where applicable)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "[X/Fe]^\\rm \\ddag | (dex)",
+          "meaning": "Solar abundance ratio [X/Fe] from this study (TS)",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "\\log\\epsilon_\\rm \\odot(X_\\rm TS) | (dex)",
+          "meaning": "Solar logarithmic abundance of element X from this study",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "n | (dex)",
+          "meaning": "Number of lines used for the solar abundance determination",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "\\log\\epsilon_\\rm \\odot(X_\\rm ASP)",
+          "meaning": "Solar logarithmic abundance of element X from Asplund et al. (2009)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "\\Delta\\log\\epsilon_\\rm \\odot(X) | (dex)",
+          "meaning": "Difference between solar abundances from this study and Asplund et al. (2009)",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "(dex)",
+          "meaning": "Additional dex unit placeholder for the last column",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        }
+      ],
+      "evidence": "The element abundances [$X$/Fe] calculated for stars HD\\,8724 and HD\\,195633 are shown. Simultaneously, the Solar abundances obtained in this study (TS) and those reported by \\citet{asplund2009}[ASP] are provided. Abundances in bold are those calculated via spectrum synthesis method.",
+      "comments": "The header parsing is complicated by multi-column clines and grouped columns. Some column name mappings are approximate."
+    },
+    {
+      "id": "table-table-abund_err",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Reports the sensitivity of derived abundances to uncertainties in the model atmosphere parameters (effective temperature, surface gravity, and microturbulence) for HD 8724 and HD 195633.",
+      "source_refs": [
+        {
+          "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+          "start_line": 239,
+          "end_line": 277,
+          "caption": "Sensitivity of the derived abundances to the uncertainties of $\\Delta T_{\\rm eff} = +$115 K, $\\Delta \\log g = +$0.32 cgs, and $\\Delta \\xi = \\pm$0.5 km s$^{\\rm -1}$ in the model atmosphere parameters of HD\\,8724 for $T_{\\rm eff} =$ 4700 K, $\\log g$ = 1.65 cgs, and $\\xi$ = 1.58 km s$^{\\rm -1}$. The derived uncertainties of $\\Delta T_{\\rm eff} = +$205 K, $\\Delta \\log g = +$0.35 cgs, and $\\Delta \\xi = \\pm$0.5 km s$^{\\rm -1}$ in the model parameters of HD\\,195633 for $T_{\\rm eff} =$ 6100 K, $\\log g$ = 3.95 cgs, and $\\xi$ = 1.26 km s$^{\\rm -1}$ were also reported. The uncertainties in bold are those calculated via spectrum synthesis method.",
+          "label": "table:abund_err"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\cline2-9 Species | \\cline2-9",
+          "meaning": "Chemical species (element and ionization state)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\Delta \\log \\epsilon (HD 8724) | \\Delta T_\\rm eff | (+115 K)",
+          "meaning": "Change in abundance for HD 8724 due to a +115 K change in effective temperature",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "\\Delta \\log \\epsilon (HD 195633) | \\Delta \\log g | (+0.32 cgs)",
+          "meaning": "Change in abundance for HD 8724 due to a +0.32 cgs change in surface gravity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "\\Delta \\xi | (+0.50 km s^\\rm -1)",
+          "meaning": "Change in abundance for HD 8724 due to a +0.50 km/s change in microturbulence",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "\\Delta \\xi | (-0.50 km s^\\rm -1)",
+          "meaning": "Change in abundance for HD 8724 due to a -0.50 km/s change in microturbulence",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "\\Delta T_\\rm eff | (+205 K)",
+          "meaning": "Change in abundance for HD 195633 due to a +205 K change in effective temperature",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "\\Delta \\log g | (+0.35 cgs)",
+          "meaning": "Change in abundance for HD 195633 due to a +0.35 cgs change in surface gravity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "\\Delta \\xi | (+0.50 km s^\\rm -1)",
+          "meaning": "Change in abundance for HD 195633 due to a +0.50 km/s change in microturbulence",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "\\Delta \\xi | (-0.50 km s^\\rm -1)",
+          "meaning": "Change in abundance for HD 195633 due to a -0.50 km/s change in microturbulence",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        }
+      ],
+      "evidence": "Sensitivity of the derived abundances to the uncertainties of model atmosphere parameters.",
+      "comments": "Column headers encode both the star and the parameter perturbation; the parsing is approximate."
+    },
+    {
+      "id": "table-table-6",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Lists the equatorial coordinates, proper-motion components, trigonometric parallaxes, distances, and radial velocities for HD 8724 and HD 195633, taken from the Gaia DR3 catalogue.",
+      "source_refs": [
+        {
+          "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+          "start_line": 328,
+          "end_line": 343,
+          "caption": "Equatorial coordinates, proper-motion components, trigonometric parallaxes, distances, and radial velocities for two metal-poor stars with HPM. The astrometric and spectroscopic data were taken from \\cite{gaiadr32023} catalogue.",
+          "label": "table:6"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Identifier of the star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\alpha | (hh:mm:ss)",
+          "meaning": "Right Ascension in sexagesimal format (J2000)",
+          "unit_text": "hh:mm:ss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\delta | (dd:mm:ss)",
+          "meaning": "Declination in sexagesimal format (J2000)",
+          "unit_text": "dd:mm:ss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\rm \\alpha \\cos\\delta | (mas yr^-1)",
+          "meaning": "Proper motion in right ascension including cos delta factor",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\rm \\delta | (mas yr^-1)",
+          "meaning": "Proper motion in declination",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\varpi | (mas)",
+          "meaning": "Trigonometric parallax",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d | (pc)",
+          "meaning": "Distance to the star",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_\\rm Rad | (km s^\\rm -1)",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Equatorial coordinates, proper-motion components, trigonometric parallaxes, distances, and radial velocities for two metal-poor stars with HPM.",
+      "comments": ""
+    },
+    {
+      "id": "table-table-7",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Reports the calculated Galactic space velocity components (U, V, W), total space velocity (S), and derived Galactic orbital parameters (maximum height Z_max, apocenter R_a, pericenter R_p, and eccentricity e) for HD 8724 and HD 195633.",
+      "source_refs": [
+        {
+          "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+          "start_line": 345,
+          "end_line": 360,
+          "caption": "The calculated space velocity components, total space velocities and obtained Galactic orbital parameters for HD\\,8724 and HD\\,195633.",
+          "label": "table:7"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\multirow2*Star | \\cline2-8",
+          "meaning": "Name of the star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "U_\\rm LSR | \\multicolumn4c|(km s^\\rm -1)",
+          "meaning": "Galactic space velocity component towards the Galactic center (relative to the LSR)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_\\rm LSR | (kpc)",
+          "meaning": "Galactic space velocity component in the direction of Galactic rotation (relative to the LSR)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "W_\\rm LSR",
+          "meaning": "Galactic space velocity component towards the North Galactic Pole (relative to the LSR)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S_\\rm LSR",
+          "meaning": "Total space velocity relative to the LSR",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Z_\\rm max",
+          "meaning": "Maximum distance from the Galactic plane reached by the orbit",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R_\\rm a",
+          "meaning": "Apocenter distance (farthest distance from the Galactic center)",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R_\\rm p",
+          "meaning": "Pericenter distance (closest distance to the Galactic center)",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "e",
+          "meaning": "Orbital eccentricity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The calculated space velocity components, total space velocities and obtained Galactic orbital parameters for HD\\,8724 and HD\\,195633.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-final",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Lists data for the five most likely globular clusters supporting the GC escape scenario for HD 8724 and HD 195633, including spatial and velocity encounter probabilities, metallicities, ages, and magnesium abundances.",
+      "source_refs": [
+        {
+          "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+          "start_line": 399,
+          "end_line": 430,
+          "caption": "Data for the five most likely GCs that support the GC escape scenario for HD\\,8724 and HD\\,195633.",
+          "label": "tab:final"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster",
+          "meaning": "Name of the globular cluster",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l | (^o)",
+          "meaning": "Galactic longitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b | (^o)",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P(\\rm \\theta) | (%)",
+          "meaning": "Spatial encounter probability based on position difference",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P(\\rm \\nu) | (%)",
+          "meaning": "Velocity encounter probability based on velocity difference",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P(\\rm origin | \\theta, \\nu) | (%)",
+          "meaning": "Combined probability of GC origin from spatial and velocity encounter",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H] | (dex)",
+          "meaning": "Iron abundance of the cluster",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\tau | (Gyr)",
+          "meaning": "Age of the globular cluster",
+          "unit_text": "Gyr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Mg/Fe] | (dex)",
+          "meaning": "Magnesium-to-iron abundance ratio of the cluster",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "References",
+          "meaning": "Literature references for the cluster parameters",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Data for the five most likely GCs that support the GC escape scenario for HD\\,8724 and HD\\,195633.",
+      "comments": "The table is split into two blocks (HD 8724 candidates and HD 195633 candidates) with a separator row showing the stellar parameters of each program star."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://physics.nist.gov/PhysRefData/ASD",
+      "local_path": "",
+      "description": "NIST Atomic Spectra Database, used as a source of atomic data (wavelengths, log gf, excitation energies) for line identification and equivalent width analysis.",
+      "source_refs": [
+        {
+          "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+          "start_line": 115,
+          "end_line": 115,
+          "context": "Atomic data were sourced from NIST\\footnote{NIST Atomic Spectra Database http://physics.nist.gov/PhysRefData/ASD} and VALD\\footnote{VALD Atomic Spectra Database http://vald.astro.uu.se} databases."
+        }
+      ],
+      "evidence": "Atomic data were sourced from NIST\\footnote{NIST Atomic Spectra Database http://physics.nist.gov/PhysRefData/ASD} and VALD\\footnote{VALD Atomic Spectra Database http://vald.astro.uu.se} databases.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://vald.astro.uu.se",
+      "local_path": "",
+      "description": "VALD Atomic Spectra Database, used as a source of atomic data for line identification and equivalent width analysis.",
+      "source_refs": [
+        {
+          "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+          "start_line": 115,
+          "end_line": 115,
+          "context": "Atomic data were sourced from NIST\\footnote{NIST Atomic Spectra Database http://physics.nist.gov/PhysRefData/ASD} and VALD\\footnote{VALD Atomic Spectra Database http://vald.astro.uu.se} databases."
+        }
+      ],
+      "evidence": "Atomic data were sourced from NIST\\footnote{NIST Atomic Spectra Database http://physics.nist.gov/PhysRefData/ASD} and VALD\\footnote{VALD Atomic Spectra Database http://vald.astro.uu.se} databases.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "",
+      "local_path": "",
+      "description": "MOOG stellar atmosphere line analysis code by Sneden (1973), used under LTE conditions for elemental abundance determinations.",
+      "source_refs": [
+        {
+          "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+          "start_line": 118,
+          "end_line": 118,
+          "context": "the line analysis code MOOG \\citep{sneden1973}\\footnote{Source code of the MOOG software is available at \\href{http://www.as.utexas.edu/$\\sim$ chris/moog.html}{http://www.as.utexas.edu/$\\sim$ chris/moog.html}} operating under LTE conditions was used."
+        }
+      ],
+      "evidence": "the line analysis code MOOG \\citep{sneden1973}\\footnote{Source code of the MOOG software is available at \\href{http://www.as.utexas.edu/$\\sim$ chris/moog.html}{http://www.as.utexas.edu/$\\sim$ chris/moog.html}} operating under LTE conditions was used.",
+      "comments": "The paper cites a URL with LaTeX syntax ($\\sim$) that is not a valid concrete URL; left empty per fidelity rules."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://people.smp.uq.edu.au/HolgerBaumgardt/globular/",
+      "local_path": "",
+      "description": "4th version of the Milky Way Globular Cluster Database (Baumgardt & Hilker), providing tidal radii and escape velocities used in the GC encounter probability calculations.",
+      "source_refs": [
+        {
+          "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+          "start_line": 441,
+          "end_line": 441,
+          "context": "their values are taken from 4th version of the Milky Way GC Database\\footnote{\\href{https://people.smp.uq.edu.au/HolgerBaumgardt/globular/}{https://people.smp.uq.edu.au/HolgerBaumgardt/globular/}}."
+        }
+      ],
+      "evidence": "their values are taken from 4th version of the Milky Way GC Database\\footnote{\\href{https://people.smp.uq.edu.au/HolgerBaumgardt/globular/}{https://people.smp.uq.edu.au/HolgerBaumgardt/globular/}}.",
+      "comments": ""
+    }
+  ]
+}

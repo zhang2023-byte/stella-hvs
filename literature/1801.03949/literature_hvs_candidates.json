@@ -1,0 +1,58 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:06:15",
+  "paper": {
+    "arxiv_id": "1801.03949",
+    "bibcode": "2018MNRAS.475.4043K",
+    "title": "The Need for Speed: Escape velocity and dynamical mass measurements of the Andromeda galaxy",
+    "month": "2018-01",
+    "source_note_json": "notes/2018/2018-01/2018-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1801.03949",
+      "pdf": "https://arxiv.org/pdf/1801.03949"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1801.03949",
+    "audit_path": "literature/1801.03949/audit.json",
+    "catalog_review_path": "literature/1801.03949/catalog_review.json",
+    "catalog_extraction_path": "literature/1801.03949/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1801.03949/catalog_tables/table-table-pneresult.ecsv",
+      "literature/1801.03949/catalog_tables/table-m31-central-properties.ecsv",
+      "literature/1801.03949/catalog_tables/table-bulge-disk-parameters.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:06:15",
+    "extractor": "agent",
+    "summary": "No HVS candidates found. This paper measures the escape velocity curve and dynamical mass of the Andromeda galaxy (M31) using high-velocity Planetary Nebulae (PNe) as tracers. The paper models the escape velocity of M31 with a hierarchical Bayesian approach; the 'unbound stars' mentioned are possible outliers in the M31 escape velocity model — they are PNe in M31, not Galactic hypervelocity stars. The paper does not select for or discuss hypervelocity stars, HVS candidates, or unbound stars in the Milky Way. No Galactic HVS-related claims are made anywhere in the text."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "m31-high-velocity-pne",
+      "description": "The full sample of high-velocity Planetary Nebulae (PNe) in M31 used as tracers for escape velocity modeling. The paper selects on line-of-sight velocity for M31 PNe to model the M31 escape velocity curve, not to identify Galactic HVS candidates.",
+      "decision": "excluded",
+      "reason": "No HVS candidates present. All tracers are PNe in the Andromeda galaxy (M31), not stars in the Milky Way. The paper measures the escape velocity of M31 for dynamical mass determination; it does not claim any star is a hypervelocity star or is unbound from the Milky Way. The single mention of 'possibly unbound stars' (line 207) refers to outlier PNe in the M31 escape velocity model, not to Galactic HVS. Full paper text reviewed — zero claims of Galactic HVS, hypervelocity stars, or Milky Way escape trajectories.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1801.03949/arxiv_source/paper.tex",
+          "start_line": 54,
+          "end_line": 58,
+          "context": "Here, we apply a novel approach to determine the dynamical mass of M31 using high velocity Planetary Nebulae (PNe), establishing a hierarchical Bayesian model united with a scheme to capture potential outliers and marginalize over tracers unknown distances. With this, we derive the escape velocity run of M31 as a function of galacto-centric distance, with both parametric and non-parametric approaches. We determine the escape velocity of M31 to be 470±40 km/s at a galacto-centric distance of 15 kpc, and also, derive the total potential of M31, estimating the virial mass and radius of the galaxy to be 0.8±0.1×10^12 M_sun and 240±10 kpc, respectively."
+        },
+        {
+          "kind": "text",
+          "path": "literature/1801.03949/arxiv_source/paper.tex",
+          "start_line": 207,
+          "end_line": 207,
+          "context": "Some tracers in our data could probably be outliers (possibly unbound stars) and to capture this we adopt an outlier, or background model, g, which is given by"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,367 @@
+{
+    "schema_version": "stella.article_data_assets.review.v1",
+    "paper": {
+        "arxiv_id": "2410.06255",
+        "title": "Two waves of massive stars running away from the young cluster R136",
+        "month": "2024-10",
+        "source_note_json": "notes/2024/2024-10/2024-10.json",
+        "links": {
+            "abs": "https://arxiv.org/abs/2410.06255",
+            "pdf": "https://arxiv.org/pdf/2410.06255"
+        }
+    },
+    "source": {
+        "paper_dir": "literature/2410.06255",
+        "audit_path": "literature/2410.06255/audit.json",
+        "source_dir": "literature/2410.06255/arxiv_source",
+        "tex_root": "literature/2410.06255/arxiv_source/MAIN.tex",
+        "source_available": true
+    },
+    "review": {
+        "status": "reviewed",
+        "reviewed_at": "2026-05-17T12:34:09",
+        "reviewer": "agent",
+        "summary": "Auto-filled review: 4 internal table(s), 3 external resource(s)."
+    },
+    "internal_tables": [
+        {
+            "id": "table-tab-R136params",
+            "kind": "latex_table",
+            "asset_type": "model_fit_table",
+            "role_in_paper": "\\textbf{$\\vert$ Astrometric, kinematic, and physical parameters of R136}",
+            "source_refs": [
+                {
+                    "path": "literature/2410.06255/arxiv_source/MAIN.tex",
+                    "start_line": 458,
+                    "end_line": 504,
+                    "caption": "\\textbf{$\\vert$ Astrometric, kinematic, and physical parameters of R136}.",
+                    "label": "tab:R136params"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "\\noalign Equatorial | \\noalign",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_002",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_003",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "\\textbf{$\\vert$ Astrometric, kinematic, and physical parameters of R136}.",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-luminous_stars",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "\\textbf{$\\vert$ All stars in 30 Doradus with log($L$/L$_{\\odot}$) $>$ 6",
+            "source_refs": [
+                {
+                    "path": "literature/2410.06255/arxiv_source/MAIN.tex",
+                    "start_line": 508,
+                    "end_line": 576,
+                    "caption": "\\textbf{$\\vert$ All stars in 30 Doradus with log($L$/L$_{\\odot}$) $>$ 6.0}. The uncertainty on the data is expressed as a 1$\\sigma$ confidence interval.",
+                    "label": "tab:luminous_stars"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "\\noalign Identifier | \\noalign -",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Spectral type | -",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "r_\\rmsep,proj | pc",
+                    "meaning": "Column from table header",
+                    "unit_text": "pc",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "log(L/L_\\odot) | -",
+                    "meaning": "Column from table header",
+                    "unit_text": "L/L_\\odot",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "v_\\rmR | km s^-1",
+                    "meaning": "V-band magnitude",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "log(Q_0) | s^-1",
+                    "meaning": "Column from table header",
+                    "unit_text": "Q_0",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Ref. | -",
+                    "meaning": "Bibliographic reference",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "\\textbf{$\\vert$ All stars in 30 Doradus with log($L$/L$_{\\odot}$) $>$ 6.0}. The uncertainty on the data is expressed as a 1$\\sigma$ confidence interval.",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-kinematic_runaways",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "\\textbf{$\\vert$ Runaways coming from R136 in the past 3 Myr}",
+            "source_refs": [
+                {
+                    "path": "literature/2410.06255/arxiv_source/MAIN.tex",
+                    "start_line": 748,
+                    "end_line": 787,
+                    "caption": "\\textbf{$\\vert$ Runaways coming from R136 in the past 3 Myr}. The uncertainty on the data is denoted as a 1$\\sigma$ confidence interval.",
+                    "label": "tab:kinematic_runaways"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Identifier | -",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "source_id | -",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Spectral type | -",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "v_\\rmT | km s^-1",
+                    "meaning": "V-band magnitude",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "t_\\rmkin | Myr",
+                    "meaning": "Column from table header",
+                    "unit_text": "Myr",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\phi | deg",
+                    "meaning": "Column from table header",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "log(L/L_\\odot) | -",
+                    "meaning": "Column from table header",
+                    "unit_text": "L/L_\\odot",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "M_\\rmpri | M_\\odot",
+                    "meaning": "Stellar mass",
+                    "unit_text": "Msun",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "t_\\rmevo | Myr",
+                    "meaning": "Column from table header",
+                    "unit_text": "Myr",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Ref. | -",
+                    "meaning": "Bibliographic reference",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "\\textbf{$\\vert$ Runaways coming from R136 in the past 3 Myr}. The uncertainty on the data is denoted as a 1$\\sigma$ confidence interval.",
+            "comments": ""
+        },
+        {
+            "id": "table-004",
+            "kind": "latex_table",
+            "asset_type": "data_table",
+            "role_in_paper": "Continued",
+            "source_refs": [
+                {
+                    "path": "literature/2410.06255/arxiv_source/MAIN.tex",
+                    "start_line": 791,
+                    "end_line": 830,
+                    "caption": "Continued.",
+                    "label": ""
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Identifier | -",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "source_id | -",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Spectral type | -",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "v_\\rmT | km s^-1",
+                    "meaning": "V-band magnitude",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "t_\\rmkin | Myr",
+                    "meaning": "Column from table header",
+                    "unit_text": "Myr",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\phi | deg",
+                    "meaning": "Column from table header",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "log(L/L_\\odot) | -",
+                    "meaning": "Column from table header",
+                    "unit_text": "L/L_\\odot",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "M_\\rmpri | M_\\odot",
+                    "meaning": "Stellar mass",
+                    "unit_text": "Msun",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "t_\\rmevo | Myr",
+                    "meaning": "Column from table header",
+                    "unit_text": "Myr",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Ref. | -",
+                    "meaning": "Bibliographic reference",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Continued.",
+            "comments": ""
+        }
+    ],
+    "external_resources": [
+        {
+            "id": "resource-001",
+            "kind": "external_url",
+            "url": "https://doi.org/10.5281/zenodo.10058762",
+            "local_path": "",
+            "description": "Zenodo data repository entry referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2410.06255/arxiv_source/MAIN.tex",
+                    "start_line": 374,
+                    "end_line": 374,
+                    "context": "\\subsection*{Data and Code availability}\nThe datasets generated during and/or analysed during the current study are available in the following Zenodo repository once published, \\url{https://doi.org/10.5281/zenodo.10058762}. The software and code developed in this manuscript to produce the findings in this study are available in the same repository.\n\n\\bibliography{MAIN.bib}"
+                }
+            ],
+            "evidence": "\\subsection*{Data and Code availability}\nThe datasets generated during and/or analysed during the current study are available in the following Zenodo repository once published, \\url{https://doi.org/10.5281/zenodo.10058762}. The software and code developed in this manuscript to produce the findings in this study are available in the same repository.\n\n\\bibliography{MAIN.bib}",
+            "comments": ""
+        },
+        {
+            "id": "resource-002",
+            "kind": "external_url",
+            "url": "https://www.cosmos.esa.int/gaia",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2410.06255/arxiv_source/MAIN.tex",
+                    "start_line": 384,
+                    "end_line": 384,
+                    "context": "\\label{sec:Acknowledgements}\nWe thank Frank Backs, Omar Ould-Boukattine, Jason Hessels, Dion Linssen, and Mark Snelders for their help and discussions. MS acknowledges support from NOVA. The research leading to these results has received funding from the European Research Council (ERC) under the European Union's Horizon 2020 research and innovation programme (grant agreement numbers 772225: MULTIPLES). This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC"
+                }
+            ],
+            "evidence": "\\label{sec:Acknowledgements}\nWe thank Frank Backs, Omar Ould-Boukattine, Jason Hessels, Dion Linssen, and Mark Snelders for their help and discussions. MS acknowledges support from NOVA. The research leading to these results has received funding from the European Research Council (ERC) under the European Union's Horizon 2020 research and innovation programme (grant agreement numbers 772225: MULTIPLES). This work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC",
+            "comments": ""
+        },
+        {
+            "id": "resource-003",
+            "kind": "external_url",
+            "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2410.06255/arxiv_source/MAIN.tex",
+                    "start_line": 386,
+                    "end_line": 386,
+                    "context": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement. This publication makes use of data products from the Two Micron All Sky Survey, which is a joint project of the University of Massachusetts and the Infrared Processing and Analysis Center/California Institute of Technology, funded by the National Aeronautics and Space Administration and the National Science Foundation."
+                }
+            ],
+            "evidence": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement. This publication makes use of data products from the Two Micron All Sky Survey, which is a joint project of the University of Massachusetts and the Infrared Processing and Analysis Center/California Institute of Technology, funded by the National Aeronautics and Space Administration and the National Science Foundation.",
+            "comments": ""
+        }
+    ]
+}

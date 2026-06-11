@@ -1,0 +1,67 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:17:00",
+  "paper": {
+    "arxiv_id": "1803.02859",
+    "bibcode": "",
+    "title": "A Runaway Yellow Supergiant Star in the Small Magellanic Cloud",
+    "month": "2018-03",
+    "source_note_json": "notes/2018/2018-03/2018-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1803.02859",
+      "pdf": "https://arxiv.org/pdf/1803.02859"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1803.02859",
+    "audit_path": "literature/1803.02859/audit.json",
+    "catalog_review_path": "literature/1803.02859/catalog_review.json",
+    "catalog_extraction_path": "literature/1803.02859/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1803.02859/catalog_tables/table-tab-obs.ecsv",
+      "literature/1803.02859/catalog_tables/table-tab-stds.ecsv",
+      "literature/1803.02859/catalog_tables/table-tab-allobs.ecsv",
+      "literature/1803.02859/catalog_tables/table-tab-temps.ecsv",
+      "literature/1803.02859/catalog_tables/table-tab-physprop.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:17:00",
+    "extractor": "agent",
+    "summary": "No HVS candidates found. This paper reports the discovery of a single runaway yellow supergiant (YSG), J01020100-7122208, in the Small Magellanic Cloud (SMC) with a heliocentric radial velocity of ~300 km/s. The star is bound to the SMC; its peculiar radial velocity (~140 km/s relative to the SMC) is discussed in the context of a binary supernova ejection scenario within the SMC. The paper makes no claims about hypervelocity stars, unbound Galactic trajectories, or escape from the Milky Way. The star is not even in the Milky Way — it is an extragalactic object in the SMC at ~59 kpc. Full paper text reviewed — zero mentions of hypervelocity, HVS, unbound stars, or Galactic escape velocity."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "smc-runaway-ysg",
+      "description": "Single runaway yellow supergiant (YSG) J01020100-7122208 in the Small Magellanic Cloud. Heliocentric radial velocity ~300 km/s, peculiar velocity ~140 km/s relative to SMC systemic velocity of 158 km/s. Classified G5-8 I, Teff ~4700 K, log L/Lsun ~4.2, mass ~9 Msun, age ~30 Myr. Interpreted as a binary supernova ejection within the SMC.",
+      "decision": "excluded",
+      "reason": "Not an HVS candidate. The star is located in the Small Magellanic Cloud (another galaxy, not the Milky Way) and is bound to the SMC. Its peculiar velocity of ~140 km/s relative to the SMC is far below any galactic escape velocity. The paper studies it as a runaway star within the SMC, not a hypervelocity star. Full paper text reviewed — no claims of unbound trajectories, hypervelocity status, or Galactic escape. The paper focuses on the star as the first discovered runaway YSG (anywhere) and the second evolved runaway star in another galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1803.02859/arxiv.txt",
+          "start_line": 6,
+          "end_line": 9,
+          "context": "ABSTRACT: We recently discovered a yellow supergiant (YSG) in the Small Magellanic Cloud (SMC) with a heliocentric radial velocity of ~300 km/s which is much larger than expected for a star in its location in the SMC. This is the first runaway YSG ever discovered and only the second evolved runaway star discovered in a different galaxy than the Milky Way."
+        },
+        {
+          "kind": "text",
+          "path": "literature/1803.02859/arxiv.txt",
+          "start_line": 43,
+          "end_line": 48,
+          "context": "One star, J01020100-7122208, however, has a heliocentric radial velocity of around 300 km/s, 140 km/s greater than expected... this star is the first runaway YSG discovered and the second evolved runaway star discovered in another galaxy."
+        },
+        {
+          "kind": "text",
+          "path": "literature/1803.02859/arxiv.txt",
+          "start_line": 224,
+          "end_line": 232,
+          "context": "We suspect that the YSG began in a binary system and was flung out into space when the primary star went supernova... We believe that the high peculiar velocity of this YSG points to it originating due to a supernova explosion."
+        }
+      ]
+    }
+  ]
+}

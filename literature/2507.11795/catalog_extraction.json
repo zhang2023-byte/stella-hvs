@@ -1,0 +1,907 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:58",
+  "paper": {
+    "arxiv_id": "2507.11795",
+    "title": "The origin of the most recently ejected OB runaway star from the R136 cluster",
+    "month": "2025-07"
+  },
+  "review": {
+    "path": "literature/2507.11795/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123958",
+    "started_at": "2026-05-17T12:39:58",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2507.11795",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 6,
+      "work_count": 6,
+      "table_count": 6,
+      "success_count": 6,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 6,
+      "file_success_count": 6,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-cross_sections",
+      "internal_table_id": "table-tab-cross_sections",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+        "start_line": 433,
+        "end_line": 462,
+        "caption": "The 8 initial configurations for a triple-binary encounter. The target triple has an inner separation $a_{\\rm in} = 4$\\,au, and outer separation $a_{\\rm out} = 40$\\,au. The projectile binary with $a_{\\rm p} = 6$\\,au, encounters the terget triple with a relative velocity of $v_{\\rm enc} = 7$\\,km/s. The last four columns give the interaction cross-section ($\\sigma$), the fraction of cases in which VFTS~590 is ejected ($f_{\\rm esc, VFTS590}$), with a velocity of at least $v_{\\rm ej} \\apgt 27.6$\\,km/s ($f_{\\rm run}$), and the corresponding rate that VFTS~590 and the two surviving binaries are ejected with at least $v_{\\rm ej} \\apgt 27.6$\\,km/s calculated for the core collapsed cluster R136 ($\\Gamma_{\\rm esc, VFTS590}$). The most likely scenario is G.",
+        "label": "tab:cross_sections"
+      },
+      "source_path": "literature/2507.11795/arxiv_source/Mel34.tex",
+      "excerpt_path": "literature/2507.11795/catalog_sources/table-tab-cross_sections/excerpt.tex",
+      "sha256": "a7c5b52301fb88b2150d42bf6195267cde253318a8991b83e968ce3b950ecfb1",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-tab-final_orbits",
+      "internal_table_id": "table-tab-final_orbits",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+        "start_line": 608,
+        "end_line": 627,
+        "caption": "Pre and post-encounter orbital parameters for the two binaries and the tertiary component. The first row identifies the binary components followed by the name of the third star. The subsequent column gives the initial orbital separation ($a_{\\rm init}$). The last three columns give the final semi-major axis ($a_{\\rm fin}$), eccentricity ($e_{\\rm fin}$) and the mean ejection velocity (with respect to the barycenter, $v_{\\rm run}$).",
+        "label": "tab:final_orbits"
+      },
+      "source_path": "literature/2507.11795/arxiv_source/Mel34.tex",
+      "excerpt_path": "literature/2507.11795/catalog_sources/table-tab-final_orbits/excerpt.tex",
+      "sha256": "561b11ed2331f67db859a09dd874b108da2acbcbe4fcc410fef9b3c5420c5dce",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-interaction_frequency",
+      "internal_table_id": "table-tab-interaction_frequency",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+        "start_line": 1028,
+        "end_line": 1052,
+        "caption": "Identification of the escaping star and relative outcome frequency for scenarios A till H for the encounter in which $a_{\\rm in} = 4$\\,au, $a_{\\rm out} = 40$\\,au, $a_{\\rm projectile} = 6$\\,au. For an encounter velocity of $v_{\\rm enc} = 7$\\,km/s. Scenario G in which \\tB\\, escapes as a single and (\\pA, \\pB) as well as (\\tAa, \\tAb) escape as binaries give the most probable outcome.",
+        "label": "tab:interaction_frequency"
+      },
+      "source_path": "literature/2507.11795/arxiv_source/Mel34.tex",
+      "excerpt_path": "literature/2507.11795/catalog_sources/table-tab-interaction_frequency/excerpt.tex",
+      "sha256": "972fdd6a39a1b38982e3a0d55b3c9b9826a290e04c4aad15ba8c738446aa67e5",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-tab-cross_sections_velocity_dependence",
+      "internal_table_id": "table-tab-cross_sections_velocity_dependence",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+        "start_line": 1055,
+        "end_line": 1084,
+        "caption": "Cross section for scenario G but with varying the encounter velocity. Here we adopted the binary (\\tAa,\\tAb) to have a semi-major axis of $a_{\\rm in} =4$\\,au, The initial tertiary \\tB\\, (that eventually escapes) orbits the target binary with a semimajor-axis of $a_{\\rm out} = 40$\\,au. The projectile binary (\\pA, \\pB), has a semi-major axis of 6\\,au. The first column gives the relative encounter velocity, followed by the cross section, and the fraction of systems for which VFTS~590 escapes. The following columns give the cross section for VFTS~590 and the two binaries to acquire a minimum runaway velocity of 27.6km/s, and the encounter rate associated with this cross section. The last three columns give the branching ratios of the eventual surviving binaries with \\pA\\, as primary.",
+        "label": "tab:cross_sections_velocity_dependence"
+      },
+      "source_path": "literature/2507.11795/arxiv_source/Mel34.tex",
+      "excerpt_path": "literature/2507.11795/catalog_sources/table-tab-cross_sections_velocity_dependence/excerpt.tex",
+      "sha256": "bc0ad1af951083ac98fa3ab9a2ee5e8e02ac406988722e712edebbb9b056e3bb",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-tab-cross_sections_orbital_separation",
+      "internal_table_id": "table-tab-cross_sections_orbital_separation",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+        "start_line": 1096,
+        "end_line": 1129,
+        "caption": "Branching ratios and cross-section for scenario G (\\tB\\, escapes) for the varying orbit of the tertiary star (VFTS~590) around the inner binary (\\tAa, \\tAb). The inner target binary has an adopted semi-major axis of 4\\,au, while the projectile binary has a semi-major axis of 6\\,au. The relative encounter velocity is 7\\,km/s. The first column gives the semi-major axis of the tertiary star (\\tB) around the target binary (\\tAa, \\tAb). The following column gives the cross section for this interaction to happen. The next three columns give the fraction of systems, cross-section and the rate for the escaper (VFTS~590) to acquire a runaway speed of at least 27.6\\,km/s. The last three columns give the branching ratios of the eventual surviving binaries with \\pA\\, as primary.",
+        "label": "tab:cross_sections_orbital_separation"
+      },
+      "source_path": "literature/2507.11795/arxiv_source/Mel34.tex",
+      "excerpt_path": "literature/2507.11795/catalog_sources/table-tab-cross_sections_orbital_separation/excerpt.tex",
+      "sha256": "d1d4fb3d126733849c083d30fb9dcb6291f4fa8833ea2471257fd88725a8c561",
+      "line_count": 34,
+      "error": ""
+    },
+    {
+      "id": "table-tab-cross_sections_for_1010010",
+      "internal_table_id": "table-tab-cross_sections_for_1010010",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+        "start_line": 1132,
+        "end_line": 1160,
+        "caption": "Cross sections for the 8 reduced cases for which we adopt Mel39B as a 80\\,\\MSun\\, star, and 50\\,\\MSun\\, for VFTS~590. All the other stars are 140\\,\\MSun. Calculations are performed with a semi-major axis for the inner target binary of $a = 10$\\,au and an outer orbit of $100$\\,au. For the projectile binary, we also adopt $10$\\,au. The relative encounter velocity is $v_{\\rm enc} = 7$\\,km/s. The first column identifies the scenario, explains the second column. The third and fourth columns give the total cross section for this interaction and the fraction of cases in which VFTS~590 is ejected. The last two columns give the cross-section and rate for VFTS~590 to be ejected with a velocity of at least 27.6km/s.",
+        "label": "tab:cross_sections_for_1010010"
+      },
+      "source_path": "literature/2507.11795/arxiv_source/Mel34.tex",
+      "excerpt_path": "literature/2507.11795/catalog_sources/table-tab-cross_sections_for_1010010/excerpt.tex",
+      "sha256": "ad258410df90ab2fe7add5f88d12360364dfc6db9b56936cddfbccad632a275e",
+      "line_count": 29,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-cross_sections",
+      "internal_table_id": "table-tab-cross_sections",
+      "status": "success",
+      "ecsv_path": "literature/2507.11795/catalog_tables/table-tab-cross_sections.ecsv",
+      "caption": "The 8 initial configurations for a triple-binary encounter. The target triple has an inner separation $a_{\\rm in} = 4$\\,au, and outer separation $a_{\\rm out} = 40$\\,au. The projectile binary with $a_{\\rm p} = 6$\\,au, encounters the terget triple with a relative velocity of $v_{\\rm enc} = 7$\\,km/s. The last four columns give the interaction cross-section ($\\sigma$), the fraction of cases in which VFTS~590 is ejected ($f_{\\rm esc, VFTS590}$), with a velocity of at least $v_{\\rm ej} \\apgt 27.6$\\,km/s ($f_{\\rm run}$), and the corresponding rate that VFTS~590 and the two surviving binaries are ejected with at least $v_{\\rm ej} \\apgt 27.6$\\,km/s calculated for the core collapsed cluster R136 ($\\Gamma_{\\rm esc, VFTS590}$). The most likely scenario is G.",
+      "label": "tab:cross_sections",
+      "row_count": 8,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "id",
+          "initial configuration",
+          "\\sigma",
+          "f_\\rm esc,VFTS590",
+          "f_\\rm run",
+          "\\Gamma_\\rm esc,VFTS590"
+        ],
+        [
+          "",
+          "",
+          "[ 10^6 au 2 ]",
+          "",
+          "",
+          "Myr -1"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "id",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "initial configuration",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma | [ 10^6 au 2 ]",
+          "unit_text": "[ 10^6 au 2 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "f_\\rm esc,VFTS590",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "f_\\rm run",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\Gamma_\\rm esc,VFTS590 | Myr -1",
+          "unit_text": "Myr -1",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmputfmypqj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.11795/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmputfmypqj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.11795/catalog_sources/table-tab-cross_sections/wrapped.tex",
+            "html": "literature/2507.11795/catalog_sources/table-tab-cross_sections/latexml.html",
+            "stdout": "literature/2507.11795/catalog_sources/table-tab-cross_sections/latexml.stdout.txt",
+            "stderr": "literature/2507.11795/catalog_sources/table-tab-cross_sections/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a7c5b52301fb88b2150d42bf6195267cde253318a8991b83e968ce3b950ecfb1"
+    },
+    {
+      "id": "table-tab-final_orbits",
+      "internal_table_id": "table-tab-final_orbits",
+      "status": "success",
+      "ecsv_path": "literature/2507.11795/catalog_tables/table-tab-final_orbits.ecsv",
+      "caption": "Pre and post-encounter orbital parameters for the two binaries and the tertiary component. The first row identifies the binary components followed by the name of the third star. The subsequent column gives the initial orbital separation ($a_{\\rm init}$). The last three columns give the final semi-major axis ($a_{\\rm fin}$), eccentricity ($e_{\\rm fin}$) and the mean ejection velocity (with respect to the barycenter, $v_{\\rm run}$).",
+      "label": "tab:final_orbits",
+      "row_count": 3,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Binary",
+          "",
+          "Tertiary",
+          "a_\\rm init",
+          "a_\\rm fin",
+          "e_\\rm fin",
+          "v_\\rm run"
+        ],
+        [
+          "",
+          "",
+          "",
+          "[au]",
+          "[au]",
+          "",
+          "km/s"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Binary",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Tertiary",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "a_\\rm init | [au]",
+          "unit_text": "[au]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "a_\\rm fin | [au]",
+          "unit_text": "[au]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "e_\\rm fin",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_\\rm run | km/s",
+          "unit_text": "km/s",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp25ywlh2b/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.11795/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp25ywlh2b/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.11795/catalog_sources/table-tab-final_orbits/wrapped.tex",
+            "html": "literature/2507.11795/catalog_sources/table-tab-final_orbits/latexml.html",
+            "stdout": "literature/2507.11795/catalog_sources/table-tab-final_orbits/latexml.stdout.txt",
+            "stderr": "literature/2507.11795/catalog_sources/table-tab-final_orbits/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "561b11ed2331f67db859a09dd874b108da2acbcbe4fcc410fef9b3c5420c5dce"
+    },
+    {
+      "id": "table-tab-interaction_frequency",
+      "internal_table_id": "table-tab-interaction_frequency",
+      "status": "success",
+      "ecsv_path": "literature/2507.11795/catalog_tables/table-tab-interaction_frequency.ecsv",
+      "caption": "Identification of the escaping star and relative outcome frequency for scenarios A till H for the encounter in which $a_{\\rm in} = 4$\\,au, $a_{\\rm out} = 40$\\,au, $a_{\\rm projectile} = 6$\\,au. For an encounter velocity of $v_{\\rm enc} = 7$\\,km/s. Scenario G in which \\tB\\, escapes as a single and (\\pA, \\pB) as well as (\\tAa, \\tAb) escape as binaries give the most probable outcome.",
+      "label": "tab:interaction_frequency",
+      "row_count": 9,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "id",
+          "escaper",
+          "( \\pA , \\pB )",
+          "( \\pA , \\tAa )",
+          "( \\pA , \\tB )",
+          "( \\pA , \\tAb )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "id",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "escaper",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "( \\pA , \\pB )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "( \\pA , \\tAa )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "( \\pA , \\tB )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "( \\pA , \\tAb )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdk_2hud9/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.11795/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdk_2hud9/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.11795/catalog_sources/table-tab-interaction_frequency/wrapped.tex",
+            "html": "literature/2507.11795/catalog_sources/table-tab-interaction_frequency/latexml.html",
+            "stdout": "literature/2507.11795/catalog_sources/table-tab-interaction_frequency/latexml.stdout.txt",
+            "stderr": "literature/2507.11795/catalog_sources/table-tab-interaction_frequency/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "972fdd6a39a1b38982e3a0d55b3c9b9826a290e04c4aad15ba8c738446aa67e5"
+    },
+    {
+      "id": "table-tab-cross_sections_velocity_dependence",
+      "internal_table_id": "table-tab-cross_sections_velocity_dependence",
+      "status": "success",
+      "ecsv_path": "literature/2507.11795/catalog_tables/table-tab-cross_sections_velocity_dependence.ecsv",
+      "caption": "Cross section for scenario G but with varying the encounter velocity. Here we adopted the binary (\\tAa,\\tAb) to have a semi-major axis of $a_{\\rm in} =4$\\,au, The initial tertiary \\tB\\, (that eventually escapes) orbits the target binary with a semimajor-axis of $a_{\\rm out} = 40$\\,au. The projectile binary (\\pA, \\pB), has a semi-major axis of 6\\,au. The first column gives the relative encounter velocity, followed by the cross section, and the fraction of systems for which VFTS~590 escapes. The following columns give the cross section for VFTS~590 and the two binaries to acquire a minimum runaway velocity of 27.6km/s, and the encounter rate associated with this cross section. The last three columns give the branching ratios of the eventual surviving binaries with \\pA\\, as primary.",
+      "label": "tab:cross_sections_velocity_dependence",
+      "row_count": 7,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "v_\\rm enc",
+          "\\sigma",
+          "f_\\rm esc,VFTS590",
+          "\\sigma_\\rm run",
+          "\\Gamma_\\rm esc,VFTS590",
+          "( \\pA , \\pB )",
+          "( \\pA , \\tAa )",
+          "( \\pA , \\tAb )"
+        ],
+        [
+          "[km/s]",
+          "[ 10^6 au 2 ]",
+          "",
+          "[ 10^6 au 2 ]",
+          "[Myr -1 ]",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "v_\\rm enc | [km/s]",
+          "unit_text": "[km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\sigma | [ 10^6 au 2 ]",
+          "unit_text": "[ 10^6 au 2 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "f_\\rm esc,VFTS590",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\sigma_\\rm run | [ 10^6 au 2 ]",
+          "unit_text": "[ 10^6 au 2 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\Gamma_\\rm esc,VFTS590 | [Myr -1 ]",
+          "unit_text": "[Myr -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "( \\pA , \\pB )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "( \\pA , \\tAa )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "( \\pA , \\tAb )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyuqth9nc/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.11795/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyuqth9nc/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.11795/catalog_sources/table-tab-cross_sections_velocity_dependence/wrapped.tex",
+            "html": "literature/2507.11795/catalog_sources/table-tab-cross_sections_velocity_dependence/latexml.html",
+            "stdout": "literature/2507.11795/catalog_sources/table-tab-cross_sections_velocity_dependence/latexml.stdout.txt",
+            "stderr": "literature/2507.11795/catalog_sources/table-tab-cross_sections_velocity_dependence/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "bc0ad1af951083ac98fa3ab9a2ee5e8e02ac406988722e712edebbb9b056e3bb"
+    },
+    {
+      "id": "table-tab-cross_sections_orbital_separation",
+      "internal_table_id": "table-tab-cross_sections_orbital_separation",
+      "status": "success",
+      "ecsv_path": "literature/2507.11795/catalog_tables/table-tab-cross_sections_orbital_separation.ecsv",
+      "caption": "Branching ratios and cross-section for scenario G (\\tB\\, escapes) for the varying orbit of the tertiary star (VFTS~590) around the inner binary (\\tAa, \\tAb). The inner target binary has an adopted semi-major axis of 4\\,au, while the projectile binary has a semi-major axis of 6\\,au. The relative encounter velocity is 7\\,km/s. The first column gives the semi-major axis of the tertiary star (\\tB) around the target binary (\\tAa, \\tAb). The following column gives the cross section for this interaction to happen. The next three columns give the fraction of systems, cross-section and the rate for the escaper (VFTS~590) to acquire a runaway speed of at least 27.6\\,km/s. The last three columns give the branching ratios of the eventual surviving binaries with \\pA\\, as primary.",
+      "label": "tab:cross_sections_orbital_separation",
+      "row_count": 11,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "a_\\rm out",
+          "\\sigma",
+          "f_\\rm esc,VFTS590",
+          "\\sigma_\\rm run",
+          "\\Gamma_\\rm esc,VFTS590",
+          "( \\pA , \\pB )",
+          "( \\pA , \\tAa )",
+          "( \\pA , \\tAb )"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "( \\tAa , \\tAb )",
+          "( \\pB , \\tAb )",
+          "( \\pB , \\tAa )"
+        ],
+        [
+          "[au]",
+          "[ 10^6 au 2 ]",
+          "[au 2 ]",
+          "[au 2 ]",
+          "[Myr] -1",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "a_\\rm out | [au]",
+          "unit_text": "[au]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\sigma | [ 10^6 au 2 ]",
+          "unit_text": "[ 10^6 au 2 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "f_\\rm esc,VFTS590 | [au 2 ]",
+          "unit_text": "[au 2 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\sigma_\\rm run | [au 2 ]",
+          "unit_text": "[au 2 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\Gamma_\\rm esc,VFTS590 | [Myr] -1",
+          "unit_text": "[Myr] -1",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "( \\pA , \\pB ) | ( \\tAa , \\tAb )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "( \\pA , \\tAa ) | ( \\pB , \\tAb )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "( \\pA , \\tAb ) | ( \\pB , \\tAa )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpira9zvai/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.11795/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpira9zvai/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.11795/catalog_sources/table-tab-cross_sections_orbital_separation/wrapped.tex",
+            "html": "literature/2507.11795/catalog_sources/table-tab-cross_sections_orbital_separation/latexml.html",
+            "stdout": "literature/2507.11795/catalog_sources/table-tab-cross_sections_orbital_separation/latexml.stdout.txt",
+            "stderr": "literature/2507.11795/catalog_sources/table-tab-cross_sections_orbital_separation/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d1d4fb3d126733849c083d30fb9dcb6291f4fa8833ea2471257fd88725a8c561"
+    },
+    {
+      "id": "table-tab-cross_sections_for_1010010",
+      "internal_table_id": "table-tab-cross_sections_for_1010010",
+      "status": "success",
+      "ecsv_path": "literature/2507.11795/catalog_tables/table-tab-cross_sections_for_1010010.ecsv",
+      "caption": "Cross sections for the 8 reduced cases for which we adopt Mel39B as a 80\\,\\MSun\\, star, and 50\\,\\MSun\\, for VFTS~590. All the other stars are 140\\,\\MSun. Calculations are performed with a semi-major axis for the inner target binary of $a = 10$\\,au and an outer orbit of $100$\\,au. For the projectile binary, we also adopt $10$\\,au. The relative encounter velocity is $v_{\\rm enc} = 7$\\,km/s. The first column identifies the scenario, explains the second column. The third and fourth columns give the total cross section for this interaction and the fraction of cases in which VFTS~590 is ejected. The last two columns give the cross-section and rate for VFTS~590 to be ejected with a velocity of at least 27.6km/s.",
+      "label": "tab:cross_sections_for_1010010",
+      "row_count": 8,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "id",
+          "Encounter",
+          "\\sigma",
+          "f_\\rm esc,VFTS590",
+          "f_\\rm run",
+          "\\Gamma_\\rm esc,VFTS590"
+        ],
+        [
+          "",
+          "",
+          "[ 10^6 au 2 ]",
+          "[au 2 ]",
+          "",
+          "[Myr] -1"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "id",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Encounter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma | [ 10^6 au 2 ]",
+          "unit_text": "[ 10^6 au 2 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "f_\\rm esc,VFTS590 | [au 2 ]",
+          "unit_text": "[au 2 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "f_\\rm run",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\Gamma_\\rm esc,VFTS590 | [Myr] -1",
+          "unit_text": "[Myr] -1",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptcelepoo/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.11795/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptcelepoo/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.11795/catalog_sources/table-tab-cross_sections_for_1010010/wrapped.tex",
+            "html": "literature/2507.11795/catalog_sources/table-tab-cross_sections_for_1010010/latexml.html",
+            "stdout": "literature/2507.11795/catalog_sources/table-tab-cross_sections_for_1010010/latexml.stdout.txt",
+            "stderr": "literature/2507.11795/catalog_sources/table-tab-cross_sections_for_1010010/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ad258410df90ab2fe7add5f88d12360364dfc6db9b56936cddfbccad632a275e"
+    }
+  ]
+}

@@ -1,0 +1,1285 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:05",
+  "paper": {
+    "arxiv_id": "2401.05630",
+    "title": "New candidate hypervelocity red clump stars in the inner Galactic bulge",
+    "month": "2024-01"
+  },
+  "review": {
+    "path": "literature/2401.05630/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123905",
+    "started_at": "2026-05-17T12:39:05",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2401.05630",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 9,
+      "work_count": 9,
+      "table_count": 9,
+      "success_count": 9,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 9,
+      "file_success_count": 9,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-pop-corr",
+      "internal_table_id": "table-tab-pop-corr",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2401.05630/arxiv_source/hvs.tex",
+        "start_line": 397,
+        "end_line": 411,
+        "caption": "Population correction ($\\Delta M_{K_s}^{RC}$) for the $K_s$ absolute magnitude of RC stars. $\\Delta M_{K_s}^{RC}$ is computed with Table 1 of \\citet{SalarisGirardi2002} assuming different ages and metallicities of Galactic bulge stars.",
+        "label": "tab:pop corr"
+      },
+      "source_path": "literature/2401.05630/arxiv_source/hvs.tex",
+      "excerpt_path": "literature/2401.05630/catalog_sources/table-tab-pop-corr/excerpt.tex",
+      "sha256": "1cdfca1179c30f019092ebe7e04ae4811f3ad29ed7590e11fdf479632d6b51b7",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-tab-all",
+      "internal_table_id": "table-tab-all",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2401.05630/arxiv_source/hvs.tex",
+        "start_line": 609,
+        "end_line": 624,
+        "caption": "Location and photometric properties of the stars with \\gaia DR3 counterpart and VIRAC2 proper motions pointing away from $0.5\\deg$ around the GC. The Galactic longitude and latitude have a precision of $0\\farcs5$.",
+        "label": "tab:all"
+      },
+      "source_path": "literature/2401.05630/arxiv_source/hvs.tex",
+      "excerpt_path": "literature/2401.05630/catalog_sources/table-tab-all/excerpt.tex",
+      "sha256": "da4f05a94d8d58804523da2efe2ba376cc020e15212d48e27eb5f298d287eea4",
+      "line_count": 16,
+      "error": ""
+    },
+    {
+      "id": "table-tab-all2",
+      "internal_table_id": "table-tab-all2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2401.05630/arxiv_source/hvs.tex",
+        "start_line": 626,
+        "end_line": 642,
+        "caption": "Derived parameters of the stars with \\gaia DR3 counterpart and VIRAC2 proper motions pointing out from $0.5\\deg$ around the GC. The second to last column indicates how close the projected 2D velocity vector approaches the GC. \\rev{The last column indicates the probability of exceeding the escape velocity.}\\\\ \\rev{* According to the classifier of spurious astrometric solution in \\textit{Gaia} DR3 \\citep{2022MNRAS.510.2597R}, these sources have a good astrometric solution. The VIRAC2 proper motions are consistent within $1\\sigma$.}",
+        "label": "tab:all2"
+      },
+      "source_path": "literature/2401.05630/arxiv_source/hvs.tex",
+      "excerpt_path": "literature/2401.05630/catalog_sources/table-tab-all2/excerpt.tex",
+      "sha256": "ce3527be5f41cb2e8c5af32a7e8467c725741189088d83d907d68abc2d168b14",
+      "line_count": 17,
+      "error": ""
+    },
+    {
+      "id": "table-tab-frmctr_v_extract",
+      "internal_table_id": "table-tab-frmctr_v_extract",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2401.05630/arxiv_source/hvs.tex",
+        "start_line": 734,
+        "end_line": 753,
+        "caption": "Location and photometric properties of the stars with no \\gaia DR3 counterpart and VIRAC2 proper motions pointing away from $0.5\\deg$ around the GC. The Galactic longitude and latitude have a precision of $0\\farcs5$. This is an extract, the complete table can be found in Appendix \\ref{ap:table_virac2notGDR3_frmctr}.",
+        "label": "tab:frmctr_v_extract"
+      },
+      "source_path": "literature/2401.05630/arxiv_source/hvs.tex",
+      "excerpt_path": "literature/2401.05630/catalog_sources/table-tab-frmctr_v_extract/excerpt.tex",
+      "sha256": "cfa68af1bb13bf6bdb15396d007cb2a60db934a614b77cd1d138fb3147edda59",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-frmctr_v_extract2",
+      "internal_table_id": "table-tab-frmctr_v_extract2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2401.05630/arxiv_source/hvs.tex",
+        "start_line": 755,
+        "end_line": 775,
+        "caption": "Derived parameters of the stars with no \\gaia DR3 counterpart and VIRAC2 proper motions pointing out from $0.5\\deg$ around the GC. The second to last column indicates how close the projected 2D velocity vector approaches the GC. \\rev{The last column is the probability of exceeding the escape velocity}. This is an extract, the complete table can be found in Appendix \\ref{ap:table_virac2notGDR3_frmctr}.",
+        "label": "tab:frmctr_v_extract2"
+      },
+      "source_path": "literature/2401.05630/arxiv_source/hvs.tex",
+      "excerpt_path": "literature/2401.05630/catalog_sources/table-tab-frmctr_v_extract2/excerpt.tex",
+      "sha256": "c387096df0ff26112e11104830ed4a67dc3dc4f296a42cf2082894d8aa4a0b26",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-tab-bds_v2gdr3",
+      "internal_table_id": "table-tab-bds_v2gdr3",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2401.05630/arxiv_source/hvs.tex",
+        "start_line": 873,
+        "end_line": 887,
+        "caption": "Properties of the stars, in the \\gaia DR3 -- VIRAC2 crossmatch, that could be \\rev{M-dwarfs} according to the colour cuts of Eq. \\ref{eq:bds}. The proper motions are from VIRAC2, without the reflex motion correction.",
+        "label": "tab:bds_v2gdr3"
+      },
+      "source_path": "literature/2401.05630/arxiv_source/hvs.tex",
+      "excerpt_path": "literature/2401.05630/catalog_sources/table-tab-bds_v2gdr3/excerpt.tex",
+      "sha256": "0c5d9e0cb882f76525f8c405cc4e8b56d679a81ee447b4d0d4dc4dcc24a127d3",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-tab-bds_v2",
+      "internal_table_id": "table-tab-bds_v2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2401.05630/arxiv_source/hvs.tex",
+        "start_line": 889,
+        "end_line": 909,
+        "caption": "Properties of the stars, in VIRAC2 without \\gaia DR3 counterpart, that could be \\rev{M-dwarfs} according to the colour cuts of Eq. \\ref{eq:bds}. The proper motions are from VIRAC2, without the reflex motion correction.",
+        "label": "tab:bds_v2"
+      },
+      "source_path": "literature/2401.05630/arxiv_source/hvs.tex",
+      "excerpt_path": "literature/2401.05630/catalog_sources/table-tab-bds_v2/excerpt.tex",
+      "sha256": "8f8df742237e6bd71ca69c54c6f61f73f97b3daaec966bbf7ea9d7b4a95f3c47",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-tab-frmctr_v",
+      "internal_table_id": "table-tab-frmctr_v",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2401.05630/arxiv_source/hvs.tex",
+        "start_line": 919,
+        "end_line": 1010,
+        "caption": "Location and photometric properties of the stars with no \\gaia DR3 counterpart and VIRAC2 proper motions pointing away from $0.5\\deg$ around the GC. The Galactic longitude and latitude have a precision of $0\\farcs5$.\\label{tab:frmctr_v}",
+        "label": "tab:frmctr_v"
+      },
+      "source_path": "literature/2401.05630/arxiv_source/hvs.tex",
+      "excerpt_path": "literature/2401.05630/catalog_sources/table-tab-frmctr_v/excerpt.tex",
+      "sha256": "3552fdd68745a7d106e669afa73712c60fcea50b1faa0fef057135631395c22a",
+      "line_count": 92,
+      "error": ""
+    },
+    {
+      "id": "table-tab-frmctr_v2",
+      "internal_table_id": "table-tab-frmctr_v2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2401.05630/arxiv_source/hvs.tex",
+        "start_line": 1013,
+        "end_line": 1103,
+        "caption": "Derived parameters of the stars with no \\gaia DR3 counterpart and VIRAC2 proper motions pointing out from $0.5\\deg$ around the GC. The last column indicates how close the projected 2D velocity vector approaches the GC.\\label{tab:frmctr_v2}",
+        "label": "tab:frmctr_v2"
+      },
+      "source_path": "literature/2401.05630/arxiv_source/hvs.tex",
+      "excerpt_path": "literature/2401.05630/catalog_sources/table-tab-frmctr_v2/excerpt.tex",
+      "sha256": "c05634ca7b6f8957fc6c0a2235cc132254cf2c80ab7f091123403230ed6b741e",
+      "line_count": 91,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-pop-corr",
+      "internal_table_id": "table-tab-pop-corr",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2401.05630/catalog_tables/table-tab-pop-corr.ecsv",
+      "caption": "Population correction ($\\Delta M_{K_s}^{RC}$) for the $K_s$ absolute magnitude of RC stars. $\\Delta M_{K_s}^{RC}$ is computed with Table 1 of \\citet{SalarisGirardi2002} assuming different ages and metallicities of Galactic bulge stars.",
+      "label": "tab:pop corr",
+      "row_count": 3,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Age (Gyr)",
+          "Z=0.008",
+          "Z=0.03",
+          "\\Delta M_K_s^RC"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Age (Gyr)",
+          "unit_text": "Age (Gyr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Z=0.008",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Z=0.03",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\Delta M_K_s^RC",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpghamzjxj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2401.05630/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpghamzjxj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2401.05630/catalog_sources/table-tab-pop-corr/wrapped.tex",
+            "html": "literature/2401.05630/catalog_sources/table-tab-pop-corr/latexml.html",
+            "stdout": "literature/2401.05630/catalog_sources/table-tab-pop-corr/latexml.stdout.txt",
+            "stderr": "literature/2401.05630/catalog_sources/table-tab-pop-corr/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "1cdfca1179c30f019092ebe7e04ae4811f3ad29ed7590e11fdf479632d6b51b7"
+    },
+    {
+      "id": "table-tab-all",
+      "internal_table_id": "table-tab-all",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2401.05630/catalog_tables/table-tab-all.ecsv",
+      "caption": "Location and photometric properties of the stars with \\gaia DR3 counterpart and VIRAC2 proper motions pointing away from $0.5\\deg$ around the GC. The Galactic longitude and latitude have a precision of $0\\farcs5$.",
+      "label": "tab:all",
+      "row_count": 4,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\gaia DR3 source ID",
+          "RA [hms]",
+          "Dec [dms]",
+          "l [deg]",
+          "b [deg]",
+          "K_s [mag]",
+          "J-K_s [mag]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\gaia DR3 source ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA [hms]",
+          "unit_text": "RA [hms]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec [dms]",
+          "unit_text": "Dec [dms]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "l [deg]",
+          "unit_text": "l [deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "b [deg]",
+          "unit_text": "b [deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "K_s [mag]",
+          "unit_text": "K_s [mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "J-K_s [mag]",
+          "unit_text": "J-K_s [mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgwahhwcq/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2401.05630/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgwahhwcq/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2401.05630/catalog_sources/table-tab-all/wrapped.tex",
+            "html": "literature/2401.05630/catalog_sources/table-tab-all/latexml.html",
+            "stdout": "literature/2401.05630/catalog_sources/table-tab-all/latexml.stdout.txt",
+            "stderr": "literature/2401.05630/catalog_sources/table-tab-all/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "da4f05a94d8d58804523da2efe2ba376cc020e15212d48e27eb5f298d287eea4"
+    },
+    {
+      "id": "table-tab-all2",
+      "internal_table_id": "table-tab-all2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2401.05630/catalog_tables/table-tab-all2.ecsv",
+      "caption": "Derived parameters of the stars with \\gaia DR3 counterpart and VIRAC2 proper motions pointing out from $0.5\\deg$ around the GC. The second to last column indicates how close the projected 2D velocity vector approaches the GC. \\rev{The last column indicates the probability of exceeding the escape velocity.}\\\\ \\rev{* According to the classifier of spurious astrometric solution in \\textit{Gaia} DR3 \\citep{2022MNRAS.510.2597R}, these sources have a good astrometric solution. The VIRAC2 proper motions are consistent within $1\\sigma$.}",
+      "label": "tab:all2",
+      "row_count": 4,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\gaia DR3 source ID",
+          "\\mu [ mas yr^-1 ]",
+          "d [kpc]",
+          "r_GC [kpc]",
+          "V_tan [km s^-1]",
+          "t_f [yr]",
+          "Approach [deg]",
+          "P"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\gaia DR3 source ID",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\mu [ mas yr^-1 ]",
+          "unit_text": "\\mu [ mas yr^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "d [kpc]",
+          "unit_text": "d [kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "r_GC [kpc]",
+          "unit_text": "r_GC [kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V_tan [km s^-1]",
+          "unit_text": "V_tan [km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "t_f [yr]",
+          "unit_text": "t_f [yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Approach [deg]",
+          "unit_text": "Approach [deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "P",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4nnt3c6t/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2401.05630/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4nnt3c6t/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2401.05630/catalog_sources/table-tab-all2/wrapped.tex",
+            "html": "literature/2401.05630/catalog_sources/table-tab-all2/latexml.html",
+            "stdout": "literature/2401.05630/catalog_sources/table-tab-all2/latexml.stdout.txt",
+            "stderr": "literature/2401.05630/catalog_sources/table-tab-all2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ce3527be5f41cb2e8c5af32a7e8467c725741189088d83d907d68abc2d168b14"
+    },
+    {
+      "id": "table-tab-frmctr_v_extract",
+      "internal_table_id": "table-tab-frmctr_v_extract",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2401.05630/catalog_tables/table-tab-frmctr_v_extract.ecsv",
+      "caption": "Location and photometric properties of the stars with no \\gaia DR3 counterpart and VIRAC2 proper motions pointing away from $0.5\\deg$ around the GC. The Galactic longitude and latitude have a precision of $0\\farcs5$. This is an extract, the complete table can be found in Appendix \\ref{ap:table_virac2notGDR3_frmctr}.",
+      "label": "tab:frmctr_v_extract",
+      "row_count": 5,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "RA [hms]",
+          "Dec [dms]",
+          "l [deg]",
+          "b [deg]",
+          "K_s [mag]",
+          "J-K_s [mag] ]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA [hms]",
+          "unit_text": "RA [hms]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec [dms]",
+          "unit_text": "Dec [dms]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "l [deg]",
+          "unit_text": "l [deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "b [deg]",
+          "unit_text": "b [deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "K_s [mag]",
+          "unit_text": "K_s [mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "J-K_s [mag] ]",
+          "unit_text": "J-K_s [mag] ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptevp0d4j/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2401.05630/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptevp0d4j/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2401.05630/catalog_sources/table-tab-frmctr_v_extract/wrapped.tex",
+            "html": "literature/2401.05630/catalog_sources/table-tab-frmctr_v_extract/latexml.html",
+            "stdout": "literature/2401.05630/catalog_sources/table-tab-frmctr_v_extract/latexml.stdout.txt",
+            "stderr": "literature/2401.05630/catalog_sources/table-tab-frmctr_v_extract/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "cfa68af1bb13bf6bdb15396d007cb2a60db934a614b77cd1d138fb3147edda59"
+    },
+    {
+      "id": "table-tab-frmctr_v_extract2",
+      "internal_table_id": "table-tab-frmctr_v_extract2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2401.05630/catalog_tables/table-tab-frmctr_v_extract2.ecsv",
+      "caption": "Derived parameters of the stars with no \\gaia DR3 counterpart and VIRAC2 proper motions pointing out from $0.5\\deg$ around the GC. The second to last column indicates how close the projected 2D velocity vector approaches the GC. \\rev{The last column is the probability of exceeding the escape velocity}. This is an extract, the complete table can be found in Appendix \\ref{ap:table_virac2notGDR3_frmctr}.",
+      "label": "tab:frmctr_v_extract2",
+      "row_count": 6,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "\\mu [ mas yr^-1 ]",
+          "d [kpc]",
+          "r_GC [kpc]",
+          "V_tan [km s^-1]",
+          "t_f [yr]",
+          "Approach [deg]",
+          "P"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\mu [ mas yr^-1 ]",
+          "unit_text": "\\mu [ mas yr^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "d [kpc]",
+          "unit_text": "d [kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "r_GC [kpc]",
+          "unit_text": "r_GC [kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V_tan [km s^-1]",
+          "unit_text": "V_tan [km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "t_f [yr]",
+          "unit_text": "t_f [yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Approach [deg]",
+          "unit_text": "Approach [deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "P",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfq8jgelj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2401.05630/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfq8jgelj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2401.05630/catalog_sources/table-tab-frmctr_v_extract2/wrapped.tex",
+            "html": "literature/2401.05630/catalog_sources/table-tab-frmctr_v_extract2/latexml.html",
+            "stdout": "literature/2401.05630/catalog_sources/table-tab-frmctr_v_extract2/latexml.stdout.txt",
+            "stderr": "literature/2401.05630/catalog_sources/table-tab-frmctr_v_extract2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c387096df0ff26112e11104830ed4a67dc3dc4f296a42cf2082894d8aa4a0b26"
+    },
+    {
+      "id": "table-tab-bds_v2gdr3",
+      "internal_table_id": "table-tab-bds_v2gdr3",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2401.05630/catalog_tables/table-tab-bds_v2gdr3.ecsv",
+      "caption": "Properties of the stars, in the \\gaia DR3 -- VIRAC2 crossmatch, that could be \\rev{M-dwarfs} according to the colour cuts of Eq. \\ref{eq:bds}. The proper motions are from VIRAC2, without the reflex motion correction.",
+      "label": "tab:bds_v2gdr3",
+      "row_count": 3,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\gaia DR3 source ID",
+          "RA [hms]",
+          "Dec [dms]",
+          "H [mag]",
+          "J [mag]",
+          "K_s [mag]",
+          "\\mu_RA [ mas yr^-1 ]",
+          "\\mu_Dec [ mas yr^-1 ]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\gaia DR3 source ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA [hms]",
+          "unit_text": "RA [hms]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec [dms]",
+          "unit_text": "Dec [dms]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "H [mag]",
+          "unit_text": "H [mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "J [mag]",
+          "unit_text": "J [mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "K_s [mag]",
+          "unit_text": "K_s [mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_RA [ mas yr^-1 ]",
+          "unit_text": "\\mu_RA [ mas yr^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\mu_Dec [ mas yr^-1 ]",
+          "unit_text": "\\mu_Dec [ mas yr^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppxjz2uxd/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2401.05630/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppxjz2uxd/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2401.05630/catalog_sources/table-tab-bds_v2gdr3/wrapped.tex",
+            "html": "literature/2401.05630/catalog_sources/table-tab-bds_v2gdr3/latexml.html",
+            "stdout": "literature/2401.05630/catalog_sources/table-tab-bds_v2gdr3/latexml.stdout.txt",
+            "stderr": "literature/2401.05630/catalog_sources/table-tab-bds_v2gdr3/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0c5d9e0cb882f76525f8c405cc4e8b56d679a81ee447b4d0d4dc4dcc24a127d3"
+    },
+    {
+      "id": "table-tab-bds_v2",
+      "internal_table_id": "table-tab-bds_v2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2401.05630/catalog_tables/table-tab-bds_v2.ecsv",
+      "caption": "Properties of the stars, in VIRAC2 without \\gaia DR3 counterpart, that could be \\rev{M-dwarfs} according to the colour cuts of Eq. \\ref{eq:bds}. The proper motions are from VIRAC2, without the reflex motion correction.",
+      "label": "tab:bds_v2",
+      "row_count": 9,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "RA [hms]",
+          "Dec [dms]",
+          "H [mag]",
+          "J [mag]",
+          "K_s [mag]",
+          "\\mu_RA [ mas yr^-1 ]",
+          "\\mu_Dec [ mas yr^-1 ]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "RA [hms]",
+          "unit_text": "RA [hms]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Dec [dms]",
+          "unit_text": "Dec [dms]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "H [mag]",
+          "unit_text": "H [mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "J [mag]",
+          "unit_text": "J [mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "K_s [mag]",
+          "unit_text": "K_s [mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_RA [ mas yr^-1 ]",
+          "unit_text": "\\mu_RA [ mas yr^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_Dec [ mas yr^-1 ]",
+          "unit_text": "\\mu_Dec [ mas yr^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6upmq3do/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2401.05630/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6upmq3do/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2401.05630/catalog_sources/table-tab-bds_v2/wrapped.tex",
+            "html": "literature/2401.05630/catalog_sources/table-tab-bds_v2/latexml.html",
+            "stdout": "literature/2401.05630/catalog_sources/table-tab-bds_v2/latexml.stdout.txt",
+            "stderr": "literature/2401.05630/catalog_sources/table-tab-bds_v2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8f8df742237e6bd71ca69c54c6f61f73f97b3daaec966bbf7ea9d7b4a95f3c47"
+    },
+    {
+      "id": "table-tab-frmctr_v",
+      "internal_table_id": "table-tab-frmctr_v",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2401.05630/catalog_tables/table-tab-frmctr_v.ecsv",
+      "caption": "Location and photometric properties of the stars with no \\gaia DR3 counterpart and VIRAC2 proper motions pointing away from $0.5\\deg$ around the GC. The Galactic longitude and latitude have a precision of $0\\farcs5$.\\label{tab:frmctr_v}",
+      "label": "tab:frmctr_v",
+      "row_count": 65,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "RA [hms]",
+          "Dec [dms]",
+          "l [deg]",
+          "b [deg]",
+          "K_s [mag]",
+          "J-K_s [mag] ]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA [hms]",
+          "unit_text": "RA [hms]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec [dms]",
+          "unit_text": "Dec [dms]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "l [deg]",
+          "unit_text": "l [deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "b [deg]",
+          "unit_text": "b [deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "K_s [mag]",
+          "unit_text": "K_s [mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "J-K_s [mag] ]",
+          "unit_text": "J-K_s [mag] ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcbz64zqg/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2401.05630/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcbz64zqg/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2401.05630/catalog_sources/table-tab-frmctr_v/wrapped.tex",
+            "html": "literature/2401.05630/catalog_sources/table-tab-frmctr_v/latexml.html",
+            "stdout": "literature/2401.05630/catalog_sources/table-tab-frmctr_v/latexml.stdout.txt",
+            "stderr": "literature/2401.05630/catalog_sources/table-tab-frmctr_v/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3552fdd68745a7d106e669afa73712c60fcea50b1faa0fef057135631395c22a"
+    },
+    {
+      "id": "table-tab-frmctr_v2",
+      "internal_table_id": "table-tab-frmctr_v2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2401.05630/catalog_tables/table-tab-frmctr_v2.ecsv",
+      "caption": "Derived parameters of the stars with no \\gaia DR3 counterpart and VIRAC2 proper motions pointing out from $0.5\\deg$ around the GC. The last column indicates how close the projected 2D velocity vector approaches the GC.\\label{tab:frmctr_v2}",
+      "label": "tab:frmctr_v2",
+      "row_count": 65,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "\\mu [ mas yr^-1 ]",
+          "d [kpc]",
+          "r_GC [kpc]",
+          "V_tan [km s^-1]",
+          "t_f [yr]",
+          "Approach [deg]",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\mu [ mas yr^-1 ]",
+          "unit_text": "\\mu [ mas yr^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "d [kpc]",
+          "unit_text": "d [kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "r_GC [kpc]",
+          "unit_text": "r_GC [kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V_tan [km s^-1]",
+          "unit_text": "V_tan [km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "t_f [yr]",
+          "unit_text": "t_f [yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Approach [deg]",
+          "unit_text": "Approach [deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfbtxnmcx/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2401.05630/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfbtxnmcx/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2401.05630/catalog_sources/table-tab-frmctr_v2/wrapped.tex",
+            "html": "literature/2401.05630/catalog_sources/table-tab-frmctr_v2/latexml.html",
+            "stdout": "literature/2401.05630/catalog_sources/table-tab-frmctr_v2/latexml.stdout.txt",
+            "stderr": "literature/2401.05630/catalog_sources/table-tab-frmctr_v2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c05634ca7b6f8957fc6c0a2235cc132254cf2c80ab7f091123403230ed6b741e"
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:37:09",
+  "paper": {
+    "arxiv_id": "1912.12679",
+    "title": "The tale of the tail -- disentangling the high transverse velocity stars in Gaia DR2",
+    "month": "2019-12"
+  },
+  "review": {
+    "path": "literature/1912.12679/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083709",
+    "started_at": "2026-06-07T08:37:09",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1912.12679",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab_param",
+      "internal_table_id": "table-tab_param",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1912.12679/arxiv_source/sections/modeling2.tex",
+        "start_line": 19,
+        "end_line": 37,
+        "caption": "Parameters for the canonical Galaxia model and our updated model. \\newline * We do not use a Gaussian distribution to model $v_\\phi$ for the thick disc and so these numbers are just included to give an indication of the mean and spread of our distribution. See text for details.",
+        "label": "tab_param"
+      },
+      "source_path": "literature/1912.12679/arxiv_source/sections/modeling2.tex",
+      "excerpt_path": "literature/1912.12679/catalog_sources/table-tab_param/excerpt.tex",
+      "sha256": "a4a881bdd061182f7adedbd19120512d6381c1d6eabf700fd7798b6faddcbcb0",
+      "line_count": 19,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab_param",
+      "internal_table_id": "table-tab_param",
+      "status": "success",
+      "ecsv_path": "literature/1912.12679/catalog_tables/table-tab_param.ecsv",
+      "caption": "Parameters for the canonical Galaxia model and our updated model. \\newline * We do not use a Gaussian distribution to model $v_\\phi$ for the thick disc and so these numbers are just included to give an indication of the mean and spread of our distribution. See text for details.",
+      "label": "tab_param",
+      "row_count": 1,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "Galaxia",
+          "",
+          "Model",
+          ""
+        ],
+        [
+          "",
+          "TD",
+          "Halo",
+          "TD",
+          "Halo"
+        ],
+        [
+          "\\langle v_R\\rangle ; \\sigma_v_R [km/s]",
+          "[0;66]",
+          "[0,135]",
+          "[ 0;58]",
+          "[0,140]"
+        ],
+        [
+          "\\langle v_\\phi\\rangle ; \\sigma_v_\\phi [km/s]",
+          "[195;51]",
+          "[11;85]",
+          "[ 196,48]^*",
+          "[30,78]"
+        ],
+        [
+          "\\langle v_z\\rangle ; \\sigma_v_z [km/s]",
+          "[0;42]",
+          "[0,84]",
+          "[ 0;42]",
+          "[0,80]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\langle v_R\\rangle ; \\sigma_v_R [km/s] | \\langle v_\\phi\\rangle ; \\sigma_v_\\phi [km/s] | \\langle v_z\\rangle ; \\sigma_v_z [km/s]",
+          "unit_text": "\\langle v_R\\rangle ; \\sigma_v_R [km/s]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Galaxia | TD | [0;66] | [195;51] | [0;42]",
+          "unit_text": "[0;66]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Halo | [0,135] | [11;85] | [0,84]",
+          "unit_text": "[0,135]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Model | TD | [ 0;58] | [ 196,48]^* | [ 0;42]",
+          "unit_text": "[ 0;58]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Halo | [0,140] | [30,78] | [0,80]",
+          "unit_text": "[0,140]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpatxfr05q/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1912.12679/arxiv_source/sections",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpatxfr05q/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.12679/catalog_sources/table-tab_param/wrapped.tex",
+            "html": "literature/1912.12679/catalog_sources/table-tab_param/latexml.html",
+            "stdout": "literature/1912.12679/catalog_sources/table-tab_param/latexml.stdout.txt",
+            "stderr": "literature/1912.12679/catalog_sources/table-tab_param/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a4a881bdd061182f7adedbd19120512d6381c1d6eabf700fd7798b6faddcbcb0"
+    }
+  ]
+}

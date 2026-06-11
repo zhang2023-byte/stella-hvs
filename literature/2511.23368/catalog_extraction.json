@@ -1,0 +1,208 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:06",
+  "paper": {
+    "arxiv_id": "2511.23368",
+    "title": "The Kinematic Properties of T\\.ZO Candidate HV 11417 with Gaia DR3",
+    "month": "2025-11"
+  },
+  "review": {
+    "path": "literature/2511.23368/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124006",
+    "started_at": "2026-05-17T12:40:06",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2511.23368",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-kinematics",
+      "internal_table_id": "table-tab-kinematics",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2511.23368/arxiv_source/main.tex",
+        "start_line": 62,
+        "end_line": 78,
+        "caption": "The \\textit{Gaia} DR3 and derived kinematic properties of HV 11417 and RIOTS4 comparison stars. All values are taken or calculated from \\textit{Gaia} DR3 data, other than the speeds of the RIOTS4 comparison stars, taken from Table 1 of \\citet{Phillips.G.2024.RIOTS4.4}",
+        "label": "tab:kinematics"
+      },
+      "source_path": "literature/2511.23368/arxiv_source/main.tex",
+      "excerpt_path": "literature/2511.23368/catalog_sources/table-tab-kinematics/excerpt.tex",
+      "sha256": "ce94b993fb7ba0f0c67eba0a0a4ecb1e9d74a210053a73914e363a9f13adef39",
+      "line_count": 17,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-kinematics",
+      "internal_table_id": "table-tab-kinematics",
+      "status": "success",
+      "ecsv_path": "literature/2511.23368/catalog_tables/table-tab-kinematics.ecsv",
+      "caption": "The \\textit{Gaia} DR3 and derived kinematic properties of HV 11417 and RIOTS4 comparison stars. All values are taken or calculated from \\textit{Gaia} DR3 data, other than the speeds of the RIOTS4 comparison stars, taken from Table 1 of \\citet{Phillips.G.2024.RIOTS4.4}",
+      "label": "tab:kinematics",
+      "row_count": 8,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpov385unx/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2511.23368/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpov385unx/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2511.23368/catalog_sources/table-tab-kinematics/wrapped.tex",
+            "html": "literature/2511.23368/catalog_sources/table-tab-kinematics/latexml.html",
+            "stdout": "literature/2511.23368/catalog_sources/table-tab-kinematics/latexml.stdout.txt",
+            "stderr": "literature/2511.23368/catalog_sources/table-tab-kinematics/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ce94b993fb7ba0f0c67eba0a0a4ecb1e9d74a210053a73914e363a9f13adef39"
+    }
+  ]
+}

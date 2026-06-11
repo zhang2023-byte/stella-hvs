@@ -1,0 +1,2611 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:23:04",
+  "paper": {
+    "arxiv_id": "1912.02129",
+    "bibcode": "2019ApJ...887L..39L",
+    "title": "Candidate Hypervelocity Red Clump Stars in the Galactic Bulge Found Using the VVV and Gaia Surveys",
+    "month": "2019-12",
+    "source_note_json": "",
+    "links": {
+      "abs": "https://arxiv.org/abs/1912.02129",
+      "pdf": "https://arxiv.org/pdf/1912.02129"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1912.02129",
+    "audit_path": "literature/1912.02129/audit.json",
+    "catalog_review_path": "literature/1912.02129/catalog_review.json",
+    "catalog_extraction_path": "literature/1912.02129/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1912.02129/catalog_tables/table-tab-table1.ecsv",
+      "literature/1912.02129/catalog_tables/table-tab-dist.ecsv",
+      "literature/1912.02129/catalog_tables/table-tab-table2.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-06-07T11:23:04",
+    "extractor": "agent",
+    "summary": "论文利用红团簇(RC)巨星在银河系核球中搜寻超高速星。从Gaia DR2+VVV的34颗核球RC星样本中发现7颗VVV自行矢量指向银心方向的候选超高速RC星。Gaia DR2天体测量存在显著excess noise，采用VVV两历元自行。7颗候选体切向速度V_T=5900-17900 km/s，缺乏径向速度待确认。这是首次在银河系核球中发现超高速RC星候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR2 + VVV PSF photometry cross-match (0.5 arcsec). 34 bulge RC stars selected within -10°<l<10°, -10°<b<5°, 6<d<11 kpc.",
+      "inputs": [
+        "Gaia DR2",
+        "VVV Survey"
+      ],
+      "outputs": [
+        "34 RC star sample with astrometry and photometry"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+          "start_line": 176,
+          "end_line": 260,
+          "context": "Sec 2-3: Data and RC selection"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Distance estimation via Wesenheit magnitudes (reddening-independent) and Ruiz-Dern+2018 RC calibrations. σD≈0.38 kpc.",
+      "inputs": [
+        "VVV J/Ks",
+        "Gaia G",
+        "Ruiz-Dern+2018 calibrations"
+      ],
+      "outputs": [
+        "Distance per RC star"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+          "start_line": 237,
+          "end_line": 390,
+          "context": "Sec 3: Distance estimation"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-01",
+        "step-02"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Tangential velocity V_T=4.74×D×PM using VVV-derived PMs. Solar reflex motion corrected via gala.",
+      "inputs": [
+        "VVV PM",
+        "Distance"
+      ],
+      "outputs": [
+        "Tangential velocity V_T"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+          "start_line": 392,
+          "end_line": 433,
+          "context": "Sec 3: Velocity calculation"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "reported_value_adoption",
+      "summary": "Ejection times T_eject computed from angular distance to GC and VVV PM, assuming constant velocity. Listed in Table 2.",
+      "inputs": [
+        "PM vectors",
+        "Angular distance"
+      ],
+      "outputs": [
+        "T_eject per candidate"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+          "start_line": 445,
+          "end_line": 496,
+          "context": "Sec 4: Ejection times"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-04"
+      ],
+      "step_type": "candidate_classification",
+      "summary": "7 HVS candidates selected (PM radiating from within 2° of GC). Estimated production rate N_HVRC=3.26×10^{-4} yr^{-1}. No RVs available for unbound confirmation.",
+      "inputs": [
+        "Candidate list",
+        "Production rate"
+      ],
+      "outputs": [
+        "7 HVS candidates",
+        "Production rate"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+          "start_line": 500,
+          "end_line": 513,
+          "context": "Conclusions: 7 HVS candidates"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "1912.02129:cand-001",
+        "paper_candidate_id": "VVV RC 10",
+        "gaia_source_id": "Gaia DR2 4056475218139133568",
+        "all": [
+          {
+            "value": "VVV RC 10",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 262,
+                "end_line": 321,
+                "context": "Tab table1: ID 10"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR2 4056475218139133568",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 262,
+                "end_line": 321,
+                "context": "Tab table1: Source ID 4056475218139133568"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "VVV RC 10: PM vector consistent with ejection from Galactic centre. V_T=7317.575 km/s, d=7394.923 pc, T_eject=24554.129 yr. Gaia DR2 astrometry flagged with significant excess noise; VVV-derived PM used. Candidate hypervelocity red clump star in the Galactic bulge. No RV available — follow-up needed to confirm unbound status.",
+        "paper_labels": [
+          "hvs_candidate",
+          "high_velocity_star"
+        ],
+        "galactic_bound_claim": "not_reported",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "medium",
+        "confidence_reason": "Candidate selected based on PM vector radiating from Galactic centre within 2°. Paper explicitly treats as HVS candidate but notes no RV available for orbit confirmation. Gaia DR2 astrometric excess noise makes Gaia PM unreliable.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 426,
+            "end_line": 433,
+            "context": "Selection: 7 stars that radiate from the Galactic centre"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 458,
+            "end_line": 493,
+            "context": "Tab table2: Candidate HVS with V_T and T_eject"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 435,
+            "end_line": 513,
+            "context": "Sec 4-5: Discussion and Conclusions"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 149,
+            "end_line": 157,
+            "context": "Paper abstract: discovery of 7 candidate HVS RC stars"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 193,
+            "end_line": 260,
+            "context": "Sec 3: Selection of Hypervelocity RC stars"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "267.952",
+            "value": "267.952",
+            "unit": "deg",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table1.ecsv",
+                "line": 30,
+                "column": "col_003",
+                "raw_value": "267.952",
+                "column_header": "RA | ( \\degree )"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "inference_basis": "gaia_dr2_default"
+            },
+            "epoch": {
+              "value": "2015.5",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "epoch_kind": "reference_epoch",
+              "inference_basis": "gaia_dr2_default"
+            },
+            "description": "RA from Gaia DR2"
+          },
+          "dec": {
+            "raw_value": "-29.386",
+            "value": "-29.386",
+            "unit": "deg",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table1.ecsv",
+                "line": 30,
+                "column": "col_004",
+                "raw_value": "-29.386",
+                "column_header": "DEC | ( \\degree )"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "inference_basis": "gaia_dr2_default"
+            },
+            "epoch": {
+              "value": "2015.5",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "epoch_kind": "reference_epoch",
+              "inference_basis": "gaia_dr2_default"
+            },
+            "description": "Dec from Gaia DR2"
+          },
+          "distance": {
+            "raw_value": "7394.923",
+            "value": "7394.923",
+            "unit": "pc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 326,
+                "end_line": 383,
+                "context": "Tab dist: distance estimation"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "tangential_velocity": {
+            "raw_value": "7317.575",
+            "value": "7317.575",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+                "line": 21,
+                "column": "col_005",
+                "raw_value": "7317.575",
+                "column_header": "V_T | (km s -1 )"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          }
+        },
+        "bound_assessment": {}
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "flight_time": {
+          "raw_value": "24554.129",
+          "value": "24554.129",
+          "unit": "yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 21,
+              "column": "col_006",
+              "raw_value": "24554.129",
+              "column_header": "T_eject | (yr)"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "Galactic centre",
+          "value": "Galactic centre",
+          "unit": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+              "start_line": 426,
+              "end_line": 433,
+              "context": "Selection: 7 stars that radiate from the Galactic centre"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ],
+          "description": "PM vectors traced back to within 2° of Galactic centre"
+        },
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": {
+          "raw_value": "24554.129",
+          "value": "24554.129",
+          "unit": "yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 21,
+              "column": "col_006",
+              "raw_value": "24554.129",
+              "column_header": "T_eject | (yr)"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "proper_motion_total",
+          "raw_value": "208.743 +/- 28",
+          "value": "208.743",
+          "unit": "mas yr^-1",
+          "error": "28",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 21,
+              "column": "col_004",
+              "raw_value": "208.743 +/- 28",
+              "column_header": "PM^b | ( mas~yr^-1 )"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "description": "Total proper motion from VVV (epoch 2010-2015). Gaia DR2 PM unreliable due to astrometric excess noise."
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "1912.02129:cand-002",
+        "paper_candidate_id": "VVV RC 15",
+        "gaia_source_id": "Gaia DR2 4060422022558245248",
+        "all": [
+          {
+            "value": "VVV RC 15",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 262,
+                "end_line": 321,
+                "context": "Tab table1: ID 15"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR2 4060422022558245248",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 262,
+                "end_line": 321,
+                "context": "Tab table1: Source ID 4060422022558245248"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "VVV RC 15: PM vector consistent with ejection from Galactic centre. V_T=9469.333 km/s, d=7409.066 pc, T_eject=25766.906 yr. Gaia DR2 astrometry flagged with significant excess noise; VVV-derived PM used. Candidate hypervelocity red clump star in the Galactic bulge. No RV available — follow-up needed to confirm unbound status.",
+        "paper_labels": [
+          "hvs_candidate",
+          "high_velocity_star"
+        ],
+        "galactic_bound_claim": "not_reported",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "medium",
+        "confidence_reason": "Candidate selected based on PM vector radiating from Galactic centre within 2°. Paper explicitly treats as HVS candidate but notes no RV available for orbit confirmation. Gaia DR2 astrometric excess noise makes Gaia PM unreliable.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 426,
+            "end_line": 433,
+            "context": "Selection: 7 stars that radiate from the Galactic centre"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 458,
+            "end_line": 493,
+            "context": "Tab table2: Candidate HVS with V_T and T_eject"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 435,
+            "end_line": 513,
+            "context": "Sec 4-5: Discussion and Conclusions"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 149,
+            "end_line": 157,
+            "context": "Paper abstract: discovery of 7 candidate HVS RC stars"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 193,
+            "end_line": 260,
+            "context": "Sec 3: Selection of Hypervelocity RC stars"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "264.260",
+            "value": "264.260",
+            "unit": "deg",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table1.ecsv",
+                "line": 35,
+                "column": "col_003",
+                "raw_value": "264.260",
+                "column_header": "RA | ( \\degree )"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "inference_basis": "gaia_dr2_default"
+            },
+            "epoch": {
+              "value": "2015.5",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "epoch_kind": "reference_epoch",
+              "inference_basis": "gaia_dr2_default"
+            },
+            "description": "RA from Gaia DR2"
+          },
+          "dec": {
+            "raw_value": "-28.505",
+            "value": "-28.505",
+            "unit": "deg",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table1.ecsv",
+                "line": 35,
+                "column": "col_004",
+                "raw_value": "-28.505",
+                "column_header": "DEC | ( \\degree )"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "inference_basis": "gaia_dr2_default"
+            },
+            "epoch": {
+              "value": "2015.5",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "epoch_kind": "reference_epoch",
+              "inference_basis": "gaia_dr2_default"
+            },
+            "description": "Dec from Gaia DR2"
+          },
+          "distance": {
+            "raw_value": "7409.066",
+            "value": "7409.066",
+            "unit": "pc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 326,
+                "end_line": 383,
+                "context": "Tab dist: distance estimation"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "tangential_velocity": {
+            "raw_value": "9469.333",
+            "value": "9469.333",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+                "line": 22,
+                "column": "col_005",
+                "raw_value": "9469.333",
+                "column_header": "V_T | (km s -1 )"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          }
+        },
+        "bound_assessment": {}
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "flight_time": {
+          "raw_value": "25766.906",
+          "value": "25766.906",
+          "unit": "yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 22,
+              "column": "col_006",
+              "raw_value": "25766.906",
+              "column_header": "T_eject | (yr)"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "Galactic centre",
+          "value": "Galactic centre",
+          "unit": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+              "start_line": 426,
+              "end_line": 433,
+              "context": "Selection: 7 stars that radiate from the Galactic centre"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ],
+          "description": "PM vectors traced back to within 2° of Galactic centre"
+        },
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": {
+          "raw_value": "25766.906",
+          "value": "25766.906",
+          "unit": "yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 22,
+              "column": "col_006",
+              "raw_value": "25766.906",
+              "column_header": "T_eject | (yr)"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "proper_motion_total",
+          "raw_value": "269.609 +/- 23",
+          "value": "269.609",
+          "unit": "mas yr^-1",
+          "error": "23",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 22,
+              "column": "col_004",
+              "raw_value": "269.609 +/- 23",
+              "column_header": "PM^b | ( mas~yr^-1 )"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "description": "Total proper motion from VVV (epoch 2010-2015). Gaia DR2 PM unreliable due to astrometric excess noise."
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "1912.02129:cand-003",
+        "paper_candidate_id": "VVV RC 17",
+        "gaia_source_id": "Gaia DR2 4060841348825794432",
+        "all": [
+          {
+            "value": "VVV RC 17",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 262,
+                "end_line": 321,
+                "context": "Tab table1: ID 17"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR2 4060841348825794432",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 262,
+                "end_line": 321,
+                "context": "Tab table1: Source ID 4060841348825794432"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "VVV RC 17: PM vector consistent with ejection from Galactic centre. V_T=5903.893 km/s, d=7267.601 pc, T_eject=33755.978 yr. Gaia DR2 astrometry flagged with significant excess noise; VVV-derived PM used. Candidate hypervelocity red clump star in the Galactic bulge. No RV available — follow-up needed to confirm unbound status.",
+        "paper_labels": [
+          "hvs_candidate",
+          "high_velocity_star"
+        ],
+        "galactic_bound_claim": "not_reported",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "medium",
+        "confidence_reason": "Candidate selected based on PM vector radiating from Galactic centre within 2°. Paper explicitly treats as HVS candidate but notes no RV available for orbit confirmation. Gaia DR2 astrometric excess noise makes Gaia PM unreliable.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 426,
+            "end_line": 433,
+            "context": "Selection: 7 stars that radiate from the Galactic centre"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 458,
+            "end_line": 493,
+            "context": "Tab table2: Candidate HVS with V_T and T_eject"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 435,
+            "end_line": 513,
+            "context": "Sec 4-5: Discussion and Conclusions"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 149,
+            "end_line": 157,
+            "context": "Paper abstract: discovery of 7 candidate HVS RC stars"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 193,
+            "end_line": 260,
+            "context": "Sec 3: Selection of Hypervelocity RC stars"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "265.091",
+            "value": "265.091",
+            "unit": "deg",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table1.ecsv",
+                "line": 37,
+                "column": "col_003",
+                "raw_value": "265.091",
+                "column_header": "RA | ( \\degree )"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "inference_basis": "gaia_dr2_default"
+            },
+            "epoch": {
+              "value": "2015.5",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "epoch_kind": "reference_epoch",
+              "inference_basis": "gaia_dr2_default"
+            },
+            "description": "RA from Gaia DR2"
+          },
+          "dec": {
+            "raw_value": "-27.820",
+            "value": "-27.820",
+            "unit": "deg",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table1.ecsv",
+                "line": 37,
+                "column": "col_004",
+                "raw_value": "-27.820",
+                "column_header": "DEC | ( \\degree )"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "inference_basis": "gaia_dr2_default"
+            },
+            "epoch": {
+              "value": "2015.5",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "epoch_kind": "reference_epoch",
+              "inference_basis": "gaia_dr2_default"
+            },
+            "description": "Dec from Gaia DR2"
+          },
+          "distance": {
+            "raw_value": "7267.601",
+            "value": "7267.601",
+            "unit": "pc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 326,
+                "end_line": 383,
+                "context": "Tab dist: distance estimation"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "tangential_velocity": {
+            "raw_value": "5903.893",
+            "value": "5903.893",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+                "line": 23,
+                "column": "col_005",
+                "raw_value": "5903.893",
+                "column_header": "V_T | (km s -1 )"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          }
+        },
+        "bound_assessment": {}
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "flight_time": {
+          "raw_value": "33755.978",
+          "value": "33755.978",
+          "unit": "yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 23,
+              "column": "col_006",
+              "raw_value": "33755.978",
+              "column_header": "T_eject | (yr)"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "Galactic centre",
+          "value": "Galactic centre",
+          "unit": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+              "start_line": 426,
+              "end_line": 433,
+              "context": "Selection: 7 stars that radiate from the Galactic centre"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ],
+          "description": "PM vectors traced back to within 2° of Galactic centre"
+        },
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": {
+          "raw_value": "33755.978",
+          "value": "33755.978",
+          "unit": "yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 23,
+              "column": "col_006",
+              "raw_value": "33755.978",
+              "column_header": "T_eject | (yr)"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "proper_motion_total",
+          "raw_value": "171.367 +/- 27",
+          "value": "171.367",
+          "unit": "mas yr^-1",
+          "error": "27",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 23,
+              "column": "col_004",
+              "raw_value": "171.367 +/- 27",
+              "column_header": "PM^b | ( mas~yr^-1 )"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "description": "Total proper motion from VVV (epoch 2010-2015). Gaia DR2 PM unreliable due to astrometric excess noise."
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "1912.02129:cand-004",
+        "paper_candidate_id": "VVV RC 19",
+        "gaia_source_id": "Gaia DR2 4060875566737607936",
+        "all": [
+          {
+            "value": "VVV RC 19",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 262,
+                "end_line": 321,
+                "context": "Tab table1: ID 19"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR2 4060875566737607936",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 262,
+                "end_line": 321,
+                "context": "Tab table1: Source ID 4060875566737607936"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "VVV RC 19: PM vector consistent with ejection from Galactic centre. V_T=6442.689 km/s, d=7317.010 pc, T_eject=31913.086 yr. Gaia DR2 astrometry flagged with significant excess noise; VVV-derived PM used. Candidate hypervelocity red clump star in the Galactic bulge. No RV available — follow-up needed to confirm unbound status.",
+        "paper_labels": [
+          "hvs_candidate",
+          "high_velocity_star"
+        ],
+        "galactic_bound_claim": "not_reported",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "medium",
+        "confidence_reason": "Candidate selected based on PM vector radiating from Galactic centre within 2°. Paper explicitly treats as HVS candidate but notes no RV available for orbit confirmation. Gaia DR2 astrometric excess noise makes Gaia PM unreliable.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 426,
+            "end_line": 433,
+            "context": "Selection: 7 stars that radiate from the Galactic centre"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 458,
+            "end_line": 493,
+            "context": "Tab table2: Candidate HVS with V_T and T_eject"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 435,
+            "end_line": 513,
+            "context": "Sec 4-5: Discussion and Conclusions"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 149,
+            "end_line": 157,
+            "context": "Paper abstract: discovery of 7 candidate HVS RC stars"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 193,
+            "end_line": 260,
+            "context": "Sec 3: Selection of Hypervelocity RC stars"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "265.435",
+            "value": "265.435",
+            "unit": "deg",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table1.ecsv",
+                "line": 39,
+                "column": "col_003",
+                "raw_value": "265.435",
+                "column_header": "RA | ( \\degree )"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "inference_basis": "gaia_dr2_default"
+            },
+            "epoch": {
+              "value": "2015.5",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "epoch_kind": "reference_epoch",
+              "inference_basis": "gaia_dr2_default"
+            },
+            "description": "RA from Gaia DR2"
+          },
+          "dec": {
+            "raw_value": "-27.529",
+            "value": "-27.529",
+            "unit": "deg",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table1.ecsv",
+                "line": 39,
+                "column": "col_004",
+                "raw_value": "-27.529",
+                "column_header": "DEC | ( \\degree )"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "inference_basis": "gaia_dr2_default"
+            },
+            "epoch": {
+              "value": "2015.5",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "epoch_kind": "reference_epoch",
+              "inference_basis": "gaia_dr2_default"
+            },
+            "description": "Dec from Gaia DR2"
+          },
+          "distance": {
+            "raw_value": "7317.010",
+            "value": "7317.010",
+            "unit": "pc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 326,
+                "end_line": 383,
+                "context": "Tab dist: distance estimation"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "tangential_velocity": {
+            "raw_value": "6442.689",
+            "value": "6442.689",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+                "line": 24,
+                "column": "col_005",
+                "raw_value": "6442.689",
+                "column_header": "V_T | (km s -1 )"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          }
+        },
+        "bound_assessment": {}
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "flight_time": {
+          "raw_value": "31913.086",
+          "value": "31913.086",
+          "unit": "yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 24,
+              "column": "col_006",
+              "raw_value": "31913.086",
+              "column_header": "T_eject | (yr)"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "Galactic centre",
+          "value": "Galactic centre",
+          "unit": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+              "start_line": 426,
+              "end_line": 433,
+              "context": "Selection: 7 stars that radiate from the Galactic centre"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ],
+          "description": "PM vectors traced back to within 2° of Galactic centre"
+        },
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": {
+          "raw_value": "31913.086",
+          "value": "31913.086",
+          "unit": "yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 24,
+              "column": "col_006",
+              "raw_value": "31913.086",
+              "column_header": "T_eject | (yr)"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "proper_motion_total",
+          "raw_value": "185.743 +/- 26",
+          "value": "185.743",
+          "unit": "mas yr^-1",
+          "error": "26",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 24,
+              "column": "col_004",
+              "raw_value": "185.743 +/- 26",
+              "column_header": "PM^b | ( mas~yr^-1 )"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "description": "Total proper motion from VVV (epoch 2010-2015). Gaia DR2 PM unreliable due to astrometric excess noise."
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "1912.02129:cand-005",
+        "paper_candidate_id": "VVV RC 20",
+        "gaia_source_id": "Gaia DR2 4061174432075039488",
+        "all": [
+          {
+            "value": "VVV RC 20",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 262,
+                "end_line": 321,
+                "context": "Tab table1: ID 20"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR2 4061174432075039488",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 262,
+                "end_line": 321,
+                "context": "Tab table1: Source ID 4061174432075039488"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "VVV RC 20: PM vector consistent with ejection from Galactic centre. V_T=17918.229 km/s, d=7663.788 pc, T_eject=21476.753 yr. Gaia DR2 astrometry flagged with significant excess noise; VVV-derived PM used. Candidate hypervelocity red clump star in the Galactic bulge. No RV available — follow-up needed to confirm unbound status.",
+        "paper_labels": [
+          "hvs_candidate",
+          "high_velocity_star"
+        ],
+        "galactic_bound_claim": "not_reported",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "medium",
+        "confidence_reason": "Candidate selected based on PM vector radiating from Galactic centre within 2°. Paper explicitly treats as HVS candidate but notes no RV available for orbit confirmation. Gaia DR2 astrometric excess noise makes Gaia PM unreliable.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 426,
+            "end_line": 433,
+            "context": "Selection: 7 stars that radiate from the Galactic centre"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 458,
+            "end_line": 493,
+            "context": "Tab table2: Candidate HVS with V_T and T_eject"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 435,
+            "end_line": 513,
+            "context": "Sec 4-5: Discussion and Conclusions"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 149,
+            "end_line": 157,
+            "context": "Paper abstract: discovery of 7 candidate HVS RC stars"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 193,
+            "end_line": 260,
+            "context": "Sec 3: Selection of Hypervelocity RC stars"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "263.213",
+            "value": "263.213",
+            "unit": "deg",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table1.ecsv",
+                "line": 40,
+                "column": "col_003",
+                "raw_value": "263.213",
+                "column_header": "RA | ( \\degree )"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "inference_basis": "gaia_dr2_default"
+            },
+            "epoch": {
+              "value": "2015.5",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "epoch_kind": "reference_epoch",
+              "inference_basis": "gaia_dr2_default"
+            },
+            "description": "RA from Gaia DR2"
+          },
+          "dec": {
+            "raw_value": "-28.048",
+            "value": "-28.048",
+            "unit": "deg",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table1.ecsv",
+                "line": 40,
+                "column": "col_004",
+                "raw_value": "-28.048",
+                "column_header": "DEC | ( \\degree )"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "inference_basis": "gaia_dr2_default"
+            },
+            "epoch": {
+              "value": "2015.5",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "epoch_kind": "reference_epoch",
+              "inference_basis": "gaia_dr2_default"
+            },
+            "description": "Dec from Gaia DR2"
+          },
+          "distance": {
+            "raw_value": "7663.788",
+            "value": "7663.788",
+            "unit": "pc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 326,
+                "end_line": 383,
+                "context": "Tab dist: distance estimation"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "tangential_velocity": {
+            "raw_value": "17918.229",
+            "value": "17918.229",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+                "line": 25,
+                "column": "col_005",
+                "raw_value": "17918.229",
+                "column_header": "V_T | (km s -1 )"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          }
+        },
+        "bound_assessment": {}
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "flight_time": {
+          "raw_value": "21476.753",
+          "value": "21476.753",
+          "unit": "yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 25,
+              "column": "col_006",
+              "raw_value": "21476.753",
+              "column_header": "T_eject | (yr)"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "Galactic centre",
+          "value": "Galactic centre",
+          "unit": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+              "start_line": 426,
+              "end_line": 433,
+              "context": "Selection: 7 stars that radiate from the Galactic centre"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ],
+          "description": "PM vectors traced back to within 2° of Galactic centre"
+        },
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": {
+          "raw_value": "21476.753",
+          "value": "21476.753",
+          "unit": "yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 25,
+              "column": "col_006",
+              "raw_value": "21476.753",
+              "column_header": "T_eject | (yr)"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "proper_motion_total",
+          "raw_value": "493.208 +/- 24",
+          "value": "493.208",
+          "unit": "mas yr^-1",
+          "error": "24",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 25,
+              "column": "col_004",
+              "raw_value": "493.208 +/- 24",
+              "column_header": "PM^b | ( mas~yr^-1 )"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "description": "Total proper motion from VVV (epoch 2010-2015). Gaia DR2 PM unreliable due to astrometric excess noise."
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "1912.02129:cand-006",
+        "paper_candidate_id": "VVV RC 22",
+        "gaia_source_id": "Gaia DR2 4061839842728015360",
+        "all": [
+          {
+            "value": "VVV RC 22",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 262,
+                "end_line": 321,
+                "context": "Tab table1: ID 22"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR2 4061839842728015360",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 262,
+                "end_line": 321,
+                "context": "Tab table1: Source ID 4061839842728015360"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "VVV RC 22: PM vector consistent with ejection from Galactic centre. V_T=7944.791 km/s, d=10712.555 pc, T_eject=67448.368 yr. Gaia DR2 astrometry flagged with significant excess noise; VVV-derived PM used. Candidate hypervelocity red clump star in the Galactic bulge. No RV available — follow-up needed to confirm unbound status.",
+        "paper_labels": [
+          "hvs_candidate",
+          "high_velocity_star"
+        ],
+        "galactic_bound_claim": "not_reported",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "medium",
+        "confidence_reason": "Candidate selected based on PM vector radiating from Galactic centre within 2°. Paper explicitly treats as HVS candidate but notes no RV available for orbit confirmation. Gaia DR2 astrometric excess noise makes Gaia PM unreliable.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 426,
+            "end_line": 433,
+            "context": "Selection: 7 stars that radiate from the Galactic centre"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 458,
+            "end_line": 493,
+            "context": "Tab table2: Candidate HVS with V_T and T_eject"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 435,
+            "end_line": 513,
+            "context": "Sec 4-5: Discussion and Conclusions"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 149,
+            "end_line": 157,
+            "context": "Paper abstract: discovery of 7 candidate HVS RC stars"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 193,
+            "end_line": 260,
+            "context": "Sec 3: Selection of Hypervelocity RC stars"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "265.130",
+            "value": "265.130",
+            "unit": "deg",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table1.ecsv",
+                "line": 42,
+                "column": "col_003",
+                "raw_value": "265.130",
+                "column_header": "RA | ( \\degree )"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "inference_basis": "gaia_dr2_default"
+            },
+            "epoch": {
+              "value": "2015.5",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "epoch_kind": "reference_epoch",
+              "inference_basis": "gaia_dr2_default"
+            },
+            "description": "RA from Gaia DR2"
+          },
+          "dec": {
+            "raw_value": "-26.232",
+            "value": "-26.232",
+            "unit": "deg",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table1.ecsv",
+                "line": 42,
+                "column": "col_004",
+                "raw_value": "-26.232",
+                "column_header": "DEC | ( \\degree )"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "inference_basis": "gaia_dr2_default"
+            },
+            "epoch": {
+              "value": "2015.5",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "epoch_kind": "reference_epoch",
+              "inference_basis": "gaia_dr2_default"
+            },
+            "description": "Dec from Gaia DR2"
+          },
+          "distance": {
+            "raw_value": "10712.555",
+            "value": "10712.555",
+            "unit": "pc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 326,
+                "end_line": 383,
+                "context": "Tab dist: distance estimation"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "tangential_velocity": {
+            "raw_value": "7944.791",
+            "value": "7944.791",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+                "line": 26,
+                "column": "col_005",
+                "raw_value": "7944.791",
+                "column_header": "V_T | (km s -1 )"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          }
+        },
+        "bound_assessment": {}
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "flight_time": {
+          "raw_value": "67448.368",
+          "value": "67448.368",
+          "unit": "yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 26,
+              "column": "col_006",
+              "raw_value": "67448.368",
+              "column_header": "T_eject | (yr)"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "Galactic centre",
+          "value": "Galactic centre",
+          "unit": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+              "start_line": 426,
+              "end_line": 433,
+              "context": "Selection: 7 stars that radiate from the Galactic centre"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ],
+          "description": "PM vectors traced back to within 2° of Galactic centre"
+        },
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": {
+          "raw_value": "67448.368",
+          "value": "67448.368",
+          "unit": "yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 26,
+              "column": "col_006",
+              "raw_value": "67448.368",
+              "column_header": "T_eject | (yr)"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "proper_motion_total",
+          "raw_value": "156.447 +/- 30",
+          "value": "156.447",
+          "unit": "mas yr^-1",
+          "error": "30",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 26,
+              "column": "col_004",
+              "raw_value": "156.447 +/- 30",
+              "column_header": "PM^b | ( mas~yr^-1 )"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "description": "Total proper motion from VVV (epoch 2010-2015). Gaia DR2 PM unreliable due to astrometric excess noise."
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "1912.02129:cand-007",
+        "paper_candidate_id": "VVV RC 23",
+        "gaia_source_id": "Gaia DR2 4062483636849326080",
+        "all": [
+          {
+            "value": "VVV RC 23",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 262,
+                "end_line": 321,
+                "context": "Tab table1: ID 23"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR2 4062483636849326080",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 262,
+                "end_line": 321,
+                "context": "Tab table1: Source ID 4062483636849326080"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "VVV RC 23: PM vector consistent with ejection from Galactic centre. V_T=5948.829 km/s, d=10171.570 pc, T_eject=95509.047 yr. Gaia DR2 astrometry flagged with significant excess noise; VVV-derived PM used. Candidate hypervelocity red clump star in the Galactic bulge. No RV available — follow-up needed to confirm unbound status.",
+        "paper_labels": [
+          "hvs_candidate",
+          "high_velocity_star"
+        ],
+        "galactic_bound_claim": "not_reported",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "medium",
+        "confidence_reason": "Candidate selected based on PM vector radiating from Galactic centre within 2°. Paper explicitly treats as HVS candidate but notes no RV available for orbit confirmation. Gaia DR2 astrometric excess noise makes Gaia PM unreliable.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 426,
+            "end_line": 433,
+            "context": "Selection: 7 stars that radiate from the Galactic centre"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 458,
+            "end_line": 493,
+            "context": "Tab table2: Candidate HVS with V_T and T_eject"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 435,
+            "end_line": 513,
+            "context": "Sec 4-5: Discussion and Conclusions"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 149,
+            "end_line": 157,
+            "context": "Paper abstract: discovery of 7 candidate HVS RC stars"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+            "start_line": 193,
+            "end_line": 260,
+            "context": "Sec 3: Selection of Hypervelocity RC stars"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "270.111",
+            "value": "270.111",
+            "unit": "deg",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table1.ecsv",
+                "line": 43,
+                "column": "col_003",
+                "raw_value": "270.111",
+                "column_header": "RA | ( \\degree )"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "inference_basis": "gaia_dr2_default"
+            },
+            "epoch": {
+              "value": "2015.5",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "epoch_kind": "reference_epoch",
+              "inference_basis": "gaia_dr2_default"
+            },
+            "description": "RA from Gaia DR2"
+          },
+          "dec": {
+            "raw_value": "-28.542",
+            "value": "-28.542",
+            "unit": "deg",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table1.ecsv",
+                "line": 43,
+                "column": "col_004",
+                "raw_value": "-28.542",
+                "column_header": "DEC | ( \\degree )"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ],
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "inference_basis": "gaia_dr2_default"
+            },
+            "epoch": {
+              "value": "2015.5",
+              "source_refs": [
+                {
+                  "kind": "text",
+                  "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                  "start_line": 181,
+                  "end_line": 181,
+                  "context": "Gaia DR2 data (ICRS, epoch 2015.5)"
+                }
+              ],
+              "epoch_kind": "reference_epoch",
+              "inference_basis": "gaia_dr2_default"
+            },
+            "description": "Dec from Gaia DR2"
+          },
+          "distance": {
+            "raw_value": "10171.570",
+            "value": "10171.570",
+            "unit": "pc",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+                "start_line": 326,
+                "end_line": 383,
+                "context": "Tab dist: distance estimation"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "tangential_velocity": {
+            "raw_value": "5948.829",
+            "value": "5948.829",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+                "line": 27,
+                "column": "col_005",
+                "raw_value": "5948.829",
+                "column_header": "V_T | (km s -1 )"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          }
+        },
+        "bound_assessment": {}
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "flight_time": {
+          "raw_value": "95509.047",
+          "value": "95509.047",
+          "unit": "yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 27,
+              "column": "col_006",
+              "raw_value": "95509.047",
+              "column_header": "T_eject | (yr)"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "Galactic centre",
+          "value": "Galactic centre",
+          "unit": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+              "start_line": 426,
+              "end_line": 433,
+              "context": "Selection: 7 stars that radiate from the Galactic centre"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ],
+          "description": "PM vectors traced back to within 2° of Galactic centre"
+        },
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": {
+          "raw_value": "95509.047",
+          "value": "95509.047",
+          "unit": "yr",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 27,
+              "column": "col_006",
+              "raw_value": "95509.047",
+              "column_header": "T_eject | (yr)"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "proper_motion_total",
+          "raw_value": "123.374 +/- 31",
+          "value": "123.374",
+          "unit": "mas yr^-1",
+          "error": "31",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+              "line": 27,
+              "column": "col_004",
+              "raw_value": "123.374 +/- 31",
+              "column_header": "PM^b | ( mas~yr^-1 )"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "description": "Total proper motion from VVV (epoch 2010-2015). Gaia DR2 PM unreliable due to astrometric excess noise."
+        }
+      ]
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "bulge-rc-hvs-candidates",
+      "description": "7颗VVV自行矢量指向银心方向(2°范围内)的核球RC星候选体(ID: 10,15,17,19,20,22,23)。Gaia DR2存在显著astrometric excess noise，VVV两历元(2010-2015)自行更可靠。缺乏径向速度。",
+      "decision": "included",
+      "reason": "论文明确称其为'candidate hypervelocity stars'。7颗全部纳入。V_T范围5900-17900 km/s远超典型银盘恒星速度。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+          "start_line": 426,
+          "end_line": 433,
+          "context": "Selection: 7 stars that radiate from the Galactic centre"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+          "start_line": 458,
+          "end_line": 493,
+          "context": "Tab table2: Candidate HVS with V_T and T_eject"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+          "start_line": 500,
+          "end_line": 513,
+          "context": "Conclusions: 7 HVS candidates"
+        }
+      ]
+    },
+    {
+      "group_id": "all-34-rc-stars",
+      "description": "全部34颗核球RC星。7颗HVS候选体+27颗非候选体。",
+      "decision": "partially_included",
+      "reason": "27颗非候选体RC星PM矢量未指向银心方向，不符合论文HVS选择标准。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+          "start_line": 262,
+          "end_line": 321,
+          "context": "Tab table1: Gaia and VVV Photometry of Bulge RC Stars"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+          "start_line": 426,
+          "end_line": 429,
+          "context": "7 stars that radiate from the Galactic centre"
+        }
+      ]
+    }
+  ]
+}

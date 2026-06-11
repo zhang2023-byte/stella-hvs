@@ -1,0 +1,198 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2105.12600",
+    "title": "Analysis of Selected Runaway Stars in the Orion Nebula Based on Data from the Gaia EDR3 Catalogue",
+    "month": "2021-05",
+    "source_note_json": "notes/2021/2021-05/2021-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2105.12600",
+      "pdf": "https://arxiv.org/pdf/2105.12600"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2105.12600",
+    "audit_path": "literature/2105.12600/audit.json",
+    "source_dir": "literature/2105.12600/arxiv_source",
+    "tex_root": "literature/2105.12600/arxiv_source/ArXiv-Enc-Orion=2021.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:24:21",
+    "reviewer": "agent",
+    "summary": "论文使用 Gaia EDR3 星表的视差和自行数据，通过蒙特卡洛方法模拟多颗速逃星（runaway stars）的历史轨迹。确认 AE Aur 和 μ Col 是约 2.5 Myr 前多体系统瓦解的产物，Orion Trapezium 星团可能是其母星团。Gaia EDR3 的 ι Ori 视差数据不支持其与 AE Aur、μ Col 同源。确认 HD 30112 和 HD 43112 约 1 Myr 前从 Col 69 星团逃逸。首次发现 Gaia EDR3 3021115184676332288 和 2983790269606043648 可能是约 1.1 Myr 前瓦解的双星系统。论文含三张 LaTeX 数据表：Table 1 列出 AE Aur、μ Col、ι Ori 及 Orion Trapezium 在 Hipparcos (1997)、Gaia DR2、Gaia EDR3 和 VLBI 中的运动学参数；Table 2 列出从 Schoettler et al. (2020) 和 Farias et al. (2020) 列表中选取的速逃星的 Gaia EDR3 运动学参数；Table 3 列出与 Col 69 星团相关的恒星 HD 43112、HD 30112 及 Col 69 本身的 Gaia EDR3 运动学参数。论文不含外部 URL 链接。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-dat-1",
+      "kind": "latex_table",
+      "asset_type": "input_astrometry",
+      "role_in_paper": "汇总 AE Aur、μ Col、ι Ori 三颗速逃星及 Orion Trapezium 星团中心在 Hipparcos (1997)、Gaia DR2、Gaia EDR3 和 VLBI 四个来源中的初始运动学参数（自行、视差、视向速度、日心距离），作为蒙特卡洛轨迹模拟的输入数据。",
+      "source_refs": [
+        {
+          "path": "literature/2105.12600/arxiv_source/ArXiv-Enc-Orion=2021.tex",
+          "start_line": 90,
+          "end_line": 131,
+          "caption": "Initial kinematic characteristics of the stars taken from various catalogues, μ_α^*=μ_αcosδ",
+          "label": "tab-dat-1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "恒星标识或参数行标签（AE Aur、μ Col、ι Ori、Orion Trapezium，以及各行对应的运动学参数如 μα*、μδ、π、Vr、d）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Hipparcos (1997)",
+          "meaning": "来自 Hipparcos (1997) 星表的测量值（自行 mas/yr、视差 mas、视向速度 km/s、距离 pc）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia DR2",
+          "meaning": "来自 Gaia DR2 星表 (Brown et al. 2018) 的测量值（自行 mas/yr、视差 mas）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia EDR3",
+          "meaning": "来自 Gaia EDR3 星表 (Brown et al. 2020; Lindegren et al. 2020) 的测量值（自行 mas/yr、视差 mas、视向速度 km/s、距离 pc）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "VLBI",
+          "meaning": "来自 VLBI 射电观测 (Reid et al. 2019) 的测量值（自行 mas/yr、视差 mas、视向速度 km/s、距离 pc），仅适用于 Orion Trapezium / Orion Nebula 中心区域",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section DATA: 'Table 1 gives the measured characteristics of the stars AE Aur, μCol, and ιOri taken from several sources. These include, first, the Hipparcos (1997) catalogue with which Hoogerwerf et al. (2001) worked, second, the Gaia DR2 catalogue, third, the Gaia EDR3 catalogue, and, finally, the VLBI measurements for the Orion Nebula.' 表注列出了各视向速度的文献来源。",
+      "comments": "表结构为多行参数布局：每颗恒星占一组行，分别列出 μα*、μδ、π、Vr、d 的测量值及误差。VLBI 列仅 Orion Trapezium 行有数据（来自 Reid et al. 2019）。Gaia DR2 列仅 AE Aur 和 μ Col 有自行和视差数据，Vr 和 d 未提供。"
+    },
+    {
+      "id": "table-tab-dat-2",
+      "kind": "latex_table",
+      "asset_type": "input_astrometry",
+      "role_in_paper": "列出从 Schoettler et al. (2020) 和 Farias et al. (2020) 的速逃星候选列表中筛选出的 7 颗恒星在 Gaia EDR3 星表中的初始运动学参数（视差、自行、视向速度），用于进一步分析这些恒星是否可能与 AE Aur/μ Col 同源或从 Orion Trapezium 逃逸。",
+      "source_refs": [
+        {
+          "path": "literature/2105.12600/arxiv_source/ArXiv-Enc-Orion=2021.tex",
+          "start_line": 134,
+          "end_line": 155,
+          "caption": "Initial kinematic characteristics taken from the Gaia EDR3 catalogue for runaway stars from the lists by Schoettler et al. (2020) and Farias et al. (2020)",
+          "label": "tab-dat-2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia EDR3",
+          "meaning": "Gaia EDR3 源标识符 (source_id)，19 位数字唯一标识该恒星",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "π",
+          "meaning": "Gaia EDR3 三角视差及其误差",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μαcosδ",
+          "meaning": "赤经方向自行及其误差，μαcosδ = μα × cosδ",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μδ",
+          "meaning": "赤纬方向自行及其误差",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Vr",
+          "meaning": "日心视向速度及其误差",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section DATA: 'From these publications we selected such stars that, first, possessed a significant (more than 35 km/s) escape velocity from the Orion Nebula, second, had measured radial velocities, and, third, had measurements in the Gaia EDR3 catalogue. The most interesting stars from the selected ones are given in Table 2.' 前 5 颗来自 Schoettler et al. (2020)，后 2 颗来自 Farias et al. (2020)。",
+      "comments": "表中包含 7 颗星：前 5 颗（3012438796685305728 至 3003060825792025088）来自 Schoettler et al. (2020)；后 2 颗（3021115184676332288 和 2983790269606043648）来自 Farias et al. (2020)。3021115184676332288 和 2983790269606043648 是首次被发现可能为瓦解双星的候选体。"
+    },
+    {
+      "id": "table-tab-Col69",
+      "kind": "latex_table",
+      "asset_type": "input_astrometry",
+      "role_in_paper": "列出与 Col 69 (λ Ori) 疏散星团相关的两颗速逃星 HD 43112、HD 30112 以及 Col 69 星团本身的 Gaia EDR3 运动学参数，用于蒙特卡洛模拟验证它们是否约 1 Myr 前从该星团逃逸。",
+      "source_refs": [
+        {
+          "path": "literature/2105.12600/arxiv_source/ArXiv-Enc-Orion=2021.tex",
+          "start_line": 158,
+          "end_line": 177,
+          "caption": "Initial kinematic characteristics of the stars associated with the cluster Col 69 taken from the Gaia EDR3 catalogue",
+          "label": "tab-Col69"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "天体标识：速逃星 HD 43112、HD 30112 或疏散星团 Col 69",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "π",
+          "meaning": "Gaia EDR3 三角视差及其误差",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μαcosδ",
+          "meaning": "赤经方向自行及其误差，μαcosδ = μα × cosδ",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μδ",
+          "meaning": "赤纬方向自行及其误差",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Vr",
+          "meaning": "日心视向速度及其误差",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ref Vr",
+          "meaning": "视向速度数据来源：(a) Gontcharov (2006)，(b) Carrera et al. (2019)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section DATA subsection 'HD 30112, HD 43112, and Col 69': 'For the stars HD 30112, HD 43112, and the cluster Col 69 Table 3 gives their trigonometric parallaxes and proper motions taken from the Gaia EDR3 catalogue.' Col 69 的自行和视差通过 Cantat-Gaudin et al. (2018) 星表中成员概率 >0.9 的多颗恒星的平均值确定。",
+      "comments": "Col 69 星团中心的天体测量参数由 Cantat-Gaudin et al. (2018) 成员星表中 7' 半径内的多颗高概率成员星平均得到。表注标明视向速度来源：HD 43112 和 HD 30112 的 Vr 来自 Gontcharov (2006)，Col 69 的 Vr 来自 Carrera et al. (2019)。"
+    }
+  ],
+  "external_resources": []
+}

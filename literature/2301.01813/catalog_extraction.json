@@ -1,0 +1,1753 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:55:25",
+  "paper": {
+    "arxiv_id": "2301.01813",
+    "title": "The HH 24 Complex: Jets, Multiple Star Formation, and Orphaned Protostars",
+    "month": "2023-01"
+  },
+  "review": {
+    "path": "literature/2301.01813/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225525",
+    "started_at": "2026-05-22T22:55:25",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2301.01813",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 12,
+      "work_count": 12,
+      "table_count": 12,
+      "success_count": 12,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 12,
+      "file_success_count": 12,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table-overview",
+      "internal_table_id": "table-table-overview",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+        "start_line": 388,
+        "end_line": 415,
+        "caption": "Overview of the HH 24 Complex\\label{table:overview}",
+        "label": "table:overview"
+      },
+      "source_path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+      "excerpt_path": "literature/2301.01813/catalog_sources/table-table-overview/excerpt.tex",
+      "sha256": "30d4b46148c324c0fb7742f0e40eb42a6955101f65f7e0844a7d2a2a8684de0e",
+      "line_count": 28,
+      "error": ""
+    },
+    {
+      "id": "table-table-almamaps",
+      "internal_table_id": "table-table-almamaps",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+        "start_line": 715,
+        "end_line": 739,
+        "caption": "ALMA Observations \\label{table:almamaps}",
+        "label": "table:almamaps"
+      },
+      "source_path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+      "excerpt_path": "literature/2301.01813/catalog_sources/table-table-almamaps/excerpt.tex",
+      "sha256": "9da29b957bee73ec39a391d64cf2658ad26735b5fb48e66d4abb302397bb226b",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-table-coordinates",
+      "internal_table_id": "table-table-coordinates",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+        "start_line": 1068,
+        "end_line": 1145,
+        "caption": "Coordinates and 2MASS-, SPITZER-, and WISE-Photometry of HH~24 Sources and H$\\alpha$ emission stars \\label{table:coordinates}",
+        "label": "table:coordinates"
+      },
+      "source_path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+      "excerpt_path": "literature/2301.01813/catalog_sources/table-table-coordinates/excerpt.tex",
+      "sha256": "453d5f0293b7cd43b61b2b6359a24788f014f8bec681435cffcb3eca5543024d",
+      "line_count": 78,
+      "error": ""
+    },
+    {
+      "id": "table-table-vlt",
+      "internal_table_id": "table-table-vlt",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+        "start_line": 1150,
+        "end_line": 1170,
+        "caption": "VLT Photometry of SSV 63 Components\\label{table:vlt}",
+        "label": "table:vlt"
+      },
+      "source_path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+      "excerpt_path": "literature/2301.01813/catalog_sources/table-table-vlt/excerpt.tex",
+      "sha256": "a3c80ee44948bb5bcc53e0b75c7c0b6af9193f4a8ce1302bc3137a18be3c0b90",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-table-vla-parameters",
+      "internal_table_id": "table-table-vla-parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+        "start_line": 1265,
+        "end_line": 1289,
+        "caption": "Parameters of the Radio Sources in the SSV 63 Region\\label{table:vla-parameters}",
+        "label": "table:vla-parameters"
+      },
+      "source_path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+      "excerpt_path": "literature/2301.01813/catalog_sources/table-table-vla-parameters/excerpt.tex",
+      "sha256": "5fe31e8f4c4abba48458745492e2458b36c52fed600cc4445c5de2f3290bfb50",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-table-giant-bowshocks",
+      "internal_table_id": "table-table-giant-bowshocks",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+        "start_line": 2419,
+        "end_line": 2455,
+        "caption": "Giant Bow Shocks^a\\label{table:giant-bowshocks}",
+        "label": "table:giant-bowshocks"
+      },
+      "source_path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+      "excerpt_path": "literature/2301.01813/catalog_sources/table-table-giant-bowshocks/excerpt.tex",
+      "sha256": "f5cb957eefe42b4e90e28981ff074800669bcb9e82355527627704fece19fb6b",
+      "line_count": 37,
+      "error": ""
+    },
+    {
+      "id": "table-table-images-pm-giant-bowshocks",
+      "internal_table_id": "table-table-images-pm-giant-bowshocks",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+        "start_line": 2506,
+        "end_line": 2524,
+        "caption": "Images used for Proper Motions of Giant Bow Shocks\\label{table:images-pm-giant-bowshocks}",
+        "label": "table:images-pm-giant-bowshocks"
+      },
+      "source_path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+      "excerpt_path": "literature/2301.01813/catalog_sources/table-table-images-pm-giant-bowshocks/excerpt.tex",
+      "sha256": "259eca56f3ee4e3e83e22dbd0e6ea134a6ce01d0c7a2581cb44212f8608414c3",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-table-pm-giant-bowshocks",
+      "internal_table_id": "table-table-pm-giant-bowshocks",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+        "start_line": 2536,
+        "end_line": 2579,
+        "caption": "Parsec-Scale Components \\& Proper Motions\\label{table:pm-giant-bowshocks}",
+        "label": "table:pm-giant-bowshocks"
+      },
+      "source_path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+      "excerpt_path": "literature/2301.01813/catalog_sources/table-table-pm-giant-bowshocks/excerpt.tex",
+      "sha256": "8f3d93f0c07ab809cf8bdbc44a5c9160fe15d8c0af833da6d663700e3c671291",
+      "line_count": 44,
+      "error": ""
+    },
+    {
+      "id": "table-table-gaia",
+      "internal_table_id": "table-table-gaia",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+        "start_line": 3187,
+        "end_line": 3213,
+        "caption": "Gaia EDR3 Proper Motions for H$\\alpha$ 1-5\\label{table:gaia}",
+        "label": "table:gaia"
+      },
+      "source_path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+      "excerpt_path": "literature/2301.01813/catalog_sources/table-table-gaia/excerpt.tex",
+      "sha256": "3d5520895ffac079db51b54038217dd7efe7c6f1f95bea357a338af75b443a49",
+      "line_count": 27,
+      "error": ""
+    },
+    {
+      "id": "table-table-cont-fit",
+      "internal_table_id": "table-table-cont-fit",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+        "start_line": 3591,
+        "end_line": 3608,
+        "caption": "Gaussian fitting of the 1.3 mm continuum emission\\label{table:cont-fit}",
+        "label": "table:cont-fit"
+      },
+      "source_path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+      "excerpt_path": "literature/2301.01813/catalog_sources/table-table-cont-fit/excerpt.tex",
+      "sha256": "2d2b7f5c677aab024473752bb1b70b5a0054d68157a1c990ce8cc9c7c6149140",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-table-alma-disk",
+      "internal_table_id": "table-table-alma-disk",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+        "start_line": 3689,
+        "end_line": 3704,
+        "caption": "Disk properties and stellar masses\\label{table:alma-disk}",
+        "label": "table:alma-disk"
+      },
+      "source_path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+      "excerpt_path": "literature/2301.01813/catalog_sources/table-table-alma-disk/excerpt.tex",
+      "sha256": "87535c0503433285228f0970ef0c14edd9f93d9a69e4855e72fd018005cc5a13",
+      "line_count": 16,
+      "error": ""
+    },
+    {
+      "id": "table-table-line-fit",
+      "internal_table_id": "table-table-line-fit",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+        "start_line": 3840,
+        "end_line": 3868,
+        "caption": "Fitting of the C$^{18}$O emission with kinematical disk models\\label{table:line-fit}",
+        "label": "table:line-fit"
+      },
+      "source_path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+      "excerpt_path": "literature/2301.01813/catalog_sources/table-table-line-fit/excerpt.tex",
+      "sha256": "c62baa6544ba9281198dd25f67d4a76621131e23d394cef76ab8d06d1323fed0",
+      "line_count": 29,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table-overview",
+      "internal_table_id": "table-table-overview",
+      "status": "success",
+      "ecsv_path": "literature/2301.01813/catalog_tables/table-table-overview.ecsv",
+      "caption": "Overview of the HH 24 Complex\\label{table:overview}",
+      "label": "table:overview",
+      "row_count": 8,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Jet",
+          "PA",
+          "Orient.",
+          "Giant Bow-Shocks a",
+          "Source"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Jet",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "PA",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Orient.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Giant Bow-Shocks a",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppsyj6lr4/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.01813/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppsyj6lr4/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.01813/catalog_sources/table-table-overview/wrapped.tex",
+            "html": "literature/2301.01813/catalog_sources/table-table-overview/latexml.html",
+            "stdout": "literature/2301.01813/catalog_sources/table-table-overview/latexml.stdout.txt",
+            "stderr": "literature/2301.01813/catalog_sources/table-table-overview/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "30d4b46148c324c0fb7742f0e40eb42a6955101f65f7e0844a7d2a2a8684de0e"
+    },
+    {
+      "id": "table-table-almamaps",
+      "internal_table_id": "table-table-almamaps",
+      "status": "success",
+      "ecsv_path": "literature/2301.01813/catalog_tables/table-table-almamaps.ecsv",
+      "caption": "ALMA Observations \\label{table:almamaps}",
+      "label": "table:almamaps",
+      "row_count": 6,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Map",
+          "Configurations a",
+          "Beam Size",
+          "Beam P.A.",
+          "\\Delta V b",
+          "rms c"
+        ],
+        [
+          "",
+          "",
+          "[arcsec]",
+          "[deg E of N]",
+          "[km s -1 ]",
+          "[mJy beam -1 ]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Map",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Configurations a",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Beam Size | [arcsec]",
+          "unit_text": "[arcsec]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Beam P.A. | [deg E of N]",
+          "unit_text": "[deg E of N]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\Delta V b | [km s -1 ]",
+          "unit_text": "[km s -1 ]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "rms c | [mJy beam -1 ]",
+          "unit_text": "[mJy beam -1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpl41kt738/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.01813/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpl41kt738/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.01813/catalog_sources/table-table-almamaps/wrapped.tex",
+            "html": "literature/2301.01813/catalog_sources/table-table-almamaps/latexml.html",
+            "stdout": "literature/2301.01813/catalog_sources/table-table-almamaps/latexml.stdout.txt",
+            "stderr": "literature/2301.01813/catalog_sources/table-table-almamaps/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9da29b957bee73ec39a391d64cf2658ad26735b5fb48e66d4abb302397bb226b"
+    },
+    {
+      "id": "table-table-coordinates",
+      "internal_table_id": "table-table-coordinates",
+      "status": "success",
+      "ecsv_path": "literature/2301.01813/catalog_tables/table-table-coordinates.ecsv",
+      "caption": "Coordinates and 2MASS-, SPITZER-, and WISE-Photometry of HH~24 Sources and H$\\alpha$ emission stars \\label{table:coordinates}",
+      "label": "table:coordinates",
+      "row_count": 27,
+      "column_count": 15,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "\\alpha(2000)^a",
+          "\\delta(2000)^a",
+          "J",
+          "H",
+          "K",
+          "W1",
+          "I1",
+          "I2",
+          "W2",
+          "I3",
+          "I4",
+          "W3",
+          "W4",
+          "M1"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha(2000)^a",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta(2000)^a",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "J",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "H",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "K",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "W1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "I1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "I2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "W2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "I3",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "I4",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "W3",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "W4",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "M1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmtd0cu18/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.01813/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmtd0cu18/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.01813/catalog_sources/table-table-coordinates/wrapped.tex",
+            "html": "literature/2301.01813/catalog_sources/table-table-coordinates/latexml.html",
+            "stdout": "literature/2301.01813/catalog_sources/table-table-coordinates/latexml.stdout.txt",
+            "stderr": "literature/2301.01813/catalog_sources/table-table-coordinates/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "453d5f0293b7cd43b61b2b6359a24788f014f8bec681435cffcb3eca5543024d"
+    },
+    {
+      "id": "table-table-vlt",
+      "internal_table_id": "table-table-vlt",
+      "status": "success",
+      "ecsv_path": "literature/2301.01813/catalog_tables/table-table-vlt.ecsv",
+      "caption": "VLT Photometry of SSV 63 Components\\label{table:vlt}",
+      "label": "table:vlt",
+      "row_count": 6,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "K s",
+          "L’",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "K s",
+          "unit_text": "K s",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "L’",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb_hgk75e/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.01813/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb_hgk75e/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.01813/catalog_sources/table-table-vlt/wrapped.tex",
+            "html": "literature/2301.01813/catalog_sources/table-table-vlt/latexml.html",
+            "stdout": "literature/2301.01813/catalog_sources/table-table-vlt/latexml.stdout.txt",
+            "stderr": "literature/2301.01813/catalog_sources/table-table-vlt/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a3c80ee44948bb5bcc53e0b75c7c0b6af9193f4a8ce1302bc3137a18be3c0b90"
+    },
+    {
+      "id": "table-table-vla-parameters",
+      "internal_table_id": "table-table-vla-parameters",
+      "status": "success",
+      "ecsv_path": "literature/2301.01813/catalog_tables/table-table-vla-parameters.ecsv",
+      "caption": "Parameters of the Radio Sources in the SSV 63 Region\\label{table:vla-parameters}",
+      "label": "table:vla-parameters",
+      "row_count": 6,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "X Band a",
+          "",
+          "",
+          "Q band b",
+          "",
+          "",
+          "Spectral"
+        ],
+        [
+          "Source",
+          "\\alpha(2000)^c",
+          "\\delta(2000)^c",
+          "S( \\mu Jy) d",
+          "\\alpha(2000)^c",
+          "\\delta(2000)^c",
+          "S( \\mu Jy) d",
+          "Index"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "X Band a | \\alpha(2000)^c",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta(2000)^c",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "S( \\mu Jy) d",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Q band b | \\alpha(2000)^c",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\delta(2000)^c",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "S( \\mu Jy) d",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Spectral | Index",
+          "unit_text": "Index",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprwp5jw6s/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.01813/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprwp5jw6s/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.01813/catalog_sources/table-table-vla-parameters/wrapped.tex",
+            "html": "literature/2301.01813/catalog_sources/table-table-vla-parameters/latexml.html",
+            "stdout": "literature/2301.01813/catalog_sources/table-table-vla-parameters/latexml.stdout.txt",
+            "stderr": "literature/2301.01813/catalog_sources/table-table-vla-parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5fe31e8f4c4abba48458745492e2458b36c52fed600cc4445c5de2f3290bfb50"
+    },
+    {
+      "id": "table-table-giant-bowshocks",
+      "internal_table_id": "table-table-giant-bowshocks",
+      "status": "success",
+      "ecsv_path": "literature/2301.01813/catalog_tables/table-table-giant-bowshocks.ecsv",
+      "caption": "Giant Bow Shocks^a\\label{table:giant-bowshocks}",
+      "label": "table:giant-bowshocks",
+      "row_count": 11,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Shock",
+          "\\alpha 2000",
+          "\\delta 2000",
+          "Assoc. Jet",
+          "Source",
+          "Pos.Angle",
+          "Sep.[ ′′ ]",
+          "Length [pc] b"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Shock",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha 2000",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta 2000",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Assoc. Jet",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Pos.Angle",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Sep.[ ′′ ]",
+          "unit_text": "Sep.[ ′′ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Length [pc] b",
+          "unit_text": "Length [pc] b",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphpw6u1my/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.01813/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphpw6u1my/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.01813/catalog_sources/table-table-giant-bowshocks/wrapped.tex",
+            "html": "literature/2301.01813/catalog_sources/table-table-giant-bowshocks/latexml.html",
+            "stdout": "literature/2301.01813/catalog_sources/table-table-giant-bowshocks/latexml.stdout.txt",
+            "stderr": "literature/2301.01813/catalog_sources/table-table-giant-bowshocks/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f5cb957eefe42b4e90e28981ff074800669bcb9e82355527627704fece19fb6b"
+    },
+    {
+      "id": "table-table-images-pm-giant-bowshocks",
+      "internal_table_id": "table-table-images-pm-giant-bowshocks",
+      "status": "success",
+      "ecsv_path": "literature/2301.01813/catalog_tables/table-table-images-pm-giant-bowshocks.ecsv",
+      "caption": "Images used for Proper Motions of Giant Bow Shocks\\label{table:images-pm-giant-bowshocks}",
+      "label": "table:images-pm-giant-bowshocks",
+      "row_count": 4,
+      "column_count": 3,
+      "environment": "deluxetable",
+      "header_rows": [
+        [
+          "Date",
+          "MJD",
+          "Instrument \\& Filter"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Date",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "MJD",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Instrument \\& Filter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\Feii",
+        "unresolved LaTeX macro preserved: \\Ha",
+        "unresolved LaTeX macro preserved: \\Sii"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpr3zbjsuo/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.01813/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpr3zbjsuo/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.01813/catalog_sources/table-table-images-pm-giant-bowshocks/wrapped.tex",
+            "html": "literature/2301.01813/catalog_sources/table-table-images-pm-giant-bowshocks/latexml.html",
+            "stdout": "literature/2301.01813/catalog_sources/table-table-images-pm-giant-bowshocks/latexml.stdout.txt",
+            "stderr": "literature/2301.01813/catalog_sources/table-table-images-pm-giant-bowshocks/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcy25uy6y/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcy25uy6y/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.01813/catalog_sources/table-table-images-pm-giant-bowshocks/wrapped.tex",
+            "html": "literature/2301.01813/catalog_sources/table-table-images-pm-giant-bowshocks/pandoc.html",
+            "stdout": "literature/2301.01813/catalog_sources/table-table-images-pm-giant-bowshocks/pandoc.stdout.txt",
+            "stderr": "literature/2301.01813/catalog_sources/table-table-images-pm-giant-bowshocks/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "259eca56f3ee4e3e83e22dbd0e6ea134a6ce01d0c7a2581cb44212f8608414c3"
+    },
+    {
+      "id": "table-table-pm-giant-bowshocks",
+      "internal_table_id": "table-table-pm-giant-bowshocks",
+      "status": "success",
+      "ecsv_path": "literature/2301.01813/catalog_tables/table-table-pm-giant-bowshocks.ecsv",
+      "caption": "Parsec-Scale Components \\& Proper Motions\\label{table:pm-giant-bowshocks}",
+      "label": "table:pm-giant-bowshocks",
+      "row_count": 18,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "R.A. & Dec.",
+          "PM a",
+          "V a",
+          "PA",
+          "Comments"
+        ],
+        [
+          "(J2000)",
+          "(mas \\rm yr^-1 )",
+          "(km s^-1)",
+          "(deg.)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "R.A. & Dec. | (J2000)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "PM a | (mas \\rm yr^-1 )",
+          "unit_text": "(mas \\rm yr^-1 )",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "V a | (km s^-1)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "PA | (deg.)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Comments",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9l42yt8p/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.01813/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9l42yt8p/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.01813/catalog_sources/table-table-pm-giant-bowshocks/wrapped.tex",
+            "html": "literature/2301.01813/catalog_sources/table-table-pm-giant-bowshocks/latexml.html",
+            "stdout": "literature/2301.01813/catalog_sources/table-table-pm-giant-bowshocks/latexml.stdout.txt",
+            "stderr": "literature/2301.01813/catalog_sources/table-table-pm-giant-bowshocks/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8f3d93f0c07ab809cf8bdbc44a5c9160fe15d8c0af833da6d663700e3c671291"
+    },
+    {
+      "id": "table-table-gaia",
+      "internal_table_id": "table-table-gaia",
+      "status": "success",
+      "ecsv_path": "literature/2301.01813/catalog_tables/table-table-gaia.ecsv",
+      "caption": "Gaia EDR3 Proper Motions for H$\\alpha$ 1-5\\label{table:gaia}",
+      "label": "table:gaia",
+      "row_count": 5,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "PM( \\alpha )",
+          "PM( \\delta )",
+          "V tan a",
+          "PA a"
+        ],
+        [
+          "",
+          "mas/yr",
+          "mas/yr",
+          "km s^-1",
+          "deg"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "PM( \\alpha ) | mas/yr",
+          "unit_text": "mas/yr",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "PM( \\delta ) | mas/yr",
+          "unit_text": "mas/yr",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "V tan a | km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "PA a | deg",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfcxy7ia4/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.01813/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfcxy7ia4/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.01813/catalog_sources/table-table-gaia/wrapped.tex",
+            "html": "literature/2301.01813/catalog_sources/table-table-gaia/latexml.html",
+            "stdout": "literature/2301.01813/catalog_sources/table-table-gaia/latexml.stdout.txt",
+            "stderr": "literature/2301.01813/catalog_sources/table-table-gaia/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3d5520895ffac079db51b54038217dd7efe7c6f1f95bea357a338af75b443a49"
+    },
+    {
+      "id": "table-table-cont-fit",
+      "internal_table_id": "table-table-cont-fit",
+      "status": "success",
+      "ecsv_path": "literature/2301.01813/catalog_tables/table-table-cont-fit.ecsv",
+      "caption": "Gaussian fitting of the 1.3 mm continuum emission\\label{table:cont-fit}",
+      "label": "table:cont-fit",
+      "row_count": 6,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Source",
+          "RA",
+          "Dec",
+          "Flux",
+          "PA",
+          "Major",
+          "Minor",
+          "Residual",
+          "i",
+          "\\alpha"
+        ],
+        [
+          "",
+          "(ICRS)",
+          "(ICRS)",
+          "(mJy)",
+          "( \\arcdeg )",
+          "(mas)",
+          "(mas)",
+          "(mJy)",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA | (ICRS)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec | (ICRS)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Flux | (mJy)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "PA | ( \\arcdeg )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Major | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Minor | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Residual | (mJy)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "i",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\alpha",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm8nez_uo/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.01813/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm8nez_uo/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.01813/catalog_sources/table-table-cont-fit/wrapped.tex",
+            "html": "literature/2301.01813/catalog_sources/table-table-cont-fit/latexml.html",
+            "stdout": "literature/2301.01813/catalog_sources/table-table-cont-fit/latexml.stdout.txt",
+            "stderr": "literature/2301.01813/catalog_sources/table-table-cont-fit/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2d2b7f5c677aab024473752bb1b70b5a0054d68157a1c990ce8cc9c7c6149140"
+    },
+    {
+      "id": "table-table-alma-disk",
+      "internal_table_id": "table-table-alma-disk",
+      "status": "success",
+      "ecsv_path": "literature/2301.01813/catalog_tables/table-table-alma-disk.ecsv",
+      "caption": "Disk properties and stellar masses\\label{table:alma-disk}",
+      "label": "table:alma-disk",
+      "row_count": 5,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Source",
+          "M_\\rm disk",
+          "R_\\rm dust",
+          "R_\\rm gas",
+          "M_\\star",
+          "V_\\rm lsr"
+        ],
+        [
+          "",
+          "( M_\\rm J )",
+          "(au)",
+          "(au)",
+          "( M_\\sun )",
+          "(km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "M_\\rm disk | ( M_\\rm J )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "R_\\rm dust | (au)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "R_\\rm gas | (au)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "M_\\star | ( M_\\sun )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V_\\rm lsr | (km s -1 )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvedp5slu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.01813/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvedp5slu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.01813/catalog_sources/table-table-alma-disk/wrapped.tex",
+            "html": "literature/2301.01813/catalog_sources/table-table-alma-disk/latexml.html",
+            "stdout": "literature/2301.01813/catalog_sources/table-table-alma-disk/latexml.stdout.txt",
+            "stderr": "literature/2301.01813/catalog_sources/table-table-alma-disk/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "87535c0503433285228f0970ef0c14edd9f93d9a69e4855e72fd018005cc5a13"
+    },
+    {
+      "id": "table-table-line-fit",
+      "internal_table_id": "table-table-line-fit",
+      "status": "success",
+      "ecsv_path": "literature/2301.01813/catalog_tables/table-table-line-fit.ecsv",
+      "caption": "Fitting of the C$^{18}$O emission with kinematical disk models\\label{table:line-fit}",
+      "label": "table:line-fit",
+      "row_count": 12,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Power-law intensity profile",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Source",
+          "R_\\rm out",
+          "M_\\star",
+          "V_\\rm lsr",
+          "\\log I_0",
+          "p",
+          "Velocity ranges"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Power-law intensity profile | Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R_\\rm out",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "M_\\star",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "V_\\rm lsr",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\log I_0",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "p",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Velocity ranges",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3mcnhdp0/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.01813/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3mcnhdp0/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.01813/catalog_sources/table-table-line-fit/wrapped.tex",
+            "html": "literature/2301.01813/catalog_sources/table-table-line-fit/latexml.html",
+            "stdout": "literature/2301.01813/catalog_sources/table-table-line-fit/latexml.stdout.txt",
+            "stderr": "literature/2301.01813/catalog_sources/table-table-line-fit/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c62baa6544ba9281198dd25f67d4a76621131e23d394cef76ab8d06d1323fed0"
+    }
+  ]
+}

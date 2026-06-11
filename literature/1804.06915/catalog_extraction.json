@@ -1,0 +1,1285 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:31:24",
+  "paper": {
+    "arxiv_id": "1804.06915",
+    "title": "A search for Galactic runaway stars using Gaia Data Release 1 and Hipparcos proper motions",
+    "month": "2018-04"
+  },
+  "review": {
+    "path": "literature/1804.06915/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083124",
+    "started_at": "2026-06-07T08:31:24",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1804.06915",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 9,
+      "work_count": 9,
+      "table_count": 9,
+      "success_count": 9,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 9,
+      "file_success_count": 9,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-samples",
+      "internal_table_id": "table-samples",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.06915/arxiv_source/ms.tex",
+        "start_line": 261,
+        "end_line": 278,
+        "caption": "Samples used in this paper. T and H refer to TGAS and Hipparcos, respectively, and those columns indicate the number of entries in those catalogs. R is the number of runaway candidates, R\\% is the percentage of runaways, and D is the number of discarded objects.",
+        "label": "samples"
+      },
+      "source_path": "literature/1804.06915/arxiv_source/ms.tex",
+      "excerpt_path": "literature/1804.06915/catalog_sources/table-samples/excerpt.tex",
+      "sha256": "c85952d63e1f5bd1bf19c59083841fbda4e992d79abc641ccd3a6b90a9aae86b",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-tabGOSSS",
+      "internal_table_id": "table-tabGOSSS",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.06915/arxiv_source/ms.tex",
+        "start_line": 375,
+        "end_line": 416,
+        "caption": "New GOSSS spectral classifications sorted by Galactic longitude. GOS/GAS/GBS stands for Galactic O/B/A Star. The last column indicates which GOSSS paper (if any) was the star included in. The information in this table is also available in electronic form at the GOSC web site ({\\tt http://gosc.cab.inta-csic.es}) and at the CDS via anonymous ftp to {\\tt cdsarc.u-strasbg.fr} (130.79.128.5) or via {\\tt http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}.",
+        "label": "tabGOSSS"
+      },
+      "source_path": "literature/1804.06915/arxiv_source/ms.tex",
+      "excerpt_path": "literature/1804.06915/catalog_sources/table-tabGOSSS/excerpt.tex",
+      "sha256": "5bbe69e99ef95e17523647b35addc9ce04a4972dd5bc16f2a2c18a2aa2b8e8ea",
+      "line_count": 42,
+      "error": ""
+    },
+    {
+      "id": "table-chorizos",
+      "internal_table_id": "table-chorizos",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.06915/arxiv_source/ms.tex",
+        "start_line": 478,
+        "end_line": 500,
+        "caption": "Results of the CHORIZOS runs. The photometry (Phot.) column gives the bands included in each run with the same nomenclature as in Ma{\\'\\i}z Apell\\'aniz \\& Barb\\'a (submitted to A\\&A) i.e. J for Johnson $UBV$, 2 for 2MASS $JHK_{\\rm S}$, G for Gaia $G$, T for Tycho-2 $BV$, and S for Str\\\"omgren $uvby$.",
+        "label": "chorizos"
+      },
+      "source_path": "literature/1804.06915/arxiv_source/ms.tex",
+      "excerpt_path": "literature/1804.06915/catalog_sources/table-chorizos/excerpt.tex",
+      "sha256": "3390c4c74f5511bc24fc095c39d5cd4183b19c17bb80217858583ec3c917e5af",
+      "line_count": 23,
+      "error": ""
+    },
+    {
+      "id": "table-parameters",
+      "internal_table_id": "table-parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.06915/arxiv_source/ms.tex",
+        "start_line": 888,
+        "end_line": 901,
+        "caption": "Robust parameter fits for the O stars and BA supergiants in this paper.",
+        "label": "parameters"
+      },
+      "source_path": "literature/1804.06915/arxiv_source/ms.tex",
+      "excerpt_path": "literature/1804.06915/catalog_sources/table-parameters/excerpt.tex",
+      "sha256": "e0cfa2133d99826cfbebf94337c9b1b438b0630094eb5142ebaec9cb1c80d0a7",
+      "line_count": 14,
+      "error": ""
+    },
+    {
+      "id": "table-linewidth",
+      "internal_table_id": "table-linewidth",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.06915/arxiv_source/ms.tex",
+        "start_line": 1022,
+        "end_line": 1036,
+        "caption": "Line-width index statistics for the GOSSS I+II+III O-star sample and the O stars identified as runaways in this paper with GOSSS spectral classifications.",
+        "label": "linewidth"
+      },
+      "source_path": "literature/1804.06915/arxiv_source/ms.tex",
+      "excerpt_path": "literature/1804.06915/catalog_sources/table-linewidth/excerpt.tex",
+      "sha256": "8e641b170bce0df39e0b2836432fe70198ba4d5cda8addc7986eb3b4be07668d",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-tabs1",
+      "internal_table_id": "table-tabs1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.06915/arxiv_source/tabs1.tex",
+        "start_line": 1,
+        "end_line": 56,
+        "caption": "Previously known O-type runaway stars from Table~1 in Paper~1. The list is sorted by $\\Delta$, the normalized deviation from the mean latitude and longitude proper motions for their Galactic longitude. An ID is provided for each star in order to identify it in Figs.~\\ref{pmlat}~and~\\ref{pmlon}. The T/H flag indicates the origin of the proper motions (TGAS or Hipparcos, respectively). Some relevant references are listed in the last column. See Tables~\\ref{tabs2},~\\ref{tabs3a},~and~\\ref{tabs3b} for the rest of the runaways in this paper.",
+        "label": "tabs1"
+      },
+      "source_path": "literature/1804.06915/arxiv_source/tabs1.tex",
+      "excerpt_path": "literature/1804.06915/catalog_sources/table-tabs1/excerpt.tex",
+      "sha256": "e145a359be5d114d19a9a6da4392acfba72c336d9d94e5af31641067a2c6362f",
+      "line_count": 56,
+      "error": ""
+    },
+    {
+      "id": "table-tabs2",
+      "internal_table_id": "table-tabs2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.06915/arxiv_source/tabs2.tex",
+        "start_line": 1,
+        "end_line": 31,
+        "caption": "New O- and B0-type runaway star candidates from Table~1 in Paper~1. The list is sorted by $\\Delta$, the normalized deviation from the mean latitude and longitude proper motions for their Galactic longitude. An ID is provided for each star in order to identify it in Figs.~\\ref{pmlat}~and~\\ref{pmlon}. The corrected proper motions are in mas/a. The T/H flag indicates the origin of the proper motions (TGAS or Hipparcos, respectively). See Tables~\\ref{tabs1},~\\ref{tabs3a},~and~\\ref{tabs3b} for the rest of the runaways in this paper.",
+        "label": "tabs2"
+      },
+      "source_path": "literature/1804.06915/arxiv_source/tabs2.tex",
+      "excerpt_path": "literature/1804.06915/catalog_sources/table-tabs2/excerpt.tex",
+      "sha256": "6925a2f00568d931db6046369a4f9c4600c0298960104052dbcaccfbf62ca422",
+      "line_count": 31,
+      "error": ""
+    },
+    {
+      "id": "table-tabs3a",
+      "internal_table_id": "table-tabs3a",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.06915/arxiv_source/tabs3a.tex",
+        "start_line": 1,
+        "end_line": 28,
+        "caption": "O-type runaway star candidates not in Paper~1. The list is sorted by $\\Delta$, the normalized deviation from the mean latitude and longitude proper motions for their Galactic longitude. An ID is provided for each star in order to identify it in Figs.~\\ref{pmlat}~and~\\ref{pmlon}. The corrected proper motions are in mas/a. The T/H flag indicates the origin of the proper motions (TGAS or Hipparcos, respectively). The P/S flag indicates whether the identification of the star as being of O type is photometric or spectroscopic, respectively. The Known column indicates whether the runaway character of the object had been identified previously or not. See Tables~\\ref{tabs1},~\\ref{tabs2},~and~\\ref{tabs3b} for the rest of the runaways in this paper.",
+        "label": "tabs3a"
+      },
+      "source_path": "literature/1804.06915/arxiv_source/tabs3a.tex",
+      "excerpt_path": "literature/1804.06915/catalog_sources/table-tabs3a/excerpt.tex",
+      "sha256": "a2198934cbe95ca764d9315c92d80b32b7b7658152079ace361cdf00b252fed2",
+      "line_count": 28,
+      "error": ""
+    },
+    {
+      "id": "table-tabs3b",
+      "internal_table_id": "table-tabs3b",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1804.06915/arxiv_source/tabs3b.tex",
+        "start_line": 1,
+        "end_line": 47,
+        "caption": "BA-supergiant runaway star candidates. The list is sorted by $\\Delta$, the normalized deviation from the mean latitude and longitude proper motions for their Galactic longitude. An ID is provided for each star in order to identify it in Figs.~\\ref{pmlat}~and~\\ref{pmlon}. The corrected proper motions are in mas/a. The T/H flag indicates the origin of the proper motions (TGAS or Hipparcos, respectively). The Known column indicates whether the runaway character of the object had been identified previously or not. The last column indicates whether the spectral type is E(arly, from B0 to B0.7) or L(ate, B1 or later). See Tables~\\ref{tabs1},~\\ref{tabs2},~and~\\ref{tabs3a} for the rest of the runaways in this paper.",
+        "label": "tabs3b"
+      },
+      "source_path": "literature/1804.06915/arxiv_source/tabs3b.tex",
+      "excerpt_path": "literature/1804.06915/catalog_sources/table-tabs3b/excerpt.tex",
+      "sha256": "146cc16cdb3719da198827237ee8a902145eb252a38f410791b373453c06f4eb",
+      "line_count": 47,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-samples",
+      "internal_table_id": "table-samples",
+      "status": "success",
+      "ecsv_path": "literature/1804.06915/catalog_tables/table-samples.ecsv",
+      "caption": "Samples used in this paper. T and H refer to TGAS and Hipparcos, respectively, and those columns indicate the number of entries in those catalogs. R is the number of runaway candidates, R\\% is the percentage of runaways, and D is the number of discarded objects.",
+      "label": "samples",
+      "row_count": 2,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Sample",
+          "Sp. ty.",
+          "T",
+          "H",
+          "T or H",
+          "R",
+          "R%",
+          "D"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Sample",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Sp. ty.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "T",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "H",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "T or H",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "R",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "R%",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "D",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwimh8who/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.06915/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwimh8who/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.06915/catalog_sources/table-samples/wrapped.tex",
+            "html": "literature/1804.06915/catalog_sources/table-samples/latexml.html",
+            "stdout": "literature/1804.06915/catalog_sources/table-samples/latexml.stdout.txt",
+            "stderr": "literature/1804.06915/catalog_sources/table-samples/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c85952d63e1f5bd1bf19c59083841fbda4e992d79abc641ccd3a6b90a9aae86b"
+    },
+    {
+      "id": "table-tabGOSSS",
+      "internal_table_id": "table-tabGOSSS",
+      "status": "success",
+      "ecsv_path": "literature/1804.06915/catalog_tables/table-tabGOSSS.ecsv",
+      "caption": "New GOSSS spectral classifications sorted by Galactic longitude. GOS/GAS/GBS stands for Galactic O/B/A Star. The last column indicates which GOSSS paper (if any) was the star included in. The information in this table is also available in electronic form at the GOSC web site ({\\tt http://gosc.cab.inta-csic.es}) and at the CDS via anonymous ftp to {\\tt cdsarc.u-strasbg.fr} (130.79.128.5) or via {\\tt http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}.",
+      "label": "tabGOSSS",
+      "row_count": 25,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "GOSSS ID",
+          "R.A. (J2000)",
+          "Decl. (J2000)",
+          "ST",
+          "LC",
+          "Qual.",
+          "Second .",
+          "Paper"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "GOSSS ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "R.A. (J2000)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Decl. (J2000)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "ST",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "LC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Qual.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Second .",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Paper",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb0t8atxw/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.06915/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb0t8atxw/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.06915/catalog_sources/table-tabGOSSS/wrapped.tex",
+            "html": "literature/1804.06915/catalog_sources/table-tabGOSSS/latexml.html",
+            "stdout": "literature/1804.06915/catalog_sources/table-tabGOSSS/latexml.stdout.txt",
+            "stderr": "literature/1804.06915/catalog_sources/table-tabGOSSS/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5bbe69e99ef95e17523647b35addc9ce04a4972dd5bc16f2a2c18a2aa2b8e8ea"
+    },
+    {
+      "id": "table-chorizos",
+      "internal_table_id": "table-chorizos",
+      "status": "success",
+      "ecsv_path": "literature/1804.06915/catalog_tables/table-chorizos.ecsv",
+      "caption": "Results of the CHORIZOS runs. The photometry (Phot.) column gives the bands included in each run with the same nomenclature as in Ma{\\'\\i}z Apell\\'aniz \\& Barb\\'a (submitted to A\\&A) i.e. J for Johnson $UBV$, 2 for 2MASS $JHK_{\\rm S}$, G for Gaia $G$, T for Tycho-2 $BV$, and S for Str\\\"omgren $uvby$.",
+      "label": "chorizos",
+      "row_count": 5,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "R.A. (J2000)",
+          "Decl. (J2000)",
+          "Phot.",
+          "T_\\rm eff (kK)",
+          "LC",
+          "E(4405-5495)",
+          "R_5495",
+          "Conclusion"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R.A. (J2000)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Decl. (J2000)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Phot.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "T_\\rm eff (kK)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "LC",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "E(4405-5495)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "R_5495",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Conclusion",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwc1cgql7/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.06915/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwc1cgql7/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.06915/catalog_sources/table-chorizos/wrapped.tex",
+            "html": "literature/1804.06915/catalog_sources/table-chorizos/latexml.html",
+            "stdout": "literature/1804.06915/catalog_sources/table-chorizos/latexml.stdout.txt",
+            "stderr": "literature/1804.06915/catalog_sources/table-chorizos/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3390c4c74f5511bc24fc095c39d5cd4183b19c17bb80217858583ec3c917e5af"
+    },
+    {
+      "id": "table-parameters",
+      "internal_table_id": "table-parameters",
+      "status": "success",
+      "ecsv_path": "literature/1804.06915/catalog_tables/table-parameters.ecsv",
+      "caption": "Robust parameter fits for the O stars and BA supergiants in this paper.",
+      "label": "parameters",
+      "row_count": 2,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Sp. ty.",
+          "< \\mu_b >",
+          "\\sigma_\\mu_b",
+          "a_0",
+          "a_1",
+          "a_2",
+          "\\sigma_\\mu_l"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Sp. ty.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "< \\mu_b >",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\sigma_\\mu_b",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "a_0",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "a_1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "a_2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_\\mu_l",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpuszbgbze/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.06915/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpuszbgbze/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.06915/catalog_sources/table-parameters/wrapped.tex",
+            "html": "literature/1804.06915/catalog_sources/table-parameters/latexml.html",
+            "stdout": "literature/1804.06915/catalog_sources/table-parameters/latexml.stdout.txt",
+            "stderr": "literature/1804.06915/catalog_sources/table-parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e0cfa2133d99826cfbebf94337c9b1b438b0630094eb5142ebaec9cb1c80d0a7"
+    },
+    {
+      "id": "table-linewidth",
+      "internal_table_id": "table-linewidth",
+      "status": "success",
+      "ecsv_path": "literature/1804.06915/catalog_tables/table-linewidth.ecsv",
+      "caption": "Line-width index statistics for the GOSSS I+II+III O-star sample and the O stars identified as runaways in this paper with GOSSS spectral classifications.",
+      "label": "linewidth",
+      "row_count": 2,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Sample",
+          "Total",
+          "Empty",
+          "(n)",
+          "n",
+          "nn"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Sample",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Total",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Empty",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "(n)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "n",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "nn",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprq0iitqz/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.06915/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprq0iitqz/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.06915/catalog_sources/table-linewidth/wrapped.tex",
+            "html": "literature/1804.06915/catalog_sources/table-linewidth/latexml.html",
+            "stdout": "literature/1804.06915/catalog_sources/table-linewidth/latexml.stdout.txt",
+            "stderr": "literature/1804.06915/catalog_sources/table-linewidth/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8e641b170bce0df39e0b2836432fe70198ba4d5cda8addc7986eb3b4be07668d"
+    },
+    {
+      "id": "table-tabs1",
+      "internal_table_id": "table-tabs1",
+      "status": "success",
+      "ecsv_path": "literature/1804.06915/catalog_tables/table-tabs1.ecsv",
+      "caption": "Previously known O-type runaway stars from Table~1 in Paper~1. The list is sorted by $\\Delta$, the normalized deviation from the mean latitude and longitude proper motions for their Galactic longitude. An ID is provided for each star in order to identify it in Figs.~\\ref{pmlat}~and~\\ref{pmlon}. The T/H flag indicates the origin of the proper motions (TGAS or Hipparcos, respectively). Some relevant references are listed in the last column. See Tables~\\ref{tabs2},~\\ref{tabs3a},~and~\\ref{tabs3b} for the rest of the runaways in this paper.",
+      "label": "tabs1",
+      "row_count": 29,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Name",
+          "\\mu_b^\\prime",
+          "\\mu_l^\\prime",
+          "T/H",
+          "Ref."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mu_b^\\prime",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_l^\\prime",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "T/H",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Ref.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2km08hwe/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.06915/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2km08hwe/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.06915/catalog_sources/table-tabs1/wrapped.tex",
+            "html": "literature/1804.06915/catalog_sources/table-tabs1/latexml.html",
+            "stdout": "literature/1804.06915/catalog_sources/table-tabs1/latexml.stdout.txt",
+            "stderr": "literature/1804.06915/catalog_sources/table-tabs1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e145a359be5d114d19a9a6da4392acfba72c336d9d94e5af31641067a2c6362f"
+    },
+    {
+      "id": "table-tabs2",
+      "internal_table_id": "table-tabs2",
+      "status": "success",
+      "ecsv_path": "literature/1804.06915/catalog_tables/table-tabs2.ecsv",
+      "caption": "New O- and B0-type runaway star candidates from Table~1 in Paper~1. The list is sorted by $\\Delta$, the normalized deviation from the mean latitude and longitude proper motions for their Galactic longitude. An ID is provided for each star in order to identify it in Figs.~\\ref{pmlat}~and~\\ref{pmlon}. The corrected proper motions are in mas/a. The T/H flag indicates the origin of the proper motions (TGAS or Hipparcos, respectively). See Tables~\\ref{tabs1},~\\ref{tabs3a},~and~\\ref{tabs3b} for the rest of the runaways in this paper.",
+      "label": "tabs2",
+      "row_count": 13,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Name",
+          "\\mu_b^\\prime",
+          "\\mu_l^\\prime",
+          "T/H"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mu_b^\\prime",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_l^\\prime",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "T/H",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpx14pzwbb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.06915/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpx14pzwbb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.06915/catalog_sources/table-tabs2/wrapped.tex",
+            "html": "literature/1804.06915/catalog_sources/table-tabs2/latexml.html",
+            "stdout": "literature/1804.06915/catalog_sources/table-tabs2/latexml.stdout.txt",
+            "stderr": "literature/1804.06915/catalog_sources/table-tabs2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6925a2f00568d931db6046369a4f9c4600c0298960104052dbcaccfbf62ca422"
+    },
+    {
+      "id": "table-tabs3a",
+      "internal_table_id": "table-tabs3a",
+      "status": "success",
+      "ecsv_path": "literature/1804.06915/catalog_tables/table-tabs3a.ecsv",
+      "caption": "O-type runaway star candidates not in Paper~1. The list is sorted by $\\Delta$, the normalized deviation from the mean latitude and longitude proper motions for their Galactic longitude. An ID is provided for each star in order to identify it in Figs.~\\ref{pmlat}~and~\\ref{pmlon}. The corrected proper motions are in mas/a. The T/H flag indicates the origin of the proper motions (TGAS or Hipparcos, respectively). The P/S flag indicates whether the identification of the star as being of O type is photometric or spectroscopic, respectively. The Known column indicates whether the runaway character of the object had been identified previously or not. See Tables~\\ref{tabs1},~\\ref{tabs2},~and~\\ref{tabs3b} for the rest of the runaways in this paper.",
+      "label": "tabs3a",
+      "row_count": 7,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Name",
+          "\\mu_b^\\prime",
+          "\\mu_l^\\prime",
+          "T/H",
+          "P/S",
+          "Known"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mu_b^\\prime",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_l^\\prime",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "T/H",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "P/S",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Known",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2byruilu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.06915/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp2byruilu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.06915/catalog_sources/table-tabs3a/wrapped.tex",
+            "html": "literature/1804.06915/catalog_sources/table-tabs3a/latexml.html",
+            "stdout": "literature/1804.06915/catalog_sources/table-tabs3a/latexml.stdout.txt",
+            "stderr": "literature/1804.06915/catalog_sources/table-tabs3a/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a2198934cbe95ca764d9315c92d80b32b7b7658152079ace361cdf00b252fed2"
+    },
+    {
+      "id": "table-tabs3b",
+      "internal_table_id": "table-tabs3b",
+      "status": "success",
+      "ecsv_path": "literature/1804.06915/catalog_tables/table-tabs3b.ecsv",
+      "caption": "BA-supergiant runaway star candidates. The list is sorted by $\\Delta$, the normalized deviation from the mean latitude and longitude proper motions for their Galactic longitude. An ID is provided for each star in order to identify it in Figs.~\\ref{pmlat}~and~\\ref{pmlon}. The corrected proper motions are in mas/a. The T/H flag indicates the origin of the proper motions (TGAS or Hipparcos, respectively). The Known column indicates whether the runaway character of the object had been identified previously or not. The last column indicates whether the spectral type is E(arly, from B0 to B0.7) or L(ate, B1 or later). See Tables~\\ref{tabs1},~\\ref{tabs2},~and~\\ref{tabs3a} for the rest of the runaways in this paper.",
+      "label": "tabs3b",
+      "row_count": 27,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Name",
+          "\\mu_b^\\prime",
+          "\\mu_l^\\prime",
+          "T/H",
+          "Known",
+          "E/L"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mu_b^\\prime",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_l^\\prime",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "T/H",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Known",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "E/L",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0ozenphg/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1804.06915/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0ozenphg/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1804.06915/catalog_sources/table-tabs3b/wrapped.tex",
+            "html": "literature/1804.06915/catalog_sources/table-tabs3b/latexml.html",
+            "stdout": "literature/1804.06915/catalog_sources/table-tabs3b/latexml.stdout.txt",
+            "stderr": "literature/1804.06915/catalog_sources/table-tabs3b/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "146cc16cdb3719da198827237ee8a902145eb252a38f410791b373453c06f4eb"
+    }
+  ]
+}

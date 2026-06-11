@@ -1,0 +1,77 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:36:34",
+  "paper": {
+    "arxiv_id": "2012.05074",
+    "bibcode": "2020RNAAS...4..224K",
+    "title": "Distance and Tangential Velocity of the Main Ionizing Star in the North America/Pelican Nebulae with Gaia EDR3",
+    "month": "2020-12",
+    "source_note_json": "notes/2020/2020-12/2020-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2012.05074",
+      "pdf": "https://arxiv.org/pdf/2012.05074"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2012.05074",
+    "audit_path": "literature/2012.05074/audit.json",
+    "catalog_review_path": "literature/2012.05074/catalog_review.json",
+    "catalog_extraction_path": "literature/2012.05074/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:36:34",
+    "extractor": "agent",
+    "summary": "这是一篇RNAAS短讯(Research Note of the AAS)，利用Gaia EDR3更新了北美/鹈鹕星云(North America/Pelican Nebulae)中主要电离星——Bajamar Star(一颗早O型星)的距离和切向速度测量。Gaia EDR3数据修正了此前DR2中的视差偏差，但该星相对星协的切向速度仍约6.0 km/s，符合'walkaway'(慢速逃逸星)的特征。论文还提到第二颗O型星HD 199579，相对切向速度约7.3 km/s。这些速度(~6-7 km/s)远低于超高速星的范畴，属于星协内部恒星运动学的研究，完全不涉及银河系非束缚HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文内容，评估HVS候选体相关性。论文为RNAAS短讯，研究单个O型星(Bajamar Star)在星协中的运动学性质，切向速度仅约6 km/s，属于'walkaway'慢速逃逸星，与HVS无关。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (main.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2012.05074/arxiv_source/main.tex",
+          "start_line": 20,
+          "end_line": 22,
+          "context": "Abstract: Bajamar Star is early O star; tangential velocity ~6 km/s relative to the association; walkaway velocity."
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "bajamar-star",
+      "description": "Bajamar Star (2MASS J20555125+4****46): 北美/鹈鹕星云中的早O型主电离星，Gaia EDR3测得相对星协的切向速度约6.0 km/s。论文还提及HD 199579(第二颗O型星)，相对切向速度约7.3 km/s。",
+      "decision": "excluded",
+      "reason": "Bajamar Star和HD 199579的相对速度仅~6-7 km/s，属于'walkaway'(因星团动力学相互作用而缓慢脱离星团/星协)的范畴。Walkaway stars是速度较低(~1-10 km/s)的逃逸星，与超高速星(HVS, >~400 km/s)和银河系非束缚候选体完全不同。论文仅关注星协尺度的运动学问题，未涉及银河系逃逸速度或HVS候选体评估。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2012.05074/arxiv_source/main.tex",
+          "start_line": 20,
+          "end_line": 22,
+          "context": "Abstract: relative tangential velocity 6.0 km/s for Bajamar Star, walkaway velocity."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2012.05074/arxiv_source/main.tex",
+          "start_line": 47,
+          "end_line": 49,
+          "context": "Tangential velocity 6.0 +/- 0.2 km/s; HD 199579 at 7.3 km/s; both possible walkaways."
+        }
+      ]
+    }
+  ]
+}

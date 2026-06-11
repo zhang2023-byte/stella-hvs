@@ -1,0 +1,452 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:32:43",
+  "paper": {
+    "arxiv_id": "1810.04083",
+    "title": "A Runaway Giant in the Galactic Halo",
+    "month": "2018-10"
+  },
+  "review": {
+    "path": "literature/1810.04083/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083243",
+    "started_at": "2026-06-07T08:32:43",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1810.04083",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-red",
+      "internal_table_id": "table-tab-red",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+        "start_line": 314,
+        "end_line": 344,
+        "caption": "Intrinsic Colors and Extinction from ATLAS9 [Fe/H]=-0.5 Models for R_V=3.1",
+        "label": "tab:red"
+      },
+      "source_path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+      "excerpt_path": "literature/1810.04083/catalog_sources/table-tab-red/excerpt.tex",
+      "sha256": "d5df1f8d23c5d593592882624b7c6a368203a5e02d04b3b32d2c0f54acd2bf04",
+      "line_count": 31,
+      "error": ""
+    },
+    {
+      "id": "table-tab-physical",
+      "internal_table_id": "table-tab-physical",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+        "start_line": 369,
+        "end_line": 387,
+        "caption": "Physical Properties",
+        "label": "tab:physical"
+      },
+      "source_path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+      "excerpt_path": "literature/1810.04083/catalog_sources/table-tab-physical/excerpt.tex",
+      "sha256": "6f9ae7876c3d9f1d15337494a7f28720a659207a6f772b7dd9e5d5e99d1b2807",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-kinematics",
+      "internal_table_id": "table-tab-kinematics",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+        "start_line": 389,
+        "end_line": 411,
+        "caption": "Location and Kinematics",
+        "label": "tab:kinematics"
+      },
+      "source_path": "literature/1810.04083/arxiv_source/GiantV2.tex",
+      "excerpt_path": "literature/1810.04083/catalog_sources/table-tab-kinematics/excerpt.tex",
+      "sha256": "080b16c1638659c9922c48eb7f270924beb59de24306178867889f1e9f1cf3ff",
+      "line_count": 23,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-red",
+      "internal_table_id": "table-tab-red",
+      "status": "success",
+      "ecsv_path": "literature/1810.04083/catalog_tables/table-tab-red.ecsv",
+      "caption": "Intrinsic Colors and Extinction from ATLAS9 [Fe/H]=-0.5 Models for R_V=3.1",
+      "label": "tab:red",
+      "row_count": 4,
+      "column_count": 13,
+      "environment": "deluxetable",
+      "header_rows": [
+        [
+          "",
+          "",
+          "\\multicolumn3cT_\\rm eff=4700",
+          "",
+          "\\multicolumn3cT_\\rm eff=4800",
+          "",
+          "\\multicolumn3cT_\\rm eff=4900",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "\\cline3-5 \\cline7-9 \\cline11-13 Color",
+          "Obs. Color",
+          "Int. Color",
+          "Color Excess",
+          "A_V",
+          "",
+          "Int. Color",
+          "Color Excess",
+          "A_V",
+          "",
+          "Int. Color",
+          "Color Excess",
+          "A_V"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\cline3-5 \\cline7-9 \\cline11-13 Color",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Obs. Color",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\multicolumn3cT_\\rm eff=4700 | Int. Color",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Color Excess",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\multicolumn3cT_\\rm eff=4800 | A_V",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\multicolumn3cT_\\rm eff=4900 | Int. Color",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Color Excess",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "A_V",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Int. Color",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "Color Excess",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "A_V",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\cline",
+        "unresolved LaTeX macro preserved: \\multicolumn",
+        "unresolved LaTeX macro preserved: \\rm"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpj1qm3iim/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.04083/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpj1qm3iim/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.04083/catalog_sources/table-tab-red/wrapped.tex",
+            "html": "literature/1810.04083/catalog_sources/table-tab-red/latexml.html",
+            "stdout": "literature/1810.04083/catalog_sources/table-tab-red/latexml.stdout.txt",
+            "stderr": "literature/1810.04083/catalog_sources/table-tab-red/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwkwfi52b/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwkwfi52b/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.04083/catalog_sources/table-tab-red/wrapped.tex",
+            "html": "literature/1810.04083/catalog_sources/table-tab-red/pandoc.html",
+            "stdout": "literature/1810.04083/catalog_sources/table-tab-red/pandoc.stdout.txt",
+            "stderr": "literature/1810.04083/catalog_sources/table-tab-red/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "d5df1f8d23c5d593592882624b7c6a368203a5e02d04b3b32d2c0f54acd2bf04"
+    },
+    {
+      "id": "table-tab-physical",
+      "internal_table_id": "table-tab-physical",
+      "status": "success",
+      "ecsv_path": "literature/1810.04083/catalog_tables/table-tab-physical.ecsv",
+      "caption": "Physical Properties",
+      "label": "tab:physical",
+      "row_count": 7,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz1x1hwdt/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.04083/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz1x1hwdt/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.04083/catalog_sources/table-tab-physical/wrapped.tex",
+            "html": "literature/1810.04083/catalog_sources/table-tab-physical/latexml.html",
+            "stdout": "literature/1810.04083/catalog_sources/table-tab-physical/latexml.stdout.txt",
+            "stderr": "literature/1810.04083/catalog_sources/table-tab-physical/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6f9ae7876c3d9f1d15337494a7f28720a659207a6f772b7dd9e5d5e99d1b2807"
+    },
+    {
+      "id": "table-tab-kinematics",
+      "internal_table_id": "table-tab-kinematics",
+      "status": "success",
+      "ecsv_path": "literature/1810.04083/catalog_tables/table-tab-kinematics.ecsv",
+      "caption": "Location and Kinematics",
+      "label": "tab:kinematics",
+      "row_count": 13,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameters",
+          "Values"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameters",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Values",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpg4hkwyp1/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.04083/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpg4hkwyp1/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.04083/catalog_sources/table-tab-kinematics/wrapped.tex",
+            "html": "literature/1810.04083/catalog_sources/table-tab-kinematics/latexml.html",
+            "stdout": "literature/1810.04083/catalog_sources/table-tab-kinematics/latexml.stdout.txt",
+            "stderr": "literature/1810.04083/catalog_sources/table-tab-kinematics/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "080b16c1638659c9922c48eb7f270924beb59de24306178867889f1e9f1cf3ff"
+    }
+  ]
+}

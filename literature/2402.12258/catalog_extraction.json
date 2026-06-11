@@ -1,0 +1,551 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:38:54",
+  "paper": {
+    "arxiv_id": "2402.12258",
+    "title": "Low-mass Runaways from the Orion Nebula Cluster -- Kinematic Age Constraints on Star Cluster Formation",
+    "month": "2024-02"
+  },
+  "review": {
+    "path": "literature/2402.12258/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123854",
+    "started_at": "2026-05-17T12:38:54",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2402.12258",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-targets_table",
+      "internal_table_id": "table-targets_table",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2402.12258/arxiv_source/mnras.tex",
+        "start_line": 128,
+        "end_line": 171,
+        "caption": "List of candidate runaways observed with MAG2-MIKE. Columns are: Target identifier in the observation, Gaia DR3 ID number, Galactic longitude (Gaia DR3), Galactic latitude (Gaia DR3), Gaia DR3 \\textit{G}mag, Gaia YSO flag \\protect\\citep{rimoldini23, marton23}, $v_r$ from (a) Gaia, and (b) APOGEE taken from \\protect\\cite{tsantaki22}, \\protect\\citet{farias20} score for youth criteria met (``a'' for sources that pass the YSOflag criteria, ``b'' for sources that only fail one of either YSOflag, WYSOflag or VARflag criteria, ``I'' for sources that pass both WYSOflag and VARflag criteria, ``II'' for sources that pass either WYSOflag or VARflag criteria, ``*'' for sources whose 2D closest approach overlaps with the center of the ONC within 1$\\sigma$ uncertainty, ``!'' for sources which fail the RVflag criteria), 2D ejection velocity \\protect\\citep{farias20}, 2D closest approach to the ONC \\protect\\citep{farias20}, 'optimal' 3D traceback time \\protect\\citep{farias20}, exposure time per source.",
+        "label": "targets_table"
+      },
+      "source_path": "literature/2402.12258/arxiv_source/mnras.tex",
+      "excerpt_path": "literature/2402.12258/catalog_sources/table-targets_table/excerpt.tex",
+      "sha256": "6989ba5ce53d5975ab7fc12071301e17a898d403061079e8c6e81d14103b1fe1",
+      "line_count": 44,
+      "error": ""
+    },
+    {
+      "id": "table-results_table",
+      "internal_table_id": "table-results_table",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2402.12258/arxiv_source/mnras.tex",
+        "start_line": 342,
+        "end_line": 384,
+        "caption": "Results of spectral and traceback analysis for targets with spectroscopic youth indicators. Columns are; Gaia DR3 unique ID number, equivalent width of Li, equivalent width of H$\\alpha$, heliocentric radial velocity, time since closest approach to the ONC, distance of closest approach to the ONC, \\protect\\citet{farias20} score for youth criteria met and flag for traceback consistent with originating from the ONC.",
+        "label": "results_table"
+      },
+      "source_path": "literature/2402.12258/arxiv_source/mnras.tex",
+      "excerpt_path": "literature/2402.12258/catalog_sources/table-results_table/excerpt.tex",
+      "sha256": "3f1d80fa6aa15e8704fcd21a0dc506faaa363531fc5a502bb8f86ad9a92a7dc1",
+      "line_count": 43,
+      "error": ""
+    },
+    {
+      "id": "table-isochrone_table",
+      "internal_table_id": "table-isochrone_table",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2402.12258/arxiv_source/mnras.tex",
+        "start_line": 479,
+        "end_line": 522,
+        "caption": "Isochronal ages and masses of each spectroscopically confirmed YSO estimated from \\protect\\citet{baraffe15}, PARSEC \\protect\\citep{marigo17} and SPOTS \\protect\\citep[][x=0.9, f=0.7]{somers20} isochrones.",
+        "label": "isochrone_table"
+      },
+      "source_path": "literature/2402.12258/arxiv_source/mnras.tex",
+      "excerpt_path": "literature/2402.12258/catalog_sources/table-isochrone_table/excerpt.tex",
+      "sha256": "46bf292677ffc6d721dabb3aa69b2f0d16ce8966063e34a029cb8017e88dc058",
+      "line_count": 44,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-targets_table",
+      "internal_table_id": "table-targets_table",
+      "status": "success",
+      "ecsv_path": "literature/2402.12258/catalog_tables/table-targets_table.ecsv",
+      "caption": "List of candidate runaways observed with MAG2-MIKE. Columns are: Target identifier in the observation, Gaia DR3 ID number, Galactic longitude (Gaia DR3), Galactic latitude (Gaia DR3), Gaia DR3 \\textit{G}mag, Gaia YSO flag \\protect\\citep{rimoldini23, marton23}, $v_r$ from (a) Gaia, and (b) APOGEE taken from \\protect\\cite{tsantaki22}, \\protect\\citet{farias20} score for youth criteria met (``a'' for sources that pass the YSOflag criteria, ``b'' for sources that only fail one of either YSOflag, WYSOflag or VARflag criteria, ``I'' for sources that pass both WYSOflag and VARflag criteria, ``II'' for sources that pass either WYSOflag or VARflag criteria, ``*'' for sources whose 2D closest approach overlaps with the center of the ONC within 1$\\sigma$ uncertainty, ``!'' for sources which fail the RVflag criteria), 2D ejection velocity \\protect\\citep{farias20}, 2D closest approach to the ONC \\protect\\citep{farias20}, 'optimal' 3D traceback time \\protect\\citep{farias20}, exposure time per source.",
+      "label": "targets_table",
+      "row_count": 27,
+      "column_count": 12,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Gaia ID",
+          "\\ell ( ∘ )",
+          "b ( ∘ )",
+          "Gmag",
+          "Gaia YSO",
+          "v_r (km s -1 )",
+          "score",
+          "v_t0 (km s -1 )",
+          "CA (’)",
+          "t_\\rm 3D,opt (Myr)",
+          "Exposure time (s)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\ell ( ∘ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "b ( ∘ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Gmag",
+          "unit_text": "Gmag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Gaia YSO",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_r (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "score",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "v_t0 (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "CA (’)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "t_\\rm 3D,opt (Myr)",
+          "unit_text": "t_\\rm 3D,opt (Myr)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "Exposure time (s)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3lh18ud5/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2402.12258/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3lh18ud5/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2402.12258/catalog_sources/table-targets_table/wrapped.tex",
+            "html": "literature/2402.12258/catalog_sources/table-targets_table/latexml.html",
+            "stdout": "literature/2402.12258/catalog_sources/table-targets_table/latexml.stdout.txt",
+            "stderr": "literature/2402.12258/catalog_sources/table-targets_table/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6989ba5ce53d5975ab7fc12071301e17a898d403061079e8c6e81d14103b1fe1"
+    },
+    {
+      "id": "table-results_table",
+      "internal_table_id": "table-results_table",
+      "status": "success",
+      "ecsv_path": "literature/2402.12258/catalog_tables/table-results_table.ecsv",
+      "caption": "Results of spectral and traceback analysis for targets with spectroscopic youth indicators. Columns are; Gaia DR3 unique ID number, equivalent width of Li, equivalent width of H$\\alpha$, heliocentric radial velocity, time since closest approach to the ONC, distance of closest approach to the ONC, \\protect\\citet{farias20} score for youth criteria met and flag for traceback consistent with originating from the ONC.",
+      "label": "results_table",
+      "row_count": 11,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Gaia ID",
+          "EW(Li) (mÅ)",
+          "EW(H \\alpha ) (mÅ)",
+          "v_r (km s -1 )",
+          "v_\\rm 3D,ONC (km s -1 )",
+          "\\tau_\\rm min,3D (Myr)",
+          "D_\\rm min,3D (pc)",
+          "Score",
+          "Bona-fide"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "EW(Li) (mÅ)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "EW(H \\alpha ) (mÅ)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "v_r (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v_\\rm 3D,ONC (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\tau_\\rm min,3D (Myr)",
+          "unit_text": "\\tau_\\rm min,3D (Myr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "D_\\rm min,3D (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Score",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Bona-fide",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjmthdqks/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2402.12258/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjmthdqks/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2402.12258/catalog_sources/table-results_table/wrapped.tex",
+            "html": "literature/2402.12258/catalog_sources/table-results_table/latexml.html",
+            "stdout": "literature/2402.12258/catalog_sources/table-results_table/latexml.stdout.txt",
+            "stderr": "literature/2402.12258/catalog_sources/table-results_table/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3f1d80fa6aa15e8704fcd21a0dc506faaa363531fc5a502bb8f86ad9a92a7dc1"
+    },
+    {
+      "id": "table-isochrone_table",
+      "internal_table_id": "table-isochrone_table",
+      "status": "success",
+      "ecsv_path": "literature/2402.12258/catalog_tables/table-isochrone_table.ecsv",
+      "caption": "Isochronal ages and masses of each spectroscopically confirmed YSO estimated from \\protect\\citet{baraffe15}, PARSEC \\protect\\citep{marigo17} and SPOTS \\protect\\citep[][x=0.9, f=0.7]{somers20} isochrones.",
+      "label": "isochrone_table",
+      "row_count": 11,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Gaia ID",
+          "Baraffe age (Myr)",
+          "Baraffe mass (M ⊙ )",
+          "PARSEC age (Myr)",
+          "PARSEC mass (M ⊙ )",
+          "SPOTS age (Myr)",
+          "SPOTS mass (M ⊙ )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Baraffe age (Myr)",
+          "unit_text": "Baraffe age (Myr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Baraffe mass (M ⊙ )",
+          "unit_text": "Baraffe mass (M ⊙ )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "PARSEC age (Myr)",
+          "unit_text": "PARSEC age (Myr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "PARSEC mass (M ⊙ )",
+          "unit_text": "PARSEC mass (M ⊙ )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "SPOTS age (Myr)",
+          "unit_text": "SPOTS age (Myr)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "SPOTS mass (M ⊙ )",
+          "unit_text": "SPOTS mass (M ⊙ )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprdvv770j/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2402.12258/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprdvv770j/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2402.12258/catalog_sources/table-isochrone_table/wrapped.tex",
+            "html": "literature/2402.12258/catalog_sources/table-isochrone_table/latexml.html",
+            "stdout": "literature/2402.12258/catalog_sources/table-isochrone_table/latexml.stdout.txt",
+            "stderr": "literature/2402.12258/catalog_sources/table-isochrone_table/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "46bf292677ffc6d721dabb3aa69b2f0d16ce8966063e34a029cb8017e88dc058"
+    }
+  ]
+}

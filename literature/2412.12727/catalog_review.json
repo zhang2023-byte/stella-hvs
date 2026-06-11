@@ -1,0 +1,779 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2412.12727",
+    "title": "A binary system in the S cluster close to the supermassive black hole Sagittarius A*",
+    "month": "2024-12",
+    "source_note_json": "notes/2024/2024-12/2024-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2412.12727",
+      "pdf": "https://arxiv.org/pdf/2412.12727"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2412.12727",
+    "audit_path": "literature/2412.12727/audit.json",
+    "source_dir": "literature/2412.12727/arxiv_source",
+    "tex_root": "literature/2412.12727/arxiv_source/sn-article.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:34:13",
+    "reviewer": "agent",
+    "summary": "Paper reports detection of a binary system D9 in the S cluster near Sgr A*. Internal tables include best-fit Keplerian/SED parameters, binary comparison, flux density tests, extinction comparison, GC binary overview, RV epoch data (2005-2022), and observation logs. External resources are code availability URLs for HYPERION, PARSEC, Exo-Stricker, emcee, and ESO pipeline. No HVS/unbound candidates; this is a Galactic center binary study."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-d9_parameter-2",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Best-fit orbital and stellar parameters of the D9 binary system, combining Keplerian orbit around Sgr A*, binary orbit parameters, and SED-derived stellar properties.",
+      "source_refs": [
+        {
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 889,
+          "end_line": 928,
+          "caption": "{\\bf Best-fit parameters of the D9 system.} We list the orbital parameters for the binary of D9 together with the motion of the system around Sgr~A*. In addition, the best-fit stellar properties based on the SED fitter are included. The uncertainties of the binary parameter and the radiation transfer model are based on the reduced $\\chi^2$. For the Keplerian elements, we use MCMC simulations to estimate the uncertainty range. {Since the inclination of the secondary is assumed to be $\\mathrm{i}_{\\rm D9b}\\,=\\,90^{\\circ}$, no uncertainty for $m \\sin (\\mathrm{i}_{\\rm D9b})\\,=\\,0.73$~M$_{\\odot}$ is given.}",
+          "label": "tab:d9_parameter"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Physical parameter name (orbital, stellar, or model)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Best-fit or fixed value of the parameter",
+          "unit_text": "",
+          "source_of_definition": "table cell",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "{\\bf Best-fit parameters of the D9 system.} We list the orbital parameters for the binary of D9 together with the motion of the system around Sgr~A*. In addition, the best-fit stellar properties based on the SED fitter are included. The uncertainties of the binary parameter and the radiation transfer model are based on the reduced $\\chi^2$. For the Keplerian elements, we use MCMC simulations to estimate the uncertainty range. {Since the inclination of the secondary is assumed to be $\\mathrm{i}_{\\rm D9b}\\,=\\,90^{\\circ}$, no uncertainty for $m \\sin (\\mathrm{i}_{\\rm D9b})\\,=\\,0.73$~M$_{\\odot}$ is given.}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-d9_kepler_comp-2",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Comparison between best-fit Keplerian approximation and MCMC simulations for D9 orbital parameters around Sgr A*.",
+      "source_refs": [
+        {
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 932,
+          "end_line": 949,
+          "caption": "{\\bf Comparison of best-fit Keplerian approximation and MCMC simulations.} Since the standard deviation does not satisfactorily reflect the astrometric precision that can be achieved with SINFONI, we will use the standard deviation of the combined MCMC posteriors. {These orbital elements are related to the outer binary system D9-Sgr~A*.} We refer to \\cite{peissker2021c} for a detailed explanation of the background fluctuations of the SINFONI data.",
+          "label": "tab:d9_kepler_comp"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Orbital parameter name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Best-fit",
+          "meaning": "Best-fit Keplerian value",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "MCMC",
+          "meaning": "MCMC posterior median value",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Standard deviation",
+          "meaning": "Standard deviation from combined MCMC posteriors",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "{\\bf Comparison of best-fit Keplerian approximation and MCMC simulations.} Since the standard deviation does not satisfactorily reflect the astrometric precision that can be achieved with SINFONI, we will use the standard deviation of the combined MCMC posteriors. {These orbital elements are related to the outer binary system D9-Sgr~A*.} We refer to \\cite{peissker2021c} for a detailed explanation of the background fluctuations of the SINFONI data.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-flux_filter_comp-2",
+      "kind": "latex_table",
+      "asset_type": "observational_data",
+      "role_in_paper": "Median flux density values for S stars comparing filtered and non-filtered SINFONI H+K band data.",
+      "source_refs": [
+        {
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 982,
+          "end_line": 996,
+          "caption": "{\\bf Median flux density values for the S stars.} The standard deviation is estimated from the flux values.",
+          "label": "tab:flux_filter_comp"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Processing",
+          "meaning": "Image processing state (Non-filtered, Filtered, Standard deviation)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "H band [mJy]",
+          "meaning": "Median flux density in H band",
+          "unit_text": "mJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K band [mJy]",
+          "meaning": "Median flux density in K band",
+          "unit_text": "mJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "{\\bf Median flux density values for the S stars.} The standard deviation is estimated from the flux values.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-extinction_comp",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Impact of different visual extinction values on SED-derived stellar radius, temperature, disk mass, and envelope size of D9.",
+      "source_refs": [
+        {
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 1013,
+          "end_line": 1027,
+          "caption": "{\\bf Comparison of the impact of different extinction values.} For all three inspected extinction values, the stellar radius and temperature of D9 are comparable inside the uncertainties calculated by the radiative transfer model.",
+          "label": "tab:extinction_comp"
+        }
+      ],
+      "columns": [
+        {
+          "name": "A_V",
+          "meaning": "Visual extinction magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Radius",
+          "meaning": "Stellar radius from radiative transfer model",
+          "unit_text": "R_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Temperature",
+          "meaning": "Logarithm of stellar effective temperature",
+          "unit_text": "log(T[K])",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_Disk",
+          "meaning": "Circumbinary disk mass",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Envelope size",
+          "meaning": "Dust envelope size from radiative transfer model",
+          "unit_text": "AU",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "{\\bf Comparison of the impact of different extinction values.} For all three inspected extinction values, the stellar radius and temperature of D9 are comparable inside the uncertainties calculated by the radiative transfer model.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-binary_overview-2",
+      "kind": "latex_table",
+      "asset_type": "reference_compilation",
+      "role_in_paper": "Overview of known binaries in the Galactic center, with D9 as the only S-cluster member.",
+      "source_refs": [
+        {
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 1064,
+          "end_line": 1082,
+          "caption": "{\\bf Binaries of the Galactic center.} In this list, D9 is the only S~cluster member.",
+          "label": "tab:binary_overview"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Binary identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Period",
+          "meaning": "Orbital period of the binary",
+          "unit_text": "days",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Reference",
+          "meaning": "Literature reference for the binary",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "{\\bf Binaries of the Galactic center.} In this list, D9 is the only S~cluster member.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-rv_values_1",
+      "kind": "latex_table",
+      "asset_type": "observational_data",
+      "role_in_paper": "Radial velocity measurements from SINFONI observations of D9 Br-gamma emission line, 2005-2012.",
+      "source_refs": [
+        {
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 1107,
+          "end_line": 1148,
+          "caption": "{\\bf Radial velocities measured from the SINFONI observations carried out between 2005-2012.} We list the epoch, the wavelength, the corresponding Full-Width-Half-Maximum, the LOS velocity, and the related uncertainty. Furthermore, we indicate the normalized RV v$_{\\rm norm}$ and the final velocity v$_{\\rm mod}$ where the Keplerian model for the secondary from Exo-Stricker is included. All velocities, except v$_{\\rm mod}$, are estimated with respect to the Br$\\gamma$ rest wavelength at $2.1661\\,\\mathrm{\\mu m}$.",
+          "label": "tab:rv_values_1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Epoch",
+          "meaning": "Observation epoch (decimal year)",
+          "unit_text": "year",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Wavelength",
+          "meaning": "Measured Br-gamma line centroid wavelength",
+          "unit_text": "um",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "FWHM",
+          "meaning": "Full width at half maximum of the emission line",
+          "unit_text": "um",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "Heliocentric radial velocity from line shift",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DeltaRV",
+          "meaning": "Uncertainty in radial velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_norm",
+          "meaning": "Normalized radial velocity (observed minus systemic)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_mod",
+          "meaning": "Model residual velocity after Keplerian subtraction",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "{\\bf Radial velocities measured from the SINFONI observations carried out between 2005-2012.} We list the epoch, the wavelength, the corresponding Full-Width-Half-Maximum, the LOS velocity, and the related uncertainty. Furthermore, we indicate the normalized RV v$_{\\rm norm}$ and the final velocity v$_{\\rm mod}$ where the Keplerian model for the secondary from Exo-Stricker is included. All velocities, except v$_{\\rm mod}$, are estimated with respect to the Br$\\gamma$ rest wavelength at $2.1661\\,\\mathrm{\\mu m}$.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-rv_values_2",
+      "kind": "latex_table",
+      "asset_type": "observational_data",
+      "role_in_paper": "Radial velocity measurements from SINFONI observations of D9 Br-gamma emission line, 2013-2014.",
+      "source_refs": [
+        {
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 1152,
+          "end_line": 1190,
+          "caption": "{\\bf Radial velocities measured from the SINFONI observations carried out between 2013-2014.} Like Table \\ref{tab:rv_values_1}, we list v$_{\\rm mod}$ which is the final output velocity from the RV fitter Exo-Stricker.",
+          "label": "tab:rv_values_2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Epoch",
+          "meaning": "Observation epoch (decimal year)",
+          "unit_text": "year",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Wavelength",
+          "meaning": "Measured Br-gamma line centroid wavelength",
+          "unit_text": "um",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "FWHM",
+          "meaning": "Full width at half maximum of the emission line",
+          "unit_text": "um",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "Heliocentric radial velocity from line shift",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DeltaRV",
+          "meaning": "Uncertainty in radial velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_norm",
+          "meaning": "Normalized radial velocity (observed minus systemic)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_mod",
+          "meaning": "Model residual velocity after Keplerian subtraction",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "{\\bf Radial velocities measured from the SINFONI observations carried out between 2013-2014.} Like Table \\ref{tab:rv_values_1}, we list v$_{\\rm mod}$ which is the final output velocity from the RV fitter Exo-Stricker.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-rv_values_3",
+      "kind": "latex_table",
+      "asset_type": "observational_data",
+      "role_in_paper": "Radial velocity measurements from SINFONI and ERIS observations of D9 Br-gamma emission line, 2015-2022.",
+      "source_refs": [
+        {
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 1194,
+          "end_line": 1230,
+          "caption": "{\\bf Radial velocities measured from the SINFONI and ERIS observations carried out between 2015-2022.} Like Table \\ref{tab:rv_values_1} and Table \\ref{tab:rv_values_2}, we indicate all relevant observables that are used to derive the best-fit RV model displayed in the periodic pattern of D9. Here, v$_{\\rm mod}$ indicates the final RV velocity. The data points from 2022 were observed with ERIS.",
+          "label": "tab:rv_values_3"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Epoch",
+          "meaning": "Observation epoch (decimal year)",
+          "unit_text": "year",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Wavelength",
+          "meaning": "Measured Br-gamma line centroid wavelength",
+          "unit_text": "um",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "FWHM",
+          "meaning": "Full width at half maximum of the emission line",
+          "unit_text": "um",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "Heliocentric radial velocity from line shift",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DeltaRV",
+          "meaning": "Uncertainty in radial velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_norm",
+          "meaning": "Normalized radial velocity (observed minus systemic)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_mod",
+          "meaning": "Model residual velocity after Keplerian subtraction",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "{\\bf Radial velocities measured from the SINFONI and ERIS observations carried out between 2015-2022.} Like Table \\ref{tab:rv_values_1} and Table \\ref{tab:rv_values_2}, we indicate all relevant observables that are used to derive the best-fit RV model displayed in the periodic pattern of D9. Here, v$_{\\rm mod}$ indicates the final RV velocity. The data points from 2022 were observed with ERIS.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-data_sinfo1",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Observation log for SINFONI data used in D9 analysis, 2005-2012.",
+      "source_refs": [
+        {
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 1234,
+          "end_line": 1275,
+          "caption": "{\\bf Analyzed SINFONI data of 2005 to 2012.}",
+          "label": "tab:data_sinfo1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Epoch",
+          "meaning": "Observation epoch (decimal year)",
+          "unit_text": "year",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Observation ID",
+          "meaning": "ESO observation program ID",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Total",
+          "meaning": "Total number of exposures",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Medium",
+          "meaning": "Number of medium-quality exposures",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Good",
+          "meaning": "Number of good-quality exposures",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Exp. Time",
+          "meaning": "Total exposure time per observation",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Noise",
+          "meaning": "Noise level in the spectrum",
+          "unit_text": "a.u.",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Peak",
+          "meaning": "Peak signal of Br-gamma line",
+          "unit_text": "a.u.",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ratio",
+          "meaning": "Signal-to-noise ratio (Peak/Noise)",
+          "unit_text": "a.u.",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "{\\bf Analyzed SINFONI data of 2005 to 2012.}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-data_sinfo2",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Observation log for SINFONI data used in D9 analysis, 2013-2014.",
+      "source_refs": [
+        {
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 1279,
+          "end_line": 1317,
+          "caption": "{\\bf Analyzed SINFONI data of 2013 and 2014.}",
+          "label": "tab:data_sinfo2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Epoch",
+          "meaning": "Observation epoch (decimal year)",
+          "unit_text": "year",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Observation ID",
+          "meaning": "ESO observation program ID",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Total",
+          "meaning": "Total number of exposures",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Medium",
+          "meaning": "Number of medium-quality exposures",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Good",
+          "meaning": "Number of good-quality exposures",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Exp. Time",
+          "meaning": "Total exposure time per observation",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Noise",
+          "meaning": "Noise level in the spectrum",
+          "unit_text": "a.u.",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Peak",
+          "meaning": "Peak signal of Br-gamma line",
+          "unit_text": "a.u.",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ratio",
+          "meaning": "Signal-to-noise ratio (Peak/Noise)",
+          "unit_text": "a.u.",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "{\\bf Analyzed SINFONI data of 2013 and 2014.}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-data_sinfo4",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Observation log for SINFONI and ERIS data used in D9 analysis, 2015-2022.",
+      "source_refs": [
+        {
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 1320,
+          "end_line": 1357,
+          "caption": "{\\bf Analyzed SINFONI and ERIS data of 2015 to 2022.} The two observations in 2022 were carried out with ERIS.",
+          "label": "tab:data_sinfo4"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Epoch",
+          "meaning": "Observation epoch (decimal year)",
+          "unit_text": "year",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Observation ID",
+          "meaning": "ESO observation program ID",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Total",
+          "meaning": "Total number of exposures",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Medium",
+          "meaning": "Number of medium-quality exposures",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Good",
+          "meaning": "Number of good-quality exposures",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Exp. Time",
+          "meaning": "Total exposure time per observation",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Noise",
+          "meaning": "Noise level in the spectrum",
+          "unit_text": "a.u.",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Peak",
+          "meaning": "Peak signal of Br-gamma line",
+          "unit_text": "a.u.",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ratio",
+          "meaning": "Signal-to-noise ratio (Peak/Noise)",
+          "unit_text": "a.u.",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "{\\bf Analyzed SINFONI and ERIS data of 2015 to 2022.} The two observations in 2022 were carried out with ERIS.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://stev.oapd.inaf.it/cgi-bin/cmd",
+      "local_path": "",
+      "description": "PARSEC stellar evolution tracks (v3.7) used for isochrone fitting.",
+      "source_refs": [
+        {
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 334,
+          "end_line": 334,
+          "context": "\\bmhead{Code availability}\n\nThe code for generating the SED is publicly available at \\url{http://www.hyperion-rt.org/}. Stable version 1.4 was used to generate the SED. The evolutionary tracks {PARSEC} can be found at \\url{http://stev.oapd.inaf.it/cgi-bin/cmd} (version 3.7). The radial fit was performed with Exo-Stricker, version 0.88, and can be found at \\url{https://exo-restart.com/tools/the-exo-striker-tool/}. The emcee package is a pure PYTHON package and can be downloaded from \\url{https://emcee.readthedocs.io/en/stable/}. The ESO pipeline can be downloaded from \\url{https://www.eso.org/sci/software/pipelines/}.\n\n%\\bibliography{sn-bibliography.bib}"
+        }
+      ],
+      "evidence": "\\bmhead{Code availability}\n\nThe code for generating the SED is publicly available at \\url{http://www.hyperion-rt.org/}. Stable version 1.4 was used to generate the SED. The evolutionary tracks {PARSEC} can be found at \\url{http://stev.oapd.inaf.it/cgi-bin/cmd} (version 3.7). The radial fit was performed with Exo-Stricker, version 0.88, and can be found at \\url{https://exo-restart.com/tools/the-exo-striker-tool/}. The emcee package is a pure PYTHON package and can be downloaded from \\url{https://emcee.readthedocs.io/en/stable/}. The ESO pipeline can be downloaded from \\url{https://www.eso.org/sci/software/pipelines/}.\n\n%\\bibliography{sn-bibliography.bib}",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "http://www.hyperion-rt.org/",
+      "local_path": "",
+      "description": "HYPERION radiative transfer code (v1.4) used for SED generation.",
+      "source_refs": [
+        {
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 334,
+          "end_line": 334,
+          "context": "\\bmhead{Code availability}\n\nThe code for generating the SED is publicly available at \\url{http://www.hyperion-rt.org/}. Stable version 1.4 was used to generate the SED. The evolutionary tracks {PARSEC} can be found at \\url{http://stev.oapd.inaf.it/cgi-bin/cmd} (version 3.7). The radial fit was performed with Exo-Stricker, version 0.88, and can be found at \\url{https://exo-restart.com/tools/the-exo-striker-tool/}. The emcee package is a pure PYTHON package and can be downloaded from \\url{https://emcee.readthedocs.io/en/stable/}. The ESO pipeline can be downloaded from \\url{https://www.eso.org/sci/software/pipelines/}.\n\n%\\bibliography{sn-bibliography.bib}"
+        }
+      ],
+      "evidence": "\\bmhead{Code availability}\n\nThe code for generating the SED is publicly available at \\url{http://www.hyperion-rt.org/}. Stable version 1.4 was used to generate the SED. The evolutionary tracks {PARSEC} can be found at \\url{http://stev.oapd.inaf.it/cgi-bin/cmd} (version 3.7). The radial fit was performed with Exo-Stricker, version 0.88, and can be found at \\url{https://exo-restart.com/tools/the-exo-striker-tool/}. The emcee package is a pure PYTHON package and can be downloaded from \\url{https://emcee.readthedocs.io/en/stable/}. The ESO pipeline can be downloaded from \\url{https://www.eso.org/sci/software/pipelines/}.\n\n%\\bibliography{sn-bibliography.bib}",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://emcee.readthedocs.io/en/stable/",
+      "local_path": "",
+      "description": "emcee Python MCMC ensemble sampler package.",
+      "source_refs": [
+        {
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 334,
+          "end_line": 334,
+          "context": "\\bmhead{Code availability}\n\nThe code for generating the SED is publicly available at \\url{http://www.hyperion-rt.org/}. Stable version 1.4 was used to generate the SED. The evolutionary tracks {PARSEC} can be found at \\url{http://stev.oapd.inaf.it/cgi-bin/cmd} (version 3.7). The radial fit was performed with Exo-Stricker, version 0.88, and can be found at \\url{https://exo-restart.com/tools/the-exo-striker-tool/}. The emcee package is a pure PYTHON package and can be downloaded from \\url{https://emcee.readthedocs.io/en/stable/}. The ESO pipeline can be downloaded from \\url{https://www.eso.org/sci/software/pipelines/}.\n\n%\\bibliography{sn-bibliography.bib}"
+        }
+      ],
+      "evidence": "\\bmhead{Code availability}\n\nThe code for generating the SED is publicly available at \\url{http://www.hyperion-rt.org/}. Stable version 1.4 was used to generate the SED. The evolutionary tracks {PARSEC} can be found at \\url{http://stev.oapd.inaf.it/cgi-bin/cmd} (version 3.7). The radial fit was performed with Exo-Stricker, version 0.88, and can be found at \\url{https://exo-restart.com/tools/the-exo-striker-tool/}. The emcee package is a pure PYTHON package and can be downloaded from \\url{https://emcee.readthedocs.io/en/stable/}. The ESO pipeline can be downloaded from \\url{https://www.eso.org/sci/software/pipelines/}.\n\n%\\bibliography{sn-bibliography.bib}",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://exo-restart.com/tools/the-exo-striker-tool/",
+      "local_path": "",
+      "description": "Exo-Stricker radial velocity fitting tool (v0.88).",
+      "source_refs": [
+        {
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 334,
+          "end_line": 334,
+          "context": "\\bmhead{Code availability}\n\nThe code for generating the SED is publicly available at \\url{http://www.hyperion-rt.org/}. Stable version 1.4 was used to generate the SED. The evolutionary tracks {PARSEC} can be found at \\url{http://stev.oapd.inaf.it/cgi-bin/cmd} (version 3.7). The radial fit was performed with Exo-Stricker, version 0.88, and can be found at \\url{https://exo-restart.com/tools/the-exo-striker-tool/}. The emcee package is a pure PYTHON package and can be downloaded from \\url{https://emcee.readthedocs.io/en/stable/}. The ESO pipeline can be downloaded from \\url{https://www.eso.org/sci/software/pipelines/}.\n\n%\\bibliography{sn-bibliography.bib}"
+        }
+      ],
+      "evidence": "\\bmhead{Code availability}\n\nThe code for generating the SED is publicly available at \\url{http://www.hyperion-rt.org/}. Stable version 1.4 was used to generate the SED. The evolutionary tracks {PARSEC} can be found at \\url{http://stev.oapd.inaf.it/cgi-bin/cmd} (version 3.7). The radial fit was performed with Exo-Stricker, version 0.88, and can be found at \\url{https://exo-restart.com/tools/the-exo-striker-tool/}. The emcee package is a pure PYTHON package and can be downloaded from \\url{https://emcee.readthedocs.io/en/stable/}. The ESO pipeline can be downloaded from \\url{https://www.eso.org/sci/software/pipelines/}.\n\n%\\bibliography{sn-bibliography.bib}",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://www.eso.org/sci/software/pipelines/",
+      "local_path": "",
+      "description": "ESO data reduction pipeline for SINFONI/ERIS spectroscopy.",
+      "source_refs": [
+        {
+          "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+          "start_line": 334,
+          "end_line": 334,
+          "context": "\\bmhead{Code availability}\n\nThe code for generating the SED is publicly available at \\url{http://www.hyperion-rt.org/}. Stable version 1.4 was used to generate the SED. The evolutionary tracks {PARSEC} can be found at \\url{http://stev.oapd.inaf.it/cgi-bin/cmd} (version 3.7). The radial fit was performed with Exo-Stricker, version 0.88, and can be found at \\url{https://exo-restart.com/tools/the-exo-striker-tool/}. The emcee package is a pure PYTHON package and can be downloaded from \\url{https://emcee.readthedocs.io/en/stable/}. The ESO pipeline can be downloaded from \\url{https://www.eso.org/sci/software/pipelines/}.\n\n%\\bibliography{sn-bibliography.bib}"
+        }
+      ],
+      "evidence": "\\bmhead{Code availability}\n\nThe code for generating the SED is publicly available at \\url{http://www.hyperion-rt.org/}. Stable version 1.4 was used to generate the SED. The evolutionary tracks {PARSEC} can be found at \\url{http://stev.oapd.inaf.it/cgi-bin/cmd} (version 3.7). The radial fit was performed with Exo-Stricker, version 0.88, and can be found at \\url{https://exo-restart.com/tools/the-exo-striker-tool/}. The emcee package is a pure PYTHON package and can be downloaded from \\url{https://emcee.readthedocs.io/en/stable/}. The ESO pipeline can be downloaded from \\url{https://www.eso.org/sci/software/pipelines/}.\n\n%\\bibliography{sn-bibliography.bib}",
+      "comments": ""
+    }
+  ]
+}

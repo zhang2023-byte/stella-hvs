@@ -1,0 +1,151 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:36:00",
+  "paper": {
+    "arxiv_id": "1810.09501",
+    "bibcode": "2019MNRAS.482.5327G",
+    "title": "SB 796: a high-velocity RRc star",
+    "month": "2018-10",
+    "source_note_json": "notes/2018/2018-10/2018-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1810.09501",
+      "pdf": "https://arxiv.org/pdf/1810.09501"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1810.09501",
+    "audit_path": "literature/1810.09501/audit.json",
+    "catalog_review_path": "literature/1810.09501/catalog_review.json",
+    "catalog_extraction_path": "literature/1810.09501/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1810.09501/catalog_tables/table-Sys_Parameters.ecsv",
+      "literature/1810.09501/catalog_tables/table-Photometry.ecsv",
+      "literature/1810.09501/catalog_tables/table-Template.ecsv",
+      "literature/1810.09501/catalog_tables/table-RV_data.ecsv",
+      "literature/1810.09501/catalog_tables/table-RV_sol.ecsv",
+      "literature/1810.09501/catalog_tables/table-GAIA.ecsv",
+      "literature/1810.09501/catalog_tables/table-SB796-loc.ecsv",
+      "literature/1810.09501/catalog_tables/table-Gal-Model.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:36:00",
+    "extractor": "agent",
+    "summary": "本文详细研究了一颗c型天琴座RR型变星（RRc）SB 796（Gaia DR2 4958223672295639040）。该星平均视向速度~248 km/s，银心静止系总速度~274 km/s，位于银道面下方~3.5 kpc处。使用galpy+MWPotential2014进行1 Gyr轨道积分，显示SB 796处于束缚轨道：银心距在0.5-20 kpc之间振荡，约每0.3 Gyr经过银心附近一次，在~10 Gyr寿命中约30次经过银心。论文将其标注为'high-velocity star'（高速星），但轨道明确为束缚轨道，速度远低于银河系逃逸速度（~500+ km/s）。无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "WASP公共数据库：SB 796的2006-2014年V_W和r'波段测光数据（49,804次测量，6个观测季）。Gaia DR2：G/GBP/GRP波段测光及天体测量（赤经赤纬、视差0.26±0.02 mas、自行、分类为RRc）。",
+      "inputs": [
+        "WASP public data",
+        "Gaia DR2"
+      ],
+      "outputs": [
+        "SB 796多波段光变曲线",
+        "Gaia DR2天体测量解"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 193,
+          "end_line": 208,
+          "context": "Sec 2: WASP photometry, 6 seasons"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 287,
+          "end_line": 288,
+          "context": "Sec 2: Gaia DR2 photometry and astrometry"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [],
+      "step_type": "radial_velocity_measurement",
+      "summary": "SAAO/SpUpNIC（16次，2017年12月，σ~10 km/s）和Euler/CORALIE（9次，2017年12月-2018年1月，σ~0.6-2.3 km/s）的视向速度跟踪观测。使用UNICOR软件与PHOENIX模板（Teff=8200±600 K, logg=3.62±0.25, [Fe/H]=-1.6±0.5）交叉相关测量RV。",
+      "inputs": [
+        "SpUpNIC@SAAO 1.9m",
+        "CORALIE@Euler 1.2m",
+        "PHOENIX stellar library"
+      ],
+      "outputs": [
+        "24次RV测量（Table RV_data）",
+        "RV解：K_RV=5.64 km/s, γ=248.707 km/s"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 310,
+          "end_line": 420,
+          "context": "Sec 3: Spectroscopic observations, RV measurements and solution"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-01",
+        "step-02"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "使用galpy+MWPotential2014进行前后1 Gyr轨道积分。银河系模型：核球0.5×10^10 M_⊙，恒星盘6.8×10^10 M_⊙，暗晕ρ_⊙=0.008 M_⊙/pc^3。对初始条件和模型参数进行MC采样。轨道显示SB 796处于束缚轨道，银心距0.5-20 kpc，约每0.3 Gyr经过银心。",
+      "inputs": [
+        "Gaia DR2 astrometry",
+        "CORALIE γ velocity",
+        "MWPotential2014"
+      ],
+      "outputs": [
+        "SB 796轨道：束缚轨道，r_min~0.6±0.2 kpc"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 519,
+          "end_line": 588,
+          "context": "Sec 5: Galactic dynamics, galpy integration, bound radial orbit"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "sb796",
+      "description": "SB 796（Gaia DR2 4958223672295639040）：c型天琴座RR型变星（RRc），周期P=0.2658523 d，位于银道面下方~3.5 kpc。银心静止系总速度~274 km/s（Vx,Vy,Vz=229,-59,-138.1 km/s），平均RV~248 km/s。论文将其标注为'high-velocity star'。",
+      "decision": "excluded",
+      "reason": "SB 796并非HVS候选体。该星总空间速度~274 km/s，远低于银河系逃逸速度（该位置~500+ km/s）。galpy+MWPotential2014轨道积分明确显示其为束缚轨道：银心距在0.5-20 kpc之间周期性振荡，约每0.3 Gyr经过银心附近。论文虽使用'high-velocity'一词，但这是相对于典型银盘星的速度而言，并非指超高速星（HVS）。SB 796是典型的老年贫金属晕族星（[Fe/H]~-1.6），属于银河系正常束缚成员。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 97,
+          "end_line": 116,
+          "context": "Abstract: SB 796 high-velocity, RV ~250 km/s, ~3.5 kpc below plane, oscillates 0.5-20 kpc"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 574,
+          "end_line": 578,
+          "context": "Sec 5: Bound radial orbit, crosses near GC ~3 times per Gyr, r_min=0.6±0.2 kpc"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 524,
+          "end_line": 544,
+          "context": "Table SB796-loc: Galactic position and velocity"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,663 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:39:30",
+  "paper": {
+    "arxiv_id": "1806.07907",
+    "title": "The Fastest Travel Together: Chemical Tagging of the Fastest Stars in Gaia DR2 to the Stellar Halo",
+    "month": "2018-06"
+  },
+  "review": {
+    "path": "literature/1806.07907/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083930",
+    "started_at": "2026-06-07T08:39:30",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1806.07907",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-obsprops",
+      "internal_table_id": "table-tab-obsprops",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+        "start_line": 236,
+        "end_line": 274,
+        "caption": "Observational Properties of Candidate Extreme-velocity Stars and Radial Velocity Standards",
+        "label": "tab:obsprops"
+      },
+      "source_path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+      "excerpt_path": "literature/1806.07907/catalog_sources/table-tab-obsprops/excerpt.tex",
+      "sha256": "1ea962d9d3524801bbd006556196e972afe70422ed437e0150c53471d21ff5a0",
+      "line_count": 39,
+      "error": ""
+    },
+    {
+      "id": "table-tab-obspropsothers",
+      "internal_table_id": "table-tab-obspropsothers",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+        "start_line": 309,
+        "end_line": 332,
+        "caption": "Observational Properties of Extreme-velocity Star Candidates from other surveys",
+        "label": "tab:obspropsothers"
+      },
+      "source_path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+      "excerpt_path": "literature/1806.07907/catalog_sources/table-tab-obspropsothers/excerpt.tex",
+      "sha256": "4901a89d13d2190eb33bee5a02aaec3f9b6b8081cfa513a88b3400fb52651890",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-tab-results",
+      "internal_table_id": "table-tab-results",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+        "start_line": 349,
+        "end_line": 394,
+        "caption": "Stellar parameters and chemical abundances for 5 Candidate Extreme-velocity Stars",
+        "label": "tab:results"
+      },
+      "source_path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+      "excerpt_path": "literature/1806.07907/catalog_sources/table-tab-results/excerpt.tex",
+      "sha256": "817619066d0f70716cfd018e585e6d940a27a2594950dd84e8b098e21f28ef3c",
+      "line_count": 46,
+      "error": ""
+    },
+    {
+      "id": "table-tab-online",
+      "internal_table_id": "table-tab-online",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+        "start_line": 536,
+        "end_line": 569,
+        "caption": "Line-By-Line Chemical Abundances and Atomic Information",
+        "label": "tab:online"
+      },
+      "source_path": "literature/1806.07907/arxiv_source/Hawkins_HVS.tex",
+      "excerpt_path": "literature/1806.07907/catalog_sources/table-tab-online/excerpt.tex",
+      "sha256": "6e40bd48eb6ad1bc41398f8f2c5cffda12e2cda47b5788b3b9f9f3da2414404c",
+      "line_count": 34,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-obsprops",
+      "internal_table_id": "table-tab-obsprops",
+      "status": "success",
+      "ecsv_path": "literature/1806.07907/catalog_tables/table-tab-obsprops.ecsv",
+      "caption": "Observational Properties of Candidate Extreme-velocity Stars and Radial Velocity Standards",
+      "label": "tab:obsprops",
+      "row_count": 9,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "RA",
+          "DEC",
+          "G",
+          "RV Gaia",
+          "RV APO",
+          "V tot",
+          "P MW",
+          "P ub",
+          "SNR",
+          "t obs"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "DEC",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "G",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "RV Gaia",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "RV APO",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "V tot",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "P MW",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "P ub",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "SNR",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "t obs",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp90_6wrud/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1806.07907/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp90_6wrud/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1806.07907/catalog_sources/table-tab-obsprops/wrapped.tex",
+            "html": "literature/1806.07907/catalog_sources/table-tab-obsprops/latexml.html",
+            "stdout": "literature/1806.07907/catalog_sources/table-tab-obsprops/latexml.stdout.txt",
+            "stderr": "literature/1806.07907/catalog_sources/table-tab-obsprops/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "1ea962d9d3524801bbd006556196e972afe70422ed437e0150c53471d21ff5a0"
+    },
+    {
+      "id": "table-tab-obspropsothers",
+      "internal_table_id": "table-tab-obspropsothers",
+      "status": "success",
+      "ecsv_path": "literature/1806.07907/catalog_tables/table-tab-obspropsothers.ecsv",
+      "caption": "Observational Properties of Extreme-velocity Star Candidates from other surveys",
+      "label": "tab:obspropsothers",
+      "row_count": 5,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "RA",
+          "DEC",
+          "G",
+          "RV Gaia",
+          "RV survey",
+          "V tot",
+          "P MW",
+          "P ub",
+          "SNR",
+          "Survey"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "DEC",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "G",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "RV Gaia",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "RV survey",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "V tot",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "P MW",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "P ub",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "SNR",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Survey",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnfamkbjt/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1806.07907/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnfamkbjt/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1806.07907/catalog_sources/table-tab-obspropsothers/wrapped.tex",
+            "html": "literature/1806.07907/catalog_sources/table-tab-obspropsothers/latexml.html",
+            "stdout": "literature/1806.07907/catalog_sources/table-tab-obspropsothers/latexml.stdout.txt",
+            "stderr": "literature/1806.07907/catalog_sources/table-tab-obspropsothers/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4901a89d13d2190eb33bee5a02aaec3f9b6b8081cfa513a88b3400fb52651890"
+    },
+    {
+      "id": "table-tab-results",
+      "internal_table_id": "table-tab-results",
+      "status": "success",
+      "ecsv_path": "literature/1806.07907/catalog_tables/table-tab-results.ecsv",
+      "caption": "Stellar parameters and chemical abundances for 5 Candidate Extreme-velocity Stars",
+      "label": "tab:results",
+      "row_count": 27,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "1508756353921427328",
+          "1364548016594914560",
+          "4593398670455374592",
+          "4248140165233284352",
+          "2233912206910720000"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "1508756353921427328",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "1364548016594914560",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "4593398670455374592",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "4248140165233284352",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "2233912206910720000",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpu0yh_efj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1806.07907/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpu0yh_efj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1806.07907/catalog_sources/table-tab-results/wrapped.tex",
+            "html": "literature/1806.07907/catalog_sources/table-tab-results/latexml.html",
+            "stdout": "literature/1806.07907/catalog_sources/table-tab-results/latexml.stdout.txt",
+            "stderr": "literature/1806.07907/catalog_sources/table-tab-results/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "817619066d0f70716cfd018e585e6d940a27a2594950dd84e8b098e21f28ef3c"
+    },
+    {
+      "id": "table-tab-online",
+      "internal_table_id": "table-tab-online",
+      "status": "success",
+      "ecsv_path": "literature/1806.07907/catalog_tables/table-tab-online.ecsv",
+      "caption": "Line-By-Line Chemical Abundances and Atomic Information",
+      "label": "tab:online",
+      "row_count": 15,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "Element",
+          "\\lambda",
+          "\\log(gf)",
+          "Excitation Pot.",
+          "\\log(\\epsilon)"
+        ],
+        [
+          "",
+          "",
+          "(Å)",
+          "",
+          "(eV)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Element",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\lambda | (Å)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\log(gf)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Excitation Pot. | (eV)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\log(\\epsilon)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgdp_vytp/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1806.07907/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgdp_vytp/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1806.07907/catalog_sources/table-tab-online/wrapped.tex",
+            "html": "literature/1806.07907/catalog_sources/table-tab-online/latexml.html",
+            "stdout": "literature/1806.07907/catalog_sources/table-tab-online/latexml.stdout.txt",
+            "stderr": "literature/1806.07907/catalog_sources/table-tab-online/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6e40bd48eb6ad1bc41398f8f2c5cffda12e2cda47b5788b3b9f9f3da2414404c"
+    }
+  ]
+}

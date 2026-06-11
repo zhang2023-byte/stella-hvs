@@ -1,0 +1,971 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:41:32",
+  "paper": {
+    "arxiv_id": "2005.04762",
+    "title": "Hunting for Runaways from the Orion Nebula Cluster",
+    "month": "2020-05"
+  },
+  "review": {
+    "path": "literature/2005.04762/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084132",
+    "started_at": "2026-06-07T08:41:32",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2005.04762",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-flags",
+      "internal_table_id": "table-tab-flags",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+        "start_line": 670,
+        "end_line": 682,
+        "caption": "Number of Sources that fulfill all combination of flags described in the text. Quantities between parenthesis show the number of sources that fulfill the condition and also have all the information required (see text). The table is organized on blocks where, from top to bottom, results show the combination of 1, 2, 3, 4, 5 and 6 flags respectively.",
+        "label": "tab:flags"
+      },
+      "source_path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+      "excerpt_path": "literature/2005.04762/catalog_sources/table-tab-flags/excerpt.tex",
+      "sha256": "9444fe35d1891b3d18f4ef953a0f51919645139c203669fd61c31253e01c6e28",
+      "line_count": 13,
+      "error": ""
+    },
+    {
+      "id": "table-tab-score",
+      "internal_table_id": "table-tab-score",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+        "start_line": 684,
+        "end_line": 707,
+        "caption": "Summary table of score system used to classify and label candidate runaway sources. Score is based in how many signatures of youth a source fails (indicated with -1), while the subclass column is based on how many flags for which the source could not be tested (indicated with 0).",
+        "label": "tab:score"
+      },
+      "source_path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+      "excerpt_path": "literature/2005.04762/catalog_sources/table-tab-score/excerpt.tex",
+      "sha256": "61a545639fe40d8dc3eec2fc009cd94d69bddb66b9ca0dc64628ee874b83ff51",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-tab-known",
+      "internal_table_id": "table-tab-known",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+        "start_line": 848,
+        "end_line": 881,
+        "caption": "Traceback candidates that are known members of the Orion A complex from McBride (2019) with transverse velocities above 4 km/s. First column shows the Gaia ID with alternative names for specific sources within parenthesis, such as AE Aur, mu Col. The first section of the table shows candidate runaways reported recently by McBride (2019) with the label letters used by the authors for quick reference. Second column shows the corresponding score and label system used in this work.",
+        "label": "tab:known"
+      },
+      "source_path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+      "excerpt_path": "literature/2005.04762/catalog_sources/table-tab-known/excerpt.tex",
+      "sha256": "99f2bf08b59a66263305507aa5ddcfd1049561e18a8dac35837f3c7846614674",
+      "line_count": 34,
+      "error": ""
+    },
+    {
+      "id": "table-tab-bestcandidates",
+      "internal_table_id": "table-tab-bestcandidates",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+        "start_line": 972,
+        "end_line": 984,
+        "caption": "Same as Table tab:known, but for sources with score a+. The table is divided in 6 sections grouped by scores aI+, aII+ and aIII+ and the same but for sources in the 'contaminated' zone, i.e., aI+*, aII+* and aIII+*. A version of this table listing all ~17,000 2D traceback candidates will be available in the electronic version of the published paper.",
+        "label": "tab:bestcandidates"
+      },
+      "source_path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+      "excerpt_path": "literature/2005.04762/catalog_sources/table-tab-bestcandidates/excerpt.tex",
+      "sha256": "ca3b54ab5011dddd00ac3c8093de9a3a19641133d10e860982b23e09a9ee80a1",
+      "line_count": 13,
+      "error": ""
+    },
+    {
+      "id": "table-tab-rv",
+      "internal_table_id": "table-tab-rv",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+        "start_line": 1142,
+        "end_line": 1152,
+        "caption": "Sources that fulfill the RV flag with available Gaia DR2 radial velocities with scores A+. Gaia ID in bold indicate sources that are known members of the Orion A complex. v_3D,ONC shows the space velocity in the frame of reference of the ONC. tau_min,3D is the traceback time obtained by 3D traceback and D_min,3d the corresponding 3D closest approach to the ONC.",
+        "label": "tab:rv"
+      },
+      "source_path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+      "excerpt_path": "literature/2005.04762/catalog_sources/table-tab-rv/excerpt.tex",
+      "sha256": "eca1bd5f35ea3e0e69629907adeac53f1131d01f767058f38bb8a8aad9efd14f",
+      "line_count": 11,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-flags",
+      "internal_table_id": "table-tab-flags",
+      "status": "success",
+      "ecsv_path": "literature/2005.04762/catalog_tables/table-tab-flags.ecsv",
+      "caption": "Number of Sources that fulfill all combination of flags described in the text. Quantities between parenthesis show the number of sources that fulfill the condition and also have all the information required (see text). The table is organized on blocks where, from top to bottom, results show the combination of 1, 2, 3, 4, 5 and 6 flags respectively.",
+      "label": "tab:flags",
+      "row_count": 32,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "YSO",
+          "WYSO",
+          "VAR",
+          "CA",
+          "PA",
+          "RV",
+          "Flag Combinations"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "YSO",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "WYSO",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "VAR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "CA",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "PA",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "RV",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Flag Combinations",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpk7l519hv/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2005.04762/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpk7l519hv/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2005.04762/catalog_sources/table-tab-flags/wrapped.tex",
+            "html": "literature/2005.04762/catalog_sources/table-tab-flags/latexml.html",
+            "stdout": "literature/2005.04762/catalog_sources/table-tab-flags/latexml.stdout.txt",
+            "stderr": "literature/2005.04762/catalog_sources/table-tab-flags/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9444fe35d1891b3d18f4ef953a0f51919645139c203669fd61c31253e01c6e28"
+    },
+    {
+      "id": "table-tab-score",
+      "internal_table_id": "table-tab-score",
+      "status": "success",
+      "ecsv_path": "literature/2005.04762/catalog_tables/table-tab-score.ecsv",
+      "caption": "Summary table of score system used to classify and label candidate runaway sources. Score is based in how many signatures of youth a source fails (indicated with -1), while the subclass column is based on how many flags for which the source could not be tested (indicated with 0).",
+      "label": "tab:score",
+      "row_count": 12,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Score",
+          "Subclass",
+          "YSO",
+          "WYSO",
+          "VAR"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Score",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Subclass",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "YSO",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "WYSO",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "VAR",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3bzru8j3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2005.04762/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3bzru8j3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2005.04762/catalog_sources/table-tab-score/wrapped.tex",
+            "html": "literature/2005.04762/catalog_sources/table-tab-score/latexml.html",
+            "stdout": "literature/2005.04762/catalog_sources/table-tab-score/latexml.stdout.txt",
+            "stderr": "literature/2005.04762/catalog_sources/table-tab-score/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "61a545639fe40d8dc3eec2fc009cd94d69bddb66b9ca0dc64628ee874b83ff51"
+    },
+    {
+      "id": "table-tab-known",
+      "internal_table_id": "table-tab-known",
+      "status": "success",
+      "ecsv_path": "literature/2005.04762/catalog_tables/table-tab-known.ecsv",
+      "caption": "Traceback candidates that are known members of the Orion A complex from McBride (2019) with transverse velocities above 4 km/s. First column shows the Gaia ID with alternative names for specific sources within parenthesis, such as AE Aur, mu Col. The first section of the table shows candidate runaways reported recently by McBride (2019) with the label letters used by the authors for quick reference. Second column shows the corresponding score and label system used in this work.",
+      "label": "tab:known",
+      "row_count": 44,
+      "column_count": 15,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia ID",
+          "Label",
+          "\\ell (^\\circ)",
+          "b (^\\circ)",
+          "d_\\rm ONC",
+          "\\theta_\\rm ONC",
+          "v_t^\\prime",
+          "t_\\rm back",
+          "v_\\rm r,opt",
+          "v_\\rm r",
+          "YSO",
+          "P(YSO)",
+          "V_i",
+          "D_\\rm min",
+          "\\theta_\\rm PA"
+        ],
+        [
+          "",
+          "Score",
+          "[J2015.5]",
+          "[J2015.5]",
+          "(pc)",
+          "( ∘ )",
+          "(km/s)",
+          "(Myr)",
+          "(km/s)",
+          "(km/s)",
+          "",
+          "",
+          "",
+          "(’)",
+          "( ∘ )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia ID",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Label | Score",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\ell (^\\circ) | [J2015.5]",
+          "unit_text": "[J2015.5]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "b (^\\circ) | [J2015.5]",
+          "unit_text": "[J2015.5]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "d_\\rm ONC | (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\theta_\\rm ONC | ( ∘ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_t^\\prime | (km/s)",
+          "unit_text": "(km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "t_\\rm back | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "v_\\rm r,opt | (km/s)",
+          "unit_text": "(km/s)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "v_\\rm r | (km/s)",
+          "unit_text": "(km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "YSO",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "P(YSO)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "V_i",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "D_\\rm min | (’)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "\\theta_\\rm PA | ( ∘ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwra85clc/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2005.04762/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwra85clc/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2005.04762/catalog_sources/table-tab-known/wrapped.tex",
+            "html": "literature/2005.04762/catalog_sources/table-tab-known/latexml.html",
+            "stdout": "literature/2005.04762/catalog_sources/table-tab-known/latexml.stdout.txt",
+            "stderr": "literature/2005.04762/catalog_sources/table-tab-known/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "99f2bf08b59a66263305507aa5ddcfd1049561e18a8dac35837f3c7846614674"
+    },
+    {
+      "id": "table-tab-bestcandidates",
+      "internal_table_id": "table-tab-bestcandidates",
+      "status": "success",
+      "ecsv_path": "literature/2005.04762/catalog_tables/table-tab-bestcandidates.ecsv",
+      "caption": "Same as Table tab:known, but for sources with score a+. The table is divided in 6 sections grouped by scores aI+, aII+ and aIII+ and the same but for sources in the 'contaminated' zone, i.e., aI+*, aII+* and aIII+*. A version of this table listing all ~17,000 2D traceback candidates will be available in the electronic version of the published paper.",
+      "label": "tab:bestcandidates",
+      "row_count": 25,
+      "column_count": 15,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia ID",
+          "Label",
+          "\\ell (^\\circ)",
+          "b (^\\circ)",
+          "d_\\rm ONC",
+          "\\theta_\\rm ONC",
+          "v_t^\\prime",
+          "t_\\rm back",
+          "v_\\rm r,opt",
+          "v_\\rm r",
+          "YSO",
+          "P(YSO)",
+          "V_i",
+          "D_\\rm min",
+          "\\theta_\\rm PA"
+        ],
+        [
+          "",
+          "Score",
+          "[J2015.5]",
+          "[J2015.5]",
+          "(pc)",
+          "( ∘ )",
+          "(km/s)",
+          "(Myr)",
+          "(km/s)",
+          "(km/s)",
+          "",
+          "",
+          "",
+          "(’)",
+          "( ∘ )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Label | Score",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\ell (^\\circ) | [J2015.5]",
+          "unit_text": "[J2015.5]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "b (^\\circ) | [J2015.5]",
+          "unit_text": "[J2015.5]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "d_\\rm ONC | (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\theta_\\rm ONC | ( ∘ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_t^\\prime | (km/s)",
+          "unit_text": "(km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "t_\\rm back | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "v_\\rm r,opt | (km/s)",
+          "unit_text": "(km/s)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "v_\\rm r | (km/s)",
+          "unit_text": "(km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "YSO",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "P(YSO)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "V_i",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "D_\\rm min | (’)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "\\theta_\\rm PA | ( ∘ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa3nfvxpl/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2005.04762/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa3nfvxpl/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2005.04762/catalog_sources/table-tab-bestcandidates/wrapped.tex",
+            "html": "literature/2005.04762/catalog_sources/table-tab-bestcandidates/latexml.html",
+            "stdout": "literature/2005.04762/catalog_sources/table-tab-bestcandidates/latexml.stdout.txt",
+            "stderr": "literature/2005.04762/catalog_sources/table-tab-bestcandidates/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ca3b54ab5011dddd00ac3c8093de9a3a19641133d10e860982b23e09a9ee80a1"
+    },
+    {
+      "id": "table-tab-rv",
+      "internal_table_id": "table-tab-rv",
+      "status": "success",
+      "ecsv_path": "literature/2005.04762/catalog_tables/table-tab-rv.ecsv",
+      "caption": "Sources that fulfill the RV flag with available Gaia DR2 radial velocities with scores A+. Gaia ID in bold indicate sources that are known members of the Orion A complex. v_3D,ONC shows the space velocity in the frame of reference of the ONC. tau_min,3D is the traceback time obtained by 3D traceback and D_min,3d the corresponding 3D closest approach to the ONC.",
+      "label": "tab:rv",
+      "row_count": 16,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia ID",
+          "Label",
+          "\\ell (^\\circ)",
+          "b (^\\circ)",
+          "distance",
+          "d_\\rm ONC",
+          "\\theta_\\rm ONC",
+          "v_\\rm 3D,ONC",
+          "v_\\rm r",
+          "\\tau_\\rm min,3d",
+          "D_\\rm min,3d"
+        ],
+        [
+          "",
+          "Score",
+          "[J2015.5]",
+          "[J2015.5]",
+          "(pc)",
+          "(pc)",
+          "( ∘ )",
+          "(Myr)",
+          "(km/s)",
+          "(Myr)",
+          "(pc)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Label | Score",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\ell (^\\circ) | [J2015.5]",
+          "unit_text": "[J2015.5]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "b (^\\circ) | [J2015.5]",
+          "unit_text": "[J2015.5]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "distance | (pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "d_\\rm ONC | (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\theta_\\rm ONC | ( ∘ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "v_\\rm 3D,ONC | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "v_\\rm r | (km/s)",
+          "unit_text": "(km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\tau_\\rm min,3d | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "D_\\rm min,3d | (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb2n7cv46/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2005.04762/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb2n7cv46/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2005.04762/catalog_sources/table-tab-rv/wrapped.tex",
+            "html": "literature/2005.04762/catalog_sources/table-tab-rv/latexml.html",
+            "stdout": "literature/2005.04762/catalog_sources/table-tab-rv/latexml.stdout.txt",
+            "stderr": "literature/2005.04762/catalog_sources/table-tab-rv/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "eca1bd5f35ea3e0e69629907adeac53f1131d01f767058f38bb8a8aad9efd14f"
+    }
+  ]
+}

@@ -1,0 +1,604 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:33:20",
+  "paper": {
+    "arxiv_id": "1810.12916",
+    "title": "CPD-64 2731: a massive spun-up and rejuvenated high-velocity runaway star",
+    "month": "2018-10"
+  },
+  "review": {
+    "path": "literature/1810.12916/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083320",
+    "started_at": "2026-06-07T08:33:20",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1810.12916",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-det",
+      "internal_table_id": "table-tab-det",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.12916/arxiv_source/CPD.tex",
+        "start_line": 159,
+        "end_line": 184,
+        "caption": "Details of CPD-64 2731. The spectral type, SpT, is based on our spectroscopic observations and spectral analysis. The coordinates and the JHKs photometry are from the 2MASS All-Sky Catalog of Point Sources (Cutri et al. 2003), the BV photometry is from the AAVSO Photometric All-Sky Survey (Henden et al. 2016), and the [3.4] and [4.6] magnitudes are from the AllWISE Data Release (Cutri et al. 2014).",
+        "label": "tab:det"
+      },
+      "source_path": "literature/1810.12916/arxiv_source/CPD.tex",
+      "excerpt_path": "literature/1810.12916/catalog_sources/table-tab-det/excerpt.tex",
+      "sha256": "df6d610d44258a6d735a69422f2db39bd59ec14719a1563af1190898df677be0",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-tab-cno",
+      "internal_table_id": "table-tab-cno",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.12916/arxiv_source/CPD.tex",
+        "start_line": 286,
+        "end_line": 299,
+        "caption": "Comparison of the CNO abundances (by number) in CPD-64 2731 with the cosmic abundance standard (CAS; Nieva & Przybilla 2012) in the solar neighbourhood and initial abundances adopted in the evolutionary models by Brott et al. (2011).",
+        "label": "tab:cno"
+      },
+      "source_path": "literature/1810.12916/arxiv_source/CPD.tex",
+      "excerpt_path": "literature/1810.12916/catalog_sources/table-tab-cno/excerpt.tex",
+      "sha256": "36fa533e70f904f203f99a7ce643a78cf64ceb7126603b9d008031a0cbc48284",
+      "line_count": 14,
+      "error": ""
+    },
+    {
+      "id": "table-tab-par",
+      "internal_table_id": "table-tab-par",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.12916/arxiv_source/CPD.tex",
+        "start_line": 328,
+        "end_line": 355,
+        "caption": "Stellar parameters of CPD-64 2731 for three distances (see text for details).",
+        "label": "tab:par"
+      },
+      "source_path": "literature/1810.12916/arxiv_source/CPD.tex",
+      "excerpt_path": "literature/1810.12916/catalog_sources/table-tab-par/excerpt.tex",
+      "sha256": "0109ec526d2afe5f115fcca124c9b97ffcbba12c598a599f1a67420990446055",
+      "line_count": 28,
+      "error": ""
+    },
+    {
+      "id": "table-tab-pro",
+      "internal_table_id": "table-tab-pro",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.12916/arxiv_source/CPD.tex",
+        "start_line": 428,
+        "end_line": 441,
+        "caption": "Astrometric and kinematic data on CPD-64 2731 (see text for details).",
+        "label": "tab:pro"
+      },
+      "source_path": "literature/1810.12916/arxiv_source/CPD.tex",
+      "excerpt_path": "literature/1810.12916/catalog_sources/table-tab-pro/excerpt.tex",
+      "sha256": "42756a4803125b5b4c42ff0f409fad1b36a62f7599ee5942b92b18b67c5eacaa",
+      "line_count": 14,
+      "error": ""
+    },
+    {
+      "id": "table-tab-bro",
+      "internal_table_id": "table-tab-bro",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.12916/arxiv_source/CPD.tex",
+        "start_line": 526,
+        "end_line": 554,
+        "caption": "Comparison of CPD-64 2731 with model stars from Brott et al. (2011).",
+        "label": "tab:bro"
+      },
+      "source_path": "literature/1810.12916/arxiv_source/CPD.tex",
+      "excerpt_path": "literature/1810.12916/catalog_sources/table-tab-bro/excerpt.tex",
+      "sha256": "bf2a6c1c2a58d16c4660c47ef851e3a9f095a14fff0e937e62afb65cfafdd84a",
+      "line_count": 29,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-det",
+      "internal_table_id": "table-tab-det",
+      "status": "success",
+      "ecsv_path": "literature/1810.12916/catalog_tables/table-tab-det.ecsv",
+      "caption": "Details of CPD-64 2731. The spectral type, SpT, is based on our spectroscopic observations and spectral analysis. The coordinates and the JHKs photometry are from the 2MASS All-Sky Catalog of Point Sources (Cutri et al. 2003), the BV photometry is from the AAVSO Photometric All-Sky Survey (Henden et al. 2016), and the [3.4] and [4.6] magnitudes are from the AllWISE Data Release (Cutri et al. 2014).",
+      "label": "tab:det",
+      "row_count": 12,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp57bri4j4/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.12916/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp57bri4j4/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.12916/catalog_sources/table-tab-det/wrapped.tex",
+            "html": "literature/1810.12916/catalog_sources/table-tab-det/latexml.html",
+            "stdout": "literature/1810.12916/catalog_sources/table-tab-det/latexml.stdout.txt",
+            "stderr": "literature/1810.12916/catalog_sources/table-tab-det/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "df6d610d44258a6d735a69422f2db39bd59ec14719a1563af1190898df677be0"
+    },
+    {
+      "id": "table-tab-cno",
+      "internal_table_id": "table-tab-cno",
+      "status": "success",
+      "ecsv_path": "literature/1810.12916/catalog_tables/table-tab-cno.ecsv",
+      "caption": "Comparison of the CNO abundances (by number) in CPD-64 2731 with the cosmic abundance standard (CAS; Nieva & Przybilla 2012) in the solar neighbourhood and initial abundances adopted in the evolutionary models by Brott et al. (2011).",
+      "label": "tab:cno",
+      "row_count": 3,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\log (X/H)+12",
+          "CPD-64 2731",
+          "CAS",
+          "Brott et al."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\log (X/H)+12",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "CPD-64 2731",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "CAS",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Brott et al.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_pmf3pmn/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.12916/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_pmf3pmn/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.12916/catalog_sources/table-tab-cno/wrapped.tex",
+            "html": "literature/1810.12916/catalog_sources/table-tab-cno/latexml.html",
+            "stdout": "literature/1810.12916/catalog_sources/table-tab-cno/latexml.stdout.txt",
+            "stderr": "literature/1810.12916/catalog_sources/table-tab-cno/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "36fa533e70f904f203f99a7ce643a78cf64ceb7126603b9d008031a0cbc48284"
+    },
+    {
+      "id": "table-tab-par",
+      "internal_table_id": "table-tab-par",
+      "status": "success",
+      "ecsv_path": "literature/1810.12916/catalog_tables/table-tab-par.ecsv",
+      "caption": "Stellar parameters of CPD-64 2731 for three distances (see text for details).",
+      "label": "tab:par",
+      "row_count": 18,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm179wbqc/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.12916/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm179wbqc/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.12916/catalog_sources/table-tab-par/wrapped.tex",
+            "html": "literature/1810.12916/catalog_sources/table-tab-par/latexml.html",
+            "stdout": "literature/1810.12916/catalog_sources/table-tab-par/latexml.stdout.txt",
+            "stderr": "literature/1810.12916/catalog_sources/table-tab-par/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0109ec526d2afe5f115fcca124c9b97ffcbba12c598a599f1a67420990446055"
+    },
+    {
+      "id": "table-tab-pro",
+      "internal_table_id": "table-tab-pro",
+      "status": "success",
+      "ecsv_path": "literature/1810.12916/catalog_tables/table-tab-pro.ecsv",
+      "caption": "Astrometric and kinematic data on CPD-64 2731 (see text for details).",
+      "label": "tab:pro",
+      "row_count": 3,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "d",
+          "v_\\rm l",
+          "v_\\rm b",
+          "v_\\rm r",
+          "v_\\rm tr",
+          "v_*",
+          "z",
+          "t_\\rm kin"
+        ],
+        [
+          "(kpc)",
+          "( \\rm km s^-1 )",
+          "( \\rm km s^-1 )",
+          "( \\rm km s^-1 )",
+          "( \\rm km s^-1 )",
+          "( \\rm km s^-1 )",
+          "(pc)",
+          "(Myr)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "d | (kpc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "v_\\rm l | ( \\rm km s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "v_\\rm b | ( \\rm km s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "v_\\rm r | ( \\rm km s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "v_\\rm tr | ( \\rm km s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v_* | ( \\rm km s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "z | (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "t_\\rm kin | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpamnk8vhl/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.12916/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpamnk8vhl/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.12916/catalog_sources/table-tab-pro/wrapped.tex",
+            "html": "literature/1810.12916/catalog_sources/table-tab-pro/latexml.html",
+            "stdout": "literature/1810.12916/catalog_sources/table-tab-pro/latexml.stdout.txt",
+            "stderr": "literature/1810.12916/catalog_sources/table-tab-pro/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "42756a4803125b5b4c42ff0f409fad1b36a62f7599ee5942b92b18b67c5eacaa"
+    },
+    {
+      "id": "table-tab-bro",
+      "internal_table_id": "table-tab-bro",
+      "status": "success",
+      "ecsv_path": "literature/1810.12916/catalog_tables/table-tab-bro.ecsv",
+      "caption": "Comparison of CPD-64 2731 with model stars from Brott et al. (2011).",
+      "label": "tab:bro",
+      "row_count": 14,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdol3qkt_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.12916/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdol3qkt_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.12916/catalog_sources/table-tab-bro/wrapped.tex",
+            "html": "literature/1810.12916/catalog_sources/table-tab-bro/latexml.html",
+            "stdout": "literature/1810.12916/catalog_sources/table-tab-bro/latexml.stdout.txt",
+            "stderr": "literature/1810.12916/catalog_sources/table-tab-bro/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "bf2a6c1c2a58d16c4660c47ef851e3a9f095a14fff0e937e62afb65cfafdd84a"
+    }
+  ]
+}

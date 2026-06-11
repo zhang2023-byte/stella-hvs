@@ -1,0 +1,1237 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:43:58",
+  "paper": {
+    "arxiv_id": "2010.10964",
+    "title": "2D kinematics of massive stars near the Galactic Center",
+    "month": "2020-10"
+  },
+  "review": {
+    "path": "literature/2010.10964/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084358",
+    "started_at": "2026-06-07T08:43:58",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2010.10964",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 9,
+      "work_count": 9,
+      "table_count": 9,
+      "success_count": 9,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 9,
+      "file_success_count": 9,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-log",
+      "internal_table_id": "table-tab-log",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+        "start_line": 221,
+        "end_line": 239,
+        "caption": "List of observations used in this paper.",
+        "label": "tab:log"
+      },
+      "source_path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+      "excerpt_path": "literature/2010.10964/catalog_sources/table-tab-log/excerpt.tex",
+      "sha256": "11201c4b52b142d40dc46ba44be1c825c4d2e53d6f9a72f9afa5ae5dee690ae0",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-ref",
+      "internal_table_id": "table-tab-ref",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+        "start_line": 1004,
+        "end_line": 1027,
+        "caption": "Position and PMs of Sgr A*, the Arches and the Quintuplet.",
+        "label": "tab:ref"
+      },
+      "source_path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+      "excerpt_path": "literature/2010.10964/catalog_sources/table-tab-ref/excerpt.tex",
+      "sha256": "f12b6af8a14dbf365df64aeea04113005183830db584170a0dfdbc151f1f1f73",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-tab-confirm",
+      "internal_table_id": "table-tab-confirm",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+        "start_line": 1349,
+        "end_line": 1383,
+        "caption": "Overview of the confirmed MSs selected as escaping candidates.",
+        "label": "tab:confirm"
+      },
+      "source_path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+      "excerpt_path": "literature/2010.10964/catalog_sources/table-tab-confirm/excerpt.tex",
+      "sha256": "deee812865d7d7858849b66617f3cf1cf7159dcff8a7780c406830f0f4e70ddb",
+      "line_count": 35,
+      "error": ""
+    },
+    {
+      "id": "table-tab-arches",
+      "internal_table_id": "table-tab-arches",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+        "start_line": 1577,
+        "end_line": 1608,
+        "caption": "List of confirmed massive stars likely members of the Arches cluster.",
+        "label": "tab:arches"
+      },
+      "source_path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+      "excerpt_path": "literature/2010.10964/catalog_sources/table-tab-arches/excerpt.tex",
+      "sha256": "e44042cfeacfcf8ed83493972a34b43aea20cb03caa0faa2487f9a569a7a7d20",
+      "line_count": 32,
+      "error": ""
+    },
+    {
+      "id": "table-tab-candidate",
+      "internal_table_id": "table-tab-candidate",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+        "start_line": 1778,
+        "end_line": 1815,
+        "caption": "Overview of the candidate MSs selected as likely escapers.",
+        "label": "tab:candidate"
+      },
+      "source_path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+      "excerpt_path": "literature/2010.10964/catalog_sources/table-tab-candidate/excerpt.tex",
+      "sha256": "5be30697f1cbf016a42717fbc6fb6d6232452bb7656017b702bf81d89c969c07",
+      "line_count": 38,
+      "error": ""
+    },
+    {
+      "id": "table-tab-photcat",
+      "internal_table_id": "table-tab-photcat",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+        "start_line": 2209,
+        "end_line": 2251,
+        "caption": "First 10 lines of the WFC3/IR F139M photometric catalog based on the GO-12915 data.",
+        "label": "tab:photcat"
+      },
+      "source_path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+      "excerpt_path": "literature/2010.10964/catalog_sources/table-tab-photcat/excerpt.tex",
+      "sha256": "61e8a36830660115cecf242e55a86213a593754201d22fdb159f7bc608bf2f78",
+      "line_count": 43,
+      "error": ""
+    },
+    {
+      "id": "table-tab-photzp",
+      "internal_table_id": "table-tab-photzp",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+        "start_line": 2253,
+        "end_line": 2271,
+        "caption": "Adopted zero-points used to calibrate our instrumental photometry into the VEGA-mag flight system.",
+        "label": "tab:photzp"
+      },
+      "source_path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+      "excerpt_path": "literature/2010.10964/catalog_sources/table-tab-photzp/excerpt.tex",
+      "sha256": "fa079cefceab2a69693edb0ffbaeebfb9d254c9003295c33df2da9666a37e9ce",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-pmcat",
+      "internal_table_id": "table-tab-pmcat",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+        "start_line": 2274,
+        "end_line": 2310,
+        "caption": "First 10 lines of the WFC3/IR PM catalog.",
+        "label": "tab:pmcat"
+      },
+      "source_path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+      "excerpt_path": "literature/2010.10964/catalog_sources/table-tab-pmcat/excerpt.tex",
+      "sha256": "f1661ec04235e4793e9e0a54df20ddf384239197e28efa3455061cff28acaf30",
+      "line_count": 37,
+      "error": ""
+    },
+    {
+      "id": "table-tab-mslist",
+      "internal_table_id": "table-tab-mslist",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+        "start_line": 2320,
+        "end_line": 2361,
+        "caption": "First 10 lines of the list of confirmed MSs, candidate MSs and non-massive objects analyzed in Sect. MS.",
+        "label": "tab:mslist"
+      },
+      "source_path": "literature/2010.10964/arxiv_source/GALCEN.ACCEPTED.v3.tex",
+      "excerpt_path": "literature/2010.10964/catalog_sources/table-tab-mslist/excerpt.tex",
+      "sha256": "e701694e3f66e77a472760eea10abe3647471a490f8333b608ed154e7b74c157",
+      "line_count": 42,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-log",
+      "internal_table_id": "table-tab-log",
+      "status": "success",
+      "ecsv_path": "literature/2010.10964/catalog_tables/table-tab-log.ecsv",
+      "caption": "List of observations used in this paper.",
+      "label": "tab:log",
+      "row_count": 6,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "GO",
+          "Date",
+          "Instrument/Camera",
+          "Filter",
+          "N \\times Exp. Time"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "GO",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Date",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Instrument/Camera",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Filter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "N \\times Exp. Time",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptlxrzd7o/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2010.10964/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptlxrzd7o/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.10964/catalog_sources/table-tab-log/wrapped.tex",
+            "html": "literature/2010.10964/catalog_sources/table-tab-log/latexml.html",
+            "stdout": "literature/2010.10964/catalog_sources/table-tab-log/latexml.stdout.txt",
+            "stderr": "literature/2010.10964/catalog_sources/table-tab-log/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "11201c4b52b142d40dc46ba44be1c825c4d2e53d6f9a72f9afa5ae5dee690ae0"
+    },
+    {
+      "id": "table-tab-ref",
+      "internal_table_id": "table-tab-ref",
+      "status": "success",
+      "ecsv_path": "literature/2010.10964/catalog_tables/table-tab-ref.ecsv",
+      "caption": "Position and PMs of Sgr A*, the Arches and the Quintuplet.",
+      "label": "tab:ref",
+      "row_count": 3,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "R.A.",
+          "Dec.",
+          "( \\mu_\\alpha\\cos\\delta , \\mu_\\delta )",
+          "( \\mu_l\\cos b , \\mu_b )"
+        ],
+        [
+          "",
+          "deg",
+          "deg",
+          "\\masyr",
+          "\\masyr"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R.A. | deg",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec. | deg",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "( \\mu_\\alpha\\cos\\delta , \\mu_\\delta ) | \\masyr",
+          "unit_text": "\\masyr",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "( \\mu_l\\cos b , \\mu_b ) | \\masyr",
+          "unit_text": "\\masyr",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpr69y7fwu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2010.10964/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpr69y7fwu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.10964/catalog_sources/table-tab-ref/wrapped.tex",
+            "html": "literature/2010.10964/catalog_sources/table-tab-ref/latexml.html",
+            "stdout": "literature/2010.10964/catalog_sources/table-tab-ref/latexml.stdout.txt",
+            "stderr": "literature/2010.10964/catalog_sources/table-tab-ref/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f12b6af8a14dbf365df64aeea04113005183830db584170a0dfdbc151f1f1f73"
+    },
+    {
+      "id": "table-tab-confirm",
+      "internal_table_id": "table-tab-confirm",
+      "status": "success",
+      "ecsv_path": "literature/2010.10964/catalog_tables/table-tab-confirm.ecsv",
+      "caption": "Overview of the confirmed MSs selected as escaping candidates.",
+      "label": "tab:confirm",
+      "row_count": 6,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "\\Delta PM",
+          "\\theta",
+          "Flight time",
+          "Possible origin",
+          "List",
+          "Spectral Type",
+          ""
+        ],
+        [
+          "",
+          "\\masyr",
+          "deg",
+          "Myr",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\Delta PM | \\masyr",
+          "unit_text": "\\masyr",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\theta | deg",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Flight time | Myr",
+          "unit_text": "Myr",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Possible origin",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "List",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Spectral Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq50lu0j_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2010.10964/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq50lu0j_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.10964/catalog_sources/table-tab-confirm/wrapped.tex",
+            "html": "literature/2010.10964/catalog_sources/table-tab-confirm/latexml.html",
+            "stdout": "literature/2010.10964/catalog_sources/table-tab-confirm/latexml.stdout.txt",
+            "stderr": "literature/2010.10964/catalog_sources/table-tab-confirm/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "deee812865d7d7858849b66617f3cf1cf7159dcff8a7780c406830f0f4e70ddb"
+    },
+    {
+      "id": "table-tab-arches",
+      "internal_table_id": "table-tab-arches",
+      "status": "success",
+      "ecsv_path": "literature/2010.10964/catalog_tables/table-tab-arches.ecsv",
+      "caption": "List of confirmed massive stars likely members of the Arches cluster.",
+      "label": "tab:arches",
+      "row_count": 10,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "List",
+          "Spectral Type"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "List",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Spectral Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptt830d4e/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2010.10964/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptt830d4e/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.10964/catalog_sources/table-tab-arches/wrapped.tex",
+            "html": "literature/2010.10964/catalog_sources/table-tab-arches/latexml.html",
+            "stdout": "literature/2010.10964/catalog_sources/table-tab-arches/latexml.stdout.txt",
+            "stderr": "literature/2010.10964/catalog_sources/table-tab-arches/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e44042cfeacfcf8ed83493972a34b43aea20cb03caa0faa2487f9a569a7a7d20"
+    },
+    {
+      "id": "table-tab-candidate",
+      "internal_table_id": "table-tab-candidate",
+      "status": "success",
+      "ecsv_path": "literature/2010.10964/catalog_tables/table-tab-candidate.ecsv",
+      "caption": "Overview of the candidate MSs selected as likely escapers.",
+      "label": "tab:candidate",
+      "row_count": 14,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "\\Delta PM",
+          "\\theta",
+          "Flight time",
+          "Possible origin",
+          "List",
+          ""
+        ],
+        [
+          "",
+          "\\masyr",
+          "deg",
+          "Myr",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\Delta PM | \\masyr",
+          "unit_text": "\\masyr",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\theta | deg",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Flight time | Myr",
+          "unit_text": "Myr",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Possible origin",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "List",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7c2mntxh/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2010.10964/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7c2mntxh/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.10964/catalog_sources/table-tab-candidate/wrapped.tex",
+            "html": "literature/2010.10964/catalog_sources/table-tab-candidate/latexml.html",
+            "stdout": "literature/2010.10964/catalog_sources/table-tab-candidate/latexml.stdout.txt",
+            "stderr": "literature/2010.10964/catalog_sources/table-tab-candidate/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5be30697f1cbf016a42717fbc6fb6d6232452bb7656017b702bf81d89c969c07"
+    },
+    {
+      "id": "table-tab-photcat",
+      "internal_table_id": "table-tab-photcat",
+      "status": "success",
+      "ecsv_path": "literature/2010.10964/catalog_tables/table-tab-photcat.ecsv",
+      "caption": "First 10 lines of the WFC3/IR F139M photometric catalog based on the GO-12915 data.",
+      "label": "tab:photcat",
+      "row_count": 12,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "VEGA mag",
+          "rms mag",
+          "QFIT",
+          "o",
+          "RADXS",
+          "\\rm n_f",
+          "\\rm n_u",
+          "Local sky",
+          "Local-sky rms"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "VEGA mag",
+          "unit_text": "VEGA mag",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "rms mag",
+          "unit_text": "rms mag",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "QFIT",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "o",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "RADXS",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\rm n_f",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\rm n_u",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Local sky",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Local-sky rms",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpbxzkhkjh/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2010.10964/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpbxzkhkjh/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.10964/catalog_sources/table-tab-photcat/wrapped.tex",
+            "html": "literature/2010.10964/catalog_sources/table-tab-photcat/latexml.html",
+            "stdout": "literature/2010.10964/catalog_sources/table-tab-photcat/latexml.stdout.txt",
+            "stderr": "literature/2010.10964/catalog_sources/table-tab-photcat/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "61e8a36830660115cecf242e55a86213a593754201d22fdb159f7bc608bf2f78"
+    },
+    {
+      "id": "table-tab-photzp",
+      "internal_table_id": "table-tab-photzp",
+      "status": "success",
+      "ecsv_path": "literature/2010.10964/catalog_tables/table-tab-photzp.ecsv",
+      "caption": "Adopted zero-points used to calibrate our instrumental photometry into the VEGA-mag flight system.",
+      "label": "tab:photzp",
+      "row_count": 4,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "GO",
+          "Instrument/Camera",
+          "Filter",
+          "Zero-point"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "GO",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Instrument/Camera",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Filter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Zero-point",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1u11n0ef/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2010.10964/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1u11n0ef/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.10964/catalog_sources/table-tab-photzp/wrapped.tex",
+            "html": "literature/2010.10964/catalog_sources/table-tab-photzp/latexml.html",
+            "stdout": "literature/2010.10964/catalog_sources/table-tab-photzp/latexml.stdout.txt",
+            "stderr": "literature/2010.10964/catalog_sources/table-tab-photzp/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "fa079cefceab2a69693edb0ffbaeebfb9d254c9003295c33df2da9666a37e9ce"
+    },
+    {
+      "id": "table-tab-pmcat",
+      "internal_table_id": "table-tab-pmcat",
+      "status": "success",
+      "ecsv_path": "literature/2010.10964/catalog_tables/table-tab-pmcat.ecsv",
+      "caption": "First 10 lines of the WFC3/IR PM catalog.",
+      "label": "tab:pmcat",
+      "row_count": 14,
+      "column_count": 12,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpspxym75j/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2010.10964/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpspxym75j/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.10964/catalog_sources/table-tab-pmcat/wrapped.tex",
+            "html": "literature/2010.10964/catalog_sources/table-tab-pmcat/latexml.html",
+            "stdout": "literature/2010.10964/catalog_sources/table-tab-pmcat/latexml.stdout.txt",
+            "stderr": "literature/2010.10964/catalog_sources/table-tab-pmcat/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f1661ec04235e4793e9e0a54df20ddf384239197e28efa3455061cff28acaf30"
+    },
+    {
+      "id": "table-tab-mslist",
+      "internal_table_id": "table-tab-mslist",
+      "status": "success",
+      "ecsv_path": "literature/2010.10964/catalog_tables/table-tab-mslist.ecsv",
+      "caption": "First 10 lines of the list of confirmed MSs, candidate MSs and non-massive objects analyzed in Sect. MS.",
+      "label": "tab:mslist",
+      "row_count": 12,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "R.A.",
+          "Dec.",
+          "ID",
+          "List",
+          "Alternative ID"
+        ],
+        [
+          "deg",
+          "deg",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "R.A. | deg",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Dec. | deg",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "List",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Alternative ID",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxpfq4rog/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2010.10964/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxpfq4rog/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.10964/catalog_sources/table-tab-mslist/wrapped.tex",
+            "html": "literature/2010.10964/catalog_sources/table-tab-mslist/latexml.html",
+            "stdout": "literature/2010.10964/catalog_sources/table-tab-mslist/latexml.stdout.txt",
+            "stderr": "literature/2010.10964/catalog_sources/table-tab-mslist/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e701694e3f66e77a472760eea10abe3647471a490f8333b608ed154e7b74c157"
+    }
+  ]
+}

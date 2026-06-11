@@ -1,0 +1,126 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:07:21",
+  "paper": {
+    "arxiv_id": "1804.08678",
+    "bibcode": "2018AJ....156...98P",
+    "title": "HST astrometry in the 30 Doradus region: II. Runaway stars from new proper motions in the Large Magellanic Cloud",
+    "month": "2018-04",
+    "source_note_json": "notes/2018/2018-04/2018-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1804.08678",
+      "pdf": "https://arxiv.org/pdf/1804.08678"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1804.08678",
+    "audit_path": "literature/1804.08678/audit.json",
+    "catalog_review_path": "literature/1804.08678/catalog_review.json",
+    "catalog_extraction_path": "literature/1804.08678/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1804.08678/catalog_tables/table-1-ob-runaways.ecsv",
+      "literature/1804.08678/catalog_tables/table-2-af-runaways.ecsv",
+      "literature/1804.08678/catalog_tables/table-3-r136-escaped.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:14:10",
+    "extractor": "agent",
+    "summary": "No Galactic HVS/unbound candidates. Paper presents proper motions for 368,787 stars in the 30 Doradus region of the LMC. Identified runaway stars are LMC-internal objects. All stars are bound to the LMC, not the Milky Way. No claims of Milky Way unbound status or hypervelocity classification."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "HST/WFC3+ACS two-epoch proper motions for 368,787 stars in 30 Dor (LMC). Epoch difference ~3 yr reaching ~0.1 mas/yr precision.",
+      "inputs": [
+        "HST GO-12499, GO-12915, GO-13359"
+      ],
+      "outputs": [
+        "Relative proper motions (mu_X, mu_Y) for 368,787 stars"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+          "start_line": 59,
+          "end_line": 78,
+          "context": "Abstract: 368,787 stars, 2-epoch HST survey, ~0.1 mas/yr precision"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "sample_selection",
+      "summary": "Identified stars with proper motions exceeding 3-sigma error threshold. Found 17 potential LMC runaway stars.",
+      "inputs": [
+        "Proper motions with errors"
+      ],
+      "outputs": [
+        "17 LMC runaway candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+          "start_line": 66,
+          "end_line": 69,
+          "context": "Abstract: stars exceeding 3-sigma error threshold, 17 potential LMC runaways"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "lmc_ob_runaways",
+      "description": "7 candidate OB proper-motion runaway stars from VFTS survey (Table 1). LMC-internal runaway candidates, not Galactic HVS.",
+      "decision": "not_relevant",
+      "reason": "These are LMC-internal runaways from the 30 Dor region. Not Galactic HVS/unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+          "start_line": 1172,
+          "end_line": 1190,
+          "context": "Table 1: Candidate OB proper-motion runaway stars (7 VFTS stars)"
+        }
+      ]
+    },
+    {
+      "group_id": "lmc_af_runaways",
+      "description": "11 candidate young A-F proper-motion runaway stars from the general catalog (Table 2, tab:afrun). LMC-internal.",
+      "decision": "not_relevant",
+      "reason": "These are young A-F runaway stars in the LMC. Not Galactic HVS/unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+          "start_line": 1192,
+          "end_line": 1214,
+          "context": "Table 2: Candidate young A-F proper-motion runaways (11 stars)"
+        }
+      ]
+    },
+    {
+      "group_id": "r136_escaped",
+      "description": "10 likely-escaped stars from R136 cluster (Table 3), tangential velocities correlated with magnitude.",
+      "decision": "not_relevant",
+      "reason": "Stars escaped from R136 cluster within the LMC. Not Galactic HVS/unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.08678/arxiv_source/paper_b_v2.tex",
+          "start_line": 1217,
+          "end_line": 1241,
+          "context": "Table 3: Likely-escaped stars from R136 (10 stars)"
+        }
+      ]
+    }
+  ]
+}

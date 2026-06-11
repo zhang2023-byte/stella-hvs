@@ -1,0 +1,89 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:13:16",
+  "paper": {
+    "arxiv_id": "2510.23470",
+    "bibcode": "2025A&A...704A.268M",
+    "title": "A targeted radio survey of infrared-selected bow shock candidates",
+    "month": "2025-10",
+    "source_note_json": "notes/2025/2025-10/2025-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2510.23470",
+      "pdf": "https://arxiv.org/pdf/2510.23470"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2510.23470",
+    "audit_path": "literature/2510.23470/audit.json",
+    "catalog_review_path": "literature/2510.23470/catalog_review.json",
+    "catalog_extraction_path": "literature/2510.23470/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2510.23470/catalog_tables/table-tab-obsvla.ecsv",
+      "literature/2510.23470/catalog_tables/table-tab-ne.ecsv",
+      "literature/2510.23470/catalog_tables/table-tab-targets.ecsv",
+      "literature/2510.23470/catalog_tables/table-tab-app-mdot.ecsv",
+      "literature/2510.23470/catalog_tables/table-tab-eff-names.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T20:13:16",
+    "extractor": "agent",
+    "summary": "The paper presents 24 bow-shock candidates around massive stars but consistently describes them as ordinary runaway or walkaway stars bound to the Galaxy. No object is discussed as possibly unbound from the Milky Way or as a hypervelocity-star candidate. Peculiar velocities are 2D proper-motion velocities in the plane of the sky, with only three stars reaching the classical runaway threshold (>=30 km/s) and none discussed as Galactic-escape candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-targets",
+      "description": "Table of 24 bow-shock candidates and their driving stars with coordinates, spectral types, parallaxes, and peculiar proper motions from Gaia DR3.",
+      "decision": "excluded",
+      "reason": "The paper does not present these objects as possibly unbound from the Galaxy. All 24 driving stars are discussed as ordinary runaway or walkaway massive stars with 2D peculiar velocities bound to the Milky Way. The paper classifies only 3 as classical runaways (v_star >= 30 km/s) and 15 as walkaways (v_star < 30 km/s), with no discussion of Galactic-unbound or HVS status.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+          "start_line": 133,
+          "end_line": 134,
+          "context": "Introduction establishes the paper's subject as runaway massive stars driving bow shocks, not Galactic-unbound candidates"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+          "start_line": 712,
+          "end_line": 715,
+          "context": "Table caption listing 24 bow-shock candidates and their driving stars with proper motions and parallaxes"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+          "start_line": 660,
+          "end_line": 662,
+          "context": "Discussion explicitly classifies the stars as ordinary runaways and walkaways with 2D peculiar velocities, with no mention of Galactic-unbound status"
+        }
+      ]
+    },
+    {
+      "group_id": "paper-detections-and-marginal",
+      "description": "The six detected and five marginally detected bow-shock sources discussed in Sections 3.1 and 3.2.",
+      "decision": "excluded",
+      "reason": "These sources are discussed as radio-detected or candidate bow shocks around runaway stars, but the paper never raises the possibility that any driving star is unbound from the Milky Way. Individual discussions focus on H II region contamination, spectral indices, and non-thermal emission, not Galactic escape.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+          "start_line": 347,
+          "end_line": 351,
+          "context": "Section opening for detected sources, describing them as bow shocks without any Galactic-unbound discussion"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+          "start_line": 460,
+          "end_line": 464,
+          "context": "Section opening for marginal cases, again with no mention of unbound or HVS status"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T12:00:00",
+  "paper": {
+    "arxiv_id": "2108.12918",
+    "bibcode": "2021A&A...655A..31V",
+    "title": "Confirming NGC 6231 as the parent cluster of the runaway high-mass X-ray binary HD 153919/4U 1700-37 with Gaia DR2",
+    "month": "2021-08",
+    "source_note_json": "notes/2021/2021-08/2021-08.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2108.12918",
+      "pdf": "https://arxiv.org/pdf/2108.12918"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2108.12918",
+    "audit_path": "literature/2108.12918/audit.json",
+    "catalog_review_path": "literature/2108.12918/catalog_review.json",
+    "catalog_extraction_path": "literature/2108.12918/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2108.12918/catalog_tables/table-tab-6231.ecsv",
+      "literature/2108.12918/catalog_tables/table-tab-error.ecsv",
+      "literature/2108.12918/catalog_tables/table-tab-age_summary.ecsv",
+      "literature/2108.12918/catalog_tables/table-tab-4u.ecsv",
+      "literature/2108.12918/catalog_tables/table-tab-radvel.ecsv",
+      "literature/2108.12918/catalog_tables/table-test.ecsv",
+      "literature/2108.12918/catalog_tables/table-tab-pmin_n_relation.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T12:00:00",
+    "extractor": "agent",
+    "summary": "论文利用Gaia DR2自行和视差数据，通过成员星分析确认高质量X射线双星HD 153919/4U 1700-37起源于疏散星团NGC 6231（Sco OB1核心）。该系统相对NGC 6231的空间速度为63±5 km/s，运动学年龄2.2±0.1 Myr。论文的'runaway'指从母星团中逃逸的速逃星（cluster runaway），其速度（~63 km/s）远低于银河系逃逸速度。论文讨论双星演化历史——提出系统经历Case A物质转移阶段，致密天体前身星初始质量>60 M_sun，并推测HD 153919/4U 1700-37可能是银河系中GW190412引力波事件前身系统的原型。论文未声称该系统为银河系非束缚天体，速逃星（runaway star）与超高速星（HVS）为不同天体类别。因此无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文确认HD 153919/4U 1700-37是个从NGC 6231逃逸的速逃星（runaway），空间速度63 km/s，远低于银河系逃逸速度。论文用'runaway'而非'HVS'描述，未声称任何天体为非束缚。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (hmxb.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+          "start_line": 40,
+          "end_line": 40,
+          "context": "Title: Confirming NGC 6231 as the parent cluster of the runaway high-mass X-ray binary HD 153919/4U 1700-37 with Gaia DR2"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+          "start_line": 88,
+          "end_line": 88,
+          "context": "Abstract: move with a space velocity of 63 ± 5 km/s with respect to NGC 6231"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "runaway-hmxb-hd153919",
+      "description": "高质量X射线双星HD 153919/4U 1700-37，由O超巨星和致密天体（中子星或黑洞）组成。论文确认其从疏散星团NGC 6231中逃逸，空间速度63±5 km/s，运动学年龄2.2±0.1 Myr。论文用'runaway high-mass X-ray binary'描述该系统。",
+      "decision": "excluded",
+      "reason": "论文中的'runaway'指从母星团NGC 6231中逃逸的恒星级天体系统（cluster runaway）。该系统的空间速度仅63 km/s，远低于银河系逃逸速度（~500 km/s），属于典型的星团逃逸天体而非银河系非束缚天体。论文标题和正文始终使用'runaway'描述，从未使用'hypervelocity star'或'unbound'等术语。论文核心关注双星演化历史（Case A质量转移、超新星kick）以及该系统作为GW190412前身原型的可能性，并未涉及银河系非束缚状态判定。速逃星（runaway star）与超高速星（HVS/hypervelocity star）是不同天体类别，后者要求速度足以逃离银河系引力势。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+          "start_line": 40,
+          "end_line": 40,
+          "context": "Title: runaway high-mass X-ray binary"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+          "start_line": 85,
+          "end_line": 88,
+          "context": "Abstract: HD153919/4U1700-37 originates from NGC6231; moves with space velocity of 63±5 km/s with respect to NGC 6231"
+        }
+      ]
+    }
+  ]
+}

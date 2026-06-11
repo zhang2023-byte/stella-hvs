@@ -1,0 +1,361 @@
+{
+    "schema_version": "stella.article_data_assets.review.v1",
+    "paper": {
+        "arxiv_id": "2602.06465",
+        "title": "The Walkaway Star HP Tau/G2: Evidence for a Stellar Merger",
+        "month": "2026-02",
+        "source_note_json": "notes/2026/2026-02/2026-02.json",
+        "links": {
+            "abs": "https://arxiv.org/abs/2602.06465",
+            "pdf": "https://arxiv.org/pdf/2602.06465"
+        }
+    },
+    "source": {
+        "paper_dir": "literature/2602.06465",
+        "audit_path": "literature/2602.06465/audit.json",
+        "source_dir": "literature/2602.06465/arxiv_source",
+        "tex_root": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+        "source_available": true
+    },
+    "review": {
+        "status": "reviewed",
+        "reviewed_at": "2026-05-17T12:34:41",
+        "reviewer": "agent",
+        "summary": "Auto-filled review: 3 internal table(s), 5 external resource(s)."
+    },
+    "internal_tables": [
+        {
+            "id": "table-001",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Young Stars in the HP Tau Group",
+            "source_refs": [
+                {
+                    "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+                    "start_line": 622,
+                    "end_line": 710,
+                    "caption": "Young Stars in the HP Tau Group",
+                    "label": ""
+                }
+            ],
+            "columns": [
+                {
+                    "name": "\\#",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Object",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "2MASS",
+                    "meaning": "2MASS identifier",
+                    "unit_text": "2MASS",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadSpT^a",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "G | [mag]",
+                    "meaning": "Gaia G-band magnitude",
+                    "unit_text": "[mag]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadJ^b | [mag]",
+                    "meaning": "Galactic latitude",
+                    "unit_text": "[mag]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadH^b | [mag]",
+                    "meaning": "Galactic latitude",
+                    "unit_text": "[mag]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadK^b | [mag]",
+                    "meaning": "Galactic latitude",
+                    "unit_text": "[mag]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadpmra^c | [mas/yr]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[mas/yr]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadpmdec^c | [mas/yr]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[mas/yr]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Notes",
+                    "meaning": "Note or comment",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Young Stars in the HP Tau Group",
+            "comments": ""
+        },
+        {
+            "id": "table-002",
+            "kind": "latex_table",
+            "asset_type": "observation_log",
+            "role_in_paper": "Proper Motions within Rest Frame$^a$ and Radial and Space Velocities",
+            "source_refs": [
+                {
+                    "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+                    "start_line": 718,
+                    "end_line": 785,
+                    "caption": "Proper Motions within Rest Frame$^a$ and Radial and Space Velocities",
+                    "label": ""
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Object",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Dist. | [pc]",
+                    "meaning": "Distance",
+                    "unit_text": "[pc]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "pmra | [mas/yr]",
+                    "meaning": "Proper motion in RA",
+                    "unit_text": "[mas/yr]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "pmdec | [mas/yr]",
+                    "meaning": "Proper motion in Dec",
+                    "unit_text": "[mas/yr]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Tang.Vel. | [km/sec]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[km/sec]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "PA | [deg.]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[deg.]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Rad.Vel.^b | [km/sec]",
+                    "meaning": "Right Ascension",
+                    "unit_text": "[km/sec]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Spa.Vel.^c | [km/sec]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[km/sec]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "RUWE^d",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Proper Motions within Rest Frame$^a$ and Radial and Space Velocities",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-comparison",
+            "kind": "latex_table",
+            "asset_type": "comparison_table",
+            "role_in_paper": "Comparison of HP Tau/G2 with HD 283572 and FK Com \\label{tab:comparison}",
+            "source_refs": [
+                {
+                    "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+                    "start_line": 2351,
+                    "end_line": 2482,
+                    "caption": "Comparison of HP Tau/G2 with HD 283572 and FK Com \\label{tab:comparison}",
+                    "label": "tab:comparison"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Parameter",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "HP Tau/G2",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Ref.^a",
+                    "meaning": "Bibliographic reference",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "HD 283572",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Ref.^a",
+                    "meaning": "Bibliographic reference",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "FK Com",
+                    "meaning": "Column from table header",
+                    "unit_text": "FK Com",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Ref.^a",
+                    "meaning": "Bibliographic reference",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Comparison of HP Tau/G2 with HD 283572 and FK Com \\label{tab:comparison}",
+            "comments": ""
+        }
+    ],
+    "external_resources": [
+        {
+            "id": "resource-001",
+            "kind": "external_url",
+            "url": "https://www.cosmos.esa.int/gaia",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+                    "start_line": 4078,
+                    "end_line": 4078,
+                    "context": "This work has made use of data from the European Space Agency (ESA)\nmission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed\nby the {\\it Gaia} Data Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the"
+                }
+            ],
+            "evidence": "This work has made use of data from the European Space Agency (ESA)\nmission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed\nby the {\\it Gaia} Data Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the",
+            "comments": ""
+        },
+        {
+            "id": "resource-002",
+            "kind": "external_url",
+            "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+                    "start_line": 4080,
+                    "end_line": 4080,
+                    "context": "mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed\nby the {\\it Gaia} Data Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the \nDPAC has been provided by national institutions, in particular the\ninstitutions participating in the {\\it Gaia} Multilateral Agreement."
+                }
+            ],
+            "evidence": "mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed\nby the {\\it Gaia} Data Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the \nDPAC has been provided by national institutions, in particular the\ninstitutions participating in the {\\it Gaia} Multilateral Agreement.",
+            "comments": ""
+        },
+        {
+            "id": "resource-003",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+                    "start_line": 4126,
+                    "end_line": 4126,
+                    "context": "participation from NASA.\n%\nThis research has made use of the SIMBAD database, operated at CDS,\nStrasbourg, France, and of NASA's Astrophysics Data System\nBibliographic Services."
+                }
+            ],
+            "evidence": "participation from NASA.\n%\nThis research has made use of the SIMBAD database, operated at CDS,\nStrasbourg, France, and of NASA's Astrophysics Data System\nBibliographic Services.",
+            "comments": ""
+        },
+        {
+            "id": "resource-004",
+            "kind": "external_url",
+            "url": "https://docs.anaconda.com/",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+                    "start_line": 4173,
+                    "end_line": 4173,
+                    "context": "\\bibitem[Anaconda Software Distribution (2020)]{anaconda2020}\n{\\em Anaconda Documentation 2020}. Anaconda Inc. Retrieved from https://docs.anaconda.com/\n\n%\\bibitem[J.P. Anosova (1986)]"
+                }
+            ],
+            "evidence": "\\bibitem[Anaconda Software Distribution (2020)]{anaconda2020}\n{\\em Anaconda Documentation 2020}. Anaconda Inc. Retrieved from https://docs.anaconda.com/\n\n%\\bibitem[J.P. Anosova (1986)]",
+            "comments": ""
+        },
+        {
+            "id": "resource-005",
+            "kind": "external_url",
+            "url": "https://ui.adsabs.harvard.edu/abs/2018ascl.soft12013L/abstract",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2602.06465/arxiv_source/hptau-arXiv.tex",
+                    "start_line": 4677,
+                    "end_line": 4677,
+                    "context": "% Outflows and Bubbles in Taurus\n\n\\bibitem[Lightkurve Collaboration et al. (2018)]{lightkurve2018} Lightkurve Collaboration et al. 2018, Astrophysics Source Code Library, https://ui.adsabs.harvard.edu/abs/2018ascl.soft12013L/abstract"
+                }
+            ],
+            "evidence": "% Outflows and Bubbles in Taurus\n\n\\bibitem[Lightkurve Collaboration et al. (2018)]{lightkurve2018} Lightkurve Collaboration et al. 2018, Astrophysics Source Code Library, https://ui.adsabs.harvard.edu/abs/2018ascl.soft12013L/abstract",
+            "comments": ""
+        }
+    ]
+}

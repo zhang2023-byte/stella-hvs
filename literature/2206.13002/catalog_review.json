@@ -1,0 +1,217 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2206.13002",
+    "title": "60 candidate high-velocity stars originating from the Sagittarius dwarf spheroidal galaxy in Gaia EDR3",
+    "month": "2022-06",
+    "source_note_json": "notes/2022/2022-06/2022-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2206.13002",
+      "pdf": "https://arxiv.org/pdf/2206.13002"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2206.13002",
+    "audit_path": "literature/2206.13002/audit.json",
+    "source_dir": "literature/2206.13002/arxiv_source",
+    "tex_root": "literature/2206.13002/arxiv_source/Library.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-23T10:59:29",
+    "reviewer": "agent",
+    "summary": "This paper identifies 60 candidate high-velocity stars likely originating from the Sagittarius dwarf spheroidal galaxy (Sgr) via backward orbit integration using Gaia EDR3 astrometry combined with radial velocities from nine spectroscopic surveys. The internal data assets are: (1) a calibration table (Table 1) listing radial velocity offset and error-correction parameters for each survey relative to Gaia, required to homogenize the multi-survey radial velocity sample; and (2) a candidate catalog table (Table 2, commented out in the source but referenced in the paper) presenting Galactocentric distances, total velocities, traceback times, normalized minimum approach distances, velocity differences relative to Sgr, Sgr-origin probabilities, and unbound probabilities for the 60 stars. An external online catalog of stellar properties is hosted at the China-VO NADC portal. No other internal observational tables were found in the LaTeX source."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-correction",
+      "kind": "latex_table",
+      "asset_type": "calibration_table",
+      "role_in_paper": "Lists the radial velocity offset and error-correction parameters for each spectroscopic survey relative to Gaia, used to homogenize multi-survey radial velocity measurements before orbit integration.",
+      "source_refs": [
+        {
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 78,
+          "end_line": 98,
+          "caption": "Correction parameters for radial velocity and its error.",
+          "label": "tab:correction"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Survey",
+          "meaning": "Name of the spectroscopic survey providing radial velocity data.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "offset | \\colheadkm s^-1",
+          "meaning": "Median radial velocity offset of the survey relative to Gaia.",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "k",
+          "meaning": "Multiplicative correction factor applied to the survey's radial velocity error.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\colhead\\sigma_v, floor | \\colheadkm s^-1",
+          "meaning": "Floor value added in quadrature to the corrected radial velocity error.",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Method",
+          "meaning": "Correction method used: 'dupl' for duplicate-observation fitting or 'cross' for cross-survey fitting.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Correction parameters for radial velocity and its error.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-results",
+      "kind": "latex_table",
+      "asset_type": "candidate_catalog",
+      "role_in_paper": "Presents the orbital properties, Sgr-origin probabilities, and unbound probabilities for the 60 candidate high-velocity stars identified as likely tidally stripped from the Sagittarius dwarf spheroidal galaxy.",
+      "source_refs": [
+        {
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 235,
+          "end_line": 252,
+          "caption": "Properties of stars that originate from Sgr.",
+          "label": "tab:results"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Internal star identifier used in this study.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "source-id",
+          "meaning": "Unique source identifier from the Gaia EDR3 catalog.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_GC | (kpc)",
+          "meaning": "Galactocentric distance of the star.",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_GC | \\colhead(km s^-1)",
+          "meaning": "Total Galactocentric velocity of the star.",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_trace | (Myr)",
+          "meaning": "Backward trace time to the closest approach between the star and Sgr.",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\Delta r_min^*",
+          "meaning": "Minimum approach distance between the star and Sgr normalized by the Sgr half-light radius.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\Delta v_GC | \\colhead(km s^-1)",
+          "meaning": "Velocity difference between the star and Sgr at the time of closest approach.",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_Sgr",
+          "meaning": "Probability that the star originates from the Sagittarius dwarf spheroidal galaxy.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_ub",
+          "meaning": "Probability that the star is gravitationally unbound from the Milky Way.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Properties of stars that originate from Sgr.",
+      "comments": "The table environment is commented out in the source LaTeX; the actual data rows are not present in the archived source."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://nadc.china-vo.org/res/r101121/.",
+      "local_path": "",
+      "description": "Online catalog hosting the properties of the 60 candidate high-velocity stars originating from Sgr.",
+      "source_refs": [
+        {
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 203,
+          "end_line": 203,
+          "context": "A catalog of the properties of these stars is available at \\url{https://nadc.china-vo.org/res/r101121/.}"
+        }
+      ],
+      "evidence": "A catalog of the properties of these stars is available at https://nadc.china-vo.org/res/r101121/.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission data portal, providing the astrometric and photometric data used in this work.",
+      "source_refs": [
+        {
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 223,
+          "end_line": 223,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia})"
+        }
+      ],
+      "evidence": "This work has made use of data from the European Space Agency (ESA) mission Gaia (https://www.cosmos.esa.int/gaia).",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "Gaia Data Processing and Analysis Consortium (DPAC) website.",
+      "source_refs": [
+        {
+          "path": "literature/2206.13002/arxiv_source/Library.tex",
+          "start_line": 223,
+          "end_line": 223,
+          "context": "processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium})"
+        }
+      ],
+      "evidence": "Processed by the Gaia Data Processing and Analysis Consortium (DPAC, https://www.cosmos.esa.int/web/gaia/dpac/consortium).",
+      "comments": ""
+    }
+  ]
+}

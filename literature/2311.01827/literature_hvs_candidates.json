@@ -1,0 +1,205 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:02:16",
+  "paper": {
+    "arxiv_id": "2311.01827",
+    "bibcode": "2023A&A...679A.109C",
+    "title": "Galactic runaway O and Be stars found using Gaia DR3",
+    "month": "2023-11",
+    "source_note_json": "notes/2023/2023-11/2023-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2311.01827",
+      "pdf": "https://arxiv.org/pdf/2311.01827"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2311.01827",
+    "audit_path": "literature/2311.01827/audit.json",
+    "catalog_review_path": "literature/2311.01827/catalog_review.json",
+    "catalog_extraction_path": "literature/2311.01827/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2311.01827/catalog_tables/table-Tab-FitsAfterClippingField.ecsv",
+      "literature/2311.01827/catalog_tables/table-Tab-FitsAfterClippingRun.ecsv",
+      "literature/2311.01827/catalog_tables/table-Tab-GOSC_Runaways.ecsv",
+      "literature/2311.01827/catalog_tables/table-Tab-BeSS_Runaways.ecsv",
+      "literature/2311.01827/catalog_tables/table-Tab-SpectralType.ecsv",
+      "literature/2311.01827/catalog_tables/table-Tab-Publications.ecsv",
+      "literature/2311.01827/catalog_tables/table-Tab-Cuts.ecsv",
+      "literature/2311.01827/catalog_tables/table-Tab-GuassianFits.ecsv",
+      "literature/2311.01827/catalog_tables/table-Tab-Simulations_Input.ecsv",
+      "literature/2311.01827/catalog_tables/table-Tab-Simulations_Output.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:10:00",
+    "extractor": "agent",
+    "summary": "Paper identifies 106 O-type and 69 Be-type runaway stars using a 2D velocity method with Gaia DR3 data. These stars are classified as runaways based on significant deviation from the Galactic rotation curve (E>1 criterion at 3-sigma confidence). However, the paper does not assess whether any of these stars are gravitationally unbound from the Galaxy. No orbit integration, escape velocity calculation, or Galactic escape assessment is performed. All identified stars are ordinary runaways with 2D peculiar velocities ranging from 16 to 210 km/s (O-type) and 16 to 132 km/s (Be-type), well below typical Galactic escape velocities. The paper does not claim any star as a hyper-velocity star, hyper-runaway, or candidate for Galactic escape."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "GOSC v4.2 (643 O/BA stars, reduced to 604 after removing A0 stars and multiple-star-system flags) and BeSS database (1881 Galactic Be stars after removing Herbig stars and LMC/SMC stars).",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 130,
+          "end_line": 139,
+          "context": "GOSC v4.2 contains 611 O stars and 32 BA stars...we removed two A0 stars...eliminated 37 sources...the catalog contains 604 stars...BeSS current version contains 2330 Be stars...after removing A-type, Herbig, LMC/SMC stars, the catalog contained 1881 stars."
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "cross_match",
+      "summary": "Cross-matched GOSC (604 stars) with Gaia DR3 using 0.5 arcsec radius; BeSS (1881 stars) with Gaia DR3 using 1.5 arcsec radius. Obtained 598 GOSC-Gaia and 1808 BeSS-Gaia matches.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 142,
+          "end_line": 153,
+          "context": "We first cross-matched the GOSC catalog with Gaia DR3 using a radius of 1 arcsec...restricted the cross-match radius to 0.5 arcsec...Of the 604 GOSC stars, we obtained 600 cross matches...In the case of BeSS...cross-match radius of 1.5 arcsec...We obtained 1863 cross matches for the 1881 BeSS stars."
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "quality_filter",
+      "summary": "Applied quality cuts: removed duplicate source_id pairs, non-5/6-parameter solutions, G<6, visibility_periods_used<10, sigma_ext/varpi_c>0.2, negative parallax, RUWE>1.35. Also excluded R*<5 kpc stars. Result: 417 GOSC-Gaia DR3 stars and 1335 BeSS-Gaia DR3 stars.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 152,
+          "end_line": 153,
+          "context": "The first cut corresponds to...the same Gaia DR3 source_id attributed to two different stars...we rejected stars without a five- and six-parameter solution, a G magnitude lower than 6, fewer than ten visibility periods, an any apparent fractional parallax error higher than 0.2, a negative parallax, and a renormalized unit weight error (RUWE) parameter >1.35...we also excluded stars with galactocentric distances smaller than 5 kpc...GOSC-Gaia DR3 catalog contains 417 stars, and the BeSS-Gaia DR3 catalog contains 1335 stars."
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-03"
+      ],
+      "step_type": "astrometric_calibration",
+      "summary": "Applied parallax zero-point correction using MA2022 method: varpi_c = varpi - Z_EDR3, with external uncertainties sigma_ext = sqrt(k^2*sigma_int^2 + sigma_s^2). Distances computed by inverting corrected parallaxes.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 127,
+          "end_line": 128,
+          "context": "To obtain accurate and precise parallaxes we followed the procedure presented in MA2021 and MA2022...first we computed corrected parallaxes using the equation varpi_c = varpi - Z_EDR3...Second, we computed the so-called external parallax uncertainties using their formula sigma_ext = sqrt(k^2 sigma_int^2 + sigma_s^2)."
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-04"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Distances d computed by inverting corrected Gaia parallaxes varpi_c.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 170,
+          "end_line": 170,
+          "context": "To compute distances d to the stars (from the Sun), we inverted the corrected Gaia parallaxes varpi_c discussed in Sect. 3.1."
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-05"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Computed RSR velocity components using theoretical radial velocities from Galactic rotation curve (Reid2019 A5 fit: Theta_sun=236±7 km/s, R_sun=8.15±0.15 kpc, dTheta/dR=-0.4±0.4 km/s/kpc). Transformed to (V_TAN, W_RSR) system to minimize radial velocity uncertainty. Propagated uncertainties via Jacobian covariance method including all astrometric, solar motion, and rotation curve uncertainties.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 197,
+          "end_line": 263,
+          "context": "To compute the velocities of the stars...we used the Galactic rotation curve provided by the A5 fit of Reid2019...we defined a new reference system...V_TAN is the tangential velocity contained in the plane of the sky and parallel to the Galactic plane, V_LOS is the line-of-sight velocity...the error on a function Y was computed as sqrt(J_X C J_X^T)...The uncertainties in V_TAN for the GOSC-Gaia DR3 catalog range between 1.5 and 35.8 km/s."
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [
+        "step-06"
+      ],
+      "step_type": "candidate_classification",
+      "summary": "Runaway stars classified using E parameter: E = sqrt(((V_TAN - mu_VTAN^GF)/(3*sigma_bar_VTAN))^2 + ((W_RSR - mu_WRSR^GF)/(3*sigma_bar_WRSR))^2). Stars with E>1 classified as runaways via iterative 3-sigma clipping of Gaussian fits to field star velocity distributions. Threshold is purely statistical (deviation from field star distribution), not a physical escape threshold. Result: 106 GOSC runaways (25.4%) and 69 BeSS runaways (5.2%).",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 276,
+          "end_line": 367,
+          "context": "In this work, we define a runaway star as an star with a high peculiar 2D velocity with respect to the mean Galactic rotation at a 3-sigma confidence level...E = sqrt(...)...The stars with E>1 were classified as runaways...we obtained 106 runaway stars for the GOSC-Gaia DR3 catalog...For the BeSS-Gaia DR3 catalog, we obtained 69 runaway stars."
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "GOSC_Gaia_DR3_runaways",
+      "description": "106 O-type runaway stars identified from the GOSC-Gaia DR3 catalog (417 stars) using a 2D velocity method with the E>1 criterion at 3-sigma confidence level. Their 2D peculiar velocities V_PEC^2D range from 16 to 210 km/s with a median of ~40 km/s.",
+      "decision": "ordinary_runaway_only",
+      "reason": "These stars are identified solely as runaways (deviating from the Galactic rotation curve). The paper does not assess whether any of them are gravitationally unbound from the Galaxy, does not compute escape velocities, and does not perform orbit integration. The maximum 2D peculiar velocity of 210 km/s is below typical Galactic escape velocities at the solar circle (~550 km/s). No star is claimed as a hyper-velocity star or candidate for Galactic escape.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 365,
+          "end_line": 367,
+          "context": "After the clipping process discussed in Sect. 4.3, we obtained 106 runaway stars for the GOSC-Gaia DR3 catalog (42 newly published as such here, to our knowledge), which is equivalent to 25.4% of the catalog."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 421,
+          "end_line": 421,
+          "context": "For the GOSC-Gaia DR3 runaway stars, it [V_PEC^2D] ranges from 16 to 210 km/s and has a median (mean) of ~40 (~46) km/s."
+        }
+      ]
+    },
+    {
+      "group_id": "BeSS_Gaia_DR3_runaways",
+      "description": "69 Be-type runaway stars identified from the BeSS-Gaia DR3 catalog (1335 stars) using a 2D velocity method with the E>1 criterion at 3-sigma confidence level. Their 2D peculiar velocities V_PEC^2D range from 16 to 132 km/s with a median of ~30 km/s.",
+      "decision": "ordinary_runaway_only",
+      "reason": "These stars are identified solely as runaways (deviating from the Galactic rotation curve). The paper does not assess whether any of them are gravitationally unbound from the Galaxy, does not compute escape velocities, and does not perform orbit integration. The maximum 2D peculiar velocity of 132 km/s is well below typical Galactic escape velocities. No star is claimed as a hyper-velocity star or candidate for Galactic escape.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 366,
+          "end_line": 367,
+          "context": "For the BeSS-Gaia DR3 catalog, we obtained 69 runaway stars (47 newly published as such here), representing 5.2% of the catalog."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 421,
+          "end_line": 421,
+          "context": "For the BeSS-Gaia DR3 runaway stars, V_PEC^2D ranges from 16 to 132 km/s and has a median (mean) of ~30 (37) km/s."
+        }
+      ]
+    }
+  ]
+}

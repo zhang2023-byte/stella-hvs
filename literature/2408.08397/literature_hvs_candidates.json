@@ -1,0 +1,584 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T18:08:28",
+  "paper": {
+    "arxiv_id": "2408.08397",
+    "bibcode": "2024A&A...689L...6W",
+    "title": "Ultraviolet spectroscopy of the supernova Ia hypervelocity runaway white dwarf J0927-6335",
+    "month": "2024-08",
+    "source_note_json": "notes/2024/2024-08/2024-08.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2408.08397",
+      "pdf": "https://arxiv.org/pdf/2408.08397"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2408.08397",
+    "audit_path": "literature/2408.08397/audit.json",
+    "catalog_review_path": "literature/2408.08397/catalog_review.json",
+    "catalog_extraction_path": "literature/2408.08397/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2408.08397/catalog_tables/table-tab-results.ecsv",
+      "literature/2408.08397/catalog_tables/table-tab-lines.ecsv",
+      "literature/2408.08397/catalog_tables/table-tab-abu.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-22T18:08:28",
+    "extractor": "agent",
+    "summary": "One HVS candidate extracted: J0927-6335 (Gaia DR3 5250394728194220800), a hypervelocity runaway white dwarf previously identified by El-Badry2023. This paper is a UV spectroscopy follow-up confirming atmospheric abundances."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR3 identification of J0927-6335 (Gaia DR3 5250394728194220800) as the target for follow-up spectroscopy.",
+      "inputs": ["Gaia DR3"],
+      "outputs": ["target coordinates and astrometry"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2408.08397/arxiv_source/aa.tex",
+          "start_line": 127,
+          "end_line": 127,
+          "context": "Introduction stating Gaia DR3 source ID"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": ["step-01"],
+      "step_type": "radial_velocity_measurement",
+      "summary": "HST/COS ultraviolet spectroscopy radial velocity measurement of J0927-6335.",
+      "inputs": ["HST/COS G140L spectrum"],
+      "outputs": ["radial velocity v_rad = -2265 +/- 20 km/s"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2408.08397/arxiv_source/aa.tex",
+          "start_line": 134,
+          "end_line": 134,
+          "context": "Observation section describing HST/COS observation and radial velocity measurement"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": ["step-01"],
+      "step_type": "reported_value_adoption",
+      "summary": "Adoption of total space velocity from El-Badry2023.",
+      "inputs": ["El-Badry2023 kinematic analysis"],
+      "outputs": ["total velocity ~2800 km/s"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2408.08397/arxiv_source/aa.tex",
+          "start_line": 127,
+          "end_line": 127,
+          "context": "Introduction citing space velocity ~2800 km/s from previous work"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": ["step-01"],
+      "step_type": "orbit_integration",
+      "summary": "Orbit integration from El-Badry2023.",
+      "inputs": ["Gaia DR3 astrometry", "radial velocity"],
+      "outputs": ["orbit parameters"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2408.08397/arxiv_source/aa.tex",
+          "start_line": 127,
+          "end_line": 127,
+          "context": "Introduction citing El-Badry2023 for hypervelocity star discovery"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": ["step-01"],
+      "step_type": "reported_value_adoption",
+      "summary": "Adoption of stellar parameters from Werner2024 optical analysis.",
+      "inputs": ["Werner2024 optical analysis"],
+      "outputs": ["Teff = 60000 K", "logg = 7.0"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2408.08397/arxiv_source/aa.tex",
+          "start_line": 127,
+          "end_line": 127,
+          "context": "Introduction citing Teff and logg from optical spectrum analysis"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": ["step-02", "step-05"],
+      "step_type": "stellar_parameter_inference",
+      "summary": "TMAP NLTE model atmosphere analysis of the UV spectrum to determine atmospheric parameters and element abundances.",
+      "inputs": ["HST/COS UV spectrum", "optical spectrum parameters"],
+      "outputs": ["element abundances"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2408.08397/arxiv_source/aa.tex",
+          "start_line": 228,
+          "end_line": 232,
+          "context": "Spectral analysis section describing TMAP NLTE model atmosphere construction"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": ["step-04", "step-06"],
+      "step_type": "origin_assessment",
+      "summary": "Assessment of D6 formation scenario from abundance pattern, comparing observed Ni/Fe ratio to SN Ia nucleosynthesis predictions.",
+      "inputs": ["element abundances", "SN Ia nucleosynthesis models"],
+      "outputs": ["D6 star classification", "pollution by SN ejecta"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2408.08397/arxiv_source/aa.tex",
+          "start_line": 256,
+          "end_line": 260,
+          "context": "Summary and discussion of D6 formation scenario and abundance interpretation"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2408.08397:cand-001",
+        "paper_candidate_id": "J0927-6335",
+        "gaia_source_id": "Gaia DR3 5250394728194220800",
+        "all": [
+          {
+            "value": "J0927-6335",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2408.08397/arxiv_source/aa.tex",
+                "start_line": 87,
+                "end_line": 87,
+                "context": "Title mentioning J0927-6335"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR3 5250394728194220800",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2408.08397/arxiv_source/aa.tex",
+                "start_line": 127,
+                "end_line": 127,
+                "context": "Introduction giving Gaia DR3 source identifier"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "The paper explicitly identifies J0927-6335 as the fastest known Galactic hypervelocity star and a hypervelocity runaway white dwarf, implying unbound status from the Milky Way. The object was originally identified as an HVS by El-Badry2023; this paper is a UV spectroscopic follow-up.",
+        "paper_labels": [
+          "hyper_runaway_candidate",
+          "escaping_star",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly calls J0927-6335 the fastest known Galactic hypervelocity star and a hypervelocity runaway white dwarf, terminology that in astronomy denotes an object unbound from the Galaxy.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2408.08397/arxiv_source/aa.tex",
+            "start_line": 107,
+            "end_line": 109,
+            "context": "Abstract describing J0927-6335 as fastest known Galactic hypervelocity star"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2408.08397/arxiv_source/aa.tex",
+            "start_line": 127,
+            "end_line": 127,
+            "context": "Introduction describing J0927-6335 as fastest known star in the Galaxy with space velocity ~2800 km/s"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2408.08397/arxiv_source/aa.tex",
+            "start_line": 127,
+            "end_line": 127,
+            "context": "Introduction citing El-Badry2023 and Shen2018 for hypervelocity white dwarf population and J0927-6335 discovery"
+          }
+        ],
+        "citation": {
+          "bibkey": "El-Badry2023",
+          "authors": [
+            "El-Badry, K.",
+            "Shen, K. J.",
+            "Chandra, V.",
+            "et al."
+          ],
+          "year": "2023",
+          "title": "The fastest stars in the Galaxy",
+          "doi": "10.21105/astro.2306.03914",
+          "bibcode": "",
+          "arxiv_id": "2306.03914",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2408.08397/arxiv_source/aa.tex",
+              "start_line": 127,
+              "end_line": 127,
+              "context": "Introduction citing El-Badry2023 for discovery of J0927-6335 as fastest known Galactic hypervelocity star"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2408.08397/arxiv_source/aa.bbl",
+              "start_line": 16,
+              "end_line": 17,
+              "context": "Bibliography entry for El-Badry2023"
+            },
+            {
+              "kind": "text",
+              "path": "literature/2408.08397/arxiv_source/aa.bib",
+              "start_line": 614,
+              "end_line": 630,
+              "context": "BibTeX entry for El-Badry2023 with title, DOI, and arXiv ID"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "radial_velocity": {
+            "raw_value": "-2265 +/- 20",
+            "value": "-2265",
+            "error": "20",
+            "unit": "km/s",
+            "kind": "radial_velocity",
+            "description": "Radial velocity measured from HST/COS UV spectrum",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2408.08397/arxiv_source/aa.tex",
+                "start_line": 134,
+                "end_line": 134,
+                "context": "UV spectrum radial velocity measurement"
+              }
+            ],
+            "method_refs": ["step-02"]
+          }
+        },
+        "derived_kinematics": {
+          "total_velocity": {
+            "raw_value": "~2800",
+            "value": "2800",
+            "unit": "km/s",
+            "kind": "space_velocity",
+            "description": "Total space velocity cited from El-Badry2023",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2408.08397/arxiv_source/aa.tex",
+                "start_line": 107,
+                "end_line": 109,
+                "context": "Abstract stating space velocity of ~2800 km/s"
+              },
+              {
+                "kind": "text",
+                "path": "literature/2408.08397/arxiv_source/aa.tex",
+                "start_line": 127,
+                "end_line": 127,
+                "context": "Introduction stating space velocity of ~2800 km/s"
+              }
+            ],
+            "method_refs": ["step-03"]
+          }
+        },
+        "bound_assessment": {}
+      },
+      "photometry": [],
+      "spectroscopy": [
+        {
+          "raw_value": "HST/COS G140L, Delta lambda = 0.6 A, 1120-2250 A",
+          "value": "HST/COS G140L",
+          "unit": "",
+          "kind": "UV_spectrum",
+          "description": "HST/COS ultraviolet spectroscopy with G140L grating",
+          "measurement_type": "classification",
+          "instrument": "HST/COS",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2408.08397/arxiv_source/aa.tex",
+              "start_line": 134,
+              "end_line": 134,
+              "context": "Observation section describing HST/COS observation"
+            }
+          ],
+          "method_refs": ["step-06"]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "60,000",
+          "value": "60000",
+          "error": "5000",
+          "unit": "K",
+          "kind": "effective_temperature",
+          "description": "Effective temperature adopted from optical analysis by Werner2024 and confirmed with UV spectrum",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2408.08397/arxiv_source/aa.tex",
+              "start_line": 127,
+              "end_line": 127,
+              "context": "Introduction stating Teff = 60000 +/- 5000 K from optical spectrum"
+            }
+          ],
+          "method_refs": ["step-05"]
+        },
+        "log_g": {
+          "raw_value": "7.0",
+          "value": "7.0",
+          "error": "0.5",
+          "unit": "",
+          "kind": "surface_gravity",
+          "description": "Surface gravity adopted from optical analysis by Werner2024 and confirmed with UV spectrum",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2408.08397/arxiv_source/aa.tex",
+              "start_line": 127,
+              "end_line": 127,
+              "context": "Introduction stating logg = 7.0 +/- 0.5 from optical spectrum"
+            }
+          ],
+          "method_refs": ["step-05"]
+        }
+      },
+      "abundances": [
+        {
+          "raw_value": "0.42+/- 0.25",
+          "value": "0.42",
+          "error": "0.25",
+          "unit": "mass_fraction",
+          "kind": "mass_fraction",
+          "element": "C",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2408.08397/catalog_tables/table-tab-results.ecsv",
+              "line": 26,
+              "column": "col_002",
+              "column_header": "Mass Fraction",
+              "raw_value": "0.42+/- 0.25"
+            }
+          ],
+          "method_refs": ["step-06"]
+        },
+        {
+          "raw_value": "0.42+/- 0.25",
+          "value": "0.42",
+          "error": "0.25",
+          "unit": "mass_fraction",
+          "kind": "mass_fraction",
+          "element": "O",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2408.08397/catalog_tables/table-tab-results.ecsv",
+              "line": 28,
+              "column": "col_002",
+              "column_header": "Mass Fraction",
+              "raw_value": "0.42+/- 0.25"
+            }
+          ],
+          "method_refs": ["step-06"]
+        },
+        {
+          "raw_value": "0.02+/- 0.01",
+          "value": "0.02",
+          "error": "0.01",
+          "unit": "mass_fraction",
+          "kind": "mass_fraction",
+          "element": "Si",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2408.08397/catalog_tables/table-tab-results.ecsv",
+              "line": 29,
+              "column": "col_002",
+              "column_header": "Mass Fraction",
+              "raw_value": "0.02+/- 0.01"
+            }
+          ],
+          "method_refs": ["step-06"]
+        },
+        {
+          "raw_value": "0.10+/- 0.05",
+          "value": "0.10",
+          "error": "0.05",
+          "unit": "mass_fraction",
+          "kind": "mass_fraction",
+          "element": "Fe",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2408.08397/catalog_tables/table-tab-results.ecsv",
+              "line": 33,
+              "column": "col_002",
+              "column_header": "Mass Fraction",
+              "raw_value": "0.10+/- 0.05"
+            }
+          ],
+          "method_refs": ["step-06"]
+        },
+        {
+          "raw_value": "0.03+/- 0.02",
+          "value": "0.03",
+          "error": "0.02",
+          "unit": "mass_fraction",
+          "kind": "mass_fraction",
+          "element": "Ni",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2408.08397/catalog_tables/table-tab-results.ecsv",
+              "line": 34,
+              "column": "col_002",
+              "column_header": "Mass Fraction",
+              "raw_value": "0.03+/- 0.02"
+            }
+          ],
+          "method_refs": ["step-06"]
+        },
+        {
+          "raw_value": "<0.05",
+          "value": "",
+          "error": "",
+          "unit": "mass_fraction",
+          "kind": "upper_limit",
+          "element": "He",
+          "description": "Upper limit on helium mass fraction",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2408.08397/catalog_tables/table-tab-results.ecsv",
+              "line": 25,
+              "column": "col_002",
+              "column_header": "Mass Fraction",
+              "raw_value": "<0.05"
+            }
+          ],
+          "method_refs": ["step-06"]
+        }
+      ],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_classification": {
+          "raw_value": "D6 hypervelocity runaway white dwarf",
+          "value": "D6 hypervelocity runaway white dwarf",
+          "unit": "",
+          "kind": "classification",
+          "description": "Dynamically driven double-degenerate double-detonation (D6) SN Ia survivor",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2408.08397/arxiv_source/aa.tex",
+              "start_line": 127,
+              "end_line": 127,
+              "context": "Introduction describing J0927-6335 as D6 star and runaway WD"
+            }
+          ],
+          "method_refs": ["step-07"]
+        },
+        "hypothesis_metrics": [
+          {
+            "raw_value": "0.067--1.0",
+            "value": "",
+            "unit": "",
+            "kind": "mass_ratio",
+            "hypothesis": "SN_Ia_origin",
+            "metric_type": "other",
+            "description": "Observed Ni/Fe mass fraction ratio range from UV analysis, compared to SN Ia nucleosynthesis predictions",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2408.08397/arxiv_source/aa.tex",
+                "start_line": 256,
+                "end_line": 256,
+                "context": "Summary stating observed Ni/Fe ratio range"
+              }
+            ],
+            "method_refs": ["step-07"]
+          }
+        ]
+      },
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-results",
+      "description": "Atmospheric element abundances of J0927-6335 and statistics of NLTE model atoms.",
+      "decision": "excluded",
+      "reason": "This table reports atmospheric abundances for a single known object; it is not a catalog of HVS candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2408.08397/arxiv_source/aa.tex",
+          "start_line": 149,
+          "end_line": 178,
+          "context": "Table tab:results caption and contents"
+        }
+      ]
+    },
+    {
+      "group_id": "table-tab-lines",
+      "description": "Approximate spectral regions where Fe and Ni lines are predominantly located.",
+      "decision": "excluded",
+      "reason": "This table lists spectral line regions for analysis purposes; it contains no object catalog or candidate data.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2408.08397/arxiv_source/aa.tex",
+          "start_line": 181,
+          "end_line": 199,
+          "context": "Table tab:lines caption and contents"
+        }
+      ]
+    },
+    {
+      "group_id": "table-tab-abu",
+      "description": "Element abundances in J0927-6335 compared to other compact objects (G191-B2B, EC11481-2302, HS0713+3958).",
+      "decision": "excluded",
+      "reason": "The comparison objects are not presented as HVS or unbound candidates; they are included only for abundance comparison.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2408.08397/arxiv_source/aa.tex",
+          "start_line": 201,
+          "end_line": 226,
+          "context": "Table tab:abu caption and contents showing comparison stars"
+        }
+      ]
+    }
+  ]
+}

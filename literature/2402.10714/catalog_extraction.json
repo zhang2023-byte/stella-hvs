@@ -1,0 +1,752 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:38:57",
+  "paper": {
+    "arxiv_id": "2402.10714",
+    "title": "Hypervelocity star candidates from Gaia DR2 and DR3 proper motions and parallaxes",
+    "month": "2024-02"
+  },
+  "review": {
+    "path": "literature/2402.10714/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123857",
+    "started_at": "2026-05-17T12:38:57",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2402.10714",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-Tab_quali",
+      "internal_table_id": "table-Tab_quali",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2402.10714/arxiv_source/hvsDR2DR3_arXiv.tex",
+        "start_line": 1644,
+        "end_line": 1680,
+        "caption": "DR3 quality flags and parameters used for HVS candidates, in particular for the 72 nearest extreme candidates studied in Sect.~\\ref{Sect_nearextrHVS}",
+        "label": "Tab_quali"
+      },
+      "source_path": "literature/2402.10714/arxiv_source/hvsDR2DR3_arXiv.tex",
+      "excerpt_path": "literature/2402.10714/catalog_sources/table-Tab_quali/excerpt.tex",
+      "sha256": "6aaecc94e9ea65234808f2538a12db0b7de8d451c3e2a120be950024b84d30dc",
+      "line_count": 37,
+      "error": ""
+    },
+    {
+      "id": "table-Tab_72dr3",
+      "internal_table_id": "table-Tab_72dr3",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2402.10714/arxiv_source/hvsDR2DR3_arXiv.tex",
+        "start_line": 2250,
+        "end_line": 2338,
+        "caption": "Basic DR3 data on 72 nearest extreme HVS candidates with high ($RPlx$$>$5) and low (3$<$$RPlx$$<$5) priority, sorted by $G$ magnitude",
+        "label": "Tab_72dr3"
+      },
+      "source_path": "literature/2402.10714/arxiv_source/hvsDR2DR3_arXiv.tex",
+      "excerpt_path": "literature/2402.10714/catalog_sources/table-Tab_72dr3/excerpt.tex",
+      "sha256": "035962c26d65044022a1e01078fe002673a06bb8769f46d6e70761a22fb9e2db",
+      "line_count": 89,
+      "error": ""
+    },
+    {
+      "id": "table-Tab_72nnflg",
+      "internal_table_id": "table-Tab_72nnflg",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2402.10714/arxiv_source/hvsDR2DR3_arXiv.tex",
+        "start_line": 2345,
+        "end_line": 2434,
+        "caption": "DR3 next neighbours, IPD parameters, flags, and results from local$+$global parameter comparison of 72 HVS candidates",
+        "label": "Tab_72nnflg"
+      },
+      "source_path": "literature/2402.10714/arxiv_source/hvsDR2DR3_arXiv.tex",
+      "excerpt_path": "literature/2402.10714/catalog_sources/table-Tab_72nnflg/excerpt.tex",
+      "sha256": "153fbc2908ff057ed89e82233ce984e3baf43dc2c70202801bf5d0d49b95653a",
+      "line_count": 90,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-Tab_quali",
+      "internal_table_id": "table-Tab_quali",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2402.10714/catalog_tables/table-Tab_quali.ecsv",
+      "caption": "DR3 quality flags and parameters used for HVS candidates, in particular for the 72 nearest extreme candidates studied in Sect.~\\ref{Sect_nearextrHVS}",
+      "label": "Tab_quali",
+      "row_count": 22,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp28003qte/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2402.10714/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp28003qte/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2402.10714/catalog_sources/table-Tab_quali/wrapped.tex",
+            "html": "literature/2402.10714/catalog_sources/table-Tab_quali/latexml.html",
+            "stdout": "literature/2402.10714/catalog_sources/table-Tab_quali/latexml.stdout.txt",
+            "stderr": "literature/2402.10714/catalog_sources/table-Tab_quali/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6aaecc94e9ea65234808f2538a12db0b7de8d451c3e2a120be950024b84d30dc"
+    },
+    {
+      "id": "table-Tab_72dr3",
+      "internal_table_id": "table-Tab_72dr3",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2402.10714/catalog_tables/table-Tab_72dr3.ecsv",
+      "caption": "Basic DR3 data on 72 nearest extreme HVS candidates with high ($RPlx$$>$5) and low (3$<$$RPlx$$<$5) priority, sorted by $G$ magnitude",
+      "label": "Tab_72dr3",
+      "row_count": 72,
+      "column_count": 19,
+      "environment": "",
+      "header_rows": [
+        [
+          "No.",
+          "Gaia DR3",
+          "G",
+          "Nper",
+          "Plx",
+          "RPlx",
+          "pmRA",
+          "pmDE",
+          "gofAL",
+          "epsi",
+          "sepsi",
+          "amax",
+          "IPDgofha",
+          "RUWE",
+          "G_abs",
+          "G - RP",
+          "RV",
+          "vtan",
+          "vtan_g"
+        ],
+        [
+          "",
+          "",
+          "[mag]",
+          "",
+          "[mas]",
+          "",
+          "[mas/yr]",
+          "[mas/yr]",
+          "",
+          "[mas]",
+          "",
+          "[mas]",
+          "",
+          "",
+          "[mag]",
+          "[mag]",
+          "[km/s]",
+          "[km/s]",
+          "[km/s]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "No.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR3",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Nper",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Plx | [mas]",
+          "unit_text": "[mas]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "RPlx",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "pmRA | [mas/yr]",
+          "unit_text": "[mas/yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "pmDE | [mas/yr]",
+          "unit_text": "[mas/yr]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "gofAL",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "epsi | [mas]",
+          "unit_text": "[mas]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "sepsi",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "amax | [mas]",
+          "unit_text": "[mas]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "IPDgofha",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "RUWE",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "G_abs | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "G - RP | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "RV | [km/s]",
+          "unit_text": "[km/s]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "vtan | [km/s]",
+          "unit_text": "[km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "vtan_g | [km/s]",
+          "unit_text": "[km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpoxd3gcuk/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2402.10714/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpoxd3gcuk/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2402.10714/catalog_sources/table-Tab_72dr3/wrapped.tex",
+            "html": "literature/2402.10714/catalog_sources/table-Tab_72dr3/latexml.html",
+            "stdout": "literature/2402.10714/catalog_sources/table-Tab_72dr3/latexml.stdout.txt",
+            "stderr": "literature/2402.10714/catalog_sources/table-Tab_72dr3/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "035962c26d65044022a1e01078fe002673a06bb8769f46d6e70761a22fb9e2db"
+    },
+    {
+      "id": "table-Tab_72nnflg",
+      "internal_table_id": "table-Tab_72nnflg",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2402.10714/catalog_tables/table-Tab_72nnflg.ecsv",
+      "caption": "DR3 next neighbours, IPD parameters, flags, and results from local$+$global parameter comparison of 72 HVS candidates",
+      "label": "Tab_72nnflg",
+      "row_count": 72,
+      "column_count": 20,
+      "environment": "",
+      "header_rows": [
+        [
+          "No.",
+          "G",
+          "Gnn",
+          "dnn",
+          "n5as",
+          "IPD",
+          "IPD",
+          "Sol",
+          "Dup",
+          "Nper",
+          "e_Plx",
+          "e_pmRA",
+          "e_pmDE",
+          "gofAL",
+          "epsi",
+          "sepsi",
+          "amax",
+          "IPDgofha",
+          "RUWE",
+          "RPlx"
+        ],
+        [
+          "",
+          "",
+          "",
+          "[arc",
+          "",
+          "fmp",
+          "fow",
+          "ved",
+          "",
+          "l\\Delta g\\Delta",
+          "lR gR",
+          "lR gR",
+          "lR gR",
+          "lR gR",
+          "lR gR",
+          "lR gR",
+          "lR gR",
+          "lR gR",
+          "lR gR",
+          ""
+        ],
+        [
+          "",
+          "[mag]",
+          "[mag]",
+          "sec]",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "No.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Gnn | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "dnn | [arc | sec]",
+          "unit_text": "[arc",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "n5as",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "IPD | fmp",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "IPD | fow",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Sol | ved",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Dup",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Nper | l\\Delta g\\Delta",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "e_Plx | lR gR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "e_pmRA | lR gR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "e_pmDE | lR gR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "gofAL | lR gR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "epsi | lR gR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "sepsi | lR gR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "amax | lR gR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "IPDgofha | lR gR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "RUWE | lR gR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_020",
+          "original_header": "RPlx",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5pq7m839/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2402.10714/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5pq7m839/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2402.10714/catalog_sources/table-Tab_72nnflg/wrapped.tex",
+            "html": "literature/2402.10714/catalog_sources/table-Tab_72nnflg/latexml.html",
+            "stdout": "literature/2402.10714/catalog_sources/table-Tab_72nnflg/latexml.stdout.txt",
+            "stderr": "literature/2402.10714/catalog_sources/table-Tab_72nnflg/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "153fbc2908ff057ed89e82233ce984e3baf43dc2c70202801bf5d0d49b95653a"
+    }
+  ]
+}

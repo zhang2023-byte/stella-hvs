@@ -1,0 +1,124 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:16:06",
+  "paper": {
+    "arxiv_id": "1910.06340",
+    "bibcode": "2020MNRAS.492.3241V",
+    "title": "Pristine IX: CFHT ESPaDOnS Spectroscopic Analysis of 115 Bright Metal-Poor Candidate Stars",
+    "month": "2019-10",
+    "source_note_json": "notes/2019/2019-10/2019-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1910.06340",
+      "pdf": "https://arxiv.org/pdf/1910.06340"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1910.06340",
+    "audit_path": "literature/1910.06340/audit.json",
+    "catalog_review_path": "literature/1910.06340/catalog_review.json",
+    "catalog_extraction_path": "literature/1910.06340/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1910.06340/catalog_tables/table-targets.ecsv",
+      "literature/1910.06340/catalog_tables/table-newfs.ecsv",
+      "literature/1910.06340/catalog_tables/table-iron.ecsv",
+      "literature/1910.06340/catalog_tables/table-alpha.ecsv",
+      "literature/1910.06340/catalog_tables/table-syserrs.ecsv",
+      "literature/1910.06340/catalog_tables/table-errsample.ecsv",
+      "literature/1910.06340/catalog_tables/table-orbits.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:16:06",
+    "extractor": "agent",
+    "summary": "本文利用CFHT ESPaDOnS高分辨率光谱(R~68,000)对Pristine巡天选出的115颗亮贫金属候选星进行化学动力学分析，发现了28颗[Fe/H]<-2.5和5颗[Fe/H]<-3.0的新亮星。论文对28颗新贫金属星进行了10种元素的丰度测定，对70颗星计算了轨道运动学参数。摘要提及部分星具有'unbound orbits', 但本文为化学丰度巡天论文，并非以HVS候选体发现/分类为核心目标，且未明确将任何目标标识为超高速星(HVS)候选体。论文主要贡献为增加已知亮贫金属星样本量并研究银河系贫金属晕的化学动力学性质。无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "radial_velocity_measurement",
+      "summary": "CFHT ESPaDOnS high-resolution spectroscopy (R~68,000). Radial velocities measured via cross-correlation.",
+      "inputs": ["CFHT ESPaDOnS"],
+      "outputs": ["Radial velocities"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1910.06340/arxiv_source/Venn.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Sec 2"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": ["step-01"],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Bayesian inference using SDSS photometry, Gaia DR2 parallaxes, MESA/MIST isochrones, and Pristine metallicities.",
+      "inputs": ["SDSS", "Gaia DR2", "MESA/MIST"],
+      "outputs": ["Teff, log g, [Fe/H]"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1910.06340/arxiv_source/Venn.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Sec 3"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": ["step-02"],
+      "step_type": "other",
+      "summary": "Equivalent width analysis with MOOG (LTE). Abundances of Na, Mg, Ca, Sc, Ti, Cr, Fe, Ni, Y, Ba.",
+      "inputs": ["MOOG", "linemake"],
+      "outputs": ["[X/Fe] abundances"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1910.06340/arxiv_source/Venn.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Sec 4"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": ["step-03"],
+      "step_type": "orbit_integration",
+      "summary": "Orbit integration with galpy (MWPotential2014). U, V, W velocities, orbital pericenter/apocenter, eccentricity, actions Jφ/Jz and energy E.",
+      "inputs": ["Gaia DR2", "galpy"],
+      "outputs": ["Orbital parameters"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1910.06340/arxiv_source/Venn.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Sec 5"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "grp-metal-poor-unbound",
+      "description": "Among 70 stars with orbit calculations, some exhibit unbound orbits, planar orbits, or highly elliptical orbits plunging into the Galactic bulge (R_peri < 0.5 kpc). However, these stars are not explicitly identified as HVS candidates in the paper, which is primarily a chemical abundance survey.",
+      "decision": "excluded",
+      "reason": "Paper is a chemical abundance survey of metal-poor stars, not an HVS discovery paper. Stars with unbound orbits are mentioned only in passing as part of chemo-dynamical analysis, and none are explicitly presented or labeled as hypervelocity star candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1910.06340/arxiv_source/Venn.tex",
+          "start_line": 1,
+          "end_line": 50,
+          "context": "Full paper"
+        }
+      ]
+    }
+  ]
+}

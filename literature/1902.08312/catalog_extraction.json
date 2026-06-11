@@ -1,0 +1,255 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:33:44",
+  "paper": {
+    "arxiv_id": "1902.08312",
+    "title": "Asteroseismology of massive stars with the TESS mission: the runaway Beta Cep pulsator PHL 346 = HN Aqr",
+    "month": "2019-02"
+  },
+  "review": {
+    "path": "literature/1902.08312/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083344",
+    "started_at": "2026-06-07T08:33:44",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1902.08312",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-frequencies",
+      "internal_table_id": "table-tab-frequencies",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1902.08312/arxiv_source/hnaqr_final.tex",
+        "start_line": 519,
+        "end_line": 587,
+        "caption": "Multifrequency solution for our {\\it TESS} photometry of HN~Aqr. Error estimates for the independent frequencies are given in braces in units of the last significant digit; the errors on the amplitudes are about $\\pm0.03$\\,mmag.",
+        "label": "tab:frequencies"
+      },
+      "source_path": "literature/1902.08312/arxiv_source/hnaqr_final.tex",
+      "excerpt_path": "literature/1902.08312/catalog_sources/table-tab-frequencies/excerpt.tex",
+      "sha256": "3ccf7915367f28567f56ee5189a7c5a967eaaf2c4467348dffc915ea681fbdec",
+      "line_count": 69,
+      "error": ""
+    },
+    {
+      "id": "table-tab-parameters",
+      "internal_table_id": "table-tab-parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1902.08312/arxiv_source/hnaqr_final.tex",
+        "start_line": 1052,
+        "end_line": 1085,
+        "caption": "Determinations of basic parameters of PHL~346.",
+        "label": "tab:parameters"
+      },
+      "source_path": "literature/1902.08312/arxiv_source/hnaqr_final.tex",
+      "excerpt_path": "literature/1902.08312/catalog_sources/table-tab-parameters/excerpt.tex",
+      "sha256": "26fc89a4aec5ce1b1c4c7f58fe48b2b1d1e0a83bc9778b2d3eda5413c9524872",
+      "line_count": 34,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-frequencies",
+      "internal_table_id": "table-tab-frequencies",
+      "status": "success",
+      "ecsv_path": "literature/1902.08312/catalog_tables/table-tab-frequencies.ecsv",
+      "caption": "Multifrequency solution for our {\\it TESS} photometry of HN~Aqr. Error estimates for the independent frequencies are given in braces in units of the last significant digit; the errors on the amplitudes are about $\\pm0.03$\\,mmag.",
+      "label": "tab:frequencies",
+      "row_count": 38,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Freq.",
+          "Ampl.",
+          "S/N"
+        ],
+        [
+          "",
+          "( \\cd )",
+          "(mmag)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Freq. | ( \\cd )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Ampl. | (mmag)",
+          "unit_text": "(mmag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "S/N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1pzw4ezu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1902.08312/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1pzw4ezu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1902.08312/catalog_sources/table-tab-frequencies/wrapped.tex",
+            "html": "literature/1902.08312/catalog_sources/table-tab-frequencies/latexml.html",
+            "stdout": "literature/1902.08312/catalog_sources/table-tab-frequencies/latexml.stdout.txt",
+            "stderr": "literature/1902.08312/catalog_sources/table-tab-frequencies/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3ccf7915367f28567f56ee5189a7c5a967eaaf2c4467348dffc915ea681fbdec"
+    },
+    {
+      "id": "table-tab-parameters",
+      "internal_table_id": "table-tab-parameters",
+      "status": "success",
+      "ecsv_path": "literature/1902.08312/catalog_tables/table-tab-parameters.ecsv",
+      "caption": "Determinations of basic parameters of PHL~346.",
+      "label": "tab:parameters",
+      "row_count": 11,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "T_\\rm eff (K)",
+          "log g",
+          "Ref.",
+          "Method"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "T_\\rm eff (K)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "log g",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Ref.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Method",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnx9mw4ic/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1902.08312/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnx9mw4ic/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1902.08312/catalog_sources/table-tab-parameters/wrapped.tex",
+            "html": "literature/1902.08312/catalog_sources/table-tab-parameters/latexml.html",
+            "stdout": "literature/1902.08312/catalog_sources/table-tab-parameters/latexml.stdout.txt",
+            "stderr": "literature/1902.08312/catalog_sources/table-tab-parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "26fc89a4aec5ce1b1c4c7f58fe48b2b1d1e0a83bc9778b2d3eda5413c9524872"
+    }
+  ]
+}

@@ -1,0 +1,507 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:15",
+  "paper": {
+    "arxiv_id": "2408.08397",
+    "title": "Ultraviolet spectroscopy of the supernova Ia hypervelocity runaway white dwarf J0927-6335",
+    "month": "2024-08"
+  },
+  "review": {
+    "path": "literature/2408.08397/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123915",
+    "started_at": "2026-05-17T12:39:15",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2408.08397",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-results",
+      "internal_table_id": "table-tab-results",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2408.08397/arxiv_source/aa.tex",
+        "start_line": 149,
+        "end_line": 178,
+        "caption": "Atmospheric element abundances of \\jnz and statistics of NLTE model atoms. \\tablefootmark{a}",
+        "label": "tab:results"
+      },
+      "source_path": "literature/2408.08397/arxiv_source/aa.tex",
+      "excerpt_path": "literature/2408.08397/catalog_sources/table-tab-results/excerpt.tex",
+      "sha256": "4d80decd0ae38ffc8ead326a174949ad3e749cb2e18b43aaa4ad68e55f77417d",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-tab-lines",
+      "internal_table_id": "table-tab-lines",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2408.08397/arxiv_source/aa.tex",
+        "start_line": 181,
+        "end_line": 199,
+        "caption": "Approximate spectral regions where Fe and Ni lines are predominantly located.",
+        "label": "tab:lines"
+      },
+      "source_path": "literature/2408.08397/arxiv_source/aa.tex",
+      "excerpt_path": "literature/2408.08397/catalog_sources/table-tab-lines/excerpt.tex",
+      "sha256": "6d5a3d5ed221549b345e38a5fc1ac051206f9674650b11fa2e3c6469f420f657",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-abu",
+      "internal_table_id": "table-tab-abu",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2408.08397/arxiv_source/aa.tex",
+        "start_line": 201,
+        "end_line": 226,
+        "caption": "Element abundances in \\jnz compared to other compact objects. \\tablefootmark{a}",
+        "label": "tab:abu"
+      },
+      "source_path": "literature/2408.08397/arxiv_source/aa.tex",
+      "excerpt_path": "literature/2408.08397/catalog_sources/table-tab-abu/excerpt.tex",
+      "sha256": "cbd9eafac69d662be97e824e0e1ba846e8970a24e9f6636df2c4d6ab9ea67e36",
+      "line_count": 26,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-results",
+      "internal_table_id": "table-tab-results",
+      "status": "success",
+      "ecsv_path": "literature/2408.08397/catalog_tables/table-tab-results.ecsv",
+      "caption": "Atmospheric element abundances of \\jnz and statistics of NLTE model atoms. \\tablefootmark{a}",
+      "label": "tab:results",
+      "row_count": 10,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Element",
+          "Mass Fraction",
+          "[X]",
+          "I",
+          "II",
+          "III",
+          "IV",
+          "V",
+          "VI",
+          "VII",
+          "VIII"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Element",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Mass Fraction",
+          "unit_text": "Mass Fraction",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "[X]",
+          "unit_text": "[X]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "I",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "II",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "III",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "IV",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "V",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "VI",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "VII",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "VIII",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpn4x5y8bb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2408.08397/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpn4x5y8bb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2408.08397/catalog_sources/table-tab-results/wrapped.tex",
+            "html": "literature/2408.08397/catalog_sources/table-tab-results/latexml.html",
+            "stdout": "literature/2408.08397/catalog_sources/table-tab-results/latexml.stdout.txt",
+            "stderr": "literature/2408.08397/catalog_sources/table-tab-results/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4d80decd0ae38ffc8ead326a174949ad3e749cb2e18b43aaa4ad68e55f77417d"
+    },
+    {
+      "id": "table-tab-lines",
+      "internal_table_id": "table-tab-lines",
+      "status": "success",
+      "ecsv_path": "literature/2408.08397/catalog_tables/table-tab-lines.ecsv",
+      "caption": "Approximate spectral regions where Fe and Ni lines are predominantly located.",
+      "label": "tab:lines",
+      "row_count": 3,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Fe iv",
+          "Fe v",
+          "Fe vi",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Fe iv",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Fe v",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Fe vi",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphxxscg1v/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2408.08397/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphxxscg1v/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2408.08397/catalog_sources/table-tab-lines/wrapped.tex",
+            "html": "literature/2408.08397/catalog_sources/table-tab-lines/latexml.html",
+            "stdout": "literature/2408.08397/catalog_sources/table-tab-lines/latexml.stdout.txt",
+            "stderr": "literature/2408.08397/catalog_sources/table-tab-lines/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6d5a3d5ed221549b345e38a5fc1ac051206f9674650b11fa2e3c6469f420f657"
+    },
+    {
+      "id": "table-tab-abu",
+      "internal_table_id": "table-tab-abu",
+      "status": "success",
+      "ecsv_path": "literature/2408.08397/catalog_tables/table-tab-abu.ecsv",
+      "caption": "Element abundances in \\jnz compared to other compact objects. \\tablefootmark{a}",
+      "label": "tab:abu",
+      "row_count": 4,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "Type",
+          "\\Teff /logg",
+          "H",
+          "He",
+          "C",
+          "O",
+          "Si",
+          "S",
+          "Fe",
+          "Ni"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\Teff /logg",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "H",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "He",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "C",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "O",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Si",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "S",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Fe",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Ni",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp56o2a2t5/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2408.08397/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp56o2a2t5/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2408.08397/catalog_sources/table-tab-abu/wrapped.tex",
+            "html": "literature/2408.08397/catalog_sources/table-tab-abu/latexml.html",
+            "stdout": "literature/2408.08397/catalog_sources/table-tab-abu/latexml.stdout.txt",
+            "stderr": "literature/2408.08397/catalog_sources/table-tab-abu/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "cbd9eafac69d662be97e824e0e1ba846e8970a24e9f6636df2c4d6ab9ea67e36"
+    }
+  ]
+}

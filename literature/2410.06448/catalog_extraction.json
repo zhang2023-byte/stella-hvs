@@ -1,0 +1,857 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:33",
+  "paper": {
+    "arxiv_id": "2410.06448",
+    "title": "Kinematic Insights Into Luminous Blue Variables and B[e] Supergiants",
+    "month": "2024-10"
+  },
+  "review": {
+    "path": "literature/2410.06448/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123933",
+    "started_at": "2026-05-17T12:39:33",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2410.06448",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 6,
+      "work_count": 6,
+      "table_count": 6,
+      "success_count": 6,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 6,
+      "file_success_count": 6,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-samplelmc",
+      "internal_table_id": "table-tab-samplelmc",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+        "start_line": 141,
+        "end_line": 191,
+        "caption": "LMC Target Stars",
+        "label": "tab:samplelmc"
+      },
+      "source_path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+      "excerpt_path": "literature/2410.06448/catalog_sources/table-tab-samplelmc/excerpt.tex",
+      "sha256": "9ff5350767578a35252f0825e84a5b0fc43fdcb13e1cc100c2e60a6b982a6c73",
+      "line_count": 51,
+      "error": ""
+    },
+    {
+      "id": "table-tab-samplesmc",
+      "internal_table_id": "table-tab-samplesmc",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+        "start_line": 193,
+        "end_line": 218,
+        "caption": "SMC Target Stars",
+        "label": "tab:samplesmc"
+      },
+      "source_path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+      "excerpt_path": "literature/2410.06448/catalog_sources/table-tab-samplesmc/excerpt.tex",
+      "sha256": "c087ed8239cad54a0170dcda99586194f2aa1332dbcfd458a68caf84e77d0741",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-tab-vel_lmc",
+      "internal_table_id": "table-tab-vel_lmc",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+        "start_line": 220,
+        "end_line": 271,
+        "caption": "LMC Proper Motion Measurements",
+        "label": "tab:vel_lmc"
+      },
+      "source_path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+      "excerpt_path": "literature/2410.06448/catalog_sources/table-tab-vel_lmc/excerpt.tex",
+      "sha256": "234a6f9efe3edb5ef166dcbfea0c7dde3ed0e2db59840e397a32817579e44375",
+      "line_count": 52,
+      "error": ""
+    },
+    {
+      "id": "table-tab-vel_smc",
+      "internal_table_id": "table-tab-vel_smc",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+        "start_line": 275,
+        "end_line": 301,
+        "caption": "SMC Proper Motion Measurements",
+        "label": "tab:vel_smc"
+      },
+      "source_path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+      "excerpt_path": "literature/2410.06448/catalog_sources/table-tab-vel_smc/excerpt.tex",
+      "sha256": "bbe73b92d76272823cbaff654c00023acdbafd26175123fbbfdb86c41c7a06e7",
+      "line_count": 27,
+      "error": ""
+    },
+    {
+      "id": "table-tab-LMCmedians",
+      "internal_table_id": "table-tab-LMCmedians",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+        "start_line": 325,
+        "end_line": 360,
+        "caption": "Characteristic Transverse Peculiar Velocities by Stellar Class",
+        "label": "tab:LMCmedians"
+      },
+      "source_path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+      "excerpt_path": "literature/2410.06448/catalog_sources/table-tab-LMCmedians/excerpt.tex",
+      "sha256": "4759e7653637d288f2fe27b8d7d1dff2127d099e62bfec59a3f706a977ffd288",
+      "line_count": 36,
+      "error": ""
+    },
+    {
+      "id": "table-tab-LMCluminosities",
+      "internal_table_id": "table-tab-LMCluminosities",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+        "start_line": 394,
+        "end_line": 419,
+        "caption": "Characteristic Luminosities by Stellar Class",
+        "label": "tab:LMCluminosities"
+      },
+      "source_path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+      "excerpt_path": "literature/2410.06448/catalog_sources/table-tab-LMCluminosities/excerpt.tex",
+      "sha256": "9a890a01d004cdaf7039bbf2a70b6c86b843e08269c83b369e95cb114603164f",
+      "line_count": 26,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-samplelmc",
+      "internal_table_id": "table-tab-samplelmc",
+      "status": "success",
+      "ecsv_path": "literature/2410.06448/catalog_tables/table-tab-samplelmc.ecsv",
+      "caption": "LMC Target Stars",
+      "label": "tab:samplelmc",
+      "row_count": 35,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "Alternate Identifiers",
+          "Type a a All LBVs and LBVc types and Classes are from Agliozzo2021 , and all sgB[e] stars and sgB[e]c are from Kraus2019 , with the exception of [BE74] 328. Class types for sgB[e]-WL stars are from Graus2012 , with the exception of [L72] LH 85-10.",
+          "Class a a All LBVs and LBVc types and Classes are from Agliozzo2021 , and all sgB[e] stars and sgB[e]c are from Kraus2019 , with the exception of [BE74] 328. Class types for sgB[e]-WL stars are from Graus2012 , with the exception of [L72] LH 85-10."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Alternate Identifiers",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Type a a All LBVs and LBVc types and Classes are from Agliozzo2021 , and all sgB[e] stars and sgB[e]c are from Kraus2019 , with the exception of [BE74] 328. Class types for sgB[e]-WL stars are from Graus2012 , with the exception of [L72] LH 85-10.",
+          "unit_text": "Type a a All LBVs and LBVc types and Classes are from Agliozzo2021 , and all sgB[e] stars and sgB[e]c are from Kraus2019 , with the exception of [BE74] 328. Class types for sgB[e]-WL stars are from Graus2012 , with the exception of [L72] LH 85-10.",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Class a a All LBVs and LBVc types and Classes are from Agliozzo2021 , and all sgB[e] stars and sgB[e]c are from Kraus2019 , with the exception of [BE74] 328. Class types for sgB[e]-WL stars are from Graus2012 , with the exception of [L72] LH 85-10.",
+          "unit_text": "Class a a All LBVs and LBVc types and Classes are from Agliozzo2021 , and all sgB[e] stars and sgB[e]c are from Kraus2019 , with the exception of [BE74] 328. Class types for sgB[e]-WL stars are from Graus2012 , with the exception of [L72] LH 85-10.",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplgl_dfcg/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2410.06448/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplgl_dfcg/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2410.06448/catalog_sources/table-tab-samplelmc/wrapped.tex",
+            "html": "literature/2410.06448/catalog_sources/table-tab-samplelmc/latexml.html",
+            "stdout": "literature/2410.06448/catalog_sources/table-tab-samplelmc/latexml.stdout.txt",
+            "stderr": "literature/2410.06448/catalog_sources/table-tab-samplelmc/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9ff5350767578a35252f0825e84a5b0fc43fdcb13e1cc100c2e60a6b982a6c73"
+    },
+    {
+      "id": "table-tab-samplesmc",
+      "internal_table_id": "table-tab-samplesmc",
+      "status": "success",
+      "ecsv_path": "literature/2410.06448/catalog_tables/table-tab-samplesmc.ecsv",
+      "caption": "SMC Target Stars",
+      "label": "tab:samplesmc",
+      "row_count": 12,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "Alternate Identifiers",
+          "Type a a All LBVs and their Classes are from Agliozzo2021 , and all sgB[e] stars and sgB[e]c stars are from Kraus2019 , with the exception of AzV 261. Class types for sgB[e]-WL stars are from Graus2012 .",
+          "Class a a All LBVs and their Classes are from Agliozzo2021 , and all sgB[e] stars and sgB[e]c stars are from Kraus2019 , with the exception of AzV 261. Class types for sgB[e]-WL stars are from Graus2012 ."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Alternate Identifiers",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Type a a All LBVs and their Classes are from Agliozzo2021 , and all sgB[e] stars and sgB[e]c stars are from Kraus2019 , with the exception of AzV 261. Class types for sgB[e]-WL stars are from Graus2012 .",
+          "unit_text": "Type a a All LBVs and their Classes are from Agliozzo2021 , and all sgB[e] stars and sgB[e]c stars are from Kraus2019 , with the exception of AzV 261. Class types for sgB[e]-WL stars are from Graus2012 .",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Class a a All LBVs and their Classes are from Agliozzo2021 , and all sgB[e] stars and sgB[e]c stars are from Kraus2019 , with the exception of AzV 261. Class types for sgB[e]-WL stars are from Graus2012 .",
+          "unit_text": "Class a a All LBVs and their Classes are from Agliozzo2021 , and all sgB[e] stars and sgB[e]c stars are from Kraus2019 , with the exception of AzV 261. Class types for sgB[e]-WL stars are from Graus2012 .",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7w3xjba9/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2410.06448/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7w3xjba9/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2410.06448/catalog_sources/table-tab-samplesmc/wrapped.tex",
+            "html": "literature/2410.06448/catalog_sources/table-tab-samplesmc/latexml.html",
+            "stdout": "literature/2410.06448/catalog_sources/table-tab-samplesmc/latexml.stdout.txt",
+            "stderr": "literature/2410.06448/catalog_sources/table-tab-samplesmc/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c087ed8239cad54a0170dcda99586194f2aa1332dbcfd458a68caf84e77d0741"
+    },
+    {
+      "id": "table-tab-vel_lmc",
+      "internal_table_id": "table-tab-vel_lmc",
+      "status": "success",
+      "ecsv_path": "literature/2410.06448/catalog_tables/table-tab-vel_lmc.ecsv",
+      "caption": "LMC Proper Motion Measurements",
+      "label": "tab:vel_lmc",
+      "row_count": 35,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "Type",
+          "Number of",
+          "v_\\alpha (Target)",
+          "v_\\delta (Target)",
+          "v_\\alpha (Field)",
+          "v_\\delta (Field)",
+          "v_\\perp",
+          "Luminosity a a From Agliozzo2021 unless otherwise noted."
+        ],
+        [
+          "",
+          "",
+          "field stars",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\log(L/L_\\sun)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Number of | field stars",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "v_\\alpha (Target) | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "v_\\delta (Target) | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v_\\alpha (Field) | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_\\delta (Field) | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "v_\\perp | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Luminosity a a From Agliozzo2021 unless otherwise noted. | \\log(L/L_\\sun)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfxqnnna0/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2410.06448/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfxqnnna0/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2410.06448/catalog_sources/table-tab-vel_lmc/wrapped.tex",
+            "html": "literature/2410.06448/catalog_sources/table-tab-vel_lmc/latexml.html",
+            "stdout": "literature/2410.06448/catalog_sources/table-tab-vel_lmc/latexml.stdout.txt",
+            "stderr": "literature/2410.06448/catalog_sources/table-tab-vel_lmc/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "234a6f9efe3edb5ef166dcbfea0c7dde3ed0e2db59840e397a32817579e44375"
+    },
+    {
+      "id": "table-tab-vel_smc",
+      "internal_table_id": "table-tab-vel_smc",
+      "status": "success",
+      "ecsv_path": "literature/2410.06448/catalog_tables/table-tab-vel_smc.ecsv",
+      "caption": "SMC Proper Motion Measurements",
+      "label": "tab:vel_smc",
+      "row_count": 12,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "Type",
+          "Number of",
+          "v_\\alpha (Target)",
+          "v_\\delta (Target)",
+          "v_\\alpha (Field)",
+          "v_\\delta (Field)",
+          "v_\\perp",
+          "Luminosity"
+        ],
+        [
+          "",
+          "",
+          "field stars",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\log(L/L_\\sun)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Number of | field stars",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "v_\\alpha (Target) | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "v_\\delta (Target) | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v_\\alpha (Field) | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v_\\delta (Field) | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "v_\\perp | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Luminosity | \\log(L/L_\\sun)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpct55q380/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2410.06448/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpct55q380/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2410.06448/catalog_sources/table-tab-vel_smc/wrapped.tex",
+            "html": "literature/2410.06448/catalog_sources/table-tab-vel_smc/latexml.html",
+            "stdout": "literature/2410.06448/catalog_sources/table-tab-vel_smc/latexml.stdout.txt",
+            "stderr": "literature/2410.06448/catalog_sources/table-tab-vel_smc/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "bbe73b92d76272823cbaff654c00023acdbafd26175123fbbfdb86c41c7a06e7"
+    },
+    {
+      "id": "table-tab-LMCmedians",
+      "internal_table_id": "table-tab-LMCmedians",
+      "status": "success",
+      "ecsv_path": "literature/2410.06448/catalog_tables/table-tab-LMCmedians.ecsv",
+      "caption": "Characteristic Transverse Peculiar Velocities by Stellar Class",
+      "label": "tab:LMCmedians",
+      "row_count": 21,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Class",
+          "N",
+          "Median",
+          "Median Error a a footnotemark:",
+          "Weighted Median",
+          "Weighted Mean",
+          "Standard Deviation"
+        ],
+        [
+          "",
+          "",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "\\rm km s^-1"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Class",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Median | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Median Error a a footnotemark: | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Weighted Median | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Weighted Mean | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Standard Deviation | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmph1thlfyq/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2410.06448/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmph1thlfyq/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2410.06448/catalog_sources/table-tab-LMCmedians/wrapped.tex",
+            "html": "literature/2410.06448/catalog_sources/table-tab-LMCmedians/latexml.html",
+            "stdout": "literature/2410.06448/catalog_sources/table-tab-LMCmedians/latexml.stdout.txt",
+            "stderr": "literature/2410.06448/catalog_sources/table-tab-LMCmedians/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4759e7653637d288f2fe27b8d7d1dff2127d099e62bfec59a3f706a977ffd288"
+    },
+    {
+      "id": "table-tab-LMCluminosities",
+      "internal_table_id": "table-tab-LMCluminosities",
+      "status": "success",
+      "ecsv_path": "literature/2410.06448/catalog_tables/table-tab-LMCluminosities.ecsv",
+      "caption": "Characteristic Luminosities by Stellar Class",
+      "label": "tab:LMCluminosities",
+      "row_count": 15,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Class",
+          "N",
+          "Mean",
+          "Median",
+          "Standard Deviation"
+        ],
+        [
+          "",
+          "",
+          "\\log(L/L_\\sun)",
+          "\\log(L/L_\\sun)",
+          "\\log(L/L_\\sun)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Class",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Mean | \\log(L/L_\\sun)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Median | \\log(L/L_\\sun)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Standard Deviation | \\log(L/L_\\sun)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp177r2l28/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2410.06448/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp177r2l28/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2410.06448/catalog_sources/table-tab-LMCluminosities/wrapped.tex",
+            "html": "literature/2410.06448/catalog_sources/table-tab-LMCluminosities/latexml.html",
+            "stdout": "literature/2410.06448/catalog_sources/table-tab-LMCluminosities/latexml.stdout.txt",
+            "stderr": "literature/2410.06448/catalog_sources/table-tab-LMCluminosities/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9a890a01d004cdaf7039bbf2a70b6c86b843e08269c83b369e95cb114603164f"
+    }
+  ]
+}

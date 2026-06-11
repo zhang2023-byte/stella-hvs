@@ -1,0 +1,1478 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:37",
+  "paper": {
+    "arxiv_id": "2412.12727",
+    "title": "A binary system in the S cluster close to the supermassive black hole Sagittarius A*",
+    "month": "2024-12"
+  },
+  "review": {
+    "path": "literature/2412.12727/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123937",
+    "started_at": "2026-05-17T12:39:37",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2412.12727",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 11,
+      "work_count": 11,
+      "table_count": 11,
+      "success_count": 11,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 11,
+      "file_success_count": 11,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-d9_parameter-2",
+      "internal_table_id": "table-tab-d9_parameter-2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+        "start_line": 889,
+        "end_line": 928,
+        "caption": "{\\bf Best-fit parameters of the D9 system.} We list the orbital parameters for the binary of D9 together with the motion of the system around Sgr~A*. In addition, the best-fit stellar properties based on the SED fitter are included. The uncertainties of the binary parameter and the radiation transfer model are based on the reduced $\\chi^2$. For the Keplerian elements, we use MCMC simulations to estimate the uncertainty range. {Since the inclination of the secondary is assumed to be $\\mathrm{i}_{\\rm D9b}\\,=\\,90^{\\circ}$, no uncertainty for $m \\sin (\\mathrm{i}_{\\rm D9b})\\,=\\,0.73$~M$_{\\odot}$ is given.}",
+        "label": "tab:d9_parameter"
+      },
+      "source_path": "literature/2412.12727/arxiv_source/sn-article.tex",
+      "excerpt_path": "literature/2412.12727/catalog_sources/table-tab-d9_parameter-2/excerpt.tex",
+      "sha256": "0197341d6f8103d0c609da5b331b7fe1809a0ee902781fd384c623dbace1fb94",
+      "line_count": 40,
+      "error": ""
+    },
+    {
+      "id": "table-tab-d9_kepler_comp-2",
+      "internal_table_id": "table-tab-d9_kepler_comp-2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+        "start_line": 932,
+        "end_line": 949,
+        "caption": "{\\bf Comparison of best-fit Keplerian approximation and MCMC simulations.} Since the standard deviation does not satisfactorily reflect the astrometric precision that can be achieved with SINFONI, we will use the standard deviation of the combined MCMC posteriors. {These orbital elements are related to the outer binary system D9-Sgr~A*.} We refer to \\cite{peissker2021c} for a detailed explanation of the background fluctuations of the SINFONI data.",
+        "label": "tab:d9_kepler_comp"
+      },
+      "source_path": "literature/2412.12727/arxiv_source/sn-article.tex",
+      "excerpt_path": "literature/2412.12727/catalog_sources/table-tab-d9_kepler_comp-2/excerpt.tex",
+      "sha256": "57e8fb6117ca4b1a501caf7874cc5fdd7814e5ea51d95aecb26dea878fd9cf0e",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-tab-flux_filter_comp-2",
+      "internal_table_id": "table-tab-flux_filter_comp-2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+        "start_line": 982,
+        "end_line": 996,
+        "caption": "{\\bf Median flux density values for the S stars.} The standard deviation is estimated from the flux values.",
+        "label": "tab:flux_filter_comp"
+      },
+      "source_path": "literature/2412.12727/arxiv_source/sn-article.tex",
+      "excerpt_path": "literature/2412.12727/catalog_sources/table-tab-flux_filter_comp-2/excerpt.tex",
+      "sha256": "e22e06daaad8774714a2ae86f98db4f9f4228d8bbc2bc27ba51d234b665de9fc",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-tab-extinction_comp",
+      "internal_table_id": "table-tab-extinction_comp",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+        "start_line": 1013,
+        "end_line": 1027,
+        "caption": "{\\bf Comparison of the impact of different extinction values.} For all three inspected extinction values, the stellar radius and temperature of D9 are comparable inside the uncertainties calculated by the radiative transfer model.",
+        "label": "tab:extinction_comp"
+      },
+      "source_path": "literature/2412.12727/arxiv_source/sn-article.tex",
+      "excerpt_path": "literature/2412.12727/catalog_sources/table-tab-extinction_comp/excerpt.tex",
+      "sha256": "b505ca25b92ed2eac26da6ab2d9b810b79233f2ed993126fee3534ef2022ae82",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-tab-binary_overview-2",
+      "internal_table_id": "table-tab-binary_overview-2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+        "start_line": 1064,
+        "end_line": 1082,
+        "caption": "{\\bf Binaries of the Galactic center.} In this list, D9 is the only S~cluster member.",
+        "label": "tab:binary_overview"
+      },
+      "source_path": "literature/2412.12727/arxiv_source/sn-article.tex",
+      "excerpt_path": "literature/2412.12727/catalog_sources/table-tab-binary_overview-2/excerpt.tex",
+      "sha256": "62dd74157d77887d5f88c344b39a41088a8c65ecc184d52469b3a86a236fb714",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-rv_values_1",
+      "internal_table_id": "table-tab-rv_values_1",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+        "start_line": 1107,
+        "end_line": 1148,
+        "caption": "{\\bf Radial velocities measured from the SINFONI observations carried out between 2005-2012.} We list the epoch, the wavelength, the corresponding Full-Width-Half-Maximum, the LOS velocity, and the related uncertainty. Furthermore, we indicate the normalized RV v$_{\\rm norm}$ and the final velocity v$_{\\rm mod}$ where the Keplerian model for the secondary from Exo-Stricker is included. All velocities, except v$_{\\rm mod}$, are estimated with respect to the Br$\\gamma$ rest wavelength at $2.1661\\,\\mathrm{\\mu m}$.",
+        "label": "tab:rv_values_1"
+      },
+      "source_path": "literature/2412.12727/arxiv_source/sn-article.tex",
+      "excerpt_path": "literature/2412.12727/catalog_sources/table-tab-rv_values_1/excerpt.tex",
+      "sha256": "710d8bcdd68eb3ec9136e84bdb50dd7db1419c6a9ea8467fe03a702254bd9d84",
+      "line_count": 42,
+      "error": ""
+    },
+    {
+      "id": "table-tab-rv_values_2",
+      "internal_table_id": "table-tab-rv_values_2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+        "start_line": 1152,
+        "end_line": 1190,
+        "caption": "{\\bf Radial velocities measured from the SINFONI observations carried out between 2013-2014.} Like Table \\ref{tab:rv_values_1}, we list v$_{\\rm mod}$ which is the final output velocity from the RV fitter Exo-Stricker.",
+        "label": "tab:rv_values_2"
+      },
+      "source_path": "literature/2412.12727/arxiv_source/sn-article.tex",
+      "excerpt_path": "literature/2412.12727/catalog_sources/table-tab-rv_values_2/excerpt.tex",
+      "sha256": "e5bbebf27dba130817802eb4a80476bfad3e2e92b8fcfa2abe2ba5d27a851193",
+      "line_count": 39,
+      "error": ""
+    },
+    {
+      "id": "table-tab-rv_values_3",
+      "internal_table_id": "table-tab-rv_values_3",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+        "start_line": 1194,
+        "end_line": 1230,
+        "caption": "{\\bf Radial velocities measured from the SINFONI and ERIS observations carried out between 2015-2022.} Like Table \\ref{tab:rv_values_1} and Table \\ref{tab:rv_values_2}, we indicate all relevant observables that are used to derive the best-fit RV model displayed in the periodic pattern of D9. Here, v$_{\\rm mod}$ indicates the final RV velocity. The data points from 2022 were observed with ERIS.",
+        "label": "tab:rv_values_3"
+      },
+      "source_path": "literature/2412.12727/arxiv_source/sn-article.tex",
+      "excerpt_path": "literature/2412.12727/catalog_sources/table-tab-rv_values_3/excerpt.tex",
+      "sha256": "3a395b05d9188b1516669b62d2264f5f2159abd53ecd7d5af19be7b639cf1a8d",
+      "line_count": 37,
+      "error": ""
+    },
+    {
+      "id": "table-tab-data_sinfo1",
+      "internal_table_id": "table-tab-data_sinfo1",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+        "start_line": 1234,
+        "end_line": 1275,
+        "caption": "{\\bf Analyzed SINFONI data of 2005 to 2012.}",
+        "label": "tab:data_sinfo1"
+      },
+      "source_path": "literature/2412.12727/arxiv_source/sn-article.tex",
+      "excerpt_path": "literature/2412.12727/catalog_sources/table-tab-data_sinfo1/excerpt.tex",
+      "sha256": "90a7b6e69f43520b3c06d160cc23cb1a066f61878c37ef5254ffa2aef31a3192",
+      "line_count": 42,
+      "error": ""
+    },
+    {
+      "id": "table-tab-data_sinfo2",
+      "internal_table_id": "table-tab-data_sinfo2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+        "start_line": 1279,
+        "end_line": 1317,
+        "caption": "{\\bf Analyzed SINFONI data of 2013 and 2014.}",
+        "label": "tab:data_sinfo2"
+      },
+      "source_path": "literature/2412.12727/arxiv_source/sn-article.tex",
+      "excerpt_path": "literature/2412.12727/catalog_sources/table-tab-data_sinfo2/excerpt.tex",
+      "sha256": "016bb6303d0729f74aca7363740030887e53dbbb3e8ecc59d01deb1384fb5e08",
+      "line_count": 39,
+      "error": ""
+    },
+    {
+      "id": "table-tab-data_sinfo4",
+      "internal_table_id": "table-tab-data_sinfo4",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2412.12727/arxiv_source/sn-article.tex",
+        "start_line": 1320,
+        "end_line": 1357,
+        "caption": "{\\bf Analyzed SINFONI and ERIS data of 2015 to 2022.} The two observations in 2022 were carried out with ERIS.",
+        "label": "tab:data_sinfo4"
+      },
+      "source_path": "literature/2412.12727/arxiv_source/sn-article.tex",
+      "excerpt_path": "literature/2412.12727/catalog_sources/table-tab-data_sinfo4/excerpt.tex",
+      "sha256": "60554bb3ed79f2e831d104cccd92d1108e959d2447ea55ae25ca7b6529ace507",
+      "line_count": 38,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-d9_parameter-2",
+      "internal_table_id": "table-tab-d9_parameter-2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2412.12727/catalog_tables/table-tab-d9_parameter-2.ecsv",
+      "caption": "{\\bf Best-fit parameters of the D9 system.} We list the orbital parameters for the binary of D9 together with the motion of the system around Sgr~A*. In addition, the best-fit stellar properties based on the SED fitter are included. The uncertainties of the binary parameter and the radiation transfer model are based on the reduced $\\chi^2$. For the Keplerian elements, we use MCMC simulations to estimate the uncertainty range. {Since the inclination of the secondary is assumed to be $\\mathrm{i}_{\\rm D9b}\\,=\\,90^{\\circ}$, no uncertainty for $m \\sin (\\mathrm{i}_{\\rm D9b})\\,=\\,0.73$~M$_{\\odot}$ is given.}",
+      "label": "tab:d9_parameter",
+      "row_count": 22,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Secondary Keplerian Parameter",
+          ""
+        ],
+        [
+          "P_\\rm D9b [year]",
+          "1.02 +/- 0.01"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Secondary Keplerian Parameter | P_\\rm D9b [year]",
+          "unit_text": "P_\\rm D9b [year]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "1.02 +/- 0.01",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9ovl4qlh/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.12727/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9ovl4qlh/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.12727/catalog_sources/table-tab-d9_parameter-2/wrapped.tex",
+            "html": "literature/2412.12727/catalog_sources/table-tab-d9_parameter-2/latexml.html",
+            "stdout": "literature/2412.12727/catalog_sources/table-tab-d9_parameter-2/latexml.stdout.txt",
+            "stderr": "literature/2412.12727/catalog_sources/table-tab-d9_parameter-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0197341d6f8103d0c609da5b331b7fe1809a0ee902781fd384c623dbace1fb94"
+    },
+    {
+      "id": "table-tab-d9_kepler_comp-2",
+      "internal_table_id": "table-tab-d9_kepler_comp-2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2412.12727/catalog_tables/table-tab-d9_kepler_comp-2.ecsv",
+      "caption": "{\\bf Comparison of best-fit Keplerian approximation and MCMC simulations.} Since the standard deviation does not satisfactorily reflect the astrometric precision that can be achieved with SINFONI, we will use the standard deviation of the combined MCMC posteriors. {These orbital elements are related to the outer binary system D9-Sgr~A*.} We refer to \\cite{peissker2021c} for a detailed explanation of the background fluctuations of the SINFONI data.",
+      "label": "tab:d9_kepler_comp",
+      "row_count": 6,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Best-fit",
+          "MCMC",
+          "Standard deviation"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Best-fit",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "MCMC",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Standard deviation",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv_uldmgt/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.12727/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv_uldmgt/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.12727/catalog_sources/table-tab-d9_kepler_comp-2/wrapped.tex",
+            "html": "literature/2412.12727/catalog_sources/table-tab-d9_kepler_comp-2/latexml.html",
+            "stdout": "literature/2412.12727/catalog_sources/table-tab-d9_kepler_comp-2/latexml.stdout.txt",
+            "stderr": "literature/2412.12727/catalog_sources/table-tab-d9_kepler_comp-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "57e8fb6117ca4b1a501caf7874cc5fdd7814e5ea51d95aecb26dea878fd9cf0e"
+    },
+    {
+      "id": "table-tab-flux_filter_comp-2",
+      "internal_table_id": "table-tab-flux_filter_comp-2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2412.12727/catalog_tables/table-tab-flux_filter_comp-2.ecsv",
+      "caption": "{\\bf Median flux density values for the S stars.} The standard deviation is estimated from the flux values.",
+      "label": "tab:flux_filter_comp",
+      "row_count": 3,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "H band [mJy]",
+          "K band [mJy]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "H band [mJy]",
+          "unit_text": "H band [mJy]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "K band [mJy]",
+          "unit_text": "K band [mJy]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm4uc7_yc/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.12727/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm4uc7_yc/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.12727/catalog_sources/table-tab-flux_filter_comp-2/wrapped.tex",
+            "html": "literature/2412.12727/catalog_sources/table-tab-flux_filter_comp-2/latexml.html",
+            "stdout": "literature/2412.12727/catalog_sources/table-tab-flux_filter_comp-2/latexml.stdout.txt",
+            "stderr": "literature/2412.12727/catalog_sources/table-tab-flux_filter_comp-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e22e06daaad8774714a2ae86f98db4f9f4228d8bbc2bc27ba51d234b665de9fc"
+    },
+    {
+      "id": "table-tab-extinction_comp",
+      "internal_table_id": "table-tab-extinction_comp",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2412.12727/catalog_tables/table-tab-extinction_comp.ecsv",
+      "caption": "{\\bf Comparison of the impact of different extinction values.} For all three inspected extinction values, the stellar radius and temperature of D9 are comparable inside the uncertainties calculated by the radiative transfer model.",
+      "label": "tab:extinction_comp",
+      "row_count": 3,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "A V",
+          "Radius in [R ⊙ ]",
+          "Temperature in log(T[K])",
+          "M Disk in [M ⊙ ]",
+          "Envelope size in [AU]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "A V",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Radius in [R ⊙ ]",
+          "unit_text": "Radius in [R ⊙ ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Temperature in log(T[K])",
+          "unit_text": "Temperature in log(T[K])",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "M Disk in [M ⊙ ]",
+          "unit_text": "M Disk in [M ⊙ ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Envelope size in [AU]",
+          "unit_text": "Envelope size in [AU]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpabp_f87b/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.12727/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpabp_f87b/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.12727/catalog_sources/table-tab-extinction_comp/wrapped.tex",
+            "html": "literature/2412.12727/catalog_sources/table-tab-extinction_comp/latexml.html",
+            "stdout": "literature/2412.12727/catalog_sources/table-tab-extinction_comp/latexml.stdout.txt",
+            "stderr": "literature/2412.12727/catalog_sources/table-tab-extinction_comp/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b505ca25b92ed2eac26da6ab2d9b810b79233f2ed993126fee3534ef2022ae82"
+    },
+    {
+      "id": "table-tab-binary_overview-2",
+      "internal_table_id": "table-tab-binary_overview-2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2412.12727/catalog_tables/table-tab-binary_overview-2.ecsv",
+      "caption": "{\\bf Binaries of the Galactic center.} In this list, D9 is the only S~cluster member.",
+      "label": "tab:binary_overview",
+      "row_count": 1,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Period [days]",
+          "Reference"
+        ],
+        [
+          "S2-36",
+          "39.42",
+          "[ Gautam2019 ]"
+        ],
+        [
+          "S4-258 (E60)",
+          "2.30",
+          "[ Pfuhl2014 ]"
+        ],
+        [
+          "S4-308",
+          "1.33",
+          "[ Gautam2024 ]"
+        ],
+        [
+          "IRS 16SW",
+          "19.45",
+          "[ Ott1999 ]"
+        ],
+        [
+          "IRS 16NE",
+          "224.0",
+          "[ Pfuhl2014 ]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID | S2-36 | S4-258 (E60) | S4-308 | IRS 16SW | IRS 16NE",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Period [days] | 39.42 | 2.30 | 1.33 | 19.45 | 224.0",
+          "unit_text": "Period [days]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Reference | [ Gautam2019 ] | [ Pfuhl2014 ] | [ Gautam2024 ] | [ Ott1999 ] | [ Pfuhl2014 ]",
+          "unit_text": "[ Gautam2019 ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgxr742na/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.12727/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgxr742na/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.12727/catalog_sources/table-tab-binary_overview-2/wrapped.tex",
+            "html": "literature/2412.12727/catalog_sources/table-tab-binary_overview-2/latexml.html",
+            "stdout": "literature/2412.12727/catalog_sources/table-tab-binary_overview-2/latexml.stdout.txt",
+            "stderr": "literature/2412.12727/catalog_sources/table-tab-binary_overview-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "62dd74157d77887d5f88c344b39a41088a8c65ecc184d52469b3a86a236fb714"
+    },
+    {
+      "id": "table-tab-rv_values_1",
+      "internal_table_id": "table-tab-rv_values_1",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2412.12727/catalog_tables/table-tab-rv_values_1.ecsv",
+      "caption": "{\\bf Radial velocities measured from the SINFONI observations carried out between 2005-2012.} We list the epoch, the wavelength, the corresponding Full-Width-Half-Maximum, the LOS velocity, and the related uncertainty. Furthermore, we indicate the normalized RV v$_{\\rm norm}$ and the final velocity v$_{\\rm mod}$ where the Keplerian model for the secondary from Exo-Stricker is included. All velocities, except v$_{\\rm mod}$, are estimated with respect to the Br$\\gamma$ rest wavelength at $2.1661\\,\\mathrm{\\mu m}$.",
+      "label": "tab:rv_values_1",
+      "row_count": 30,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Epoch",
+          "Wavelength [ \\mu m ]",
+          "FWHM [ \\mu m ]",
+          "RV [km/s]",
+          "\\Delta RV [km/s]",
+          "v norm [km/s]",
+          "v mod [km/s]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Epoch",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Wavelength [ \\mu m ]",
+          "unit_text": "Wavelength [ \\mu m ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "FWHM [ \\mu m ]",
+          "unit_text": "FWHM [ \\mu m ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RV [km/s]",
+          "unit_text": "RV [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\Delta RV [km/s]",
+          "unit_text": "\\Delta RV [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v norm [km/s]",
+          "unit_text": "v norm [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v mod [km/s]",
+          "unit_text": "v mod [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpitx9i5lr/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.12727/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpitx9i5lr/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.12727/catalog_sources/table-tab-rv_values_1/wrapped.tex",
+            "html": "literature/2412.12727/catalog_sources/table-tab-rv_values_1/latexml.html",
+            "stdout": "literature/2412.12727/catalog_sources/table-tab-rv_values_1/latexml.stdout.txt",
+            "stderr": "literature/2412.12727/catalog_sources/table-tab-rv_values_1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "710d8bcdd68eb3ec9136e84bdb50dd7db1419c6a9ea8467fe03a702254bd9d84"
+    },
+    {
+      "id": "table-tab-rv_values_2",
+      "internal_table_id": "table-tab-rv_values_2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2412.12727/catalog_tables/table-tab-rv_values_2.ecsv",
+      "caption": "{\\bf Radial velocities measured from the SINFONI observations carried out between 2013-2014.} Like Table \\ref{tab:rv_values_1}, we list v$_{\\rm mod}$ which is the final output velocity from the RV fitter Exo-Stricker.",
+      "label": "tab:rv_values_2",
+      "row_count": 27,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Epoch",
+          "Wavelength [ \\mu m ]",
+          "FWHM [ \\mu m ]",
+          "RV [km/s]",
+          "\\Delta RV [km/s]",
+          "v norm [km/s]",
+          "v mod [km/s]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Epoch",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Wavelength [ \\mu m ]",
+          "unit_text": "Wavelength [ \\mu m ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "FWHM [ \\mu m ]",
+          "unit_text": "FWHM [ \\mu m ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RV [km/s]",
+          "unit_text": "RV [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\Delta RV [km/s]",
+          "unit_text": "\\Delta RV [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v norm [km/s]",
+          "unit_text": "v norm [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v mod [km/s]",
+          "unit_text": "v mod [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5gtzkt32/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.12727/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5gtzkt32/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.12727/catalog_sources/table-tab-rv_values_2/wrapped.tex",
+            "html": "literature/2412.12727/catalog_sources/table-tab-rv_values_2/latexml.html",
+            "stdout": "literature/2412.12727/catalog_sources/table-tab-rv_values_2/latexml.stdout.txt",
+            "stderr": "literature/2412.12727/catalog_sources/table-tab-rv_values_2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e5bbebf27dba130817802eb4a80476bfad3e2e92b8fcfa2abe2ba5d27a851193"
+    },
+    {
+      "id": "table-tab-rv_values_3",
+      "internal_table_id": "table-tab-rv_values_3",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2412.12727/catalog_tables/table-tab-rv_values_3.ecsv",
+      "caption": "{\\bf Radial velocities measured from the SINFONI and ERIS observations carried out between 2015-2022.} Like Table \\ref{tab:rv_values_1} and Table \\ref{tab:rv_values_2}, we indicate all relevant observables that are used to derive the best-fit RV model displayed in the periodic pattern of D9. Here, v$_{\\rm mod}$ indicates the final RV velocity. The data points from 2022 were observed with ERIS.",
+      "label": "tab:rv_values_3",
+      "row_count": 26,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Epoch",
+          "Wavelength [ \\mu m ]",
+          "FWHM [ \\mu m ]",
+          "RV [km/s]",
+          "\\Delta RV [km/s]",
+          "v norm [km/s]",
+          "v mod [km/s]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Epoch",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Wavelength [ \\mu m ]",
+          "unit_text": "Wavelength [ \\mu m ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "FWHM [ \\mu m ]",
+          "unit_text": "FWHM [ \\mu m ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RV [km/s]",
+          "unit_text": "RV [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\Delta RV [km/s]",
+          "unit_text": "\\Delta RV [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v norm [km/s]",
+          "unit_text": "v norm [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "v mod [km/s]",
+          "unit_text": "v mod [km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxz00jlu7/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.12727/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxz00jlu7/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.12727/catalog_sources/table-tab-rv_values_3/wrapped.tex",
+            "html": "literature/2412.12727/catalog_sources/table-tab-rv_values_3/latexml.html",
+            "stdout": "literature/2412.12727/catalog_sources/table-tab-rv_values_3/latexml.stdout.txt",
+            "stderr": "literature/2412.12727/catalog_sources/table-tab-rv_values_3/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3a395b05d9188b1516669b62d2264f5f2159abd53ecd7d5af19be7b639cf1a8d"
+    },
+    {
+      "id": "table-tab-data_sinfo1",
+      "internal_table_id": "table-tab-data_sinfo1",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2412.12727/catalog_tables/table-tab-data_sinfo1.ecsv",
+      "caption": "{\\bf Analyzed SINFONI data of 2005 to 2012.}",
+      "label": "tab:data_sinfo1",
+      "row_count": 30,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Epoch",
+          "Observation ID",
+          "Data quality",
+          "",
+          "",
+          "Exp. Time [s]",
+          "SNR [a.u.]",
+          "",
+          ""
+        ],
+        [
+          "\\hhline — — ——— ———",
+          "",
+          "Total",
+          "Medium",
+          "Good",
+          "",
+          "Noise",
+          "Peak",
+          "Ratio"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Epoch | \\hhline — — ——— ———",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Observation ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Data quality | Total",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Medium",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Good",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Exp. Time [s]",
+          "unit_text": "Exp. Time [s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "SNR [a.u.] | Noise",
+          "unit_text": "SNR [a.u.]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Peak",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Ratio",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp027vl_68/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.12727/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp027vl_68/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.12727/catalog_sources/table-tab-data_sinfo1/wrapped.tex",
+            "html": "literature/2412.12727/catalog_sources/table-tab-data_sinfo1/latexml.html",
+            "stdout": "literature/2412.12727/catalog_sources/table-tab-data_sinfo1/latexml.stdout.txt",
+            "stderr": "literature/2412.12727/catalog_sources/table-tab-data_sinfo1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "90a7b6e69f43520b3c06d160cc23cb1a066f61878c37ef5254ffa2aef31a3192"
+    },
+    {
+      "id": "table-tab-data_sinfo2",
+      "internal_table_id": "table-tab-data_sinfo2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2412.12727/catalog_tables/table-tab-data_sinfo2.ecsv",
+      "caption": "{\\bf Analyzed SINFONI data of 2013 and 2014.}",
+      "label": "tab:data_sinfo2",
+      "row_count": 27,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Epoch",
+          "Observation ID",
+          "Data quality",
+          "",
+          "",
+          "Exp. Time [s]",
+          "SNR [a.u.]",
+          "",
+          ""
+        ],
+        [
+          "\\hhline — — ——— ———",
+          "",
+          "Total",
+          "Medium",
+          "Good",
+          "",
+          "Noise",
+          "Peak",
+          "Ratio"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Epoch | \\hhline — — ——— ———",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Observation ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Data quality | Total",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Medium",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Good",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Exp. Time [s]",
+          "unit_text": "Exp. Time [s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "SNR [a.u.] | Noise",
+          "unit_text": "SNR [a.u.]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Peak",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Ratio",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppco688oa/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.12727/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppco688oa/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.12727/catalog_sources/table-tab-data_sinfo2/wrapped.tex",
+            "html": "literature/2412.12727/catalog_sources/table-tab-data_sinfo2/latexml.html",
+            "stdout": "literature/2412.12727/catalog_sources/table-tab-data_sinfo2/latexml.stdout.txt",
+            "stderr": "literature/2412.12727/catalog_sources/table-tab-data_sinfo2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "016bb6303d0729f74aca7363740030887e53dbbb3e8ecc59d01deb1384fb5e08"
+    },
+    {
+      "id": "table-tab-data_sinfo4",
+      "internal_table_id": "table-tab-data_sinfo4",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2412.12727/catalog_tables/table-tab-data_sinfo4.ecsv",
+      "caption": "{\\bf Analyzed SINFONI and ERIS data of 2015 to 2022.} The two observations in 2022 were carried out with ERIS.",
+      "label": "tab:data_sinfo4",
+      "row_count": 26,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Epoch",
+          "Observation ID",
+          "Data quality",
+          "",
+          "",
+          "Exp. Time [s]",
+          "SNR [a.u.]",
+          "",
+          ""
+        ],
+        [
+          "\\hhline — — ——— ———",
+          "",
+          "Total",
+          "Medium",
+          "Good",
+          "",
+          "Noise",
+          "Peak",
+          "Ratio"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Epoch | \\hhline — — ——— ———",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Observation ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Data quality | Total",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Medium",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Good",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Exp. Time [s]",
+          "unit_text": "Exp. Time [s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "SNR [a.u.] | Noise",
+          "unit_text": "SNR [a.u.]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Peak",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Ratio",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_35c5872/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2412.12727/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_35c5872/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2412.12727/catalog_sources/table-tab-data_sinfo4/wrapped.tex",
+            "html": "literature/2412.12727/catalog_sources/table-tab-data_sinfo4/latexml.html",
+            "stdout": "literature/2412.12727/catalog_sources/table-tab-data_sinfo4/latexml.stdout.txt",
+            "stderr": "literature/2412.12727/catalog_sources/table-tab-data_sinfo4/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "60554bb3ed79f2e831d104cccd92d1108e959d2447ea55ae25ca7b6529ace507"
+    }
+  ]
+}

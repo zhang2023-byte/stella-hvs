@@ -1,0 +1,216 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1806.08630",
+    "title": "A quantitative spectral analysis of 14 hypervelocity stars from the MMT survey",
+    "month": "2018-06",
+    "source_note_json": "notes/2018/2018-06/2018-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1806.08630",
+      "pdf": "https://arxiv.org/pdf/1806.08630"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1806.08630",
+    "audit_path": "literature/1806.08630/audit.json",
+    "source_dir": "literature/1806.08630/arxiv_source",
+    "tex_root": "literature/1806.08630/arxiv_source/paper.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T08:03:34",
+    "reviewer": "agent",
+    "summary": "Paper reanalyzes low-resolution optical MMT spectra (3600–4500 Å) of 14 hypervelocity stars from the MMT HVS survey (Brown et al. 2014) using improved Atlas12/Detail/Surface model atmospheres with level dissolution and non-LTE iterations. Simultaneous spectral fitting yields effective temperatures (Teff), surface gravities (log g), heliocentric radial velocities (v_rad), and projected rotational velocities (v sin i). Stellar masses (M), ages (τ), radii (R), luminosities (log L/L⊙), and Ω/Ω_crit ratios are derived by interpolation of rotating Geneva evolutionary tracks (Georgy et al. 2013). Spectroscopic distances (d) come from SED fitting to SDSS DR14, UKIDSS DR9, and ALLWISE photometry, with reddening E(B−V) from the Fitzpatrick (1999) extinction law. One internal table: Table table:parameters — the master data table of atmospheric and stellar parameters for all 14 HVSs. No machine-readable data tables are provided in the arXiv source. The observational data are drawn from public surveys (MMT spectra, SDSS DR14, UKIDSS DR9, ALLWISE). No CDS/VizieR data links are mentioned in the paper text."
+  },
+  "internal_tables": [
+    {
+      "id": "table-table:parameters",
+      "kind": "latex_table",
+      "asset_type": "catalog_table",
+      "role_in_paper": "Master data table presenting the full set of derived atmospheric and stellar parameters for the 14 hypervelocity star candidates from the MMT survey. This is the core output catalog of the paper, containing effective temperatures, surface gravities, radial velocities, projected rotational velocities, stellar masses, ages, luminosities, radii, critical rotation ratios, color excesses, and spectroscopic distances with their uncertainties.",
+      "source_refs": [
+        {
+          "path": "literature/1806.08630/arxiv_source/paper.tex",
+          "start_line": 130,
+          "end_line": 164,
+          "caption": "Atmospheric and stellar parameters of the program stars.",
+          "label": "table:parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "Star identifier: HVS designation from Brown et al. (2014) with SDSS J2000.0 coordinates in parentheses. HVS-prefix stars are unbound candidates; B-prefix stars are bound candidates.",
+          "unit_text": "",
+          "source_of_definition": "table header / Brown et al. 2014",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_eff",
+          "meaning": "Effective temperature derived from simultaneous spectral fit to MMT spectrum (3600–4500 Å) using ADS non-LTE model atmospheres. For B711 an Atlas12/Synthe LTE analysis was used.",
+          "unit_text": "K",
+          "source_of_definition": "table header / spectral analysis",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_eff_unc",
+          "meaning": "Uncertainty in effective temperature: quadratic sum of statistical (99%-confidence limits from χ²) and systematic uncertainties (additional variations of 2% in Teff).",
+          "unit_text": "K",
+          "source_of_definition": "table footnotes / Irrgang et al. 2014 method",
+          "confidence": 1.0
+        },
+        {
+          "name": "log_g",
+          "meaning": "Surface gravity (logarithmic, cgs units) from simultaneous spectral fit to MMT Balmer line profiles.",
+          "unit_text": "dex",
+          "source_of_definition": "table header / spectral analysis",
+          "confidence": 1.0
+        },
+        {
+          "name": "log_g_unc",
+          "meaning": "Uncertainty in surface gravity: quadratic sum of statistical (99%-confidence limits) and systematic uncertainties (additional variations of 0.1 dex in log g).",
+          "unit_text": "dex",
+          "source_of_definition": "table footnotes / Irrgang et al. 2014 method",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_rad",
+          "meaning": "Heliocentric radial velocity from simultaneous spectral fit to MMT spectrum.",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header / spectral analysis",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_rad_unc",
+          "meaning": "Uncertainty in radial velocity (99%-confidence limits from χ² fitting).",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header / spectral analysis",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_sin_i",
+          "meaning": "Projected rotational velocity from simultaneous spectral fit via line broadening. High values (>100 km/s) indicate main sequence nature rather than blue horizontal branch.",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header / spectral line broadening",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_sin_i_unc",
+          "meaning": "Uncertainty in projected rotational velocity (99%-confidence limits). Upper/lower bounds may be asymmetric.",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header / spectral analysis",
+          "confidence": 1.0
+        },
+        {
+          "name": "M",
+          "meaning": "Stellar mass derived by interpolation of rotating Geneva evolutionary tracks (Georgy et al. 2013) in the (Teff, log g) diagram, using v sin(i) × (4/π) as proxy for equatorial rotation.",
+          "unit_text": "M⊙",
+          "source_of_definition": "table header / Georgy et al. 2013 evolutionary models",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_unc",
+          "meaning": "Uncertainty in stellar mass propagated from Teff and log g uncertainties (99%-confidence limits).",
+          "unit_text": "M⊙",
+          "source_of_definition": "table footnotes / error propagation",
+          "confidence": 1.0
+        },
+        {
+          "name": "tau",
+          "meaning": "Stellar age from interpolation of rotating Geneva evolutionary tracks.",
+          "unit_text": "Myr",
+          "source_of_definition": "table header / Georgy et al. 2013 evolutionary models",
+          "confidence": 1.0
+        },
+        {
+          "name": "tau_unc",
+          "meaning": "Uncertainty in stellar age propagated from Teff and log g (99%-confidence limits).",
+          "unit_text": "Myr",
+          "source_of_definition": "table footnotes / error propagation",
+          "confidence": 1.0
+        },
+        {
+          "name": "log_L_Lsun",
+          "meaning": "Logarithmic stellar luminosity relative to solar, from interpolation of evolutionary tracks.",
+          "unit_text": "dex",
+          "source_of_definition": "table header / Georgy et al. 2013 evolutionary models",
+          "confidence": 1.0
+        },
+        {
+          "name": "log_L_Lsun_unc",
+          "meaning": "Uncertainty in logarithmic luminosity (99%-confidence limits).",
+          "unit_text": "dex",
+          "source_of_definition": "table footnotes / error propagation",
+          "confidence": 1.0
+        },
+        {
+          "name": "R",
+          "meaning": "Stellar radius from interpolation of evolutionary tracks.",
+          "unit_text": "R⊙",
+          "source_of_definition": "table header / Georgy et al. 2013 evolutionary models",
+          "confidence": 1.0
+        },
+        {
+          "name": "R_unc",
+          "meaning": "Uncertainty in stellar radius (99%-confidence limits).",
+          "unit_text": "R⊙",
+          "source_of_definition": "table footnotes / error propagation",
+          "confidence": 1.0
+        },
+        {
+          "name": "Omega_Omega_crit",
+          "meaning": "Ratio of actual angular velocity to critical angular velocity (Ω/Ω_crit), from interpolation of rotating evolutionary tracks. Values near 1 indicate rotation close to break-up speed.",
+          "unit_text": "",
+          "source_of_definition": "table header / Georgy et al. 2013 rotating models",
+          "confidence": 1.0
+        },
+        {
+          "name": "Omega_Omega_crit_unc",
+          "meaning": "Uncertainty in Ω/Ω_crit (99%-confidence limits).",
+          "unit_text": "",
+          "source_of_definition": "table footnotes / error propagation",
+          "confidence": 1.0
+        },
+        {
+          "name": "E_BminusV",
+          "meaning": "Color excess E(B−V) from SED fitting of synthetic Atlas12 SED to SDSS+UKIDSS+ALLWISE photometry using Fitzpatrick (1999) extinction law with R_V = 3.1.",
+          "unit_text": "mag",
+          "source_of_definition": "table header / SED fitting",
+          "confidence": 1.0
+        },
+        {
+          "name": "E_BminusV_unc",
+          "meaning": "Uncertainty in E(B−V) (99%-confidence limits).",
+          "unit_text": "mag",
+          "source_of_definition": "table footnotes / SED fitting",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "Spectroscopic distance derived from stellar radius (from evolutionary tracks) and angular diameter (from SED fitting).",
+          "unit_text": "kpc",
+          "source_of_definition": "table header / SED fitting",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_unc_99pct",
+          "meaning": "Distance uncertainty at 99%-confidence level. Dominated by systematic uncertainties in log g.",
+          "unit_text": "kpc",
+          "source_of_definition": "table footnotes",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_unc_1sigma",
+          "meaning": "Distance uncertainty at 1σ (68%-confidence) level, obtained by dividing 99%-confidence limits by a factor of 2.576.",
+          "unit_text": "kpc",
+          "source_of_definition": "table footnotes",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Atmospheric and stellar parameters of the program stars.",
+      "comments": "14 program stars: HVS 1, 4, 5, 6, 7, 8, 9, 10, 12, 13 (unbound candidates) and B434, B485, B711, B733 (bound candidates). B711 reclassified as A-type star (analyzed with LTE Synthe). All uncertainties are formally 99%-confidence limits except d_unc_1sigma. Stars HVS 10 and HVS 12 have v sin(i) consistent with zero. Three stars (HVS 14–16) from the original MMT sample are not included."
+    }
+  ],
+  "external_resources": []
+}

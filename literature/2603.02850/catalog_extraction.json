@@ -1,0 +1,292 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:21",
+  "paper": {
+    "arxiv_id": "2603.02850",
+    "title": "Gaia DR3 high radial velocity stars: Genuine fast-moving objects or outliers?",
+    "month": "2026-03"
+  },
+  "review": {
+    "path": "literature/2603.02850/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124021",
+    "started_at": "2026-05-17T12:40:21",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2603.02850",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-Table-Surveys",
+      "internal_table_id": "table-Table-Surveys",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+        "start_line": 163,
+        "end_line": 183,
+        "caption": "Comparison of the SOPHIE and UVES radial velocities to APOGEE~DR17, LAMOST~DR7, and \\citet{Matsuno2022} measurements.",
+        "label": "Table:Surveys"
+      },
+      "source_path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+      "excerpt_path": "literature/2603.02850/catalog_sources/table-Table-Surveys/excerpt.tex",
+      "sha256": "c673bc0338e00de3fcbdcd5ab4330f9abd65d1a6a8423eb3097f7dd5e5be651c",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-Table-SB2",
+      "internal_table_id": "table-Table-SB2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+        "start_line": 205,
+        "end_line": 221,
+        "caption": "Velocities of the two components of the SB2 star Gaia\\_432.",
+        "label": "Table:SB2"
+      },
+      "source_path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+      "excerpt_path": "literature/2603.02850/catalog_sources/table-Table-SB2/excerpt.tex",
+      "sha256": "45ce7db887f5d8da0643efb5294ff59c08fa9819fe9f76fd9e2fe014658d29c0",
+      "line_count": 17,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-Table-Surveys",
+      "internal_table_id": "table-Table-Surveys",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2603.02850/catalog_tables/table-Table-Surveys.ecsv",
+      "caption": "Comparison of the SOPHIE and UVES radial velocities to APOGEE~DR17, LAMOST~DR7, and \\citet{Matsuno2022} measurements.",
+      "label": "Table:Surveys",
+      "row_count": 9,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsebg3drv/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2603.02850/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsebg3drv/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2603.02850/catalog_sources/table-Table-Surveys/wrapped.tex",
+            "html": "literature/2603.02850/catalog_sources/table-Table-Surveys/latexml.html",
+            "stdout": "literature/2603.02850/catalog_sources/table-Table-Surveys/latexml.stdout.txt",
+            "stderr": "literature/2603.02850/catalog_sources/table-Table-Surveys/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c673bc0338e00de3fcbdcd5ab4330f9abd65d1a6a8423eb3097f7dd5e5be651c"
+    },
+    {
+      "id": "table-Table-SB2",
+      "internal_table_id": "table-Table-SB2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2603.02850/catalog_tables/table-Table-SB2.ecsv",
+      "caption": "Velocities of the two components of the SB2 star Gaia\\_432.",
+      "label": "Table:SB2",
+      "row_count": 4,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\gaia DR3 source_id",
+          "MJD",
+          "V_R comp1",
+          "\\sigma_VR comp1",
+          "V_R comp2",
+          "\\sigma_VR comp2"
+        ],
+        [
+          "",
+          "[d]",
+          "[km s^-1]",
+          "[km s^-1]",
+          "[km s^-1]",
+          "[km s^-1]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\gaia DR3 source_id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "MJD | [d]",
+          "unit_text": "[d]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "V_R comp1 | [km s^-1]",
+          "unit_text": "[km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\sigma_VR comp1 | [km s^-1]",
+          "unit_text": "[km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V_R comp2 | [km s^-1]",
+          "unit_text": "[km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\sigma_VR comp2 | [km s^-1]",
+          "unit_text": "[km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgy8lo21p/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2603.02850/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgy8lo21p/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2603.02850/catalog_sources/table-Table-SB2/wrapped.tex",
+            "html": "literature/2603.02850/catalog_sources/table-Table-SB2/latexml.html",
+            "stdout": "literature/2603.02850/catalog_sources/table-Table-SB2/latexml.stdout.txt",
+            "stderr": "literature/2603.02850/catalog_sources/table-Table-SB2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "45ce7db887f5d8da0643efb5294ff59c08fa9819fe9f76fd9e2fe014658d29c0"
+    }
+  ]
+}

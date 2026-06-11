@@ -1,0 +1,341 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2001.00899",
+    "title": "The Orion Protostellar Explosion and Runaway Stars Revisited: Stellar Masses, Disk Retention, and an Outflow from BN",
+    "month": "2020-01",
+    "source_note_json": "notes/2020/2020-01/2020-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2001.00899",
+      "pdf": "https://arxiv.org/pdf/2001.00899"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2001.00899",
+    "audit_path": "literature/2001.00899/audit.json",
+    "source_dir": "literature/2001.00899/arxiv_source",
+    "tex_root": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:15:00",
+    "reviewer": "agent",
+    "summary": "Paper presents proper motion analysis of three runaway stars (Src I, BN, Src x) ejected from OMC1, plus radio continuum features near BN. Contains 5 LaTeX tables: an observation log (Table 1), a runaway star astrometric catalog (Table 2), a summary parameter table for ejected stars (Table 3), BN outflow feature proper motions (Table 4), and BN radio jet parameters (Table 5). No explicit external data resource URLs found in the paper source; ALMA/Gemini/SIMBAD are acknowledged as facilities but no concrete data links are provided."
+  },
+  "internal_tables": [
+    {
+      "id": "table-table1",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Summary of multi-epoch near-IR imaging data used to measure proper motions of runaway stars in OMC1. Lists telescope, observation date, MJD, wavelength, and reference for 5 epochs spanning 1992-2013.",
+      "source_refs": [
+        {
+          "path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+          "start_line": 1101,
+          "end_line": 1122,
+          "caption": "Summary of Near-IR Data Used in this Study",
+          "label": "table1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Telescope",
+          "meaning": "Name of telescope or observatory used for observation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Date",
+          "meaning": "Observation date or date range",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "MJD",
+          "meaning": "Modified Julian Date of observation (midpoint for date ranges)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Wavelength",
+          "meaning": "Observing wavelength or filter band (near-IR: 1.644, 2.12, 11.7 μm)",
+          "unit_text": "μm",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Reference",
+          "meaning": "Bibliographic reference for the observation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 lists the telescopes, dates, MJD, wavelengths, and references for 5 epochs of near-IR observations used for proper motion analysis. Described in Section 2 (Observations and Analysis).",
+      "comments": "Single-page observation log table; 5 rows of data. Observations from AAT, Subaru, APO 3.5m, Gemini-S (2 epochs)."
+    },
+    {
+      "id": "table-table2",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Primary data table: positions and proper motions of runaway stars and radio sources in OMC1, assembled from literature and new measurements. Used to compute center-of-mass motion and constrain stellar masses.",
+      "source_refs": [
+        {
+          "path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+          "start_line": 1128,
+          "end_line": 1188,
+          "caption": "Positions and proper motions of the runaway stars in OMC1",
+          "label": "table2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Source",
+          "meaning": "Object designation: BN, Src I, Src x, Src n, or radio feature (SW1-SW4, E1, E2)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A. (J2000)",
+          "meaning": "Right Ascension at epoch J2000",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec. (J2000)",
+          "meaning": "Declination at epoch J2000",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ(α) cos(δ)",
+          "meaning": "Proper motion in Right Ascension (cosine Declination corrected), in the Orion reference frame",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ(δ)",
+          "meaning": "Proper motion in Declination, in the Orion reference frame",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V",
+          "meaning": "Total proper motion speed on the plane of the sky, assuming D=400 pc",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P.A.",
+          "meaning": "Position angle of the proper motion vector (east of north)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Comments",
+          "meaning": "Reference for the measurement or additional notes",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 2 compiles proper motions for BN, Src I, Src x, Src n, and radio features SW1-SW4, E1, E2 from Rodriguez2017, Luhman2017, Goddi2011, Kim2018, Dzib2017, and new measurements from this work. Described in Section 3 (Results).",
+      "comments": "Multi-row object catalog with measurements from multiple references per source. Includes 18 data rows across 8 sources/features."
+    },
+    {
+      "id": "table-table3",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Summary of best-estimate kinematic parameters for the three ejected stars (Src I, BN, Src x) in the OMC1 reference frame, combining proper motions, adopted masses, radial velocities, and derived total velocities and kinetic energies.",
+      "source_refs": [
+        {
+          "path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+          "start_line": 1193,
+          "end_line": 1213,
+          "caption": "Parameters for the Ejected Stars in the OMC1 Reference Frame",
+          "label": "table3"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Quantity",
+          "meaning": "Physical parameter: proper motion speed (V_PM), mass (M), radial velocity (V_r), total velocity (V_tot), kinetic energy (K.E.)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Src I",
+          "meaning": "Value for radio Source I",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "BN",
+          "meaning": "Value for the Becklin-Neugebauer object",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Src x",
+          "meaning": "Value for infrared source x",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Unit",
+          "meaning": "Physical unit of the quantity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 3 lists adopted best values for V_PM, mass, V_r, V_tot, and kinetic energy for the three ejected stars. Discussed in Section 3 (Results) and derived in subsections 3.1 and 3.2.",
+      "comments": "Summary parameter table with 5 rows; combines literature values with derived quantities."
+    },
+    {
+      "id": "table-table4",
+      "kind": "latex_table",
+      "asset_type": "followup_measurements",
+      "role_in_paper": "Proper motions of 6 GHz radio continuum features near BN, measured relative to BN's motion. Used to investigate whether these features trace a slow bipolar outflow from BN.",
+      "source_refs": [
+        {
+          "path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+          "start_line": 1219,
+          "end_line": 1250,
+          "caption": "Proper Motions of suspected BN Outflow Features Relative to BN.",
+          "label": "table4"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "Radio feature designation: SW1, SW2, SW3, E1, E2",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_α cos(δ)",
+          "meaning": "Proper motion in Right Ascension relative to BN",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_δ",
+          "meaning": "Proper motion in Declination relative to BN",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_t",
+          "meaning": "Tangential velocity of the feature relative to BN",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P.A.",
+          "meaning": "Position angle of the relative proper motion vector",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Comments",
+          "meaning": "Notes on each feature (e.g., proximity to BN, new component, brightening, photometric variations)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 4 gives proper motions of 5 radio features (SW1-SW3, E1, E2) relative to BN, from Vargas-González et al. (in prep). Discussed in Section 3.3 and 3.4.",
+      "comments": "Data from new 2012-2016 VLA comparison by Vargas-González et al. (in prep). 5 data rows."
+    },
+    {
+      "id": "table-table5",
+      "kind": "latex_table",
+      "asset_type": "measurement_table",
+      "role_in_paper": "Radio continuum parameters of BN jet features: flux densities, sizes, distances from BN, and derived electron densities. Used to characterize the putative slow bipolar outflow from BN.",
+      "source_refs": [
+        {
+          "path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+          "start_line": 1254,
+          "end_line": 1288,
+          "caption": "Parameters of the BN Radio Jet",
+          "label": "table5"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "Radio feature designation: SW1-SW4, BN, E1, E2",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Peak S_ν",
+          "meaning": "Peak flux density at 6 GHz",
+          "unit_text": "μJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Total S_ν",
+          "meaning": "Area-integrated total flux density at 6 GHz",
+          "unit_text": "μJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Size",
+          "meaning": "Angular size of the emission region (major × minor axes or diameter)",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D_BN",
+          "meaning": "Projected angular distance from BN",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "n_e",
+          "meaning": "Mean electron density derived from optically thin free-free emission, assuming line-of-sight depth equals minor axis",
+          "unit_text": "10⁴ cm⁻³",
+          "source_of_definition": "table header; derived in Section 3.5",
+          "confidence": 1.0
+        },
+        {
+          "name": "Comments",
+          "meaning": "Cross-reference designations from Forbrich2016 and Dzib2017",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 5 reports peak and integrated 6 GHz flux densities, sizes, distance from BN, and derived n_e for 7 radio features on the 2012 epoch JVLA image. Electron density derivation described in Section 3.5.",
+      "comments": "7 data rows. Electron densities derived assuming optically thin bremsstrahlung with spectral index ~0."
+    }
+  ],
+  "external_resources": []
+}

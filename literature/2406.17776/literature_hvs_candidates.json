@@ -1,0 +1,70 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T17:56:46",
+  "paper": {
+    "arxiv_id": "2406.17776",
+    "bibcode": "2024AN....34540047M",
+    "title": "Spectroscopic and Dynamic Orbital Analyses of Metal-Poor and High Proper Motion Stars: I. HD\\,8724 and HD\\,195633",
+    "month": "2024-06",
+    "source_note_json": "notes/2024/2024-06/2024-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2406.17776",
+      "pdf": "https://arxiv.org/pdf/2406.17776"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2406.17776",
+    "audit_path": "literature/2406.17776/audit.json",
+    "catalog_review_path": "literature/2406.17776/catalog_review.json",
+    "catalog_extraction_path": "literature/2406.17776/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2406.17776/catalog_tables/table-table-1.ecsv",
+      "literature/2406.17776/catalog_tables/table-modelparametreler.ecsv",
+      "literature/2406.17776/catalog_tables/table-table-lit.ecsv",
+      "literature/2406.17776/catalog_tables/table-table-abund.ecsv",
+      "literature/2406.17776/catalog_tables/table-table-abund_err.ecsv",
+      "literature/2406.17776/catalog_tables/table-table-6.ecsv",
+      "literature/2406.17776/catalog_tables/table-table-7.ecsv",
+      "literature/2406.17776/catalog_tables/table-tab-final.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T17:56:46",
+    "extractor": "agent",
+    "summary": "This paper presents a detailed spectroscopic, kinematic, and orbital analysis of two metal-poor high-proper-motion stars (HD 8724 and HD 195633). The paper investigates 'escape scenarios' in which these stars may have broken away from globular clusters (GCs), but it never presents either star as possibly unbound from the Milky Way gravitational potential. HD 8724 is explicitly classified as a bound halo object with a highly flattened orbit (e = 0.93), while HD 195633 is classified as a bound Galactic-disc object (e = 0.16). The paper does not use terminology such as 'hypervelocity star', 'HVS', 'unbound', or 'escaping the Galaxy', and it does not perform a bound/unbound assessment against the Galactic potential. Consequently, no Galactic-unbound HVS candidates are included."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "program-stars-hd8724-hd195633",
+      "description": "The two program stars HD 8724 and HD 195633, which are the sole objects subjected to spectroscopic, kinematic, and orbital analysis in this paper. They appear in Tables 1, 6, 7, and the final GC-encounter table.",
+      "decision": "excluded",
+      "reason": "The paper treats both stars as bound Galactic objects. HD 8724 is described as a halo object with a highly flattened orbit, and HD 195633 is described as belonging to the Galactic disc. The 'escape scenarios' investigated refer to escape from globular clusters (NGC 5139 / omega Cen for HD 8724 and NGC 6356 for HD 195633), not escape from the Milky Way potential. The paper does not present either star as a hypervelocity star, HVS candidate, or possibly Galactic-unbound object, and it does not calculate Galactic escape velocities or bound/unbound probabilities.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+          "start_line": 37,
+          "end_line": 37,
+          "context": "Abstract describes the investigation as 'escape scenarios of these stars from 170 candidate globular clusters (GCs) in the Galaxy', not escape from the Galaxy itself."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+          "start_line": 366,
+          "end_line": 366,
+          "context": "Orbital analysis explicitly classifies HD 8724 as a halo object with a bound orbit (e=0.93) and HD 195633 as a Galactic-disc object (e=0.16), indicating both remain bound to the Galaxy."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2406.17776/arxiv_source/Marismak_et_al_arxiv.tex",
+          "start_line": 98,
+          "end_line": 98,
+          "context": "Introduction states the analyses are aimed at determining the Galactic origins of the two stars, not at assessing whether they are unbound from the Milky Way."
+        }
+      ]
+    }
+  ]
+}

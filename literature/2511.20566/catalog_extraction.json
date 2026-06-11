@@ -1,0 +1,343 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:05",
+  "paper": {
+    "arxiv_id": "2511.20566",
+    "title": "The origin of B-type runaway stars based on kinematics",
+    "month": "2025-11"
+  },
+  "review": {
+    "path": "literature/2511.20566/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124005",
+    "started_at": "2026-05-17T12:40:05",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2511.20566",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-Tab-1",
+      "internal_table_id": "table-Tab-1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2511.20566/arxiv_source/aa57420-25.tex",
+        "start_line": 331,
+        "end_line": 349,
+        "caption": "\\label{Tab:1}The predicted parameters of B-type runaway stars.",
+        "label": "Tab:1"
+      },
+      "source_path": "literature/2511.20566/arxiv_source/aa57420-25.tex",
+      "excerpt_path": "literature/2511.20566/catalog_sources/table-Tab-1/excerpt.tex",
+      "sha256": "475fc62dc1bd51fa444a497f5b8c37233300a3bde70f6bfcf07aefbb1cc23b97",
+      "line_count": 19,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-Tab-1",
+      "internal_table_id": "table-Tab-1",
+      "status": "success",
+      "ecsv_path": "literature/2511.20566/catalog_tables/table-Tab-1.ecsv",
+      "caption": "\\label{Tab:1}The predicted parameters of B-type runaway stars.",
+      "label": "Tab:1",
+      "row_count": 6,
+      "column_count": 22,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\GG Gaia DR3 ID",
+          "Name",
+          "RA",
+          "DEC",
+          "Para",
+          "\\mu_\\alpha",
+          "\\mu_\\beta",
+          "T_eff",
+          "\\logg",
+          "[M/H]",
+          "v\\sini",
+          "Mass",
+          "Age",
+          "V_Sp",
+          "X",
+          "Y",
+          "Z",
+          "U",
+          "V",
+          "W",
+          "Class",
+          "Flag"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\GG Gaia DR3 ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "RA",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "DEC",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Para",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_\\alpha",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_\\beta",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "T_eff",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\logg",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "[M/H]",
+          "unit_text": "[M/H]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "v\\sini",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "Mass",
+          "unit_text": "Mass",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "Age",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "V_Sp",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "X",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "Y",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "Z",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "U",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "V",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_020",
+          "original_header": "W",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_021",
+          "original_header": "Class",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_022",
+          "original_header": "Flag",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv2_52hzz/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2511.20566/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv2_52hzz/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2511.20566/catalog_sources/table-Tab-1/wrapped.tex",
+            "html": "literature/2511.20566/catalog_sources/table-Tab-1/latexml.html",
+            "stdout": "literature/2511.20566/catalog_sources/table-Tab-1/latexml.stdout.txt",
+            "stderr": "literature/2511.20566/catalog_sources/table-Tab-1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "475fc62dc1bd51fa444a497f5b8c37233300a3bde70f6bfcf07aefbb1cc23b97"
+    }
+  ]
+}

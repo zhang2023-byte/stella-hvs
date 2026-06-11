@@ -1,0 +1,61 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:26:35",
+  "paper": {
+    "arxiv_id": "2603.10607",
+    "bibcode": "2026NatAs.tmp...60H",
+    "title": "Star formation in the circumgalactic high-velocity cloud Complex H",
+    "month": "2026-03",
+    "source_note_json": "notes/2026/2026-03/2026-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2603.10607",
+      "pdf": "https://arxiv.org/pdf/2603.10607"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2603.10607",
+    "audit_path": "literature/2603.10607/audit.json",
+    "catalog_review_path": "literature/2603.10607/catalog_review.json",
+    "catalog_extraction_path": "literature/2603.10607/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T20:26:35",
+    "extractor": "agent",
+    "summary": "The paper reports young open clusters Emei-1 and Emei-2 within HVC Complex H. While the clusters and their massive member stars (E-S1, E-S2) exhibit high radial velocities (v_lsr ~ -180 km/s) and are located at a Galactocentric radius of ~20 kpc, the paper does not present any of these objects as possibly unbound from the Milky Way. The paper explicitly describes the clusters as gravitationally bound systems. The only mentions of hypervelocity stars and escape are general speculative statements that HVCs could produce such stars, not claims about the specific objects studied."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "emei-clusters",
+      "description": "The young binary open clusters Emei-1 and Emei-2 discovered within HVC Complex H, together with their massive B-type member stars E-S1 and E-S2.",
+      "decision": "excluded",
+      "reason": "The paper does not present these objects as possibly unbound from the Galaxy. The clusters are explicitly described as gravitationally bound systems, and orbit integration predicts they will enter high-inclination orbits and cross the Galactic disk in ~30 Myr, not escape the Galaxy. The paper's mentions of hypervelocity stars and escape are general speculative statements about HVCs as a population, not claims about these specific objects.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.10607/arxiv_source/Main_Article_File.tex",
+          "start_line": 120,
+          "end_line": 123,
+          "context": "Paper explicitly states the clusters are gravitationally bound systems"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2603.10607/arxiv_source/Main_Article_File.tex",
+          "start_line": 197,
+          "end_line": 200,
+          "context": "Orbital integration predicts high-inclination disk-crossing orbits in ~30 Myr, not Galactic escape"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2603.10607/arxiv_source/Main_Article_File.tex",
+          "start_line": 82,
+          "end_line": 85,
+          "context": "General speculation that hypervelocity stars may originate in HVCs, not a claim about the specific Emei clusters"
+        }
+      ]
+    }
+  ]
+}

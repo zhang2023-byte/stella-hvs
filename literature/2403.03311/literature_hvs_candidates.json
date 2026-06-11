@@ -1,0 +1,138 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T17:45:22",
+  "paper": {
+    "arxiv_id": "2403.03311",
+    "bibcode": "2024AJ....167..225W",
+    "title": "Verification of Hypervelocity Bulge Red Clump Stars",
+    "month": "2024-03",
+    "source_note_json": "notes/2024/2024-03/2024-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2403.03311",
+      "pdf": "https://arxiv.org/pdf/2403.03311"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2403.03311",
+    "audit_path": "literature/2403.03311/audit.json",
+    "catalog_review_path": "literature/2403.03311/catalog_review.json",
+    "catalog_extraction_path": "literature/2403.03311/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2403.03311/catalog_tables/table-table_34.ecsv",
+      "literature/2403.03311/catalog_tables/table-table_luna.ecsv",
+      "literature/2403.03311/catalog_tables/table-propermotions.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T17:45:22",
+    "extractor": "agent",
+    "summary": "The paper verifies 30 of 34 HVRCS candidates from Luna et al. 2019 and finds none are hypervelocity stars. Only star no. 34 shows high proper motion, but it is identified as a nearby bound star (d ~ 686 pc, v_T ~ 364 km/s). The paper explicitly concludes it does not confirm any candidates as HVSs."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "step_type": "input_catalog",
+      "summary": "Adopt Gaia DR2 identifiers and VVV distances from Luna et al. 2019 for 34 HVRCS candidates. Cross-match to OGLE-IV and Gaia DR3 for verification.",
+      "depends_on": []
+    },
+    {
+      "id": "step-02",
+      "step_type": "cross_match",
+      "summary": "Transform equatorial coordinates to OGLE-IV pixel scale and identify target stars in OGLE-IV catalog. Separation between OGLE-IV and Gaia DR2 is typically below 63 mas.",
+      "depends_on": ["step-01"]
+    },
+    {
+      "id": "step-03",
+      "step_type": "quality_filter",
+      "summary": "Select epochs for astrometric fitting based on visual inspection of time-series plots, excluding outliers caused by bad seeing, nearby companions, or asteroids.",
+      "depends_on": ["step-02"]
+    },
+    {
+      "id": "step-04",
+      "step_type": "astrometric_calibration",
+      "summary": "Transform OGLE-IV pixel coordinates to equatorial coordinates using Gaia DR3 reference stars and 5th-order polynomial transformations corrected for Gaia proper motions.",
+      "depends_on": ["step-02"]
+    },
+    {
+      "id": "step-05",
+      "step_type": "velocity_calculation",
+      "summary": "Fit proper motions and parallaxes from OGLE-IV time-series astrometry using MCMC. Model includes linear proper motion and parallactic acceleration terms.",
+      "depends_on": ["step-03", "step-04"]
+    },
+    {
+      "id": "step-06",
+      "step_type": "distance_estimation",
+      "summary": "For star no. 34, adopt Gaia DR3 parallax with photogeometric prior from Bailer-Jones et al. 2021 to estimate distance.",
+      "depends_on": ["step-01"]
+    },
+    {
+      "id": "step-07",
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Compare measured transverse velocities to Galactic escape velocity. For star no. 34, v_T ~ 364 km/s at ~686 pc reveals it is bound to the Galaxy. For all other candidates, high proper motions claimed by Luna et al. 2019 are not confirmed.",
+      "depends_on": ["step-05", "step-06"]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "luna19-34-candidates",
+      "description": "The 34 HVRCS candidates from Luna et al. 2019 listed in Table 1 (table_34). Thirty were analyzed with OGLE-IV data.",
+      "decision": "excluded",
+      "reason": "The paper explicitly does not confirm any of these candidates as hypervelocity stars. Only one star (no. 34) shows high proper motion, but it is identified as a nearby bound star, not an HVS.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2403.03311/arxiv_source/publikacja.tex",
+          "start_line": 22,
+          "end_line": 26,
+          "context": "Abstract states: We confirmed high proper motion of only one of these stars and find out that it is a nearby one, hence, not hypervelocity. To sum up, we do not confirm the candidate stars as hypervelocity ones."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2403.03311/arxiv_source/publikacja.tex",
+          "start_line": 304,
+          "end_line": 306,
+          "context": "Discussion states: Our verification does not confirm, that the candidates provided by Luna et al. 2019 are HVSs. Only one of these stars has a high PM but it is a nearby object, not a bulge one, hence, not a hypervelocity one."
+        }
+      ]
+    },
+    {
+      "group_id": "luna19-7-final",
+      "description": "The seven final HVRCS candidates from Luna et al. 2019 selected as moving away from the Galactic Center, listed in Table 2 (table_luna). All seven were analyzed.",
+      "decision": "excluded",
+      "reason": "The paper analyzes all seven final candidates and does not confirm any as hypervelocity. The extremely high tangential velocities reported by Luna et al. 2019 (5900-17900 km/s) are not supported by OGLE-IV astrometry.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2403.03311/arxiv_source/publikacja.tex",
+          "start_line": 306,
+          "end_line": 307,
+          "context": "Discussion states: We analyzed 30 out of 34 HVRCSs including all seven stars which Luna et al. 2019 used to estimate the production rate of HVRCSs by the central supermassive black hole. Thus, this rate is not supported by any evidence."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2403.03311/arxiv_source/publikacja.tex",
+          "start_line": 308,
+          "end_line": 311,
+          "context": "Discussion explains that Luna et al. 2019 tangential velocities are extremely large, at least three times larger than the highest 3D velocity of a well-established HVS (1755 km/s)."
+        }
+      ]
+    },
+    {
+      "group_id": "star-34",
+      "description": "Star no. 34, the only object with confirmed high proper motion in the OGLE-IV data.",
+      "decision": "excluded",
+      "reason": "Although star no. 34 has a high proper motion (mu_delta = -111.84 mas/yr), the paper explicitly identifies it as a nearby bound star at ~686 pc with a transverse velocity of ~364 km/s, well below the Galactic escape velocity.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2403.03311/arxiv_source/publikacja.tex",
+          "start_line": 231,
+          "end_line": 236,
+          "context": "Results section: Given all the information gathered, only star no. 34 can be considered a high-PM star... However, this star is not an HVS but a nearby star instead... This parallax combined with the photogeometric prior places the star at a distance of 686 pc. Our measurement of PM and Gaia distance result in transverse velocity of 364 km/s which reveals a star bound to the Galaxy."
+        }
+      ]
+    }
+  ]
+}

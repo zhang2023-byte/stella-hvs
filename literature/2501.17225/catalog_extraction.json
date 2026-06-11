@@ -1,0 +1,1216 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:37",
+  "paper": {
+    "arxiv_id": "2501.17225",
+    "title": "Tidal tails of nearby open clusters I. Mapping with Gaia DR3",
+    "month": "2025-01"
+  },
+  "review": {
+    "path": "literature/2501.17225/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123937",
+    "started_at": "2026-05-17T12:39:37",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2501.17225",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 7,
+      "work_count": 7,
+      "table_count": 7,
+      "success_count": 7,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 7,
+      "file_success_count": 7,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-clone_basic_params",
+      "internal_table_id": "table-clone_basic_params",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+        "start_line": 533,
+        "end_line": 552,
+        "caption": "Basic parameters of Praesepe clones",
+        "label": "clone_basic_params"
+      },
+      "source_path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+      "excerpt_path": "literature/2501.17225/catalog_sources/table-clone_basic_params/excerpt.tex",
+      "sha256": "b4519651c010438e2aeedad54d0c5b28b16a496cea319b1f7e5664cbc6a4bade",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-clone_results",
+      "internal_table_id": "table-clone_results",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+        "start_line": 564,
+        "end_line": 583,
+        "caption": "Recoveries of Praesepe clones",
+        "label": "clone_results"
+      },
+      "source_path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+      "excerpt_path": "literature/2501.17225/catalog_sources/table-clone_results/excerpt.tex",
+      "sha256": "e5ab21bd441ffa11a08f2d5ed20e908237bd54cd154e0dff7010334489c01e32",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-Table-phi_org_pole",
+      "internal_table_id": "table-Table-phi_org_pole",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+        "start_line": 650,
+        "end_line": 683,
+        "caption": "Pole and origin in equatorial coordinates used for every cluster for the transformations from ($\\alpha$, $\\delta$) to ($\\phi_1$,$\\phi_2$) and ($\\mu_{\\alpha} cos \\delta $, $\\mu_{\\delta}$) to ($\\mu_{\\phi_{1}} cos \\phi_2 $, $\\mu_{\\phi_{2}}$) (see section \\ref{sec: phi1-phi2}).",
+        "label": "Table: phi_org_pole"
+      },
+      "source_path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+      "excerpt_path": "literature/2501.17225/catalog_sources/table-Table-phi_org_pole/excerpt.tex",
+      "sha256": "6c0e0053412d596a8dd60260e4a6d760af21a62fb92a27faee5d819b4f54bf0e",
+      "line_count": 34,
+      "error": ""
+    },
+    {
+      "id": "table-Table-Clusters_basics_params",
+      "internal_table_id": "table-Table-Clusters_basics_params",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+        "start_line": 690,
+        "end_line": 765,
+        "caption": "Open clusters selected in this work",
+        "label": "Table: Clusters_basics_params"
+      },
+      "source_path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+      "excerpt_path": "literature/2501.17225/catalog_sources/table-Table-Clusters_basics_params/excerpt.tex",
+      "sha256": "6624638953cb061adec5eae18c34a1b02cc06a2267ab236dcd62d2d1872a476c",
+      "line_count": 76,
+      "error": ""
+    },
+    {
+      "id": "table-Table-Tidal-tails",
+      "internal_table_id": "table-Table-Tidal-tails",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+        "start_line": 768,
+        "end_line": 823,
+        "caption": "Statistics of the Tidal tails we found in this work",
+        "label": "Table: Tidal tails"
+      },
+      "source_path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+      "excerpt_path": "literature/2501.17225/catalog_sources/table-Table-Tidal-tails/excerpt.tex",
+      "sha256": "8e6a785748fe893152a057d38b975782ac557fad7c913a770a066e42dd4681f8",
+      "line_count": 56,
+      "error": ""
+    },
+    {
+      "id": "table-Table-Moving_Groups",
+      "internal_table_id": "table-Table-Moving_Groups",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+        "start_line": 825,
+        "end_line": 844,
+        "caption": "Moving Groups (MvGr) associated with OCs and their tails found in this work.",
+        "label": "Table: Moving_Groups"
+      },
+      "source_path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+      "excerpt_path": "literature/2501.17225/catalog_sources/table-Table-Moving_Groups/excerpt.tex",
+      "sha256": "15482d94632a4b63ef5955a200c6a43cea1e6d1a8fcb87cf177472f89c3a8931",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-Table-phi_org_pole-2",
+      "internal_table_id": "table-Table-phi_org_pole-2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+        "start_line": 855,
+        "end_line": 888,
+        "caption": "Pole and origin in equatorial coordinates used for every cluster for the transformations from ($\\alpha$, $\\delta$) to ($\\phi_1$,$\\phi_2$) and ($\\mu_{\\alpha} cos \\delta $, $\\mu_{\\delta}$) to ($\\mu_{\\phi_{1}} cos \\phi_2 $, $\\mu_{\\phi_{2}}$) (see section \\ref{sec: phi1-phi2}).",
+        "label": "Table: phi_org_pole"
+      },
+      "source_path": "literature/2501.17225/arxiv_source/Arxiv.tex",
+      "excerpt_path": "literature/2501.17225/catalog_sources/table-Table-phi_org_pole-2/excerpt.tex",
+      "sha256": "6c0e0053412d596a8dd60260e4a6d760af21a62fb92a27faee5d819b4f54bf0e",
+      "line_count": 34,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-clone_basic_params",
+      "internal_table_id": "table-clone_basic_params",
+      "status": "success",
+      "ecsv_path": "literature/2501.17225/catalog_tables/table-clone_basic_params.ecsv",
+      "caption": "Basic parameters of Praesepe clones",
+      "label": "clone_basic_params",
+      "row_count": 10,
+      "column_count": 13,
+      "environment": "",
+      "header_rows": [
+        [
+          "X (pc)",
+          "Y (pc)",
+          "Z (pc)",
+          "\\alpha_cp (deg)",
+          "\\delta_cp (deg)",
+          "\\mu_\\alpha\\cos\\delta (mas/yr)",
+          "\\mu_\\delta (mas/yr)",
+          "\\alpha_c",
+          "\\delta_c",
+          "N_tot",
+          "N_tidal",
+          "N_leading",
+          "N_trailing"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "X (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Y (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Z (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\alpha_cp (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\delta_cp (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_\\alpha\\cos\\delta (mas/yr)",
+          "unit_text": "\\mu_\\alpha\\cos\\delta (mas/yr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_\\delta (mas/yr)",
+          "unit_text": "\\mu_\\delta (mas/yr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\alpha_c",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\delta_c",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "N_tot",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "N_tidal",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "N_leading",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "N_trailing",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv6b3z4rh/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2501.17225/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv6b3z4rh/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2501.17225/catalog_sources/table-clone_basic_params/wrapped.tex",
+            "html": "literature/2501.17225/catalog_sources/table-clone_basic_params/latexml.html",
+            "stdout": "literature/2501.17225/catalog_sources/table-clone_basic_params/latexml.stdout.txt",
+            "stderr": "literature/2501.17225/catalog_sources/table-clone_basic_params/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b4519651c010438e2aeedad54d0c5b28b16a496cea319b1f7e5664cbc6a4bade"
+    },
+    {
+      "id": "table-clone_results",
+      "internal_table_id": "table-clone_results",
+      "status": "success",
+      "ecsv_path": "literature/2501.17225/catalog_tables/table-clone_results.ecsv",
+      "caption": "Recoveries of Praesepe clones",
+      "label": "clone_results",
+      "row_count": 10,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "X (pc)",
+          "Y (pc)",
+          "Z (pc)",
+          "N_tot_15",
+          "N_tidal_15",
+          "N_leading_15",
+          "N_trailing_15",
+          "N_tot_17",
+          "N_tidal_17",
+          "N_leading_17",
+          "N_trailing_17"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "X (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Y (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Z (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "N_tot_15",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "N_tidal_15",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "N_leading_15",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "N_trailing_15",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "N_tot_17",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "N_tidal_17",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "N_leading_17",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "N_trailing_17",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpaj1t8jdb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2501.17225/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpaj1t8jdb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2501.17225/catalog_sources/table-clone_results/wrapped.tex",
+            "html": "literature/2501.17225/catalog_sources/table-clone_results/latexml.html",
+            "stdout": "literature/2501.17225/catalog_sources/table-clone_results/latexml.stdout.txt",
+            "stderr": "literature/2501.17225/catalog_sources/table-clone_results/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e5ab21bd441ffa11a08f2d5ed20e908237bd54cd154e0dff7010334489c01e32"
+    },
+    {
+      "id": "table-Table-phi_org_pole",
+      "internal_table_id": "table-Table-phi_org_pole",
+      "status": "success",
+      "ecsv_path": "literature/2501.17225/catalog_tables/table-Table-phi_org_pole.ecsv",
+      "caption": "Pole and origin in equatorial coordinates used for every cluster for the transformations from ($\\alpha$, $\\delta$) to ($\\phi_1$,$\\phi_2$) and ($\\mu_{\\alpha} cos \\delta $, $\\mu_{\\delta}$) to ($\\mu_{\\phi_{1}} cos \\phi_2 $, $\\mu_{\\phi_{2}}$) (see section \\ref{sec: phi1-phi2}).",
+      "label": "Table: phi_org_pole",
+      "row_count": 19,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster",
+          "\\alpha_\\rmpole",
+          "\\delta_\\rmpole",
+          "\\alpha_\\rmorg",
+          "\\delta_\\rmpole"
+        ],
+        [
+          "",
+          "(deg)",
+          "(deg)",
+          "(deg)",
+          "(deg)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha_\\rmpole | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta_\\rmpole | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\alpha_\\rmorg | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\delta_\\rmpole | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdng8ofec/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2501.17225/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdng8ofec/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2501.17225/catalog_sources/table-Table-phi_org_pole/wrapped.tex",
+            "html": "literature/2501.17225/catalog_sources/table-Table-phi_org_pole/latexml.html",
+            "stdout": "literature/2501.17225/catalog_sources/table-Table-phi_org_pole/latexml.stdout.txt",
+            "stderr": "literature/2501.17225/catalog_sources/table-Table-phi_org_pole/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6c0e0053412d596a8dd60260e4a6d760af21a62fb92a27faee5d819b4f54bf0e"
+    },
+    {
+      "id": "table-Table-Clusters_basics_params",
+      "internal_table_id": "table-Table-Clusters_basics_params",
+      "status": "success",
+      "ecsv_path": "literature/2501.17225/catalog_tables/table-Table-Clusters_basics_params.ecsv",
+      "caption": "Open clusters selected in this work",
+      "label": "Table: Clusters_basics_params",
+      "row_count": 30,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp98fvvq12/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2501.17225/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp98fvvq12/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2501.17225/catalog_sources/table-Table-Clusters_basics_params/wrapped.tex",
+            "html": "literature/2501.17225/catalog_sources/table-Table-Clusters_basics_params/latexml.html",
+            "stdout": "literature/2501.17225/catalog_sources/table-Table-Clusters_basics_params/latexml.stdout.txt",
+            "stderr": "literature/2501.17225/catalog_sources/table-Table-Clusters_basics_params/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6624638953cb061adec5eae18c34a1b02cc06a2267ab236dcd62d2d1872a476c"
+    },
+    {
+      "id": "table-Table-Tidal-tails",
+      "internal_table_id": "table-Table-Tidal-tails",
+      "status": "success",
+      "ecsv_path": "literature/2501.17225/catalog_tables/table-Table-Tidal-tails.ecsv",
+      "caption": "Statistics of the Tidal tails we found in this work",
+      "label": "Table: Tidal tails",
+      "row_count": 20,
+      "column_count": 12,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "N Tidal",
+          "N Leading",
+          "N Trailing",
+          "N Tidal,Corr",
+          "N Leading,Corr",
+          "N Trailing,Corr",
+          "M G , L i m",
+          "p cont,max",
+          "a",
+          "b",
+          "r\\textsubscriptlim"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "N Tidal",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "N Leading",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "N Trailing",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "N Tidal,Corr",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "N Leading,Corr",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "N Trailing,Corr",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "M G , L i m",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "p cont,max",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "a",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "b",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "r\\textsubscriptlim",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "pandoc",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnz4nhtev/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2501.17225/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnz4nhtev/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2501.17225/catalog_sources/table-Table-Tidal-tails/wrapped.tex",
+            "html": "literature/2501.17225/catalog_sources/table-Table-Tidal-tails/latexml.html",
+            "stdout": "literature/2501.17225/catalog_sources/table-Table-Tidal-tails/latexml.stdout.txt",
+            "stderr": "literature/2501.17225/catalog_sources/table-Table-Tidal-tails/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq8k57b4u/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq8k57b4u/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2501.17225/catalog_sources/table-Table-Tidal-tails/wrapped.tex",
+            "html": "literature/2501.17225/catalog_sources/table-Table-Tidal-tails/pandoc.html",
+            "stdout": "literature/2501.17225/catalog_sources/table-Table-Tidal-tails/pandoc.stdout.txt",
+            "stderr": "literature/2501.17225/catalog_sources/table-Table-Tidal-tails/pandoc.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8e6a785748fe893152a057d38b975782ac557fad7c913a770a066e42dd4681f8"
+    },
+    {
+      "id": "table-Table-Moving_Groups",
+      "internal_table_id": "table-Table-Moving_Groups",
+      "status": "success",
+      "ecsv_path": "literature/2501.17225/catalog_tables/table-Table-Moving_Groups.ecsv",
+      "caption": "Moving Groups (MvGr) associated with OCs and their tails found in this work.",
+      "label": "Table: Moving_Groups",
+      "row_count": 3,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name_OC",
+          "Name_MvGr",
+          "log 10 (\\fracageyr) _OC",
+          "log 10 (\\fracageyr) _MvGr",
+          "V_X _OC (km s ^-1)",
+          "V_Y _OC (km s ^-1)",
+          "V_Z _OC (km s ^-1)",
+          "V_X _MvGr (km s ^-1)",
+          "V_Y _MvGr (km s ^-1)",
+          "V_Z _MvGr (km s ^-1)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name_OC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Name_MvGr",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "log 10 (\\fracageyr) _OC",
+          "unit_text": "log 10 (\\fracageyr) _OC",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "log 10 (\\fracageyr) _MvGr",
+          "unit_text": "log 10 (\\fracageyr) _MvGr",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V_X _OC (km s ^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V_Y _OC (km s ^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "V_Z _OC (km s ^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "V_X _MvGr (km s ^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "V_Y _MvGr (km s ^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "V_Z _MvGr (km s ^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpr1i6b7nm/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2501.17225/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpr1i6b7nm/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2501.17225/catalog_sources/table-Table-Moving_Groups/wrapped.tex",
+            "html": "literature/2501.17225/catalog_sources/table-Table-Moving_Groups/latexml.html",
+            "stdout": "literature/2501.17225/catalog_sources/table-Table-Moving_Groups/latexml.stdout.txt",
+            "stderr": "literature/2501.17225/catalog_sources/table-Table-Moving_Groups/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "15482d94632a4b63ef5955a200c6a43cea1e6d1a8fcb87cf177472f89c3a8931"
+    },
+    {
+      "id": "table-Table-phi_org_pole-2",
+      "internal_table_id": "table-Table-phi_org_pole-2",
+      "status": "success",
+      "ecsv_path": "literature/2501.17225/catalog_tables/table-Table-phi_org_pole-2.ecsv",
+      "caption": "Pole and origin in equatorial coordinates used for every cluster for the transformations from ($\\alpha$, $\\delta$) to ($\\phi_1$,$\\phi_2$) and ($\\mu_{\\alpha} cos \\delta $, $\\mu_{\\delta}$) to ($\\mu_{\\phi_{1}} cos \\phi_2 $, $\\mu_{\\phi_{2}}$) (see section \\ref{sec: phi1-phi2}).",
+      "label": "Table: phi_org_pole",
+      "row_count": 19,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster",
+          "\\alpha_\\rmpole",
+          "\\delta_\\rmpole",
+          "\\alpha_\\rmorg",
+          "\\delta_\\rmpole"
+        ],
+        [
+          "",
+          "(deg)",
+          "(deg)",
+          "(deg)",
+          "(deg)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha_\\rmpole | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta_\\rmpole | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\alpha_\\rmorg | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\delta_\\rmpole | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdmzlcbm4/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2501.17225/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdmzlcbm4/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2501.17225/catalog_sources/table-Table-phi_org_pole-2/wrapped.tex",
+            "html": "literature/2501.17225/catalog_sources/table-Table-phi_org_pole-2/latexml.html",
+            "stdout": "literature/2501.17225/catalog_sources/table-Table-phi_org_pole-2/latexml.stdout.txt",
+            "stderr": "literature/2501.17225/catalog_sources/table-Table-phi_org_pole-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6c0e0053412d596a8dd60260e4a6d760af21a62fb92a27faee5d819b4f54bf0e"
+    }
+  ]
+}

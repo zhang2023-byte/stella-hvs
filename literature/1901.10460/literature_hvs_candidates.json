@@ -1,0 +1,70 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:58:30",
+  "paper": {
+    "arxiv_id": "1901.10460",
+    "bibcode": null,
+    "title": "Lessons from the curious case of the 'fastest' star in Gaia DR2",
+    "month": "2019-01",
+    "source_note_json": "notes/2019/2019-01/2019-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1901.10460",
+      "pdf": "https://arxiv.org/pdf/1901.10460"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1901.10460",
+    "audit_path": "literature/1901.10460/audit.json",
+    "catalog_review_path": "literature/1901.10460/catalog_review.json",
+    "catalog_extraction_path": "literature/1901.10460/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:58:30",
+    "extractor": "agent",
+    "summary": "本文针对Gaia DR2 5932173855446728064——一颗此前被提出为银河系非束缚星（基于Gaia DR2径向速度-614.3 km/s）的天体——进行了8次光谱跟踪观测。作者发现其中值径向速度仅为-56.5 +/- 5.3 km/s，并论证Gaia DR2径向速度为错误测量（4.3角秒外恒星的光谱污染导致~620 km/s虚假位移）。论文结论是该星并非超高速星，并提出了从Gaia DR2 RVS数据中剔除类似污染恒星的质量筛选方案。论文未提出任何新的HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "Quick scan of paper abstract and title for HVS relevance assessment.",
+      "inputs": [
+        "arXiv abstract",
+        "Monthly literature notes"
+      ],
+      "outputs": [
+        "HVS relevance classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.10460/paper_abstract.txt",
+          "start_line": 5,
+          "end_line": 5,
+          "context": "Paper abstract"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "quick-scan-debunked-candidate",
+      "description": "论文研究Gaia DR2 5932173855446728064——一颗此前基于Gaia DR2径向速度（-614.3 +/- 2.5 km/s）被提出为银河系非束缚星的天体。作者通过8次光谱跟踪观测获得中值径向速度-56.5 +/- 5.3 km/s，论证Gaia DR2径向速度为错误测量（由4.3角秒外恒星的光谱污染导致）。论文结论是该星并非超高速星，其表观高速度完全由Gaia DR2径向速度测量误差所致。",
+      "decision": "excluded",
+      "reason": "Gaia DR2 5932173855446728064的真实径向速度仅为-56.5 km/s，远低于银河系逃逸速度。此前将其归类为银河系非束缚星是基于错误的Gaia DR2径向速度测量。本文通过独立光谱跟踪观测明确否定了该星的非束缚状态。论文本身未引入任何新的HVS候选体，而是提供了一种从Gaia DR2数据中识别和排除虚假高径向速度恒星的方法。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.10460/paper_abstract.txt",
+          "start_line": 5,
+          "end_line": 5,
+          "context": "Paper abstract describing the debunking of Gaia DR2 5932173855446728064 as an unbound star"
+        }
+      ]
+    }
+  ]
+}

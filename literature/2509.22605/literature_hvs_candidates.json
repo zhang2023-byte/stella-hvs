@@ -1,0 +1,81 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T19:57:43",
+  "paper": {
+    "arxiv_id": "2509.22605",
+    "bibcode": "2025AJ....170..277Z",
+    "title": "High Proper Motion Discoveries from the UKIRT Hemisphere Survey",
+    "month": "2025-09",
+    "source_note_json": "notes/2025/2025-09/2025-09.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2509.22605",
+      "pdf": "https://arxiv.org/pdf/2509.22605"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2509.22605",
+    "audit_path": "literature/2509.22605/audit.json",
+    "catalog_review_path": "literature/2509.22605/catalog_review.json",
+    "catalog_extraction_path": "literature/2509.22605/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2509.22605/catalog_tables/table-tab-props.ecsv",
+      "literature/2509.22605/catalog_tables/table-tab-sds.ecsv",
+      "literature/2509.22605/catalog_tables/table-tab-g_spt.ecsv",
+      "literature/2509.22605/catalog_tables/table-tab-ng_spt.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T19:57:43",
+    "extractor": "agent",
+    "summary": "The paper reports 127 new high proper motion discoveries from UHS DR3. While several non-Gaia sources have tangential velocity estimates that exceed the nominal Milky Way escape velocity (~500-600 km/s), the paper does not explicitly discuss any object as a possible Galactic-unbound, HVS, escaping, or hyper-runaway candidate. The paper consistently characterizes the sample as likely old, low-metallicity members of the thick disk or halo, i.e., Galaxy-bound populations. Large uncertainties in photometric distance estimates are emphasized, and follow-up observations are called for to better understand the nature and origin of these sources."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-props",
+      "description": "The full sample of 127 new high proper motion discoveries with total proper motions >300 mas yr^-1, including UHS astrometry/photometry and Gaia DR3 cross-matches where available.",
+      "decision": "excluded",
+      "reason": "The paper characterizes these objects as likely old, low-metallicity members of the Galactic thick disk or halo (e.g., 'likely halo members', 'thick disk or halo'). It does not present any of them as possibly unbound from the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2509.22605/arxiv_source/main.tex",
+          "start_line": 296,
+          "end_line": 298,
+          "context": "Paper states that Gaia-matched sources are consistent with criteria for halo membership and are unlikely to be thin disk members; describes them as likely halo members."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2509.22605/arxiv_source/main.tex",
+          "start_line": 460,
+          "end_line": 463,
+          "context": "Conclusion reiterates that most candidates are likely low-metallicity M-type stars belonging to the galactic thick disk or halo."
+        }
+      ]
+    },
+    {
+      "group_id": "table-tab-ng_spt",
+      "description": "The 33 non-Gaia high proper motion sources (plus 3 Gaia sources without parallax/PM), with photometric distance and tangential velocity estimates. Several objects have V_tan estimates nominally exceeding the Milky Way escape velocity.",
+      "decision": "excluded",
+      "reason": "Although the paper notes that several of these objects have tangential velocity estimates larger than the nominal Milky Way escape velocity, it does not label any of them as unbound, HVS, escaping, or hyper-runaway candidates. The paper explicitly states that the likelihood of halo or thick disk membership is still high for many of these sources, and emphasizes large uncertainties in the distance/velocity estimates. The exceedance of escape velocity is presented as an observational curiosity requiring follow-up, not as a bound/unbound assessment.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2509.22605/arxiv_source/main.tex",
+          "start_line": 402,
+          "end_line": 402,
+          "context": "Paper notes several non-Gaia sources have V_tan larger than the escape velocity of the Milky Way, but frames this as highlighting the need for follow-up observations, not as a bound/unbound claim."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2509.22605/arxiv_source/main.tex",
+          "start_line": 398,
+          "end_line": 399,
+          "context": "Paper emphasizes large uncertainties in photometric distance estimates and states that halo or thick disk membership likelihood is still high for many sources."
+        }
+      ]
+    }
+  ]
+}

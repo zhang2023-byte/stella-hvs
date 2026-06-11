@@ -1,0 +1,1294 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:48:33",
+  "paper": {
+    "arxiv_id": "2603.02850",
+    "bibcode": "2025A&A...704A.294K",
+    "title": "Gaia DR3 high radial velocity stars: Genuine fast-moving objects or outliers?",
+    "month": "2026-03",
+    "source_note_json": "notes/2026/2026-03/2026-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2603.02850",
+      "pdf": "https://arxiv.org/pdf/2603.02850"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2603.02850",
+    "audit_path": "literature/2603.02850/audit.json",
+    "catalog_review_path": "literature/2603.02850/catalog_review.json",
+    "catalog_extraction_path": "literature/2603.02850/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2603.02850/catalog_tables/table-Table-Surveys.ecsv",
+      "literature/2603.02850/catalog_tables/table-Table-SB2.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-22T20:48:33",
+    "extractor": "agent",
+    "summary": "Extracted 3 HVS candidates from the 53 unconfirmed Gaia DR3 HRV stars with S/N > 10 and positive orbital energies. The 4th positive-energy star (Gaia DR3 3017364441287016320) was excluded as the paper flags it unreliable. Observed phase-space coordinates are not available from internal tables or paper text (external Table A.1 at CDS). Derived kinematics and bound assessments rely on paper text ranges."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Adopt astrometry (positions, proper motions, parallaxes) and radial velocities from Gaia DR3 catalogue.",
+      "inputs": [
+        "Gaia DR3"
+      ],
+      "outputs": [
+        "astrometry",
+        "radial velocities"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 310,
+          "end_line": 310,
+          "context": "For the astrometric data, we employed the EDR3 positions and proper motions, along with the Bayesian photogeometric distances."
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "quality_filter",
+      "summary": "Select clean sample of HRV stars with astrometric quality criteria RUWE < 1.4 and parallax_over_error > 5, and S/N > 10 for unconfirmed stars.",
+      "inputs": [
+        "Gaia DR3 HRV stars"
+      ],
+      "outputs": [
+        "clean sample of 161 HRV stars"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 310,
+          "end_line": 310,
+          "context": "The first contains the 108 Gaia DR3 HRV stars with a ground-based confirmation and astrometric quality criteria. The second comprises the Gaia DR3 HRV stars that lack ground-based confirmation, but possess a S/N greater than 10, and satisfy the same astrometric quality criteria."
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Adopt Bayesian photogeometric distances from Bailer-Jones 2021.",
+      "inputs": [
+        "Gaia DR3 parallaxes"
+      ],
+      "outputs": [
+        "heliocentric distances"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 310,
+          "end_line": 310,
+          "context": "Along with the Bayesian photogeometric distances derived by Bailer-Jones 2021."
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-01",
+        "step-03"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Compute Galactocentric velocities using solar motion parameters and positions/proper motions/distances.",
+      "inputs": [
+        "Gaia DR3 astrometry",
+        "distances",
+        "radial velocities",
+        "solar motion parameters"
+      ],
+      "outputs": [
+        "Galactocentric velocities"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 310,
+          "end_line": 310,
+          "context": "For the solar velocity with respect to the Galactocentric cylindrical reference frame, we adopted the same values as in Drimmel 2023."
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "Adopt axisymmetric Galactic gravitational potential PII of Pouliasis 2017, including thin and thick disc and spherical dark matter halo.",
+      "inputs": [
+        "PII potential"
+      ],
+      "outputs": [
+        "Galactic gravitational potential"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 310,
+          "end_line": 310,
+          "context": "The orbits of the 161 stars were integrated using a leap-frog algorithm and the axisymmetric Galactic potential PII of Pouliasis 2017."
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-04",
+        "step-05"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Integrate orbits using a leap-frog algorithm in the PII potential to derive orbital parameters including eccentricity, pericentre, apocentre, and energy.",
+      "inputs": [
+        "Galactocentric phase space",
+        "Galactic potential"
+      ],
+      "outputs": [
+        "orbital parameters",
+        "energy",
+        "eccentricity",
+        "pericentre",
+        "apocentre"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 310,
+          "end_line": 310,
+          "context": "The orbits of the 161 stars were integrated using a leap-frog algorithm and the axisymmetric Galactic potential PII of Pouliasis 2017."
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [
+        "step-06"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Assess bound/unbound status from the sign of the total orbital energy; positive energy indicates gravitationally unbound.",
+      "inputs": [
+        "orbital energy"
+      ],
+      "outputs": [
+        "bound/unbound assessment"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 314,
+          "end_line": 314,
+          "context": "For the most part, the HRV stars exhibit total velocities within the range 300 to 450 km/s and remain gravitationally bound to the Milky Way, as indicated by their negative energies."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 318,
+          "end_line": 318,
+          "context": "Their positive total energies suggest that these stars are gravitationally unbound from the Milky Way."
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [
+        "step-07"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Classify stars with total Galactocentric velocities above the HVS threshold as HVSs.",
+      "inputs": [
+        "total Galactocentric velocity",
+        "bound/unbound assessment"
+      ],
+      "outputs": [
+        "HVS classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 318,
+          "end_line": 318,
+          "context": "Their positive total energies suggest that these stars are gravitationally unbound from the Milky Way, and their total Galactocentric velocities classify them as HVSs."
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": [],
+      "step_type": "reported_value_adoption",
+      "summary": "Paper reports the Gaia DR3 pipeline template information (Teff = 3400 K or default template) as a quality concern for radial-velocity bias risk.",
+      "inputs": [],
+      "outputs": [
+        "template information"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 318,
+          "end_line": 318,
+          "context": "The paper reports template details for the three stars as a possible source of radial-velocity bias."
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2603.02850:cand-001",
+        "paper_candidate_id": "Gaia DR3 1061822400696509696",
+        "gaia_source_id": "Gaia DR3 1061822400696509696",
+        "all": [
+          {
+            "value": "Gaia DR3 1061822400696509696",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+                "start_line": 318,
+                "end_line": 318,
+                "context": "Four stars exhibit positive energies, including Gaia DR3 1061822400696509696."
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper identifies this star as having positive total energy and classifies it as an HVS based on its total Galactocentric velocity. It is one of three stars with satisfactory astrometric and radial-velocity quality indicators among the unconfirmed S/N > 10 sample.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "medium",
+        "confidence_reason": "The paper explicitly states positive total energy and HVS classification, but the Gaia DR3 radial velocity is unconfirmed by ground-based spectroscopy and the paper notes a possible template-mismatch bias (Teff = 3400 K template).",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+            "start_line": 318,
+            "end_line": 318,
+            "context": "Their positive total energies suggest that these stars are gravitationally unbound from the Milky Way, and their total Galactocentric velocities classify them as HVSs. Future follow-up ground-based spectroscopic observations are needed to confirm or refute their HVS status."
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+            "start_line": 318,
+            "end_line": 318,
+            "context": "First identification of this star as having positive energy and HVS status in this work."
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "742 to 895 km/s",
+            "value": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km/s",
+            "description": "Total velocity range for the three positive-energy stars; individual value not reported in text.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+                "start_line": 318,
+                "end_line": 318,
+                "context": "The three stars are visible in the eccentricity-total velocity diagram, displaying eccentricities greater than 0.98 and total velocities ranging from 742 to 895 km/s."
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": {
+            "raw_value": "positive total energies",
+            "value": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km^2/s^2",
+            "description": "Positive total orbital energy in the PII potential, indicating gravitationally unbound status. Individual energy value not reported separately for this star; the three stars collectively have energies in the range 1.3e5 to 2e5 km^2/s^2.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+                "start_line": 318,
+                "end_line": 318,
+                "context": "Their positive total energies suggest that these stars are gravitationally unbound from the Milky Way."
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ]
+          }
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [
+        {
+          "raw_value": "S/N > 10, no ground-based confirmation",
+          "value": "unconfirmed-sn-gt-10",
+          "unit": "",
+          "description": "Star belongs to the 53-star subsample with S/N > 10 but lacking ground-based radial-velocity confirmation.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "All four stars belong to the sample of 53 stars without ground-based confirmation of their radial velocity, but an S/N greater than 10."
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ],
+          "name": "rv_confirmation_status"
+        },
+        {
+          "raw_value": "astrometric_gof_al in [-1.1, 2.9], rv_nb_transits = 19-26",
+          "value": "satisfactory-quality",
+          "unit": "",
+          "description": "The star exhibits satisfactory astrometric quality and 19-26 valid RVS transits.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "The three other stars exhibit satisfactory astrometric_gof_al values, ranging from -1.1 to 2.9. Their Gaia DR3 radial velocities were derived based on 19 to 26 valid transits."
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ],
+          "name": "data_quality"
+        },
+        {
+          "raw_value": "template Teff = 3400 K",
+          "value": "template-teff-3400k",
+          "unit": "",
+          "description": "Gaia DR3 radial velocity determined using a template with effective temperature 3400 K; risk of bias from possible molecular features.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "For the third star, Gaia DR3 1061...9696, the template used had an effective temperature of 3400 K. In this case as well, there is a risk of bias arising from the possible presence of molecular features in the spectrum."
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ],
+          "name": "rv-template-bias-risk"
+        }
+      ],
+      "orbit": {
+        "eccentricity": {
+          "raw_value": "> 0.98",
+          "value": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "description": "Eccentricity greater than 0.98; exact value not reported in text.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "The three stars are visible in the eccentricity-total velocity diagram, displaying eccentricities greater than 0.98."
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        },
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": {
+          "raw_value": "HVSs",
+          "value": "HVS",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "description": "Classified as HVSs based on total Galactocentric velocities and positive energies.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "Their positive total energies suggest that these stars are gravitationally unbound from the Milky Way, and their total Galactocentric velocities classify them as HVSs."
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "raw_value": "357",
+          "value": "357",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "description": "Ratio of parallax corrected for zero-point over parallax error.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "The ratios of their parallax corrected for the parallax zero-point and proper-motions over the corresponding errors are all relatively large."
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "name": "parallax_snr"
+        },
+        {
+          "raw_value": "799",
+          "value": "799",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "description": "Ratio of proper motion in right ascension over its error.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "mu_alpha / sigma_mu_alpha = {799, 91, 136} for the three stars."
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "name": "pm_ra_snr"
+        },
+        {
+          "raw_value": "284",
+          "value": "284",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "description": "Ratio of proper motion in declination over its error.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "mu_delta / sigma_mu_delta = {284, 267, 290} for Gaia DR3 1061...9696, 2020...7776, and 5943...4320, respectively."
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "name": "pm_dec_snr"
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2603.02850:cand-002",
+        "paper_candidate_id": "Gaia DR3 2020578982307467776",
+        "gaia_source_id": "Gaia DR3 2020578982307467776",
+        "all": [
+          {
+            "value": "Gaia DR3 2020578982307467776",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+                "start_line": 318,
+                "end_line": 318,
+                "context": "Four stars exhibit positive energies, including Gaia DR3 2020578982307467776."
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper identifies this star as having positive total energy and classifies it as an HVS based on its total Galactocentric velocity. It is one of three stars with satisfactory astrometric and radial-velocity quality indicators among the unconfirmed S/N > 10 sample.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "medium",
+        "confidence_reason": "The paper explicitly states positive total energy and HVS classification, but the Gaia DR3 radial velocity is unconfirmed by ground-based spectroscopy and the paper notes a possible template-mismatch bias (default template).",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+            "start_line": 318,
+            "end_line": 318,
+            "context": "Their positive total energies suggest that these stars are gravitationally unbound from the Milky Way, and their total Galactocentric velocities classify them as HVSs. Future follow-up ground-based spectroscopic observations are needed to confirm or refute their HVS status."
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+            "start_line": 318,
+            "end_line": 318,
+            "context": "First identification of this star as having positive energy and HVS status in this work."
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "742 to 895 km/s",
+            "value": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km/s",
+            "description": "Total velocity range for the three positive-energy stars; individual value not reported in text.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+                "start_line": 318,
+                "end_line": 318,
+                "context": "The three stars are visible in the eccentricity-total velocity diagram, displaying eccentricities greater than 0.98 and total velocities ranging from 742 to 895 km/s."
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": {
+            "raw_value": "positive total energies",
+            "value": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km^2/s^2",
+            "description": "Positive total orbital energy in the PII potential, indicating gravitationally unbound status. Individual energy value not reported separately for this star; the three stars collectively have energies in the range 1.3e5 to 2e5 km^2/s^2.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+                "start_line": 318,
+                "end_line": 318,
+                "context": "Their positive total energies suggest that these stars are gravitationally unbound from the Milky Way."
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ]
+          }
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [
+        {
+          "raw_value": "S/N > 10, no ground-based confirmation",
+          "value": "unconfirmed-sn-gt-10",
+          "unit": "",
+          "description": "Star belongs to the 53-star subsample with S/N > 10 but lacking ground-based radial-velocity confirmation.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "All four stars belong to the sample of 53 stars without ground-based confirmation of their radial velocity, but an S/N greater than 10."
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ],
+          "name": "rv_confirmation_status"
+        },
+        {
+          "raw_value": "astrometric_gof_al in [-1.1, 2.9], rv_nb_transits = 19-26",
+          "value": "satisfactory-quality",
+          "unit": "",
+          "description": "The star exhibits satisfactory astrometric quality and 19-26 valid RVS transits.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "The three other stars exhibit satisfactory astrometric_gof_al values, ranging from -1.1 to 2.9. Their Gaia DR3 radial velocities were derived based on 19 to 26 valid transits."
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ],
+          "name": "data_quality"
+        },
+        {
+          "raw_value": "default template",
+          "value": "default-template",
+          "unit": "",
+          "description": "Gaia DR3 radial velocity determined using a default template, employed when stellar parameters are unknown; risk of bias if true parameters differ from default.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "The radial velocities of Gaia DR3 2020...7776 and 5943...4320 were both determined by the Gaia spectroscopic pipeline using a default template."
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ],
+          "name": "rv-template-bias-risk"
+        }
+      ],
+      "orbit": {
+        "eccentricity": {
+          "raw_value": "> 0.98",
+          "value": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "description": "Eccentricity greater than 0.98; exact value not reported in text.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "The three stars are visible in the eccentricity-total velocity diagram, displaying eccentricities greater than 0.98."
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        },
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": {
+          "raw_value": "HVSs",
+          "value": "HVS",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "description": "Classified as HVSs based on total Galactocentric velocities and positive energies.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "Their positive total energies suggest that these stars are gravitationally unbound from the Milky Way, and their total Galactocentric velocities classify them as HVSs."
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "raw_value": "22",
+          "value": "22",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "description": "Ratio of parallax corrected for zero-point over parallax error.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "(varpi - varpi_0) / sigma_varpi in {357, 22, 12} for the three stars."
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "name": "parallax_snr"
+        },
+        {
+          "raw_value": "91",
+          "value": "91",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "description": "Ratio of proper motion in right ascension over its error.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "mu_alpha / sigma_mu_alpha = {799, 91, 136} for the three stars."
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "name": "pm_ra_snr"
+        },
+        {
+          "raw_value": "267",
+          "value": "267",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "description": "Ratio of proper motion in declination over its error.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "mu_delta / sigma_mu_delta = {284, 267, 290} for Gaia DR3 1061...9696, 2020...7776, and 5943...4320, respectively."
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "name": "pm_dec_snr"
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2603.02850:cand-003",
+        "paper_candidate_id": "Gaia DR3 5943642753740584320",
+        "gaia_source_id": "Gaia DR3 5943642753740584320",
+        "all": [
+          {
+            "value": "Gaia DR3 5943642753740584320",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+                "start_line": 318,
+                "end_line": 318,
+                "context": "Four stars exhibit positive energies, including Gaia DR3 5943642753740584320."
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper identifies this star as having positive total energy and classifies it as an HVS based on its total Galactocentric velocity. It is one of three stars with satisfactory astrometric and radial-velocity quality indicators among the unconfirmed S/N > 10 sample.",
+        "paper_labels": [
+          "hvs_candidate"
+        ],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "medium",
+        "confidence_reason": "The paper explicitly states positive total energy and HVS classification, but the Gaia DR3 radial velocity is unconfirmed by ground-based spectroscopy and the paper notes a possible template-mismatch bias (default template).",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+            "start_line": 318,
+            "end_line": 318,
+            "context": "Their positive total energies suggest that these stars are gravitationally unbound from the Milky Way, and their total Galactocentric velocities classify them as HVSs. Future follow-up ground-based spectroscopic observations are needed to confirm or refute their HVS status."
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+            "start_line": 318,
+            "end_line": 318,
+            "context": "First identification of this star as having positive energy and HVS status in this work."
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "742 to 895 km/s",
+            "value": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km/s",
+            "description": "Total velocity range for the three positive-energy stars; individual value not reported in text.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+                "start_line": 318,
+                "end_line": 318,
+                "context": "The three stars are visible in the eccentricity-total velocity diagram, displaying eccentricities greater than 0.98 and total velocities ranging from 742 to 895 km/s."
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": {
+            "raw_value": "positive total energies",
+            "value": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km^2/s^2",
+            "description": "Positive total orbital energy in the PII potential, indicating gravitationally unbound status. This star is visible in the E-Lz diagram; exact energy value not reported separately.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+                "start_line": 318,
+                "end_line": 318,
+                "context": "Their positive total energies suggest that these stars are gravitationally unbound from the Milky Way."
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ]
+          }
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [
+        {
+          "raw_value": "S/N > 10, no ground-based confirmation",
+          "value": "unconfirmed-sn-gt-10",
+          "unit": "",
+          "description": "Star belongs to the 53-star subsample with S/N > 10 but lacking ground-based radial-velocity confirmation.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "All four stars belong to the sample of 53 stars without ground-based confirmation of their radial velocity, but an S/N greater than 10."
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ],
+          "name": "rv_confirmation_status"
+        },
+        {
+          "raw_value": "astrometric_gof_al in [-1.1, 2.9], rv_nb_transits = 19-26",
+          "value": "satisfactory-quality",
+          "unit": "",
+          "description": "The star exhibits satisfactory astrometric quality and 19-26 valid RVS transits.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "The three other stars exhibit satisfactory astrometric_gof_al values, ranging from -1.1 to 2.9. Their Gaia DR3 radial velocities were derived based on 19 to 26 valid transits."
+            }
+          ],
+          "method_refs": [
+            "step-02"
+          ],
+          "name": "data_quality"
+        },
+        {
+          "raw_value": "default template",
+          "value": "default-template",
+          "unit": "",
+          "description": "Gaia DR3 radial velocity determined using a default template, employed when stellar parameters are unknown; risk of bias if true parameters differ from default.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "The radial velocities of Gaia DR3 2020...7776 and 5943...4320 were both determined by the Gaia spectroscopic pipeline using a default template."
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ],
+          "name": "rv-template-bias-risk"
+        }
+      ],
+      "orbit": {
+        "eccentricity": {
+          "raw_value": "> 0.98",
+          "value": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "description": "Eccentricity greater than 0.98; exact value not reported in text.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "The three stars are visible in the eccentricity-total velocity diagram, displaying eccentricities greater than 0.98."
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        },
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": {
+          "raw_value": "HVSs",
+          "value": "HVS",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "description": "Classified as HVSs based on total Galactocentric velocities and positive energies.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "Their positive total energies suggest that these stars are gravitationally unbound from the Milky Way, and their total Galactocentric velocities classify them as HVSs."
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "raw_value": "12",
+          "value": "12",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "description": "Ratio of parallax corrected for zero-point over parallax error.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "(varpi - varpi_0) / sigma_varpi in {357, 22, 12} for the three stars."
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "name": "parallax_snr"
+        },
+        {
+          "raw_value": "136",
+          "value": "136",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "description": "Ratio of proper motion in right ascension over its error.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "mu_alpha / sigma_mu_alpha = {799, 91, 136} for the three stars."
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "name": "pm_ra_snr"
+        },
+        {
+          "raw_value": "290",
+          "value": "290",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "description": "Ratio of proper motion in declination over its error.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+              "start_line": 318,
+              "end_line": 318,
+              "context": "mu_delta / sigma_mu_delta = {284, 267, 290} for Gaia DR3 1061...9696, 2020...7776, and 5943...4320, respectively."
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ],
+          "name": "pm_dec_snr"
+        }
+      ]
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "confirmed-hrv-108",
+      "description": "The 108 Gaia DR3 HRV stars with ground-based confirmation (UVES, SOPHIE, APOGEE, GALAH, RAVE) and astrometric quality cuts RUWE < 1.4 and parallax_over_error > 5.",
+      "decision": "excluded",
+      "reason": "The paper states that these stars remain gravitationally bound to the Milky Way, as indicated by their negative orbital energies. They are high-velocity halo stars or accreted stars, not unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 314,
+          "end_line": 314,
+          "context": "For the most part, the HRV stars exhibit total velocities within the range 300 to 450 km/s and remain gravitationally bound to the Milky Way, as indicated by their negative energies."
+        }
+      ]
+    },
+    {
+      "group_id": "refuted-spurious-30",
+      "description": "The 30 Gaia DR3 HRV stars whose high radial velocities were refuted by ground-based spectroscopy (SOPHIE/UVES).",
+      "decision": "excluded",
+      "reason": "The paper refutes the Gaia DR3 radial velocities of these stars; they are spurious measurements, not genuine high-velocity or unbound stars.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 232,
+          "end_line": 234,
+          "context": "The Gaia DR3 radial velocity of 104 of our targets were confirmed, while the remaining 30 were deemed spurious."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 335,
+          "end_line": 335,
+          "context": "We refute the measurements of the remaining 30, all of which have Gaia DR3 S/N below 7."
+        }
+      ]
+    },
+    {
+      "group_id": "unreliable-positive-energy-3017",
+      "description": "Gaia DR3 3017364441287016320, one of the four stars with positive orbital energy but flagged as unreliable due to poor astrometric fit, few RV transits, and Orion Variable classification.",
+      "decision": "excluded",
+      "reason": "The paper explicitly suggests that the velocity and orbital parameters derived for this star may be unreliable. It exhibits astrometric_gof_al = -7.38, only 5 valid RVS transits, and is classified as an Orion Variable in SIMBAD. Stella excludes it from HVS candidacy based on the paper's own quality assessment.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 318,
+          "end_line": 318,
+          "context": "Taken together, these elements suggest that the velocity and orbital parameters derived here for Gaia DR3 3017...6320 may be unreliable."
+        }
+      ]
+    },
+    {
+      "group_id": "sn-below-10-hrv",
+      "description": "The remaining Gaia DR3 HRV stars with S/N <= 10 that were not included in the clean sample of 161 stars.",
+      "decision": "excluded",
+      "reason": "The paper deliberately excludes stars with S/N <= 10 from the clean kinematic sample to avoid spurious measurement contamination. These stars are not discussed for unbound candidacy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 310,
+          "end_line": 310,
+          "context": "The second comprises the Gaia DR3 HRV stars that lack ground-based confirmation, but possess a S/N greater than 10, and satisfy the same astrometric quality criteria."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,358 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2406.00923",
+    "title": "A high-velocity star recently ejected by an intermediate-mass black hole in M15",
+    "month": "2024-06",
+    "source_note_json": "notes/2024/2024-06/2024-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2406.00923",
+      "pdf": "https://arxiv.org/pdf/2406.00923"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2406.00923",
+    "audit_path": "literature/2406.00923/audit.json",
+    "source_dir": "literature/2406.00923/arxiv_source",
+    "tex_root": "literature/2406.00923/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:34:08",
+    "reviewer": "agent",
+    "summary": "This paper reports the discovery of high-velocity star J0731+3717, recently ejected from the globular cluster M15 by an intermediate-mass black hole via the Hills mechanism. The paper contains one main-text parameter table comparing J0731+3717 and M15, plus two supplementary tables summarizing the top candidate globular clusters from backward orbital analysis and robustness tests under alternative assumptions. External resources include Gaia DR3, SDSS/SEGUE data archives, SDSS photometric catalogs, Dartmouth stellar isochrones, the Gala and galpy Python packages, the Baumgardt globular cluster parameter database, and a GitHub reproduction repository."
+  },
+  "internal_tables": [
+    {
+      "id": "table-table-Table1",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Summarizes the measured astrometric, photometric, spectroscopic, kinematic, and physical parameters of the high-velocity star J0731+3717 and its proposed parent globular cluster M15 for direct comparison.",
+      "source_refs": [
+        {
+          "path": "literature/2406.00923/arxiv_source/main.tex",
+          "start_line": 85,
+          "end_line": 121,
+          "caption": "The measured parameters of J0731+3717 and M15",
+          "label": "table:Table1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name of the measured physical or astrometric quantity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J0731+3717",
+          "meaning": "Measured value for the high-velocity star J0731+3717",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M15",
+          "meaning": "Measured value for the globular cluster M15",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Units",
+          "meaning": "Physical units of the parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The measured parameters of J0731+3717 and M15",
+      "comments": ""
+    },
+    {
+      "id": "table-002",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Lists the top five globular clusters sorted by the ratio of the closest orbital distance to the cluster tidal radius in the backward orbital analysis of J0731+3717.",
+      "source_refs": [
+        {
+          "path": "literature/2406.00923/arxiv_source/supplementary.tex",
+          "start_line": 319,
+          "end_line": 335,
+          "caption": "",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster name",
+          "meaning": "Name of the globular cluster",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Closest distance (d_\\rm min) | (kpc)",
+          "meaning": "Minimum 3D distance between the backward orbit of J0731+3717 and the cluster center",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Backward time | (Myr)",
+          "meaning": "Lookback time at which the closest approach occurred",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Tidal radius (r_t) | (kpc)",
+          "meaning": "Tidal radius of the globular cluster",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_\\rmmin/r_\\rm t",
+          "meaning": "Ratio of closest approach distance to cluster tidal radius",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Top 5 globular clusters sorted by the ratio of the closest orbital distance to the clusters' tidal radius",
+      "comments": ""
+    },
+    {
+      "id": "table-003",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Shows the robustness of the backward orbital reconstruction by reporting the closest orbital distance and backward time under six alternative assumptions (different Galactic potentials, solar motions, circular velocities, Galactocentric distances, moving Plummer potential for M15, and LMC potential).",
+      "source_refs": [
+        {
+          "path": "literature/2406.00923/arxiv_source/supplementary.tex",
+          "start_line": 337,
+          "end_line": 354,
+          "caption": "",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Changed assumptions",
+          "meaning": "Description of the modified assumption in the orbital integration test",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Closest orbital distance | (pc)",
+          "meaning": "Minimum 3D distance between J0731+3717 and M15 under the modified assumption",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Backward time | (Myr)",
+          "meaning": "Lookback time at closest approach under the modified assumption",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Backward orbital results under different assumptions",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "European Space Agency Gaia mission website and data portal. Gaia DR3 astrometry and photometry are core data sources for this study.",
+      "source_refs": [
+        {
+          "path": "literature/2406.00923/arxiv_source/main.tex",
+          "start_line": 253,
+          "end_line": 253,
+          "context": "This work made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia})"
+        }
+      ],
+      "evidence": "This work made use of data from the European Space Agency (ESA) mission Gaia (\\url{https://www.cosmos.esa.int/gaia})",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://data.sdss.org/sas/dr12/sdss/sspp/ssppOut-dr12.fits",
+      "local_path": "",
+      "description": "SDSS-II/III SEGUE archive containing the stellar parameters of J0731+3717.",
+      "source_refs": [
+        {
+          "path": "literature/2406.00923/arxiv_source/main.tex",
+          "start_line": 255,
+          "end_line": 255,
+          "context": "The stellar parameters of J0731+3717 is available from the SDSS-II/III SEGUE archive at \\url{https://data.sdss.org/sas/dr12/sdss/sspp/ssppOut-dr12.fits}."
+        }
+      ],
+      "evidence": "The stellar parameters of J0731+3717 is available from the SDSS-II/III SEGUE archive at \\url{https://data.sdss.org/sas/dr12/sdss/sspp/ssppOut-dr12.fits}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "http://skyserver.sdss.org/dr12/en/tools/search/radial.aspx",
+      "local_path": "",
+      "description": "SDSS photometric and spectroscopic data portal (DR12).",
+      "source_refs": [
+        {
+          "path": "literature/2406.00923/arxiv_source/main.tex",
+          "start_line": 256,
+          "end_line": 256,
+          "context": "The SDSS photometric and spectroscopic data can be found at \\url{http://skyserver.sdss.org/dr12/en/tools/search/radial.aspx}."
+        }
+      ],
+      "evidence": "The SDSS photometric and spectroscopic data can be found at \\url{http://skyserver.sdss.org/dr12/en/tools/search/radial.aspx}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "http://das.sdss.org/va/osuPhot/v1_0/",
+      "local_path": "",
+      "description": "SDSS photometric catalog of M15 from the Galactic globular and open clusters project.",
+      "source_refs": [
+        {
+          "path": "literature/2406.00923/arxiv_source/main.tex",
+          "start_line": 257,
+          "end_line": 257,
+          "context": "The photometric catalog of M15 is available from \\url{http://das.sdss.org/va/osuPhot/v1_0/}."
+        }
+      ],
+      "evidence": "The photometric catalog of M15 is available from \\url{http://das.sdss.org/va/osuPhot/v1_0/}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "http://stellar.dartmouth.edu/models",
+      "local_path": "",
+      "description": "Dartmouth Stellar Evolution Program (DSEP) stellar isochrones used for age and mass estimation.",
+      "source_refs": [
+        {
+          "path": "literature/2406.00923/arxiv_source/main.tex",
+          "start_line": 258,
+          "end_line": 258,
+          "context": "The stellar isochrones can be found at \\url{http://stellar.dartmouth.edu/models}."
+        }
+      ],
+      "evidence": "The stellar isochrones can be found at \\url{http://stellar.dartmouth.edu/models}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "http://gala.adrian.pw/en/v1.6.1/getting_started.html",
+      "local_path": "",
+      "description": "Gala Python package used for orbital analysis.",
+      "source_refs": [
+        {
+          "path": "literature/2406.00923/arxiv_source/main.tex",
+          "start_line": 263,
+          "end_line": 263,
+          "context": "the orbital analysis is carried out with Python package Gala and galpy, which is publicly available at \\url{http://gala.adrian.pw/en/v1.6.1/getting_started.html} and \\url{www.galpy.org}."
+        }
+      ],
+      "evidence": "the orbital analysis is carried out with Python package Gala and galpy, which is publicly available at \\url{http://gala.adrian.pw/en/v1.6.1/getting_started.html} and \\url{www.galpy.org}.",
+      "comments": "galpy (www.galpy.org) is mentioned but not captured as a separate resource entry."
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Supplementary data available at NSR (National Science Review) online.",
+      "source_refs": [
+        {
+          "path": "literature/2406.00923/arxiv_source/main.tex",
+          "start_line": 266,
+          "end_line": 266,
+          "context": "Supplementary data are available at {\\it NSR} online."
+        }
+      ],
+      "evidence": "Supplementary data are available at {\\it NSR} online.",
+      "comments": "No explicit URL provided."
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "https://people.smp.uq.edu.au/HolgerBaumgardt/globular/parameter.html",
+      "local_path": "",
+      "description": "Baumgardt globular cluster parameter database (4th version of the Milky Way GC Database), providing tidal radii and escape velocities used in the encounter analysis.",
+      "source_refs": [
+        {
+          "path": "literature/2406.00923/arxiv_source/supplementary.tex",
+          "start_line": 87,
+          "end_line": 87,
+          "context": "the tidal radii $r_{\\rm t}$ of the clusters which can be found at \\url{https://people.smp.uq.edu.au/HolgerBaumgardt/globular/parameter.html}."
+        }
+      ],
+      "evidence": "the tidal radii $r_{\\rm t}$ of the clusters which can be found at \\url{https://people.smp.uq.edu.au/HolgerBaumgardt/globular/parameter.html}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-009",
+      "kind": "external_url",
+      "url": "https://www.sdss3.org/dr9/algorithms/wavelength.php",
+      "local_path": "",
+      "description": "SDSS DR9 wavelength calibration documentation, referenced for the systematic offset correction applied to the SEGUE spectrum of J0731+3717.",
+      "source_refs": [
+        {
+          "path": "literature/2406.00923/arxiv_source/supplementary.tex",
+          "start_line": 154,
+          "end_line": 154,
+          "context": "corrected for a systematic offset of $+7.3$\\,km\\,s$^{-1}$ due to wavelength calibrations (ref.\\citep{Adelman-McCarthy08}; \\url{https://www.sdss3.org/dr9/algorithms/wavelength.php})."
+        }
+      ],
+      "evidence": "corrected for a systematic offset of $+7.3$\\,km\\,s$^{-1}$ due to wavelength calibrations (ref.\\citep{Adelman-McCarthy08}; \\url{https://www.sdss3.org/dr9/algorithms/wavelength.php}).",
+      "comments": ""
+    },
+    {
+      "id": "resource-010",
+      "kind": "external_url",
+      "url": "https://cmc.ciera.northwestern.edu/home/",
+      "local_path": "",
+      "description": "Cluster Monte Carlo (CMC) N-body simulation website, providing present-day binary semimajor axis distributions used in the Hills ejection modeling.",
+      "source_refs": [
+        {
+          "path": "literature/2406.00923/arxiv_source/supplementary.tex",
+          "start_line": 265,
+          "end_line": 265,
+          "context": "we adopt the present-day distribution (with age up to 13.6\\,Gyr; \\url{https://cmc.ciera.northwestern.edu/home/}) for main-sequence binaries from the Cluster Monte Carlo (CMC) {\\it N}-body simulations\\citep{Kremer20}."
+        }
+      ],
+      "evidence": "we adopt the present-day distribution (with age up to 13.6\\,Gyr; \\url{https://cmc.ciera.northwestern.edu/home/}) for main-sequence binaries from the Cluster Monte Carlo (CMC) {\\it N}-body simulations\\citep{Kremer20}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-011",
+      "kind": "external_url",
+      "url": "https://zenodo.org/record/7599871",
+      "local_path": "",
+      "description": "Zenodo repository containing Monte Carlo N-body simulations for single-binary interactions involving compact objects (Cabrera & Rodriguez 2023), used for comparison with the Hills mechanism ejection rate.",
+      "source_refs": [
+        {
+          "path": "literature/2406.00923/arxiv_source/supplementary.tex",
+          "start_line": 306,
+          "end_line": 306,
+          "context": "only 10 such high-velocity stars, ejected in the past 250\\,Myr are found in the Monte Carlo {\\it N}-body simulations (\\url{https://zenodo.org/record/7599871}) for single-binary interaction involving compact objects by ref.\\citep{CR23}."
+        }
+      ],
+      "evidence": "only 10 such high-velocity stars, ejected in the past 250\\,Myr are found in the Monte Carlo {\\it N}-body simulations (\\url{https://zenodo.org/record/7599871}) for single-binary interaction involving compact objects by ref.\\citep{CR23}.",
+      "comments": ""
+    }
+  ]
+}

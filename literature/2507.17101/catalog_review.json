@@ -1,0 +1,234 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2507.17101",
+    "title": "Ancient, eclipsing, tidally-locked: A blue lurker progenitor in the population of extreme-velocity star candidates",
+    "month": "2025-07",
+    "source_note_json": "notes/2025/2025-07/2025-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2507.17101",
+      "pdf": "https://arxiv.org/pdf/2507.17101"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2507.17101",
+    "audit_path": "literature/2507.17101/audit.json",
+    "source_dir": "literature/2507.17101/arxiv_source",
+    "tex_root": "literature/2507.17101/arxiv_source/letter3.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:33:58",
+    "reviewer": "agent",
+    "summary": "Four internal tables: best-fit atmospheric parameters from X-shooter spectroscopy (tab:params1), median light-curve parameters of the eclipsing binary (tab:lc_parameters), combined spectro-photometric parameters including distances and tangential velocities (tab:params2), and radial-velocity measurements from three instruments (Tab:compspec). Three external resources retained: SOAR/Goodman and NOT/ALFOSC instrument pages, and the SOAR_data_reducer GitHub repository used for spectral reduction."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-params1",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Best-fit atmospheric and kinematic parameters for the two metal-poor stars (Gaia-S and WISE J0751) derived from X-shooter spectroscopy via chi-squared minimisation.",
+      "source_refs": [
+        {
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 178,
+          "end_line": 196,
+          "caption": "Best fit parameters for X-shooter spectrum fitted using a $\\chi^2$ minimization method. Statistical uncertainties are provided.",
+          "label": "tab:params1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name of the atmospheric or kinematic parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\gstar",
+          "meaning": "Value for Gaia-S",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\wise",
+          "meaning": "Value for WISE J0751",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Best fit parameters for X-shooter spectrum fitted using a $\\chi^2$ minimization method. Statistical uncertainties are provided.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-lc_parameters",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Median light-curve parameters of the Gaia-S eclipsing binary system derived from ZTF photometry, with 1-sigma uncertainties.",
+      "source_refs": [
+        {
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 232,
+          "end_line": 248,
+          "caption": "Median light curve Parameters with $1\\sigma$ uncertanties",
+          "label": "tab:lc_parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name of the light-curve parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Median value with uncertainty",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Median light curve Parameters with $1\\sigma$ uncertanties",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-params2",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Combined spectro-photometric parameters for both stars, including angular diameters, reddening, evolutionary masses, radii, spectroscopic distances, tangential velocities, and luminosities from SED fitting.",
+      "source_refs": [
+        {
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 261,
+          "end_line": 284,
+          "caption": "The combined spectro-photometric parameters for the two stars.",
+          "label": "tab:params2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name of the spectro-photometric parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\gstar",
+          "meaning": "Value for Gaia-S",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\wise",
+          "meaning": "Value for WISE J0751",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The combined spectro-photometric parameters for the two stars.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-compspec",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Radial-velocity measurements of Gaia-S from three different spectrographs (X-shooter, NOT/ALFOSC, SOAR/Goodman), used to confirm the large RV shift and binary nature.",
+      "source_refs": [
+        {
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 394,
+          "end_line": 407,
+          "caption": "Radial velocity measurements from different instruments. Uncertainties are systematic.",
+          "label": "Tab:compspec"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Instrument",
+          "meaning": "Spectrograph or instrument name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "MJD",
+          "meaning": "Modified Julian Date of the observation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV (km/s)",
+          "meaning": "Heliocentric radial velocity with uncertainty",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Radial velocity measurements from different instruments. Uncertainties are systematic.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://noirlab.edu/public/programs/ctio/soar-telescope/goodman/",
+      "local_path": "",
+      "description": "SOAR telescope Goodman spectrograph instrument page.",
+      "source_refs": [
+        {
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 157,
+          "end_line": 157,
+          "context": "A precise measurement of the atmospheric parameters, metallicity, and radial velocity was required to probe further. The star was later reported to be variable in \\citet{Gaia3}, although with only a few data points.\n\nWe obtained optical spectra at the ESO VLT with the X-shooter instrument at high signal-to-noise ($\\mathrm{S/N}>60$) in the blue and VIS arms of X-shooter ($\\lambda = 3000 - 9000\\, \\text{\\AA}$ at a resolving power $R = 5500 \\,\\text{to}\\, 11500$). Due to the light curve variability in the Zwicky Transient Facility (ZTF) light curve, two low S/N, low resolution spectra were obtained to check for radial velocity (RV) variability from the Nordic Optical Telescope (NOT/ALFOSC)\\footnote{https://www.not.iac.es/instruments/alfosc/} and Southern Astrophysical Research (SOAR/Goodman)\\footnote{https://noirlab.edu/public/programs/ctio/soar-telescope/goodman/} spectrographs  covering the optical range from approximately 3600 \\,\\AA\\, to 5200 \\AA. Using a 1\" slit, each setup achieves a spectral resolution of 2.2\\,\\AA, and 2.6\\,\\AA, respectively, corresponding to RV precisions between 10 and 15 \\kms. \nFor \\wise\\, we reanalyzed an archival X-Shooter spectrum ($R$ $= 6655$ in the blue arm, and $R$ $=8935$ in the VIS arm), of high S/N ($165$ in the blue, $178$ in the VIS)."
+        }
+      ],
+      "evidence": "A precise measurement of the atmospheric parameters, metallicity, and radial velocity was required to probe further. The star was later reported to be variable in \\citet{Gaia3}, although with only a few data points.\n\nWe obtained optical spectra at the ESO VLT with the X-shooter instrument at high signal-to-noise ($\\mathrm{S/N}>60$) in the blue and VIS arms of X-shooter ($\\lambda = 3000 - 9000\\, \\text{\\AA}$ at a resolving power $R = 5500 \\,\\text{to}\\, 11500$). Due to the light curve variability in the Zwicky Transient Facility (ZTF) light curve, two low S/N, low resolution spectra were obtained to check for radial velocity (RV) variability from the Nordic Optical Telescope (NOT/ALFOSC)\\footnote{https://www.not.iac.es/instruments/alfosc/} and Southern Astrophysical Research (SOAR/Goodman)\\footnote{https://noirlab.edu/public/programs/ctio/soar-telescope/goodman/} spectrographs  covering the optical range from approximately 3600 \\,\\AA\\, to 5200 \\AA. Using a 1\" slit, each setup achieves a spectral resolution of 2.2\\,\\AA, and 2.6\\,\\AA, respectively, corresponding to RV precisions between 10 and 15 \\kms. \nFor \\wise\\, we reanalyzed an archival X-Shooter spectrum ($R$ $= 6655$ in the blue arm, and $R$ $=8935$ in the VIS arm), of high S/N ($165$ in the blue, $178$ in the VIS).",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.not.iac.es/instruments/alfosc/",
+      "local_path": "",
+      "description": "Nordic Optical Telescope ALFOSC instrument page.",
+      "source_refs": [
+        {
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 157,
+          "end_line": 157,
+          "context": "A precise measurement of the atmospheric parameters, metallicity, and radial velocity was required to probe further. The star was later reported to be variable in \\citet{Gaia3}, although with only a few data points.\n\nWe obtained optical spectra at the ESO VLT with the X-shooter instrument at high signal-to-noise ($\\mathrm{S/N}>60$) in the blue and VIS arms of X-shooter ($\\lambda = 3000 - 9000\\, \\text{\\AA}$ at a resolving power $R = 5500 \\,\\text{to}\\, 11500$). Due to the light curve variability in the Zwicky Transient Facility (ZTF) light curve, two low S/N, low resolution spectra were obtained to check for radial velocity (RV) variability from the Nordic Optical Telescope (NOT/ALFOSC)\\footnote{https://www.not.iac.es/instruments/alfosc/} and Southern Astrophysical Research (SOAR/Goodman)\\footnote{https://noirlab.edu/public/programs/ctio/soar-telescope/goodman/} spectrographs  covering the optical range from approximately 3600 \\,\\AA\\, to 5200 \\AA. Using a 1\" slit, each setup achieves a spectral resolution of 2.2\\,\\AA, and 2.6\\,\\AA, respectively, corresponding to RV precisions between 10 and 15 \\kms. \nFor \\wise\\, we reanalyzed an archival X-Shooter spectrum ($R$ $= 6655$ in the blue arm, and $R$ $=8935$ in the VIS arm), of high S/N ($165$ in the blue, $178$ in the VIS)."
+        }
+      ],
+      "evidence": "A precise measurement of the atmospheric parameters, metallicity, and radial velocity was required to probe further. The star was later reported to be variable in \\citet{Gaia3}, although with only a few data points.\n\nWe obtained optical spectra at the ESO VLT with the X-shooter instrument at high signal-to-noise ($\\mathrm{S/N}>60$) in the blue and VIS arms of X-shooter ($\\lambda = 3000 - 9000\\, \\text{\\AA}$ at a resolving power $R = 5500 \\,\\text{to}\\, 11500$). Due to the light curve variability in the Zwicky Transient Facility (ZTF) light curve, two low S/N, low resolution spectra were obtained to check for radial velocity (RV) variability from the Nordic Optical Telescope (NOT/ALFOSC)\\footnote{https://www.not.iac.es/instruments/alfosc/} and Southern Astrophysical Research (SOAR/Goodman)\\footnote{https://noirlab.edu/public/programs/ctio/soar-telescope/goodman/} spectrographs  covering the optical range from approximately 3600 \\,\\AA\\, to 5200 \\AA. Using a 1\" slit, each setup achieves a spectral resolution of 2.2\\,\\AA, and 2.6\\,\\AA, respectively, corresponding to RV precisions between 10 and 15 \\kms. \nFor \\wise\\, we reanalyzed an archival X-Shooter spectrum ($R$ $= 6655$ in the blue arm, and $R$ $=8935$ in the VIS arm), of high S/N ($165$ in the blue, $178$ in the VIS).",
+      "comments": ""
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "https://github.com/Fabmat1/SOAR_data_reducer",
+      "local_path": "",
+      "description": "Open-source Python pipeline used for bias subtraction, flat-field correction, and wavelength calibration of SOAR/Goodman and NOT/ALFOSC spectra.",
+      "source_refs": [
+        {
+          "path": "literature/2507.17101/arxiv_source/letter3.tex",
+          "start_line": 391,
+          "end_line": 391,
+          "context": "\\label{A.spectra}\nThe X-Shooter spectrum of \\gstar\\, is shown in Fig. \\ref{fig:2}. We model this as a single star spectrum with no visible contamination through a secondary component. Table \\ref{Tab:compspec} shows the different RVs for the system. Fig. \\ref{fig:comp} shows the difference in RV. \nThe spectra obtained with NOT/ALFOSC and SOAR/Goodman were reduced using an open-source pipeline available on GitHub\\footnote{\\url{https://github.com/Fabmat1/SOAR_data_reducer}}. The reduction process included standard bias subtraction and flat-field correction. Wavelength calibration was performed using arc lamp exposures taken immediately prior to each science observation."
+        }
+      ],
+      "evidence": "\\label{A.spectra}\nThe X-Shooter spectrum of \\gstar\\, is shown in Fig. \\ref{fig:2}. We model this as a single star spectrum with no visible contamination through a secondary component. Table \\ref{Tab:compspec} shows the different RVs for the system. Fig. \\ref{fig:comp} shows the difference in RV. \nThe spectra obtained with NOT/ALFOSC and SOAR/Goodman were reduced using an open-source pipeline available on GitHub\\footnote{\\url{https://github.com/Fabmat1/SOAR_data_reducer}}. The reduction process included standard bias subtraction and flat-field correction. Wavelength calibration was performed using arc lamp exposures taken immediately prior to each science observation.",
+      "comments": ""
+    }
+  ]
+}

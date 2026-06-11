@@ -1,0 +1,321 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-23T11:40:06",
+  "paper": {
+    "arxiv_id": "2211.13476",
+    "title": "The VLT-FLAMES Tarantula Survey: Observational evidence for two distinct populations of massive runaway stars in 30 Doradus",
+    "month": "2022-11"
+  },
+  "review": {
+    "path": "literature/2211.13476/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260523T114006",
+    "started_at": "2026-05-23T11:40:06",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2211.13476",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": true
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-cluster",
+      "internal_table_id": "table-tab-cluster",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2211.13476/arxiv_source/aa.tex",
+        "start_line": 188,
+        "end_line": 206,
+        "caption": "Systemic velocities and 1\\s\\ radial-velocity dispersions from the two analysis methods (see text) and runaway (RW) fractions of the single O-star populations in 30~Dor.",
+        "label": "tab: cluster"
+      },
+      "source_path": "literature/2211.13476/arxiv_source/aa.tex",
+      "excerpt_path": "literature/2211.13476/catalog_sources/table-tab-cluster/excerpt.tex",
+      "sha256": "6f29658b3fe680e3f93a1903a30924249ad4eca14a14216f1e044f74791b2b29",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-RW",
+      "internal_table_id": "table-tab-RW",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2211.13476/arxiv_source/aa.tex",
+        "start_line": 243,
+        "end_line": 294,
+        "caption": "Properties of the O-type runaway stars detected in 30~Dor. Quoted uncertainties are 1\\s\\ errorbars for the velocities \\citep{SdKdM13} and 95\\%\\ confidence interval for the present-day evolutionary masses ($M_\\mathrm{act}$) and ages ($\\tau$) \\citep{SSE18}, but for VFTS~661 for which the mass estimates is taken from \\citet{MAS20}.",
+        "label": "tab: RW"
+      },
+      "source_path": "literature/2211.13476/arxiv_source/aa.tex",
+      "excerpt_path": "literature/2211.13476/catalog_sources/table-tab-RW/excerpt.tex",
+      "sha256": "fdd9908360d05fd191d33a99656319584463029c0520466975634e26a510182f",
+      "line_count": 52,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-cluster",
+      "internal_table_id": "table-tab-cluster",
+      "status": "success",
+      "ecsv_path": "literature/2211.13476/catalog_tables/table-tab-cluster.ecsv",
+      "caption": "Systemic velocities and 1\\s\\ radial-velocity dispersions from the two analysis methods (see text) and runaway (RW) fractions of the single O-star populations in 30~Dor.",
+      "label": "tab: cluster",
+      "row_count": 4,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Population",
+          "Sample",
+          "Sample Stat.",
+          "Gaussian fit",
+          "RW fraction"
+        ],
+        [
+          "",
+          "size",
+          "(km s^-1)",
+          "(km s^-1)",
+          "(%)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Population",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Sample | size",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Sample Stat. | (km s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Gaussian fit | (km s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "RW fraction | (%)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfs0jp2ap/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2211.13476/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfs0jp2ap/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2211.13476/catalog_sources/table-tab-cluster/wrapped.tex",
+            "html": "literature/2211.13476/catalog_sources/table-tab-cluster/latexml.html",
+            "stdout": "literature/2211.13476/catalog_sources/table-tab-cluster/latexml.stdout.txt",
+            "stderr": "literature/2211.13476/catalog_sources/table-tab-cluster/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6f29658b3fe680e3f93a1903a30924249ad4eca14a14216f1e044f74791b2b29"
+    },
+    {
+      "id": "table-tab-RW",
+      "internal_table_id": "table-tab-RW",
+      "status": "success",
+      "ecsv_path": "literature/2211.13476/catalog_tables/table-tab-RW.ecsv",
+      "caption": "Properties of the O-type runaway stars detected in 30~Dor. Quoted uncertainties are 1\\s\\ errorbars for the velocities \\citep{SdKdM13} and 95\\%\\ confidence interval for the present-day evolutionary masses ($M_\\mathrm{act}$) and ages ($\\tau$) \\citep{SSE18}, but for VFTS~661 for which the mass estimates is taken from \\citet{MAS20}.",
+      "label": "tab: RW",
+      "row_count": 24,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "VFTS",
+          "Loca-",
+          "v_los",
+          "\\delta v_los",
+          "\\vrot",
+          "Spectral",
+          "M_act",
+          "\\tau"
+        ],
+        [
+          "ID",
+          "tion",
+          "(km s^-1)",
+          "(km s^-1)",
+          "(km s^-1)",
+          "Classification",
+          "( \\msun )",
+          "(Myr)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "VFTS | ID",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Loca- | tion",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "v_los | (km s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\delta v_los | (km s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\vrot | (km s^-1)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Spectral | Classification",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "M_act | ( \\msun )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\tau | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptrav6kcv/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2211.13476/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptrav6kcv/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2211.13476/catalog_sources/table-tab-RW/wrapped.tex",
+            "html": "literature/2211.13476/catalog_sources/table-tab-RW/latexml.html",
+            "stdout": "literature/2211.13476/catalog_sources/table-tab-RW/latexml.stdout.txt",
+            "stderr": "literature/2211.13476/catalog_sources/table-tab-RW/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "fdd9908360d05fd191d33a99656319584463029c0520466975634e26a510182f"
+    }
+  ]
+}

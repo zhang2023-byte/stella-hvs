@@ -1,0 +1,51 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T18:21:38",
+  "paper": {
+    "arxiv_id": "2503.13095",
+    "bibcode": "2025AN....34670003H",
+    "title": "A slowly pulsating run-away B star at high Galactic latitude ejected from a spiral arm",
+    "month": "2025-03",
+    "source_note_json": "notes/2025/2025-03/2025-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2503.13095",
+      "pdf": "https://arxiv.org/pdf/2503.13095"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2503.13095",
+    "audit_path": "literature/2503.13095/audit.json",
+    "catalog_review_path": "literature/2503.13095/catalog_review.json",
+    "catalog_extraction_path": "literature/2503.13095/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2503.13095/catalog_tables/table-tab-atmos.ecsv",
+      "literature/2503.13095/catalog_tables/table-tab-stellar.ecsv",
+      "literature/2503.13095/catalog_tables/table-tab-kinematic.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T18:21:38",
+    "extractor": "agent",
+    "summary": "This paper studies the runaway B star LAMOST J083323.18+430825.4 (J0833+4308), a slowly pulsating B6V star ejected from the Carina-Sagittarius spiral arm at 92 km/s. Despite its high Galactic latitude (2.5 kpc above the plane) and Galactic rest-frame velocity of 210 km/s, the paper explicitly states that this velocity is 'much lower than the Galactic escape velocity, and therefore, the star is bound to the Galaxy.' The object is presented as an ordinary runaway star, not as a possibly unbound, HVS, or hyper-runaway candidate. No HVS/unbound candidates are included."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "j0833+4308",
+      "description": "The runaway B star LAMOST J083323.18+430825.4 (J0833+4308), the sole object studied in this paper. It is a B6V slowly pulsating star at high Galactic latitude with kinematic traceback to the Carina-Sagittarius spiral arm.",
+      "decision": "excluded",
+      "reason": "The paper explicitly states that the star is bound to the Galaxy: its Galactic rest-frame velocity of 210 km/s is 'much lower than the Galactic escape velocity.' The object is presented as an ordinary runaway star ejected via binary supernova or dynamical ejection, not as a possibly unbound/HVS/hyper-runaway candidate. Per Stella rules, ordinary runaways and objects the paper concludes are bound to the Galaxy are excluded.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2503.13095/arxiv_source/runaway_AN_final.tex",
+          "start_line": 193,
+          "end_line": 196,
+          "context": "Kinematic analysis section explicitly stating: 'Its present Galactic rest frame velocity is 210+/-4 km/s, much lower than the Galactic escape velocity, and therefore, the star is bound to the Galaxy.'"
+        }
+      ]
+    }
+  ]
+}

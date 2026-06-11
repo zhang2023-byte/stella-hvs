@@ -1,0 +1,77 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:36:34",
+  "paper": {
+    "arxiv_id": "2010.14279",
+    "bibcode": "2020ApJ...903..131Y",
+    "title": "Existence of the Metal-Rich Stellar Halo and High-velocity Thick Disk in the Galaxy",
+    "month": "2020-10",
+    "source_note_json": "notes/2020/2020-10/2020-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2010.14279",
+      "pdf": "https://arxiv.org/pdf/2010.14279"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2010.14279",
+    "audit_path": "literature/2010.14279/audit.json",
+    "catalog_review_path": "literature/2010.14279/catalog_review.json",
+    "catalog_extraction_path": "literature/2010.14279/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:36:34",
+    "extractor": "agent",
+    "summary": "本文利用Gaia DR2天体测量结合LAMOST DR5和APOGEE DR14光谱巡天数据，研究相对于本地静止标准(LSR)速度超过220 km/s的'高速星'(high-velocity stars)的运动学和金属丰度分布。通过分析旋转速度分布和金属丰度分布函数，论文发现存在金属丰恒星晕(metal-rich stellar halo, MRSH)和高速厚盘(high-velocity thick disk, HVTD)两个结构成分。该研究属于银河系结构的统计分析，研究对象是基于统计定义的群体(速度>220 km/s，所有样本星均处于银河系束缚轨道)，不涉及任何银河系非束缚超高速星(HVS)候选体的识别或表征。论文中的'high-velocity'指相对于LSR的高速度(>220 km/s)，远小于该处的银河系逃逸速度。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS候选体相关性。论文是基于Gaia DR2+LAMOST+APOGEE的银河系结构统计研究，以v_tot > 220 km/s选取'高速星'样本用于统计分析，不涉及银河系非束缚HVS候选体。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (yyp1.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2010.14279/arxiv_source/yyp1.tex",
+          "start_line": 31,
+          "end_line": 36,
+          "context": "Abstract: study of high-velocity stars with relative speed >= 220 km/s; kinematics and metallicity of thick disk and halo components."
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "high-velocity-sample",
+      "description": "从LAMOST DR5和APOGEE DR14中选取的v_tot > 220 km/s的高速星样本(含高分辨样本和低分辨样本)，用于银河系厚盘和晕的运动学及金属丰度统计分析。",
+      "decision": "excluded",
+      "reason": "论文定义'high-velocity'为相对于LSR的总空间速度>220 km/s，该速度阈值远小于太阳附近~550 km/s的银河系逃逸速度。所有样本星均处于银河系束缚轨道，论文仅研究这些恒星在不同银河系结构成分(厚盘、晕)中的分布特征。论文中未将任何恒星识别为银河系非束缚超高速星候选体，也未进行逃逸速度或束缚状态评估。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2010.14279/arxiv_source/yyp1.tex",
+          "start_line": 31,
+          "end_line": 36,
+          "context": "Abstract: high-velocity stars with v_tot > 220 km/s; kinematic classification into thick disk and halo."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2010.14279/arxiv_source/yyp1.tex",
+          "start_line": 62,
+          "end_line": 63,
+          "context": "Paper studies kinematics and MDF of metal-rich halo and high-velocity thick disk populations."
+        }
+      ]
+    }
+  ]
+}

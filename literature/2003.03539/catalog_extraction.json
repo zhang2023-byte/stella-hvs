@@ -1,0 +1,529 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:37:31",
+  "paper": {
+    "arxiv_id": "2003.03539",
+    "title": "A high-resolution spectroscopic study of two new Na- and Al-rich field giants -- likely globular cluster escapees in the Galactic halo",
+    "month": "2020-03"
+  },
+  "review": {
+    "path": "literature/2003.03539/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083731",
+    "started_at": "2026-06-07T08:37:31",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2003.03539",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-001",
+      "internal_table_id": "table-001",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2003.03539/arxiv_source/gce.tex",
+        "start_line": 538,
+        "end_line": 552,
+        "caption": "Observational Details for our Program Stars",
+        "label": ""
+      },
+      "source_path": "literature/2003.03539/arxiv_source/gce.tex",
+      "excerpt_path": "literature/2003.03539/catalog_sources/table-001/excerpt.tex",
+      "sha256": "68562ec5c21cf86020e250a1c356f2cf51b9fb407ee230431b33cdb79e56894b",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-002",
+      "internal_table_id": "table-002",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2003.03539/arxiv_source/gce.tex",
+        "start_line": 554,
+        "end_line": 583,
+        "caption": "Elemental Abundances for SDSS J064655.6+411620.5",
+        "label": ""
+      },
+      "source_path": "literature/2003.03539/arxiv_source/gce.tex",
+      "excerpt_path": "literature/2003.03539/catalog_sources/table-002/excerpt.tex",
+      "sha256": "56ae9f71886f33ea4f4203c4d813f114d15795999b1e2158127e277384bfc39a",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-003",
+      "internal_table_id": "table-003",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2003.03539/arxiv_source/gce.tex",
+        "start_line": 585,
+        "end_line": 616,
+        "caption": "Elemental Abundances for SDSS J193712.01+502455.5",
+        "label": ""
+      },
+      "source_path": "literature/2003.03539/arxiv_source/gce.tex",
+      "excerpt_path": "literature/2003.03539/catalog_sources/table-003/excerpt.tex",
+      "sha256": "7254f92c7e998b347955fff0326689f17b01d2e3aeead2144475ca5337aed35d",
+      "line_count": 32,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-001",
+      "internal_table_id": "table-001",
+      "status": "success",
+      "ecsv_path": "literature/2003.03539/catalog_tables/table-001.ecsv",
+      "caption": "Observational Details for our Program Stars",
+      "label": "",
+      "row_count": 3,
+      "column_count": 12,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "RA",
+          "DEC",
+          "Exposure",
+          "Frames",
+          "SNR",
+          "V",
+          "Radial Vel.",
+          "T_\\rm eff",
+          "log(g)",
+          "\\xi",
+          "[Fe / H]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "DEC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Exposure",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Frames",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "SNR",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "V",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Radial Vel.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "T_\\rm eff",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "log(g)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\xi",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "[Fe / H]",
+          "unit_text": "[Fe / H]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpptt30idu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2003.03539/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpptt30idu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2003.03539/catalog_sources/table-001/wrapped.tex",
+            "html": "literature/2003.03539/catalog_sources/table-001/latexml.html",
+            "stdout": "literature/2003.03539/catalog_sources/table-001/latexml.stdout.txt",
+            "stderr": "literature/2003.03539/catalog_sources/table-001/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "68562ec5c21cf86020e250a1c356f2cf51b9fb407ee230431b33cdb79e56894b"
+    },
+    {
+      "id": "table-002",
+      "internal_table_id": "table-002",
+      "status": "success",
+      "ecsv_path": "literature/2003.03539/catalog_tables/table-002.ecsv",
+      "caption": "Elemental Abundances for SDSS J064655.6+411620.5",
+      "label": "",
+      "row_count": 18,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "Species",
+          "Solar",
+          "lines",
+          "A(X)",
+          "[X/H]",
+          "[X/Fe]",
+          "\\sigma^*"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Species",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Solar",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "lines",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "A(X)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "[X/H]",
+          "unit_text": "[X/H]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "[X/Fe]",
+          "unit_text": "[X/Fe]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\sigma^*",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvz8b5327/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2003.03539/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvz8b5327/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2003.03539/catalog_sources/table-002/wrapped.tex",
+            "html": "literature/2003.03539/catalog_sources/table-002/latexml.html",
+            "stdout": "literature/2003.03539/catalog_sources/table-002/latexml.stdout.txt",
+            "stderr": "literature/2003.03539/catalog_sources/table-002/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "56ae9f71886f33ea4f4203c4d813f114d15795999b1e2158127e277384bfc39a"
+    },
+    {
+      "id": "table-003",
+      "internal_table_id": "table-003",
+      "status": "success",
+      "ecsv_path": "literature/2003.03539/catalog_tables/table-003.ecsv",
+      "caption": "Elemental Abundances for SDSS J193712.01+502455.5",
+      "label": "",
+      "row_count": 19,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "Species",
+          "Solar",
+          "lines",
+          "A(X)",
+          "[X/H]",
+          "[X/Fe]",
+          "\\sigma^*"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Species",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Solar",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "lines",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "A(X)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "[X/H]",
+          "unit_text": "[X/H]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "[X/Fe]",
+          "unit_text": "[X/Fe]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\sigma^*",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp567lute5/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2003.03539/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp567lute5/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2003.03539/catalog_sources/table-003/wrapped.tex",
+            "html": "literature/2003.03539/catalog_sources/table-003/latexml.html",
+            "stdout": "literature/2003.03539/catalog_sources/table-003/latexml.stdout.txt",
+            "stderr": "literature/2003.03539/catalog_sources/table-003/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7254f92c7e998b347955fff0326689f17b01d2e3aeead2144475ca5337aed35d"
+    }
+  ]
+}

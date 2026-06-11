@@ -1,0 +1,90 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1804.09677",
+    "title": "Anatomy of the hyper-runaway star LP 40-365 with Gaia",
+    "month": "2018-04",
+    "source_note_json": "notes/2018/2018-04/2018-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1804.09677",
+      "pdf": "https://arxiv.org/pdf/1804.09677"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1804.09677",
+    "audit_path": "literature/1804.09677/audit.json",
+    "source_dir": "literature/1804.09677/arxiv_source",
+    "tex_root": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T08:12:00",
+    "reviewer": "agent",
+    "summary": "This MNRAS Letter presents a detailed kinematic and physical analysis of the hyper-runaway star LP 40-365 (GD 492) using Gaia DR2 astrometry. The authors use the Gaia parallax (ϖ=1.58±0.03 mas) to derive a distance of 632±14 pc, radius of 0.18±0.01 R☉, and mass of 0.37(+0.29/−0.17) M☉, confirming LP 40-365 as a subluminous star ~15× larger than a typical white dwarf — consistent with the SN Iax partially-burnt remnant scenario. They compute a rest-frame velocity of 852±10 km/s (~1.5× Galactic escape velocity) and trace its trajectory back 5.0±0.3 Myr to a Galactic disc crossing in Carina at R_G≈6.0 kpc. The paper contains one structured data table (Table 1): physical parameters of LP 40-365 with columns for Teff, log g, distance, radius, mass, and luminosity, including both nominal values and 5–95% confidence ranges. No machine-readable data files are present in the arXiv source (only .tex and .eps figure files). URLs in the text point to the galpy software repository (tool citation) and Gaia/DPAC institutional websites (acknowledgments); these are not structured data resources. The data underlying the analysis (Gaia DR2 astrometry, radial velocity from Raddi et al. 2018) are cited from prior publications and public archives."
+  },
+  "internal_tables": [
+    {
+      "id": "table-t-phys",
+      "kind": "latex_table",
+      "asset_type": "physical_parameters",
+      "role_in_paper": "Presents the derived physical parameters of LP 40-365: effective temperature, surface gravity, distance, radius, mass, and luminosity, with nominal values (median ± 1σ) and 5–95% confidence ranges.",
+      "source_refs": [
+        {
+          "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+          "start_line": 132,
+          "end_line": 147,
+          "caption": "Physical parameters of LP 40-365. The nominal values of d, R and M correspond to the median of the distributions, and the 1σ uncertainty. The 5–95 per cent range is also given below.",
+          "label": "t:phys"
+        }
+      ],
+      "columns": [
+        {
+          "name": "T_eff",
+          "meaning": "Effective temperature of LP 40-365",
+          "unit_text": "K",
+          "source_of_definition": "table header + footnote (from Raddi et al. 2018, Paper I)",
+          "confidence": 0.95
+        },
+        {
+          "name": "log_g",
+          "meaning": "Surface gravity (logarithmic)",
+          "unit_text": "cgs (cm/s²)",
+          "source_of_definition": "table header + footnote (from Raddi et al. 2018, Paper I)",
+          "confidence": 0.95
+        },
+        {
+          "name": "d",
+          "meaning": "Heliocentric distance to LP 40-365",
+          "unit_text": "pc",
+          "source_of_definition": "table header; derived from Gaia DR2 parallax",
+          "confidence": 0.95
+        },
+        {
+          "name": "R",
+          "meaning": "Stellar radius of LP 40-365",
+          "unit_text": "R_sun",
+          "source_of_definition": "table header; derived from flux + Gaia parallax via Stefan-Boltzmann law",
+          "confidence": 0.95
+        },
+        {
+          "name": "M",
+          "meaning": "Stellar mass of LP 40-365",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header; derived from M ∝ gR² using spectral log g + Gaia radius",
+          "confidence": 0.90
+        },
+        {
+          "name": "L",
+          "meaning": "Stellar luminosity of LP 40-365",
+          "unit_text": "L_sun",
+          "source_of_definition": "table header; derived from flux + Gaia parallax",
+          "confidence": 0.95
+        }
+      ],
+      "evidence": "Table 1 (t:phys) in Section 2 (Physical properties). Data row: Teff=8900±300 K, log g=5.50±0.25, d=632±14 pc, R=0.18±0.01 R☉, M=0.37(+0.29/−0.17) M☉, L=0.18±0.01 L☉. Second row gives 5–95% ranges: d=610–655 pc, R=0.16–0.20 R☉, M=0.14–0.98 M☉, L=0.17–0.19 L☉. Teff and log g are adopted from the companion Paper I (Raddi et al. 2018, ApJ 858, 3).",
+      "comments": "Single-object table (N=1). Teff and log g are not independently derived in this paper — they come from the spectral analysis of Paper I. Distance, radius, mass, and luminosity are derived here using Gaia DR2 parallax. The mass has large asymmetric uncertainties due to the log g uncertainty propagation through M ∝ gR²."
+    }
+  ],
+  "external_resources": []
+}

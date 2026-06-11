@@ -1,0 +1,163 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2301.02251",
+    "title": "On the degree of stochastic asymmetry in the tidal tails of star clusters",
+    "month": "2023-01",
+    "source_note_json": "notes/2023/2023-01/2023-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2301.02251",
+      "pdf": "https://arxiv.org/pdf/2301.02251"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2301.02251",
+    "audit_path": "literature/2301.02251/audit.json",
+    "source_dir": "literature/2301.02251/arxiv_source",
+    "tex_root": "literature/2301.02251/arxiv_source/paper3.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:18:27",
+    "reviewer": "agent",
+    "summary": "Three LaTeX tables identified: (1) tab_sc_data: observed parameters of 4 star clusters (Hyades, Praesepe, Coma Berenices, NGC 752) including distances, masses, tidal radii, ages, tidal tail member counts and asymmetries, and Galactic positions/velocities; this is a sample summary table compiling published data from Jerabkova+2021, Jerabkova+2022, Boffin+2022, and Kroupa+2022. (2) tab_monte_carlo: Gaussian fit parameters (mean, dispersion, observed deviation) of Monte Carlo asymmetry distributions for 4 star clusters under minimum and maximum mass models plus theoretical prediction. (3) tab_pot_value: parameters of the Allen & Santillan (1991) Galactic potential (bulge, disk, halo components). No external data resources (URLs, archives, machine-readable files) are mentioned in the paper; observational data are taken from prior publications."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab_sc_data",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Summarises observed physical and kinematic parameters of the four target star clusters (Hyades, Praesepe, Coma Berenices, NGC 752) and their tidal tail member counts/asymmetries. Data compiled from Jerabkova+2021, Jerabkova+2022, Boffin+2022, and Kroupa+2022.",
+      "source_refs": [
+        {
+          "path": "literature/2301.02251/arxiv_source/paper3.tex",
+          "start_line": 265,
+          "end_line": 317,
+          "caption": "\\label{tab_sc_data} Data of the star clusters. ({\\it upper section}:) $d$: distance Sun--star cluster, $M$: current stellar mass within tidal radius $r_\\mathrm{t}$, $b_\\mathrm{Pl}$: Plummer parameter obtained from the observed half mass radius, $r_\\mathrm{t}$: observed tidal radius, $t$: average of published ages of the star clusters, $n$: total number of tidal tail members, $n_\\mathrm{l}$: number of members in the leading tidal tail, $n_\\mathrm{t}$: number of members in the trailing tidal tail, $n_\\mathrm{l,50-200}$: number of members in the leading tidal tail at a distance of 50--200\\,pc from the cluster centre, $n_\\mathrm{t,50-200}$: number of members in the trailing tidal tail at a distance of 50--200\\,pc from the cluster centre. ({\\it lower section}:) current position and velocity of the star clusters in the Galactic inertial rest frame used for the Monte Carlo simulations for an assumed Solar distance of 8.3 kpc to the Galactic centre, and 27\\,pc above the Galactic plane and a local rotational velocity of 225\\,km/s as in \\citet{jerabkova2021a}. The velocity components of the Sun in the Galactic rest frame are 11.1\\,km/s towards to the Galactic centre, 232.24\\,km/s into the direction of Galactic rotation and 7.25\\,km/s in positive vertical direction. Thus, the peculiar velocity of the Sun is [11.1, 7.24, 7.25]\\,km/s. See \\citet{kroupa2022a} for details.",
+          "label": "tab_sc_data"
+        }
+      ],
+      "columns": [
+        {
+          "name": "parameter",
+          "meaning": "Physical or kinematic parameter name (row header)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Hyades",
+          "meaning": "Measured value of the parameter for the Hyades star cluster",
+          "unit_text": "varies by row",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Coma Berenices",
+          "meaning": "Measured value of the parameter for the Coma Berenices star cluster",
+          "unit_text": "varies by row",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Praesepe",
+          "meaning": "Measured value of the parameter for the Praesepe star cluster",
+          "unit_text": "varies by row",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "NGC 752",
+          "meaning": "Measured value of the parameter for the NGC 752 star cluster",
+          "unit_text": "varies by row",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table is transposed: rows are parameters (d, M, b_Pl, r_t, t, n, n_l, n_t, epsilon, n_l,50-200, n_t,50-200, x, y, z, v_x, v_y, v_z) and columns are the four star clusters. Upper section: physical parameters and tidal tail counts. Lower section: Galactic positions and velocities.",
+      "comments": "Observational data compiled from Jerabkova+2021 (A&A 647 A137), Jerabkova+2022 (in prep.), Boffin+2022 (MNRAS 514 3579), and Kroupa+2022 (MNRAS 517 3613)."
+    },
+    {
+      "id": "table-tab_monte_carlo",
+      "kind": "latex_table",
+      "asset_type": "fit_parameters",
+      "role_in_paper": "Gaussian fit parameters of the Monte Carlo asymmetry distributions for all four star clusters under minimum-mass, maximum-mass models, and theoretical prediction; used to compare observed asymmetry against stochastic expectation.",
+      "source_refs": [
+        {
+          "path": "literature/2301.02251/arxiv_source/paper3.tex",
+          "start_line": 620,
+          "end_line": 643,
+          "caption": "\\label{tab_monte_carlo}Parameter of Gaussian fits of the asymmetry distribution of the different Monte Carlo models.",
+          "label": "tab_monte_carlo"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster",
+          "meaning": "Star cluster name and model variant (min/max/theo)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu",
+          "meaning": "Mean of the Gaussian fit to the normalised asymmetry distribution",
+          "unit_text": "dimensionless",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "sigma",
+          "meaning": "Standard deviation (dispersion) of the Gaussian fit to the normalised asymmetry distribution",
+          "unit_text": "dimensionless",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "|x_obs - mu|",
+          "meaning": "Absolute deviation of the observed asymmetry from the model mean, expressed in units of sigma",
+          "unit_text": "sigma",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table lists 4 clusters x 3 model variants (min, max, theo). Values show the stochastic expectation: Hyades observed asymmetry is a 6.7-7.3 sigma outlier; other clusters are 1.6-2.4 sigma.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab_pot_value",
+      "kind": "latex_table",
+      "asset_type": "model_parameters",
+      "role_in_paper": "Lists the gravitational potential parameters (Allen & Santillan 1991) for the Galactic bulge, disk, and halo components used in the Monte Carlo orbit integrations.",
+      "source_refs": [
+        {
+          "path": "literature/2301.02251/arxiv_source/paper3.tex",
+          "start_line": 949,
+          "end_line": 963,
+          "caption": "\\label{tab_pot_value} Parameters of the potential used in this work.",
+          "label": "tab_pot_value"
+        }
+      ],
+      "columns": [
+        {
+          "name": "component",
+          "meaning": "Galactic component: bulge, disk, or halo",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "parameter",
+          "meaning": "Parameter name and value for each potential component (M1, b1 for bulge; M2, a2, b2 for disk; M3, a3, gamma for halo). Mass in units of 2.3262e7 M_sun, length in kpc.",
+          "unit_text": "see context",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "From Allen & Santillan (1991) potential. Parameters: bulge M1=606.0, b1=0.3873; disk M2=3690.0, a2=5.3178, b2=0.2500; halo M3=4615.0, a3=12.0, gamma=2.02.",
+      "comments": "Units: mass in 2.3262e7 M_sun, length in kpc. G=1 in these units. See Appendix for Hermite integration formulae."
+    }
+  ],
+  "external_resources": []
+}

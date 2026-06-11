@@ -1,0 +1,896 @@
+{
+    "schema_version": "stella.article_data_assets.review.v1",
+    "paper": {
+        "arxiv_id": "2510.23470",
+        "title": "A targeted radio survey of infrared-selected bow shock candidates",
+        "month": "2025-10",
+        "source_note_json": "notes/2025/2025-10/2025-10.json",
+        "links": {
+            "abs": "https://arxiv.org/abs/2510.23470",
+            "pdf": "https://arxiv.org/pdf/2510.23470"
+        }
+    },
+    "source": {
+        "paper_dir": "literature/2510.23470",
+        "audit_path": "literature/2510.23470/audit.json",
+        "source_dir": "literature/2510.23470/arxiv_source",
+        "tex_root": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+        "source_available": true
+    },
+    "review": {
+        "status": "reviewed",
+        "reviewed_at": "2026-05-17T12:34:32",
+        "reviewer": "agent",
+        "summary": "Auto-filled review: 5 internal table(s), 33 external resource(s)."
+    },
+    "internal_tables": [
+        {
+            "id": "table-tab-obsvla",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Summary of observational runs, targets, and calibrators",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 221,
+                    "end_line": 239,
+                    "caption": "Summary of observational runs, targets, and calibrators.",
+                    "label": "tab:obsvla"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Observation ID",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Observed Targets",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Flux/Bandpass Calibrator",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Phase/Amplitude Calibrators",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Summary of observational runs, targets, and calibrators.",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-ne",
+            "kind": "latex_table",
+            "asset_type": "data_table",
+            "role_in_paper": "Estimation of $n_e$ based on size and brightness of bow shock (or RMS noise level of the map for non-detections) using Eq",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 515,
+                    "end_line": 561,
+                    "caption": "Estimation of $n_e$ based on size and brightness of bow shock (or RMS noise level of the map for non-detections) using Eq.~\\ref{eq:ne}.",
+                    "label": "tab:ne"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Source",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "d | (kpc)",
+                    "meaning": "Distance",
+                    "unit_text": "kpc",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "method",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "R_0 | (pc)",
+                    "meaning": "Column from table header",
+                    "unit_text": "pc",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "RMS | (mJy beam^-1)",
+                    "meaning": "Column from table header",
+                    "unit_text": "mJy beam^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "I_\\nu | (mJy beam^-1)",
+                    "meaning": "I-band magnitude",
+                    "unit_text": "mJy beam^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "UL?",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "n_e | (cm^-3)",
+                    "meaning": "Column from table header",
+                    "unit_text": "cm^-3",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Estimation of $n_e$ based on size and brightness of bow shock (or RMS noise level of the map for non-detections) using Eq.~\\ref{eq:ne}.",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-targets",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "List of VLA targets and their driving star, sorted according to right ascension",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 712,
+                    "end_line": 1005,
+                    "caption": "List of VLA targets and their driving star, sorted according to right ascension.",
+                    "label": "tab:targets"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Bow Shock",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Driving Star",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "R.A._J2000",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Dec._J2000",
+                    "meaning": "Declination",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "spec. type",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Det?",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\multicolumn2cEnv.~PM (km s^-1) | R.A.",
+                    "meaning": "Column from table header",
+                    "unit_text": "km s^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\multicolumn2cPeculiar PM (km s^-1) | Dec",
+                    "meaning": "Column from table header",
+                    "unit_text": "km s^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "parallax | R.A.",
+                    "meaning": "Parallax",
+                    "unit_text": "mas",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "ref. | Dec",
+                    "meaning": "Bibliographic reference",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "(mas)",
+                    "meaning": "Column from table header",
+                    "unit_text": "(mas)",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_012",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "List of VLA targets and their driving star, sorted according to right ascension.",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-app-mdot",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Estimation of mass-loss rates, $\\dot{M}$, and wind velocities, $v_\\infty$, from spectral types in Table~\\ref{tab:targets} of 17 of the 24 target bow shocks and the derived ISM electron density, $n_{e,0}$",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 1018,
+                    "end_line": 1045,
+                    "caption": "Estimation of mass-loss rates, $\\dot{M}$, and wind velocities, $v_\\infty$, from spectral types in Table~\\ref{tab:targets} of 17 of the 24 target bow shocks and the derived ISM electron density, $n_{e,0}$.",
+                    "label": "tab:app:mdot"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Bow Shock",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\dotM | (10^-6 M_\\odot yr^-1)",
+                    "meaning": "Column from table header",
+                    "unit_text": "(10^-6 M_\\odot yr^-1)",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "v_\\infty | (km s^-1)",
+                    "meaning": "V-band magnitude",
+                    "unit_text": "km s^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "n_e,0 | (cm^-3)",
+                    "meaning": "Column from table header",
+                    "unit_text": "cm^-3",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Estimation of mass-loss rates, $\\dot{M}$, and wind velocities, $v_\\infty$, from spectral types in Table~\\ref{tab:targets} of 17 of the 24 target bow shocks and the derived ISM electron density, $n_{e,0}$.",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-eff-names",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "List of targets observed with Effelsberg with the associated name in the Effelbserg proposal and in Figure~\\ref{fig:eff-bow}",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 1158,
+                    "end_line": 1176,
+                    "caption": "List of targets observed with Effelsberg with the associated name in the Effelbserg proposal and in Figure~\\ref{fig:eff-bow}.",
+                    "label": "tab:eff-names"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Target name",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Name in Effelsberg proposal 86-20",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "List of targets observed with Effelsberg with the associated name in the Effelbserg proposal and in Figure~\\ref{fig:eff-bow}.",
+            "comments": ""
+        }
+    ],
+    "external_resources": [
+        {
+            "id": "resource-001",
+            "kind": "external_url",
+            "url": "https://science.nrao.edu/facilities/vla/docs/manuals/obsguide/dynsched/antenna-shadowing",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 190,
+                    "end_line": 190,
+                    "context": "Observations were made during the 2019B Semester when the VLA was in D-configuration, choosing the C band  (4-8\\,GHz) and X band (8-12\\,GHz).\n\nThe biggest limitation was to choose candidates that have declination  $>-\\ang{16}$ in order to minimise shadowing from the antennas\\footnote{\\url{https://science.nrao.edu/facilities/vla/docs/manuals/obsguide/dynsched/antenna-shadowing}} for sources that are low in the sky.\nSince the D-configuration is the tightest layout for the VLA, there is a high chance the targets with declination $\\le-\\ang{16}$ will be overshadowed.\nThis limitation excluded almost half of the candidates."
+                }
+            ],
+            "evidence": "Observations were made during the 2019B Semester when the VLA was in D-configuration, choosing the C band  (4-8\\,GHz) and X band (8-12\\,GHz).\n\nThe biggest limitation was to choose candidates that have declination  $>-\\ang{16}$ in order to minimise shadowing from the antennas\\footnote{\\url{https://science.nrao.edu/facilities/vla/docs/manuals/obsguide/dynsched/antenna-shadowing}} for sources that are low in the sky.\nSince the D-configuration is the tightest layout for the VLA, there is a high chance the targets with declination $\\le-\\ang{16}$ will be overshadowed.\nThis limitation excluded almost half of the candidates.",
+            "comments": ""
+        },
+        {
+            "id": "resource-002",
+            "kind": "external_url",
+            "url": "https://science.nrao.edu/facilities/vla/docs/manuals/oss2019B/performance/resolution",
+            "local_path": "",
+            "description": "Observatory or institute data portal referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 197,
+                    "end_line": 197,
+                    "context": "The smallest resolvable angle, $\\theta_\\mathrm{min}$, depends highly on the observing wavelength, $\\lambda$, and the arrangement of the array: $\\theta_\\mathrm{min} \\sim \\lambda/B_\\mathrm{max}$, where $B_\\mathrm{max}$ is the length of the largest baseline of the interferometer.\nThe largest observable scale, $\\theta_\\mathrm{max}$, is set by the beamsize of a single component telescope of the interferometer with diameter $D_\\mathrm{tel}$, according to $\\theta_\\mathrm{max}\\sim \\lambda / D_\\mathrm{tel}$,\nFor D-configuration, the observing limits (i.e,~observable angular scales of the target\\footnote{\\url{https://science.nrao.edu/facilities/vla/docs/manuals/oss2019B/performance/resolution}}) are between \\ang{;;12} and \\ang{;;240} for C band, and between \\ang{;;7.2} and \\ang{;;145} for the X band.\nIf the target is outside those limits, the array will not be able to resolve the image or will lose flux on large scales.\nTo decide which of the remaining objects we would include in the observation, we measured the size of the bow shocks from the available IR maps online.\\footnote{\\url{https://aladin.u-strasbg.fr}}"
+                }
+            ],
+            "evidence": "The smallest resolvable angle, $\\theta_\\mathrm{min}$, depends highly on the observing wavelength, $\\lambda$, and the arrangement of the array: $\\theta_\\mathrm{min} \\sim \\lambda/B_\\mathrm{max}$, where $B_\\mathrm{max}$ is the length of the largest baseline of the interferometer.\nThe largest observable scale, $\\theta_\\mathrm{max}$, is set by the beamsize of a single component telescope of the interferometer with diameter $D_\\mathrm{tel}$, according to $\\theta_\\mathrm{max}\\sim \\lambda / D_\\mathrm{tel}$,\nFor D-configuration, the observing limits (i.e,~observable angular scales of the target\\footnote{\\url{https://science.nrao.edu/facilities/vla/docs/manuals/oss2019B/performance/resolution}}) are between \\ang{;;12} and \\ang{;;240} for C band, and between \\ang{;;7.2} and \\ang{;;145} for the X band.\nIf the target is outside those limits, the array will not be able to resolve the image or will lose flux on large scales.\nTo decide which of the remaining objects we would include in the observation, we measured the size of the bow shocks from the available IR maps online.\\footnote{\\url{https://aladin.u-strasbg.fr}}",
+            "comments": ""
+        },
+        {
+            "id": "resource-003",
+            "kind": "external_url",
+            "url": "https://aladin.u-strasbg.fr",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 199,
+                    "end_line": 199,
+                    "context": "For D-configuration, the observing limits (i.e,~observable angular scales of the target\\footnote{\\url{https://science.nrao.edu/facilities/vla/docs/manuals/oss2019B/performance/resolution}}) are between \\ang{;;12} and \\ang{;;240} for C band, and between \\ang{;;7.2} and \\ang{;;145} for the X band.\nIf the target is outside those limits, the array will not be able to resolve the image or will lose flux on large scales.\nTo decide which of the remaining objects we would include in the observation, we measured the size of the bow shocks from the available IR maps online.\\footnote{\\url{https://aladin.u-strasbg.fr}}\n\nFrom those that had the appropriate size, we chose a sample of the brightest ones, and added three extra targets of special interest, namely the bow shocks of \\bdforty, \\bdsixty and \\zoph."
+                }
+            ],
+            "evidence": "For D-configuration, the observing limits (i.e,~observable angular scales of the target\\footnote{\\url{https://science.nrao.edu/facilities/vla/docs/manuals/oss2019B/performance/resolution}}) are between \\ang{;;12} and \\ang{;;240} for C band, and between \\ang{;;7.2} and \\ang{;;145} for the X band.\nIf the target is outside those limits, the array will not be able to resolve the image or will lose flux on large scales.\nTo decide which of the remaining objects we would include in the observation, we measured the size of the bow shocks from the available IR maps online.\\footnote{\\url{https://aladin.u-strasbg.fr}}\n\nFrom those that had the appropriate size, we chose a sample of the brightest ones, and added three extra targets of special interest, namely the bow shocks of \\bdforty, \\bdsixty and \\zoph.",
+            "comments": ""
+        },
+        {
+            "id": "resource-004",
+            "kind": "external_url",
+            "url": "https://casa.nrao.edu/casadocs/casa-5.5.0/global-task-list/task_tclean/about",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 218,
+                    "end_line": 218,
+                    "context": "We imaged each target for the full frequency range of \\SIrange{4}{12}{GHz}, comprising all 64 spectral windows of 128\\,MHz each, using the CASA task `tclean' with the multi-scale multi-frequency deconvolution algorithm \\citep{Rau11}.\nThe images were cleaned for a diameter of four times the FWHM of the primary beam, corresponding to a field of view of \\ang{;21;} for central frequency of \\qty{8}{GHz}.\nWe used a cell size of \\ang{;;0.7} and scales sizes of [0, 5, 10, 15, 20, 25, 50, 100, 200] pixels, with a small scale bias\\footnote{\\url{https://casa.nrao.edu/casadocs/casa-5.5.0/global-task-list/task_tclean/about}} of 0.9.\nScales that were too large were ignored by the software."
+                }
+            ],
+            "evidence": "We imaged each target for the full frequency range of \\SIrange{4}{12}{GHz}, comprising all 64 spectral windows of 128\\,MHz each, using the CASA task `tclean' with the multi-scale multi-frequency deconvolution algorithm \\citep{Rau11}.\nThe images were cleaned for a diameter of four times the FWHM of the primary beam, corresponding to a field of view of \\ang{;21;} for central frequency of \\qty{8}{GHz}.\nWe used a cell size of \\ang{;;0.7} and scales sizes of [0, 5, 10, 15, 20, 25, 50, 100, 200] pixels, with a small scale bias\\footnote{\\url{https://casa.nrao.edu/casadocs/casa-5.5.0/global-task-list/task_tclean/about}} of 0.9.\nScales that were too large were ignored by the software.",
+            "comments": ""
+        },
+        {
+            "id": "resource-005",
+            "kind": "external_url",
+            "url": "http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/.",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 686,
+                    "end_line": 686,
+                    "context": "\\section*{Data availability}\n\nFITS files used to generate Figures \\ref{fig:detections2}, \\ref{fig:quasi-detections2} \\ref{fig:zeta-oph} \\ref{fig:non-detection-images2} and \\ref{fig:eff-bow} are available at the CDS via anonymous ftp to cdsarc.u-strasbg.fr (130.79.128.5) or via http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/."
+                }
+            ],
+            "evidence": "\\section*{Data availability}\n\nFITS files used to generate Figures \\ref{fig:detections2}, \\ref{fig:quasi-detections2} \\ref{fig:zeta-oph} \\ref{fig:non-detection-images2} and \\ref{fig:eff-bow} are available at the CDS via anonymous ftp to cdsarc.u-strasbg.fr (130.79.128.5) or via http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/.",
+            "comments": ""
+        },
+        {
+            "id": "resource-006",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 698,
+                    "end_line": 698,
+                    "context": "This work is based on observations with the 100 m telescope of the MPIfR (Max-Planck-Institut f{\\\"u}r Radioastronomie) at Effelsberg (Project ID: 86-20; PI: M.~Moutzouri).\nWe thank the operations team at the Effelsberg 100 m telescope for their assistance with our observations.\nThis research has made use of the SIMBAD database, operated at CDS, Strasbourg, France \\citep{WenOchEgr00}.\nThis research has made use of the Astrophysics Data System, funded by NASA under Cooperative Agreement 80NSSC25M7105.\nThis research made use of the python packages APLpy, \\citep{2012ascl.soft08017R}, Astropy \\citep{astropy:2018},  Numpy \\citep{HarMilVan20}, matplotlib \\citep{Hun07}."
+                }
+            ],
+            "evidence": "This work is based on observations with the 100 m telescope of the MPIfR (Max-Planck-Institut f{\\\"u}r Radioastronomie) at Effelsberg (Project ID: 86-20; PI: M.~Moutzouri).\nWe thank the operations team at the Effelsberg 100 m telescope for their assistance with our observations.\nThis research has made use of the SIMBAD database, operated at CDS, Strasbourg, France \\citep{WenOchEgr00}.\nThis research has made use of the Astrophysics Data System, funded by NASA under Cooperative Agreement 80NSSC25M7105.\nThis research made use of the python packages APLpy, \\citep{2012ascl.soft08017R}, Astropy \\citep{astropy:2018},  Numpy \\citep{HarMilVan20}, matplotlib \\citep{Hun07}.",
+            "comments": ""
+        },
+        {
+            "id": "resource-007",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 736,
+                    "end_line": 736,
+                    "context": "\\\\\n\\midrule\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J002153.09\\%2B614502.6\\%20}{\\goneonenine}\n& BD\\ensuremath{+60^\\circ\\,39}\n& \\ra{00}{21}{53}{9}"
+                }
+            ],
+            "evidence": "\\\\\n\\midrule\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J002153.09\\%2B614502.6\\%20}{\\goneonenine}\n& BD\\ensuremath{+60^\\circ\\,39}\n& \\ra{00}{21}{53}{9}",
+            "comments": ""
+        },
+        {
+            "id": "resource-008",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J002153.09\\%2B614502.6\\%20",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 736,
+                    "end_line": 736,
+                    "context": "\\\\\n\\midrule\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J002153.09\\%2B614502.6\\%20}{\\goneonenine}\n& BD\\ensuremath{+60^\\circ\\,39}\n& \\ra{00}{21}{53}{9}"
+                }
+            ],
+            "evidence": "\\\\\n\\midrule\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J002153.09\\%2B614502.6\\%20}{\\goneonenine}\n& BD\\ensuremath{+60^\\circ\\,39}\n& \\ra{00}{21}{53}{9}",
+            "comments": ""
+        },
+        {
+            "id": "resource-009",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=HD+2083",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 747,
+                    "end_line": 747,
+                    "context": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=HD+2083}{\\hiptwenty}\n& BD\\ensuremath{+71^\\circ\\,16}\n& \\ra{00}{25}{51}{2}"
+                }
+            ],
+            "evidence": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=HD+2083}{\\hiptwenty}\n& BD\\ensuremath{+71^\\circ\\,16}\n& \\ra{00}{25}{51}{2}",
+            "comments": ""
+        },
+        {
+            "id": "resource-010",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=%4011672625&Name=TYC%203677-890-1&submit=submit",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 758,
+                    "end_line": 758,
+                    "context": "& 3\n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=%4011672625&Name=TYC%203677-890-1&submit=submit}{\\sersix}\n& {\\tiny 2MASS\\;J01112094 +5733282}\n& \\ra{01}{11}{25}{3}"
+                }
+            ],
+            "evidence": "& 3\n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=%4011672625&Name=TYC%203677-890-1&submit=submit}{\\sersix}\n& {\\tiny 2MASS\\;J01112094 +5733282}\n& \\ra{01}{11}{25}{3}",
+            "comments": ""
+        },
+        {
+            "id": "resource-011",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J021753.20\\%2B611112.8\\%20",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 768,
+                    "end_line": 768,
+                    "context": "&  $ 0.42 \\pm 0.01 $\n& 3  \\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J021753.20\\%2B611112.8\\%20}{\\gonethreethree}\n& LS\\;I\\;\\ensuremath{+60^\\circ\\,226}\n& \\ra{02}{17}{53}{2}"
+                }
+            ],
+            "evidence": "&  $ 0.42 \\pm 0.01 $\n& 3  \\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J021753.20\\%2B611112.8\\%20}{\\gonethreethree}\n& LS\\;I\\;\\ensuremath{+60^\\circ\\,226}\n& \\ra{02}{17}{53}{2}",
+            "comments": ""
+        },
+        {
+            "id": "resource-012",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J022930.47\\%2B612944.1\\%20",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 779,
+                    "end_line": 779,
+                    "context": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J022930.47\\%2B612944.1\\%20}{\\gonethreefour}\n& V\\ensuremath{^\\star}\\,KM\\,Cas\n& \\ra{02}{29}{30}{5}"
+                }
+            ],
+            "evidence": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J022930.47\\%2B612944.1\\%20}{\\gonethreefour}\n& V\\ensuremath{^\\star}\\,KM\\,Cas\n& \\ra{02}{29}{30}{5}",
+            "comments": ""
+        },
+        {
+            "id": "resource-013",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J025410.66\\%2B603903.5\\%20",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 790,
+                    "end_line": 790,
+                    "context": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J025410.66\\%2B603903.5\\%20}{\\gonethreeseven}\n& BD\\ensuremath{+60^\\circ\\,586}\n& \\ra{02}{54}{10}{7}"
+                }
+            ],
+            "evidence": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J025410.66\\%2B603903.5\\%20}{\\gonethreeseven}\n& BD\\ensuremath{+60^\\circ\\,586}\n& \\ra{02}{54}{10}{7}",
+            "comments": ""
+        },
+        {
+            "id": "resource-014",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J040553.02\\%2B510657.9\\%20",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 801,
+                    "end_line": 801,
+                    "context": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J040553.02\\%2B510657.9\\%20}{\\gonefiveone}\n& {\\tiny 2MASS\\;J04055303 +5106580}\n& \\ra{04}{05}{53}{0}"
+                }
+            ],
+            "evidence": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J040553.02\\%2B510657.9\\%20}{\\gonefiveone}\n& {\\tiny 2MASS\\;J04055303 +5106580}\n& \\ra{04}{05}{53}{0}",
+            "comments": ""
+        },
+        {
+            "id": "resource-015",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%40792954&Name=HD\\%20\\%2037032",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 812,
+                    "end_line": 812,
+                    "context": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%40792954&Name=HD\\%20\\%2037032}{\\hiptwentysix}\n& BD\\ensuremath{+34^\\circ\\,1118}\n& \\ra{05}{37}{09}{0}"
+                }
+            ],
+            "evidence": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%40792954&Name=HD\\%20\\%2037032}{\\hiptwentysix}\n& BD\\ensuremath{+34^\\circ\\,1118}\n& \\ra{05}{37}{09}{0}",
+            "comments": ""
+        },
+        {
+            "id": "resource-016",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%40910971&Name=HD\\%20\\%2047432",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 823,
+                    "end_line": 823,
+                    "context": "& 3 \n \\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%40910971&Name=HD\\%20\\%2047432}{\\hipthirtyone}\n& BD\\ensuremath{+01^\\circ\\,1443}\n& \\ra{06}{38}{38}{2}"
+                }
+            ],
+            "evidence": "& 3 \n \\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%40910971&Name=HD\\%20\\%2047432}{\\hipthirtyone}\n& BD\\ensuremath{+01^\\circ\\,1443}\n& \\ra{06}{38}{38}{2}",
+            "comments": ""
+        },
+        {
+            "id": "resource-017",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%40974602&Name=HD\\%20\\%2057682",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 834,
+                    "end_line": 834,
+                    "context": "& 3 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%40974602&Name=HD\\%20\\%2057682}{\\hdfiftyseven}\n& BD\\ensuremath{-08^\\circ\\,1872}\n& \\ra{07}{22}{02}{1}"
+                }
+            ],
+            "evidence": "& 3 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%40974602&Name=HD\\%20\\%2057682}{\\hdfiftyseven}\n& BD\\ensuremath{-08^\\circ\\,1872}\n& \\ra{07}{22}{02}{1}",
+            "comments": ""
+        },
+        {
+            "id": "resource-018",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J163709.54-103401.5\\%20",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 844,
+                    "end_line": 844,
+                    "context": "&  $ 0.90 \\pm 0.07 $\n& 3 \\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J163709.54-103401.5\\%20}{\\zophbs} \n& \\zoph\n& \\ra{16}{37}{09}{5}"
+                }
+            ],
+            "evidence": "&  $ 0.90 \\pm 0.07 $\n& 3 \\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J163709.54-103401.5\\%20}{\\zophbs} \n& \\zoph\n& \\ra{16}{37}{09}{5}",
+            "comments": ""
+        },
+        {
+            "id": "resource-019",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%402563103&Name=HD\\%20165319",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 854,
+                    "end_line": 854,
+                    "context": "&  $ 7.41 \\pm 0.66 $\n& 1 \\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%402563103&Name=HD\\%20165319}{\\hdsixteen}\n& BD\\ensuremath{-14^\\circ\\,4880}\n& \\ra{18}{05}{58}{8}"
+                }
+            ],
+            "evidence": "&  $ 7.41 \\pm 0.66 $\n& 1 \\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%402563103&Name=HD\\%20165319}{\\hdsixteen}\n& BD\\ensuremath{-14^\\circ\\,4880}\n& \\ra{18}{05}{58}{8}",
+            "comments": ""
+        },
+        {
+            "id": "resource-020",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J182518.13-130943.0\\%20",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 865,
+                    "end_line": 865,
+                    "context": "& 3\n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J182518.13-130943.0\\%20}{\\geighteen}\n& {\\tiny 2MASS\\;J18251808 -1309427}\n& \\ra{18}{25}{18}{1}"
+                }
+            ],
+            "evidence": "& 3\n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J182518.13-130943.0\\%20}{\\geighteen}\n& {\\tiny 2MASS\\;J18251808 -1309427}\n& \\ra{18}{25}{18}{1}",
+            "comments": ""
+        },
+        {
+            "id": "resource-021",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J183821.05-053122.9\\%20",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 875,
+                    "end_line": 875,
+                    "context": "& $0.24\\pm0.02$\n& 1 \\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J183821.05-053122.9\\%20}{\\gtwentysixfifytwo}\n& {\\tiny 2MASS\\;J18382147 -0531233}\n& \\ra{18}{38}{21}{5}"
+                }
+            ],
+            "evidence": "& $0.24\\pm0.02$\n& 1 \\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J183821.05-053122.9\\%20}{\\gtwentysixfifytwo}\n& {\\tiny 2MASS\\;J18382147 -0531233}\n& \\ra{18}{38}{21}{5}",
+            "comments": ""
+        },
+        {
+            "id": "resource-022",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J183909.07-060327.8\\%20",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 886,
+                    "end_line": 886,
+                    "context": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J183909.07-060327.8\\%20}{\\gtwentysixfourteen}\n & {\\tiny 2MASS\\;J18390969 -0603279}\n& \\ra{18}{39}{09}{7}"
+                }
+            ],
+            "evidence": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J183909.07-060327.8\\%20}{\\gtwentysixfourteen}\n & {\\tiny 2MASS\\;J18390969 -0603279}\n& \\ra{18}{39}{09}{7}",
+            "comments": ""
+        },
+        {
+            "id": "resource-023",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=[KCS2016]",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 897,
+                    "end_line": 897,
+                    "context": "& 1\n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=[KCS2016]\\%20J184831.03-010209.2}{\\gthirtyone}\n& {\\tiny 2MASS\\;J18483100 -0102094}\n& \\ra{18}{48}{31}{0}"
+                }
+            ],
+            "evidence": "& 1\n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=[KCS2016]\\%20J184831.03-010209.2}{\\gthirtyone}\n& {\\tiny 2MASS\\;J18483100 -0102094}\n& \\ra{18}{48}{31}{0}",
+            "comments": ""
+        },
+        {
+            "id": "resource-024",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=[KCS2016]\\%20J184831.03-010209.2",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 897,
+                    "end_line": 897,
+                    "context": "& 1\n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=[KCS2016]\\%20J184831.03-010209.2}{\\gthirtyone}\n& {\\tiny 2MASS\\;J18483100 -0102094}\n& \\ra{18}{48}{31}{0}"
+                }
+            ],
+            "evidence": "& 1\n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=[KCS2016]\\%20J184831.03-010209.2}{\\gthirtyone}\n& {\\tiny 2MASS\\;J18483100 -0102094}\n& \\ra{18}{48}{31}{0}",
+            "comments": ""
+        },
+        {
+            "id": "resource-025",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J190313.07\\%2B053523.0\\%20",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 908,
+                    "end_line": 908,
+                    "context": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J190313.07\\%2B053523.0\\%20}{\\gthirtynine}\n& {\\tiny 2MASS\\;J19031363 +0535230}\n& \\ra{19}{03}{13}{6}"
+                }
+            ],
+            "evidence": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J190313.07\\%2B053523.0\\%20}{\\gthirtynine}\n& {\\tiny 2MASS\\;J19031363 +0535230}\n& \\ra{19}{03}{13}{6}",
+            "comments": ""
+        },
+        {
+            "id": "resource-026",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J192322.03\\%2B144808.4\\%20",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 918,
+                    "end_line": 918,
+                    "context": "& no data\n& 1 \\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J192322.03\\%2B144808.4\\%20}{\\gfortynine}\n& {\\tiny 2MASS\\;J19031363 +0535230}\n& \\ra{19}{23}{22}{3}"
+                }
+            ],
+            "evidence": "& no data\n& 1 \\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J192322.03\\%2B144808.4\\%20}{\\gfortynine}\n& {\\tiny 2MASS\\;J19031363 +0535230}\n& \\ra{19}{23}{22}{3}",
+            "comments": ""
+        },
+        {
+            "id": "resource-027",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J202350.71\\%2B362426.4\\%20",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 929,
+                    "end_line": 929,
+                    "context": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J202350.71\\%2B362426.4\\%20}{\\gseventyfive}\n& {\\tiny 2MASS\\;J20235070 +3624265}\n& \\ra{20}{23}{50}{7}"
+                }
+            ],
+            "evidence": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J202350.71\\%2B362426.4\\%20}{\\gseventyfive}\n& {\\tiny 2MASS\\;J20235070 +3624265}\n& \\ra{20}{23}{50}{7}",
+            "comments": ""
+        },
+        {
+            "id": "resource-028",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J202717.68\\%2B394432.6\\%20",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 940,
+                    "end_line": 940,
+                    "context": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J202717.68\\%2B394432.6\\%20}{\\gseventyeight}\n& LS\\,II\\,\\ensuremath{+39^\\circ\\,53}\n& \\ra{20}{27}{17}{6}"
+                }
+            ],
+            "evidence": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J202717.68\\%2B394432.6\\%20}{\\gseventyeight}\n& LS\\,II\\,\\ensuremath{+39^\\circ\\,53}\n& \\ra{20}{27}{17}{6}",
+            "comments": ""
+        },
+        {
+            "id": "resource-029",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J203336.08\\%2B435907.4\\%20",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 951,
+                    "end_line": 951,
+                    "context": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J203336.08\\%2B435907.4\\%20}{\\bdfortybs}\n& \\bdforty\n& \\ra{20}{33}{36}{1}"
+                }
+            ],
+            "evidence": "& 1 \n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J203336.08\\%2B435907.4\\%20}{\\bdfortybs}\n& \\bdforty\n& \\ra{20}{33}{36}{1}",
+            "comments": ""
+        },
+        {
+            "id": "resource-030",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J224640.45\\%2B581743.8\\%20",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 962,
+                    "end_line": 962,
+                    "context": "& 2\n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J224640.45\\%2B581743.8\\%20}{\\gonezeroseven}\n& BD\\ensuremath{+57^\\circ\\,2606}\n& \\ra{22}{46}{40}{2}"
+                }
+            ],
+            "evidence": "& 2\n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J224640.45\\%2B581743.8\\%20}{\\gonezeroseven}\n& BD\\ensuremath{+57^\\circ\\,2606}\n& \\ra{22}{46}{40}{2}",
+            "comments": ""
+        },
+        {
+            "id": "resource-031",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J225133.77\\%2B590030.7\\%20",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 973,
+                    "end_line": 973,
+                    "context": "& 1\n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J225133.77\\%2B590030.7\\%20}{\\gonezeroeight}\n& BD\\ensuremath{+58^\\circ\\,2492}\n& \\ra{22}{51}{33}{8}"
+                }
+            ],
+            "evidence": "& 1\n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-id?Ident=\\%5BKCS2016\\%5D\\%20J225133.77\\%2B590030.7\\%20}{\\gonezeroeight}\n& BD\\ensuremath{+58^\\circ\\,2492}\n& \\ra{22}{51}{33}{8}",
+            "comments": ""
+        },
+        {
+            "id": "resource-032",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-basic?Ident=BD",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 984,
+                    "end_line": 984,
+                    "context": "& 1\n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-basic?Ident=BD\\%2B60+2522}{\\bdsixtybs}\n& \\bdsixty\n& \\ra{23}{20}{44}{5}"
+                }
+            ],
+            "evidence": "& 1\n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-basic?Ident=BD\\%2B60+2522}{\\bdsixtybs}\n& \\bdsixty\n& \\ra{23}{20}{44}{5}",
+            "comments": ""
+        },
+        {
+            "id": "resource-033",
+            "kind": "external_url",
+            "url": "http://simbad.cds.unistra.fr/simbad/sim-basic?Ident=BD\\%2B60+2522",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.23470/arxiv_source/aa57036-25corr_clean.tex",
+                    "start_line": 984,
+                    "end_line": 984,
+                    "context": "& 1\n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-basic?Ident=BD\\%2B60+2522}{\\bdsixtybs}\n& \\bdsixty\n& \\ra{23}{20}{44}{5}"
+                }
+            ],
+            "evidence": "& 1\n\\\\\n\\href{http://simbad.cds.unistra.fr/simbad/sim-basic?Ident=BD\\%2B60+2522}{\\bdsixtybs}\n& \\bdsixty\n& \\ra{23}{20}{44}{5}",
+            "comments": ""
+        }
+    ]
+}

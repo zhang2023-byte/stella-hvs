@@ -1,0 +1,61 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T19:54:00",
+  "paper": {
+    "arxiv_id": "2509.20227",
+    "bibcode": "2025MNRAS.544L..70C",
+    "title": "Runaway origins of a disc mass gradient in $\\\\sigma$ Orionis",
+    "month": "2025-09",
+    "source_note_json": "notes/2025/2025-09/2025-09.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2509.20227",
+      "pdf": "https://arxiv.org/pdf/2509.20227"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2509.20227",
+    "audit_path": "literature/2509.20227/audit.json",
+    "catalog_review_path": "literature/2509.20227/catalog_review.json",
+    "catalog_extraction_path": "literature/2509.20227/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T19:54:00",
+    "extractor": "agent",
+    "summary": "The paper discusses sigma Ori AB as a runaway system passing through the sigma Orionis cluster. It does not present any objects as possibly unbound from the Milky Way. No HVS or Galactic-unbound candidates are identified."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "sigma-ori-ab-runaway",
+      "description": "The paper discusses sigma Ori AB as a runaway system ejected from its birth cluster and currently passing through the sigma Orionis cluster.",
+      "decision": "excluded",
+      "reason": "The paper treats sigma Ori AB as a cluster runaway (ejected from one star-forming cluster and passing through another), not as a Galactic-unbound or hypervelocity star candidate. No objects are discussed as possibly escaping the Milky Way gravitational potential.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2509.20227/arxiv_source/main.tex",
+          "start_line": 46,
+          "end_line": 48,
+          "context": "Abstract stating that massive stars can be runaways and that sigma Ori AB is a runaway system passing through sigma Orionis"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2509.20227/arxiv_source/main.tex",
+          "start_line": 60,
+          "end_line": 64,
+          "context": "Introduction discussing runaway stars and stating the paper explores sigma Ori AB as a runaway system performing a flyby of sigma Orionis"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2509.20227/arxiv_source/main.tex",
+          "start_line": 75,
+          "end_line": 78,
+          "context": "Section 2.1 concluding that sigma Ori AB is a runaway system passing through the cluster, ejected through dynamical interactions with nearby massive stars"
+        }
+      ]
+    }
+  ]
+}

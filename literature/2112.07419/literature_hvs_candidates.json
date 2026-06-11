@@ -1,0 +1,98 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T12:03:00",
+  "paper": {
+    "arxiv_id": "2112.07419",
+    "bibcode": "2022MNRAS.510.4308K",
+    "title": "Stars in the Local Galactic Thick Disk and Halo in Gaia EDR3: A catalogue of Half a Million Local Main-sequence Stars with Photometric Metallicities",
+    "month": "2021-12",
+    "source_note_json": "notes/2021/2021-12/2021-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2112.07419",
+      "pdf": "https://arxiv.org/pdf/2112.07419"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2112.07419",
+    "audit_path": "literature/2112.07419/audit.json",
+    "catalog_review_path": "literature/2112.07419/catalog_review.json",
+    "catalog_extraction_path": "literature/2112.07419/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2112.07419/catalog_tables/table-tab-tab1.ecsv",
+      "literature/2112.07419/catalog_tables/table-tab-tab2.ecsv",
+      "literature/2112.07419/catalog_tables/table-tab-tab3.ecsv",
+      "literature/2112.07419/catalog_tables/table-tab-tab4.ecsv",
+      "literature/2112.07419/catalog_tables/table-tab-tab5.ecsv",
+      "literature/2112.07419/catalog_tables/table-tab-tab6.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T12:03:00",
+    "extractor": "agent",
+    "summary": "论文构建了Gaia EDR3中551,214颗本地（d<2 kpc）厚盘和晕主序星星表，基于大自行（μ>40 mas/yr）筛选。通过约化自行图（RPM diagram）分离盘族和晕族恒星，并利用SDSS SEGUE/APOGEE、LAMOST DR6、GALAH DR3等光谱巡天的20,047颗恒星的金属丰度构建测光金属丰度网格。论文中的'high-velocity stars'指晕族恒星的高速度弥散（V>200 km/s相对于LSR），属于正常银河系引力束缚的晕族运动学特征，而非银河系非束缚超高速星（HVS）。论文核心是银河系结构研究（厚盘、晕、Gaia-Enceladus流、Helmi流），通过自行选择晕星并推导测光金属丰度。论文未声称任何恒星为银河系非束缚HVS。因此无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文是厚盘和晕主序星的测光金属丰度星表，通过大自行（μ>40 mas/yr）选择低质量盘/晕星，研究银河系结构和晕运动学。论文中的'high-velocity'指晕族速度弥散（V>200 km/s），属正常束缚恒星运动，非HVS。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (ms.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2112.07419/arxiv_source/ms.tex",
+          "start_line": 69,
+          "end_line": 69,
+          "context": "Abstract: catalogue of 551,214 main-sequence stars in local (d<2 kpc) Galactic thick disk and halo, based on large proper motions (μ>40 mas/yr)"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2112.07419/arxiv_source/ms.tex",
+          "start_line": 121,
+          "end_line": 121,
+          "context": "Typical halo stars have high Galactic rotational velocities V>200 km/s relative to LSR"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "thick-disk-halo-catalogue",
+      "description": "551,214颗本地（d<2 kpc）厚盘和晕主序星，通过Gaia EDR3大自行（μ_tot>40 mas/yr）筛选。论文利用约化自行图（RPM diagram）分离厚盘和晕族恒星，其中晕族恒星具有高切向速度（v_T>200 km/s），通过测光金属丰度网格为所有源估计[Fe/H]。论文重构了Gaia-Enceladus和Helmi流等局部晕结构。",
+      "decision": "excluded",
+      "reason": "论文中的'high-velocity stars'指晕族恒星的高速度弥散特征（V>200 km/s相对于LSR）和切向速度（v_T>200 km/s），这些是银河系引力束缚恒星在晕中的正常轨道运动特征。论文引言（第121行）明确说明'Typical halo stars have high Galactic rotational velocities, V, relative to the local standard of rest, V≥200 km/s'，这是对晕族运动学的标准描述，而非超高速星（HVS）类别。论文的核心目标是通过大自行选择构建厚盘和晕主序星星表，推导测光金属丰度，研究银河系结构（Gaia-Enceladus流、Helmi流）和星族特性。论文标题、摘要和正文从未使用'hypervelocity star'、'unbound'、'escape velocity'或'HVS'等术语描述这些恒星。论文中的天体均为银河系正常束缚天体（厚盘星和晕星），不涉及银河系逃逸速度或非束缚状态判定。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2112.07419/arxiv_source/ms.tex",
+          "start_line": 69,
+          "end_line": 69,
+          "context": "Abstract: catalogue of 551,214 main-sequence stars in local thick disk and halo, large proper motions"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2112.07419/arxiv_source/ms.tex",
+          "start_line": 121,
+          "end_line": 121,
+          "context": "Typical halo stars have high Galactic rotational velocities V>200 km/s relative to LSR"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2112.07419/arxiv_source/ms.tex",
+          "start_line": 185,
+          "end_line": 185,
+          "context": "High-tangential velocity stars in the CMD; upper sequence shows high-velocity tail of thick disk"
+        }
+      ]
+    }
+  ]
+}

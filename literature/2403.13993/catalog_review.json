@@ -1,0 +1,372 @@
+{
+    "schema_version": "stella.article_data_assets.review.v1",
+    "paper": {
+        "arxiv_id": "2403.13993",
+        "title": "Is the RSGC4 (Alicante 8) cluster a real star cluster?: Peculiar radial velocities of red supergiant stars",
+        "month": "2024-03",
+        "source_note_json": "notes/2024/2024-03/2024-03.json",
+        "links": {
+            "abs": "https://arxiv.org/abs/2403.13993",
+            "pdf": "https://arxiv.org/pdf/2403.13993"
+        }
+    },
+    "source": {
+        "paper_dir": "literature/2403.13993",
+        "audit_path": "literature/2403.13993/audit.json",
+        "source_dir": "literature/2403.13993/arxiv_source",
+        "tex_root": "literature/2403.13993/arxiv_source/ms.tex",
+        "source_available": true
+    },
+    "review": {
+        "status": "reviewed",
+        "reviewed_at": "2026-05-17T12:33:55",
+        "reviewer": "agent",
+        "summary": "Auto-filled review: 2 internal table(s), 8 external resource(s)."
+    },
+    "internal_tables": [
+        {
+            "id": "table-kinematics",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "The observation log, radial velocities of observed RSG candidates and proper motions from $Gaia$ DR3\\label{kinematics}",
+            "source_refs": [
+                {
+                    "path": "literature/2403.13993/arxiv_source/ms.tex",
+                    "start_line": 308,
+                    "end_line": 386,
+                    "caption": "The observation log, radial velocities of observed RSG candidates and proper motions from $Gaia$ DR3\\label{kinematics}",
+                    "label": "kinematics"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "ID",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "RA",
+                    "meaning": "Right Ascension",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "DEC",
+                    "meaning": "Declination",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Exp. time (s)",
+                    "meaning": "Exposure time",
+                    "unit_text": "s",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "S/N",
+                    "meaning": "Signal-to-noise ratio",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "V_Helio (km s^-1)",
+                    "meaning": "Column from table header",
+                    "unit_text": "km s^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "V_LSR (km s^-1)",
+                    "meaning": "Column from table header",
+                    "unit_text": "km s^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\mu_\\alphacos\\delta (mas yr^-1)",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\mu_\\alphacos\\delta (mas yr^-1)",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\mu_\\delta (mas yr^-1)",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\mu_\\delta (mas yr^-1)",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "The observation log, radial velocities of observed RSG candidates and proper motions from $Gaia$ DR3\\label{kinematics}",
+            "comments": ""
+        },
+        {
+            "id": "table-photo",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "The photometry and color information of RSG candidates in six RSGCs\\label{photo}",
+            "source_refs": [
+                {
+                    "path": "literature/2403.13993/arxiv_source/ms.tex",
+                    "start_line": 502,
+                    "end_line": 553,
+                    "caption": "The photometry and color information of RSG candidates in six RSGCs\\label{photo}",
+                    "label": "photo"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "\\cline2-15 ID",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\rm 2MASS | J",
+                    "meaning": "2MASS identifier",
+                    "unit_text": "\\rm 2MASS",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Gaia | H",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "GLIMPSE | K_s",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "DENIS | G",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "DENIS-2MASS | [3.6]",
+                    "meaning": "Column from table header",
+                    "unit_text": "DENIS-2MASS",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Q1 | [4.5]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[4.5]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Q2 | [5.8]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[5.8]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "[8.0]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[8.0]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "J",
+                    "meaning": "2MASS J magnitude",
+                    "unit_text": "mag",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "K_s",
+                    "meaning": "2MASS Ks magnitude",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\Delta J",
+                    "meaning": "2MASS J magnitude",
+                    "unit_text": "mag",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\Delta K_s",
+                    "meaning": "2MASS Ks magnitude",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_014",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_015",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "The photometry and color information of RSG candidates in six RSGCs\\label{photo}",
+            "comments": ""
+        }
+    ],
+    "external_resources": [
+        {
+            "id": "resource-001",
+            "kind": "external_url",
+            "url": "http://publish.aps.org/revtex4/",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2403.13993/arxiv_source/ms.tex",
+                    "start_line": 12,
+                    "end_line": 12,
+                    "context": "%% (Copyright 2000-2015).  See the classfile for details.\n\n%% AASTeX requires revtex4-1.cls (http://publish.aps.org/revtex4/) and\n%% other external packages (latexsym, graphicx, amssymb, longtable, and epsf).\n%% All of these external packages should already be present in the modern TeX"
+                }
+            ],
+            "evidence": "%% (Copyright 2000-2015).  See the classfile for details.\n\n%% AASTeX requires revtex4-1.cls (http://publish.aps.org/revtex4/) and\n%% other external packages (latexsym, graphicx, amssymb, longtable, and epsf).\n%% All of these external packages should already be present in the modern TeX",
+            "comments": ""
+        },
+        {
+            "id": "resource-003",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2403.13993/arxiv_source/ms.tex",
+                    "start_line": 380,
+                    "end_line": 380,
+                    "context": "\\end{center}\n}\n\\tablecomments{}{Full Table~\\ref{kinematics} is published in the machine-readable format.\nA portion is shown here for guidance regarding its form and content. Redundant information is eliminated.\nThe first header of each cluster shows average radial velocity and proper motions. The numbers in parentheses represent the counts"
+                }
+            ],
+            "evidence": "\\end{center}\n}\n\\tablecomments{}{Full Table~\\ref{kinematics} is published in the machine-readable format.\nA portion is shown here for guidance regarding its form and content. Redundant information is eliminated.\nThe first header of each cluster shows average radial velocity and proper motions. The numbers in parentheses represent the counts",
+            "comments": ""
+        },
+        {
+            "id": "resource-004",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2403.13993/arxiv_source/ms.tex",
+                    "start_line": 552,
+                    "end_line": 552,
+                    "context": "\\end{center}\n}\n\\tablecomments{}{Full Table~\\ref{photo} is published in the machine-readable format.}\n\\end{table*}"
+                }
+            ],
+            "evidence": "\\end{center}\n}\n\\tablecomments{}{Full Table~\\ref{photo} is published in the machine-readable format.}\n\\end{table*}",
+            "comments": ""
+        },
+        {
+            "id": "resource-005",
+            "kind": "external_url",
+            "url": "https://igrinscontact.github.io/",
+            "local_path": "",
+            "description": "GitHub repository or code release referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2403.13993/arxiv_source/ms.tex",
+                    "start_line": 726,
+                    "end_line": 726,
+                    "context": "Eventually, we found a hint that their spectra were similar to the spectra of D-type symbiotic stars (e.g., V1016 Cyg).\nSymbiotic stars are interacting binary systems consisting of an evolved cool giant and a compact companion, typically an AGB star and a white dwarf.\nFortunately, several symbiotic stars were also observed using IGRINS and are available in the Raw \\& Reduced IGRINS Spectral Archive (RRISA)\\footnote{~\\url{https://igrinscontact.github.io/}}. \nThus, we could directly compare our spectra with those of symbiotic stars."
+                }
+            ],
+            "evidence": "Eventually, we found a hint that their spectra were similar to the spectra of D-type symbiotic stars (e.g., V1016 Cyg).\nSymbiotic stars are interacting binary systems consisting of an evolved cool giant and a compact companion, typically an AGB star and a white dwarf.\nFortunately, several symbiotic stars were also observed using IGRINS and are available in the Raw \\& Reduced IGRINS Spectral Archive (RRISA)\\footnote{~\\url{https://igrinscontact.github.io/}}. \nThus, we could directly compare our spectra with those of symbiotic stars.",
+            "comments": ""
+        },
+        {
+            "id": "resource-006",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2403.13993/arxiv_source/ms.tex",
+                    "start_line": 745,
+                    "end_line": 745,
+                    "context": "\\begin{figure*}\n\\includegraphics[width=\\textwidth]{Fig7.eps}\n\\caption{The distributions of RSG candidates in six RSGCs in $(Q1, Q2)$, $(Q2, [3.6]-[4.5])$, and $(K_s-[8.0], Q1)$ CCDs. The dashed lines indicate the criteria of RSG established by~\\citet{Messi2012},\nand the shaded region in each panel is where most Galactic RSGs are distributed. The peculiar RSG candidates with ID numbers in RSGC4 are located in the region where IR excesses are expected.\n}\\label{CCD}"
+                }
+            ],
+            "evidence": "\\begin{figure*}\n\\includegraphics[width=\\textwidth]{Fig7.eps}\n\\caption{The distributions of RSG candidates in six RSGCs in $(Q1, Q2)$, $(Q2, [3.6]-[4.5])$, and $(K_s-[8.0], Q1)$ CCDs. The dashed lines indicate the criteria of RSG established by~\\citet{Messi2012},\nand the shaded region in each panel is where most Galactic RSGs are distributed. The peculiar RSG candidates with ID numbers in RSGC4 are located in the region where IR excesses are expected.\n}\\label{CCD}",
+            "comments": ""
+        },
+        {
+            "id": "resource-007",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2403.13993/arxiv_source/ms.tex",
+                    "start_line": 754,
+                    "end_line": 754,
+                    "context": "Using the reddening-free $Q1$ and $Q2$\\footnote{$Q2=(J-K_s)-2.69\\times(K_s-[8.0])$} parameters, GLIMPSE $[3.6]-[4.5]$, and $K_s-[8.0]$ colors, \nthey assigned specific color regions for objects with IR excess and RSGs. \nWe also examined the same CCDs for the RSG candidates in our RSGCs to assess their IR excess properties.\nThe magnitudes in the mid-infrared region of GLIMPSE are provided in Table~\\ref{photo}."
+                }
+            ],
+            "evidence": "Using the reddening-free $Q1$ and $Q2$\\footnote{$Q2=(J-K_s)-2.69\\times(K_s-[8.0])$} parameters, GLIMPSE $[3.6]-[4.5]$, and $K_s-[8.0]$ colors, \nthey assigned specific color regions for objects with IR excess and RSGs. \nWe also examined the same CCDs for the RSG candidates in our RSGCs to assess their IR excess properties.\nThe magnitudes in the mid-infrared region of GLIMPSE are provided in Table~\\ref{photo}.",
+            "comments": ""
+        },
+        {
+            "id": "resource-008",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2403.13993/arxiv_source/ms.tex",
+                    "start_line": 757,
+                    "end_line": 757,
+                    "context": "The magnitudes in the mid-infrared region of GLIMPSE are provided in Table~\\ref{photo}.\n \nFigure~\\ref{CCD} shows the distributions of RSG candidates in the six RSGCs in the (Q1, Q2), (Q2, $[3.6]-[4.5]$), and ($K_s-[8.0]$, Q1) CCDs. \nAs determined by~\\citet{Messi2012}, the shaded region in each CCD indicates\nthe area where most Galactic RSGs are distributed; $0.1<Q1<0.5$, $-1.1<Q2<1.5$, and $Q1>-0.2\\times(K_s-[8.0])+0.34$."
+                }
+            ],
+            "evidence": "The magnitudes in the mid-infrared region of GLIMPSE are provided in Table~\\ref{photo}.\n \nFigure~\\ref{CCD} shows the distributions of RSG candidates in the six RSGCs in the (Q1, Q2), (Q2, $[3.6]-[4.5]$), and ($K_s-[8.0]$, Q1) CCDs. \nAs determined by~\\citet{Messi2012}, the shaded region in each CCD indicates\nthe area where most Galactic RSGs are distributed; $0.1<Q1<0.5$, $-1.1<Q2<1.5$, and $Q1>-0.2\\times(K_s-[8.0])+0.34$.",
+            "comments": ""
+        },
+        {
+            "id": "resource-009",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2403.13993/arxiv_source/ms.tex",
+                    "start_line": 767,
+                    "end_line": 767,
+                    "context": "which are comparable to Mira-AGBs~\\citep[from $\\sim10^{-7}$ to $\\sim10^{-4} M_\\sun$yr$^{-1}$;][]{Habing2003} but not \nmaser sources~\\citep[from $\\sim10^{-5}$ to $\\sim10^{-3} M_\\sun$yr$^{-1}$;][]{Ortiz2002}.\nWe note that Mira-AGBs and SiO or OH/IR maser stars also have an IR excess and can be located in the IR-excess areas on the CCDs.\nHowever, as mentioned earlier, we did not detect Mira-AGB variability. No maser sources in this field were reported by~\\citet{Negu2010}.\nIn this respect, the peculiar RSG candidates in RSGC4 do not appear to be Mira-AGBs or maser sources."
+                }
+            ],
+            "evidence": "which are comparable to Mira-AGBs~\\citep[from $\\sim10^{-7}$ to $\\sim10^{-4} M_\\sun$yr$^{-1}$;][]{Habing2003} but not \nmaser sources~\\citep[from $\\sim10^{-5}$ to $\\sim10^{-3} M_\\sun$yr$^{-1}$;][]{Ortiz2002}.\nWe note that Mira-AGBs and SiO or OH/IR maser stars also have an IR excess and can be located in the IR-excess areas on the CCDs.\nHowever, as mentioned earlier, we did not detect Mira-AGB variability. No maser sources in this field were reported by~\\citet{Negu2010}.\nIn this respect, the peculiar RSG candidates in RSGC4 do not appear to be Mira-AGBs or maser sources.",
+            "comments": ""
+        }
+    ]
+}

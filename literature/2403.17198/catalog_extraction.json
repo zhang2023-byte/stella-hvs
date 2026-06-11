@@ -1,0 +1,630 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:06",
+  "paper": {
+    "arxiv_id": "2403.17198",
+    "title": "Runaway OB Stars in the Small Magellanic Cloud III. Updated Kinematics and Insights on Dynamical vs. Supernova Ejections",
+    "month": "2024-03"
+  },
+  "review": {
+    "path": "literature/2403.17198/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123906",
+    "started_at": "2026-05-17T12:39:06",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2403.17198",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-Table-1",
+      "internal_table_id": "table-tab-Table-1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+        "start_line": 116,
+        "end_line": 139,
+        "caption": "Kinematic Data for SMC Field OB and OBe Stars \\label{tab:Table 1}",
+        "label": "tab:Table 1"
+      },
+      "source_path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+      "excerpt_path": "literature/2403.17198/catalog_sources/table-tab-Table-1/excerpt.tex",
+      "sha256": "cb8cdd63a3d46f8adad218047804ed59fa1dd98ba761fc9cb9b8d357d4476004",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-tab-Table-2",
+      "internal_table_id": "table-tab-Table-2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+        "start_line": 171,
+        "end_line": 199,
+        "caption": "Subpopulation kinematics % errors are the standard error of the median \\label{tab:Table 2}",
+        "label": "tab:Table 2"
+      },
+      "source_path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+      "excerpt_path": "literature/2403.17198/catalog_sources/table-tab-Table-2/excerpt.tex",
+      "sha256": "0143e3a18742bbc34f02b30ad426e0218e2a7edd90742aaf2447f45517c1957c",
+      "line_count": 29,
+      "error": ""
+    },
+    {
+      "id": "table-tab-Table-3",
+      "internal_table_id": "table-tab-Table-3",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+        "start_line": 278,
+        "end_line": 297,
+        "caption": "Numbers and Ratios of Walkaway and Runaway Field OB Stars \\label{tab:Table 3}",
+        "label": "tab:Table 3"
+      },
+      "source_path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+      "excerpt_path": "literature/2403.17198/catalog_sources/table-tab-Table-3/excerpt.tex",
+      "sha256": "b9ff49e8a1c904074d9c4bb11183471af4da7c70e6a65048128c5cabf28550f2",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-Table-4",
+      "internal_table_id": "table-tab-Table-4",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+        "start_line": 299,
+        "end_line": 327,
+        "caption": "Model Runaway and Walkaway Frequencies\\tablenotemark{a} \\label{tab:Table 4}",
+        "label": "tab:Table 4"
+      },
+      "source_path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+      "excerpt_path": "literature/2403.17198/catalog_sources/table-tab-Table-4/excerpt.tex",
+      "sha256": "a4bc8e048eef6920b41950aeee12447dc8ff86f39df401a4b09cbd1369e399a7",
+      "line_count": 29,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-Table-1",
+      "internal_table_id": "table-tab-Table-1",
+      "status": "success",
+      "ecsv_path": "literature/2403.17198/catalog_tables/table-tab-Table-1.ecsv",
+      "caption": "Kinematic Data for SMC Field OB and OBe Stars \\label{tab:Table 1}",
+      "label": "tab:Table 1",
+      "row_count": 10,
+      "column_count": 18,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID a a IDs are from Massey02 . Stars with an asterisk (*) next to their ID are RIOTS4 data that were not included in Paper II. Stars with a plus sign (+) next to their ID have spectral types taken from their quiescent phase, but are identified as emission-line stars by Lamb16 or SIMBAD.",
+          "Class b b E = Eclipsing binary, S = Double-lined spectroscopic binary, X = High-mass X-ray binary, e = OBe star.",
+          "SpT",
+          "\\alpha (J2016)",
+          "\\delta (J2016)",
+          "Target v_\\alpha",
+          "err",
+          "Target v_\\delta",
+          "err",
+          "N",
+          "Field v_\\alpha",
+          "err",
+          "Field v_\\delta",
+          "err",
+          "v_\\perp",
+          "err",
+          "v_r\\sin i",
+          "Mass"
+        ],
+        [
+          "",
+          "",
+          "",
+          "(deg)",
+          "(deg)",
+          "( \\rm km s^-1 )",
+          "",
+          "( \\rm km s^-1 )",
+          "",
+          "",
+          "( \\rm km s^-1 )",
+          "",
+          "( \\rm km s^-1 )",
+          "",
+          "( \\rm km s^-1 )",
+          "\\rm km s^-1",
+          "\\rm km s^-1",
+          "M_\\odot"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID a a IDs are from Massey02 . Stars with an asterisk (*) next to their ID are RIOTS4 data that were not included in Paper II. Stars with a plus sign (+) next to their ID have spectral types taken from their quiescent phase, but are identified as emission-line stars by Lamb16 or SIMBAD.",
+          "unit_text": "ID a a IDs are from Massey02 . Stars with an asterisk (*) next to their ID are RIOTS4 data that were not included in Paper II. Stars with a plus sign (+) next to their ID have spectral types taken from their quiescent phase, but are identified as emission-line stars by Lamb16 or SIMBAD.",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Class b b E = Eclipsing binary, S = Double-lined spectroscopic binary, X = High-mass X-ray binary, e = OBe star.",
+          "unit_text": "Class b b E = Eclipsing binary, S = Double-lined spectroscopic binary, X = High-mass X-ray binary, e = OBe star.",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "SpT",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\alpha (J2016) | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\delta (J2016) | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Target v_\\alpha | ( \\rm km s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "err",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Target v_\\delta | ( \\rm km s^-1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "err",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Field v_\\alpha | ( \\rm km s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "err",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "Field v_\\delta | ( \\rm km s^-1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "err",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "v_\\perp | ( \\rm km s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "err | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "v_r\\sin i | \\rm km s^-1",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "Mass | M_\\odot",
+          "unit_text": "Mass",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq10jqizw/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2403.17198/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq10jqizw/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2403.17198/catalog_sources/table-tab-Table-1/wrapped.tex",
+            "html": "literature/2403.17198/catalog_sources/table-tab-Table-1/latexml.html",
+            "stdout": "literature/2403.17198/catalog_sources/table-tab-Table-1/latexml.stdout.txt",
+            "stderr": "literature/2403.17198/catalog_sources/table-tab-Table-1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "cb8cdd63a3d46f8adad218047804ed59fa1dd98ba761fc9cb9b8d357d4476004"
+    },
+    {
+      "id": "table-tab-Table-2",
+      "internal_table_id": "table-tab-Table-2",
+      "status": "success",
+      "ecsv_path": "literature/2403.17198/catalog_tables/table-tab-Table-2.ecsv",
+      "caption": "Subpopulation kinematics % errors are the standard error of the median \\label{tab:Table 2}",
+      "label": "tab:Table 2",
+      "row_count": 10,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Subgroup",
+          "Sample size",
+          "Median v_\\perp"
+        ],
+        [
+          "",
+          "",
+          "(km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Subgroup",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Sample size",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Median v_\\perp | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyi4gy0qd/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2403.17198/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyi4gy0qd/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2403.17198/catalog_sources/table-tab-Table-2/wrapped.tex",
+            "html": "literature/2403.17198/catalog_sources/table-tab-Table-2/latexml.html",
+            "stdout": "literature/2403.17198/catalog_sources/table-tab-Table-2/latexml.stdout.txt",
+            "stderr": "literature/2403.17198/catalog_sources/table-tab-Table-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0143e3a18742bbc34f02b30ad426e0218e2a7edd90742aaf2447f45517c1957c"
+    },
+    {
+      "id": "table-tab-Table-3",
+      "internal_table_id": "table-tab-Table-3",
+      "status": "success",
+      "ecsv_path": "literature/2403.17198/catalog_tables/table-tab-Table-3.ecsv",
+      "caption": "Numbers and Ratios of Walkaway and Runaway Field OB Stars \\label{tab:Table 3}",
+      "label": "tab:Table 3",
+      "row_count": 4,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "Numerator a a Numbers of walkaways are corrected by a factor of 2.4 for incompleteness (see Paper II).",
+          "Denominator",
+          "Ratio",
+          "Model b b See text and Table LABEL:tab:Table_4 for details about the model predictions."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Numerator a a Numbers of walkaways are corrected by a factor of 2.4 for incompleteness (see Paper II).",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Denominator",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Ratio",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Model b b See text and Table LABEL:tab:Table_4 for details about the model predictions.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxsu7zs4z/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2403.17198/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxsu7zs4z/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2403.17198/catalog_sources/table-tab-Table-3/wrapped.tex",
+            "html": "literature/2403.17198/catalog_sources/table-tab-Table-3/latexml.html",
+            "stdout": "literature/2403.17198/catalog_sources/table-tab-Table-3/latexml.stdout.txt",
+            "stderr": "literature/2403.17198/catalog_sources/table-tab-Table-3/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b9ff49e8a1c904074d9c4bb11183471af4da7c70e6a65048128c5cabf28550f2"
+    },
+    {
+      "id": "table-tab-Table-4",
+      "internal_table_id": "table-tab-Table-4",
+      "status": "success",
+      "ecsv_path": "literature/2403.17198/catalog_tables/table-tab-Table-4.ecsv",
+      "caption": "Model Runaway and Walkaway Frequencies\\tablenotemark{a} \\label{tab:Table 4}",
+      "label": "tab:Table 4",
+      "row_count": 16,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "Runaways",
+          "Walkaways"
+        ],
+        [
+          "DES",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "DES",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Runaways",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Walkaways",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmps8n1jdkb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2403.17198/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmps8n1jdkb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2403.17198/catalog_sources/table-tab-Table-4/wrapped.tex",
+            "html": "literature/2403.17198/catalog_sources/table-tab-Table-4/latexml.html",
+            "stdout": "literature/2403.17198/catalog_sources/table-tab-Table-4/latexml.stdout.txt",
+            "stderr": "literature/2403.17198/catalog_sources/table-tab-Table-4/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a4bc8e048eef6920b41950aeee12447dc8ff86f39df401a4b09cbd1369e399a7"
+    }
+  ]
+}

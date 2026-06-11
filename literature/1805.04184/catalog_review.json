@@ -1,0 +1,158 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1805.04184",
+    "title": "Gaia and the Galactic Center Origin of Hypervelocity Stars",
+    "month": "2018-05",
+    "source_note_json": "notes/2018/2018-05/2018-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1805.04184",
+      "pdf": "https://arxiv.org/pdf/1805.04184"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1805.04184",
+    "audit_path": "literature/1805.04184/audit.json",
+    "source_dir": "literature/1805.04184/arxiv_source",
+    "tex_root": "literature/1805.04184/arxiv_source/p2v3.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T08:07:19",
+    "reviewer": "agent",
+    "summary": "Paper uses Gaia DR2 proper motions to determine the origin of 42 (39 with Gaia measurements) high-velocity B-type stars from the Hypervelocity Star Survey (v_rf > +275 km/s). The authors compute backward trajectories through a Galactic potential model and evaluate origin probabilities via Monte Carlo simulations. Two internal tables are provided: Table 1 lists the sample of 39 stars with coordinates, g magnitudes, and proper motion measurements from Gaia DR2, HST, and GPS1. Table 2 presents the primary results — Galactic rest-frame radial velocity, Galactocentric distance, velocity relative to escape velocity, and probabilities for Galactic center HVS origin and disk runaway origin for each star. The paper classifies stars into three origin categories: Galactic center HVSs (7 probable), disk runaways (7), and halo stars (4). No external data resources (CDS/VizieR tables) are provided; the Gaia, HST, GPS1 data are from external surveys/databases used as input, not data products of this paper."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-sample",
+      "kind": "latex_table",
+      "asset_type": "observation_sample_table",
+      "role_in_paper": "Primary sample table listing the 39 velocity outlier B-type stars from the HVS Survey with Gaia DR2 proper motions (out of 42 total; 3 lack Gaia solutions). Columns: star identifier (HVS or B prefix indicating unbound/bound), J2000 coordinates, SDSS g-band apparent magnitude, and proper motion components from three independent sources (Gaia DR2, HST, GPS1). This table defines the complete study sample and provides the astrometric data used for trajectory calculations. Stars are sorted by decreasing Galactic rest-frame radial velocity v_rf.",
+      "source_refs": [
+        {
+          "path": "literature/1805.04184/arxiv_source/p2v3.tex",
+          "start_line": 110,
+          "end_line": 164,
+          "caption": "HVS Survey Stars with $v_{rf}>+275$ \\kms, Ordered by $v_{rf}$",
+          "label": "tab:sample"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Star identifier from the HVS Survey. Stars with 'HVS' prefix are previously published unbound hypervelocity stars; stars with 'B' prefix are bound radial velocity outliers from the survey (identified by their target number).",
+          "unit_text": "",
+          "source_of_definition": "Table header / Section 2.1 (Sample description: 'We refer to bound objects with the letter B followed by their target number in the HVS Survey, and unbound objects by their published HVS number.')",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA",
+          "meaning": "Right Ascension (J2000 epoch) of the star, in sexagesimal hours:minutes:seconds format.",
+          "unit_text": "h:m:s (J2000)",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec",
+          "meaning": "Declination (J2000 epoch) of the star, in sexagesimal degrees:arcminutes:arcseconds format.",
+          "unit_text": "d:m:s (J2000)",
+          "source_of_definition": "Table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "g",
+          "meaning": "SDSS g-band apparent magnitude of the star. The sample spans 15.75 < g < 20.26 mag, corresponding to Galactocentric distances of ~10-120 kpc.",
+          "unit_text": "mag",
+          "source_of_definition": "Table header / Section 2.1",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia (mu_alpha, mu_delta)",
+          "meaning": "Gaia DR2 proper motion components in right ascension and declination (east-west and north-south), corrected for the adopted spectrophotometric parallax (=1/distance) using the Gaia covariance matrix. Values are listed with ±1σ uncertainties. The median Gaia proper motion error is ±0.73 mas/yr.",
+          "unit_text": "mas/yr, mas/yr",
+          "source_of_definition": "Table header / Section 2.2 (Proper Motions subsection)",
+          "confidence": 1.0
+        },
+        {
+          "name": "HST (mu_alpha, mu_delta)",
+          "meaning": "Hubble Space Telescope proper motion components from Brown et al. (2015a), measured relative to background galaxies for 14 stars. An additional ±0.5 mas/yr error is added in quadrature for bright stars observed with paired short+long exposures (B434, B485, B711, HVS7, HVS8). The median HST error after adjustment is ±0.91 mas/yr. '...' (\\nodata) indicates no HST measurement available.",
+          "unit_text": "mas/yr, mas/yr",
+          "source_of_definition": "Table header / Section 2.2 (HST Comparison subsection)",
+          "confidence": 1.0
+        },
+        {
+          "name": "GPS1 (mu_alpha, mu_delta)",
+          "meaning": "Gaia-PanStarrs1-SDSS (GPS1) proper motion components from Tian et al. (2017), based on ground-based astrometric positions combined with Gaia DR1. These are essentially independent of Gaia DR2. The median GPS1 error is ±2.69 mas/yr. '...' (\\nodata) indicates no GPS1 measurement available.",
+          "unit_text": "mas/yr, mas/yr",
+          "source_of_definition": "Table header / Section 2.2 (GPS1 Comparison subsection)",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 lists the sample of 42 stars with their coordinates and apparent g-band SDSS magnitude. We sort the table by decreasing v_rf. We also list the east-west and north-south components of proper motion, (mu_alpha, mu_delta), obtained from three sources.",
+      "comments": "Table has 7 columns (ID, RA, Dec, g, Gaia pm, HST pm, GPS1 pm) and 39 data rows (42 entries listed but 3 stars — HVS14, HVS23, B149 — lack Gaia DR2 solutions and are dropped from analysis). The LaTeX table uses \\nodata for missing measurements. Proper motions are listed as value±error pairs within each cell."
+    },
+    {
+      "id": "table-tab-pval",
+      "kind": "latex_table",
+      "asset_type": "analysis_results_table",
+      "role_in_paper": "Primary results table presenting origin constraints derived from Monte Carlo trajectory calculations (10^6 realizations per star) for all 39 stars with Gaia measurements. Columns: star ID, Galactic rest-frame radial velocity v_rf, Galactocentric distance R, velocity relative to Galactic escape velocity (v_rf - v_esc), probability of Galactic center HVS origin (p_GC HVS), and probability of disk runaway origin (p_Disk Runaway). Probabilities are derived from the density of simulated trajectories crossing the Galactic plane. This table supports the paper's core classification into Galactic center HVSs, disk runaways, and halo stars.",
+      "source_refs": [
+        {
+          "path": "literature/1805.04184/arxiv_source/p2v3.tex",
+          "start_line": 647,
+          "end_line": 699,
+          "caption": "Constraints on Origin",
+          "label": "tab:pval"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Star identifier from the HVS Survey (same as Table 1).",
+          "unit_text": "",
+          "source_of_definition": "Table header / Table 1",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_rf",
+          "meaning": "Heliocentric radial velocity transformed to the Galactic rest frame (v_rf = v_helio + solar/LSR correction assuming circular velocity 235 km/s). This is the largest and most accurately measured velocity component. Stars sorted by decreasing v_rf.",
+          "unit_text": "km/s",
+          "source_of_definition": "Table header / Equation (1) and Section 2.1",
+          "confidence": 1.0
+        },
+        {
+          "name": "R",
+          "meaning": "Galactocentric radial distance of the star, computed from spectrophotometric parallaxes using Padova main-sequence tracks with ~15% precision, transformed to the Galactic frame assuming Sun at 8 kpc from Galactic center.",
+          "unit_text": "kpc",
+          "source_of_definition": "Table header / Section 2.1",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_rf - v_esc",
+          "meaning": "Galactic rest-frame radial velocity minus the effective Galactic escape velocity at the star's Galactocentric distance R. Escape velocity from the Kenyon et al. (2014) 3-component potential model (v_esc = 350 km/s at median R=55 kpc). Negative values indicate bound stars; positive values indicate formally unbound stars.",
+          "unit_text": "km/s",
+          "source_of_definition": "Table header / Section 3.1 (Gravitational Potential Model)",
+          "confidence": 1.0
+        },
+        {
+          "name": "p_GC HVS",
+          "meaning": "Probability that the star originated from the Galactic center, computed from the density of 10^6 Monte Carlo simulated backward trajectories as they cross the Galactic plane. Value near 1.0 indicates strong consistency with Galactic center origin; value near 0.0 indicates the Galactic center hypothesis is rejected. Probability thresholds: 1σ=0.3173, 2σ=0.0455, 3σ=0.0027.",
+          "unit_text": "",
+          "source_of_definition": "Table header / Section 3.2 (Trajectory Calculation) and Section 4",
+          "confidence": 1.0
+        },
+        {
+          "name": "p_Disk Runaway",
+          "meaning": "Probability that the star originated from the Galactic disk, computed by averaging the trajectory density over a 5 kpc radius region centered on the position of minimum Galactic disk ejection velocity. Value near 1.0 indicates strong consistency with disk origin; value near 0.0 indicates the disk hypothesis is rejected at >3σ significance.",
+          "unit_text": "",
+          "source_of_definition": "Table header / Section 4.2 (Disk Runaways) and Section 3.4 (Ejection Velocity)",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "For each star, we perform 10^6 Monte Carlo trajectory calculations assuming that measurement errors are normally distributed. We evaluate likelihood of origin based on the 0.3173 (1σ), 0.0455 (2σ), and 0.0027 (3σ) thresholds of the trajectory distribution at the Galactic plane. We estimate the likelihood of Galactic disk origin by averaging the trajectory density over a 5 kpc radius region centered on the position of minimum Galactic disk ejection velocity.",
+      "comments": "Table has 6 columns and 39 data rows (one per star with Gaia measurements). Stars are sorted by decreasing v_rf. The LaTeX table uses 'lcccccc' column specification. The p_GC HVS and p_Disk Runaway columns contain the cumulative probability values from the Monte Carlo trajectory analysis. Not all stars have both probabilities near 1 or 0 — ambiguous cases exist where neither hypothesis is strongly preferred or rejected."
+    }
+  ],
+  "external_resources": []
+}

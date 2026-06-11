@@ -1,0 +1,237 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2009.03571",
+    "title": "Runaway OB Stars in the Small Magellanic Cloud: Dynamical Versus Supernova Ejections",
+    "month": "2020-09",
+    "source_note_json": "notes/2020/2020-09/2020-09.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2009.03571",
+      "pdf": "https://arxiv.org/pdf/2009.03571"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2009.03571",
+    "audit_path": "literature/2009.03571/audit.json",
+    "source_dir": "literature/2009.03571/arxiv_source",
+    "tex_root": "literature/2009.03571/arxiv_source/ms.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:55:00",
+    "reviewer": "agent",
+    "summary": "论文利用RIOTS4巡天的304颗小麦哲伦云（SMC）场OB星样本，通过Gaia DR2自行得到的本地剩余横向速度（vperp）、光谱拟合恒星质量和投影自转速度（vsini），约束动力学抛射（DES）和双星超新星抛射（BSS）两种速逃星产生机制的相对贡献，发现DES主导，DES:BSS比例约2-3:1。论文含三张LaTeX表格：Table 1（tab:data）列出304颗RIOTS4场OB星的运动学数据和基本参数（ID、光谱型、子群分类、vperp、质量M、vsini、Teff、log L）；Table 2（tab:frequencies）为模型驱动的速逃星/漫步星频率估算表；Table 3（tab:frequencies2）为强制匹配观测的速逃星/漫步星频率估算表。Table 1在论文LaTeX源中仅展示前10行，完整数据以机器可读格式提供（本地文件anc/tab1.txt含有全部304颗星数据）。论文致谢提及Astropy、NumPy、SciPy为通用软件工具，非结构化数据资产。未发现外部URL数据资源链接。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-data",
+      "kind": "latex_table",
+      "asset_type": "source_catalog",
+      "role_in_paper": "列出304颗RIOTS4巡天SMC场OB星的运动学数据（本地剩余横向速度vperp及其误差）和基本物理参数（质量M、投影自转速度vsini、有效温度Teff、光度log L及其各自误差），标注每颗星的光谱型（SpType）和子群分类（EB/SB2/HMXB/发射线星标记）。这是全文的唯一观测数据表，为后续DES与BSS抛射机制统计分析和速逃星比例估算提供核心输入数据。",
+      "source_refs": [
+        {
+          "path": "literature/2009.03571/arxiv_source/ms.tex",
+          "start_line": 168,
+          "end_line": 191,
+          "caption": "Kinematic Data and Fundamental Parameters for RIOTS4 Field OB Stars \\tablenotemark{a} \\label{tab:data}",
+          "label": "tab:data"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Massey (2002)星表标识符（M2002 SMC NNNNN），用于唯一标识SMC中的恒星",
+          "unit_text": "",
+          "source_of_definition": "table header and table note b",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpType",
+          "meaning": "MK光谱型，主要来自Lamb et al. (2016) RIOTS4巡天，四颗B[e]星取Graus et al. (2012)",
+          "unit_text": "",
+          "source_of_definition": "table header and table note c",
+          "confidence": 1.0
+        },
+        {
+          "name": "Subgroup",
+          "meaning": "子群分类标记：E=食双星(EB)、S=双线光谱双星(SB2)、X=大质量X射线双星(HMXB)、e=发射线星(Oe/Be)；各标记以逗号分隔可出现多个",
+          "unit_text": "",
+          "source_of_definition": "table header and table note d",
+          "confidence": 1.0
+        },
+        {
+          "name": "vperp",
+          "meaning": "本地剩余横向速度，由Gaia DR2自行改正局部速度场（90 pc半径）后获得，来自Paper I (Oey et al. 2018)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header and table note e",
+          "confidence": 1.0
+        },
+        {
+          "name": "err(vperp)",
+          "meaning": "vperp的测量误差",
+          "unit_text": "km/s",
+          "source_of_definition": "table header (err column under vperp)",
+          "confidence": 1.0
+        },
+        {
+          "name": "M",
+          "meaning": "恒星质量，由恒星在H-R图上的位置与Brott et al. (2011)旋转演化轨迹插值得到；标记':'的质量不确定，标记'n'的另有来源说明",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header, table note f, and Section 3.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "err(M)",
+          "meaning": "质量的误差，基于±半个光谱子型范围估算",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header and table note g",
+          "confidence": 1.0
+        },
+        {
+          "name": "vsini",
+          "meaning": "投影自转速度，由iacob_broad软件对He I、He II、Si III、Si IV吸收线进行傅里叶分析获得",
+          "unit_text": "km/s",
+          "source_of_definition": "table header and Section 4 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "err(vsini)",
+          "meaning": "vsini的测量误差",
+          "unit_text": "km/s",
+          "source_of_definition": "table header (err column under vsini)",
+          "confidence": 1.0
+        },
+        {
+          "name": "Teff",
+          "meaning": "有效温度，根据光谱型由Massey et al. (2005, O型)和Crowther et al. (B型)的转换关系得出",
+          "unit_text": "kK",
+          "source_of_definition": "table header and Section 3.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "err(Teff)",
+          "meaning": "Teff的误差",
+          "unit_text": "kK",
+          "source_of_definition": "table header (err column under Teff)",
+          "confidence": 1.0
+        },
+        {
+          "name": "log L",
+          "meaning": "光度的对数（以太阳光度为单位），由V星等、距离模数18.9和热改正BC计算",
+          "unit_text": "log(L/L_sun)",
+          "source_of_definition": "table header and Section 3.1 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "err(log L)",
+          "meaning": "log L的误差",
+          "unit_text": "log(L/L_sun)",
+          "source_of_definition": "table header (err column under log L)",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 3.1: 'Table 1 gives our mass estimates.' 表注a说明完整表格以机器可读格式提供。表注b-g详细说明各列含义和数据来源。Section 2正文引用该表：'The relevant data for 304 field OB stars...'",
+      "comments": "论文LaTeX源仅展示前10行数据（ID 107~3815），完整304颗星数据在本地机器可读文件anc/tab1.txt中。该表含297颗有质量测定的星（其中238颗光谱型确定良好），201颗有vsini测定的星。质量不确定的59颗星用':'标记。SMC X-1（M2002-77458）的质量来自Rawls et al. (2011)动力学质量测定而非H-R图插值。"
+    },
+    {
+      "id": "table-tab-frequencies",
+      "kind": "latex_table",
+      "asset_type": "derived_population_statistics",
+      "role_in_paper": "列出基于理论模型驱动的SMC OB星群体中速逃星（Runaways）和漫步星（Walkaways）各子群的估算频率。以DES抛射比例0.33、DES速逃星:漫步星分支比30:70、DES双星比例0.3为输入参数，结合Renzo et al. (2019)的BSS模型预测，计算DES和BSS各类子群（包括前SN、后SN、双星、两步抛射）的频率。该表为全文核心结论（DES:BSS≈2-3:1）提供定量频率分解依据。",
+      "source_refs": [
+        {
+          "path": "literature/2009.03571/arxiv_source/ms.tex",
+          "start_line": 267,
+          "end_line": 299,
+          "caption": "Runaway and Walkaway Frequencies: \\\\ Model-driven\\tablenotemark{a} \\label{tab:frequencies}",
+          "label": "tab:frequencies"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Subpopulation",
+          "meaning": "DES/BSS各子群描述行标签（如DES All Ejected、Pre-SN、Post-SN、Two-step；BSS Unbound、Bound；Total Predicted/Observed；DES/BSS ratio等）",
+          "unit_text": "",
+          "source_of_definition": "table row labels",
+          "confidence": 1.0
+        },
+        {
+          "name": "Runaways",
+          "meaning": "该子群在SMC总OB星群体中的速逃星频率（vperp>30 km/s对应3-D空间速度≥37 km/s）",
+          "unit_text": "",
+          "source_of_definition": "table header and Section 5 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "Walkaways",
+          "meaning": "该子群在SMC总OB星群体中的漫步星频率（vperp<30 km/s的已抛射星）",
+          "unit_text": "",
+          "source_of_definition": "table header and Section 5 text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 5 Discussion: 'Table 2 presents our estimates for the frequencies of runaway and walkaway stars...' 表注a说明采用的三项假设参数。正文Section 5.1-5.3详细讨论各项频率的来源和推导。",
+      "comments": "粗体行（Pre-SN、With two-step、Total Predicted/Observed、DES/BSS ratio、Pre-SN binaries sub-pop）为与观测比较的关键值。DES/BSS速逃星比为2.9。总速逃星预测频率0.10，观测频率0.18（经漫步星不完备改正后）。"
+    },
+    {
+      "id": "table-tab-frequencies2",
+      "kind": "latex_table",
+      "asset_type": "derived_population_statistics",
+      "role_in_paper": "列出强制匹配观测值的SMC OB星群体中速逃星和漫步星频率估算表。与Table 2不同的是，该表采用DES速逃星:漫步星分支比50:50和DES双星比例1.0的极端假设，使模型预测更接近观测结果。该表用于探索参数空间，说明当DES双星抛射率和速逃星比例更高时可以更好地解释观测到的速逃星比例和场星双星比例。",
+      "source_refs": [
+        {
+          "path": "literature/2009.03571/arxiv_source/ms.tex",
+          "start_line": 301,
+          "end_line": 329,
+          "caption": "Runaway and Walkaway Frequencies: \\\\ Forced Match to Observations\\tablenotemark{a} \\label{tab:frequencies2}",
+          "label": "tab:frequencies2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Subpopulation",
+          "meaning": "DES/BSS各子群描述行标签（结构同Table 2，但参数假设不同）",
+          "unit_text": "",
+          "source_of_definition": "table row labels",
+          "confidence": 1.0
+        },
+        {
+          "name": "Runaways",
+          "meaning": "该子群在SMC总OB星群体中的速逃星频率（采用DES分支比50:50、双星比例1.0的强制匹配假设）",
+          "unit_text": "",
+          "source_of_definition": "table header and Section 5.3 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "Walkaways",
+          "meaning": "该子群在SMC总OB星群体中的漫步星频率（采用同上强制匹配假设）",
+          "unit_text": "",
+          "source_of_definition": "table header and Section 5.3 text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 5.3: 'We can explore the effect of forcing the parameters to match the observations...Table 3 gives revised estimates...' 表注a说明不同于Table 2的三项新假设参数。",
+      "comments": "该表在DES/BSS速逃星比为1.8的情况下，总速逃星预测频率0.18恰好匹配观测值，总漫步星预测频率0.22接近观测值0.18。总抛射双星比例0.58与文献观测值0.59一致。两步抛射速逃星占比（0.048）远超纯BSS速逃星（0.014），说明若DES双星抛射率高，两步抛射可能主导BSS速逃星群体。"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "machine-readable-table-tab-data",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/2009.03571/arxiv_source/anc/tab1.txt",
+      "description": "Table 1 (tab:data) 的完整机器可读版本，包含全部304颗RIOTS4场OB星的运动学数据和基本参数（ID、光谱型、子群分类标记、vperp及误差、质量M及误差标记、vsini及误差、Teff及误差、log L及误差），以固定宽度格式的字节说明+数据表形式提供。文件头部含详细的Byte-by-byte列描述。",
+      "source_refs": [
+        {
+          "path": "literature/2009.03571/arxiv_source/ms.tex",
+          "start_line": 184,
+          "end_line": 184,
+          "context": "\\tablenotetext{a}{Table~\\ref{tab:data} is available in its entirety in machine-readable format.}"
+        }
+      ],
+      "evidence": "Table 1表注a: 'Table 1 is available in its entirety in machine-readable format.' 本地文件anc/tab1.txt存在于arxiv_source/anc/目录下，文件头部含标题、作者和Byte-by-byte列描述，随后为304行数据。",
+      "comments": "该文件为固定宽度格式（Byte-by-byte描述），含完整的304行数据。LaTeX源中仅展示前10行示例数据。文件大小约28KB。"
+    }
+  ]
+}

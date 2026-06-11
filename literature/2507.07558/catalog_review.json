@@ -1,0 +1,330 @@
+{
+    "schema_version": "stella.article_data_assets.review.v1",
+    "paper": {
+        "arxiv_id": "2507.07558",
+        "title": "The Gaia RVS Benchmark Stars. III . Confirmed and New High Radial Velocity Stars From Gaia DR3",
+        "month": "2025-07",
+        "source_note_json": "notes/2025/2025-07/2025-07.json",
+        "links": {
+            "abs": "https://arxiv.org/abs/2507.07558",
+            "pdf": "https://arxiv.org/pdf/2507.07558"
+        }
+    },
+    "source": {
+        "paper_dir": "literature/2507.07558",
+        "audit_path": "literature/2507.07558/audit.json",
+        "source_dir": "literature/2507.07558/arxiv_source",
+        "tex_root": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+        "source_available": true
+    },
+    "review": {
+        "status": "reviewed",
+        "reviewed_at": "2026-05-17T12:34:21",
+        "reviewer": "agent",
+        "summary": "Auto-filled review: 2 internal table(s), 8 external resource(s)."
+    },
+    "internal_tables": [
+        {
+            "id": "table-tab-stars",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Stars",
+            "source_refs": [
+                {
+                    "path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+                    "start_line": 474,
+                    "end_line": 511,
+                    "caption": "Stars.",
+                    "label": "tab:stars"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Star",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\teff\\",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\logg\\",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\xi",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "[Fe/H]",
+                    "meaning": "Metallicity [Fe/H]",
+                    "unit_text": "[Fe/H]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "S/N | 450 nm",
+                    "meaning": "Signal-to-noise ratio",
+                    "unit_text": "450 nm",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "S/N | 650 nm",
+                    "meaning": "Signal-to-noise ratio",
+                    "unit_text": "650 nm",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Li",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\ionCaii-H and -K",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Note",
+                    "meaning": "Note or comment",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Stars.",
+            "comments": ""
+        },
+        {
+            "id": "table-coord",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Coordinates, Gaia DR3 ID and $G$ magnitudes, extinction A0, Gaia\\,DR3 radial velocities with their uncerianties for the program stars",
+            "source_refs": [
+                {
+                    "path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+                    "start_line": 706,
+                    "end_line": 749,
+                    "caption": "Coordinates, Gaia DR3 ID and $G$ magnitudes, extinction A0, Gaia\\,DR3 radial velocities with their uncerianties for the program stars.",
+                    "label": "coord"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Name",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Gaia DR3 ID",
+                    "meaning": "Gaia source identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "G",
+                    "meaning": "Gaia G-band magnitude",
+                    "unit_text": "mag",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "RA (J2000)",
+                    "meaning": "Right Ascension",
+                    "unit_text": "J2000",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "DEC (J2000)",
+                    "meaning": "Declination",
+                    "unit_text": "J2000",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "A0",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\rm V_r Gaia | \\kms",
+                    "meaning": "Heliocentric radial velocity",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\rm \\sigma(V_r) | \\kms",
+                    "meaning": "Column from table header",
+                    "unit_text": "V_r",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Coordinates, Gaia DR3 ID and $G$ magnitudes, extinction A0, Gaia\\,DR3 radial velocities with their uncerianties for the program stars.",
+            "comments": ""
+        }
+    ],
+    "external_resources": [
+        {
+            "id": "resource-001",
+            "kind": "external_url",
+            "url": "https://www.eso.org/sci/software/legacy/gasgano.html",
+            "local_path": "",
+            "description": "Observatory or institute data portal referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+                    "start_line": 202,
+                    "end_line": 202,
+                    "context": "With this high resolution the doppler width of the lines is completely resolved and the width of the lines\nis dominated by macroturbulence and stellar rotation.\nWe reduced all the spectra with the ESO pipeline (on gasgano version \\footnote{\\url{https://www.eso.org/sci/software/legacy/gasgano.html}}).\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+                }
+            ],
+            "evidence": "With this high resolution the doppler width of the lines is completely resolved and the width of the lines\nis dominated by macroturbulence and stellar rotation.\nWe reduced all the spectra with the ESO pipeline (on gasgano version \\footnote{\\url{https://www.eso.org/sci/software/legacy/gasgano.html}}).\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%",
+            "comments": ""
+        },
+        {
+            "id": "resource-002",
+            "kind": "external_url",
+            "url": "https://datalabs.esa.int",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+                    "start_line": 291,
+                    "end_line": 291,
+                    "context": "We used $-1.5$ as first guess metallicity and a mass of $\\rm 0.8\\,M_\\odot$. \n\nExtinction values were estimated by integrating from the Sun to the target star within the three-dimensional (3D) extinction density maps from \\cite{Vergely22}. The maps are based on the tomographic inversion of a large amount of extinction-distance pairs of individual targets, following a hierarchical technique. The latest maps used extinctions of $\\simeq$ 35 500 000 individual stars, derived from Gaia G, GBP, and GRP and 2MASS J, H, and KS photometric data, and their distances from Gaia EDR3 parallaxes. Accurate extinctions of $\\simeq$ 6 000 000 stars derived from both spectroscopic and photometric measurements were added and the two catalogues were inter-calibrated following a newly devised technique \\citep[see][]{Vergely22}. The achievable spatial resolution of the maps is governed by the target star density and distribution, which is highly variable and depends primarily on the distance to the Sun. The hierarchical inversion technique ensures that the spatial correlation kernel is compatible everywhere with the local target density. For reasons linked with the computational time, several maps with different maximum spatial resolutions and distance coverages were built (see the G-TOMO online facility at \\url{https://datalabs.esa.int)}. Here, we used a composite integration starting within the highest resolution map, and, if the line-of-sight reaches the boundary of the map, continuing the integration in the lower resolution (and wider) map, and so on. The maps are limited to a distance to the Plane Z of 400 pc. For targets with Z$\\geq$400 pc, the extinction beyond Z=400 pc is considered negligible.\n\nWith the first-guess parameters, we ran \\mygi\\ \\citep{mygi14} to derive the metallicity that was used to update the parameters."
+                }
+            ],
+            "evidence": "We used $-1.5$ as first guess metallicity and a mass of $\\rm 0.8\\,M_\\odot$. \n\nExtinction values were estimated by integrating from the Sun to the target star within the three-dimensional (3D) extinction density maps from \\cite{Vergely22}. The maps are based on the tomographic inversion of a large amount of extinction-distance pairs of individual targets, following a hierarchical technique. The latest maps used extinctions of $\\simeq$ 35 500 000 individual stars, derived from Gaia G, GBP, and GRP and 2MASS J, H, and KS photometric data, and their distances from Gaia EDR3 parallaxes. Accurate extinctions of $\\simeq$ 6 000 000 stars derived from both spectroscopic and photometric measurements were added and the two catalogues were inter-calibrated following a newly devised technique \\citep[see][]{Vergely22}. The achievable spatial resolution of the maps is governed by the target star density and distribution, which is highly variable and depends primarily on the distance to the Sun. The hierarchical inversion technique ensures that the spatial correlation kernel is compatible everywhere with the local target density. For reasons linked with the computational time, several maps with different maximum spatial resolutions and distance coverages were built (see the G-TOMO online facility at \\url{https://datalabs.esa.int)}. Here, we used a composite integration starting within the highest resolution map, and, if the line-of-sight reaches the boundary of the map, continuing the integration in the lower resolution (and wider) map, and so on. The maps are limited to a distance to the Plane Z of 400 pc. For targets with Z$\\geq$400 pc, the extinction beyond Z=400 pc is considered negligible.\n\nWith the first-guess parameters, we ran \\mygi\\ \\citep{mygi14} to derive the metallicity that was used to update the parameters.",
+            "comments": ""
+        },
+        {
+            "id": "resource-003",
+            "kind": "external_url",
+            "url": "https://datalabs.esa.int)",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+                    "start_line": 291,
+                    "end_line": 291,
+                    "context": "We used $-1.5$ as first guess metallicity and a mass of $\\rm 0.8\\,M_\\odot$. \n\nExtinction values were estimated by integrating from the Sun to the target star within the three-dimensional (3D) extinction density maps from \\cite{Vergely22}. The maps are based on the tomographic inversion of a large amount of extinction-distance pairs of individual targets, following a hierarchical technique. The latest maps used extinctions of $\\simeq$ 35 500 000 individual stars, derived from Gaia G, GBP, and GRP and 2MASS J, H, and KS photometric data, and their distances from Gaia EDR3 parallaxes. Accurate extinctions of $\\simeq$ 6 000 000 stars derived from both spectroscopic and photometric measurements were added and the two catalogues were inter-calibrated following a newly devised technique \\citep[see][]{Vergely22}. The achievable spatial resolution of the maps is governed by the target star density and distribution, which is highly variable and depends primarily on the distance to the Sun. The hierarchical inversion technique ensures that the spatial correlation kernel is compatible everywhere with the local target density. For reasons linked with the computational time, several maps with different maximum spatial resolutions and distance coverages were built (see the G-TOMO online facility at \\url{https://datalabs.esa.int)}. Here, we used a composite integration starting within the highest resolution map, and, if the line-of-sight reaches the boundary of the map, continuing the integration in the lower resolution (and wider) map, and so on. The maps are limited to a distance to the Plane Z of 400 pc. For targets with Z$\\geq$400 pc, the extinction beyond Z=400 pc is considered negligible.\n\nWith the first-guess parameters, we ran \\mygi\\ \\citep{mygi14} to derive the metallicity that was used to update the parameters."
+                }
+            ],
+            "evidence": "We used $-1.5$ as first guess metallicity and a mass of $\\rm 0.8\\,M_\\odot$. \n\nExtinction values were estimated by integrating from the Sun to the target star within the three-dimensional (3D) extinction density maps from \\cite{Vergely22}. The maps are based on the tomographic inversion of a large amount of extinction-distance pairs of individual targets, following a hierarchical technique. The latest maps used extinctions of $\\simeq$ 35 500 000 individual stars, derived from Gaia G, GBP, and GRP and 2MASS J, H, and KS photometric data, and their distances from Gaia EDR3 parallaxes. Accurate extinctions of $\\simeq$ 6 000 000 stars derived from both spectroscopic and photometric measurements were added and the two catalogues were inter-calibrated following a newly devised technique \\citep[see][]{Vergely22}. The achievable spatial resolution of the maps is governed by the target star density and distribution, which is highly variable and depends primarily on the distance to the Sun. The hierarchical inversion technique ensures that the spatial correlation kernel is compatible everywhere with the local target density. For reasons linked with the computational time, several maps with different maximum spatial resolutions and distance coverages were built (see the G-TOMO online facility at \\url{https://datalabs.esa.int)}. Here, we used a composite integration starting within the highest resolution map, and, if the line-of-sight reaches the boundary of the map, continuing the integration in the lower resolution (and wider) map, and so on. The maps are limited to a distance to the Plane Z of 400 pc. For targets with Z$\\geq$400 pc, the extinction beyond Z=400 pc is considered negligible.\n\nWith the first-guess parameters, we ran \\mygi\\ \\citep{mygi14} to derive the metallicity that was used to update the parameters.",
+            "comments": ""
+        },
+        {
+            "id": "resource-004",
+            "kind": "external_url",
+            "url": "https://simbad.cds.unistra.fr/simbad/",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+                    "start_line": 306,
+                    "end_line": 306,
+                    "context": "for systematic uncertainties and NLTE investigations refer to these papers.\n\nThe majority on the stars in the sample are not known in the SIMBAD astronomical database\\footnote{\\url{}https://simbad.cds.unistra.fr/simbad/} and just one star (RVS1315) has a complete chemical analysis in the literature."
+                }
+            ],
+            "evidence": "for systematic uncertainties and NLTE investigations refer to these papers.\n\nThe majority on the stars in the sample are not known in the SIMBAD astronomical database\\footnote{\\url{}https://simbad.cds.unistra.fr/simbad/} and just one star (RVS1315) has a complete chemical analysis in the literature.",
+            "comments": ""
+        },
+        {
+            "id": "resource-005",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+                    "start_line": 315,
+                    "end_line": 315,
+                    "context": "the identifications and coordinates are provided in Table\\,\\ref{coord} and  \nfull details about the individual chemical abundances derived for each star and the\nspectral lines used are made available at CDS.\nHere below some remarks on few stars."
+                }
+            ],
+            "evidence": "the identifications and coordinates are provided in Table\\,\\ref{coord} and  \nfull details about the individual chemical abundances derived for each star and the\nspectral lines used are made available at CDS.\nHere below some remarks on few stars.",
+            "comments": ""
+        },
+        {
+            "id": "resource-006",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+                    "start_line": 689,
+                    "end_line": 689,
+                    "context": "The authors wish to thank the referee for the useful comments.\nPB acknowledges support   from the ERC advanced grant N. 835087 -- SPIAKID.\nThis research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n\n\\bibliographystyle{aa}"
+                }
+            ],
+            "evidence": "The authors wish to thank the referee for the useful comments.\nPB acknowledges support   from the ERC advanced grant N. 835087 -- SPIAKID.\nThis research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n\n\\bibliographystyle{aa}",
+            "comments": ""
+        },
+        {
+            "id": "resource-007",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+                    "start_line": 699,
+                    "end_line": 699,
+                    "context": "\\section{Appendix: On-line tables\\label{app}}\n\nThe detailed abundances are available in a csv table at CDS.\n\nThe atomic lines used in the analysis are presented in an ASCII table available at CDS."
+                }
+            ],
+            "evidence": "\\section{Appendix: On-line tables\\label{app}}\n\nThe detailed abundances are available in a csv table at CDS.\n\nThe atomic lines used in the analysis are presented in an ASCII table available at CDS.",
+            "comments": ""
+        },
+        {
+            "id": "resource-008",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+                    "start_line": 701,
+                    "end_line": 701,
+                    "context": "The detailed abundances are available in a csv table at CDS.\n\nThe atomic lines used in the analysis are presented in an ASCII table available at CDS.\nBe careful, in the analysis performed by \\mygi\\ the observed spectrum is fitted in a selected region,\nso that other lines can be present in the wavelength range."
+                }
+            ],
+            "evidence": "The detailed abundances are available in a csv table at CDS.\n\nThe atomic lines used in the analysis are presented in an ASCII table available at CDS.\nBe careful, in the analysis performed by \\mygi\\ the observed spectrum is fitted in a selected region,\nso that other lines can be present in the wavelength range.",
+            "comments": ""
+        }
+    ]
+}

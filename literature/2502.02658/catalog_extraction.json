@@ -1,0 +1,2038 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:45",
+  "paper": {
+    "arxiv_id": "2502.02658",
+    "title": "New stellar bow shocks and bubbles found around runaway stars",
+    "month": "2025-02"
+  },
+  "review": {
+    "path": "literature/2502.02658/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123945",
+    "started_at": "2026-05-17T12:39:45",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2502.02658",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 10,
+      "work_count": 10,
+      "table_count": 10,
+      "success_count": 10,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 10,
+      "file_success_count": 10,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-Tab-GOSC_Runaways",
+      "internal_table_id": "table-Tab-GOSC_Runaways",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2502.02658/arxiv_source/main.tex",
+        "start_line": 111,
+        "end_line": 135,
+        "caption": "Data of the 10 out of 106 GOSC-\\textit{Gaia}~DR3 runaway stars with higher values of $E$ in decreasing order.",
+        "label": "Tab:GOSC_Runaways"
+      },
+      "source_path": "literature/2502.02658/arxiv_source/main.tex",
+      "excerpt_path": "literature/2502.02658/catalog_sources/table-Tab-GOSC_Runaways/excerpt.tex",
+      "sha256": "c0218d4a6257287fa0fe45a925401a272b7ac46fda79f3f0ca85b0b78a05f9ab",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-BeSS_Runaways",
+      "internal_table_id": "table-Tab-BeSS_Runaways",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2502.02658/arxiv_source/main.tex",
+        "start_line": 139,
+        "end_line": 163,
+        "caption": "Data of the 10 out of 69 BeSS-\\textit{Gaia}~DR3 runaway stars with higher values of $E$ in decreasing order.",
+        "label": "Tab:BeSS_Runaways"
+      },
+      "source_path": "literature/2502.02658/arxiv_source/main.tex",
+      "excerpt_path": "literature/2502.02658/catalog_sources/table-Tab-BeSS_Runaways/excerpt.tex",
+      "sha256": "b5663513f7631e5642daf6ebe3c95a606c752dd132f19b9bc549e5a8d8575c43",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-WISE_Survey",
+      "internal_table_id": "table-Tab-WISE_Survey",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2502.02658/arxiv_source/main.tex",
+        "start_line": 176,
+        "end_line": 191,
+        "caption": "Main properties of the WISE survey used in this work.",
+        "label": "Tab:WISE_Survey"
+      },
+      "source_path": "literature/2502.02658/arxiv_source/main.tex",
+      "excerpt_path": "literature/2502.02658/catalog_sources/table-Tab-WISE_Survey/excerpt.tex",
+      "sha256": "4ffb77ec5ed9c71e73db8176c3761b59d1296478e0aa4a6eeb43d6a1366f1f2f",
+      "line_count": 16,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-NewBowShocks",
+      "internal_table_id": "table-Tab-NewBowShocks",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2502.02658/arxiv_source/main.tex",
+        "start_line": 255,
+        "end_line": 282,
+        "caption": "Stellar parameters and velocities of the runaway stars associated with the new bow shock (BS) and bubble (BU) candidates, and geometrical IR measures in the W4 images for the bow shock and bubble candidates.",
+        "label": "Tab:NewBowShocks"
+      },
+      "source_path": "literature/2502.02658/arxiv_source/main.tex",
+      "excerpt_path": "literature/2502.02658/catalog_sources/table-Tab-NewBowShocks/excerpt.tex",
+      "sha256": "77b283b1eb54121187bf1b8736480766f266c5bfed56be75feedcd39f740968a",
+      "line_count": 28,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-KnownBowShocks",
+      "internal_table_id": "table-Tab-KnownBowShocks",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2502.02658/arxiv_source/main.tex",
+        "start_line": 316,
+        "end_line": 343,
+        "caption": "Stellar parameters and velocities of the runaway stars associated with the known bow shock (BS) and bubble (BU) candidates that were not characterized by previous works, and geometrical IR measures in the W4 images for the bow shock and bubble candidates.",
+        "label": "Tab:KnownBowShocks"
+      },
+      "source_path": "literature/2502.02658/arxiv_source/main.tex",
+      "excerpt_path": "literature/2502.02658/catalog_sources/table-Tab-KnownBowShocks/excerpt.tex",
+      "sha256": "a4d5fe48e28fb628ffa97ae209d3a45bc61f8e86684d254ba3b1ca1bd2f0a34d",
+      "line_count": 28,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-Miscellaneous",
+      "internal_table_id": "table-Tab-Miscellaneous",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2502.02658/arxiv_source/main.tex",
+        "start_line": 371,
+        "end_line": 406,
+        "caption": "Miscellaneous IR structures and their W4 morphology.",
+        "label": "Tab:Miscellaneous"
+      },
+      "source_path": "literature/2502.02658/arxiv_source/main.tex",
+      "excerpt_path": "literature/2502.02658/catalog_sources/table-Tab-Miscellaneous/excerpt.tex",
+      "sha256": "2984d6c1473b1af4a050bdc5ac26de7cb10a423ca82139830cedf2b7db46e3fc",
+      "line_count": 36,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-AngularDifferences",
+      "internal_table_id": "table-Tab-AngularDifferences",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2502.02658/arxiv_source/main.tex",
+        "start_line": 495,
+        "end_line": 533,
+        "caption": "Runaway star corrected proper motion direction ($PA$) and bow shock (BS) direction angles with their uncertainties, their difference and significance, for the new and known bow shocks.",
+        "label": "Tab:AngularDifferences"
+      },
+      "source_path": "literature/2502.02658/arxiv_source/main.tex",
+      "excerpt_path": "literature/2502.02658/catalog_sources/table-Tab-AngularDifferences/excerpt.tex",
+      "sha256": "4e5dec1ea18dee3b42c80a3a0a7b4ae84ea50859cb34c1d5ad9468abbfbdabda",
+      "line_count": 39,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-Radio_Surveys",
+      "internal_table_id": "table-Tab-Radio_Surveys",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2502.02658/arxiv_source/main.tex",
+        "start_line": 552,
+        "end_line": 569,
+        "caption": "Main properties of the radio surveys used in this work.",
+        "label": "Tab:Radio_Surveys"
+      },
+      "source_path": "literature/2502.02658/arxiv_source/main.tex",
+      "excerpt_path": "literature/2502.02658/catalog_sources/table-Tab-Radio_Surveys/excerpt.tex",
+      "sha256": "a1f6b3d21c0dcef18993780682410b2f0799af0a699a03920b065573cea3b2c7",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-RadioSearchResults",
+      "internal_table_id": "table-Tab-RadioSearchResults",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2502.02658/arxiv_source/main.tex",
+        "start_line": 577,
+        "end_line": 629,
+        "caption": "Results of the search for radio emission overlapping the new and the known bow shock (BS) and bubble (BU) candidates in different radio surveys.",
+        "label": "Tab:RadioSearchResults"
+      },
+      "source_path": "literature/2502.02658/arxiv_source/main.tex",
+      "excerpt_path": "literature/2502.02658/catalog_sources/table-Tab-RadioSearchResults/excerpt.tex",
+      "sha256": "d7f5276d673a701acde7df19a6e82106658871403f9117ec06bab2ec622486da",
+      "line_count": 53,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-RadioObs",
+      "internal_table_id": "table-Tab-RadioObs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2502.02658/arxiv_source/main.tex",
+        "start_line": 701,
+        "end_line": 726,
+        "caption": "Radio observables obtained from RACS-low images for new and known bow shock candidates.",
+        "label": "Tab:RadioObs"
+      },
+      "source_path": "literature/2502.02658/arxiv_source/main.tex",
+      "excerpt_path": "literature/2502.02658/catalog_sources/table-Tab-RadioObs/excerpt.tex",
+      "sha256": "2e0ccfa16855aa7add429f5ef876270aa285c196295e1d4656d147d9c848b9f5",
+      "line_count": 26,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-Tab-GOSC_Runaways",
+      "internal_table_id": "table-Tab-GOSC_Runaways",
+      "status": "success",
+      "ecsv_path": "literature/2502.02658/catalog_tables/table-Tab-GOSC_Runaways.ecsv",
+      "caption": "Data of the 10 out of 106 GOSC-\\textit{Gaia}~DR3 runaway stars with higher values of $E$ in decreasing order.",
+      "label": "Tab:GOSC_Runaways",
+      "row_count": 11,
+      "column_count": 19,
+      "environment": "",
+      "header_rows": [
+        [
+          "Runaway id",
+          "GOSC Name",
+          "Gaia DR3 id",
+          "RA",
+          "",
+          "",
+          "DEC",
+          "",
+          "",
+          "d",
+          "\\mu_\\alpha,corr^*",
+          "\\mu_\\delta,corr",
+          "G",
+          "S.T.",
+          "V_PEC^2D",
+          "",
+          "E",
+          "Run. Ref.",
+          "Bow. Ref."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Runaway id",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "GOSC Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Gaia DR3 id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RA",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "DEC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "d",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\mu_\\alpha,corr^*",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\mu_\\delta,corr",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "G",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "S.T.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "V_PEC^2D",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "E",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "Run. Ref.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "Bow. Ref.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjxzsprk1/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.02658/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjxzsprk1/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.02658/catalog_sources/table-Tab-GOSC_Runaways/wrapped.tex",
+            "html": "literature/2502.02658/catalog_sources/table-Tab-GOSC_Runaways/latexml.html",
+            "stdout": "literature/2502.02658/catalog_sources/table-Tab-GOSC_Runaways/latexml.stdout.txt",
+            "stderr": "literature/2502.02658/catalog_sources/table-Tab-GOSC_Runaways/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c0218d4a6257287fa0fe45a925401a272b7ac46fda79f3f0ca85b0b78a05f9ab"
+    },
+    {
+      "id": "table-Tab-BeSS_Runaways",
+      "internal_table_id": "table-Tab-BeSS_Runaways",
+      "status": "success",
+      "ecsv_path": "literature/2502.02658/catalog_tables/table-Tab-BeSS_Runaways.ecsv",
+      "caption": "Data of the 10 out of 69 BeSS-\\textit{Gaia}~DR3 runaway stars with higher values of $E$ in decreasing order.",
+      "label": "Tab:BeSS_Runaways",
+      "row_count": 11,
+      "column_count": 19,
+      "environment": "",
+      "header_rows": [
+        [
+          "Runaway id",
+          "BeSS Name",
+          "Gaia DR3 id",
+          "RA",
+          "",
+          "",
+          "DEC",
+          "",
+          "",
+          "d",
+          "\\mu_\\alpha,corr^*",
+          "\\mu_\\delta,corr",
+          "G",
+          "S.T.",
+          "V_PEC^2D",
+          "",
+          "E",
+          "Run. Ref.",
+          "Bow. Ref."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Runaway id",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "BeSS Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Gaia DR3 id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RA",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "DEC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "d",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\mu_\\alpha,corr^*",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\mu_\\delta,corr",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "G",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "S.T.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "V_PEC^2D",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "E",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "Run. Ref.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "Bow. Ref.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm60dhnlu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.02658/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm60dhnlu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.02658/catalog_sources/table-Tab-BeSS_Runaways/wrapped.tex",
+            "html": "literature/2502.02658/catalog_sources/table-Tab-BeSS_Runaways/latexml.html",
+            "stdout": "literature/2502.02658/catalog_sources/table-Tab-BeSS_Runaways/latexml.stdout.txt",
+            "stderr": "literature/2502.02658/catalog_sources/table-Tab-BeSS_Runaways/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b5663513f7631e5642daf6ebe3c95a606c752dd132f19b9bc549e5a8d8575c43"
+    },
+    {
+      "id": "table-Tab-WISE_Survey",
+      "internal_table_id": "table-Tab-WISE_Survey",
+      "status": "success",
+      "ecsv_path": "literature/2502.02658/catalog_tables/table-Tab-WISE_Survey.ecsv",
+      "caption": "Main properties of the WISE survey used in this work.",
+      "label": "Tab:WISE_Survey",
+      "row_count": 4,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Survey",
+          "Band",
+          "Wavelength",
+          "Resolution",
+          "Coverage"
+        ],
+        [
+          "",
+          "",
+          "( \\mu m)",
+          "( \\arcsec )",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Survey",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Band",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Wavelength | ( \\mu m)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Resolution | ( \\arcsec )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Coverage",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp75lhvoh0/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.02658/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp75lhvoh0/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.02658/catalog_sources/table-Tab-WISE_Survey/wrapped.tex",
+            "html": "literature/2502.02658/catalog_sources/table-Tab-WISE_Survey/latexml.html",
+            "stdout": "literature/2502.02658/catalog_sources/table-Tab-WISE_Survey/latexml.stdout.txt",
+            "stderr": "literature/2502.02658/catalog_sources/table-Tab-WISE_Survey/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4ffb77ec5ed9c71e73db8176c3761b59d1296478e0aa4a6eeb43d6a1366f1f2f"
+    },
+    {
+      "id": "table-Tab-NewBowShocks",
+      "internal_table_id": "table-Tab-NewBowShocks",
+      "status": "success",
+      "ecsv_path": "literature/2502.02658/catalog_tables/table-Tab-NewBowShocks.ecsv",
+      "caption": "Stellar parameters and velocities of the runaway stars associated with the new bow shock (BS) and bubble (BU) candidates, and geometrical IR measures in the W4 images for the bow shock and bubble candidates.",
+      "label": "Tab:NewBowShocks",
+      "row_count": 15,
+      "column_count": 18,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpf1qm5glj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.02658/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpf1qm5glj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.02658/catalog_sources/table-Tab-NewBowShocks/wrapped.tex",
+            "html": "literature/2502.02658/catalog_sources/table-Tab-NewBowShocks/latexml.html",
+            "stdout": "literature/2502.02658/catalog_sources/table-Tab-NewBowShocks/latexml.stdout.txt",
+            "stderr": "literature/2502.02658/catalog_sources/table-Tab-NewBowShocks/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "77b283b1eb54121187bf1b8736480766f266c5bfed56be75feedcd39f740968a"
+    },
+    {
+      "id": "table-Tab-KnownBowShocks",
+      "internal_table_id": "table-Tab-KnownBowShocks",
+      "status": "success",
+      "ecsv_path": "literature/2502.02658/catalog_tables/table-Tab-KnownBowShocks.ecsv",
+      "caption": "Stellar parameters and velocities of the runaway stars associated with the known bow shock (BS) and bubble (BU) candidates that were not characterized by previous works, and geometrical IR measures in the W4 images for the bow shock and bubble candidates.",
+      "label": "Tab:KnownBowShocks",
+      "row_count": 4,
+      "column_count": 18,
+      "environment": "",
+      "header_rows": [
+        [
+          "Runaway Star",
+          "ST",
+          "\\dotM\\times 10^6",
+          "\\varv_\\infty",
+          "\\varv_r",
+          "Ref",
+          "V_PEC^2D",
+          "V_PEC^3D",
+          "BS/BU",
+          "R",
+          "",
+          "l",
+          "",
+          "w",
+          "",
+          "e",
+          "n_ISM^2D",
+          "n_ISM^3D"
+        ],
+        [
+          "",
+          "",
+          "(M ⊙ yr -1 )",
+          "(km s -1 )",
+          "(km s -1 )",
+          "",
+          "(km s -1 )",
+          "(km s -1 )",
+          "",
+          "\\left(\\arcsec\\right)",
+          "(pc)",
+          "\\left(\\arcsec\\right)",
+          "(pc)",
+          "\\left(\\arcsec\\right)",
+          "(pc)",
+          "",
+          "(cm -3 )",
+          "(cm -3 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Runaway Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "ST",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\dotM\\times 10^6 | (M ⊙ yr -1 )",
+          "unit_text": "(M ⊙ yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\varv_\\infty | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\varv_r | (km s -1 )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Ref",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "V_PEC^2D | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "V_PEC^3D | (km s -1 )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "BS/BU",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "R | \\left(\\arcsec\\right)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "(pc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "l | \\left(\\arcsec\\right)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "(pc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "w | \\left(\\arcsec\\right)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "(pc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "e",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "n_ISM^2D | (cm -3 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "n_ISM^3D | (cm -3 )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmps2xiu8ll/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.02658/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmps2xiu8ll/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.02658/catalog_sources/table-Tab-KnownBowShocks/wrapped.tex",
+            "html": "literature/2502.02658/catalog_sources/table-Tab-KnownBowShocks/latexml.html",
+            "stdout": "literature/2502.02658/catalog_sources/table-Tab-KnownBowShocks/latexml.stdout.txt",
+            "stderr": "literature/2502.02658/catalog_sources/table-Tab-KnownBowShocks/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a4d5fe48e28fb628ffa97ae209d3a45bc61f8e86684d254ba3b1ca1bd2f0a34d"
+    },
+    {
+      "id": "table-Tab-Miscellaneous",
+      "internal_table_id": "table-Tab-Miscellaneous",
+      "status": "success",
+      "ecsv_path": "literature/2502.02658/catalog_tables/table-Tab-Miscellaneous.ecsv",
+      "caption": "Miscellaneous IR structures and their W4 morphology.",
+      "label": "Tab:Miscellaneous",
+      "row_count": 12,
+      "column_count": 12,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnyw08ujc/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.02658/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnyw08ujc/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.02658/catalog_sources/table-Tab-Miscellaneous/wrapped.tex",
+            "html": "literature/2502.02658/catalog_sources/table-Tab-Miscellaneous/latexml.html",
+            "stdout": "literature/2502.02658/catalog_sources/table-Tab-Miscellaneous/latexml.stdout.txt",
+            "stderr": "literature/2502.02658/catalog_sources/table-Tab-Miscellaneous/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2984d6c1473b1af4a050bdc5ac26de7cb10a423ca82139830cedf2b7db46e3fc"
+    },
+    {
+      "id": "table-Tab-AngularDifferences",
+      "internal_table_id": "table-Tab-AngularDifferences",
+      "status": "success",
+      "ecsv_path": "literature/2502.02658/catalog_tables/table-Tab-AngularDifferences.ecsv",
+      "caption": "Runaway star corrected proper motion direction ($PA$) and bow shock (BS) direction angles with their uncertainties, their difference and significance, for the new and known bow shocks.",
+      "label": "Tab:AngularDifferences",
+      "row_count": 25,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Runaway id",
+          "Type",
+          "PA",
+          "\\DeltaPA",
+          "BS Angle",
+          "\\Delta BS Angle",
+          "Angular difference (AD)",
+          "AD Significance"
+        ],
+        [
+          "",
+          "",
+          "( \\degr )",
+          "( \\degr )",
+          "( \\degr )",
+          "( \\degr )",
+          "( \\degr )",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Runaway id",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "PA | ( \\degr )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\DeltaPA | ( \\degr )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "BS Angle | ( \\degr )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\Delta BS Angle | ( \\degr )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Angular difference (AD) | ( \\degr )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "AD Significance",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9hrfez84/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.02658/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9hrfez84/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.02658/catalog_sources/table-Tab-AngularDifferences/wrapped.tex",
+            "html": "literature/2502.02658/catalog_sources/table-Tab-AngularDifferences/latexml.html",
+            "stdout": "literature/2502.02658/catalog_sources/table-Tab-AngularDifferences/latexml.stdout.txt",
+            "stderr": "literature/2502.02658/catalog_sources/table-Tab-AngularDifferences/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4e5dec1ea18dee3b42c80a3a0a7b4ae84ea50859cb34c1d5ad9468abbfbdabda"
+    },
+    {
+      "id": "table-Tab-Radio_Surveys",
+      "internal_table_id": "table-Tab-Radio_Surveys",
+      "status": "success",
+      "ecsv_path": "literature/2502.02658/catalog_tables/table-Tab-Radio_Surveys.ecsv",
+      "caption": "Main properties of the radio surveys used in this work.",
+      "label": "Tab:Radio_Surveys",
+      "row_count": 4,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Survey",
+          "Band",
+          "Wavelength",
+          "Resolution",
+          "Coverage",
+          "Ref."
+        ],
+        [
+          "",
+          "",
+          "(cm)",
+          "( \\arcsec )",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Survey",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Band",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Wavelength | (cm)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Resolution | ( \\arcsec )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Coverage",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Ref.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7j036t7n/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.02658/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7j036t7n/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.02658/catalog_sources/table-Tab-Radio_Surveys/wrapped.tex",
+            "html": "literature/2502.02658/catalog_sources/table-Tab-Radio_Surveys/latexml.html",
+            "stdout": "literature/2502.02658/catalog_sources/table-Tab-Radio_Surveys/latexml.stdout.txt",
+            "stderr": "literature/2502.02658/catalog_sources/table-Tab-Radio_Surveys/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a1f6b3d21c0dcef18993780682410b2f0799af0a699a03920b065573cea3b2c7"
+    },
+    {
+      "id": "table-Tab-RadioSearchResults",
+      "internal_table_id": "table-Tab-RadioSearchResults",
+      "status": "success",
+      "ecsv_path": "literature/2502.02658/catalog_tables/table-Tab-RadioSearchResults.ecsv",
+      "caption": "Results of the search for radio emission overlapping the new and the known bow shock (BS) and bubble (BU) candidates in different radio surveys.",
+      "label": "Tab:RadioSearchResults",
+      "row_count": 21,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "BS/BU",
+          "RA",
+          "",
+          "",
+          "DEC",
+          "",
+          "",
+          "NVSS",
+          "VLASS",
+          "RACS-low",
+          "RACS-mid"
+        ],
+        [
+          "",
+          "(h m s)",
+          "",
+          "",
+          "( \\degr \\arcmin \\arcsec )",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "New BS and BU candidates associated with O-type runaway stars",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "BS/BU | New BS and BU candidates associated with O-type runaway stars",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA | (h m s)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "DEC | ( \\degr \\arcmin \\arcsec )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "NVSS",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "VLASS",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "RACS-low",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "RACS-mid",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_w_n31zi/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.02658/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_w_n31zi/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.02658/catalog_sources/table-Tab-RadioSearchResults/wrapped.tex",
+            "html": "literature/2502.02658/catalog_sources/table-Tab-RadioSearchResults/latexml.html",
+            "stdout": "literature/2502.02658/catalog_sources/table-Tab-RadioSearchResults/latexml.stdout.txt",
+            "stderr": "literature/2502.02658/catalog_sources/table-Tab-RadioSearchResults/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d7f5276d673a701acde7df19a6e82106658871403f9117ec06bab2ec622486da"
+    },
+    {
+      "id": "table-Tab-RadioObs",
+      "internal_table_id": "table-Tab-RadioObs",
+      "status": "success",
+      "ecsv_path": "literature/2502.02658/catalog_tables/table-Tab-RadioObs.ecsv",
+      "caption": "Radio observables obtained from RACS-low images for new and known bow shock candidates.",
+      "label": "Tab:RadioObs",
+      "row_count": 8,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "id",
+          "Runaway Star",
+          "RMS",
+          "Image RMS",
+          "BMAJ",
+          "BMIN",
+          "RACS field"
+        ],
+        [
+          "",
+          "",
+          "( \\mu Jy)",
+          "( \\mu Jy)",
+          "\\left(\\arcsec\\right)",
+          "\\left(\\arcsec\\right)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "id",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Runaway Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "RMS | ( \\mu Jy)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Image RMS | ( \\mu Jy)",
+          "unit_text": "Image RMS",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "BMAJ | \\left(\\arcsec\\right)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "BMIN | \\left(\\arcsec\\right)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "RACS field",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpn7i1u5l1/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2502.02658/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpn7i1u5l1/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2502.02658/catalog_sources/table-Tab-RadioObs/wrapped.tex",
+            "html": "literature/2502.02658/catalog_sources/table-Tab-RadioObs/latexml.html",
+            "stdout": "literature/2502.02658/catalog_sources/table-Tab-RadioObs/latexml.stdout.txt",
+            "stderr": "literature/2502.02658/catalog_sources/table-Tab-RadioObs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2e0ccfa16855aa7add429f5ef876270aa285c196295e1d4656d147d9c848b9f5"
+    }
+  ]
+}

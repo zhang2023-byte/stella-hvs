@@ -1,0 +1,61 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T18:07:18",
+  "paper": {
+    "arxiv_id": "2407.09934",
+    "bibcode": "2024CoBAO..71...42T",
+    "title": "The runaway nature and origin of {\\alpha} Crucis system",
+    "month": "2024-07",
+    "source_note_json": "notes/2024/2024-07/2024-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2407.09934",
+      "pdf": "https://arxiv.org/pdf/2407.09934"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2407.09934",
+    "audit_path": "literature/2407.09934/audit.json",
+    "catalog_review_path": "literature/2407.09934/catalog_review.json",
+    "catalog_extraction_path": "literature/2407.09934/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T18:07:18",
+    "extractor": "agent",
+    "summary": "The paper studies the alpha Crucis system (HD 108248, HD 108249, HD 108250) and explicitly concludes it is not a runaway star and is gravitationally bound to its parent cluster in the Scorpius-Centaurus association. No Galactic-unbound or HVS candidates are discussed."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "alpha-crucis-system",
+      "description": "The alpha Crucis system (HD 108248, HD 108249, HD 108250), the sole subject of the paper, investigated for runaway nature via kinematics and bow-shock analysis.",
+      "decision": "excluded",
+      "reason": "The paper explicitly concludes the alpha Crucis system is not runaway, has not escaped from its parent cluster, is gravitationally bound to other cluster members, and moves with a peculiar velocity of only ~1.3 km/s relative to the cluster—far below the runaway threshold. The bow shock is attributed to large-scale ISM motions, not stellar velocity. The paper does not present any object as possibly unbound from the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.09934/arxiv_source/ComBAO.tex",
+          "start_line": 162,
+          "end_line": 171,
+          "context": "Conclusion stating the alpha Crucis system is not runaway, has not escaped its parent cluster, is gravitationally bound, and the bow shock is unaligned due to ISM motions"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2407.09934/arxiv_source/ComBAO.tex",
+          "start_line": 138,
+          "end_line": 143,
+          "context": "Relative velocity section showing peculiar velocity of ~1.3 km/s, well below the 30 km/s runaway threshold"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2407.09934/arxiv_source/ComBAO.tex",
+          "start_line": 110,
+          "end_line": 122,
+          "context": "Parent cluster search showing the system is gravitationally bound to cluster members in the Scorpius-Centaurus association"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T17:49:00",
+  "paper": {
+    "arxiv_id": "2405.04750",
+    "bibcode": "2024ApJS..272...45G",
+    "title": "The Catalog of early-type Runaway stars from LAMOST-DR8",
+    "month": "2024-05",
+    "source_note_json": "notes/2024/2024-05/2024-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2405.04750",
+      "pdf": "https://arxiv.org/pdf/2405.04750"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2405.04750",
+    "audit_path": "literature/2405.04750/audit.json",
+    "catalog_review_path": "literature/2405.04750/catalog_review.json",
+    "catalog_extraction_path": "literature/2405.04750/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2405.04750/catalog_tables/table-tab-RV-Catalogs.ecsv",
+      "literature/2405.04750/catalog_tables/table-tab-Runaway-Catalogs.ecsv",
+      "literature/2405.04750/catalog_tables/table-tab-Runaway-Catalogs-Rt.ecsv",
+      "literature/2405.04750/catalog_tables/table-tab-orbit_binary.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T17:49:00",
+    "extractor": "agent",
+    "summary": "The paper presents a catalog of 229 runaway candidate stars and 480 transverse-velocity runaway candidates identified from LAMOST MRS DR8. The paper consistently describes all identified objects as Galactic runaway stars with peculiar velocities above a Maxwellian-distribution threshold (V_Sp > 43 km/s or V_Tp > 42 km/s). The paper does not discuss any object as possibly unbound from the Milky Way or as a hypervelocity star candidate. All objects are treated as bound Galactic runaways within the thin disk, thick disk, or halo populations. No HVS/unbound candidates are included."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "step_type": "input_catalog",
+      "summary": "Adopted 9,382 early-type stars from LAMOST MRS DR8 identified by Guo et al. (2021) and cross-matched with Gaia DR3 astrometry and LAMOST MRS RV survey by Zhang et al. (2021).",
+      "depends_on": []
+    },
+    {
+      "id": "step-02",
+      "step_type": "quality_filter",
+      "summary": "Applied S/N >= 50, n_bad_pix < 100, RUWE <= 1.4, and |F2| <= 5 quality cuts. Excluded stars with logg > 5.1 or logg <= 3.0 to remove hot subdwarfs and supergiants.",
+      "depends_on": ["step-01"]
+    },
+    {
+      "id": "step-03",
+      "step_type": "cross_match",
+      "summary": "Cross-matched with Gaia DR3 using a 3-arcsec circular window to collect equatorial coordinates, proper motions, parallaxes, and associated errors.",
+      "depends_on": ["step-02"]
+    },
+    {
+      "id": "step-04",
+      "step_type": "velocity_calculation",
+      "summary": "Calculated peculiar tangential, radial, and space velocities by subtracting solar motion (Schonrich et al. 2010) and differential Galactic rotation (R0=8.5 kpc, Vc=220 km/s) following Moffat et al. (1998, 1999).",
+      "depends_on": ["step-03"]
+    },
+    {
+      "id": "step-05",
+      "step_type": "candidate_classification",
+      "summary": "Applied a Maxwellian velocity distribution fit to the peculiar space velocities and defined a runaway criterion of V_Sp > 43 km/s (at ~1% of the peak distribution). Also applied a transverse-velocity criterion of V_Tp > 42 km/s for a secondary catalog.",
+      "depends_on": ["step-04"]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-Runaway-Catalogs",
+      "description": "The 229 runaway candidate stars identified from the LAMOST MRS DR8 sample using the 3D peculiar space velocity criterion (V_Sp > 43 km/s). Reports astrometry, peculiar velocities, Galactic height, and Galactic space velocity components.",
+      "decision": "excluded",
+      "reason": "The paper explicitly treats these objects as Galactic runaway stars bound to the Milky Way. The selection criterion is based on peculiar space velocity relative to the Galactic rotation curve, not on escape velocity or unbound status. The paper states that most candidates likely reside within the Galactic thin disk. No object is discussed as possibly unbound from the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2405.04750/arxiv_source/runaway.tex",
+          "start_line": 52,
+          "end_line": 60,
+          "context": "Abstract describing the search for Galactic runaway candidate stars and their residence within the Galactic thin disk"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2405.04750/arxiv_source/runaway.tex",
+          "start_line": 261,
+          "end_line": 284,
+          "context": "Section 4 describing the runaway identification method using peculiar velocities and Galactic rotation, with no mention of escape or unbound status"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2405.04750/arxiv_source/runaway.tex",
+          "start_line": 314,
+          "end_line": 333,
+          "context": "Table 2 caption: The Peculiar Velocities of the 229 Runaway Candidate Stars"
+        }
+      ]
+    },
+    {
+      "group_id": "table-tab-Runaway-Catalogs-Rt",
+      "description": "The 480 runaway candidate stars identified using the transverse velocity criterion (V_Tp > 42 km/s). A less rigorous 2D kinematic selection that overlaps partially with the space-velocity catalog.",
+      "decision": "excluded",
+      "reason": "These objects are identified solely by transverse peculiar velocity and are explicitly presented as runaway candidates, not as unbound or hypervelocity star candidates. The paper notes that the 3D space velocity criterion is more rigorous and that this catalog serves only as a comprehensive reference. All objects are treated as Galactic-bound runaways.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2405.04750/arxiv_source/runaway.tex",
+          "start_line": 295,
+          "end_line": 312,
+          "context": "Discussion of the transverse velocity criterion as a less rigorous method, noting the 3D space velocity criterion is more effective for identifying runaway stars"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2405.04750/arxiv_source/runaway.tex",
+          "start_line": 336,
+          "end_line": 355,
+          "context": "Table 3 caption: The 480 Runaway Candidate Stars based on transverse velocity"
+        }
+      ]
+    },
+    {
+      "group_id": "table-tab-orbit_binary",
+      "description": "Two binary candidate systems among the runaway sample displaying significant radial velocity variation, with tentative circular orbital solutions.",
+      "decision": "excluded",
+      "reason": "These are binary runaway candidates with measured orbital periods of 40 and 61 days. The paper discusses them as potential binary supernova scenario (BSS) products consisting of a runaway OB star and a compact companion. They are not discussed as possibly unbound from the Galaxy; their space velocities (V_Sp ~ 47 and 51 km/s) are well below typical Galactic escape velocities.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2405.04750/arxiv_source/runaway.tex",
+          "start_line": 497,
+          "end_line": 511,
+          "context": "Discussion of the two binary candidate systems as potential BSS products with orbital periods of 40-60 days, consistent with High Mass X-ray Binaries"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2405.04750/arxiv_source/runaway.tex",
+          "start_line": 513,
+          "end_line": 535,
+          "context": "Table 4 caption: Circular orbital elements of the two binary candidate systems"
+        }
+      ]
+    }
+  ]
+}

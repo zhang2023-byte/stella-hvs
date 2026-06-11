@@ -1,0 +1,381 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2310.19709",
+    "title": "Peculiarities of Open Star Clusters with High Vertical Velocities from the Region of the Sco-Cen OB Association",
+    "month": "2023-10",
+    "source_note_json": "notes/2023/2023-10/2023-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2310.19709",
+      "pdf": "https://arxiv.org/pdf/2310.19709"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2310.19709",
+    "audit_path": "literature/2310.19709/audit.json",
+    "source_dir": "literature/2310.19709/arxiv_source",
+    "tex_root": "literature/2310.19709/arxiv_source/ArX_Sc0-Cen.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:46:48",
+    "reviewer": "agent",
+    "summary": "No formal LaTeX tables. Paper has two inline OSC member lists (47 Sco-Cen + 27 PerOB3-PerOB2) embedded in text. Computed kinematic gradients (∂U/∂y, ∂V/∂y, ∂W/∂y, Ωz, Ωx, Kxy, Kxyz) reported as text values. Three external catalogues used: Hunt & Reffert (2023) OSC catalogue from Gaia DR3, Luhman (2022) Sco-Cen member stars, and Gaia DR3 astrometry."
+  },
+  "internal_tables": [
+    {
+      "id": "inline-osc-list-sco-cen",
+      "kind": "inline_list",
+      "asset_type": "member_list",
+      "role_in_paper": "sample_definition",
+      "source_refs": [
+        {
+          "path": "literature/2310.19709/arxiv_source/ArX_Sc0-Cen.tex",
+          "start_line": 297,
+          "end_line": 305,
+          "caption": "List of 47 OSCs in the Sco-Cen region with high vertical velocities (W>15 km/s, age<80 Myr), mean age 28 Myr.",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "OSC Name",
+          "meaning": "Open star cluster identifier from Hunt & Reffert (2023) catalogue",
+          "unit_text": "",
+          "source_of_definition": "Hunt & Reffert (2023)",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "47 OSCs listed inline: HSC 151, HSC 157, HSC 191, HSC 199, HSC 310, HSC 376, HSC 2585, HSC 2603, HSC 2615, HSC 2618, HSC 2630, HSC 2636, HSC 2648, HSC 2662, HSC 2690, HSC 2733, HSC 2782, HSC 2816, HSC 2850, HSC 2900, HSC 2907, HSC 2919, HSC 2931, HSC 2963, HSC 2976, Harvard 10, OC0666, OCSN92, OCSN96, OCSN 98, OCSN 100, Platais 10, Theia 67, Theia 222, Theia 436, BH 164, CWNU 1004, CWNU 1143, HSC 67, HSC 103, Theia 711, Theia 828, UPK 33, UPK 606, UPK 612, UPK 624, UPK 640. Mean age: 28 Myr.",
+      "comments": "Selected from Hunt & Reffert (2023) catalogue with constraints W>15 km/s and age<80 Myr."
+    },
+    {
+      "id": "inline-osc-list-per-ob3-ob2",
+      "kind": "inline_list",
+      "asset_type": "member_list",
+      "role_in_paper": "sample_definition",
+      "source_refs": [
+        {
+          "path": "literature/2310.19709/arxiv_source/ArX_Sc0-Cen.tex",
+          "start_line": 356,
+          "end_line": 363,
+          "caption": "List of 27 OSCs in the PerOB3-PerOB2 region with high vertical velocities (W>15 km/s, age<80 Myr), mean age 33 Myr.",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "OSC Name",
+          "meaning": "Open star cluster identifier from Hunt & Reffert (2023) catalogue",
+          "unit_text": "",
+          "source_of_definition": "Hunt & Reffert (2023)",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "27 OSCs listed inline: CWNU 1129, HSC 940, HSC 981, HSC 1020, HSC 1040, HSC 1131, HSC 1165, HSC 1238, HSC 1254, HSC 1270, HSC 1279, HSC 1314, HSC 1318, HSC 1426, HSC 1438, HSC 1531, HSC 1553, HSC 1566, Melotte 20, Melotte 22, Theia 7, Theia 54, Theia 65, Theia 66, Theia 93, Theia 517, UPK 303. Mean age: 33 Myr. Melotte 20 is αPer OSC; Melotte 22 is the Pleiades.",
+      "comments": "Selected from Hunt & Reffert (2023) catalogue with constraints W>15 km/s and age<80 Myr. No significant velocity gradients found for this group."
+    },
+    {
+      "id": "inline-kinematic-params-sco-cen",
+      "kind": "inline_values",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "primary_results",
+      "source_refs": [
+        {
+          "path": "literature/2310.19709/arxiv_source/ArX_Sc0-Cen.tex",
+          "start_line": 309,
+          "end_line": 334,
+          "caption": "Kinematic gradients and rotation parameters for the 47 OSCs in the Sco-Cen region, derived via Ogorodnikov-Milne model.",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "∂U/∂y",
+          "meaning": "Velocity gradient of U with respect to y",
+          "unit_text": "km s^-1 kpc^-1",
+          "source_of_definition": "least-squares fit to (y, U) data",
+          "confidence": 1.0
+        },
+        {
+          "name": "∂V/∂y",
+          "meaning": "Velocity gradient of V with respect to y (expansion along y-axis)",
+          "unit_text": "km s^-1 kpc^-1",
+          "source_of_definition": "least-squares fit to (y, V) data",
+          "confidence": 1.0
+        },
+        {
+          "name": "∂W/∂y",
+          "meaning": "Velocity gradient of W with respect to y",
+          "unit_text": "km s^-1 kpc^-1",
+          "source_of_definition": "least-squares fit to (y, W) data",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ωz",
+          "meaning": "Angular velocity around z-axis (positive = opposite to Galactic rotation)",
+          "unit_text": "km s^-1 kpc^-1",
+          "source_of_definition": "Ωz = -∂U/∂y from Ogorodnikov-Milne model",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ωx",
+          "meaning": "Angular velocity around x-axis (negative rotation)",
+          "unit_text": "km s^-1 kpc^-1",
+          "source_of_definition": "Ωx = ∂W/∂y from Ogorodnikov-Milne model",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "∂U/∂y = -71±11 km s^-1 kpc^-1, ∂V/∂y = 51±12 km s^-1 kpc^-1, ∂W/∂y = -35±5 km s^-1 kpc^-1. Ωz = 71±11 km s^-1 kpc^-1, Ωx = -35±5 km s^-1 kpc^-1. Core subset (|y|<0.15 kpc, 30 OSCs): ∂V/∂y = 98±20 km s^-1 kpc^-1.",
+      "comments": "All three gradients are significantly nonzero. Expansion along y-axis confirmed. Bulk rotation detected."
+    },
+    {
+      "id": "inline-kinematic-params-luhman",
+      "kind": "inline_values",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "primary_results",
+      "source_refs": [
+        {
+          "path": "literature/2310.19709/arxiv_source/ArX_Sc0-Cen.tex",
+          "start_line": 404,
+          "end_line": 424,
+          "caption": "Kinematic gradients and expansion coefficients for Luhman (2022) Sco-Cen member stars.",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "∂U/∂x (all stars)",
+          "meaning": "Velocity gradient of U with respect to x for all ~1700 Sco-Cen stars",
+          "unit_text": "km s^-1 kpc^-1",
+          "source_of_definition": "least-squares fit",
+          "confidence": 1.0
+        },
+        {
+          "name": "∂V/∂y (all stars)",
+          "meaning": "Velocity gradient of V with respect to y for all ~1700 Sco-Cen stars",
+          "unit_text": "km s^-1 kpc^-1",
+          "source_of_definition": "least-squares fit",
+          "confidence": 1.0
+        },
+        {
+          "name": "Kxy",
+          "meaning": "Expansion coefficient of stellar system in xy plane",
+          "unit_text": "km s^-1 kpc^-1",
+          "source_of_definition": "Kxy = (∂U/∂x + ∂V/∂y)/2",
+          "confidence": 1.0
+        },
+        {
+          "name": "∂U/∂x (UCL+LCC+V1062 Sco)",
+          "meaning": "Velocity gradient for older (~20 Myr) subsystems",
+          "unit_text": "km s^-1 kpc^-1",
+          "source_of_definition": "least-squares fit",
+          "confidence": 1.0
+        },
+        {
+          "name": "∂V/∂y (UCL+LCC+V1062 Sco)",
+          "meaning": "Velocity gradient for older (~20 Myr) subsystems",
+          "unit_text": "km s^-1 kpc^-1",
+          "source_of_definition": "least-squares fit",
+          "confidence": 1.0
+        },
+        {
+          "name": "∂W/∂z (UCL+LCC+V1062 Sco)",
+          "meaning": "Velocity gradient for older (~20 Myr) subsystems",
+          "unit_text": "km s^-1 kpc^-1",
+          "source_of_definition": "least-squares fit",
+          "confidence": 1.0
+        },
+        {
+          "name": "Kxyz",
+          "meaning": "Volume expansion coefficient (first-time estimate)",
+          "unit_text": "km s^-1 kpc^-1",
+          "source_of_definition": "Kxyz = (∂U/∂x + ∂V/∂y + ∂W/∂z)/3",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "All stars: ∂U/∂x = 31.3±2.6 km s^-1 kpc^-1, ∂V/∂y = 55.2±1.6 km s^-1 kpc^-1, Kxy = 43.2±2.2 km s^-1 kpc^-1. UCL+LCC+V1062 Sco (~20 Myr): ∂U/∂x = 44.6±3.3 km s^-1 kpc^-1, ∂V/∂y = 44.9±3.8 km s^-1 kpc^-1, ∂W/∂z = 40.2±3.1 km s^-1 kpc^-1, Kxyz = 43.2±3.4 km s^-1 kpc^-1.",
+      "comments": "Kxyz is estimated for the first time and is significantly nonzero. Stars from Luhman (2022) have no high vertical velocities unlike the OSCs."
+    },
+    {
+      "id": "fig-f1",
+      "kind": "eps_figure",
+      "asset_type": "visualization",
+      "role_in_paper": "motivation",
+      "source_refs": [
+        {
+          "path": "literature/2310.19709/arxiv_source/ArX_Sc0-Cen.tex",
+          "start_line": 105,
+          "end_line": 112,
+          "caption": "Vertical velocity W versus distance R for the sample of OSCs younger than 50 Myr. The averaged data are represented by the yellow line; the periodic curve found from our spectral analysis is indicated by the red line. The figure was taken from Bobylev and Bajkova (2023).",
+          "label": "WR-50"
+        }
+      ],
+      "columns": [],
+      "evidence": "Figure 1: W vs R plot for OSCs < 50 Myr, reproduced from Bobylev & Bajkova (2023). Shows spike in W velocities in solar neighborhood.",
+      "comments": "EPS file: f1.eps"
+    },
+    {
+      "id": "fig-f2",
+      "kind": "eps_figure",
+      "asset_type": "visualization",
+      "role_in_paper": "spatial_distribution",
+      "source_refs": [
+        {
+          "path": "literature/2310.19709/arxiv_source/ArX_Sc0-Cen.tex",
+          "start_line": 201,
+          "end_line": 209,
+          "caption": "Distribution of OSCs with high (W>15 km/s) vertical velocities in projection onto the Galactic xy plane; the gray ellipses indicate approximate positions of the Sco-Cen, PerOB3, Cas-Tau, and PerOB2 OB associations.",
+          "label": "XY"
+        }
+      ],
+      "columns": [],
+      "evidence": "Figure 2: xy-plane projection of selected OSCs with W>15 km/s, showing two clumps in Sco-Cen and PerOB3-PerOB2 regions.",
+      "comments": "EPS file: f2.eps"
+    },
+    {
+      "id": "fig-f3",
+      "kind": "eps_figure",
+      "asset_type": "visualization",
+      "role_in_paper": "main_results",
+      "source_refs": [
+        {
+          "path": "literature/2310.19709/arxiv_source/ArX_Sc0-Cen.tex",
+          "start_line": 212,
+          "end_line": 218,
+          "caption": "Velocities U,V,W versus coordinates x,y,z for the selected OSCs with high (W>15 km/s) vertical velocities from the region of the Sco-Cen association.",
+          "label": "XYZ-UVW-SCO"
+        }
+      ],
+      "columns": [],
+      "evidence": "Figure 3: 9-panel plot of U(x), U(y), U(z), V(x), V(y), V(z), W(x), W(y), W(z) for the 47 Sco-Cen OSCs. Linear fits with confidence bands shown.",
+      "comments": "EPS file: f3.eps"
+    },
+    {
+      "id": "fig-f4",
+      "kind": "eps_figure",
+      "asset_type": "visualization",
+      "role_in_paper": "spatial_distribution",
+      "source_refs": [
+        {
+          "path": "literature/2310.19709/arxiv_source/ArX_Sc0-Cen.tex",
+          "start_line": 221,
+          "end_line": 229,
+          "caption": "(a) Distribution of the selected OSCs near the region of the Sco-Cen association in the lb plane, the ellipse indicates approximate positions of the stars in this association. (b) The distribution of these OSCs in the lz plane.",
+          "label": "lb-Sco"
+        }
+      ],
+      "columns": [],
+      "evidence": "Figure 4: (a) Galactic coordinates (l,b) distribution; (b) l vs z distribution for 47 Sco-Cen OSCs.",
+      "comments": "EPS file: f4.eps"
+    },
+    {
+      "id": "fig-f5",
+      "kind": "eps_figure",
+      "asset_type": "visualization",
+      "role_in_paper": "main_results",
+      "source_refs": [
+        {
+          "path": "literature/2310.19709/arxiv_source/ArX_Sc0-Cen.tex",
+          "start_line": 232,
+          "end_line": 239,
+          "caption": "Schematic distribution of the velocities U,V,W for OSCs from the region of the Sco-Cen association: (a) the velocity U in the xy plane, (b) the velocity V in the yz plane, and (c) the velocity W in the yz plane.",
+          "label": "U-Sco"
+        }
+      ],
+      "columns": [],
+      "evidence": "Figure 5: Schematic vector plots showing rotation (Ωz) and expansion patterns in Sco-Cen OSCs.",
+      "comments": "EPS file: f5.eps"
+    },
+    {
+      "id": "fig-f6",
+      "kind": "eps_figure",
+      "asset_type": "visualization",
+      "role_in_paper": "main_results",
+      "source_refs": [
+        {
+          "path": "literature/2310.19709/arxiv_source/ArX_Sc0-Cen.tex",
+          "start_line": 242,
+          "end_line": 250,
+          "caption": "Velocities U,V,W versus coordinates x,y,z for the selected OSCs with high vertical velocities from the region of the Per OB3-Per OB2 associations.",
+          "label": "XYZ-UVW-PER"
+        }
+      ],
+      "columns": [],
+      "evidence": "Figure 6: 9-panel plot of U,V,W vs x,y,z for 27 PerOB3-PerOB2 OSCs. No significant gradients found.",
+      "comments": "EPS file: f6.eps"
+    },
+    {
+      "id": "fig-f7",
+      "kind": "eps_figure",
+      "asset_type": "visualization",
+      "role_in_paper": "spatial_distribution",
+      "source_refs": [
+        {
+          "path": "literature/2310.19709/arxiv_source/ArX_Sc0-Cen.tex",
+          "start_line": 253,
+          "end_line": 260,
+          "caption": "(a) Distribution of the selected OSCs near the Per OB3-Per OB2 region in the lb plane, the crosses mark the centers of the Per OB3, Cas-Tau, and PerOB2 associations. (b) The distribution of these OSCs in the lz plane.",
+          "label": "lb-PER"
+        }
+      ],
+      "columns": [],
+      "evidence": "Figure 7: (a) Galactic coordinates distribution; (b) l vs z distribution for 27 PerOB3-PerOB2 OSCs.",
+      "comments": "EPS file: f7.eps"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-hunt-reffert-2023",
+      "kind": "external_catalogue",
+      "url": "",
+      "local_path": "",
+      "description": "Hunt & Reffert (2023, A&A 673, A114) catalogue of 7200 open star clusters identified from Gaia DR3 data using HDBSCAN algorithm. Provides mean proper motions, line-of-sight velocities, distances, and ages.",
+      "source_refs": [
+        {
+          "path": "literature/2310.19709/arxiv_source/ArX_Sc0-Cen.tex",
+          "start_line": 69,
+          "end_line": 78,
+          "context": "At present, one of the most extensive collections of kinematic data on Galactic OSCs is the catalogue by Hunt and Reffert (2023). It presents 7200 OSCs that were identified from Gaia DR3 data..."
+        }
+      ],
+      "evidence": "Primary data source for OSC kinematics. 2494 OSCs younger than 50 Myr selected; 1722 have line-of-sight velocities. The paper selects 47+27 OSCs with W>15 km/s from this catalogue.",
+      "comments": "Reference 22 in the paper. Key external catalogue that this paper's analysis depends on."
+    },
+    {
+      "id": "resource-luhman-2022",
+      "kind": "external_catalogue",
+      "url": "",
+      "local_path": "",
+      "description": "Luhman (2022, AJ 163, 24) catalogue of 10,509 probable members of the Sco-Cen OB association selected using spatial positions, kinematic, and photometric criteria from Gaia EDR3 data. More than 1700 stars have line-of-sight velocities.",
+      "source_refs": [
+        {
+          "path": "literature/2310.19709/arxiv_source/ArX_Sc0-Cen.tex",
+          "start_line": 385,
+          "end_line": 391,
+          "context": "The paper by Luhman (2022), where faint stars that are probable members of the Sco-Cen OB association were selected... The catalogue contains 10,509 stars with Gaia EDR3 data, more than 1700 of these stars have line-of-sight velocities..."
+        }
+      ],
+      "evidence": "Used for comparison analysis. Includes six subsystems: UCL (16 Myr), LCC (15 Myr), US (10 Myr), Lupus (6 Myr), V1062 Sco (20 Myr), Ophiuchus (2-6 Myr). Kxy and Kxyz expansion coefficients derived from these stars.",
+      "comments": "Reference 25 in the paper."
+    },
+    {
+      "id": "resource-gaia-dr3",
+      "kind": "external_catalogue",
+      "url": "",
+      "local_path": "",
+      "description": "Gaia DR3 (Vallenari et al. 2022, arXiv:2208.0021). Underlying astrometric catalogue providing proper motions, parallaxes, and line-of-sight velocities used by both Hunt & Reffert (2023) and Luhman (2022).",
+      "source_refs": [
+        {
+          "path": "literature/2310.19709/arxiv_source/ArX_Sc0-Cen.tex",
+          "start_line": 70,
+          "end_line": 70,
+          "context": "Gaia DR3 data (Vallenari et al. 2022)"
+        }
+      ],
+      "evidence": "Indirectly used; both Hunt & Reffert (2023) and Luhman (2022) catalogues are based on Gaia DR3 astrometry. Also Gaia DR2 (Brown et al. 2018) and Gaia DR1 (Brown et al. 2016) are referenced historically.",
+      "comments": "Reference 36 in the paper. Also referenced: Gaia DR2 (Brown et al. 2018, ref 13) and Gaia DR1 (Brown et al. 2016, ref 12)."
+    }
+  ]
+}

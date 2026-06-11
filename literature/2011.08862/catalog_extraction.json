@@ -1,0 +1,929 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:44:14",
+  "paper": {
+    "arxiv_id": "2011.08862",
+    "title": "Runaway blue main-sequence stars at high Galactic latitudes. Target selection with Gaia and spectroscopic identification",
+    "month": "2020-11"
+  },
+  "review": {
+    "path": "literature/2011.08862/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084414",
+    "started_at": "2026-06-07T08:44:14",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2011.08862",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-t-phot",
+      "internal_table_id": "table-t-phot",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+        "start_line": 166,
+        "end_line": 227,
+        "caption": "Gaia DR2 data for the observed 48 targets.",
+        "label": "t:phot"
+      },
+      "source_path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+      "excerpt_path": "literature/2011.08862/catalog_sources/table-t-phot/excerpt.tex",
+      "sha256": "580aee38e6d5077bd8eba690811c55f24cb55b6f0566d2acb56ddc9f0a92a07a",
+      "line_count": 62,
+      "error": ""
+    },
+    {
+      "id": "table-t-spec",
+      "internal_table_id": "table-t-spec",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+        "start_line": 381,
+        "end_line": 444,
+        "caption": "Spectroscopic parameters of the sample derived from model spectra, as appropriate for their classification (MS or BHB candidate, respectively). Unclassified stars are listed at the bottom with their parameters derived from models with sub-solar composition.",
+        "label": "t:spec"
+      },
+      "source_path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+      "excerpt_path": "literature/2011.08862/catalog_sources/table-t-spec/excerpt.tex",
+      "sha256": "364ecf7f1bd2da55148b24042fca3eac6ffbbd05ab09dac0f0e40dc92c1d189c",
+      "line_count": 64,
+      "error": ""
+    },
+    {
+      "id": "table-t-ms",
+      "internal_table_id": "table-t-ms",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+        "start_line": 446,
+        "end_line": 471,
+        "caption": "Physical parameters of the MS candidates: mass, radius, luminosity, age, and spectrophotometric distance.",
+        "label": "t:ms"
+      },
+      "source_path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+      "excerpt_path": "literature/2011.08862/catalog_sources/table-t-ms/excerpt.tex",
+      "sha256": "2b920b2e0200c9377494ffb360d6b435a350a4d060b9b7bff910c1f981f7e93d",
+      "line_count": 26,
+      "error": ""
+    },
+    {
+      "id": "table-t-bhb_physical",
+      "internal_table_id": "table-t-bhb_physical",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+        "start_line": 473,
+        "end_line": 517,
+        "caption": "Physical parameters of BHB and post-EHB candidates computed adopting the atmospheric parameters derived from metal deficient atmospheric models and a mass of M = 0.5 ± 0.1 M_sun. The two hot post-EHB stars are listed at the end. 1944-4628B denotes the cool companion of 1944-4628.",
+        "label": "t:bhb_physical"
+      },
+      "source_path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+      "excerpt_path": "literature/2011.08862/catalog_sources/table-t-bhb_physical/excerpt.tex",
+      "sha256": "b9a24b10b65ed50f89b46f967db8573972734c106f03f7c35176d8656014dc1b",
+      "line_count": 45,
+      "error": ""
+    },
+    {
+      "id": "table-t-orbit",
+      "internal_table_id": "table-t-orbit",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+        "start_line": 532,
+        "end_line": 560,
+        "caption": "Orbital parameters of our MS candidates.",
+        "label": "t:orbit"
+      },
+      "source_path": "literature/2011.08862/arxiv_source/runaways_raddi.tex",
+      "excerpt_path": "literature/2011.08862/catalog_sources/table-t-orbit/excerpt.tex",
+      "sha256": "992a51619817f2eaa384ee9ab76d9fdf94dd7d55475ac553dbab8070c56011d0",
+      "line_count": 29,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-t-phot",
+      "internal_table_id": "table-t-phot",
+      "status": "success",
+      "ecsv_path": "literature/2011.08862/catalog_tables/table-t-phot.ecsv",
+      "caption": "Gaia DR2 data for the observed 48 targets.",
+      "label": "t:phot",
+      "row_count": 48,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR2",
+          "\\alpha",
+          "\\delta",
+          "\\mu^*_\\alpha",
+          "\\mu_\\delta",
+          "\\varpi",
+          "G",
+          "G_\\rm BP",
+          "G_\\rm RP",
+          "Short name",
+          "Observing date"
+        ],
+        [
+          "",
+          "(hms)",
+          "(dms)",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(mas)",
+          "(mag)",
+          "(mag)",
+          "(mag)",
+          "(hhmm +/- ddmm)",
+          "(yyyy-mm-dd)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha | (hms)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta | (dms)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu^*_\\alpha | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\delta | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\varpi | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "G | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "G_\\rm BP | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "G_\\rm RP | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Short name | (hhmm +/- ddmm)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Observing date | (yyyy-mm-dd)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplxkjh64q/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2011.08862/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplxkjh64q/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2011.08862/catalog_sources/table-t-phot/wrapped.tex",
+            "html": "literature/2011.08862/catalog_sources/table-t-phot/latexml.html",
+            "stdout": "literature/2011.08862/catalog_sources/table-t-phot/latexml.stdout.txt",
+            "stderr": "literature/2011.08862/catalog_sources/table-t-phot/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "580aee38e6d5077bd8eba690811c55f24cb55b6f0566d2acb56ddc9f0a92a07a"
+    },
+    {
+      "id": "table-t-spec",
+      "internal_table_id": "table-t-spec",
+      "status": "success",
+      "ecsv_path": "literature/2011.08862/catalog_tables/table-t-spec.ecsv",
+      "caption": "Spectroscopic parameters of the sample derived from model spectra, as appropriate for their classification (MS or BHB candidate, respectively). Unclassified stars are listed at the bottom with their parameters derived from models with sub-solar composition.",
+      "label": "t:spec",
+      "row_count": 48,
+      "column_count": 7,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "Short name",
+          "S/N",
+          "\\multicolumn1cT_\\rm eff",
+          "\\logg",
+          "\\multicolumn1c\\varv_\\rm rad",
+          "E(44-55)",
+          "MS"
+        ],
+        [
+          "",
+          "",
+          "(K)",
+          "\\log(\\rm cm s^-2)",
+          "\\multicolumn1c(km s^-1)",
+          "(mag)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Short name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "S/N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\multicolumn1cT_\\rm eff | (K)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\logg | \\log(\\rm cm s^-2)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\multicolumn1c\\varv_\\rm rad | \\multicolumn1c(km s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "E(44-55) | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "MS",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\ding",
+        "unresolved LaTeX macro preserved: \\log",
+        "unresolved LaTeX macro preserved: \\logg",
+        "unresolved LaTeX macro preserved: \\multicolumn",
+        "unresolved LaTeX macro preserved: \\rm",
+        "unresolved LaTeX macro preserved: \\varv"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpbt68ftgy/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2011.08862/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpbt68ftgy/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2011.08862/catalog_sources/table-t-spec/wrapped.tex",
+            "html": "literature/2011.08862/catalog_sources/table-t-spec/latexml.html",
+            "stdout": "literature/2011.08862/catalog_sources/table-t-spec/latexml.stdout.txt",
+            "stderr": "literature/2011.08862/catalog_sources/table-t-spec/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvy_uriv6/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvy_uriv6/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2011.08862/catalog_sources/table-t-spec/wrapped.tex",
+            "html": "literature/2011.08862/catalog_sources/table-t-spec/pandoc.html",
+            "stdout": "literature/2011.08862/catalog_sources/table-t-spec/pandoc.stdout.txt",
+            "stderr": "literature/2011.08862/catalog_sources/table-t-spec/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "364ecf7f1bd2da55148b24042fca3eac6ffbbd05ab09dac0f0e40dc92c1d189c"
+    },
+    {
+      "id": "table-t-ms",
+      "internal_table_id": "table-t-ms",
+      "status": "success",
+      "ecsv_path": "literature/2011.08862/catalog_tables/table-t-ms.ecsv",
+      "caption": "Physical parameters of the MS candidates: mass, radius, luminosity, age, and spectrophotometric distance.",
+      "label": "t:ms",
+      "row_count": 12,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Short name",
+          "M /M _\\sun",
+          "R /R _\\sun",
+          "\\logL/\\rm L_\\sun",
+          "\\tau_\\rm evo",
+          "D (SpT)"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "(Myr)",
+          "(kpc)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Short name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "M /M _\\sun",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "R /R _\\sun",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\logL/\\rm L_\\sun",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\tau_\\rm evo | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "D (SpT) | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyht7e_mf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2011.08862/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyht7e_mf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2011.08862/catalog_sources/table-t-ms/wrapped.tex",
+            "html": "literature/2011.08862/catalog_sources/table-t-ms/latexml.html",
+            "stdout": "literature/2011.08862/catalog_sources/table-t-ms/latexml.stdout.txt",
+            "stderr": "literature/2011.08862/catalog_sources/table-t-ms/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2b920b2e0200c9377494ffb360d6b435a350a4d060b9b7bff910c1f981f7e93d"
+    },
+    {
+      "id": "table-t-bhb_physical",
+      "internal_table_id": "table-t-bhb_physical",
+      "status": "success",
+      "ecsv_path": "literature/2011.08862/catalog_tables/table-t-bhb_physical.ecsv",
+      "caption": "Physical parameters of BHB and post-EHB candidates computed adopting the atmospheric parameters derived from metal deficient atmospheric models and a mass of M = 0.5 ± 0.1 M_sun. The two hot post-EHB stars are listed at the end. 1944-4628B denotes the cool companion of 1944-4628.",
+      "label": "t:bhb_physical",
+      "row_count": 30,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Short name",
+          "R /R _\\sun",
+          "\\logL/\\rm L_\\sun",
+          "D (SpT)"
+        ],
+        [
+          "",
+          "",
+          "",
+          "(kpc)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Short name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R /R _\\sun",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\logL/\\rm L_\\sun",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "D (SpT) | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyjaau4mj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2011.08862/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyjaau4mj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2011.08862/catalog_sources/table-t-bhb_physical/wrapped.tex",
+            "html": "literature/2011.08862/catalog_sources/table-t-bhb_physical/latexml.html",
+            "stdout": "literature/2011.08862/catalog_sources/table-t-bhb_physical/latexml.stdout.txt",
+            "stderr": "literature/2011.08862/catalog_sources/table-t-bhb_physical/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b9a24b10b65ed50f89b46f967db8573972734c106f03f7c35176d8656014dc1b"
+    },
+    {
+      "id": "table-t-orbit",
+      "internal_table_id": "table-t-orbit",
+      "status": "success",
+      "ecsv_path": "literature/2011.08862/catalog_tables/table-t-orbit.ecsv",
+      "caption": "Orbital parameters of our MS candidates.",
+      "label": "t:orbit",
+      "row_count": 12,
+      "column_count": 15,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "Short name",
+          "X",
+          "Y",
+          "Z",
+          "\\multicolumn1c\\varv_Z",
+          "\\multicolumn1c\\varv_\\rm rf",
+          "P_\\rm esc",
+          "e",
+          "\\multicolumn1cL_Z",
+          "\\multicolumn1cR_\\rm peri",
+          "\\multicolumn1cR_\\rm apo",
+          "\\multicolumn1cZ_\\rm max",
+          "R(Z=0)",
+          "\\varv_\\rm ej",
+          "\\multicolumn1c\\tau_\\rm flight"
+        ],
+        [
+          "",
+          "(kpc)",
+          "(kpc)",
+          "(kpc)",
+          "\\multicolumn1c(km s^-1)",
+          "\\multicolumn1c(km s^-1)",
+          "",
+          "",
+          "\\multicolumn1c(kpc km s^-1)",
+          "(kpc)",
+          "(kpc)",
+          "(kpc)",
+          "(kpc)",
+          "(km s^-1)",
+          "(Myr)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Short name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "X | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Y | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Z | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\multicolumn1c\\varv_Z | \\multicolumn1c(km s^-1)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\multicolumn1c\\varv_\\rm rf | \\multicolumn1c(km s^-1)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "P_\\rm esc",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "e",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\multicolumn1cL_Z | \\multicolumn1c(kpc km s^-1)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\multicolumn1cR_\\rm peri | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\multicolumn1cR_\\rm apo | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\multicolumn1cZ_\\rm max | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "R(Z=0) | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "\\varv_\\rm ej | (km s^-1)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "\\multicolumn1c\\tau_\\rm flight | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\multicolumn",
+        "unresolved LaTeX macro preserved: \\rm",
+        "unresolved LaTeX macro preserved: \\tau",
+        "unresolved LaTeX macro preserved: \\varv"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp488ue57h/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2011.08862/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp488ue57h/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2011.08862/catalog_sources/table-t-orbit/wrapped.tex",
+            "html": "literature/2011.08862/catalog_sources/table-t-orbit/latexml.html",
+            "stdout": "literature/2011.08862/catalog_sources/table-t-orbit/latexml.stdout.txt",
+            "stderr": "literature/2011.08862/catalog_sources/table-t-orbit/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzeqp6gjq/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzeqp6gjq/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2011.08862/catalog_sources/table-t-orbit/wrapped.tex",
+            "html": "literature/2011.08862/catalog_sources/table-t-orbit/pandoc.html",
+            "stdout": "literature/2011.08862/catalog_sources/table-t-orbit/pandoc.stdout.txt",
+            "stderr": "literature/2011.08862/catalog_sources/table-t-orbit/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "992a51619817f2eaa384ee9ab76d9fdf94dd7d55475ac553dbab8070c56011d0"
+    }
+  ]
+}

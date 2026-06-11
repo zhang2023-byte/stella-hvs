@@ -1,0 +1,140 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:42:19",
+  "paper": {
+    "arxiv_id": "1810.05650",
+    "bibcode": "2019MNRAS.482L.102R",
+    "title": "Gaia and HST astrometry of the very massive ~150 Msun candidate runaway star VFTS682",
+    "month": "2018-10",
+    "source_note_json": "notes/2018/2018-10/2018-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1810.05650",
+      "pdf": "https://arxiv.org/pdf/1810.05650"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1810.05650",
+    "audit_path": "literature/1810.05650/audit.json",
+    "catalog_review_path": "literature/1810.05650/catalog_review.json",
+    "catalog_extraction_path": "literature/1810.05650/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1810.05650/catalog_tables/table-tab-vfts682.ecsv",
+      "literature/1810.05650/catalog_tables/table-tab-star_param.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:42:19",
+    "extractor": "agent",
+    "summary": "VFTS682 is a very massive (~150 Msun initial) WNh5 Wolf-Rayet star in 30 Doradus (LMC), at projected distance 29 pc from R136. Gaia DR2 + HST proper motions give v_2D=38±17 km/s relative to R136, consistent with dynamical ejection from the cluster. However, this is a RUNAWAY star from an LMC cluster — NOT a Galactic hypervelocity star. No HVS candidates identified."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR2 for VFTS682 (source_id=4657685637907503744): mu_RA=1.84±0.07 mas/yr, mu_DEC=0.79±0.08 mas/yr. Reference frame from 317 OB/WR stars near R136. HST WFC3/UVIS two-epoch (2011/2014) independent proper motion. LMC distance=50 kpc.",
+      "inputs": [
+        "Gaia DR2",
+        "HST WFC3/UVIS (Platais+2018)"
+      ],
+      "outputs": [
+        "Proper motions relative to R136"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.05650/arxiv_source/VFTS682_MNRASL.tex",
+          "start_line": 386,
+          "end_line": 448,
+          "context": "Sec 2.1: Gaia astrometry"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.05650/arxiv_source/VFTS682_MNRASL.tex",
+          "start_line": 450,
+          "end_line": 477,
+          "context": "Sec 2.2: HST astrometry"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [],
+      "step_type": "stellar_parameter_inference",
+      "summary": "VFTS682 from VFTS spectroscopy (Schneider+2018): present mass=137.8 Msun, initial mass=150.0 Msun, age=1.0±0.2 Myr. WNh5, log(L/Lsun)=6.5±0.2.",
+      "inputs": [
+        "VFTS spectroscopy",
+        "BONNSAI"
+      ],
+      "outputs": [
+        "Mass, age, spectral type, luminosity"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.05650/arxiv_source/VFTS682_MNRASL.tex",
+          "start_line": 181,
+          "end_line": 205,
+          "context": "Tab. 1: Stellar parameters"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.05650/arxiv_source/VFTS682_MNRASL.tex",
+          "start_line": 318,
+          "end_line": 347,
+          "context": "Sec 2: VFTS682 properties"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-01",
+        "step-02"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Weighted average proper motion relative to R136: delta_mu=0.16±0.07 mas/yr → v_2D=38±17 km/s. Consistent with dynamical ejection from R136 ~1 Myr ago (expected v_2D=29±6 km/s). Position angle roughly radial. NOT a Galactic HVS — this is a local cluster runaway in the LMC.",
+      "inputs": [
+        "Proper motions",
+        "R136 position"
+      ],
+      "outputs": [
+        "2D velocity relative to R136, flight direction"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.05650/arxiv_source/VFTS682_MNRASL.tex",
+          "start_line": 206,
+          "end_line": 317,
+          "context": "Tab. 2: Kinematics"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.05650/arxiv_source/VFTS682_MNRASL.tex",
+          "start_line": 479,
+          "end_line": 550,
+          "context": "Sec 3: Kinematics"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_label": "VFTS682",
+      "candidate_count": 0,
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.05650/arxiv_source/VFTS682_MNRASL.tex",
+          "start_line": 123,
+          "end_line": 161,
+          "context": "VFTS682: massive WNh5 star, isolated from R136"
+        }
+      ],
+      "exclusion_reason": "VFTS682 is a runaway star dynamically ejected from R136 cluster in the LMC (v_2D=38±17 km/s), NOT a Galactic hypervelocity star. Excluded from HVS catalog."
+    }
+  ]
+}

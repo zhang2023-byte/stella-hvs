@@ -1,0 +1,570 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:41:41",
+  "paper": {
+    "arxiv_id": "2005.12358",
+    "title": "Understanding the rotational variability of K2 targets. HgMn star KIC 250152017 and blue horizontal branch star KIC 249660366",
+    "month": "2020-05"
+  },
+  "review": {
+    "path": "literature/2005.12358/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084141",
+    "started_at": "2026-06-07T08:41:41",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2005.12358",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-spek",
+      "internal_table_id": "table-spek",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+        "start_line": 136,
+        "end_line": 163,
+        "caption": "List of spectra used for analysis.",
+        "label": "spek"
+      },
+      "source_path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+      "excerpt_path": "literature/2005.12358/catalog_sources/table-spek/excerpt.tex",
+      "sha256": "9359bca2a36946ec616c3a8c61cb3f983138401e9f199a53531347c8f65dbfbc",
+      "line_count": 28,
+      "error": ""
+    },
+    {
+      "id": "table-hveztab",
+      "internal_table_id": "table-hveztab",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+        "start_line": 214,
+        "end_line": 232,
+        "caption": "Basic astrometric and photometric parameters of studied stars.",
+        "label": "hveztab"
+      },
+      "source_path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+      "excerpt_path": "literature/2005.12358/catalog_sources/table-hveztab/excerpt.tex",
+      "sha256": "a5857b77baea19a81210b8e29f522c27807507f2df69b52fc3fd9465b29deee5",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-hvezpar",
+      "internal_table_id": "table-hvezpar",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+        "start_line": 247,
+        "end_line": 281,
+        "caption": "Derived mean parameters of the studied stars compared to solar abundances \\citep{asp09}.",
+        "label": "hvezpar"
+      },
+      "source_path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+      "excerpt_path": "literature/2005.12358/catalog_sources/table-hvezpar/excerpt.tex",
+      "sha256": "df333ead8b7449a16b4c59f68ff6a392be743d6cf64694cb64c48af72a9e3321",
+      "line_count": 35,
+      "error": ""
+    },
+    {
+      "id": "table-hvezdacar",
+      "internal_table_id": "table-hvezdacar",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+        "start_line": 304,
+        "end_line": 350,
+        "caption": "List of wavelengths (in \\AA) of the strongest lines used for \\hvezda\\ abundance determination.",
+        "label": "hvezdacar"
+      },
+      "source_path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+      "excerpt_path": "literature/2005.12358/catalog_sources/table-hvezdacar/excerpt.tex",
+      "sha256": "6bc4fc5a2907b3a94db0246a45301dec1c21bed29e8ecf218d4285e322879aae",
+      "line_count": 47,
+      "error": ""
+    },
+    {
+      "id": "table-hvezdadcar",
+      "internal_table_id": "table-hvezdadcar",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+        "start_line": 547,
+        "end_line": 572,
+        "caption": "List of wavelengths (in \\AA) of the strongest lines used for \\hvezdad\\ abundance determination.",
+        "label": "hvezdadcar"
+      },
+      "source_path": "literature/2005.12358/arxiv_source/esobtpromhv.tex",
+      "excerpt_path": "literature/2005.12358/catalog_sources/table-hvezdadcar/excerpt.tex",
+      "sha256": "583421d14154ba35f56282b401f516259f985e41e3ba6fef4152bd5a90121a6f",
+      "line_count": 26,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-spek",
+      "internal_table_id": "table-spek",
+      "status": "success",
+      "ecsv_path": "literature/2005.12358/catalog_tables/table-spek.ecsv",
+      "caption": "List of spectra used for analysis.",
+      "label": "spek",
+      "row_count": 12,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "Arm",
+          "Spectrum",
+          "JD -2 400 000",
+          "Phase \\tablefootmark \\ast",
+          "Exposure time [s]",
+          "S/N \\tablefootmark \\ast\\ast"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Arm",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Spectrum",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "JD -2 400 000",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Phase \\tablefootmark \\ast",
+          "unit_text": "Phase \\tablefootmark \\ast",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Exposure time [s]",
+          "unit_text": "Exposure time [s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "S/N \\tablefootmark \\ast\\ast",
+          "unit_text": "S/N \\tablefootmark \\ast\\ast",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1krrhjud/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2005.12358/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1krrhjud/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2005.12358/catalog_sources/table-spek/wrapped.tex",
+            "html": "literature/2005.12358/catalog_sources/table-spek/latexml.html",
+            "stdout": "literature/2005.12358/catalog_sources/table-spek/latexml.stdout.txt",
+            "stderr": "literature/2005.12358/catalog_sources/table-spek/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9359bca2a36946ec616c3a8c61cb3f983138401e9f199a53531347c8f65dbfbc"
+    },
+    {
+      "id": "table-hveztab",
+      "internal_table_id": "table-hveztab",
+      "status": "success",
+      "ecsv_path": "literature/2005.12358/catalog_tables/table-hveztab.ecsv",
+      "caption": "Basic astrometric and photometric parameters of studied stars.",
+      "label": "hveztab",
+      "row_count": 7,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "KIC (EPIC)",
+          "250152017",
+          "249660366"
+        ],
+        [
+          "\\alpha (J2000)",
+          "15h 25m 08.282s",
+          "15h 24m 48.378s"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "KIC (EPIC) | \\alpha (J2000)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "250152017 | 15h 25m 08.282s",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "249660366 | 15h 24m 48.378s",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmph4wroidd/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2005.12358/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmph4wroidd/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2005.12358/catalog_sources/table-hveztab/wrapped.tex",
+            "html": "literature/2005.12358/catalog_sources/table-hveztab/latexml.html",
+            "stdout": "literature/2005.12358/catalog_sources/table-hveztab/latexml.stdout.txt",
+            "stderr": "literature/2005.12358/catalog_sources/table-hveztab/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a5857b77baea19a81210b8e29f522c27807507f2df69b52fc3fd9465b29deee5"
+    },
+    {
+      "id": "table-hvezpar",
+      "internal_table_id": "table-hvezpar",
+      "status": "success",
+      "ecsv_path": "literature/2005.12358/catalog_tables/table-hvezpar.ecsv",
+      "caption": "Derived mean parameters of the studied stars compared to solar abundances \\citep{asp09}.",
+      "label": "hvezpar",
+      "row_count": 16,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "KIC",
+          "250152017",
+          "249660366",
+          "Sun"
+        ],
+        [
+          "T_eff [K]",
+          "12160+/- 130",
+          "19700+/- 300",
+          ""
+        ],
+        [
+          "\\log g [cgs]",
+          "3.95+/- 0.02",
+          "4.57+/- 0.06",
+          ""
+        ],
+        [
+          "M [M_\\odot]",
+          "3.33+/- 0.08",
+          "0.27+/- 0.10",
+          ""
+        ],
+        [
+          "R [R_\\odot]",
+          "3.19 +/- 0.10",
+          "0.45+/- 0.09",
+          ""
+        ],
+        [
+          "v\\sin i [km s^-1]",
+          "22+/- 5",
+          "26+/- 4",
+          ""
+        ],
+        [
+          "v_rad [km s^-1]",
+          "2+/- 4",
+          "107+/- 3",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "KIC | T_eff [K] | \\log g [cgs] | M [M_\\odot] | R [R_\\odot] | v\\sin i [km s^-1] | v_rad [km s^-1]",
+          "unit_text": "T_eff [K]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "250152017 | 12160+/- 130 | 3.95+/- 0.02 | 3.33+/- 0.08 | 3.19 +/- 0.10 | 22+/- 5 | 2+/- 4",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "249660366 | 19700+/- 300 | 4.57+/- 0.06 | 0.27+/- 0.10 | 0.45+/- 0.09 | 26+/- 4 | 107+/- 3",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Sun",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4asffdj9/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2005.12358/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4asffdj9/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2005.12358/catalog_sources/table-hvezpar/wrapped.tex",
+            "html": "literature/2005.12358/catalog_sources/table-hvezpar/latexml.html",
+            "stdout": "literature/2005.12358/catalog_sources/table-hvezpar/latexml.stdout.txt",
+            "stderr": "literature/2005.12358/catalog_sources/table-hvezpar/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "df333ead8b7449a16b4c59f68ff6a392be743d6cf64694cb64c48af72a9e3321"
+    },
+    {
+      "id": "table-hvezdacar",
+      "internal_table_id": "table-hvezdacar",
+      "status": "success",
+      "ecsv_path": "literature/2005.12358/catalog_tables/table-hvezdacar.ecsv",
+      "caption": "List of wavelengths (in \\AA) of the strongest lines used for \\hvezda\\ abundance determination.",
+      "label": "hvezdacar",
+      "row_count": 38,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvq0vlo3n/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2005.12358/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvq0vlo3n/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2005.12358/catalog_sources/table-hvezdacar/wrapped.tex",
+            "html": "literature/2005.12358/catalog_sources/table-hvezdacar/latexml.html",
+            "stdout": "literature/2005.12358/catalog_sources/table-hvezdacar/latexml.stdout.txt",
+            "stderr": "literature/2005.12358/catalog_sources/table-hvezdacar/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6bc4fc5a2907b3a94db0246a45301dec1c21bed29e8ecf218d4285e322879aae"
+    },
+    {
+      "id": "table-hvezdadcar",
+      "internal_table_id": "table-hvezdadcar",
+      "status": "success",
+      "ecsv_path": "literature/2005.12358/catalog_tables/table-hvezdadcar.ecsv",
+      "caption": "List of wavelengths (in \\AA) of the strongest lines used for \\hvezdad\\ abundance determination.",
+      "label": "hvezdadcar",
+      "row_count": 17,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppz0cd4bc/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2005.12358/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppz0cd4bc/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2005.12358/catalog_sources/table-hvezdadcar/wrapped.tex",
+            "html": "literature/2005.12358/catalog_sources/table-hvezdadcar/latexml.html",
+            "stdout": "literature/2005.12358/catalog_sources/table-hvezdadcar/latexml.stdout.txt",
+            "stderr": "literature/2005.12358/catalog_sources/table-hvezdadcar/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "583421d14154ba35f56282b401f516259f985e41e3ba6fef4152bd5a90121a6f"
+    }
+  ]
+}

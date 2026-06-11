@@ -1,0 +1,203 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:46",
+  "paper": {
+    "arxiv_id": "2506.23588",
+    "title": "Evolutionary Map of the Universe: Detection and Analysis of the Shell Surrounding the Runaway Wolf-Rayet Star WR16",
+    "month": "2025-06"
+  },
+  "review": {
+    "path": "literature/2506.23588/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123946",
+    "started_at": "2026-05-17T12:39:46",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2506.23588",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-Table-Data_Fluxes",
+      "internal_table_id": "table-Table-Data_Fluxes",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2506.23588/arxiv_source/WR16.tex",
+        "start_line": 364,
+        "end_line": 379,
+        "caption": "Measured flux densities of the Wolf-Rayet star WR16 and its nebulous shell. $^a$Measurements made as part of this paper. $^b$Measurements using \\ac{ATCA} observations from \\citet{1999ApJ...518..890C}. $^c$Measurements using \\ac{ATCA} observations from \\citet{1995ApJ...450..289L}.",
+        "label": "Table:Data_Fluxes"
+      },
+      "source_path": "literature/2506.23588/arxiv_source/WR16.tex",
+      "excerpt_path": "literature/2506.23588/catalog_sources/table-Table-Data_Fluxes/excerpt.tex",
+      "sha256": "bf18e1b885069c40cbf6e2a0847ddb5807ced66f16224a9ec1a737e146c8119a",
+      "line_count": 16,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-Table-Data_Fluxes",
+      "internal_table_id": "table-Table-Data_Fluxes",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2506.23588/catalog_tables/table-Table-Data_Fluxes.ecsv",
+      "caption": "Measured flux densities of the Wolf-Rayet star WR16 and its nebulous shell. $^a$Measurements made as part of this paper. $^b$Measurements using \\ac{ATCA} observations from \\citet{1999ApJ...518..890C}. $^c$Measurements using \\ac{ATCA} observations from \\citet{1995ApJ...450..289L}.",
+      "label": "Table:Data_Fluxes",
+      "row_count": 2,
+      "column_count": 6,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "",
+          "S_944^a",
+          "S_2.40^b",
+          "S_4.80^c",
+          "S_8.64^c",
+          "\\alpha"
+        ],
+        [
+          "WR16",
+          "(mJy)",
+          "(mJy)",
+          "(mJy)",
+          "(mJy)",
+          "\\alpha+/-\\Delta\\alpha"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "WR16",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "S_944^a | (mJy)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "S_2.40^b | (mJy)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "S_4.80^c | (mJy)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "S_8.64^c | (mJy)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\alpha | \\alpha+/-\\Delta\\alpha",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\Delta",
+        "unresolved LaTeX macro preserved: \\alpha"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz6qsadub/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2506.23588/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz6qsadub/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.23588/catalog_sources/table-Table-Data_Fluxes/wrapped.tex",
+            "html": "literature/2506.23588/catalog_sources/table-Table-Data_Fluxes/latexml.html",
+            "stdout": "literature/2506.23588/catalog_sources/table-Table-Data_Fluxes/latexml.stdout.txt",
+            "stderr": "literature/2506.23588/catalog_sources/table-Table-Data_Fluxes/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpahgw4g3d/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpahgw4g3d/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.23588/catalog_sources/table-Table-Data_Fluxes/wrapped.tex",
+            "html": "literature/2506.23588/catalog_sources/table-Table-Data_Fluxes/pandoc.html",
+            "stdout": "literature/2506.23588/catalog_sources/table-Table-Data_Fluxes/pandoc.stdout.txt",
+            "stderr": "literature/2506.23588/catalog_sources/table-Table-Data_Fluxes/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "bf18e1b885069c40cbf6e2a0847ddb5807ced66f16224a9ec1a737e146c8119a"
+    }
+  ]
+}

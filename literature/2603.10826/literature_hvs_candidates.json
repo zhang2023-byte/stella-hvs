@@ -1,0 +1,111 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:29:35",
+  "paper": {
+    "arxiv_id": "2603.10826",
+    "bibcode": "2026ApJ..1002..171B",
+    "title": "Kinematics of Wolf-Rayet Stars in the LMC: Clues to Subtype Origins",
+    "month": "2026-03",
+    "source_note_json": "notes/2026/2026-03/2026-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2603.10826",
+      "pdf": "https://arxiv.org/pdf/2603.10826"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2603.10826",
+    "audit_path": "literature/2603.10826/audit.json",
+    "catalog_review_path": "literature/2603.10826/catalog_review.json",
+    "catalog_extraction_path": "literature/2603.10826/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2603.10826/catalog_tables/table-tab-subpop.ecsv",
+      "literature/2603.10826/catalog_tables/table-tab-HII.ecsv",
+      "literature/2603.10826/catalog_tables/table-tab-Full.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T20:29:35",
+    "extractor": "agent",
+    "summary": "This paper studies the kinematics of Wolf-Rayet stars in the Large Magellanic Cloud (LMC) using Gaia DR3 astrometry. The objects are located in the LMC at a distance of 49.59 kpc and are discussed as runaway or walkaway stars ejected from LMC star clusters via dynamical ejection or binary supernova mechanisms. The paper never discusses any of these objects as possibly unbound from the Milky Way / Galactic potential. All velocities are transverse proper-motion velocities relative to local LMC field stars (v_perp), not Galactic rest-frame velocities. The paper is therefore out of scope for Galactic-unbound HVS candidate extraction."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "step_type": "input_catalog",
+      "summary": "LMC WR star sample from the Fifth Catalog of LMC Wolf-Rayet Stars (Neugent et al. 2018), cross-matched with Gaia DR3 astrometry within a 3-arcsec radius",
+      "depends_on": []
+    },
+    {
+      "id": "step-02",
+      "step_type": "quality_filter",
+      "summary": "Photometric, parallax, and astrometric quality cuts to remove foreground stars and unreliable proper motions; 121 WR stars retained with usable Gaia data",
+      "depends_on": ["step-01"]
+    },
+    {
+      "id": "step-03",
+      "step_type": "distance_estimation",
+      "summary": "Adopted a single LMC distance of 49.59 kpc (Pietrzynski et al. 2019) for all stars",
+      "depends_on": ["step-02"]
+    },
+    {
+      "id": "step-04",
+      "step_type": "velocity_calculation",
+      "summary": "Computed residual transverse velocity v_perp by subtracting median R.A. and decl. field velocities (local stars with G <= 18 within 3 arcmin) from target star velocities",
+      "depends_on": ["step-03"]
+    },
+    {
+      "id": "step-05",
+      "step_type": "candidate_classification",
+      "summary": "Classified WR subtypes by kinematic properties and compared velocity distributions to distinguish dynamical ejections, binary supernova ejections, and merger scenarios",
+      "depends_on": ["step-04"]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-Full",
+      "description": "121 LMC WR stars with Gaia DR3 proper-motion velocity measurements (Table tab:Full). These are runaway or walkaway stars ejected from LMC star clusters.",
+      "decision": "excluded",
+      "reason": "These objects are LMC runaway/walkaway stars discussed in the context of ejection from LMC clusters (dynamical ejection, binary supernova, or merger mechanisms). The paper never presents them as possibly unbound from the Milky Way / Galactic potential. They are located in the LMC at ~49.59 kpc and their velocities are transverse proper-motion velocities relative to the local LMC field, not Galactic rest-frame velocities.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+          "start_line": 46,
+          "end_line": 46,
+          "context": "Abstract describing LMC WR star kinematics and runaway/walkaway velocities relative to LMC clusters"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+          "start_line": 72,
+          "end_line": 73,
+          "context": "Introduction defining runaway and walkaway stars in the context of cluster ejection mechanisms (BSS and DES), not Galactic escape"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+          "start_line": 80,
+          "end_line": 86,
+          "context": "Method section describing cross-match with Gaia DR3 and computation of residual transverse velocities v_perp relative to local LMC field stars"
+        }
+      ]
+    },
+    {
+      "group_id": "LMC-WR-subtype-populations",
+      "description": "WR subtypes analyzed kinematically: WNh, O If*/WN, WNL (VMS and classical), WNE (single and binary), WC (single and binary), and WN3/O3 stars.",
+      "decision": "excluded",
+      "reason": "All subtype populations are studied as LMC field stars ejected from LMC clusters. The paper discusses their origins within the LMC (dynamical ejection timescales, binary evolution, merger kicks) but never raises the possibility that any of them are unbound from the Milky Way. They are extragalactic objects at the LMC distance.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+          "start_line": 481,
+          "end_line": 503,
+          "context": "Conclusion summarizing kinematic results for all WR subtypes as LMC cluster ejecta, with no mention of Galactic unbound status"
+        }
+      ]
+    }
+  ]
+}

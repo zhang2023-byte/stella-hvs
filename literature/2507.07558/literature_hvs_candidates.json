@@ -1,0 +1,79 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T19:45:02",
+  "paper": {
+    "arxiv_id": "2507.07558",
+    "bibcode": "2025AN....34670025C",
+    "title": "The Gaia RVS Benchmark Stars. III . Confirmed and New High Radial Velocity Stars From Gaia DR3",
+    "month": "2025-07",
+    "source_note_json": "notes/2025/2025-07/2025-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2507.07558",
+      "pdf": "https://arxiv.org/pdf/2507.07558"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2507.07558",
+    "audit_path": "literature/2507.07558/audit.json",
+    "catalog_review_path": "literature/2507.07558/catalog_review.json",
+    "catalog_extraction_path": "literature/2507.07558/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2507.07558/catalog_tables/table-tab-stars.ecsv",
+      "literature/2507.07558/catalog_tables/table-coord.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T19:45:02",
+    "extractor": "agent",
+    "summary": "The paper confirms high absolute radial velocities (|V_r| > 500 km/s) for 25 of 26 stars and performs detailed chemical abundance analysis, but does not assess whether any star is gravitationally unbound from the Milky Way. RVS928 and RVS930 are discussed as possible globular cluster escapers, which are excluded per extraction rules. Objects listed in external hypervelocity catalogues (RVS933, RVS1281, RVS1392) are cited from literature without reassessment of unbound status by this paper. No object is explicitly discussed as a Galactic-unbound or HVS candidate."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "high-vr-sample",
+      "description": "The 26 stars with Gaia DR3 absolute radial velocity |V_r| > 500 km/s, spectroscopically confirmed with UVES (25 stars; RVS929 has a complex spectrum and rejected velocity).",
+      "decision": "excluded",
+      "reason": "The paper confirms the extreme radial velocities and performs detailed chemical abundance analysis, but does not assess whether any of these stars are gravitationally unbound from the Milky Way. They are treated as high-velocity halo stars, not as Galactic-unbound or HVS candidates. The paper mentions some stars appear in external hypervelocity catalogues (RVS933, RVS1281, RVS1392), but only as citations without reassessment of unbound status.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+          "start_line": 150,
+          "end_line": 157,
+          "context": "Abstract describing the sample as high radial velocity stars investigated for spectroscopic follow-up, with no mention of bound/unbound assessment."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+          "start_line": 172,
+          "end_line": 176,
+          "context": "Introduction stating high-velocity stars can be escaping, falling in, or belonging to a stream, without concluding any specific object is unbound."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+          "start_line": 598,
+          "end_line": 612,
+          "context": "Discussion and conclusions confirming high radial velocities and presenting chemical abundance results, with no bound/unbound assessment."
+        }
+      ]
+    },
+    {
+      "group_id": "rvs928-rvs930",
+      "description": "RVS928 and RVS930, discussed as possible second-generation globular cluster stars.",
+      "decision": "excluded",
+      "reason": "The paper suggests these two stars may have escaped from a globular cluster based on their high [Na/Fe] and lack of measurable O. Per extraction rules, cluster escapers are excluded from Galactic-unbound HVS candidate extraction.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+          "start_line": 622,
+          "end_line": 630,
+          "context": "Discussion suggesting RVS928 and RVS930 may have escaped from a Globular Cluster."
+        }
+      ]
+    }
+  ]
+}

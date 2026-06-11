@@ -1,0 +1,787 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:05",
+  "paper": {
+    "arxiv_id": "2401.02017",
+    "title": "The origin of High-velocity stars considering the impact of the Large Magellanic Cloud",
+    "month": "2024-01"
+  },
+  "review": {
+    "path": "literature/2401.02017/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123905",
+    "started_at": "2026-05-17T12:39:05",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2401.02017",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 6,
+      "work_count": 6,
+      "table_count": 6,
+      "success_count": 6,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 6,
+      "file_success_count": 6,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2401.02017/arxiv_source/ljw.tex",
+        "start_line": 133,
+        "end_line": 145,
+        "caption": "The classification criteria of HiVels \\label{tab1}",
+        "label": "tab1"
+      },
+      "source_path": "literature/2401.02017/arxiv_source/ljw.tex",
+      "excerpt_path": "literature/2401.02017/catalog_sources/table-tab1/excerpt.tex",
+      "sha256": "3ee274204296364ad97030abfddcc5542541a2e511738af543b7b1f93a9084a6",
+      "line_count": 13,
+      "error": ""
+    },
+    {
+      "id": "table-tab4",
+      "internal_table_id": "table-tab4",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2401.02017/arxiv_source/ljw.tex",
+        "start_line": 148,
+        "end_line": 166,
+        "caption": "Basic parameters for the 9 unbound candidates",
+        "label": "tab4"
+      },
+      "source_path": "literature/2401.02017/arxiv_source/ljw.tex",
+      "excerpt_path": "literature/2401.02017/catalog_sources/table-tab4/excerpt.tex",
+      "sha256": "4de4a3acadc21ecc6a0b731e354adc0ec9f485022f5898970b2767b98f0b67bd",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab2",
+      "internal_table_id": "table-tab2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2401.02017/arxiv_source/ljw.tex",
+        "start_line": 173,
+        "end_line": 192,
+        "caption": "Detailed information about the star with probable origin in the center of the Galaxy. \\label{tab2}",
+        "label": "tab2"
+      },
+      "source_path": "literature/2401.02017/arxiv_source/ljw.tex",
+      "excerpt_path": "literature/2401.02017/catalog_sources/table-tab2/excerpt.tex",
+      "sha256": "3927c6eb53485e466e8284be3f1f875d0b855bf4c9172fe428635473829f95cf",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab3",
+      "internal_table_id": "table-tab3",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2401.02017/arxiv_source/ljw.tex",
+        "start_line": 206,
+        "end_line": 221,
+        "caption": "The related parameters of HVS3 \\label{tab3}",
+        "label": "tab3"
+      },
+      "source_path": "literature/2401.02017/arxiv_source/ljw.tex",
+      "excerpt_path": "literature/2401.02017/catalog_sources/table-tab3/excerpt.tex",
+      "sha256": "962c23b3a386a12b9f574272fc9817f17972a1437d2b3c4ebc77567774352431",
+      "line_count": 16,
+      "error": ""
+    },
+    {
+      "id": "table-tab5",
+      "internal_table_id": "table-tab5",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2401.02017/arxiv_source/ljw.tex",
+        "start_line": 229,
+        "end_line": 248,
+        "caption": "HiVels originating from the Sgr dsph",
+        "label": "tab5"
+      },
+      "source_path": "literature/2401.02017/arxiv_source/ljw.tex",
+      "excerpt_path": "literature/2401.02017/catalog_sources/table-tab5/excerpt.tex",
+      "sha256": "53661d5e6e175b205cb2c82477dd86dc2b35b97eadcc41ac57ee0e8e0a790ce6",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-catalog",
+      "internal_table_id": "table-tab-catalog",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2401.02017/arxiv_source/ljw.tex",
+        "start_line": 285,
+        "end_line": 348,
+        "caption": "Catalog Format \\label{tab:catalog}",
+        "label": "tab:catalog"
+      },
+      "source_path": "literature/2401.02017/arxiv_source/ljw.tex",
+      "excerpt_path": "literature/2401.02017/catalog_sources/table-tab-catalog/excerpt.tex",
+      "sha256": "c05d1663f43c029acb3d9e5e4484b695babe60f18b97d65972a5023736e75a88",
+      "line_count": 64,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2401.02017/catalog_tables/table-tab1.ecsv",
+      "caption": "The classification criteria of HiVels \\label{tab1}",
+      "label": "tab1",
+      "row_count": 4,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Class",
+          "P\\mathrm_ub",
+          "P\\mathrm_disk",
+          "\\nu\\mathrm_\\phi",
+          "MBH ejection origin"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Class",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "P\\mathrm_ub",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "P\\mathrm_disk",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\nu\\mathrm_\\phi",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "MBH ejection origin",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv0inop6t/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2401.02017/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv0inop6t/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2401.02017/catalog_sources/table-tab1/wrapped.tex",
+            "html": "literature/2401.02017/catalog_sources/table-tab1/latexml.html",
+            "stdout": "literature/2401.02017/catalog_sources/table-tab1/latexml.stdout.txt",
+            "stderr": "literature/2401.02017/catalog_sources/table-tab1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3ee274204296364ad97030abfddcc5542541a2e511738af543b7b1f93a9084a6"
+    },
+    {
+      "id": "table-tab4",
+      "internal_table_id": "table-tab4",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2401.02017/catalog_tables/table-tab4.ecsv",
+      "caption": "Basic parameters for the 9 unbound candidates",
+      "label": "tab4",
+      "row_count": 9,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR3 source_id",
+          "R.A.",
+          "Decl.",
+          "rv",
+          "d",
+          "\\nu\\mathrm_GC",
+          "P\\mathrm_ub",
+          "P\\mathrm_disk",
+          "\\nu\\mathrm_\\phi"
+        ],
+        [
+          "",
+          "(deg)",
+          "(deg)",
+          "(km s -1 )",
+          "(kpc)",
+          "(km s -1 )",
+          "",
+          "",
+          "(km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR3 source_id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R.A. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Decl. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "rv | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "d | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\nu\\mathrm_GC | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "P\\mathrm_ub",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "P\\mathrm_disk",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\nu\\mathrm_\\phi | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0v7j91gx/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2401.02017/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0v7j91gx/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2401.02017/catalog_sources/table-tab4/wrapped.tex",
+            "html": "literature/2401.02017/catalog_sources/table-tab4/latexml.html",
+            "stdout": "literature/2401.02017/catalog_sources/table-tab4/latexml.stdout.txt",
+            "stderr": "literature/2401.02017/catalog_sources/table-tab4/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4de4a3acadc21ecc6a0b731e354adc0ec9f485022f5898970b2767b98f0b67bd"
+    },
+    {
+      "id": "table-tab2",
+      "internal_table_id": "table-tab2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2401.02017/catalog_tables/table-tab2.ecsv",
+      "caption": "Detailed information about the star with probable origin in the center of the Galaxy. \\label{tab2}",
+      "label": "tab2",
+      "row_count": 12,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "value",
+          "unit"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "unit",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpu2bi3q2n/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2401.02017/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpu2bi3q2n/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2401.02017/catalog_sources/table-tab2/wrapped.tex",
+            "html": "literature/2401.02017/catalog_sources/table-tab2/latexml.html",
+            "stdout": "literature/2401.02017/catalog_sources/table-tab2/latexml.stdout.txt",
+            "stderr": "literature/2401.02017/catalog_sources/table-tab2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3927c6eb53485e466e8284be3f1f875d0b855bf4c9172fe428635473829f95cf"
+    },
+    {
+      "id": "table-tab3",
+      "internal_table_id": "table-tab3",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2401.02017/catalog_tables/table-tab3.ecsv",
+      "caption": "The related parameters of HVS3 \\label{tab3}",
+      "label": "tab3",
+      "row_count": 7,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "value",
+          "unit"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "unit",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpamei2w2l/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2401.02017/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpamei2w2l/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2401.02017/catalog_sources/table-tab3/wrapped.tex",
+            "html": "literature/2401.02017/catalog_sources/table-tab3/latexml.html",
+            "stdout": "literature/2401.02017/catalog_sources/table-tab3/latexml.stdout.txt",
+            "stderr": "literature/2401.02017/catalog_sources/table-tab3/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "962c23b3a386a12b9f574272fc9817f17972a1437d2b3c4ebc77567774352431"
+    },
+    {
+      "id": "table-tab5",
+      "internal_table_id": "table-tab5",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2401.02017/catalog_tables/table-tab5.ecsv",
+      "caption": "HiVels originating from the Sgr dsph",
+      "label": "tab5",
+      "row_count": 11,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR3 source_id",
+          "rv",
+          "d",
+          "\\nu\\mathrm_GC",
+          "P\\mathrm_Sgr",
+          "G- magnitude a",
+          "BP-RP a",
+          "[Fe/H]",
+          "[ \\alpha /Fe]",
+          "Reference"
+        ],
+        [
+          "…",
+          "(km s -1 )",
+          "(kpc)",
+          "(km s -1 )",
+          "…",
+          "mag",
+          "mag",
+          "dex",
+          "dex",
+          "…"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR3 source_id | …",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "rv | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "d | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\nu\\mathrm_GC | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "P\\mathrm_Sgr | …",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "G- magnitude a | mag",
+          "unit_text": "G- magnitude a",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "BP-RP a | mag",
+          "unit_text": "mag",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "[Fe/H] | dex",
+          "unit_text": "[Fe/H]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "[ \\alpha /Fe] | dex",
+          "unit_text": "[ \\alpha /Fe]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Reference | …",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5940vg5e/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2401.02017/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5940vg5e/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2401.02017/catalog_sources/table-tab5/wrapped.tex",
+            "html": "literature/2401.02017/catalog_sources/table-tab5/latexml.html",
+            "stdout": "literature/2401.02017/catalog_sources/table-tab5/latexml.stdout.txt",
+            "stderr": "literature/2401.02017/catalog_sources/table-tab5/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "53661d5e6e175b205cb2c82477dd86dc2b35b97eadcc41ac57ee0e8e0a790ce6"
+    },
+    {
+      "id": "table-tab-catalog",
+      "internal_table_id": "table-tab-catalog",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2401.02017/catalog_tables/table-tab-catalog.ecsv",
+      "caption": "Catalog Format \\label{tab:catalog}",
+      "label": "tab:catalog",
+      "row_count": 50,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Label",
+          "Unit",
+          "Description"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Label",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Unit",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Description",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0hfqtokf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2401.02017/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0hfqtokf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2401.02017/catalog_sources/table-tab-catalog/wrapped.tex",
+            "html": "literature/2401.02017/catalog_sources/table-tab-catalog/latexml.html",
+            "stdout": "literature/2401.02017/catalog_sources/table-tab-catalog/latexml.stdout.txt",
+            "stderr": "literature/2401.02017/catalog_sources/table-tab-catalog/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c05d1663f43c029acb3d9e5e4484b695babe60f18b97d65972a5023736e75a88"
+    }
+  ]
+}

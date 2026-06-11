@@ -1,0 +1,235 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:39:54",
+  "paper": {
+    "arxiv_id": "1811.04302",
+    "title": "The nearest extreme velocity stars among Gaia DR2 high proper motion stars",
+    "month": "2018-11"
+  },
+  "review": {
+    "path": "literature/1811.04302/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083954",
+    "started_at": "2026-06-07T08:39:54",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1811.04302",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-1",
+      "internal_table_id": "table-tab-1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+        "start_line": 127,
+        "end_line": 142,
+        "caption": "Selected Gaia DR2 stars with proper motions μ>60 mas/yr and Galactocentric tangential velocities v_t,g>700 km/s",
+        "label": "tab:1"
+      },
+      "source_path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+      "excerpt_path": "literature/1811.04302/catalog_sources/table-tab-1/excerpt.tex",
+      "sha256": "e951ca81081f03242970afe0a06dcf0ff53971a1e572b3abd34f7c71e7126b8e",
+      "line_count": 16,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-1",
+      "internal_table_id": "table-tab-1",
+      "status": "success",
+      "ecsv_path": "literature/1811.04302/catalog_tables/table-tab-1.ecsv",
+      "caption": "Selected Gaia DR2 stars with proper motions μ>60 mas/yr and Galactocentric tangential velocities v_t,g>700 km/s",
+      "label": "tab:1",
+      "row_count": 6,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR2 ID",
+          "G",
+          "BP - RP",
+          "\\varpi",
+          "\\mu_\\alpha\\cos\\delta",
+          "\\mu_\\delta",
+          "u^1",
+          "D^2",
+          "gofAL 3",
+          "vpu 4",
+          "v_t,g"
+        ],
+        [
+          "",
+          "[mag]",
+          "[mag]",
+          "[mas]",
+          "[mas/yr]",
+          "[mas/yr]",
+          "",
+          "",
+          "",
+          "",
+          "[km/s]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR2 ID",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "BP - RP | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\varpi | [mas]",
+          "unit_text": "[mas]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\alpha\\cos\\delta | [mas/yr]",
+          "unit_text": "[mas/yr]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_\\delta | [mas/yr]",
+          "unit_text": "[mas/yr]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "u^1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "D^2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "gofAL 3",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "vpu 4",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "v_t,g | [km/s]",
+          "unit_text": "[km/s]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzw51cryz/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1811.04302/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzw51cryz/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1811.04302/catalog_sources/table-tab-1/wrapped.tex",
+            "html": "literature/1811.04302/catalog_sources/table-tab-1/latexml.html",
+            "stdout": "literature/1811.04302/catalog_sources/table-tab-1/latexml.stdout.txt",
+            "stderr": "literature/1811.04302/catalog_sources/table-tab-1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e951ca81081f03242970afe0a06dcf0ff53971a1e572b3abd34f7c71e7126b8e"
+    }
+  ]
+}

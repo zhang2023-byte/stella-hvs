@@ -1,0 +1,88 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:47:20",
+  "paper": {
+    "arxiv_id": "2105.12600",
+    "bibcode": "2021AstL...47..224B",
+    "title": "Analysis of Selected Runaway Stars in the Orion Nebula Based on Data from the Gaia EDR3 Catalogue",
+    "month": "2021-05",
+    "source_note_json": "notes/2021/2021-05/2021-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2105.12600",
+      "pdf": "https://arxiv.org/pdf/2105.12600"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2105.12600",
+    "audit_path": "literature/2105.12600/audit.json",
+    "catalog_review_path": "literature/2105.12600/catalog_review.json",
+    "catalog_extraction_path": "literature/2105.12600/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2105.12600/catalog_tables/table-tab-dat-1.ecsv",
+      "literature/2105.12600/catalog_tables/table-tab-dat-2.ecsv",
+      "literature/2105.12600/catalog_tables/table-tab-Col69.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:47:20",
+    "extractor": "agent",
+    "summary": "论文使用Gaia EDR3星表数据通过蒙特卡洛方法模拟猎户座星云区域多颗速逃星（runaway stars）的历史轨迹。研究的恒星包括AE Aur、μ Col、ι Ori、HD 30112、HD 43112、HIP 28133、TYC 5368-1541-1、Gaia EDR3 3021115184676332288和Gaia EDR3 2983790269606043648。这些恒星均为从本地星团（Orion Trapezium、Col 69）被动力学弹射的经典OB速逃星（runaway stars），弹射速度约100 km/s量级，远低于银河系逃逸速度。论文未声称任何恒星为银河系非束缚天体或超高速星（HVS），无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文研究猎户座星云区域经典速逃星的轨迹模拟，目标恒星均为星团逃逸星（cluster escapees/runaways）。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (ArXiv-Enc-Orion=2021.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2105.12600/arxiv_source/ArXiv-Enc-Orion=2021.tex",
+          "start_line": 24,
+          "end_line": 25,
+          "context": "Title: Analysis of Selected Runaway Stars in the Orion Nebula Based on Data from the Gaia EDR3 Catalogue"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2105.12600/arxiv_source/ArXiv-Enc-Orion=2021.tex",
+          "start_line": 40,
+          "end_line": 42,
+          "context": "Abstract: Monte Carlo simulations of trajectories of runaway stars; confirmed AE Aur and μ Col breakup ~2.5 Myr ago from Orion Trapezium"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "orion-runaway-stars",
+      "description": "猎户座星云区域的多颗经典速逃星（runaway stars），包括：AE Aur（HD 34078，O9.5V）、μ Col（HD 38666，O9.5V）、ι Ori（HD 37043，O9III+B1III多体系统）、HD 30112、HD 43112（从Col 69星团逃逸）、HIP 28133、TYC 5368-1541-1、Gaia EDR3 3021115184676332288和Gaia EDR3 2983790269606043648。Table 1-3列出了它们的Gaia EDR3运动学参数（自行、视差、视向速度、日心距离）。",
+      "decision": "excluded",
+      "reason": "论文研究的'runaway stars'是从本地星团（Orion Trapezium、Col 69）被动力学弹射的经典OB速逃星。典型弹射速度约100 km/s（如AE Aur和μ Col的运动速度超过100 km/s），远低于银河系逃逸速度（~500-600 km/s at solar circle）。论文目标为通过轨迹反推确认这些恒星的母星团和弹射时间，未涉及银河系非束缚天体。论文摘要和正文未声称任何恒星为超高速星（HVS）或银河系非束缚天体。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2105.12600/arxiv_source/ArXiv-Enc-Orion=2021.tex",
+          "start_line": 49,
+          "end_line": 50,
+          "context": "Introduction: AE Aur and μ Col move apart in opposite directions with high velocities, more than 100 km/s"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2105.12600/arxiv_source/ArXiv-Enc-Orion=2021.tex",
+          "start_line": 67,
+          "end_line": 67,
+          "context": "Introduction: goal is to analyze trajectories of runaway stars using Gaia EDR3"
+        }
+      ]
+    }
+  ]
+}

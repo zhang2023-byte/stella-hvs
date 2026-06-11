@@ -1,0 +1,634 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2101.05771",
+    "title": "A search for runaway stars in twelve Galactic supernova remnants",
+    "month": "2021-01",
+    "source_note_json": "notes/2021/2021-01/2021-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2101.05771",
+      "pdf": "https://arxiv.org/pdf/2101.05771"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2101.05771",
+    "audit_path": "literature/2101.05771/audit.json",
+    "source_dir": "literature/2101.05771/arxiv_source",
+    "tex_root": "literature/2101.05771/arxiv_source/Lux.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:35:00",
+    "reviewer": "agent",
+    "summary": "论文在12个银河系超新星遗迹（SNR）中搜寻速逃星（runaway stars），使用Gaia DR2数据结合VLT/UVES和Subaru/HDS光谱观测，不限于早型星，也包含晚型星（通过锂吸收线作为年轻指标）。在39颗观测星中发现6颗富锂矮星：TYC159-251-1（新发现的双线光谱双星SB2）、TYC159-343-1、TYC8150-2802-1、TYC8150-3105-1、TYC8152-1456-1、TYC8152-550-1。TYC8150-3105-1年龄25-50 Myr为最年轻的富锂候选体。最终确认HD 37424（S147中）为唯一确证速逃星，另列出74颗候选体（附录表Runawaylist）。论文含8个数据表（不含续表）：Table 1（tab1）为12个SNR基本参数；Table 2（veloc）为Gaia DR2运动学参数；Table 3（params）为大气参数；Table 4（Li）为温度/光谱型/星等/锂等值宽度和丰度；Table 5（HRD_ages）为HRD年龄估计；Table 6（Mamajek_ages）为锂测试年龄；Table 7（cands）为各SNR候选体统计概览；Table 8（Obslist）为39颗观测星日志；附录Table Runawaylist为74颗候选体完整列表（含续页）。致谢提及Gaia、ESO VLT、NAOJ Subaru、VizieR、SIMBAD、Aladin、ATNF等均为通用致谢，非结构化数据资产。论文中引用的URL（Green SNR星表、SNRcat、PARSEC、UVES/HDS ETC等）均为方法参考工具/星表链接，非论文自身数据产物。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab1",
+      "kind": "latex_table",
+      "asset_type": "input_catalog",
+      "role_in_paper": "列出本文研究的12个银河系超新星遗迹的基本属性：赤道坐标、角直径、距离、年龄和极限光谱型，作为速逃星候选体筛选的基础输入参数。",
+      "source_refs": [
+        {
+          "path": "literature/2101.05771/arxiv_source/Lux.tex",
+          "start_line": 75,
+          "end_line": 100,
+          "caption": "Properties of the SNRs studied in this work. The equatorial coordinates RA/DEC and angular diameters $\\Theta$ are taken from \\citet{Green2014}, the distances $d$ and ages $t$ from \\citet{Ferrand2012} and references therein, where the errors come from the range between the lowest and highest values in the given literature. For 3C58, Crab Nebula and SNR G347.3$-$00.5 the ages are accurately known (assuming that the associations to the historical SNe are correct). The last column gives the limiting stellar spectral type SpT$_{\\text{lim}}$ that could be observed at the corresponding nominal distance and a limiting magnitude of $m_G=17.0$\\,mag, as descibed above.",
+          "label": "tab1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "SNR Name",
+          "meaning": "超新星遗迹的银河系编号（G编号）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Alternative Name",
+          "meaning": "超新星遗迹的常用别名",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA [h:m:s]",
+          "meaning": "超新星遗迹几何中心的赤经坐标（J2000），来自Green星表",
+          "unit_text": "h:m:s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DEC [d:m]",
+          "meaning": "超新星遗迹几何中心的赤纬坐标（J2000），来自Green星表",
+          "unit_text": "d:m",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Θ [arcmin]",
+          "meaning": "超新星遗迹的角直径（长轴×短轴），来自Green星表",
+          "unit_text": "arcmin",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d [kpc]",
+          "meaning": "超新星遗迹的距离，来自Ferrand2012及其中参考文献，误差取文献中最低值与最高值之间的范围",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t [kyr]",
+          "meaning": "超新星遗迹的年龄，来自Ferrand2012及其中参考文献；3C58、Crab Nebula和SNR G347.3-00.5因关联历史超新星而精确已知",
+          "unit_text": "kyr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpT_lim",
+          "meaning": "在标称距离和极限星等m_G=17.0 mag条件下可观测的最晚光谱型，按主序星质量-光度关系推算",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 2.1: 'The limiting spectral types of the other SNRs, as well as further properties, are given in Table 1, where we list our selection of the four SNRs with d≤500 pc, four further SNRs with 500 pc ≤ d ≤ 1600 pc and the four historical SNRs...' 表注说明坐标和角直径取自Green2014，距离和年龄取自Ferrand2012。历史超新星遗迹用*标注。",
+      "comments": "样本包含4个d≤500 pc的SNR、4个500 pc<d≤1600 pc的SNR和4个历史SNR（Cas A, 3C58, Crab, SN 393）。Vela SNR距离最近（275 pc），Cas A最远（3.5 kpc）。"
+    },
+    {
+      "id": "table-veloc",
+      "kind": "latex_table",
+      "asset_type": "results_catalog",
+      "role_in_paper": "列出6颗富锂星和剩余早型候选体的Gaia DR2运动学参数（G星等、视差、自行、重心修正、视向速度、本动速度），是整篇论文的核心运动学数据表，用于判断恒星是否为速逃星（v_pec>25 km/s）。",
+      "source_refs": [
+        {
+          "path": "literature/2101.05771/arxiv_source/Lux.tex",
+          "start_line": 228,
+          "end_line": 262,
+          "caption": "\\textit{Gaia} DR2 $G$ magnitudes, parallaxes $\\pi$ and kinematic parameters of the six Li-rich stars as well as the remaining early-type candidates in HB9, Monoceros Loop and Vela Jr. Parallaxes and proper motions are from \\textit{Gaia} DR2, the barycentric corrections ($BC$) were determined with \\textit{iSpec}. The radial velocities $v_r$ of the Li-rich stars were determined with \\textit{iSpec}, the $v_r$ of the early-type stars were determined with \\textit{IRAF}. For TYC159-251-1, we give the systemic RV $\\gamma$ of the binary, approximated using a mass ratio of $q=0.91^{+0.03}_{-0.05}$. The individual RVs of the binary components were derived with \\textit{IRAF}. For the spectral types, see Table~\\ref{Li}.",
+          "label": "veloc"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "恒星标识：TYC编号（Tycho星表）或HD编号（Henry Draper星表）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia DR2 G波段视星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "π",
+          "meaning": "Gaia DR2视差，含1σ误差",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_RA",
+          "meaning": "赤经方向自行，来自Gaia DR2",
+          "unit_text": "mas yr^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_DEC",
+          "meaning": "赤纬方向自行，来自Gaia DR2",
+          "unit_text": "mas yr^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "BC",
+          "meaning": "重心修正，由iSpec确定；修正地球绕太阳系质心运动对视向速度的影响",
+          "unit_text": "km s^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_r",
+          "meaning": "日心视向速度：富锂星由iSpec交叉相关确定，早型星由IRAF从个别谱线位置手动测量；TYC159-251-1为双线光谱双星的系统性视向速度γ",
+          "unit_text": "km s^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_pec",
+          "meaning": "本动速度（相对本地静止标准LSR），结合自行、视差和视向速度计算银河系空间速度(U,V,W)，扣除太阳运动(8.5, 13.38, 6.49) km/s后取绝对值",
+          "unit_text": "km s^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 4.2: 'By combining the RVs with proper motions and parallaxes from Gaia DR2, we calculated the heliocentric space velocities of the stars... TYC8150-2802-1, TYC8152-1456-1, TYC8152-550-1, TYC3344-235-1, TYC159-2771-1 and HD 76060 have v_pec>25 km/s and could therefore be classified as runaway stars according to Tetzlaff2013.'",
+      "comments": "6颗星具有v_pec>25 km/s符合速逃星运动学定义。TYC159-251-1为本文新发现的双线光谱双星(SB2)，其系统性RV γ=17.5 km/s基于质量比q=0.91推导。TYC8150-2802-1具有最高本动速度58.8 km/s。"
+    },
+    {
+      "id": "table-params",
+      "kind": "latex_table",
+      "asset_type": "derived_stellar_parameters",
+      "role_in_paper": "列出6颗富锂星的大气参数（有效温度、表面重力、金属丰度、微湍流速度、宏观湍流速度、自转速度），由iSpec合成光谱拟合得出，用于后续年龄估计和锂丰度分析。",
+      "source_refs": [
+        {
+          "path": "literature/2101.05771/arxiv_source/Lux.tex",
+          "start_line": 283,
+          "end_line": 304,
+          "caption": "The atmospheric parameters of the six Li-rich stars determined with \\textit{iSpec}. The effective temperatures from \\textit{Gaia} DR2 are also shown for comparison. A missing error indicates that the parameter was kept constant for all iterations. The results for TYC159-251-1 are given for both components individually.",
+          "label": "params"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "恒星标识；TYC159-251-1给出双星两个子星A和B的分别结果",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_eff,Gaia",
+          "meaning": "Gaia DR2提供的有效温度，用于对比（TYC159-251-1的Gaia值为未分解系统的综合值）",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_eff",
+          "meaning": "由iSpec合成光谱拟合得出的有效温度（1σ误差由协方差矩阵计算）",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(g/cm s^{-2})",
+          "meaning": "表面重力（对数，cgs单位），来自iSpec拟合",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[M/H]",
+          "meaning": "金属丰度（相对太阳），来自iSpec拟合",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_t^mic",
+          "meaning": "微湍流速度，来自iSpec拟合",
+          "unit_text": "km s^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_t^mac",
+          "meaning": "宏观湍流速度，来自iSpec拟合（与v_rot sin(i)强相关，迭代中可能固定）",
+          "unit_text": "km s^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_rot sin(i)",
+          "meaning": "投影自转速度，来自iSpec拟合",
+          "unit_text": "km s^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 4.3: 'The resulting atmospheric parameters of the six Li-rich stars are displayed in Table 3. The given intrinsic errors are computed from the covariance matrix which connects the errors of the individual parameters after the least-squares fitting.' 使用SPECTRUM辐射转移代码和ATLAS9.Kurucz大气模型，谱线列表为GESv5。",
+      "comments": "TYC159-343-1的log(g)=2.77异常低（可能为演化星）。TYC159-251-1两子星v_t^mac和v_rot sin(i)均为0（即使设为自由参数迭代）。缺失误差表示该参数在所有迭代中保持固定值。"
+    },
+    {
+      "id": "table-Li",
+      "kind": "latex_table",
+      "asset_type": "results_catalog",
+      "role_in_paper": "列出6颗富锂星和剩余早型候选体的有效温度、光谱型、Gaia DR2测光（G, BP, RP）、绝对星等M_G、G波段消光A_G，以及6颗富锂星的锂等值宽度EW_Li和丰度log(N_Li)。该表是全文核心观测结果表，锂吸收线是晚型星年轻指标的关键判断依据。",
+      "source_refs": [
+        {
+          "path": "literature/2101.05771/arxiv_source/Lux.tex",
+          "start_line": 317,
+          "end_line": 353,
+          "caption": "Temperatures, spectral types and magnitudes of the six Li-rich stars and the remaining observed early-type runaway star candidates. Effective Temperatures $T_{\\text{eff}}$ of the Li stars and the stars in HB9 are from our parameter fits and from \\citet{Bai2019}, respectively. The spectral types of the stars in Monoceros and Vela Jr. were taken from the \\textit{Skiff} catalogue (Vo85, \\citealt{Houk1978}). Conversion between $T_{\\text{eff}}$ and SpT was done with PM13. \\textit{G, BP} and \\textit{RP} magnitudes are from \\textit{Gaia} DR2, absolute $G$ magnitudes $M_G$ were calculated from \\textit{Gaia G}, extinction and parallax and $G$ band extinctions are from the \\textit{StarHorse} catalogue \\citep{Anders2019}. The last two columns show Li equivalent widths $EW_{\\text{Li}}$ and abundances $\\log(N_{\\text{Li}})$ for the six Li-rich stars.",
+          "label": "Li"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "恒星标识",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_eff",
+          "meaning": "有效温度：富锂星来自iSpec拟合，HB9恒星来自Bai2019；Monoceros和Vela Jr.恒星由Skiff星表光谱型经PM13转换得出",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpT",
+          "meaning": "光谱型：富锂星和HB9星由T_eff转换，Monoceros和Vela Jr.星来自Skiff星表（Vo85/Houk1978）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia DR2 G波段视星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "BP",
+          "meaning": "Gaia DR2 BP波段视星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RP",
+          "meaning": "Gaia DR2 RP波段视星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_G",
+          "meaning": "G波段绝对星等，由Gaia G星等、消光和视差计算得出",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_G",
+          "meaning": "G波段消光，来自StarHorse星表（Anders2019）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW_Li",
+          "meaning": "锂6708 Å谱线等值宽度，由IRAF积分测量（仅6颗富锂星）；含连续谱拟合误差和仪器噪声误差",
+          "unit_text": "mÅ",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(N_Li)",
+          "meaning": "锂丰度（对数，log(N_H)=12标度），由等值宽度和温度经Soderblom1993生长曲线转换得出；误差考虑EW_Li和T_eff的不确定性",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 4.4 Lithium equivalent widths and abundances: 'The Li equivalent widths EW_Li of the six Li-rich stars were measured with IRAF by integrating over the area of the Li 6708 Å line... The EW_Li were converted to abundances by using the curves of growth given by Soderblom1993.' TYC8150-3105-1具有最强锂吸收（EW=177 mÅ，log(N_Li)=3.37），接近典型初始丰度3.1-3.3。",
+      "comments": "TYC159-251-1为双星系统，给出了未分解系统值及A/B两子星分别值。TYC159-343-1（F2-F4型）的锂丰度需外推Soderblom1993的温度范围（原仅覆盖4000-6500 K，该星6749 K）。EW_Li仅适用于富锂星（带'--'的早型星无此参数）。"
+    },
+    {
+      "id": "table-HRD_ages",
+      "kind": "latex_table",
+      "asset_type": "derived_stellar_parameters",
+      "role_in_paper": "给出6颗富锂星（含TYC159-251-1两子星）和剩余早型候选体的HRD年龄估计，分两种情况：如果恒星位于（前）主序阶段和如果位于主序后阶段，为后续讨论恒星是否为年轻速逃星提供关键约束。",
+      "source_refs": [
+        {
+          "path": "literature/2101.05771/arxiv_source/Lux.tex",
+          "start_line": 394,
+          "end_line": 434,
+          "caption": "Estimated HRD ages (see Figs.~\\ref{HRD} and \\ref{HRD_zoom}) for the six Li-rich stars, including both components of the SB2 TYC159-251-1, as well as for the remaining observed runaway star candidates in HB9, Monoceros Loop and Vela Jr. If a star is consistent with the zero-age main-sequence, only a lower limit is given in column 2. Otherwise, the values in column 2 represent the case that the star is on its pre-MS and the values in column 3 represent the case that the star is on its terminal-age- or post-MS.",
+          "label": "HRD_ages"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "恒星标识",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_HRD if (pre-)MS",
+          "meaning": "假设恒星位于（前）主序阶段时的HRD年龄（与PARSEC等年龄线比较得出）；若与ZAMS一致则给出下限",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_HRD if post-MS",
+          "meaning": "假设恒星位于终端年龄主序或主序后阶段时的HRD年龄；仅当恒星不在ZAMS时给出",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 4.5.1: 'In the HRD (Figs. 7 and 8), we show the stars observed with UVES/VLT and HDS/Subaru... We compare our stars to isochrones which were calculated from PARSEC models (Bressan2012).' TYC159-343-1使用[M/H]=-0.57的低金属丰度等年龄线单独估算。",
+      "comments": "富锂星大多靠近ZAMS，但post-MS解通常给出Gyr级年龄。TYC8150-3105-1和TYC8150-2802-1与ZAMS一致（仅给出下限>25 Myr和>30 Myr）。HD 261393 (B4-B6)的pre-MS解<110 Myr与SN前身星寿命上限32 Myr一致。TYC159-343-1使用低金属丰度等年龄线（标注*）。"
+    },
+    {
+      "id": "table-Mamajek_ages",
+      "kind": "latex_table",
+      "asset_type": "derived_stellar_parameters",
+      "role_in_paper": "给出6颗富锂星（含TYC159-251-1两子星）由锂测试（T_eff vs EW_Li图）估计的年龄，作为HRD年龄的独立交叉验证。锂等值宽度与疏散星团已知年龄的比较可粗略约束恒星年龄。",
+      "source_refs": [
+        {
+          "path": "literature/2101.05771/arxiv_source/Lux.tex",
+          "start_line": 440,
+          "end_line": 457,
+          "caption": "Ages of the six Li-rich stars, including both components of the SB2 TYC159-251-1, estimated from Fig.~\\ref{Mamajek}.",
+          "label": "Mamajek_ages"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "恒星标识",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_Li",
+          "meaning": "由锂测试（Mamajek T_eff-EW_Li图）估计的年龄范围，通过比较富锂星与不同年龄疏散星团的锂-温度多项式拟合曲线得出",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 4.5.2 Lithium test: 'Eric Mamajek fitted polynomials to the data of cluster stars, allowing a rough localisation of ages in the T_eff-EW_Li space. By comparing the values of the Li-rich stars... to these curves, we obtained the age ranges displayed in Table 6.' 文中强调该方法仅给出粗略估计，受初始锂丰度、金属丰度、自转速度等因素影响。",
+      "comments": "TYC8150-3105-1的锂年龄5-50 Myr为最年轻，与HRD结果一致。TYC159-251-1A的t_Li>625 Myr表明其为较老系统。锂测试不确定度较大（如星团数据散射、未知初始锂丰度），应视为粗略估计。"
+    },
+    {
+      "id": "table-cands",
+      "kind": "latex_table",
+      "asset_type": "summary_statistics",
+      "role_in_paper": "汇总12个SNR中速逃星候选体的搜索统计：Gaia DR1和DR2分别识别的候选体数量、已光谱观测的数量（标明仪器）、关联中子星（如有）以及分析后剩余的候选体数量，为论文核心结论提供概览。",
+      "source_refs": [
+        {
+          "path": "literature/2101.05771/arxiv_source/Lux.tex",
+          "start_line": 486,
+          "end_line": 513,
+          "caption": "Numbers of runaway star candidates with $G<17$\\,mag in the SNRs covered in this work. Columns 2 and 3 give the numbers of candidates identified in \\textit{Gaia} DR1 TGAS and DR2, respectively. Column 4 gives the number of observed stars and if they were observed with UVES/VLT (U) or with HDS/Subaru (H). These observations are all based on the DR1 selection, whereupon \\text{Gaia} DR2 was used for the further characterisation of the targets. Column 5 gives the names of associated neutron stars and column 6 the numbers of remaining candidates that could not be excluded during the analysis.",
+          "label": "cands"
+        }
+      ],
+      "columns": [
+        {
+          "name": "SNR Name",
+          "meaning": "超新星遗迹的G编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DR1",
+          "meaning": "Gaia DR1 TGAS中识别的速逃星候选体数量（G<17 mag）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DR2",
+          "meaning": "Gaia DR2中识别的速逃星候选体数量（G<17 mag）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Obs.",
+          "meaning": "已光谱观测的候选体数量及使用仪器：U=UVES/VLT, H=HDS/Subaru；如无人观测则为0",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PSR",
+          "meaning": "与SNR关联的中子星（脉冲星）名称；'--'表示无已知关联中子星；CCO=中央致密天体",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Rem. cands.",
+          "meaning": "分析后无法排除的剩余速逃星候选体数量（含DR2未观测目标）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Additional info",
+          "meaning": "补充信息：已确认速逃星（HD 37424）、文献候选体（HD 261393）、中子星可能不相关等",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 5.1: 'We list in Table 7 the SNRs with their corresponding numbers of runaway star candidates from the different selection steps and if they were already observed, as well as additional information.' Cas A、3C58和Crab Nebula的DR1和DR2候选体均为0。",
+      "comments": "四个历史SNR中Cas A、3C58、Crab未发现候选体（因角直径太小）。Monoceros Loop因距离和年龄不确定性大，DR2候选体多达116个（标注**未建议观测）。S147中HD 37424为唯一确认的速逃星（Dincel2015）。合计74颗候选体（含已确认的HD 37424）。"
+    },
+    {
+      "id": "table-Obslist",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "列出39颗光谱观测星的完整日志：目标名称、仪器、J2000坐标、所在SNR、Gaia G星等、质心儒略日BJD、总曝光时间和最终光谱信噪比S/N，作为附录中的观测元数据记录。前33颗为UVES/VLT（南天），后6颗为HDS/Subaru（北天HB9）。",
+      "source_refs": [
+        {
+          "path": "literature/2101.05771/arxiv_source/Lux.tex",
+          "start_line": 626,
+          "end_line": 677,
+          "caption": "List of observed stars. The columns give target name, instrument (U for UVES/VLT; H for HDS/Subaru), equatorial coordinates (J2000) calculated with \\textit{VizieR} from \\textit{Gaia} DR2 data, the SNR where the target is located, \\textit{Gaia} DR2 \\textit{G} magnitude, barycentric Julian date BJD, total on source integration time $t_{\\text{exp}}$ and the $S/N$ reached in the fully reduced and averaged spectra.",
+          "label": "Obslist"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "目标星名称（TYC或HD编号）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Instr.",
+          "meaning": "观测仪器：U=UVES/VLT, H=HDS/Subaru",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA",
+          "meaning": "J2000赤经坐标，由VizieR根据Gaia DR2数据计算",
+          "unit_text": "h:m:s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DEC",
+          "meaning": "J2000赤纬坐标，由VizieR根据Gaia DR2数据计算",
+          "unit_text": "d:m:s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SNR",
+          "meaning": "目标所在的超新星遗迹编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia DR2 G波段视星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "BJD-2450000",
+          "meaning": "质心儒略日（Barycentric Julian Date）减去2450000，由Eastman2010在线工具计算",
+          "unit_text": "d",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_exp",
+          "meaning": "总曝光时间（每次观测取两次曝光之和）",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S/N",
+          "meaning": "最终归算和平均光谱的信噪比：UVES数据来自ESO Archive Science Portal，HDS数据在6620-6760 Å连续谱区用IRAF测量",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Appendix Section: 'Table 8 shows the individual stars that were observed with UVES/VLT in P100 and with HDS/Subaru in S18B, respectively. All observations were executed in service mode.' UVES观测在2017年10-12月执行，HDS观测在2018年10月26日执行。",
+      "comments": "共计39颗星：33颗UVES/VLT（SNR S147 3颗、Monoceros Loop 21颗、Puppis A 2颗、Vela 2颗、Vela Jr. 5颗）+ 6颗HDS/Subaru（HB9）。UVES平均S/N=64.7，HDS平均S/N=105.7。总曝光时间UVES为5h4m，HDS未单独汇总。"
+    },
+    {
+      "id": "table-Runawaylist",
+      "kind": "latex_table",
+      "asset_type": "results_catalog",
+      "role_in_paper": "列出本文识别出的全部74颗速逃星候选体（含已确认的HD 37424），给出Gaia DR2源标识符、J2000坐标、所在SNR、超新星爆发时刻相对几何中心（或Vela脉冲星）的角距离ρ、G星等和光谱型。该表是全文最核心的数据资产，为后续光谱证认观测提供了完整的候选体星表。原表因页面限制分为两部分（续页），此处合并为单表。",
+      "source_refs": [
+        {
+          "path": "literature/2101.05771/arxiv_source/Lux.tex",
+          "start_line": 680,
+          "end_line": 783,
+          "caption": "List of identified runaway star candidates. Equatorial coordinates (J2000) were calculated with \\textit{VizieR} from \\textit{Gaia} DR2 data. The fifth column shows the angular distance $\\rho$ to the geometric centre at the time of the SN, except for the candidate in Vela (G263.9$-$03.3), where the distance to the location of the Vela pulsar at the time of the SN is given. The sixth column shows the $G$ magnitudes, taken from \\textit{Gaia} DR2, and the last column shows the spectral types SpT.",
+          "label": "Runawaylist"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2",
+          "meaning": "Gaia DR2源标识符（19位数字），用于在Gaia星表中唯一标识该恒星",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA",
+          "meaning": "J2000赤经坐标，由VizieR根据Gaia DR2数据计算",
+          "unit_text": "h:m:s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "DEC",
+          "meaning": "J2000赤纬坐标，由VizieR根据Gaia DR2数据计算",
+          "unit_text": "d:m:s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SNR",
+          "meaning": "候选体所在的超新星遗迹编号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ρ",
+          "meaning": "超新星爆发时刻恒星相对SNR几何中心的角距离（含1σ误差）；Vela SNR（G263.9-03.3）为相对Vela脉冲星位置的角距离",
+          "unit_text": "arcmin",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia DR2 G波段视星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpT",
+          "meaning": "光谱型：多数由Gaia DR2 T_eff估算；Monoceros Loop和HD 76060来自Skiff星表；HB9已观测星来自Bai2019；'--'表示无可靠估计",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Appendix: 'Table Runawaylist gives an overview of the 74 possible runaway stars that were identified during this analysis.' Section 6 Conclusions: 'Our search in the Gaia DR2 catalogue for runaway stars in twelve Galactic SNRs yielded no further certain runaway stars besides HD 37424, but 73 new promising candidates, which are listed together with HD 37424 in Table Runawaylist.' 表注说明了各SNR中光谱型的来源。",
+      "comments": "原LaTeX源码中该表因页面限制分为两部分（第2部分标注'Continued'），此处合并。包含Cygnus Loop 19颗、HB9 5颗（含4颗已观测）、S147 1颗（HD 37424）、Monoceros Loop 5颗已观测星、Puppis A 9颗、Vela 1颗、Vela Jr. 13颗（含HD 76060）、Lupus Loop 3颗、SN 393 (G347.3-00.5) 18颗。已光谱观测的候选体以脚注标出常用名（TYC/HD编号）。"
+    }
+  ],
+  "external_resources": []
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2405.06015",
+    "title": "Fast-moving stars around an intermediate-mass black hole in Omega Centauri",
+    "month": "2024-05",
+    "source_note_json": "notes/2024/2024-05/2024-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2405.06015",
+      "pdf": "https://arxiv.org/pdf/2405.06015"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2405.06015",
+    "audit_path": "literature/2405.06015/audit.json",
+    "source_dir": "literature/2405.06015/arxiv_source",
+    "tex_root": "literature/2405.06015/arxiv_source/sn-article.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:34:07",
+    "reviewer": "agent",
+    "summary": "This paper reports the discovery of seven fast-moving stars in the central 3 arcseconds of the globular cluster Omega Centauri, providing evidence for an intermediate-mass black hole. The paper does not contain internal LaTeX tables; astrometric and photometric data for the fast-moving stars are presented in Extended Data figures and tables embedded as PDF images. Data assets include archival HST observations, the newly published oMEGACat proper-motion catalog, and the publicly available NBODY6 code used for simulations."
+  },
+  "internal_tables": [],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "",
+      "local_path": "",
+      "description": "Archival Hubble Space Telescope observations used in this study, grouped under a DOI and freely available in the Mikulski Archive for Space Telescopes.",
+      "source_refs": [
+        {
+          "path": "literature/2405.06015/arxiv_source/sn-article.tex",
+          "start_line": 298,
+          "end_line": 298,
+          "context": "The data used in this paper are based on archival observations taken with the \\textit{Hubble Space Telescope} which are freely available in the Mikulski Archive for Space Telescopes. All used observations have been grouped under a DOI \\cite{mydoi}."
+        }
+      ],
+      "evidence": "The data used in this paper are based on archival observations taken with the \\textit{Hubble Space Telescope} which are freely available in the Mikulski Archive for Space Telescopes. All used observations have been grouped under a DOI \\cite{mydoi}.",
+      "comments": "No explicit MAST URL provided in the paper."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "",
+      "local_path": "",
+      "description": "The full oMEGACat proper-motion catalog of the inner regions of Omega Centauri, made public along with the respective publication (Haeberle et al. 2024).",
+      "source_refs": [
+        {
+          "path": "literature/2405.06015/arxiv_source/sn-article.tex",
+          "start_line": 298,
+          "end_line": 298,
+          "context": "In addition, the full proper-motion catalog is made public along with the respective publication \\cite{2024arXiv240403722H}."
+        }
+      ],
+      "evidence": "In addition, the full proper-motion catalog is made public along with the respective publication \\cite{2024arXiv240403722H}.",
+      "comments": "No explicit URL provided; catalog released with companion arXiv paper."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "",
+      "local_path": "",
+      "description": "NBODY6 code used for the N-body simulations.",
+      "source_refs": [
+        {
+          "path": "literature/2405.06015/arxiv_source/sn-article.tex",
+          "start_line": 302,
+          "end_line": 302,
+          "context": "The N-Body simulations were run with the publicly available NBODY6 code \\cite{2012MNRAS.424..545N}."
+        }
+      ],
+      "evidence": "The N-Body simulations were run with the publicly available NBODY6 code \\cite{2012MNRAS.424..545N}.",
+      "comments": "No explicit URL provided in the paper."
+    }
+  ]
+}

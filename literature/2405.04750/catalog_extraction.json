@@ -1,0 +1,799 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:06",
+  "paper": {
+    "arxiv_id": "2405.04750",
+    "title": "The Catalog of early-type Runaway stars from LAMOST-DR8",
+    "month": "2024-05"
+  },
+  "review": {
+    "path": "literature/2405.04750/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123906",
+    "started_at": "2026-05-17T12:39:06",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2405.04750",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-RV-Catalogs",
+      "internal_table_id": "table-tab-RV-Catalogs",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2405.04750/arxiv_source/runaway.tex",
+        "start_line": 240,
+        "end_line": 258,
+        "caption": "The Radial Velocity and atmospheric parameter of the sample stars \\label{tab:RV Catalogs}",
+        "label": "tab:RV Catalogs"
+      },
+      "source_path": "literature/2405.04750/arxiv_source/runaway.tex",
+      "excerpt_path": "literature/2405.04750/catalog_sources/table-tab-RV-Catalogs/excerpt.tex",
+      "sha256": "f9c88d731ec64ebeb2965e5db0eddb73102b71aa964e79713cb390784fc04248",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-Runaway-Catalogs",
+      "internal_table_id": "table-tab-Runaway-Catalogs",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2405.04750/arxiv_source/runaway.tex",
+        "start_line": 314,
+        "end_line": 333,
+        "caption": "The Peculiar Velocities of the 229 Runaway Candidate Stars Identified from the LAMOST MRS DR8 Sample \\label{tab:Runaway Catalogs}",
+        "label": "tab:Runaway Catalogs"
+      },
+      "source_path": "literature/2405.04750/arxiv_source/runaway.tex",
+      "excerpt_path": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs/excerpt.tex",
+      "sha256": "381818a307a512061fcbb1319c14d982148bf7967750131c90a99d9ccbeb8842",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-Runaway-Catalogs-Rt",
+      "internal_table_id": "table-tab-Runaway-Catalogs-Rt",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2405.04750/arxiv_source/runaway.tex",
+        "start_line": 336,
+        "end_line": 355,
+        "caption": "The 480 Runaway Candidate Stars based on transverse velocity \\label{tab:Runaway Catalogs Rt}",
+        "label": "tab:Runaway Catalogs Rt"
+      },
+      "source_path": "literature/2405.04750/arxiv_source/runaway.tex",
+      "excerpt_path": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs-Rt/excerpt.tex",
+      "sha256": "644413c3f0844e575a7a01437e7aa788824b03a8cf55a91382cb6b4323bc939a",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-orbit_binary",
+      "internal_table_id": "table-tab-orbit_binary",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2405.04750/arxiv_source/runaway.tex",
+        "start_line": 513,
+        "end_line": 535,
+        "caption": "Circular orbital elements of the two binary candidate systems \\label{tab:orbit_binary}",
+        "label": "tab:orbit_binary"
+      },
+      "source_path": "literature/2405.04750/arxiv_source/runaway.tex",
+      "excerpt_path": "literature/2405.04750/catalog_sources/table-tab-orbit_binary/excerpt.tex",
+      "sha256": "6fe2b2ce40936cc7cc5b13f0818cc357ad257a00591bf2ae33a6aa70be7766db",
+      "line_count": 23,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-RV-Catalogs",
+      "internal_table_id": "table-tab-RV-Catalogs",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2405.04750/catalog_tables/table-tab-RV-Catalogs.ecsv",
+      "caption": "The Radial Velocity and atmospheric parameter of the sample stars \\label{tab:RV Catalogs}",
+      "label": "tab:RV Catalogs",
+      "row_count": 8,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia",
+          "R.A.",
+          "Decl.",
+          "V_r",
+          "\\sigma_r",
+          "T_\\rm eff",
+          "V\\sini",
+          "\\logg"
+        ],
+        [
+          "Source ID",
+          "(deg)",
+          "(deg)",
+          "(km s -1 )",
+          "(km s -1 )",
+          "( K )",
+          "(km s -1 )",
+          "( \\rm cm s^-2 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia | Source ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R.A. | (deg)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Decl. | (deg)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "V_r | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_r | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "T_\\rm eff | ( K )",
+          "unit_text": "( K )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "V\\sini | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\logg | ( \\rm cm s^-2 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphkqy4gwb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2405.04750/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphkqy4gwb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2405.04750/catalog_sources/table-tab-RV-Catalogs/wrapped.tex",
+            "html": "literature/2405.04750/catalog_sources/table-tab-RV-Catalogs/latexml.html",
+            "stdout": "literature/2405.04750/catalog_sources/table-tab-RV-Catalogs/latexml.stdout.txt",
+            "stderr": "literature/2405.04750/catalog_sources/table-tab-RV-Catalogs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f9c88d731ec64ebeb2965e5db0eddb73102b71aa964e79713cb390784fc04248"
+    },
+    {
+      "id": "table-tab-Runaway-Catalogs",
+      "internal_table_id": "table-tab-Runaway-Catalogs",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2405.04750/catalog_tables/table-tab-Runaway-Catalogs.ecsv",
+      "caption": "The Peculiar Velocities of the 229 Runaway Candidate Stars Identified from the LAMOST MRS DR8 Sample \\label{tab:Runaway Catalogs}",
+      "label": "tab:Runaway Catalogs",
+      "row_count": 4,
+      "column_count": 13,
+      "environment": "deluxetable*",
+      "header_rows": [
+        [
+          "R.A.",
+          "Decl.",
+          "\\mu_\\alpha",
+          "\\mu_\\beta",
+          "Parallax",
+          "\\colheadV_Rp",
+          "\\colheadV_Tp",
+          "\\colheadV_Sp",
+          "z",
+          "U",
+          "V",
+          "W",
+          "Flag"
+        ],
+        [
+          "(deg)",
+          "(deg)",
+          "\\colhead(mas yr^-1)",
+          "\\colhead(mas yr^-1)",
+          "(mas)",
+          "\\colhead(km s^-1)",
+          "\\colhead(km s^-1)",
+          "\\colhead(km s^-1)",
+          "(pc)",
+          "\\colhead(km s^-1)",
+          "\\colhead(km s^-1)",
+          "\\colhead(km s^-1)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "R.A. | (deg)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Decl. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mu_\\alpha | \\colhead(mas yr^-1)",
+          "unit_text": "\\colhead(mas yr^-1)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\beta | \\colhead(mas yr^-1)",
+          "unit_text": "\\colhead(mas yr^-1)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Parallax | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\colheadV_Rp | \\colhead(km s^-1)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\colheadV_Tp | \\colhead(km s^-1)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\colheadV_Sp | \\colhead(km s^-1)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "z | (pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "U | \\colhead(km s^-1)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "V | \\colhead(km s^-1)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "W | \\colhead(km s^-1)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "Flag",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\alpha",
+        "unresolved LaTeX macro preserved: \\beta",
+        "unresolved LaTeX macro preserved: \\colhead",
+        "unresolved LaTeX macro preserved: \\colheadV",
+        "unresolved LaTeX macro preserved: \\mu",
+        "unresolved LaTeX macro preserved: \\phn",
+        "unresolved LaTeX macro preserved: \\phs"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplgv80s73/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2405.04750/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplgv80s73/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs/wrapped.tex",
+            "html": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs/latexml.html",
+            "stdout": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs/latexml.stdout.txt",
+            "stderr": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprckvb6zb/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprckvb6zb/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs/wrapped.tex",
+            "html": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs/pandoc.html",
+            "stdout": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs/pandoc.stdout.txt",
+            "stderr": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "381818a307a512061fcbb1319c14d982148bf7967750131c90a99d9ccbeb8842"
+    },
+    {
+      "id": "table-tab-Runaway-Catalogs-Rt",
+      "internal_table_id": "table-tab-Runaway-Catalogs-Rt",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2405.04750/catalog_tables/table-tab-Runaway-Catalogs-Rt.ecsv",
+      "caption": "The 480 Runaway Candidate Stars based on transverse velocity \\label{tab:Runaway Catalogs Rt}",
+      "label": "tab:Runaway Catalogs Rt",
+      "row_count": 4,
+      "column_count": 13,
+      "environment": "deluxetable*",
+      "header_rows": [
+        [
+          "R.A.",
+          "Decl.",
+          "\\mu_\\alpha",
+          "\\mu_\\beta",
+          "Parallax",
+          "\\colheadV_Rp",
+          "\\colheadV_Tp",
+          "\\colheadV_Sp",
+          "z",
+          "U",
+          "V",
+          "W",
+          "Flag"
+        ],
+        [
+          "(deg)",
+          "(deg)",
+          "\\colhead(mas yr^-1)",
+          "\\colhead(mas yr^-1)",
+          "(mas)",
+          "\\colhead(km s^-1)",
+          "\\colhead(km s^-1)",
+          "\\colhead(km s^-1)",
+          "(pc)",
+          "\\colhead(km s^-1)",
+          "\\colhead(km s^-1)",
+          "\\colhead(km s^-1)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "R.A. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Decl. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mu_\\alpha | \\colhead(mas yr^-1)",
+          "unit_text": "\\colhead(mas yr^-1)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\beta | \\colhead(mas yr^-1)",
+          "unit_text": "\\colhead(mas yr^-1)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Parallax | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\colheadV_Rp | \\colhead(km s^-1)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\colheadV_Tp | \\colhead(km s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\colheadV_Sp | \\colhead(km s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "z | (pc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "U | \\colhead(km s^-1)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "V | \\colhead(km s^-1)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "W | \\colhead(km s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "Flag",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\alpha",
+        "unresolved LaTeX macro preserved: \\beta",
+        "unresolved LaTeX macro preserved: \\colhead",
+        "unresolved LaTeX macro preserved: \\colheadV",
+        "unresolved LaTeX macro preserved: \\mu",
+        "unresolved LaTeX macro preserved: \\phn",
+        "unresolved LaTeX macro preserved: \\phs"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmph0_b3hnc/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2405.04750/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmph0_b3hnc/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs-Rt/wrapped.tex",
+            "html": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs-Rt/latexml.html",
+            "stdout": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs-Rt/latexml.stdout.txt",
+            "stderr": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs-Rt/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_aswaikd/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_aswaikd/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs-Rt/wrapped.tex",
+            "html": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs-Rt/pandoc.html",
+            "stdout": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs-Rt/pandoc.stdout.txt",
+            "stderr": "literature/2405.04750/catalog_sources/table-tab-Runaway-Catalogs-Rt/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "644413c3f0844e575a7a01437e7aa788824b03a8cf55a91382cb6b4323bc939a"
+    },
+    {
+      "id": "table-tab-orbit_binary",
+      "internal_table_id": "table-tab-orbit_binary",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2405.04750/catalog_tables/table-tab-orbit_binary.ecsv",
+      "caption": "Circular orbital elements of the two binary candidate systems \\label{tab:orbit_binary}",
+      "label": "tab:orbit_binary",
+      "row_count": 7,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Element",
+          "Value",
+          ""
+        ],
+        [
+          "",
+          "A",
+          "B"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Element",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value | A",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "B",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpeajx84pd/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2405.04750/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpeajx84pd/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2405.04750/catalog_sources/table-tab-orbit_binary/wrapped.tex",
+            "html": "literature/2405.04750/catalog_sources/table-tab-orbit_binary/latexml.html",
+            "stdout": "literature/2405.04750/catalog_sources/table-tab-orbit_binary/latexml.stdout.txt",
+            "stderr": "literature/2405.04750/catalog_sources/table-tab-orbit_binary/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6fe2b2ce40936cc7cc5b13f0818cc357ad257a00591bf2ae33a6aa70be7766db"
+    }
+  ]
+}

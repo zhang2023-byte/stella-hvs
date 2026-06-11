@@ -4,7 +4,11 @@
 
 logs/
 notes/
-literature/
+literature/**
+!literature/*/
+!literature/*/catalog_review.json
+!literature/*/catalog_extraction.json
+!literature/*/literature_hvs_candidates.json
 catalog/
 html/
 ref/

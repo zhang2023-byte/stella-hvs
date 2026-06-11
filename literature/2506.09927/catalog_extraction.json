@@ -1,0 +1,274 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:45",
+  "paper": {
+    "arxiv_id": "2506.09927",
+    "title": "Counterculture Stars: Slow and Retrograde Stars with Low-Alpha Disk Abundances",
+    "month": "2025-06"
+  },
+  "review": {
+    "path": "literature/2506.09927/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123945",
+    "started_at": "2026-05-17T12:39:45",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2506.09927",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-results",
+      "internal_table_id": "table-tab-results",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2506.09927/arxiv_source/clean_text.tex",
+        "start_line": 597,
+        "end_line": 624,
+        "caption": "Summary of the the properties determining whether a star was considered consistent, plausible, and unlikely for each mechanism. Note that while we provide the requisite properties, there are no consistent stars for the Galactic bar mechanism.",
+        "label": "tab:results"
+      },
+      "source_path": "literature/2506.09927/arxiv_source/clean_text.tex",
+      "excerpt_path": "literature/2506.09927/catalog_sources/table-tab-results/excerpt.tex",
+      "sha256": "27f34e29383a6b885f632d68271bf1e827dee51420d7380e3df80739982e7a4b",
+      "line_count": 28,
+      "error": ""
+    },
+    {
+      "id": "table-002",
+      "internal_table_id": "table-002",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2506.09927/arxiv_source/clean_text.tex",
+        "start_line": 731,
+        "end_line": 772,
+        "caption": "The APOGEE IDs corresponding to the numbers given in Figure \\ref{fig:results}",
+        "label": ""
+      },
+      "source_path": "literature/2506.09927/arxiv_source/clean_text.tex",
+      "excerpt_path": "literature/2506.09927/catalog_sources/table-002/excerpt.tex",
+      "sha256": "41d7af164207211be1eb600085591724114ea315c325050cf1798ec3469f3777",
+      "line_count": 42,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-results",
+      "internal_table_id": "table-tab-results",
+      "status": "success",
+      "ecsv_path": "literature/2506.09927/catalog_tables/table-tab-results.ecsv",
+      "caption": "Summary of the the properties determining whether a star was considered consistent, plausible, and unlikely for each mechanism. Note that while we provide the requisite properties, there are no consistent stars for the Galactic bar mechanism.",
+      "label": "tab:results",
+      "row_count": 9,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "",
+          "Consistent",
+          "Plausible",
+          "Unlikely"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Consistent",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Plausible",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Unlikely",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpj2er5a_r/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2506.09927/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpj2er5a_r/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.09927/catalog_sources/table-tab-results/wrapped.tex",
+            "html": "literature/2506.09927/catalog_sources/table-tab-results/latexml.html",
+            "stdout": "literature/2506.09927/catalog_sources/table-tab-results/latexml.stdout.txt",
+            "stderr": "literature/2506.09927/catalog_sources/table-tab-results/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwyw8ucmb/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwyw8ucmb/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.09927/catalog_sources/table-tab-results/wrapped.tex",
+            "html": "literature/2506.09927/catalog_sources/table-tab-results/pandoc.html",
+            "stdout": "literature/2506.09927/catalog_sources/table-tab-results/pandoc.stdout.txt",
+            "stderr": "literature/2506.09927/catalog_sources/table-tab-results/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "27f34e29383a6b885f632d68271bf1e827dee51420d7380e3df80739982e7a4b"
+    },
+    {
+      "id": "table-002",
+      "internal_table_id": "table-002",
+      "status": "success",
+      "ecsv_path": "literature/2506.09927/catalog_tables/table-002.ecsv",
+      "caption": "The APOGEE IDs corresponding to the numbers given in Figure \\ref{fig:results}",
+      "label": "",
+      "row_count": 35,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Number",
+          "APOGEE ID",
+          "Number",
+          "APOGEE ID"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Number",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "APOGEE ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Number",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "APOGEE ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwiifrbf6/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2506.09927/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwiifrbf6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2506.09927/catalog_sources/table-002/wrapped.tex",
+            "html": "literature/2506.09927/catalog_sources/table-002/latexml.html",
+            "stdout": "literature/2506.09927/catalog_sources/table-002/latexml.stdout.txt",
+            "stderr": "literature/2506.09927/catalog_sources/table-002/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "41d7af164207211be1eb600085591724114ea315c325050cf1798ec3469f3777"
+    }
+  ]
+}

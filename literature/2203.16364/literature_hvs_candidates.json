@@ -1,0 +1,311 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-23T11:43:10",
+  "paper": {
+    "arxiv_id": "2203.16364",
+    "bibcode": "2022AJ....163..252R",
+    "title": "The Chemical Composition of Extreme-Velocity Stars",
+    "month": "2022-03",
+    "source_note_json": "notes/2022/2022-03/2022-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2203.16364",
+      "pdf": "https://arxiv.org/pdf/2203.16364"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2203.16364",
+    "audit_path": "literature/2203.16364/audit.json",
+    "catalog_review_path": "literature/2203.16364/catalog_review.json",
+    "catalog_extraction_path": "literature/2203.16364/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2203.16364/catalog_tables/table-obs_log.ecsv",
+      "literature/2203.16364/catalog_tables/table-measured_ews.ecsv",
+      "literature/2203.16364/catalog_tables/table-stellar_params.ecsv",
+      "literature/2203.16364/catalog_tables/table-chem_abundances_tbl.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-23T11:43:10",
+    "extractor": "agent",
+    "summary": "The paper studies 15 late-type extreme-velocity star candidates and explicitly concludes they are bound to the Galactic potential, with total velocities 274-520 km/s that do not exceed the Galactic escape velocity. No objects are treated as possibly unbound from the Milky Way."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Adopted Gaia EDR3 astrometry and photometry, combined with candidate lists from Hattori et al. (2018a) and Herzog et al. (2018) based on Gaia DR1.",
+      "inputs": [
+        "Gaia EDR3",
+        "Gaia DR1"
+      ],
+      "outputs": [
+        "candidate positions",
+        "parallaxes",
+        "proper motions",
+        "photometry"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 150,
+          "end_line": 159,
+          "context": "Sample selection from Hattori 2018a and Herzog 2018 with Gaia DR1 data"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "sample_selection",
+      "summary": "Selected 15 stars with quoted total velocities >~300 km/s and no previous high-resolution spectroscopic analysis, prioritizing brighter targets.",
+      "inputs": [
+        "Hattori 2018a candidate list",
+        "Herzog 2018 candidate list"
+      ],
+      "outputs": [
+        "15 target stars for spectroscopic follow-up"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 150,
+          "end_line": 159,
+          "context": "Sample selection criteria and target prioritization"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "radial_velocity_measurement",
+      "summary": "Measured spectroscopic radial velocities using ARCES at the 3.5m APO telescope and MIKE at the 6.5m Magellan telescope, with iSpec for RV calculation and barycentric corrections.",
+      "inputs": [
+        "high-resolution spectra"
+      ],
+      "outputs": [
+        "radial velocities",
+        "barycentric corrections"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 177,
+          "end_line": 188,
+          "context": "Observation instruments and iSpec radial velocity processing"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Derived distances by fitting MIST isochrones to photometric and astrometric data using the isochrones package with MultiNest, restricted by Bailer-Jones 2021 photo-geometric distances.",
+      "inputs": [
+        "Gaia photometry",
+        "2MASS photometry",
+        "WISE photometry",
+        "SkyMapper photometry",
+        "Gaia EDR3 parallaxes"
+      ],
+      "outputs": [
+        "posterior distance estimates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 259,
+          "end_line": 295,
+          "context": "Isochrone fitting with isochrones package and MultiNest for distance estimation"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [
+        "step-01",
+        "step-03",
+        "step-04"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Calculated total Galactic velocities from Gaia EDR3 astrometry, spectroscopic radial velocities, and isochrone-derived distances.",
+      "inputs": [
+        "Gaia EDR3 proper motions",
+        "Gaia EDR3 parallaxes",
+        "spectroscopic RVs",
+        "isochrone distances"
+      ],
+      "outputs": [
+        "total Galactic velocities"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 139,
+          "end_line": 141,
+          "context": "Total velocity calculation using Gaia EDR3 astrometry and spectroscopic RVs"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-05"
+      ],
+      "step_type": "galactic_potential_model",
+      "summary": "Adopted the MWPotential2014 Galactic potential in galpy for orbit integration, consisting of a power-law bulge, Miyamoto-Nagai disk, and NFW halo.",
+      "inputs": [],
+      "outputs": [
+        "Galactic potential model"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 398,
+          "end_line": 405,
+          "context": "Adopted MWPotential2014 Galactic potential model description"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [
+        "step-06"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Integrated Galactic orbits using galpy with the MWPotential2014 potential to derive pericenter, apocenter, eccentricity, zmax, total energy, and angular momentum.",
+      "inputs": [
+        "phase-space coordinates",
+        "MWPotential2014"
+      ],
+      "outputs": [
+        "orbital parameters"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 387,
+          "end_line": 395,
+          "context": "Galactic orbit calculation using galpy"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [
+        "step-05",
+        "step-07"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Assessed bound status by comparing total velocities to the Galactic escape velocity. The paper concludes all 15 stars are bound to the Galactic potential with velocities 274-520 km/s, below the escape threshold.",
+      "inputs": [
+        "total velocities",
+        "orbital energies"
+      ],
+      "outputs": [
+        "bound/unbound classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 68,
+          "end_line": 76,
+          "context": "Abstract stating stars are not fast enough to be classified as hypervelocity stars"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 915,
+          "end_line": 918,
+          "context": "Conclusion stating stars are bound to the Galactic potential"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": [
+        "step-07"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Evaluated astrophysical origin using chemical abundances and orbital parameters, concluding the stars are likely tidal debris from disrupted dwarf galaxies accelerated by the Galactic potential.",
+      "inputs": [
+        "chemical abundances",
+        "orbital parameters"
+      ],
+      "outputs": [
+        "origin classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 931,
+          "end_line": 934,
+          "context": "Conclusion on tidal debris origin from disrupted dwarf galaxies"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-stellar_params",
+      "description": "15 late-type extreme-velocity star candidates with photometric properties, stellar atmospheric parameters, and orbital parameters (RV, total velocity, pericenter, apocenter, eccentricity, zmax, total energy, angular momentum).",
+      "decision": "excluded",
+      "reason": "The paper explicitly concludes that all 15 stars are bound to the Galactic potential, with total velocities of 274-520 km/s that do not exceed the Galactic escape velocity. The paper classifies them as extreme-velocity stars, not as hypervelocity stars or Galactic-unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 68,
+          "end_line": 76,
+          "context": "Abstract: total velocities 274-520 km/s; stars are not fast enough to be classified as hypervelocity stars and are extreme-velocity stars"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 113,
+          "end_line": 116,
+          "context": "Introduction: term HVSs used to describe extreme-velocity stars but not necessarily unbound"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 915,
+          "end_line": 918,
+          "context": "Conclusion: total velocities confirm they are bound to the Galactic potential and not as fast as expected for classical hypervelocity stars"
+        }
+      ]
+    },
+    {
+      "group_id": "table-obs_log",
+      "description": "Observation log for the 15 target stars, recording Gaia EDR3 source identifiers, coordinates, observation details, and instruments.",
+      "decision": "excluded",
+      "reason": "This is an observation log, not a candidate table. The objects listed here are the same 15 extreme-velocity stars whose bound status is explicitly confirmed by the paper.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 191,
+          "end_line": 219,
+          "context": "Table caption and observation log for the 15 target stars"
+        }
+      ]
+    }
+  ]
+}

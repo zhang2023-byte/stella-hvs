@@ -1,0 +1,63 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:36:00",
+  "paper": {
+    "arxiv_id": "2305.04025",
+    "bibcode": "2023JKAS...56...59K",
+    "title": "Diverse Chemo-Dynamical Properties of Nitrogen-Rich Stars Identified From Low-Resolution Spectra",
+    "month": "2023-05",
+    "source_note_json": "notes/2023/2023-05/2023-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2305.04025",
+      "pdf": "https://arxiv.org/pdf/2305.04025"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2305.04025",
+    "audit_path": "literature/2305.04025/audit.json",
+    "catalog_review_path": "literature/2305.04025/catalog_review.json",
+    "catalog_extraction_path": "literature/2305.04025/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2305.04025/catalog_tables/table-tab1.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:36:00",
+    "extractor": "agent",
+    "summary": "This paper uses low-resolution spectroscopy (SEGUE/SEGUE-2, LAMOST) to identify nitrogen-rich (N-rich) stars in the Galactic halo, which are believed to be remnants of globular cluster (GC) second-generation stars tidally stripped from their parent clusters. The study examines the chemo-dynamical properties of these stars (orbital parameters rmax, rmin, zmax, eccentricity, etc.), divides them into multiple subgroups (MINR, MINT, MINT-E, MAXR, etc.), and discusses their possible origins (GSE, Sgr, Sequoia dwarf galaxies, etc.). All stars are gravitationally bound to the Milky Way; the paper never discusses Galactic escape velocity, hypervelocity stars (HVS), or the possibility of stars leaving the Galaxy. No HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2305.04025:group-01",
+      "description": "The 26 nitrogen-rich (N-rich) star sample from Table 1. Identified via SEGUE/SEGUE-2 and LAMOST low-resolution spectroscopy, combined with Gaia DR2/EDR3 proper motions and Bailer-Jones distances, orbital parameters (maximum/minimum Galactocentric distance, maximum disk distance, eccentricity, etc.) were computed using galpy.",
+      "decision": "rejected",
+      "reason": "This paper studies nitrogen-rich stars that escaped from globular clusters in the Galactic halo. Although these stars move through the halo, they are all gravitationally bound to the Milky Way — the orbital parameters calculated in the paper (rmax, rmin, zmax) all lie within the range of bound Galactic orbits, with eccentricity e < 1. The paper never discusses Galactic escape velocity, hypervelocity stars (HVS), or gravitational-unbound status. The research focuses on the dynamical property classification of chemically peculiar stars (N-rich) and is completely unrelated to HVS.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2305.04025/arxiv_source/ms.tex",
+          "start_line": 443,
+          "end_line": 455,
+          "context": "Section 2.3: 计算轨道参数（rmax, rmin, zmax, eccentricity），所有恒星轨道均在银河系束缚范围内。"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2305.04025/arxiv_source/ms.tex",
+          "start_line": 847,
+          "end_line": 849,
+          "context": "Section 4.1: 'a small fraction of our MINR stars have orbits that pass close to the Galactic center (rmin < 3 kpc), but are not bound to the bulge.' 这里 'not bound to the bulge' 指不束缚于核球（即非核球星），并非指脱离银河系引力束缚。"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2305.04025/arxiv_source/ms.tex",
+          "start_line": 1050,
+          "end_line": 1062,
+          "context": "Summary: 讨论 N-rich 恒星可能来自 GSE、Sgr、Sequoia 等矮星系，均为银河系内束缚轨道上的恒星，从未提及 HVS 或银河系逃逸。"
+        }
+      ]
+    }
+  ]
+}

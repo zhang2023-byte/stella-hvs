@@ -1,0 +1,1738 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:55:00",
+  "paper": {
+    "arxiv_id": "1811.04302",
+    "bibcode": "2018RNAAS...2..211S",
+    "title": "The nearest extreme velocity stars among Gaia DR2 high proper motion stars",
+    "month": "2018-11",
+    "source_note_json": "notes/2018/2018-11/2018-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1811.04302",
+      "pdf": "https://arxiv.org/pdf/1811.04302"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1811.04302",
+    "audit_path": "literature/1811.04302/audit.json",
+    "catalog_review_path": "literature/1811.04302/catalog_review.json",
+    "catalog_extraction_path": "literature/1811.04302/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1811.04302/catalog_tables/table-tab-1.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-06-07T10:55:00",
+    "extractor": "agent",
+    "summary": "本文为 RNAAS 简报，从 Gaia DR2 高自行 (μ>60 mas/yr) 恒星中筛选极端切向速度候选体。通过质量筛选 (u, gofAL, excess_noise_sig) 及视差显著性 (ϖ>5σ_ϖ) 后获得6颗 vt,g > 700 km/s（超过本地银河系逃逸速度 580±63 km/s）的高优先级候选体。这些星仅基于 Gaia DR2 视差和自行（仅2D切向速度），除 D6-2 外均无 RV 数据。论文明确指出这些为 'possibly unbound' 候选体，需要后续 RV 测量确认。6 颗候选体全部纳入。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR2：约180万颗 μ>60 mas/yr 且 ϖ>3σ_ϖ 的高自行恒星。",
+      "inputs": ["Gaia DR2"],
+      "outputs": ["初始高自行样本 (~1.8 million stars)"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+          "start_line": 61,
+          "end_line": 63,
+          "context": "Selection of HPM stars with μ>60 mas/yr and ϖ>3σ_ϖ"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": ["step-01"],
+      "step_type": "velocity_calculation",
+      "summary": "计算银心静止系切向速度 vt_g（修正太阳运动，LSR=235 km/s）。选取 vt_g > 700 km/s 的天体（远高于本地逃逸速度 580±63 km/s）。得到 109 个天体。",
+      "inputs": ["Gaia DR2 proper motions and parallaxes"],
+      "outputs": ["109 objects with vt_g > 700 km/s"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+          "start_line": 64,
+          "end_line": 69,
+          "context": "vt_g calculation and vt_g>700 km/s threshold"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": ["step-02"],
+      "step_type": "quality_filter",
+      "summary": "应用 Gaia DR2 质量判据：astrometric_unit_weight_error u, BP/RP 测光可靠性、astrometric_gof_al<3, astrometric_excess_noise_sig≤2。从109个过滤至39个候选体。",
+      "inputs": ["109 vt_g>700 km/s objects"],
+      "outputs": ["39 quality-filtered candidates"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+          "start_line": 69,
+          "end_line": 79,
+          "context": "Quality criteria filtering from 109 to 39 candidates"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": ["step-03"],
+      "step_type": "sample_selection",
+      "summary": "仅保留 ϖ>5σ_ϖ 的高显著性视差天体，得到最终 6 颗高优先级候选体。",
+      "inputs": ["39 quality-filtered candidates"],
+      "outputs": ["6 high-priority extreme tangential velocity candidates"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+          "start_line": 81,
+          "end_line": 86,
+          "context": "Selection of ϖ>5σ_ϖ — 6 high-priority candidates"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "1811.04302:cand-001",
+        "paper_candidate_id": "Gaia DR2 1798008584396457088",
+        "gaia_source_id": "Gaia DR2 1798008584396457088",
+        "all": [
+          {
+            "value": "Gaia DR2 1798008584396457088",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 134,
+                "end_line": 134,
+                "context": "Tab. 1: Gaia DR2 1798008584396457088 = NLTT 51732 = D6-2, vt_g=1248±122"
+              }
+            ]
+          },
+          {
+            "value": "NLTT 51732",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 96,
+                "end_line": 96,
+                "context": "D6-2 = NLTT 51732, classical HPM star"
+              }
+            ]
+          },
+          {
+            "value": "D6-2",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 96,
+                "end_line": 96,
+                "context": "D6-2 = NLTT 51732, hypervelocity white dwarf from Shen+2018"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "D6-2 (Gaia DR2 1798008584396457088): 该星为 Shen+2018 分类的超高速白矮星候选体。本文将其列为 vt_g 最高的候选体之一 (1248±122 km/s)，但指出其 Gaia DR2 质量参数 (u=1.13, gofAL=2.7, excess_noise_sig=1.8) 接近最大允许值、visibility_periods_used=9 偏低，且 Shen+2018 测得 RV=0 km/s，因此本文将其视为 'doubtful candidate'。仅2D切向速度，无可靠RV。",
+        "paper_labels": ["hvs_candidate"],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "low",
+        "confidence_reason": "Gaia DR2 quality parameters marginal (u, gofAL near limits), RV=0 km/s from Shen+2018 renders unbound status uncertain, paper itself labels as doubtful. 2D-only kinematics without reliable 6D constraint.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+            "start_line": 96,
+            "end_line": 101,
+            "context": "D6-2: doubtful candidate, quality parameters close to max allowed, zero RV"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+            "start_line": 109,
+            "end_line": 110,
+            "context": "Further RV measurements will clarify possibly unbound status"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+            "start_line": 81,
+            "end_line": 86,
+            "context": "Six high-priority candidates with vt_g>700 km/s and ϖ>5σ_ϖ"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": {
+            "raw_value": "1.05±0.11",
+            "value": "1.05",
+            "unit": "mas",
+            "error": "0.11",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 134,
+                "end_line": 134,
+                "context": "Tab. 1: ϖ=1.05±0.11 mas"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "proper_motion_ra": {
+            "raw_value": "+98.39±0.21",
+            "value": "98.39",
+            "unit": "mas yr^-1",
+            "error": "0.21",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 134,
+                "end_line": 134,
+                "context": "Tab. 1: μα cosδ = +98.39±0.21 mas/yr"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "proper_motion_dec": {
+            "raw_value": "+240.35±0.17",
+            "value": "240.35",
+            "unit": "mas yr^-1",
+            "error": "0.17",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 134,
+                "end_line": 134,
+                "context": "Tab. 1: μδ = +240.35±0.17 mas/yr"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": {
+            "raw_value": "1248±122",
+            "value": "1248",
+            "unit": "km s^-1",
+            "error": "122",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 134,
+                "end_line": 134,
+                "context": "Tab. 1: vt_g = 1248±122 km/s"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "total_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": {
+            "raw_value": "580±63",
+            "value": "580",
+            "unit": "km s^-1",
+            "error": "63",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 68,
+                "end_line": 68,
+                "context": "local Galactic escape velocity 580±63 km/s (Monari+2018)"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "bound_status": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "escape_margin_km_s": null,
+          "escape_margin_sigma": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "G",
+          "raw_value": "17.02",
+          "value": "17.02",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 134,
+              "end_line": 134,
+              "context": "Tab. 1: G=17.02 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "band": "BP-RP",
+          "raw_value": "0.40",
+          "value": "0.40",
+          "unit": "mag",
+          "measurement_type": "color",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 134,
+              "end_line": 134,
+              "context": "Tab. 1: BP-RP=0.40 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [
+        {
+          "name": "astrometric_unit_weight_error",
+          "raw_value": "1.13",
+          "value": "1.13",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 134,
+              "end_line": 134,
+              "context": "Tab. 1: u=1.13"
+            }
+          ],
+          "method_refs": ["step-03"]
+        },
+        {
+          "name": "astrometric_excess_noise_sig",
+          "raw_value": "1.8",
+          "value": "1.8",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 134,
+              "end_line": 134,
+              "context": "Tab. 1: D=1.8"
+            }
+          ],
+          "method_refs": ["step-03"]
+        },
+        {
+          "name": "astrometric_gof_al",
+          "raw_value": "2.7",
+          "value": "2.7",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 134,
+              "end_line": 134,
+              "context": "Tab. 1: gofAL=2.7"
+            }
+          ],
+          "method_refs": ["step-03"]
+        },
+        {
+          "name": "visibility_periods_used",
+          "raw_value": "9",
+          "value": "9",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 134,
+              "end_line": 134,
+              "context": "Tab. 1: vpu=9"
+            }
+          ],
+          "method_refs": ["step-03"]
+        }
+      ],
+      "orbit": {},
+      "astrophysical_origin": {},
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1811.04302:cand-002",
+        "paper_candidate_id": "Gaia DR2 1540013339194597376",
+        "gaia_source_id": "Gaia DR2 1540013339194597376",
+        "all": [
+          {
+            "value": "Gaia DR2 1540013339194597376",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 135,
+                "end_line": 135,
+                "context": "Tab. 1: Gaia DR2 1540013339194597376, vt_g=917±104"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Gaia DR2 1540013339194597376: 本文认为该星为最佳候选体 ('probably the best high-speed star candidate')，因其 Gaia DR2 质量参数优异 (u=0.98, gofAL=-0.4, excess_noise_sig=0.0, visibility_periods_used=15)。也是 Bromley+2018 发现的最近高速星候选体。vt_g=917±104 km/s 超过逃逸速度。仅2D切向速度，无RV。",
+        "paper_labels": ["hvs_candidate"],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Best quality candidate: excellent Gaia DR2 astrometric quality (low u, gofAL, excess_noise_sig), 15 visibility periods. vt_g=917 km/s well above escape velocity. 2D-only; RV needed for 6D confirmation.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+            "start_line": 102,
+            "end_line": 105,
+            "context": "Probably the best high-speed star candidate, also found by Bromley+2018"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+            "start_line": 109,
+            "end_line": 110,
+            "context": "Further RV measurements will clarify possibly unbound status"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+            "start_line": 81,
+            "end_line": 86,
+            "context": "Six high-priority candidates selected"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": {
+            "raw_value": "0.59±0.05",
+            "value": "0.59",
+            "unit": "mas",
+            "error": "0.05",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 135,
+                "end_line": 135,
+                "context": "Tab. 1: ϖ=0.59±0.05 mas"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-82.03±0.05",
+            "value": "-82.03",
+            "unit": "mas yr^-1",
+            "error": "0.05",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 135,
+                "end_line": 135,
+                "context": "Tab. 1: μα cosδ = -82.03±0.05 mas/yr"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-118.29±0.05",
+            "value": "-118.29",
+            "unit": "mas yr^-1",
+            "error": "0.05",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 135,
+                "end_line": 135,
+                "context": "Tab. 1: μδ = -118.29±0.05 mas/yr"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": {
+            "raw_value": "917±104",
+            "value": "917",
+            "unit": "km s^-1",
+            "error": "104",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 135,
+                "end_line": 135,
+                "context": "Tab. 1: vt_g=917±104 km/s"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "total_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": {
+            "raw_value": "580±63",
+            "value": "580",
+            "unit": "km s^-1",
+            "error": "63",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 68,
+                "end_line": 68,
+                "context": "local Galactic escape velocity 580±63 km/s"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "bound_status": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "escape_margin_km_s": null,
+          "escape_margin_sigma": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "G",
+          "raw_value": "15.96",
+          "value": "15.96",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 135,
+              "end_line": 135,
+              "context": "Tab. 1: G=15.96 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "band": "BP-RP",
+          "raw_value": "1.01",
+          "value": "1.01",
+          "unit": "mag",
+          "measurement_type": "color",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 135,
+              "end_line": 135,
+              "context": "Tab. 1: BP-RP=1.01 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [
+        {
+          "name": "astrometric_unit_weight_error",
+          "raw_value": "0.98",
+          "value": "0.98",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 135,
+              "end_line": 135,
+              "context": "Tab. 1: u=0.98"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "name": "astrometric_excess_noise_sig",
+          "raw_value": "0.0",
+          "value": "0.0",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 135,
+              "end_line": 135,
+              "context": "Tab. 1: D=0.0"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "name": "astrometric_gof_al",
+          "raw_value": "-0.4",
+          "value": "-0.4",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 135,
+              "end_line": 135,
+              "context": "Tab. 1: gofAL=-0.4"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "name": "visibility_periods_used",
+          "raw_value": "15",
+          "value": "15",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 135,
+              "end_line": 135,
+              "context": "Tab. 1: vpu=15"
+            }
+          ],
+          "method_refs": ["step-01"]
+        }
+      ],
+      "orbit": {},
+      "astrophysical_origin": {},
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1811.04302:cand-003",
+        "paper_candidate_id": "Gaia DR2 6698855754225352192",
+        "gaia_source_id": "Gaia DR2 6698855754225352192",
+        "all": [
+          {
+            "value": "Gaia DR2 6698855754225352192",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 136,
+                "end_line": 136,
+                "context": "Tab. 1: Gaia DR2 6698855754225352192, vt_g=733±99"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Gaia DR2 6698855754225352192: vt_g=733±99 km/s，超过逃逸速度。该星也是 Bromley+2018 发现的近邻高速星候选体。Gaia DR2 质量参数良好 (u=1.02, gofAL=0.3, vpu=13)。仅2D切向速度，无RV。",
+        "paper_labels": ["hvs_candidate"],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "medium",
+        "confidence_reason": "vt_g=733 km/s above escape velocity. Good Gaia DR2 quality. Also found by Bromley+2018. 2D-only; RV needed.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+            "start_line": 109,
+            "end_line": 110,
+            "context": "Further RV measurements will clarify possibly unbound status"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+            "start_line": 81,
+            "end_line": 86,
+            "context": "Six high-priority candidates selected"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": {
+            "raw_value": "0.47±0.05",
+            "value": "0.47",
+            "unit": "mas",
+            "error": "0.05",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 136,
+                "end_line": 136,
+                "context": "Tab. 1: ϖ=0.47±0.05 mas"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-38.97±0.07",
+            "value": "-38.97",
+            "unit": "mas yr^-1",
+            "error": "0.07",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 136,
+                "end_line": 136,
+                "context": "Tab. 1: μα cosδ = -38.97±0.07 mas/yr"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-86.57±0.05",
+            "value": "-86.57",
+            "unit": "mas yr^-1",
+            "error": "0.05",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 136,
+                "end_line": 136,
+                "context": "Tab. 1: μδ = -86.57±0.05 mas/yr"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": {
+            "raw_value": "733±99",
+            "value": "733",
+            "unit": "km s^-1",
+            "error": "99",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 136,
+                "end_line": 136,
+                "context": "Tab. 1: vt_g=733±99 km/s"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "total_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": {
+            "raw_value": "580±63",
+            "value": "580",
+            "unit": "km s^-1",
+            "error": "63",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 68,
+                "end_line": 68,
+                "context": "local Galactic escape velocity 580±63 km/s"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "bound_status": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "escape_margin_km_s": null,
+          "escape_margin_sigma": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "G",
+          "raw_value": "15.39",
+          "value": "15.39",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 136,
+              "end_line": 136,
+              "context": "Tab. 1: G=15.39 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "band": "BP-RP",
+          "raw_value": "0.81",
+          "value": "0.81",
+          "unit": "mag",
+          "measurement_type": "color",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 136,
+              "end_line": 136,
+              "context": "Tab. 1: BP-RP=0.81 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [
+        {
+          "name": "astrometric_unit_weight_error",
+          "raw_value": "1.02",
+          "value": "1.02",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 136,
+              "end_line": 136,
+              "context": "Tab. 1: u=1.02"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "name": "astrometric_excess_noise_sig",
+          "raw_value": "0.0",
+          "value": "0.0",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 136,
+              "end_line": 136,
+              "context": "Tab. 1: D=0.0"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "name": "astrometric_gof_al",
+          "raw_value": "0.3",
+          "value": "0.3",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 136,
+              "end_line": 136,
+              "context": "Tab. 1: gofAL=0.3"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "name": "visibility_periods_used",
+          "raw_value": "13",
+          "value": "13",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 136,
+              "end_line": 136,
+              "context": "Tab. 1: vpu=13"
+            }
+          ],
+          "method_refs": ["step-01"]
+        }
+      ],
+      "orbit": {},
+      "astrophysical_origin": {},
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1811.04302:cand-004",
+        "paper_candidate_id": "Gaia DR2 3841458366321558656",
+        "gaia_source_id": "Gaia DR2 3841458366321558656",
+        "all": [
+          {
+            "value": "Gaia DR2 3841458366321558656",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 137,
+                "end_line": 137,
+                "context": "Tab. 1: Gaia DR2 3841458366321558656, vt_g=978±220"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Gaia DR2 3841458366321558656: vt_g=978±220 km/s，误差较大但仍超过逃逸速度。visibility_periods_used=8 偏低。仅2D切向速度，无RV。",
+        "paper_labels": ["hvs_candidate"],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "medium",
+        "confidence_reason": "vt_g=978 km/s above escape velocity but large error (220 km/s). Low visibility_periods_used=8. 2D-only; RV needed.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+            "start_line": 109,
+            "end_line": 110,
+            "context": "Further RV measurements will clarify possibly unbound status"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+            "start_line": 81,
+            "end_line": 86,
+            "context": "Six high-priority candidates selected"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": {
+            "raw_value": "0.33±0.06",
+            "value": "0.33",
+            "unit": "mas",
+            "error": "0.06",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 137,
+                "end_line": 137,
+                "context": "Tab. 1: ϖ=0.33±0.06 mas"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "proper_motion_ra": {
+            "raw_value": "+7.29±0.11",
+            "value": "7.29",
+            "unit": "mas yr^-1",
+            "error": "0.11",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 137,
+                "end_line": 137,
+                "context": "Tab. 1: μα cosδ = +7.29±0.11 mas/yr"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-81.39±0.11",
+            "value": "-81.39",
+            "unit": "mas yr^-1",
+            "error": "0.11",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 137,
+                "end_line": 137,
+                "context": "Tab. 1: μδ = -81.39±0.11 mas/yr"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": {
+            "raw_value": "978±220",
+            "value": "978",
+            "unit": "km s^-1",
+            "error": "220",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 137,
+                "end_line": 137,
+                "context": "Tab. 1: vt_g=978±220 km/s"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "total_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": {
+            "raw_value": "580±63",
+            "value": "580",
+            "unit": "km s^-1",
+            "error": "63",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 68,
+                "end_line": 68,
+                "context": "local Galactic escape velocity 580±63 km/s"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "bound_status": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "escape_margin_km_s": null,
+          "escape_margin_sigma": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "G",
+          "raw_value": "15.89",
+          "value": "15.89",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 137,
+              "end_line": 137,
+              "context": "Tab. 1: G=15.89 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "band": "BP-RP",
+          "raw_value": "0.86",
+          "value": "0.86",
+          "unit": "mag",
+          "measurement_type": "color",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 137,
+              "end_line": 137,
+              "context": "Tab. 1: BP-RP=0.86 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [
+        {
+          "name": "astrometric_unit_weight_error",
+          "raw_value": "0.92",
+          "value": "0.92",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 137,
+              "end_line": 137,
+              "context": "Tab. 1: u=0.92"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "name": "astrometric_excess_noise_sig",
+          "raw_value": "0.0",
+          "value": "0.0",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 137,
+              "end_line": 137,
+              "context": "Tab. 1: D=0.0"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "name": "astrometric_gof_al",
+          "raw_value": "-1.0",
+          "value": "-1.0",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 137,
+              "end_line": 137,
+              "context": "Tab. 1: gofAL=-1.0"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "name": "visibility_periods_used",
+          "raw_value": "8",
+          "value": "8",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 137,
+              "end_line": 137,
+              "context": "Tab. 1: vpu=8"
+            }
+          ],
+          "method_refs": ["step-01"]
+        }
+      ],
+      "orbit": {},
+      "astrophysical_origin": {},
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1811.04302:cand-005",
+        "paper_candidate_id": "Gaia DR2 3593446274383096448",
+        "gaia_source_id": "Gaia DR2 3593446274383096448",
+        "all": [
+          {
+            "value": "Gaia DR2 3593446274383096448",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 138,
+                "end_line": 138,
+                "context": "Tab. 1: Gaia DR2 3593446274383096448, vt_g=855±156"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Gaia DR2 3593446274383096448: vt_g=855±156 km/s，超过逃逸速度。Gaia DR2 质量参数良好 (u=0.92, gofAL=-1.2, excess_noise_sig=0.0)。仅2D切向速度，无RV。",
+        "paper_labels": ["hvs_candidate"],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "medium",
+        "confidence_reason": "vt_g=855 km/s above escape velocity. Good Gaia DR2 quality. 2D-only; RV needed for 6D confirmation.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+            "start_line": 109,
+            "end_line": 110,
+            "context": "Further RV measurements will clarify possibly unbound status"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+            "start_line": 81,
+            "end_line": 86,
+            "context": "Six high-priority candidates selected"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": {
+            "raw_value": "0.27±0.04",
+            "value": "0.27",
+            "unit": "mas",
+            "error": "0.04",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 138,
+                "end_line": 138,
+                "context": "Tab. 1: ϖ=0.27±0.04 mas"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-36.35±0.06",
+            "value": "-36.35",
+            "unit": "mas yr^-1",
+            "error": "0.06",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 138,
+                "end_line": 138,
+                "context": "Tab. 1: μα cosδ = -36.35±0.06 mas/yr"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-47.95±0.04",
+            "value": "-47.95",
+            "unit": "mas yr^-1",
+            "error": "0.04",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 138,
+                "end_line": 138,
+                "context": "Tab. 1: μδ = -47.95±0.04 mas/yr"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": {
+            "raw_value": "855±156",
+            "value": "855",
+            "unit": "km s^-1",
+            "error": "156",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 138,
+                "end_line": 138,
+                "context": "Tab. 1: vt_g=855±156 km/s"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "total_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": {
+            "raw_value": "580±63",
+            "value": "580",
+            "unit": "km s^-1",
+            "error": "63",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 68,
+                "end_line": 68,
+                "context": "local Galactic escape velocity 580±63 km/s"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "bound_status": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "escape_margin_km_s": null,
+          "escape_margin_sigma": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "G",
+          "raw_value": "14.03",
+          "value": "14.03",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 138,
+              "end_line": 138,
+              "context": "Tab. 1: G=14.03 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "band": "BP-RP",
+          "raw_value": "0.89",
+          "value": "0.89",
+          "unit": "mag",
+          "measurement_type": "color",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 138,
+              "end_line": 138,
+              "context": "Tab. 1: BP-RP=0.89 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [
+        {
+          "name": "astrometric_unit_weight_error",
+          "raw_value": "0.92",
+          "value": "0.92",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 138,
+              "end_line": 138,
+              "context": "Tab. 1: u=0.92"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "name": "astrometric_excess_noise_sig",
+          "raw_value": "0.0",
+          "value": "0.0",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 138,
+              "end_line": 138,
+              "context": "Tab. 1: D=0.0"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "name": "astrometric_gof_al",
+          "raw_value": "-1.2",
+          "value": "-1.2",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 138,
+              "end_line": 138,
+              "context": "Tab. 1: gofAL=-1.2"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "name": "visibility_periods_used",
+          "raw_value": "9",
+          "value": "9",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 138,
+              "end_line": 138,
+              "context": "Tab. 1: vpu=9"
+            }
+          ],
+          "method_refs": ["step-01"]
+        }
+      ],
+      "orbit": {},
+      "astrophysical_origin": {},
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "1811.04302:cand-006",
+        "paper_candidate_id": "Gaia DR2 6097052289696317952",
+        "gaia_source_id": "Gaia DR2 6097052289696317952",
+        "all": [
+          {
+            "value": "Gaia DR2 6097052289696317952",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 139,
+                "end_line": 139,
+                "context": "Tab. 1: Gaia DR2 6097052289696317952, vt_g=1617±347"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Gaia DR2 6097052289696317952: vt_g=1617±347 km/s 为样本最高，但误差极大。visibility_periods_used=9 偏低。该星为本样本中最远天体 (ϖ=0.17 mas)。论文标注其 'slightly questionable'。仅2D切向速度，无RV。",
+        "paper_labels": ["hvs_candidate"],
+        "galactic_bound_claim": "possibly_unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "low",
+        "confidence_reason": "Highest vt_g=1617 km/s but very large error (347 km/s, ~21%). Low visibility_periods_used=9. Paper labels 'slightly questionable'. Bright G=13.53 suggests interesting object. 2D-only; RV needed.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+            "start_line": 105,
+            "end_line": 110,
+            "context": "Most distant candidate with highest vt_g, slightly questionable"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+            "start_line": 81,
+            "end_line": 86,
+            "context": "Six high-priority candidates selected"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": null,
+          "parallax": {
+            "raw_value": "0.17±0.03",
+            "value": "0.17",
+            "unit": "mas",
+            "error": "0.03",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 139,
+                "end_line": 139,
+                "context": "Tab. 1: ϖ=0.17±0.03 mas"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "proper_motion_ra": {
+            "raw_value": "-61.10±0.05",
+            "value": "-61.10",
+            "unit": "mas yr^-1",
+            "error": "0.05",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 139,
+                "end_line": 139,
+                "context": "Tab. 1: μα cosδ = -61.10±0.05 mas/yr"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-24.73±0.05",
+            "value": "-24.73",
+            "unit": "mas yr^-1",
+            "error": "0.05",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 139,
+                "end_line": 139,
+                "context": "Tab. 1: μδ = -24.73±0.05 mas/yr"
+              }
+            ],
+            "method_refs": ["step-01"]
+          },
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": {
+            "raw_value": "1617±347",
+            "value": "1617",
+            "unit": "km s^-1",
+            "error": "347",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 139,
+                "end_line": 139,
+                "context": "Tab. 1: vt_g=1617±347 km/s"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "total_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": {
+            "raw_value": "580±63",
+            "value": "580",
+            "unit": "km s^-1",
+            "error": "63",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+                "start_line": 68,
+                "end_line": 68,
+                "context": "local Galactic escape velocity 580±63 km/s"
+              }
+            ],
+            "method_refs": ["step-02"]
+          },
+          "bound_status": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "escape_margin_km_s": null,
+          "escape_margin_sigma": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "G",
+          "raw_value": "13.53",
+          "value": "13.53",
+          "unit": "mag",
+          "measurement_type": "magnitude",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 139,
+              "end_line": 139,
+              "context": "Tab. 1: G=13.53 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "band": "BP-RP",
+          "raw_value": "0.60",
+          "value": "0.60",
+          "unit": "mag",
+          "measurement_type": "color",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 139,
+              "end_line": 139,
+              "context": "Tab. 1: BP-RP=0.60 mag"
+            }
+          ],
+          "method_refs": ["step-01"]
+        }
+      ],
+      "spectroscopy": [],
+      "stellar_parameters": {},
+      "abundances": [],
+      "quality_flags": [
+        {
+          "name": "astrometric_unit_weight_error",
+          "raw_value": "1.02",
+          "value": "1.02",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 139,
+              "end_line": 139,
+              "context": "Tab. 1: u=1.02"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "name": "astrometric_excess_noise_sig",
+          "raw_value": "0.0",
+          "value": "0.0",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 139,
+              "end_line": 139,
+              "context": "Tab. 1: D=0.0"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "name": "astrometric_gof_al",
+          "raw_value": "0.3",
+          "value": "0.3",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 139,
+              "end_line": 139,
+              "context": "Tab. 1: gofAL=0.3"
+            }
+          ],
+          "method_refs": ["step-01"]
+        },
+        {
+          "name": "visibility_periods_used",
+          "raw_value": "9",
+          "value": "9",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+              "start_line": 139,
+              "end_line": 139,
+              "context": "Tab. 1: vpu=9"
+            }
+          ],
+          "method_refs": ["step-01"]
+        }
+      ],
+      "orbit": {},
+      "astrophysical_origin": {},
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "initial_109_vt_g_gt_700",
+      "description": "初步筛选阶段 vt_g > 700 km/s 的 109 个天体。经 Gaia DR2 质量判据过滤至 39 个。",
+      "decision": "excluded",
+      "reason": "该组天体未通过 Gaia DR2 质量判据筛选（astrometric_unit_weight_error, BP/RP 测光, astrometric_gof_al<3, astrometric_excess_noise_sig≤2），或者未通过视差显著性筛选（ϖ>5σ_ϖ）。仅最终 6 颗通过所有筛选的天体被纳入候选体列表。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+          "start_line": 67,
+          "end_line": 86,
+          "context": "Selection from 109 to 39 to 6 candidates"
+        }
+      ]
+    },
+    {
+      "group_id": "3_hvr_wds_from_shen2018",
+      "description": "Shen+2018 识别的 3 颗超高速白矮星候选体 (D6-1, D6-2, D6-3)。其中仅 D6-2 通过本文筛选（但被标注为 doubtful），D6-1 和 D6-3 因视差不够显著 (ϖ<5σ_ϖ) 被排除。",
+      "decision": "some_included",
+      "reason": "D6-2 (= Gaia DR2 1798008584396457088) 被纳入候选体 (cand-001)。D6-1 (= Gaia DR2 5805243926609660032) 和 D6-3 (= LSPM J1852+6202) 因 ϖ<5σ_ϖ 被排除。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+          "start_line": 91,
+          "end_line": 101,
+          "context": "Three HVR WDs from Shen+2018, only D6-2 passes all quality cuts"
+        }
+      ]
+    }
+  ]
+}

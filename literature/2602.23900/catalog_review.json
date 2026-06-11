@@ -1,0 +1,297 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2602.23900",
+    "title": "Discovery of a runaway star likely ejected by a Type Iax Supernova",
+    "month": "2026-02",
+    "source_note_json": "notes/2026/2026-02/2026-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2602.23900",
+      "pdf": "https://arxiv.org/pdf/2602.23900"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2602.23900",
+    "audit_path": "literature/2602.23900/audit.json",
+    "source_dir": "literature/2602.23900/arxiv_source",
+    "tex_root": "literature/2602.23900/arxiv_source/aanda.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:33:58",
+    "reviewer": "agent",
+    "summary": "Six internal tables: Gaia DR3 astrometry of the target star J1022-3414 (tab:kinematics), stellar atmospheric parameters and abundance ratios from FORS2 spectroscopy (tab:abundances), MCMC posterior summary for the flat-magnitude prior (tab:stats), orbital and kinematic parameters including ejection velocity and boundness (tab:kinematicparams), MCMC summary for the distance prior (tab:stats2), and MCMC summary for the mass-prior case (tab:stats3). No concrete external data-set URLs are provided in the source."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-kinematics",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Presents the Gaia DR3 astrometric parameters of the hypervelocity candidate J1022-3414, used for target selection and kinematic modelling.",
+      "source_refs": [
+        {
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 142,
+          "end_line": 162,
+          "caption": "Astrometric parameters of \\gstar",
+          "label": "tab:kinematics"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name of the astrometric or photometric parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Units",
+          "meaning": "Physical unit of the parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Measured or derived value",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Astrometric parameters of \\gstar",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-abundances",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Summarises the stellar atmospheric parameters (Teff, log g, vrad) and elemental abundance ratios relative to oxygen derived from FORS2 spectroscopy, used to constrain the evolutionary origin of J1022-3414.",
+      "source_refs": [
+        {
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 261,
+          "end_line": 287,
+          "caption": "Stellar atmospheric parameters and abundance ratios.",
+          "label": "tab:abundances"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name of the atmospheric or abundance parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Measured or derived value with uncertainty",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Unit",
+          "meaning": "Physical unit of the parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Stellar atmospheric parameters and abundance ratios.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-stats",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Summarises the posterior distributions of distance, absolute magnitude, mass, radius, ejection velocity, and midplane-crossing time sampled with emcee under a flat absolute-magnitude prior.",
+      "source_refs": [
+        {
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 354,
+          "end_line": 371,
+          "caption": "Summary of parameters sampled with emcee with mode, median, and 16--84\\% confidence intervals.",
+          "label": "tab:stats"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameters",
+          "meaning": "Name of the sampled stellar or kinematic parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mode",
+          "meaning": "Mode of the posterior distribution",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Median",
+          "meaning": "Median of the posterior distribution",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "68% CI",
+          "meaning": "16th to 84th percentile confidence interval",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Summary of parameters sampled with emcee with mode, median, and 16--84\\% confidence intervals.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-kinematicparams",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Lists the present-day and Galactic-plane-crossing orbital parameters (position, velocity, boundness, flight time) of J1022-3414, derived from kinematic integration with 1-sigma confidence intervals.",
+      "source_refs": [
+        {
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 393,
+          "end_line": 454,
+          "caption": "Orbital parameters for \\gstar. Quoted uncertainties correspond to the 1$\\sigma$ confidence intervals.",
+          "label": "tab:kinematicparams"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name of the orbital or kinematic parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Present-day value with uncertainty",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Parameter",
+          "meaning": "Name of the corresponding future/past parameter at plane crossing",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Value at plane crossing with uncertainty",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Orbital parameters for \\gstar. Quoted uncertainties correspond to the 1$\\sigma$ confidence intervals.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-stats2",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Same as tab:stats but using a distance-based prior instead of a flat absolute-magnitude prior, showing how the inferred distance, mass, and ejection velocity shift.",
+      "source_refs": [
+        {
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 532,
+          "end_line": 548,
+          "caption": "Summary of parameters sampled with \\texttt{emcee} with mode, median, and 16--84\\% confidence intervals.",
+          "label": "tab:stats2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name of the sampled stellar or kinematic parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mode",
+          "meaning": "Mode of the posterior distribution",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Median",
+          "meaning": "Median of the posterior distribution",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "16--84% CI",
+          "meaning": "16th to 84th percentile confidence interval",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Summary of parameters sampled with \\texttt{emcee} with mode, median, and 16--84\\% confidence intervals.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-stats3",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Same as tab:stats but imposing a conservative upper mass limit of 0.5 solar masses, which narrows the ejection velocity range and strengthens the bound hypervelocity-star interpretation.",
+      "source_refs": [
+        {
+          "path": "literature/2602.23900/arxiv_source/aanda.tex",
+          "start_line": 567,
+          "end_line": 585,
+          "caption": "Summary of stellar parameters with mode, median, and 16--84\\% confidence intervals, assuming a $<0.5$ \\msun\\, prior on mass.",
+          "label": "tab:stats3"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name of the sampled stellar or kinematic parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mode",
+          "meaning": "Mode of the posterior distribution",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Median",
+          "meaning": "Median of the posterior distribution",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "16--84% CI",
+          "meaning": "16th to 84th percentile confidence interval",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Summary of stellar parameters with mode, median, and 16--84\\% confidence intervals, assuming a $<0.5$ \\msun\\, prior on mass.",
+      "comments": ""
+    }
+  ],
+  "external_resources": []
+}

@@ -1,0 +1,90 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:42:48",
+  "paper": {
+    "arxiv_id": "2604.11988",
+    "bibcode": "2026A&A...709A..97A",
+    "title": "OB runaway stars originating in the Vel OB1 association",
+    "month": "2026-04",
+    "source_note_json": "notes/2026/2026-04/2026-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2604.11988",
+      "pdf": "https://arxiv.org/pdf/2604.11988"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2604.11988",
+    "audit_path": "literature/2604.11988/audit.json",
+    "catalog_review_path": "literature/2604.11988/catalog_review.json",
+    "catalog_extraction_path": "literature/2604.11988/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2604.11988/catalog_tables/table-tab-parori.ecsv",
+      "literature/2604.11988/catalog_tables/table-tab-estpar1.ecsv",
+      "literature/2604.11988/catalog_tables/table-tab-par1.ecsv",
+      "literature/2604.11988/catalog_tables/table-tab-parrun.ecsv",
+      "literature/2604.11988/catalog_tables/table-tab-parrunori.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T20:42:48",
+    "extractor": "agent",
+    "summary": "The paper identifies 26 OB runaway stars in the Vel OB1 association based on peculiar velocities (threshold 15 km/s relative to LSR or Vel OB1) and/or wind bow-shock associations. The maximum 3D peculiar velocity reported is approximately 80 km/s (e.g. HD 76968, HD 298310), and the fastest object (CD-47 4551) has a 3D peculiar velocity of about 107 km/s relative to the LSR. These velocities are far below the Galactic escape velocity. Throughout the paper, all objects are explicitly discussed as runaways or walkaways ejected from their natal stellar clusters or associations, not as candidates for escaping the Milky Way gravitational potential. No object is described as hypervelocity, gravitationally unbound from the Galaxy, or possibly Galactic-unbound. Therefore, no HVS/unbound candidates are extracted."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-parrun",
+      "description": "OB runaways with high peculiar velocity (>15 km/s) and/or bow-shock associations in the Vel OB1 region (Tab.~\\ref{tab:parrun}).",
+      "decision": "excluded",
+      "reason": "The paper presents these objects as OB runaways ejected from their natal clusters or associations. Their peculiar velocities (up to ~107 km/s 3D) are discussed in the context of cluster escape and supersonic motion through the ISM, not as evidence for being unbound from the Milky Way potential.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+          "start_line": 167,
+          "end_line": 173,
+          "context": "Section header and velocity-threshold discussion defining OB runaways relative to cluster/LSR motion, not Galactic escape."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+          "start_line": 391,
+          "end_line": 401,
+          "context": "Discussion stating that the adopted 15 km/s threshold is higher than the escape velocity of a stellar cluster, sufficient to identify an OB runaway in this region; no mention of Galactic unbinding."
+        }
+      ]
+    },
+    {
+      "group_id": "table-tab-parrunori",
+      "description": "Kinematical age estimates of OB runaways in Vel OB1, tracing paths back to the Galactic plane or proposed parent clusters (Tab.~\\ref{tab:parrunori}).",
+      "decision": "excluded",
+      "reason": "These objects are analysed as runaways whose trajectories originate in the Galactic plane or young clusters within Vel OB1. The kinematical ages (typically a few Myr) are used to distinguish dynamical ejection from binary supernova origins, not to assess Galactic unbinding.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+          "start_line": 276,
+          "end_line": 291,
+          "context": "Section describing backward tracing of runaway paths to parent clusters and the Galactic plane, concluding they escaped from the plane a few Myr ago—still within the Galactic disc."
+        }
+      ]
+    },
+    {
+      "group_id": "table-tab-par1",
+      "description": "Candidate members of Vel OB1 compiled from the literature, some flagged as runaways (Tab.~\\ref{tab:par1}).",
+      "decision": "excluded",
+      "reason": "This catalog lists OB stars in the Vel OB1 association with membership and runaway flags. The runaways are marked as ejected from the association (R flag) or associated with bow shocks (B flag), but none are presented as possibly unbound from the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2604.11988/arxiv_source/aa59021-26.tex",
+          "start_line": 454,
+          "end_line": 461,
+          "context": "Appendix description of Tab.~\\ref{tab:par1} as candidate members compiled from the literature with astrometric parameters; runaway flags denote ejection from the association, not Galactic unbinding."
+        }
+      ]
+    }
+  ]
+}

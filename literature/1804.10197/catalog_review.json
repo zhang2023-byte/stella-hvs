@@ -1,0 +1,197 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1804.10197",
+    "title": "A hypervelocity star with a Magellanic origin",
+    "month": "2018-04",
+    "source_note_json": "notes/2018/2018-04/2018-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1804.10197",
+      "pdf": "https://arxiv.org/pdf/1804.10197"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1804.10197",
+    "audit_path": "literature/1804.10197/audit.json",
+    "source_dir": "literature/1804.10197/arxiv_source",
+    "tex_root": "literature/1804.10197/arxiv_source/hvs.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T08:09:00",
+    "reviewer": "agent",
+    "summary": "Paper uses Gaia DR2 proper motions to probe the origin of 26 previously known hypervelocity stars (HVSs). Integrates orbits backward for 500 Myr in Milky Way+LMC potentials to determine closest-approach distances. Main finding: HVS3 (HE 0437-5439) is a clear outlier — it passed within ~1 kpc of the LMC center 21.1 Myr ago at 870 km/s, consistent with Hills-mechanism ejection requiring a ≥4×10³–10⁴ M⊙ black hole in the LMC. Most other HVSs prefer a Milky Way origin. Tests with N-body mock catalogs show Gaia DR2 proper motion quality is critical to avoid misclassification. Contains 1 internal table: Table tab:hvs — catalog of 26 HVSs with coordinates, proper motions (mostly Gaia DR2, 4 from HST), radial velocities, distances, and references (26 data rows × 9 columns). External resources: Gaia DR2 archive (primary astrometry), HST proper motions from Brown et al. (2015), N-body simulations from Boubert et al. (2018), and galpy/GalPot Galactic potential implementations."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-hvs",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Primary catalog table listing the 26 hypervelocity stars analyzed in this work. Contains observed positions (R.A., Dec.), proper motions (μ_α cos δ, μ_δ) with uncertainties, the Gaia DR2 correlation between proper motion components, heliocentric radial velocity, heliocentric distance, and data source references. Proper motions are mostly from Gaia DR2 (Gaia Collaboration 2018) except for HVS1, HVS4, HVS13, and HIP60350 which use HST proper motions from Brown et al. (2015). This table is the sole data source feeding the Monte Carlo orbit integration analysis (100,000 realizations for HVS3; standard sampling for the other 25 stars) in the combined Milky Way+LMC gravitational potential. All results — minimum approach distances to MW/LMC, ejection velocities and times, plane-crossing locations, origin probabilities — are derived from the data in this table.",
+      "source_refs": [
+        {
+          "path": "literature/1804.10197/arxiv_source/hvs.tex",
+          "start_line": 270,
+          "end_line": 303,
+          "caption": "The 26 hypervelocity stars considered in this work. Almost all of the proper motion measurements are from Gaia DR2 except for HVS1, HVS4, HVS13, and HIP60350. {\\scriptsize \\textbf{References:} (1) \\citet{brown_proper_2015} (2) \\citet{2018arXiv180409365G}, (3) \\citet{geier_fastest_2015}, (4) \\citet{brown_mmt_2014}, (5) \\citet{zheng_first_2014}, (6) \\citet{huang_discovery_2017}, (7) \\citet{heber_hypervelocity_2008}, (8) \\citet{irrgang_nature_2010}}",
+          "label": "tab:hvs"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Hypervelocity star identifier. Names follow the established literature: HVS1–HVS24 (excluding HVS11 and HVS14 which are not in the sample), LAMOST-HVS1 through LAMOST-HVS3, HD271791, and HIP60350. HVS2 is also known as US708; HVS3 is HE 0437-5439.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A.",
+          "meaning": "Right Ascension (J2000) in sexagesimal format (HH:MM:SS.SS). Ranges from 03h to 23h across the sample.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec.",
+          "meaning": "Declination (J2000) in sexagesimal format (DD:MM:SS.S). Ranges from −66° to +67° across the sample.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_α cos δ",
+          "meaning": "Proper motion in right ascension corrected for cos(declination), with 1σ uncertainty. Values range from −13.51 to +1.51 mas/yr. Gaia DR2 measurements include formal uncertainties typically 0.05–2.0 mas/yr; HST measurements have larger uncertainties (~0.3–0.4 mas/yr for HVS1, HVS4, HVS13).",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header / Gaia DR2 and HST",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_δ",
+          "meaning": "Proper motion in declination with 1σ uncertainty. Values range from −1.18 to +16.34 mas/yr. HVS3 has μ_δ = +1.936 ± 0.162 mas/yr which, combined with its proper motion in RA, places it on a trajectory from the LMC center.",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header / Gaia DR2 and HST",
+          "confidence": 1.0
+        },
+        {
+          "name": "Corr(μ_α cos δ, μ_δ)",
+          "meaning": "Correlation coefficient between the two proper motion components from Gaia DR2 astrometric solution. Values range from −0.43 to +0.29. Listed as '...' (ellipsis) for the four stars with HST-only proper motions (HVS1, HVS4, HVS13, HIP60350) where this correlation is not available. The correlation is accounted for in the Monte Carlo sampling of phase-space coordinates.",
+          "unit_text": "",
+          "source_of_definition": "table header / Gaia DR2",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_hel",
+          "meaning": "Heliocentric radial velocity with 1σ uncertainty. Values range from 237.3 to 917 km/s. Most HVSs have v_hel > 400 km/s, consistent with their classification as hypervelocity stars. HVS2 (US708) has the highest value at 917 ± 7 km/s. The radial velocities come from various literature sources as indicated by the reference column.",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table header / various literature sources",
+          "confidence": 1.0
+        },
+        {
+          "name": "D_hel",
+          "meaning": "Heliocentric distance with 1σ uncertainty. Values range from 3.1 ± 0.6 kpc (HIP60350) to 113 ± 21 kpc (HVS21). HVS3, the key star in this study, lies at 61 ± 10 kpc. Distances are derived from spectrophotometric parallax or literature values.",
+          "unit_text": "kpc",
+          "source_of_definition": "table header / various literature sources",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ref.",
+          "meaning": "Reference code(s) indicating the source of the proper motion and radial velocity measurements. Codes: (1) Brown et al. 2015 (HST proper motions), (2) Gaia Collaboration 2018 (Gaia DR2), (3) Geier et al. 2015 (HVS2/US708), (4) Brown et al. 2014 (MMT survey HVSs), (5) Zheng et al. 2014 (LAMOST-HVS1), (6) Huang et al. 2017 (LAMOST-HVS2/3), (7) Heber et al. 2008 (HD271791), (8) Irrgang et al. 2010 (HIP60350). Multiple codes indicate multiple data sources for that star.",
+          "unit_text": "",
+          "source_of_definition": "table header / table footnote",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "We list the properties of the 26 HVSs studied in this work in Table \\ref{tab:hvs}. Almost all of the proper motion measurements are from Gaia DR2 except for HVS1, HVS4, HVS13, and HIP60350.",
+      "comments": "26 data rows × 9 columns. Table uses a single-page table* environment (double-column width) with 'lllrrrrrc' column specification. HVS11 and HVS14 are excluded from this sample (HVS11 was never assigned; HVS14 was reclassified). HVS2 (US708) is the only sdO star in the sample — the rest are late-B/early-A type stars. Four stars (HVS1, HVS4, HVS13, HIP60350) use HST proper motions from Brown et al. (2015) rather than Gaia DR2. The Gaia DR2 proper motion correlations are properly accounted for in the Monte Carlo orbit sampling."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission Data Release 2 (DR2) archive. Primary data source providing proper motions and astrometry for 22 of the 26 HVSs in this study. The exquisite Gaia DR2 proper motions (σ ~ 0.05–2.0 mas/yr) are critical to the paper's main result: they enable the precise orbit integration that shows HVS3 originates from the LMC center rather than the Milky Way. The authors demonstrate that Gaia DR2-quality proper motions reduce the false-positive rate of misclassifying a Milky Way HVS as LMC-origin from ~10% (with HST errors) to ~0.1%.",
+      "source_refs": [
+        {
+          "path": "literature/1804.10197/arxiv_source/hvs.tex",
+          "start_line": 257,
+          "end_line": 257,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission Gaia (https://www.cosmos.esa.int/gaia), processed by the Gaia Data Processing and Analysis Consortium (DPAC, https://www.cosmos.esa.int/web/gaia/dpac/consortium)."
+        }
+      ],
+      "evidence": "Gaia DR2 has significantly improved the proper motions of many of the HVSs. With the updated proper motions in hand, we now integrate their orbits backwards. The acknowledgments cite https://www.cosmos.esa.int/gaia.",
+      "comments": "Gaia DR2 is the enabling dataset for this paper. Without it, the HVS3 result would have remained ambiguous (as it was in the pre-Gaia era). The authors acknowledge the Gaia mission in the Acknowledgments section. The Gaia archive is also used indirectly via the cited Gaia DR2 reference (Gaia Collaboration 2018, arXiv:1804.09365)."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Brown et al. (2015, ApJ, 804, 49) — HST proper motions for 13 HVSs obtained with the Hubble Space Telescope (ACS/WFC and WFC3/UVIS). Used for HVS1, HVS4, HVS13, and HIP60350, which lack Gaia DR2 proper motions. These HST measurements have larger uncertainties (~0.3–0.4 mas/yr) compared to Gaia DR2, and the authors show that Gaia DR2-quality data is necessary to reduce misclassification bias.",
+      "source_refs": [
+        {
+          "path": "literature/1804.10197/arxiv_source/hvs.tex",
+          "start_line": 125,
+          "end_line": 126,
+          "context": "Brown et al. (2015) obtained HVS proper motions for HVS1-13."
+        }
+      ],
+      "evidence": "Almost all of the proper motion measurements are from Gaia DR2 except for HVS1, HVS4, HVS13, and HIP60350. The comparison of HST versus Gaia DR2 errors is used to validate the method in Section 4.2.",
+      "comments": "The HST proper motions are cited as reference (1) in Table tab:hvs. The authors show in Fig. 6 that with HST-quality errors, there is a significant risk of misclassifying a Milky Way HVS as LMC-origin, while Gaia DR2 errors largely eliminate this bias."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Boubert et al. (2018, MNRAS, submitted) — N-body simulations of hypervelocity stars ejected from the Milky Way and LMC centers, evolved with a modified GADGET-3 code. The LMC-ejection simulation (with 1.7×10⁵ M⊙ black hole) provides 26 mock HVS analogues matched to the observed sample positions. The Milky Way-ejection simulation (with 4×10⁶ M⊙ black hole) provides 1000 mock stars at the location of HVS3. Both simulations are used in Section 4 to validate the orbit-rewinding method and estimate the false-positive rate (~0.1%) for LMC-origin classification.",
+      "source_refs": [
+        {
+          "path": "literature/1804.10197/arxiv_source/hvs.tex",
+          "start_line": 206,
+          "end_line": 208,
+          "context": "The simulations used in this work are described in Boubert et al. (2018a). These consist of N-body simulations evolved with a modified version of GADGET-3."
+        }
+      ],
+      "evidence": "We discuss two separate simulations below, one where HVSs are ejected from the centre of the LMC and one where they are ejected from the Milky Way centre.",
+      "comments": "The mock catalogs are critical validation datasets. The LMC-ejection simulation shows that if all 26 HVSs originated in the LMC, more stars should show close LMC passages — suggesting the observed sample is a mixed population. The Milky Way-ejection simulation validates the HVS3 result with a ~1/1000 misclassification rate."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "galpy Python package (Bovy 2015) providing the MWPotential2014 Galactic potential model used for orbit integration. This three-component axisymmetric potential (power-law bulge with exponential cutoff + Miyamoto-Nagai disk + NFW dark matter halo) is the primary potential in which all 26 HVS orbits are integrated backward for 500 Myr with 100,000 Monte Carlo realizations. The escape velocity curve, orbital energies E, unbound probabilities, and closest-approach distances are all computed using this potential.",
+      "source_refs": [
+        {
+          "path": "literature/1804.10197/arxiv_source/hvs.tex",
+          "start_line": 146,
+          "end_line": 148,
+          "context": "For the Milky Way, we consider two potentials. First, we use MWPotential2014 from Bovy (2015) which satisfies a number of observed constraints."
+        }
+      ],
+      "evidence": "We use MWPotential2014 from Bovy (2015) implemented in galpy. The forces are implemented using galpot (Dehnen & Binney 1998).",
+      "comments": "The second Milky Way potential considered is from McMillan (2017), marginalized over its parameter uncertainties. Both potentials yield nearly identical results for HVS3, demonstrating robustness. The LMC is modeled as a Hernquist profile with M = 1.5×10¹¹ M⊙ and scale radius 17.14 kpc. Dynamical friction from the MW on the LMC is included via the Hashimoto et al. (2003) prescription."
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "NASA ADS, SIMBAD, and VizieR astronomical databases. Acknowledged in the paper's standard acknowledgments. ADS metadata indicates SIMBAD:34 objects and NED:1 object associated with this paper. These databases provide standardized object identifiers and literature cross-references for the 26 hypervelocity stars.",
+      "source_refs": [
+        {
+          "path": "literature/1804.10197/arxiv_source/hvs.tex",
+          "start_line": 257,
+          "end_line": 258,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission Gaia."
+        }
+      ],
+      "evidence": "ADS metadata record indicates SIMBAD:34 and NED:1 data links. No explicit SIMBAD/VizieR URLs are provided in the paper.",
+      "comments": "Standard astronomical data services acknowledged in the literature."
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T17:11:15",
+  "paper": {
+    "arxiv_id": "2402.02878",
+    "bibcode": "2024A&A...683A..72C",
+    "title": "The Gaia RVS benchmark stars II. A sample of stars selected for their Gaia high radial velocity",
+    "month": "2024-02",
+    "source_note_json": "notes/2024/2024-02/2024-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2402.02878",
+      "pdf": "https://arxiv.org/pdf/2402.02878"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2402.02878",
+    "audit_path": "literature/2402.02878/audit.json",
+    "catalog_review_path": "literature/2402.02878/catalog_review.json",
+    "catalog_extraction_path": "literature/2402.02878/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2402.02878/catalog_tables/table-tab-solarabbo.ecsv",
+      "literature/2402.02878/catalog_tables/table-tab-snr.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T17:11:15",
+    "extractor": "agent",
+    "summary": "This paper chemically analyses 43 metal-poor stars selected for high Gaia DR3 radial velocity (|Vr| > 500 km/s). The kinematic investigation is explicitly deferred to Katz et al. (in preparation). The paper classifies all investigated stars as Galactic halo stars according to Bensby et al. criteria and never presents any object as possibly unbound, escaping, or a hyper-runaway candidate. No HVS/unbound candidates are included."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "high-rv-sample",
+      "description": "The full sample of 43 chemically investigated stars selected for |radial velocity| > 500 km/s from Gaia DR3.",
+      "decision": "excluded",
+      "reason": "The paper defers kinematic analysis and bound/unbound assessment to Katz et al. (in preparation). It explicitly classifies all stars as Galactic halo stars and does not present any as possibly unbound from the Milky Way.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2402.02878/arxiv_source/48191corr_rev.tex",
+          "start_line": 157,
+          "end_line": 158,
+          "context": "The kinematic investigation of the sample is to be presented by Katz et al. (in preparation). In this work, we show the results of our chemical investigation."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2402.02878/arxiv_source/48191corr_rev.tex",
+          "start_line": 232,
+          "end_line": 234,
+          "context": "The kinematic investigation of this sample of stars is presented in Katz et al. (in preparation). The stars investigated in this work all belong to the Galactic halo according to the criteria by Bensby et al."
+        }
+      ]
+    },
+    {
+      "group_id": "young-accreted-candidates",
+      "description": "The two apparently young stars RVS725 and RVS726, discussed as possible young metal-poor stars accreted from a dwarf galaxy.",
+      "decision": "excluded",
+      "reason": "These stars are discussed as young, metal-poor, and possibly accreted from a dwarf galaxy, but the paper does not claim they are unbound from the Milky Way gravitational potential. Their kinematic status is deferred to Katz et al. (in preparation).",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2402.02878/arxiv_source/48191corr_rev.tex",
+          "start_line": 685,
+          "end_line": 702,
+          "context": "The two stars RVS725 and RVS726 seem to be younger than 1 Ga ... Thus, the possibility must be confronted that these stars are really young, formed in a recent accretion event at the moment of the infall of the accreted object (a dwarf galaxy or a cluster) in the Milky Way."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:16:24",
+  "paper": {
+    "arxiv_id": "2001.00899",
+    "bibcode": "2020ApJ...889..178B",
+    "title": "The Orion Protostellar Explosion and Runaway Stars Revisited: Stellar Masses, Disk Retention, and an Outflow from BN",
+    "month": "2020-01",
+    "source_note_json": "notes/2020/2020-01/2020-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2001.00899",
+      "pdf": "https://arxiv.org/pdf/2001.00899"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2001.00899",
+    "audit_path": "literature/2001.00899/audit.json",
+    "catalog_review_path": "literature/2001.00899/catalog_review.json",
+    "catalog_extraction_path": "literature/2001.00899/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2001.00899/catalog_tables/table-table1.ecsv",
+      "literature/2001.00899/catalog_tables/table-table2.ecsv",
+      "literature/2001.00899/catalog_tables/table-table3.ecsv",
+      "literature/2001.00899/catalog_tables/table-table4.ecsv",
+      "literature/2001.00899/catalog_tables/table-table5.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:17:00",
+    "extractor": "agent",
+    "summary": "本文研究猎户座OMC1云核中三颗被弹射的恒星（Src I、BN、Src x）的自行和质量，以及来自BN的射电外流特征。这三颗恒星是约550年前原恒星动力学相互作用（原恒星爆炸）产生的'runaway stars'（逃逸星），论文讨论的逃逸速度是逃离OMC1云核的局域逃逸速度（~3.5 km/s），远低于银河系逃逸速度（~550 km/s）。论文未声称任何恒星为银河系非束缚超高速星（HVS），因此无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文研究OMC1云核中~550年前原恒星动力学弹射产生的逃逸星，讨论的是局域云核逃逸而非银河系逃逸。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (Bally_OMC1_SrcX.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+          "start_line": 79,
+          "end_line": 97,
+          "context": "Abstract: three stars ejected from OMC1; center of mass gravitationally bound to OMC1"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+          "start_line": 189,
+          "end_line": 199,
+          "context": "Introduction: three runaway stars Src I, BN, Src x; escape speed from OMC1"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "omc1-runaway-stars",
+      "description": "OMC1云核中三颗动力学弹射的逃逸星（Src I ~15 Msun、BN、Src x ~3 Msun）及射电特征（SW1-SW4、E1、E2）。论文利用多历元近红外图像测量自行，利用质心运动约束恒星质量。讨论的逃逸是逃离OMC1云核（局域逃逸速度~3.5 km/s），非银河系逃逸。",
+      "decision": "excluded",
+      "reason": "论文中的'runaway stars'指从OMC1原恒星云核中被动力学弹射的年轻恒星，弹射时间仅~550年。论文讨论的逃逸速度为逃离OMC1云核引力束缚的局域逃逸速度（~3.5 km/s），远低于银河系逃逸速度（太阳位置处~550 km/s）。这些恒星仍受银河系引力束缚。论文核心关注原恒星动力学弹射、星周盘存留和BN外流，未涉及银河系非束缚状态判定，未声称任何恒星为银河系非束缚HVS。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+          "start_line": 79,
+          "end_line": 97,
+          "context": "Abstract: three stars ejected from OMC1; center of mass gravitationally bound to OMC1; Src I mass ~15 Msun"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+          "start_line": 189,
+          "end_line": 199,
+          "context": "Introduction: three runaway stars; escape speed from OMC1 used to constrain Src I mass"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2001.00899/arxiv_source/Bally_OMC1_SrcX.tex",
+          "start_line": 354,
+          "end_line": 362,
+          "context": "Section 3.1: escape speed from OMC1 <3.5 km/s; gas mass within 0.05 pc"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:20:20",
+  "paper": {
+    "arxiv_id": "2601.12789",
+    "bibcode": "2026ApJS..283...59A",
+    "title": "Classical Be Stars and Classical Be Star Binaries from LAMOST DR12",
+    "month": "2026-01",
+    "source_note_json": "notes/2026/2026-01/2026-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2601.12789",
+      "pdf": "https://arxiv.org/pdf/2601.12789"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2601.12789",
+    "audit_path": "literature/2601.12789/audit.json",
+    "catalog_review_path": "literature/2601.12789/catalog_review.json",
+    "catalog_extraction_path": "literature/2601.12789/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2601.12789/catalog_tables/table-tab-final_sample.ecsv",
+      "literature/2601.12789/catalog_tables/table-tab-exluded.ecsv",
+      "literature/2601.12789/catalog_tables/table-tab-spectral_match.ecsv",
+      "literature/2601.12789/catalog_tables/table-tab-CBe-star-binaries.ecsv",
+      "literature/2601.12789/catalog_tables/table-tab-potential-CBe-star-binaries.ecsv",
+      "literature/2601.12789/catalog_tables/table-tab-potential-cluster-members.ecsv",
+      "literature/2601.12789/catalog_tables/table-tab-runaway-stars.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T20:20:20",
+    "extractor": "agent",
+    "summary": "The paper identifies 37 runaway stars with total peculiar velocities ranging from ~40 to ~101 km/s using the classical runaway criterion (V_pec,tot > 40 km/s). However, the paper does not present any of these objects as possibly unbound from the Milky Way. No bound/unbound assessment, escape velocity, or unbound probability is calculated. All high-velocity objects are treated as ordinary runaway stars within the Galaxy. Therefore, no candidates meet the Stella inclusion criteria."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-runaway-stars",
+      "description": "37 runaway stars identified from LAMOST DR12 CBe stars with total peculiar velocities ~40–101 km/s.",
+      "decision": "excluded",
+      "reason": "The paper applies the classical runaway-star criterion (total peculiar velocity > 40 km/s) and labels these objects as runaway stars, but it does not discuss any of them as possibly unbound from the Galaxy. No escape-velocity or bound/unbound assessment is performed. They are treated as ordinary Galactic runaways.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 351,
+          "end_line": 371,
+          "context": "paper discussion of runaway star identification and peculiar velocity calculation"
+        }
+      ]
+    },
+    {
+      "group_id": "table-tab-CBe-star-binaries",
+      "description": "13 newly identified CBe star binaries from LAMOST DR12.",
+      "decision": "excluded",
+      "reason": "These objects are presented as spectroscopic binaries with radial-velocity variations. The paper does not discuss their Galactic-bound status or treat them as possible unbound/HVS candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 185,
+          "end_line": 250,
+          "context": "paper discussion of CBe star binaries identification"
+        }
+      ]
+    },
+    {
+      "group_id": "table-tab-potential-CBe-star-binaries",
+      "description": "60 potential CBe star binaries flagged by high RUWE.",
+      "decision": "excluded",
+      "reason": "These sources are proposed as potential wide binaries based on elevated Gaia RUWE values. The paper does not discuss their kinematics in terms of Galactic escape or unbound status.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 263,
+          "end_line": 275,
+          "context": "paper discussion of potential CBe star binaries via RUWE"
+        }
+      ]
+    },
+    {
+      "group_id": "table-tab-potential-cluster-members",
+      "description": "34 potential cluster members of CBe stars from LAMOST DR12.",
+      "decision": "excluded",
+      "reason": "These objects are discussed as potential open-cluster members based on spatial, proper-motion, and distance consistency. They are not presented as high-velocity or unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2601.12789/arxiv_source/main.tex",
+          "start_line": 344,
+          "end_line": 350,
+          "context": "paper discussion of potential cluster member identification"
+        }
+      ]
+    }
+  ]
+}

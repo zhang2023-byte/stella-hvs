@@ -1,0 +1,67 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:14:47",
+  "paper": {
+    "arxiv_id": "2511.14686",
+    "bibcode": "2026A&A...707A..50D",
+    "title": "Massive runaway star HD 254577: the pre-supernova binary companion to the progenitor of the supernova remnant IC 443",
+    "month": "2025-11",
+    "source_note_json": "notes/2025/2025-11/2025-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2511.14686",
+      "pdf": "https://arxiv.org/pdf/2511.14686"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2511.14686",
+    "audit_path": "literature/2511.14686/audit.json",
+    "catalog_review_path": "literature/2511.14686/catalog_review.json",
+    "catalog_extraction_path": "literature/2511.14686/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2511.14686/catalog_tables/table-clustermembers11.ecsv",
+      "literature/2511.14686/catalog_tables/table-obss.ecsv",
+      "literature/2511.14686/catalog_tables/table-rav.ecsv",
+      "literature/2511.14686/catalog_tables/table-sp577.ecsv",
+      "literature/2511.14686/catalog_tables/table-sp.ecsv",
+      "literature/2511.14686/catalog_tables/table-mass.ecsv",
+      "literature/2511.14686/catalog_tables/table-psrvel.ecsv",
+      "literature/2511.14686/catalog_tables/table-preSN.ecsv",
+      "literature/2511.14686/catalog_tables/table-preSN2.ecsv",
+      "literature/2511.14686/catalog_tables/table-clustermembers.ecsv",
+      "literature/2511.14686/catalog_tables/table-Lines.ecsv",
+      "literature/2511.14686/catalog_tables/table-parameters.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T20:14:47",
+    "extractor": "agent",
+    "summary": "The paper studies HD 254577 as a massive runaway star inside SNR IC 443 (peculiar 3-D velocity 31.3 km/s). It does not present any object as possibly unbound from the Milky Way / Galactic potential."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "hd254577-runaway-star",
+      "description": "HD 254577, the massive runaway star inside SNR IC 443 discussed in this paper, together with the associated neutron star CXOU J61705.3+222127.",
+      "decision": "excluded",
+      "reason": "The paper presents HD 254577 as a runaway star ejected from a pre-supernova binary inside SNR IC 443, with a peculiar 3-D velocity of 31.3 km/s. It does not treat the star (or any associated object) as possibly unbound from the Milky Way / Galactic potential. The velocity is characteristic of runaway stars, not hypervelocity or Galactic-unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+          "start_line": 76,
+          "end_line": 91,
+          "context": "Abstract and conclusions state the paper presents the massive runaway star HD 254577 with a peculiar 3-D velocity of 31.3 km/s, without any claim of Galactic-unbound status."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+          "start_line": 866,
+          "end_line": 876,
+          "context": "Summary section explicitly describes HD 254577 as a runaway star linked to SNR IC 443, with a 3-D peculiar velocity of 31.3 km/s, and does not discuss escaping the Galaxy."
+        }
+      ]
+    }
+  ]
+}

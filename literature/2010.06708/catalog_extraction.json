@@ -1,0 +1,232 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:43:44",
+  "paper": {
+    "arxiv_id": "2010.06708",
+    "title": "BD+14°3061: A Luminous Yellow Post-AGB Star in the Galactic Halo",
+    "month": "2020-10"
+  },
+  "review": {
+    "path": "literature/2010.06708/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084344",
+    "started_at": "2026-06-07T08:43:44",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2010.06708",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table-basicdata",
+      "internal_table_id": "table-table-basicdata",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2010.06708/arxiv_source/main.tex",
+        "start_line": 112,
+        "end_line": 146,
+        "caption": "Basic Data for BD+14°3061 \\label{table:basicdata}",
+        "label": "table:basicdata"
+      },
+      "source_path": "literature/2010.06708/arxiv_source/main.tex",
+      "excerpt_path": "literature/2010.06708/catalog_sources/table-table-basicdata/excerpt.tex",
+      "sha256": "eeeb92ed7e293b7460371e604d42cd53f7b9a5c8f7c88cfba4d54a2fa7b97a6d",
+      "line_count": 35,
+      "error": ""
+    },
+    {
+      "id": "table-table-rvs",
+      "internal_table_id": "table-table-rvs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2010.06708/arxiv_source/main.tex",
+        "start_line": 373,
+        "end_line": 419,
+        "caption": "SMARTS 1.5-m Radial Velocities of BD+14°3061 \\label{table:rvs}",
+        "label": "table:rvs"
+      },
+      "source_path": "literature/2010.06708/arxiv_source/main.tex",
+      "excerpt_path": "literature/2010.06708/catalog_sources/table-table-rvs/excerpt.tex",
+      "sha256": "5926a53abba059f4c19bc90b48bfbdc00d32f198d3b230992670dbabcc118fa2",
+      "line_count": 47,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table-basicdata",
+      "internal_table_id": "table-table-basicdata",
+      "status": "success",
+      "ecsv_path": "literature/2010.06708/catalog_tables/table-table-basicdata.ecsv",
+      "caption": "Basic Data for BD+14°3061 \\label{table:basicdata}",
+      "label": "table:basicdata",
+      "row_count": 13,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value",
+          "Source a a Sources: (1) \\Gaia DR2; (2) Space-velocity components relative to the Sun ( U toward Galactic center, V in direction of Galactic rotation, W toward Galactic north), calculated from \\Gaia astrometry and radial velocity; (3) This paper; (4) Stilism online tool (see text); (5) This paper, calculated from data in this table (see text)."
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Source a a Sources: (1) \\Gaia DR2; (2) Space-velocity components relative to the Sun ( U toward Galactic center, V in direction of Galactic rotation, W toward Galactic north), calculated from \\Gaia astrometry and radial velocity; (3) This paper; (4) Stilism online tool (see text); (5) This paper, calculated from data in this table (see text).",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxtijmi7b/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2010.06708/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxtijmi7b/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.06708/catalog_sources/table-table-basicdata/wrapped.tex",
+            "html": "literature/2010.06708/catalog_sources/table-table-basicdata/latexml.html",
+            "stdout": "literature/2010.06708/catalog_sources/table-table-basicdata/latexml.stdout.txt",
+            "stderr": "literature/2010.06708/catalog_sources/table-table-basicdata/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "eeeb92ed7e293b7460371e604d42cd53f7b9a5c8f7c88cfba4d54a2fa7b97a6d"
+    },
+    {
+      "id": "table-table-rvs",
+      "internal_table_id": "table-table-rvs",
+      "status": "success",
+      "ecsv_path": "literature/2010.06708/catalog_tables/table-table-rvs.ecsv",
+      "caption": "SMARTS 1.5-m Radial Velocities of BD+14°3061 \\label{table:rvs}",
+      "label": "table:rvs",
+      "row_count": 32,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "HJD - 2400000",
+          "Radial Velocity",
+          "Uncertainty"
+        ],
+        [
+          "",
+          "[ \\rm km s^-1 ]",
+          "[ \\rm km s^-1 ]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "HJD - 2400000",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Radial Velocity | [ \\rm km s^-1 ]",
+          "unit_text": "[ \\rm km s^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Uncertainty | [ \\rm km s^-1 ]",
+          "unit_text": "[ \\rm km s^-1 ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfp1zylfc/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2010.06708/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfp1zylfc/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2010.06708/catalog_sources/table-table-rvs/wrapped.tex",
+            "html": "literature/2010.06708/catalog_sources/table-table-rvs/latexml.html",
+            "stdout": "literature/2010.06708/catalog_sources/table-table-rvs/latexml.stdout.txt",
+            "stderr": "literature/2010.06708/catalog_sources/table-table-rvs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5926a53abba059f4c19bc90b48bfbdc00d32f198d3b230992670dbabcc118fa2"
+    }
+  ]
+}

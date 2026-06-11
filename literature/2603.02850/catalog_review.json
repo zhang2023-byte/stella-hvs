@@ -1,0 +1,169 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2603.02850",
+    "title": "Gaia DR3 high radial velocity stars: Genuine fast-moving objects or outliers?",
+    "month": "2026-03",
+    "source_note_json": "notes/2026/2026-03/2026-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2603.02850",
+      "pdf": "https://arxiv.org/pdf/2603.02850"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2603.02850",
+    "audit_path": "literature/2603.02850/audit.json",
+    "source_dir": "literature/2603.02850/arxiv_source",
+    "tex_root": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:33:58",
+    "reviewer": "agent",
+    "summary": "Two internal tables: a comparison of SOPHIE/UVES radial velocities with literature surveys (Table:Surveys) and SB2 binary-component velocities for Gaia_432 (Table:SB2). One primary external resource: the CDS archive hosting the full electronic tables A.1 and B.1. Generic database acknowledgements (Gaia, SIMBAD, ORCID) omitted."
+  },
+  "internal_tables": [
+    {
+      "id": "table-Table-Surveys",
+      "kind": "latex_table",
+      "asset_type": "comparison_table",
+      "role_in_paper": "Compares the high-precision SOPHIE and UVES radial-velocity measurements obtained in this work with corresponding values from APOGEE DR17, LAMOST DR7, and Matsuno+22 for three cross-matched stars, validating the agreement to within 2 km/s after survey-specific zero-point corrections.",
+      "source_refs": [
+        {
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 163,
+          "end_line": 183,
+          "caption": "Comparison of the SOPHIE and UVES radial velocities to APOGEE~DR17, LAMOST~DR7, and \\citet{Matsuno2022} measurements.",
+          "label": "Table:Surveys"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\gaia DR3 source_id",
+          "meaning": "Gaia DR3 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Target",
+          "meaning": "Internal target identifier used in this paper",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectrograph",
+          "meaning": "Spectrograph used for the ground-based observation (SOPHIE or UVES)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Catalogue",
+          "meaning": "Comparison catalogue or reference",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_R | [\\kms ]",
+          "meaning": "Radial velocity measurement",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_VR | [\\kms ]",
+          "meaning": "Radial velocity uncertainty",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Comparison of the SOPHIE and UVES radial velocities to APOGEE~DR17, LAMOST~DR7, and \\citet{Matsuno2022} measurements.",
+      "comments": ""
+    },
+    {
+      "id": "table-Table-SB2",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Records the radial-velocity measurements of both components of the double-line spectroscopic binary Gaia_432 from four consecutive SOPHIE exposures, obtained by fitting double Voigt profiles to the cross-correlation functions.",
+      "source_refs": [
+        {
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 205,
+          "end_line": 221,
+          "caption": "Velocities of the two components of the SB2 star Gaia\\_432.",
+          "label": "Table:SB2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\gaia DR3 source_id",
+          "meaning": "Gaia DR3 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "MJD | [d]",
+          "meaning": "Modified Julian Date of the start of the exposure",
+          "unit_text": "d",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_R comp1 | [\\kms ]",
+          "meaning": "Radial velocity of component 1",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_VR comp1 | [\\kms ]",
+          "meaning": "Radial velocity uncertainty of component 1",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_R comp2 | [\\kms ]",
+          "meaning": "Radial velocity of component 2",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_VR comp2 | [\\kms ]",
+          "meaning": "Radial velocity uncertainty of component 2",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Velocities of the two components of the SB2 star Gaia\\_432.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/.",
+      "local_path": "",
+      "description": "CDS archive hosting the full electronic versions of Tables A.1 (target coordinates and radial velocities) and B.1 (atmospheric parameters and metallicities for the SOPHIE sample).",
+      "source_refs": [
+        {
+          "path": "literature/2603.02850/arxiv_source/aa56602-25.tex",
+          "start_line": 345,
+          "end_line": 345,
+          "context": "\\section*{Data availability}\nTables A.1 and B.1 are only available in electronic form at the CDS via anonymous ftp to cdsarc.u-strasbg.fr (130.79.128.5) or via http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/."
+        }
+      ],
+      "evidence": "\\section*{Data availability}\nTables A.1 and B.1 are only available in electronic form at the CDS via anonymous ftp to cdsarc.u-strasbg.fr (130.79.128.5) or via http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/.",
+      "comments": ""
+    }
+  ]
+}

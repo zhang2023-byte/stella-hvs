@@ -1,0 +1,338 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2109.01511",
+    "title": "Identification of additional young nearby runaway stars based on Gaia data release 2 observations and the lithium test",
+    "month": "2021-09",
+    "source_note_json": "notes/2021/2021-09/2021-09.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2109.01511",
+      "pdf": "https://arxiv.org/pdf/2109.01511"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2109.01511",
+    "audit_path": "literature/2109.01511/audit.json",
+    "source_dir": "literature/2109.01511/arxiv_source",
+    "tex_root": "literature/2109.01511/arxiv_source/bischoff.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:05:29",
+    "reviewer": "agent",
+    "summary": "Paper presents spectroscopic follow-up of 51 targets from the Tetzlaff young runaway star catalog using Gaia DR2 data and lithium 6708Å line measurements. Four structured data tables identified: (1) spectroscopic binary catalog with mass ratios, (2) lithium abundance catalog for dwarfs with significant Li detection, (3) main stellar parameters and age catalog with SpT, distances, EW_Hα, EW_Li, and ages from HRD/lithium/Tetzlaff, (4) radial velocity measurements for binaries. External resources include the Tetzlaff catalog at CDS/VizieR, Mamajek lithium age indicator curves, and VizieR data availability statements for reduced FLECHAS spectra. Three appendix tables (obslog, Li_all equivalent widths, Gaia physical parameters) use supertabular environment and were not auto-detected but contain structured data. Cleaned per rules: removed LaTeX footnote macro URLs for Baraffe BHAC15 and Mamajek dwarf colors, removed generic acknowledgements section."
+  },
+  "internal_tables": [
+    {
+      "id": "table-specbinmass",
+      "kind": "latex_table",
+      "asset_type": "spectroscopic_binary_catalog",
+      "role_in_paper": "Lists 8 identified spectroscopic binary stars within the target sample with their mass ratios M2/M1 and literature references. Used to correct the absolute G-band brightness for multiplicity before HRD placement and age estimation.",
+      "source_refs": [
+        {
+          "path": "literature/2109.01511/arxiv_source/bischoff.tex",
+          "start_line": 94,
+          "end_line": 120,
+          "caption": "The spectroscopic binary stars within our target sample. We list their mass ratio $M_{2}/M_{1}$, if available, and the corresponding reference.",
+          "label": "specbinmass"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Target",
+          "meaning": "HIP identifier of the spectroscopic binary star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_2/M_1",
+          "meaning": "Mass ratio of secondary to primary component with uncertainty",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ref.",
+          "meaning": "Literature reference code for the mass ratio determination",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The spectroscopic binary stars within our target sample. We list their mass ratio $M_{2}/M_{1}$, if available, and the corresponding reference.",
+      "comments": "Table lists 8 binaries: HIP 5081, HIP 22524, HIP 26690, HIP 64312, HIP 71631, HIP 82798, HIP 112821, HIP 114379. References decoded in table footnote: a=Griffin, b=Nordstrom, c=Escorza, d=Koenig, e=Fekel."
+    },
+    {
+      "id": "table-abundance",
+      "kind": "latex_table",
+      "asset_type": "lithium_abundance_catalog",
+      "role_in_paper": "Lists 16 classified dwarf stars with significant lithium 6708Å detection, providing identification numbers, effective temperatures from Gaia DR2, measured Li equivalent widths, and derived lithium abundances log10(N_Li) using curves of growth from Soderblom (1993).",
+      "source_refs": [
+        {
+          "path": "literature/2109.01511/arxiv_source/bischoff.tex",
+          "start_line": 142,
+          "end_line": 170,
+          "caption": "The classified dwarf stars with their identification numbers as shown in Figure\\,\\ref{fig:HRD}\\hspace{-2mm}, with their effective temperatures $T_{\\text{eff}}$ from \\textit{Gaia}\\,DR2 and the measured equivalent widths of the Li\\,(6708\\,\\AA) line $EW_{\\text{Li}}$. We list only targets with significant lithium detection. The abundances $\\log_{10}(N_{\\text{Li}})$ based on \\cite{soderblom} are given in the last column.",
+          "label": "abundance"
+        }
+      ],
+      "columns": [
+        {
+          "name": "id. nr.",
+          "meaning": "Sequential identification number for the dwarf star, cross-references with Figures and Table clearname",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Target",
+          "meaning": "HIP identifier of the target star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T_eff [K]",
+          "meaning": "Effective temperature from Gaia DR2 with upper and lower uncertainties",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW_Li [m\\AA]",
+          "meaning": "Measured equivalent width of the Li 6708Å absorption line with uncertainty",
+          "unit_text": "mÅ",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\log(N_Li)",
+          "meaning": "Lithium abundance log10(N_Li) on a scale where log10(N_H)=12, derived from curves of growth",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The classified dwarf stars with their identification numbers as shown in Figure\\,\\ref{fig:HRD}\\hspace{-2mm}, with their effective temperatures $T_{\\text{eff}}$ from \\textit{Gaia}\\,DR2 and the measured equivalent widths of the Li\\,(6708\\,\\AA) line $EW_{\\text{Li}}$. We list only targets with significant lithium detection. The abundances $\\log_{10}(N_{\\text{Li}})$ based on \\cite{soderblom} are given in the last column.",
+      "comments": "16 dwarf stars (id 1-16) with EW_Li ≥ 3σ detection. Teff range: 4917-6701 K. EW_Li range: 36-254 mÅ."
+    },
+    {
+      "id": "table-clearname",
+      "kind": "latex_table",
+      "asset_type": "stellar_parameter_and_age_catalog",
+      "role_in_paper": "Main results table presenting all identified dwarf stars with spectral types, distances from Bailer-Jones, measured Hα and Li equivalent widths, and age estimates from three methods: HRD isochrone fitting, lithium test (this work), and Tetzlaff catalog. Used to identify 8 young (≤50 Myr) stars and 3 young runaway star candidates outside known clusters.",
+      "source_refs": [
+        {
+          "path": "literature/2109.01511/arxiv_source/bischoff.tex",
+          "start_line": 206,
+          "end_line": 252,
+          "caption": "Our dwarf stars with their identification numbers as shown in Figure\\,\\ref{fig:zwerge}\\hspace{-2mm}, Figure\\,\\ref{fig:metal} and Figure\\,\\ref{fig:Li}\\hspace{-2mm}, listed with their SpT derived from their $T_{\\text{eff}}$ using the SpT-$\\log(T_{\\text{eff}})$-relation from \\cite{damiani}, their distances $d$ according to \\cite{bailerjones}, the measured equivalent width of the Hydrogen Balmer line $EW_{\\text{H}\\alpha}$ (all in absorption) and the measured equivalent width of Li\\,(6708\\,\\AA) $EW_{\\text{Li}}$. Furthermore, we list the estimated age derived from the position in the HRD, as well as the age according to the lithium test from this work and the age from \\cite{tetzlaff}.",
+          "label": "clearname"
+        }
+      ],
+      "columns": [
+        {
+          "name": "id. nr.",
+          "meaning": "Sequential identification number (1-16) for dwarf stars with Li detection; unnumbered rows are dwarfs without significant Li",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Target",
+          "meaning": "HIP identifier of the target star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpT | \\ast",
+          "meaning": "Spectral type derived from Teff using the SpT-log(Teff) relation from Damiani (2016); asterisk indicates this work",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d [pc] | Bailer-Jones",
+          "meaning": "Distance in parsecs from Bailer-Jones et al. (2018) with uncertainty",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW_H\\alpha [m\\AA] | \\ast",
+          "meaning": "Measured equivalent width of Hα Balmer line (all in absorption) with uncertainty; asterisk indicates this work",
+          "unit_text": "mÅ",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW_Li [m\\AA] | \\ast",
+          "meaning": "Measured equivalent width of Li 6708Å line with uncertainty; dash indicates no significant detection (<3σ); asterisk indicates this work",
+          "unit_text": "mÅ",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "age (HRD) [Myr] | \\ast",
+          "meaning": "Age estimated from position in HRD using PARSEC isochrones with solar metallicity; asterisk indicates this work",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "age (EW_Li) [Myr] | \\ast",
+          "meaning": "Age estimated from lithium equivalent width compared to cluster age curves (Mamajek, priv. comm.); asterisk indicates this work",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "age [Myr] | Tetzlaff",
+          "meaning": "Age from Tetzlaff (2011) young runaway star catalog with uncertainty",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Our dwarf stars with their identification numbers as shown in Figure\\,\\ref{fig:zwerge}\\hspace{-2mm}, Figure\\,\\ref{fig:metal} and Figure\\,\\ref{fig:Li}\\hspace{-2mm}, listed with their SpT derived from their $T_{\\text{eff}}$ using the SpT-$\\log(T_{\\text{eff}})$-relation from \\cite{damiani}, their distances $d$ according to \\cite{bailerjones}, the measured equivalent width of the Hydrogen Balmer line $EW_{\\text{H}\\alpha}$ (all in absorption) and the measured equivalent width of Li\\,(6708\\,\\AA) $EW_{\\text{Li}}$. Furthermore, we list the estimated age derived from the position in the HRD, as well as the age according to the lithium test from this work and the age from \\cite{tetzlaff}.",
+      "comments": "28 dwarf stars total: 16 with Li detection (numbered 1-16), 12 without. Spectral types A7V to K2V. Young (≤50 Myr) stars: HIP 28469, HIP 113174, HIP 26690, HIP 22524, HIP 51386, HIP 30030, HIP 16563, HIP 71631. Runaway candidates outside clusters: HIP 113174, HIP 26690, HIP 51386. Dagger footnote indicates double-lined SB2 where both Hα lines could be measured (HIP 5081, HIP 114379)."
+    },
+    {
+      "id": "table-RV",
+      "kind": "latex_table",
+      "asset_type": "radial_velocity_catalog",
+      "role_in_paper": "Lists radial velocity measurements for the 8 spectroscopic binary stars derived from the Ca 6718Å line, with Barycentric Julian Dates. Used to characterize binary systems in the sample and provide RV data for orbit determination.",
+      "source_refs": [
+        {
+          "path": "literature/2109.01511/arxiv_source/bischoff.tex",
+          "start_line": 286,
+          "end_line": 306,
+          "caption": "Radial velocity measurements for the spectroscopic binaries as derived from the Ca\\,(6718\\,\\AA) line and given with their Barycentric Julian Date (BJD).",
+          "label": "RV"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Target",
+          "meaning": "HIP identifier of the spectroscopic binary star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "BJD",
+          "meaning": "Barycentric Julian Date of the radial velocity observation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_1 [km/s]",
+          "meaning": "Radial velocity of the primary component with uncertainty",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV_2 [km/s]",
+          "meaning": "Radial velocity of the secondary component with uncertainty; empty if single-lined binary",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Radial velocity measurements for the spectroscopic binaries as derived from the Ca\\,(6718\\,\\AA) line and given with their Barycentric Julian Date (BJD).",
+      "comments": "Double-lined binaries (SB2) with both components measured: HIP 5081, HIP 114379. Single-lined binaries (SB1): HIP 22524, HIP 26690, HIP 64312, HIP 71631, HIP 82798, HIP 112821."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Abstract states that 308 reduced FLECHAS spectra from the main part of the observing campaign are accessible at VizieR (CDS). This refers to the earlier published dataset from Bischoff et al. (2020).",
+      "source_refs": [
+        {
+          "path": "literature/2109.01511/arxiv_source/bischoff.tex",
+          "start_line": 37,
+          "end_line": 37,
+          "context": "Usually the research field of runaway stars focuses on O- and B-type stars, because these objects are better detectable at larger distances than late-type stars. Early-type runaway stars have the advantage, that they evolve faster and can therefore better be confirmed to be young. In contrast to this, the catalogue of \\textit{Young runaway stars within 3\\,kpc} by \\cite{tetzlaff} contains also stars of spectral type A and later. The objects in this catalogue were originally classified as young ($\\le 50$ Myr) runaway stars by using \\textit{Hipparcos} data to estimate the ages from their location in the \\text{Hertzsprung-Russell} diagram and evolutionary models. \n\t\nIn this article, we redetermine and/or constrain their ages not only by using the more precise second data release of the \\textit{Gaia} mission, but also by measuring the equivalent width of the lithium (6708\\,\\AA) line, which is a youth indicator. Therefore, we searched for lithium absorption in the spectra of 51 target stars, taken at the University Observatory Jena between March and September 2020 with the \\'Echelle spectrograph FLECHAS, and within additional TRES-spectra from the Fred L.\\ Whipple Observatory. The main part of this campaign with its 308 reduced spectra, accessible at \\texttt{VizieR}, was already published. In this work, which is the continuation and completion of the in 2015 initiated observing campaign, we found three additional young runaway star candidates.}\n\n\\keywords{stars: HRD, fundamental parameters; methods: observational, data analysis; techniques: spectroscopic; astronomical databases: catalogues}"
+        }
+      ],
+      "evidence": "The main part of this campaign with its 308 reduced spectra, accessible at \\texttt{VizieR}, was already published.",
+      "comments": "Refers to previously published data from Bischoff et al. (2020, AN, 341, 908). This paper presents the remaining 51 targets."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://cdsarc.u-strasbg.fr/viz-bin/cat/J/MNRAS/410/190",
+      "local_path": "",
+      "description": "CDS/VizieR entry for the Tetzlaff (2011) catalog 'Young runaway stars within 3 kpc' (J/MNRAS/410/190). This is the parent catalog from which the 51 target stars were selected for spectroscopic follow-up.",
+      "source_refs": [
+        {
+          "path": "literature/2109.01511/arxiv_source/bischoff.tex",
+          "start_line": 54,
+          "end_line": 54,
+          "context": "In 2011 the catalogue of \\textit{Young runaway stars within 3\\,kpc}\\footnote{\\url{http://cdsarc.u-strasbg.fr/viz-bin/cat/J/MNRAS/410/190}} was published by \\citeauthor{tetzlaff}, which contains not only  O- and B-type stars, but also every type of star with a peculiar space velocity $v_{\\text{pec}}>28$\\,km/s."
+        }
+      ],
+      "evidence": "In 2011 the catalogue of \\textit{Young runaway stars within 3\\,kpc}\\footnote{\\url{http://cdsarc.u-strasbg.fr/viz-bin/cat/J/MNRAS/410/190}} was published by \\citeauthor{tetzlaff}",
+      "comments": "Verified VizieR catalog URL. Contains Tetzlaff et al. (2011, MNRAS, 410, 190) catalog of young runaway stars."
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "VizieR database used to compile stellar metallicities for the dwarf sample from multiple catalogs (Brewer, Casagrande, Casamiquela, Franchini, Gray, Kunder, Luck, Mann, Marsden, Petigura, Strassun, Valenti). Average metallicity [M/H]=0.09±0.13 dex, justifying solar metallicity assumption for isochrone fitting.",
+      "source_refs": [
+        {
+          "path": "literature/2109.01511/arxiv_source/bischoff.tex",
+          "start_line": 174,
+          "end_line": 174,
+          "context": "This estimate is based on a compilation of metallicities for our stars from the \\texttt{VizieR} database \\citep{ochsenbein}, taken from the catalogues by \\cite{brewer}, \\cite{casagrande}, \\cite{casamiquela}, \\cite{franchini}, \\cite{gray2003}, \\cite{gray2006}, \\cite{kunder}, \\cite{luck}, \\cite{mann}, \\cite{marsden}, \\cite{petigura}, \\cite{strassun} and \\cite{valenti}."
+        }
+      ],
+      "evidence": "This estimate is based on a compilation of metallicities for our stars from the \\texttt{VizieR} database \\citep{ochsenbein}, taken from the catalogues by \\cite{brewer}, \\cite{casagrande}, \\cite{casamiquela}, \\cite{franchini}, \\cite{gray2003}, \\cite{gray2006}, \\cite{kunder}, \\cite{luck}, \\cite{mann}, \\cite{marsden}, \\cite{petigura}, \\cite{strassun} and \\cite{valenti}.",
+      "comments": "Methodology resource: describes data sources for metallicity compilation used to validate solar metallicity assumption."
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "http://www.pas.rochester.edu/~emamajek/images/li.jpg",
+      "local_path": "",
+      "description": "Eric Mamajek's lithium equivalent width vs. Teff plot showing polynomial fits for observed average EW measurements in stellar clusters of known ages. Used as the primary lithium age indicator calibration for this work.",
+      "source_refs": [
+        {
+          "path": "literature/2109.01511/arxiv_source/bischoff.tex",
+          "start_line": 190,
+          "end_line": 190,
+          "context": "We compared all dwarf stars with significant lithium detection in their spectra to distributions of stellar clusters with known ages, as illustrated in Figure\\,\\ref{fig:Li}\\hspace{-2mm}. The curves are polynomial fits for observed average equivalent width measurements dependent on $T_{\\text{eff}}$ (cluster data and fits from E. Mamajek, priv. communication). E. Mamajek`s original plot is available online\\footnote{\\url{http://www.pas.rochester.edu/~emamajek/images/li.jpg}}."
+        }
+      ],
+      "evidence": "E. Mamajek`s original plot is available online\\footnote{\\url{http://www.pas.rochester.edu/~emamajek/images/li.jpg}}.",
+      "comments": "Critical external resource: the lithium age indicator curves (cluster EW_Li vs Teff polynomial fits) are the basis for the lithium age estimation method used to identify young stars."
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Data availability statement in conclusions: fully reduced FLECHAS spectra and measured Li 6708Å equivalent widths will be made available in VizieR after publication. This covers the new spectroscopic data for 51 targets from this work.",
+      "source_refs": [
+        {
+          "path": "literature/2109.01511/arxiv_source/bischoff.tex",
+          "start_line": 284,
+          "end_line": 284,
+          "context": "As it is the standard in our survey the fully reduced FLECHAS spectra as well as the measured equivalent widths of the Li\\,(6708\\,\\AA) line will be made available in \\texttt{VizieR} after publication."
+        }
+      ],
+      "evidence": "As it is the standard in our survey the fully reduced FLECHAS spectra as well as the measured equivalent widths of the Li\\,(6708\\,\\AA) line will be made available in \\texttt{VizieR} after publication.",
+      "comments": "Prospective data resource: the paper's new spectroscopic data was pledged to VizieR. Check VizieR for actual availability of this dataset."
+    }
+  ]
+}

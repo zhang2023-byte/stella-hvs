@@ -1,0 +1,97 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1811.07899",
+    "title": "MN44: a luminous blue variable running away from Westerlund 1",
+    "month": "2018-11",
+    "source_note_json": "notes/2018/2018-11/2018-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1811.07899",
+      "pdf": "https://arxiv.org/pdf/1811.07899"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1811.07899",
+    "audit_path": "literature/1811.07899/audit.json",
+    "source_dir": "literature/1811.07899/arxiv_source",
+    "tex_root": "literature/1811.07899/arxiv_source/MN44.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:57:00",
+    "reviewer": "agent",
+    "summary": "Short Research Note (RNAAS) showing that the bona fide LBV MN44 is a runaway star from the young massive cluster Westerlund 1. Uses Gaia DR2 proper motion (μα cos δ = -4.270±0.211 mas yr⁻¹, μδ = -6.106±0.143 mas yr⁻¹) and Bayesian distance estimate (d = 5.2+2.7−1.7 kpc) to derive a peculiar transverse velocity of ~75 km/s away from the Galactic plane. WEBDA database used to identify Westerlund 1 as the likely parent cluster. Kinematic age t_kin ≈ 5.4 Myr (at d=5.2 kpc) or ≈4.2 Myr (at d=4 kpc), consistent with the cluster age of ~5 Myr. One figure shows an MSX 8.3 μm image with the star trajectory overplotted. No internal tables; all data are cited from external sources (Gaia DR2, Bailer-Jones+2018, WEBDA, MSX)."
+  },
+  "internal_tables": [],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Gaia DR2 astrometric catalog (Gaia Collaboration et al. 2018, A&A, 616, A1). Provides the proper motion measurements for MN44: μα cos δ = −4.270±0.211 mas yr⁻¹ and μδ = −6.106±0.143 mas yr⁻¹, which are the core kinematic data used to compute the transverse velocity and trajectory.",
+      "source_refs": [
+        {
+          "path": "literature/1811.07899/arxiv_source/MN44.tex",
+          "start_line": 43,
+          "end_line": 53,
+          "context": "Using the {\\it Gaia} DR2 proper motion of MN44, $\\mu _\\alpha \\cos \\delta= -4.270\\pm0.211 \\, {\\rm mas} \\, {\\rm yr}^{-1}$ and $\\mu _\\delta=-6.106\\pm0.143 \\, {\\rm mas} \\, {\\rm yr}^{-1}$ ... we calculated the peculiar transverse velocity."
+        }
+      ],
+      "evidence": "Lines 43-53 of MN44.tex: Gaia DR2 proper motions explicitly quoted and used to compute peculiar transverse velocity. Also cited as Gaia Collaboration et al. (2018) in the bibliography.",
+      "comments": "Gaia DR2 released 2018-04-25. Not a data product of this paper; the proper motions are taken directly from the catalog. The paper also references Bailer-Jones et al. (2018) for a Bayesian distance estimate based on Gaia DR2 parallax."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Bailer-Jones et al. (2018, AJ, 156, 58) Bayesian distance estimate for MN44: d = 5.2+2.7−1.7 kpc, derived from Gaia DR2 data. Used as the primary distance for computing tangential velocity and kinematic age.",
+      "source_refs": [
+        {
+          "path": "literature/1811.07899/arxiv_source/MN44.tex",
+          "start_line": 44,
+          "end_line": 46,
+          "context": "and the Bayesian distance estimate of $d=5.2^{+2.7} _{-1.7}$ kpc \\citep[based on the {\\it Gaia} DR2 data;][]{Bailer2018}"
+        }
+      ],
+      "evidence": "Line 44-46 of MN44.tex: Bayesian distance estimate explicitly cited from Bailer-Jones et al. (2018).",
+      "comments": "The paper also considers d=4 kpc as an alternative distance (lines 66-70) to account for the possibility that both MN44 and Westerlund 1 are at a shorter distance."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "WEBDA open cluster database (Mermilliod 1995, in 'Information and Online Data in Astronomy', Kluwer, p.127). Used to search for young massive star clusters within the error cone of MN44's past trajectory, leading to the identification of Westerlund 1 as the likely parent cluster.",
+      "source_refs": [
+        {
+          "path": "literature/1811.07899/arxiv_source/MN44.tex",
+          "start_line": 55,
+          "end_line": 57,
+          "context": "Using the WEBDA data base \\citep{Mermiliod1995}, we searched for young massive star clusters within the error cone of the past trajectory of MN44. Much to our surprise, we found that MN44 is running away from one of the most massive Galactic star clusters --- Westerlund\\,1"
+        }
+      ],
+      "evidence": "Lines 55-57 of MN44.tex: WEBDA explicitly mentioned as the database used to search for parent cluster.",
+      "comments": "WEBDA is an online database of open star clusters maintained at the University of Geneva. The search identified Westerlund 1 (angular separation ~4.5°, projected linear separation ~400 pc at d=5.2 kpc) as the parent cluster."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Midcourse Space Experiment (MSX) satellite 8.3 μm image (Price et al. 2001, AJ, 121, 2819). Used as the background for Figure 1, which shows the relative positions of Westerlund 1 and MN44, the direction of motion, and the past trajectory with 1σ uncertainties.",
+      "source_refs": [
+        {
+          "path": "literature/1811.07899/arxiv_source/MN44.tex",
+          "start_line": 81,
+          "end_line": 89,
+          "context": "\\caption{{\\it Midcourse Space Experiment} satellite \\citep{Price2001} 8.3 \\micron \\, image of the field containing Westerlund\\,1 ... and MN44 ... The arrow shows the direction of motion of MN44, while a solid line indicates the trajectory of MN44 (with 1$\\sigma$ uncertainties shown by dashed lines) for $d=4$\\,kpc.}"
+        }
+      ],
+      "evidence": "Lines 81-89 of MN44.tex: Figure caption states the background image is from the MSX satellite, citing Price et al. (2001).",
+      "comments": "The MSX satellite surveyed the entire Galactic plane at mid-infrared wavelengths. The 8.3 μm band (Band A) image provides context for the Galactic plane and the relative positions of Westerlund 1 and MN44."
+    }
+  ]
+}

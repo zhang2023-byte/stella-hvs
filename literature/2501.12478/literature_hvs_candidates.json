@@ -1,0 +1,119 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T18:18:18",
+  "paper": {
+    "arxiv_id": "2501.12478",
+    "bibcode": "2025CoSka..55a..38E",
+    "title": "Kinematics of High-Velocity Stars Utilizing LAMOST and Gaia DR3 Archives within 100 kpc",
+    "month": "2025-01",
+    "source_note_json": "notes/2025/2025-01/2025-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2501.12478",
+      "pdf": "https://arxiv.org/pdf/2501.12478"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2501.12478",
+    "audit_path": "literature/2501.12478/audit.json",
+    "catalog_review_path": "literature/2501.12478/catalog_review.json",
+    "catalog_extraction_path": "literature/2501.12478/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2501.12478/catalog_tables/table-tab1.ecsv",
+      "literature/2501.12478/catalog_tables/table-tab2.ecsv",
+      "literature/2501.12478/catalog_tables/table-tab3.ecsv",
+      "literature/2501.12478/catalog_tables/table-tab4.ecsv",
+      "literature/2501.12478/catalog_tables/table-tab5.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T18:18:18",
+    "extractor": "agent",
+    "summary": "The paper is a kinematic analysis of three compiled high-velocity star programs (1197 stars total) adopted from Li et al. (2021, 2023, 2024). It computes velocity ellipsoid parameters, convergent points, and Oort constants for the ensembles. No individual object is explicitly discussed as a possibly Galactic-unbound or escaping candidate; the paper does not present per-star bound/unbound assessments, escape velocities, or orbit integrations."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab1",
+      "description": "Program I: 591 HiVels compiled from Li et al. 2021 (LAMOST DR7 + Gaia DR2/DR3), distances 0.10-15.40 kpc, shown as exemplars in Table 1.",
+      "decision": "excluded",
+      "reason": "The paper adopts this sample from prior literature for ensemble kinematic analysis (velocity ellipsoid, convergent point, Oort constants). It does not discuss any individual Program I star as a possibly Galactic-unbound or escaping candidate, nor does it compute per-star escape velocities or bound/unbound probabilities.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 288,
+          "end_line": 292,
+          "context": "Enumeration of Program I sample and its adopted source from Li et al. 2021"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 298,
+          "end_line": 346,
+          "context": "Table 1 caption and exemplar rows for Program I"
+        }
+      ]
+    },
+    {
+      "group_id": "program-ii",
+      "description": "Program II: 87 HiVels compiled from Li et al. 2023 (RAVE, SDSS, LAMOST, APOGEE, GALAH, Gaia EDR3), distances 0.30-108.64 kpc, described as ejected from the galactic center.",
+      "decision": "excluded",
+      "reason": "Although the paper notes these stars were selected as galactic-center-ejected HiVels by Li et al. 2023, the present work treats them only as an ensemble for kinematic parameter calculation. It does not explicitly discuss any individual Program II star as a possibly Galactic-unbound or escaping candidate, nor does it provide per-star bound/unbound assessment.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 288,
+          "end_line": 292,
+          "context": "Enumeration of Program II sample and its adopted source from Li et al. 2023"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 298,
+          "end_line": 346,
+          "context": "Table 1 caption and exemplar rows for Program II"
+        }
+      ]
+    },
+    {
+      "group_id": "program-iii",
+      "description": "Program III: 519 HiVels compiled from Li et al. 2024 (LAMOST DR10, GALAH DR3, RAVE DR6, APOGEE DR17 cross-matched with Gaia DR3), distances 0.29-16.44 kpc, influenced by LMC potential.",
+      "decision": "excluded",
+      "reason": "The paper adopts this sample from prior literature for ensemble kinematic analysis. It does not explicitly discuss any individual Program III star as a possibly Galactic-unbound or escaping candidate, nor does it compute per-star escape velocities or bound/unbound probabilities.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 288,
+          "end_line": 292,
+          "context": "Enumeration of Program III sample and its adopted source from Li et al. 2024"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 298,
+          "end_line": 346,
+          "context": "Table 1 caption and exemplar rows for Program III"
+        }
+      ]
+    },
+    {
+      "group_id": "introduction-hvs-mention",
+      "description": "General mention in the Introduction that a few stars among the three Programs are HVSs with V_GSR > V_esc.",
+      "decision": "excluded",
+      "reason": "This is a population-level statement without identification of specific objects. The paper does not name, tabulate, or individually assess any star as a Galactic-unbound candidate. No per-object escape velocity, bound probability, or orbit integration is provided.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2501.12478/arxiv_source/Final_version.tex",
+          "start_line": 217,
+          "end_line": 217,
+          "context": "Introduction sentence mentioning that a few HiVels are HVSs with V_esc less than V_GSR"
+        }
+      ]
+    }
+  ]
+}

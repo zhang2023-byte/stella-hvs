@@ -1,0 +1,1640 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:26:40",
+  "paper": {
+    "arxiv_id": "2311.13388",
+    "bibcode": "2024A&A...682A..42W",
+    "title": "The photospheres of the hottest fastest stars in the Galaxy",
+    "month": "2023-11",
+    "source_note_json": "notes/2023/2023-11/2023-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2311.13388",
+      "pdf": "https://arxiv.org/pdf/2311.13388"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2311.13388",
+    "audit_path": "literature/2311.13388/audit.json",
+    "catalog_review_path": "literature/2311.13388/catalog_review.json",
+    "catalog_extraction_path": "literature/2311.13388/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-22T23:26:40",
+    "extractor": "agent",
+    "summary": "This paper performs NLTE atmospheric model analysis of the three hottest hypervelocity stars. These three stars (J0546+0836, J0927-6335, J1332-3541) were discovered by El-Badry et al. (2023, Open Journal of Astrophysics, 6, 28) as D^6 (Type Ia supernova survivor) candidates, with space velocities ranging 1500-2800 km/s, far exceeding the Milky Way escape velocity. The paper confirms J0546+0836 as a [WC]-PG1159 transition type (oxygen-rich atmosphere, Teff=95000K), J0927-6335 as PG1159 type (carbon-oxygen atmosphere, Teff=60000K), and J1332-3541 as a DAO-type white dwarf (hydrogen-rich atmosphere, Teff=65657K). The paper confirms the D^6 scenario is a plausible origin hypothesis for J0546+0836 and J0927-6335, but the hydrogen-rich atmosphere of J1332-3541 is difficult to explain."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "reported_value_adoption",
+      "summary": "NLTE model atmosphere analysis (TMAW/TMAP code packages) determining atmospheric parameters (Teff, log g, chemical composition), stellar parameters (mass, radius, luminosity), and spectral classification of the three hypervelocity stars. Spectral data from Keck-I LRIS (R~1500).",
+      "inputs": [
+        "Keck-I LRIS optical spectra"
+      ],
+      "outputs": [
+        "Teff",
+        "log g",
+        "chemical abundances (H, He, C, O)",
+        "mass",
+        "radius",
+        "luminosity",
+        "spectral classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2311.13388/arxiv_source/aa.tex",
+          "start_line": 107,
+          "end_line": 109,
+          "context": "Abstract: NLTE model atmosphere analyses of three hottest hypervelocity stars using TMAW/TMAP code packages"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2311.13388/arxiv_source/aa.tex",
+          "start_line": 134,
+          "end_line": 134,
+          "context": "Sect.2: model atmospheres and analysis strategy using TMAW/TMAP"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "reported_value_adoption",
+      "summary": "Spectroscopic distances for the three stars determined via SED fitting (chisq method) combining Gaia DR2/EDR3, Pan-STARRS/SkyMapper/SDSS photometric data.",
+      "inputs": [
+        "Gaia DR2/EDR3 photometry",
+        "Pan-STARRS/SkyMapper/SDSS photometry",
+        "Teff",
+        "log g"
+      ],
+      "outputs": [
+        "spectroscopic distance"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2311.13388/arxiv_source/aa.tex",
+          "start_line": 175,
+          "end_line": 179,
+          "context": "Sect.2: SED fitting with chisq method for spectroscopic distances"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [],
+      "step_type": "reported_value_adoption",
+      "summary": "Radial velocities adopted from El-Badry et al. (2023, Open Journal of Astrophysics, 6, 28). For example, the radial velocity of J0546+0836 is approximately 1350 km/s.",
+      "inputs": [
+        "El-Badry et al. (2023) radial velocity measurements"
+      ],
+      "outputs": [
+        "radial velocity"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2311.13388/arxiv_source/aa.tex",
+          "start_line": 156,
+          "end_line": 156,
+          "context": "spectrum shifted to rest wavelength assuming radial velocity of 1350 km/s"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [],
+      "step_type": "reported_value_adoption",
+      "summary": "Hypervelocity star classification and D^6 (Type Ia supernova survivor) origin scenario adopted from El-Badry et al. (2023). This paper evaluates the classification and confirms the D^6 scenario is plausible for J0546+0836 and J0927-6335.",
+      "inputs": [
+        "El-Badry et al. (2023) classification and D^6 scenario"
+      ],
+      "outputs": [
+        "hypervelocity star classification",
+        "D^6 origin scenario"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2311.13388/arxiv_source/aa.tex",
+          "start_line": 107,
+          "end_line": 109,
+          "context": "Abstract: identified as runaways from Type Ia supernovae"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [],
+      "step_type": "reported_value_adoption",
+      "summary": "Total space velocity range (1500-2800 km/s) adopted from El-Badry et al. (2023). These velocities far exceed the Milky Way escape velocity (~500-600 km/s), indicating these stars are in a gravitationally unbound state with respect to the Galaxy.",
+      "inputs": [
+        "El-Badry et al. (2023) space velocities"
+      ],
+      "outputs": [
+        "total space velocity range",
+        "Galactic-unbound status"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2311.13388/arxiv_source/aa.tex",
+          "start_line": 108,
+          "end_line": 108,
+          "context": "space velocities between ~1500-2800 km/s"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2311.13388:cand-001",
+        "paper_candidate_id": "J0546+0836",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "J0546+0836",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2311.13388/arxiv_source/aa.tex",
+                "start_line": 153,
+                "end_line": 165,
+                "context": "Section 3 (J0546+0836): dedicated section for this star, LRIS spectrum analysis"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "J0546+0836 is one of the three hypervelocity stars studied in this paper, with space velocities in the range 1500-2800 km/s (from El-Badry et al. 2023). The paper refers to it as a hypervelocity star and a Type Ia supernova runaway. Radial velocity approximately 1350 km/s. The paper discusses it within the D^6 scenario and confirms that this scenario is plausible for it.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "The paper explicitly labels it as a hypervelocity star, with space velocities of 1500-2800 km/s far exceeding the Milky Way escape velocity (~500-600 km/s). Individual velocity and Galactic-unbound status come from El-Badry et al. (2023); this paper builds on that by providing atmospheric parameter analysis and confirming the plausibility of the D^6 origin scenario.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2311.13388/arxiv_source/aa.tex",
+            "start_line": 107,
+            "end_line": 109,
+            "context": "Abstract: three hottest hypervelocity stars (space velocities between ~1500-2800 km/s), identified as runaways from Type Ia supernovae"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2311.13388/arxiv_source/aa.tex",
+            "start_line": 126,
+            "end_line": 129,
+            "context": "Introduction: D^6 scenario - surviving WD escapes at orbital velocity 1000-2500 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2311.13388/arxiv_source/aa.tex",
+            "start_line": 156,
+            "end_line": 156,
+            "context": "spectrum shifted to rest wavelength assuming radial velocity of 1350 km/s"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2311.13388/arxiv_source/aa.tex",
+            "start_line": 129,
+            "end_line": 129,
+            "context": "El-Badry et al. 2023 (E23) reported discovery of four hypervelocity WDs with high space velocities"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2311.13388/arxiv_source/aa.tex",
+            "start_line": 348,
+            "end_line": 348,
+            "context": "Summary: three hottest hypervelocity stars discovered spectroscopically and characterized preliminarily by E23"
+          }
+        ],
+        "citation": {
+          "bibkey": "El-Badry2023",
+          "authors": [
+            "El-Badry, K.",
+            "Shen, K. J.",
+            "Chandra, V."
+          ],
+          "year": "2023",
+          "title": "The Open Journal of Astrophysics, 6, 28",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2311.13388/arxiv_source/aa.tex",
+              "start_line": 129,
+              "end_line": 129,
+              "context": "citet[][hereafter E23]{El-Badry2023} reported the discovery of four hypervelocity WDs"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2311.13388/arxiv_source/aa.bbl",
+              "start_line": 32,
+              "end_line": 37,
+              "context": "El-Badry et al. 2023, The Open Journal of Astrophysics, 6, 28"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "15^+4_-8",
+            "value": "15",
+            "error": "",
+            "lower_error": "8",
+            "upper_error": "4",
+            "unit": "kpc",
+            "kind": "spectroscopic_distance",
+            "description": "Spectroscopic distance from SED fitting with E(B-V)=0.29 mag. Note: Gaia distance is 4.0^+2.3_-1.7 kpc, but paper notes their SED distance is ~4x larger, which would imply tangential velocity of ~5400 km/s that is difficult to explain.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2311.13388/arxiv_source/aa.tex",
+                "start_line": 341,
+                "end_line": 343,
+                "context": "J0546+0836: SED reproduced with E(B-V)=0.29 mag, spectroscopic distance 15^+4_-8 kpc"
+              },
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+                "line": 21,
+                "column": "col_002",
+                "column_header": "J0546+0836",
+                "raw_value": "15^+4_-8"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "1350",
+            "value": "1350",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "km/s",
+            "kind": "radial_velocity",
+            "description": "Radial velocity used to shift observed spectrum to rest wavelength. Value from El-Badry et al. (2023).",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2311.13388/arxiv_source/aa.tex",
+                "start_line": 156,
+                "end_line": 156,
+                "context": "LRIS spectrum shifted to rest wavelength assuming a radial velocity of 1350 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [
+        {
+          "raw_value": "[WC]–PG1159",
+          "value": "[WC]-PG1159",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "classification",
+          "description": "[WC]-PG1159 transition-type pre-white dwarf with mixed absorption+emission line spectrum. Wind emission lines from O III/O IV, photospheric absorption from O V/O VI.",
+          "measurement_type": "classification",
+          "spectral_type": "[WC]-PG1159",
+          "line": "",
+          "instrument": "Keck-I LRIS",
+          "survey": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2311.13388/arxiv_source/aa.tex",
+              "start_line": 108,
+              "end_line": 108,
+              "context": "Spectroscopically, J0546+0836 is a [WC]-PG1159 transition-type pre-white dwarf"
+            },
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 10,
+              "column": "col_002",
+              "column_header": "J0546+0836",
+              "raw_value": "[WC]–PG1159"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "95 000+/- 15 000",
+          "value": "95000",
+          "error": "15000",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "K",
+          "kind": "effective_temperature",
+          "description": "Effective temperature from NLTE model atmosphere analysis",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 11,
+              "column": "col_002",
+              "column_header": "J0546+0836",
+              "raw_value": "95 000+/- 15 000"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "log_g": {
+          "raw_value": "5.5+/- 0.5",
+          "value": "5.5",
+          "error": "0.5",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "cm/s^2",
+          "kind": "surface_gravity",
+          "description": "Surface gravity (log g) from NLTE analysis",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 12,
+              "column": "col_002",
+              "column_header": "J0546+0836",
+              "raw_value": "5.5+/- 0.5"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "metallicity": null,
+        "mass": {
+          "raw_value": "0.52^+0.31_-0.04",
+          "value": "0.52",
+          "error": "",
+          "lower_error": "0.04",
+          "upper_error": "0.31",
+          "unit": "Msol",
+          "kind": "mass",
+          "description": "Stellar mass from comparison with post-AGB evolutionary tracks. Paper notes log g may be underestimated for this object.",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 18,
+              "column": "col_002",
+              "column_header": "J0546+0836",
+              "raw_value": "0.52^+0.31_-0.04"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radius": {
+          "raw_value": "0.21^+0.06_-0.11",
+          "value": "0.21",
+          "error": "",
+          "lower_error": "0.11",
+          "upper_error": "0.06",
+          "unit": "Rsol",
+          "kind": "radius",
+          "description": "Stellar radius derived from log g and mass",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 17,
+              "column": "col_002",
+              "column_header": "J0546+0836",
+              "raw_value": "0.21^+0.06_-0.11"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "age": null,
+        "luminosity": {
+          "raw_value": "3218^+6345_-2851",
+          "value": "3218",
+          "error": "",
+          "lower_error": "2851",
+          "upper_error": "6345",
+          "unit": "Lsol",
+          "kind": "luminosity",
+          "description": "Stellar luminosity",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 19,
+              "column": "col_002",
+              "column_header": "J0546+0836",
+              "raw_value": "3218^+6345_-2851"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "spectral_type": {
+          "raw_value": "[WC]–PG1159",
+          "value": "[WC]-PG1159",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "spectral_type",
+          "description": "Spectral type: [WC]-PG1159 transition type",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 10,
+              "column": "col_002",
+              "column_header": "J0546+0836",
+              "raw_value": "[WC]–PG1159"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "other": []
+      },
+      "abundances": [
+        {
+          "raw_value": "<0.05",
+          "value": "0.05",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "mass fraction",
+          "kind": "abundance",
+          "description": "Helium abundance upper limit (mass fraction). Star is devoid of helium.",
+          "element": "He",
+          "abundance_scale": "mass_fraction",
+          "reference_element": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 14,
+              "column": "col_002",
+              "column_header": "J0546+0836",
+              "raw_value": "<0.05"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "0.10+/- 0.05",
+          "value": "0.10",
+          "error": "0.05",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "mass fraction",
+          "kind": "abundance",
+          "description": "Carbon abundance (mass fraction)",
+          "element": "C",
+          "abundance_scale": "mass_fraction",
+          "reference_element": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 15,
+              "column": "col_002",
+              "column_header": "J0546+0836",
+              "raw_value": "0.10+/- 0.05"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "0.90+/- 0.05",
+          "value": "0.90",
+          "error": "0.05",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "mass fraction",
+          "kind": "abundance",
+          "description": "Oxygen abundance (mass fraction). Oxygen-dominated atmosphere.",
+          "element": "O",
+          "abundance_scale": "mass_fraction",
+          "reference_element": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 16,
+              "column": "col_002",
+              "column_header": "J0546+0836",
+              "raw_value": "0.90+/- 0.05"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": {
+          "raw_value": "D^6 scenario",
+          "value": "D6",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "classification",
+          "description": "Dynamically driven double-degenerate double-detonation (D^6) scenario: Type Ia supernova survivor. Paper confirms this scenario is plausible for J0546+0836.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2311.13388/arxiv_source/aa.tex",
+              "start_line": 108,
+              "end_line": 109,
+              "context": "Abstract: discuss results in context of D^6 scenario proposed for the origin of these stars"
+            },
+            {
+              "kind": "text",
+              "path": "literature/2311.13388/arxiv_source/aa.tex",
+              "start_line": 381,
+              "end_line": 381,
+              "context": "Summary: confirms D^6 scenario is plausible hypothesis for J0546+0836 and J0927-6335"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "total_space_velocity_range",
+          "raw_value": "1500-2800 km/s",
+          "value": "2150",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "km/s",
+          "kind": "total_space_velocity",
+          "description": "Collective space velocity range for the three hypervelocity stars, from El-Badry et al. (2023). Individual velocities not provided in this paper. Range 1500-2800 km/s far exceeds Galactic escape velocity ~500-600 km/s.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2311.13388/arxiv_source/aa.tex",
+              "start_line": 107,
+              "end_line": 108,
+              "context": "Abstract: space velocities between ~1500-2800 km/s"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2311.13388:cand-002",
+        "paper_candidate_id": "J0927-6335",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "J0927-6335",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2311.13388/arxiv_source/aa.tex",
+                "start_line": 108,
+                "end_line": 108,
+                "context": "Abstract: second object (J0927-6335) is a PG1159-type white dwarf"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "J0927-6335 is the second hypervelocity star studied in this paper, with space velocities of 1500-2800 km/s (El-Badry et al. 2023). PG1159-type white dwarf with carbon-oxygen atmosphere. The paper confirms the D^6 scenario is plausible for it. Velocity far exceeds the Milky Way escape velocity.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Belongs to the same D^6 hypervelocity star sample discovered by El-Badry et al. (2023) as J0546+0836; the paper explicitly labels it as a hypervelocity star. Space velocities of 1500-2800 km/s far exceed the Milky Way escape velocity.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2311.13388/arxiv_source/aa.tex",
+            "start_line": 107,
+            "end_line": 109,
+            "context": "Abstract: three hottest hypervelocity stars (space velocities ~1500-2800 km/s), runaways from Type Ia supernovae"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2311.13388/arxiv_source/aa.tex",
+            "start_line": 369,
+            "end_line": 371,
+            "context": "J0927-6335: PG1159 star, cooler than any known PG1159, close to wind limit in Kiel diagram"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2311.13388/arxiv_source/aa.tex",
+            "start_line": 129,
+            "end_line": 129,
+            "context": "El-Badry et al. 2023 (E23) reported discovery of four hypervelocity WDs"
+          }
+        ],
+        "citation": {
+          "bibkey": "El-Badry2023",
+          "authors": [
+            "El-Badry, K.",
+            "Shen, K. J.",
+            "Chandra, V."
+          ],
+          "year": "2023",
+          "title": "The Open Journal of Astrophysics, 6, 28",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2311.13388/arxiv_source/aa.tex",
+              "start_line": 129,
+              "end_line": 129,
+              "context": "citet[][hereafter E23]{El-Badry2023} reported the discovery of four hypervelocity WDs"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2311.13388/arxiv_source/aa.bbl",
+              "start_line": 32,
+              "end_line": 37,
+              "context": "El-Badry et al. 2023, The Open Journal of Astrophysics, 6, 28"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "2.5+/- 0.9",
+            "value": "2.5",
+            "error": "0.9",
+            "lower_error": "",
+            "upper_error": "",
+            "unit": "kpc",
+            "kind": "spectroscopic_distance",
+            "description": "Spectroscopic distance from SED fitting with E(B-V)=0.15 mag. Gaia distance is 4.5^+2.2_-1.7 kpc, consistent within errors.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2311.13388/arxiv_source/aa.tex",
+                "start_line": 341,
+                "end_line": 341,
+                "context": "J0927-6335: SED well reproduced at spectroscopic distance of 2.5+/-0.9 kpc"
+              },
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+                "line": 21,
+                "column": "col_003",
+                "column_header": "J0927-6335",
+                "raw_value": "2.5+/- 0.9"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [
+        {
+          "raw_value": "PG1159",
+          "value": "PG1159",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "classification",
+          "description": "PG1159-type white dwarf with pure absorption-line spectrum dominated by C III/C IV and O III/O IV",
+          "measurement_type": "classification",
+          "spectral_type": "PG1159",
+          "line": "",
+          "instrument": "Keck-I LRIS",
+          "survey": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2311.13388/arxiv_source/aa.tex",
+              "start_line": 108,
+              "end_line": 108,
+              "context": "The second object (J0927-6335) is a PG1159-type white dwarf with a pure absorption-line spectrum"
+            },
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 10,
+              "column": "col_003",
+              "column_header": "J0927-6335",
+              "raw_value": "PG1159"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "60 000+/- 5000",
+          "value": "60000",
+          "error": "5000",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "K",
+          "kind": "effective_temperature",
+          "description": "Effective temperature from NLTE analysis",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 11,
+              "column": "col_003",
+              "column_header": "J0927-6335",
+              "raw_value": "60 000+/- 5000"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "log_g": {
+          "raw_value": "7.0+/- 0.5",
+          "value": "7.0",
+          "error": "0.5",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "cm/s^2",
+          "kind": "surface_gravity",
+          "description": "Surface gravity (log g) from NLTE analysis",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 12,
+              "column": "col_003",
+              "column_header": "J0927-6335",
+              "raw_value": "7.0+/- 0.5"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "metallicity": null,
+        "mass": {
+          "raw_value": "0.32^+0.16_-0.12",
+          "value": "0.32",
+          "error": "",
+          "lower_error": "0.12",
+          "upper_error": "0.16",
+          "unit": "Msol",
+          "kind": "mass",
+          "description": "Stellar mass from post-AGB evolutionary tracks",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 18,
+              "column": "col_003",
+              "column_header": "J0927-6335",
+              "raw_value": "0.32^+0.16_-0.12"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radius": {
+          "raw_value": "0.030^+0.012_-0.010",
+          "value": "0.030",
+          "error": "",
+          "lower_error": "0.010",
+          "upper_error": "0.012",
+          "unit": "Rsol",
+          "kind": "radius",
+          "description": "Stellar radius",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 17,
+              "column": "col_003",
+              "column_header": "J0927-6335",
+              "raw_value": "0.030^+0.012_-0.010"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "age": null,
+        "luminosity": {
+          "raw_value": "21.1^+19.5_-16.1",
+          "value": "21.1",
+          "error": "",
+          "lower_error": "16.1",
+          "upper_error": "19.5",
+          "unit": "Lsol",
+          "kind": "luminosity",
+          "description": "Stellar luminosity",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 19,
+              "column": "col_003",
+              "column_header": "J0927-6335",
+              "raw_value": "21.1^+19.5_-16.1"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "spectral_type": {
+          "raw_value": "PG1159",
+          "value": "PG1159",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "spectral_type",
+          "description": "Spectral type: PG1159",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 10,
+              "column": "col_003",
+              "column_header": "J0927-6335",
+              "raw_value": "PG1159"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "other": []
+      },
+      "abundances": [
+        {
+          "raw_value": "0.05+/- 0.05",
+          "value": "0.05",
+          "error": "0.05",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "mass fraction",
+          "kind": "abundance",
+          "description": "Helium abundance (mass fraction), possibly minute amount or zero",
+          "element": "He",
+          "abundance_scale": "mass_fraction",
+          "reference_element": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 14,
+              "column": "col_003",
+              "column_header": "J0927-6335",
+              "raw_value": "0.05+/- 0.05"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "0.47+/- 0.25",
+          "value": "0.47",
+          "error": "0.25",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "mass fraction",
+          "kind": "abundance",
+          "description": "Carbon abundance (mass fraction)",
+          "element": "C",
+          "abundance_scale": "mass_fraction",
+          "reference_element": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 15,
+              "column": "col_003",
+              "column_header": "J0927-6335",
+              "raw_value": "0.47+/- 0.25"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "0.48+/- 0.25",
+          "value": "0.48",
+          "error": "0.25",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "mass fraction",
+          "kind": "abundance",
+          "description": "Oxygen abundance (mass fraction)",
+          "element": "O",
+          "abundance_scale": "mass_fraction",
+          "reference_element": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 16,
+              "column": "col_003",
+              "column_header": "J0927-6335",
+              "raw_value": "0.48+/- 0.25"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": {
+          "raw_value": "D^6 scenario",
+          "value": "D6",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "classification",
+          "description": "D^6 scenario: Type Ia supernova survivor. Paper confirms this scenario is plausible for J0927-6335.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2311.13388/arxiv_source/aa.tex",
+              "start_line": 381,
+              "end_line": 381,
+              "context": "Summary: confirms D^6 scenario is plausible hypothesis for J0546+0836 and J0927-6335"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "total_space_velocity_range",
+          "raw_value": "1500-2800 km/s",
+          "value": "2150",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "km/s",
+          "kind": "total_space_velocity",
+          "description": "Collective space velocity range for the three hypervelocity stars, from El-Badry et al. (2023). Far exceeds Galactic escape velocity.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2311.13388/arxiv_source/aa.tex",
+              "start_line": 107,
+              "end_line": 108,
+              "context": "Abstract: space velocities between ~1500-2800 km/s"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        }
+      ]
+    },
+    {
+      "identifiers": {
+        "record_id": "2311.13388:cand-003",
+        "paper_candidate_id": "J1332-3541",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "J1332-3541",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2311.13388/arxiv_source/aa.tex",
+                "start_line": 108,
+                "end_line": 109,
+                "context": "Abstract: third object (J1332-3541) to be a relatively massive (M=0.89 Msol) hydrogen-rich (DAO) white dwarf"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "J1332-3541 is the third hypervelocity star studied in this paper, with space velocities of 1500-2800 km/s (El-Badry et al. 2023). DAO-type hydrogen-rich white dwarf with higher mass (0.89 Msol). The paper notes that its hydrogen-rich atmosphere creates tension with the D^6 scenario, and the hydrogen may have been acquired through accretion from the interstellar medium. Velocity far exceeds the Milky Way escape velocity.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "cited_prior_candidate_reassessed",
+        "extraction_confidence": "high",
+        "confidence_reason": "Belongs to the same D^6 hypervelocity star sample discovered by El-Badry et al. (2023); the paper explicitly labels it as a hypervelocity star. Space velocities of 1500-2800 km/s far exceed the Milky Way escape velocity. Note, however, that the paper points out tension between its atmospheric composition (hydrogen-rich) and the D^6 scenario.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2311.13388/arxiv_source/aa.tex",
+            "start_line": 107,
+            "end_line": 109,
+            "context": "Abstract: three hottest hypervelocity stars (space velocities ~1500-2800 km/s)"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2311.13388/arxiv_source/aa.tex",
+            "start_line": 373,
+            "end_line": 381,
+            "context": "J1332-3541: hydrogen-dominated DAO WD, D^6 scenario has difficulty explaining atmospheric composition"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2311.13388/arxiv_source/aa.tex",
+            "start_line": 129,
+            "end_line": 129,
+            "context": "El-Badry et al. 2023 (E23) reported discovery of four hypervelocity WDs"
+          }
+        ],
+        "citation": {
+          "bibkey": "El-Badry2023",
+          "authors": [
+            "El-Badry, K.",
+            "Shen, K. J.",
+            "Chandra, V."
+          ],
+          "year": "2023",
+          "title": "The Open Journal of Astrophysics, 6, 28",
+          "doi": "",
+          "bibcode": "",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2311.13388/arxiv_source/aa.tex",
+              "start_line": 129,
+              "end_line": 129,
+              "context": "citet[][hereafter E23]{El-Badry2023} reported the discovery of four hypervelocity WDs"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2311.13388/arxiv_source/aa.bbl",
+              "start_line": 32,
+              "end_line": 37,
+              "context": "El-Badry et al. 2023, The Open Journal of Astrophysics, 6, 28"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "1.09^+0.12_-0.11",
+            "value": "1.09",
+            "error": "",
+            "lower_error": "0.11",
+            "upper_error": "0.12",
+            "unit": "kpc",
+            "kind": "spectroscopic_distance",
+            "description": "Spectroscopic distance from chi^2 SED fitting. E(B-V)=0.038 mag. Gaia distance is 1.63^+1.19_-0.68 kpc, consistent within errors.",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2311.13388/arxiv_source/aa.tex",
+                "start_line": 340,
+                "end_line": 341,
+                "context": "J1332-3541: chi^2 SED fitting, E(B-V)=0.038 mag, spectroscopic distance 1.09^+0.12_-0.11 kpc"
+              },
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+                "line": 21,
+                "column": "col_004",
+                "column_header": "J1332-3541",
+                "raw_value": "1.09^+0.12_-0.11"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": null
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": null,
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [
+        {
+          "raw_value": "DAO",
+          "value": "DAO",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "classification",
+          "description": "DAO white dwarf: hydrogen-rich with roughly solar helium abundance, chemically homogeneous atmosphere. Not a DO-to-DA transition object.",
+          "measurement_type": "classification",
+          "spectral_type": "DAO",
+          "line": "",
+          "instrument": "Keck-I LRIS",
+          "survey": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2311.13388/arxiv_source/aa.tex",
+              "start_line": 373,
+              "end_line": 376,
+              "context": "J1332-3541: not a hot helium-rich DO WD as originally proposed, but hydrogen-dominated DAO WD"
+            },
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 10,
+              "column": "col_004",
+              "column_header": "J1332-3541",
+              "raw_value": "DAO"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "65 657+/- 2390",
+          "value": "65657",
+          "error": "2390",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "K",
+          "kind": "effective_temperature",
+          "description": "Effective temperature from NLTE analysis",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 11,
+              "column": "col_004",
+              "column_header": "J1332-3541",
+              "raw_value": "65 657+/- 2390"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "log_g": {
+          "raw_value": "8.38+/- 0.08",
+          "value": "8.38",
+          "error": "0.08",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "cm/s^2",
+          "kind": "surface_gravity",
+          "description": "Surface gravity (log g) from NLTE analysis",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 12,
+              "column": "col_004",
+              "column_header": "J1332-3541",
+              "raw_value": "8.38+/- 0.08"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "metallicity": null,
+        "mass": {
+          "raw_value": "0.89+/- 0.03",
+          "value": "0.89",
+          "error": "0.03",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "Msol",
+          "kind": "mass",
+          "description": "Stellar mass, relatively massive for a WD",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 18,
+              "column": "col_004",
+              "column_header": "J1332-3541",
+              "raw_value": "0.89+/- 0.03"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "radius": {
+          "raw_value": "0.010+/- 0.001",
+          "value": "0.010",
+          "error": "0.001",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "Rsol",
+          "kind": "radius",
+          "description": "Stellar radius",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 17,
+              "column": "col_004",
+              "column_header": "J1332-3541",
+              "raw_value": "0.010+/- 0.001"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "age": null,
+        "luminosity": {
+          "raw_value": "1.7^+0.6_-0.5",
+          "value": "1.7",
+          "error": "",
+          "lower_error": "0.5",
+          "upper_error": "0.6",
+          "unit": "Lsol",
+          "kind": "luminosity",
+          "description": "Stellar luminosity",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 19,
+              "column": "col_004",
+              "column_header": "J1332-3541",
+              "raw_value": "1.7^+0.6_-0.5"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "spectral_type": {
+          "raw_value": "DAO",
+          "value": "DAO",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "spectral_type",
+          "description": "Spectral type: DAO (hydrogen-rich white dwarf with helium)",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 10,
+              "column": "col_004",
+              "column_header": "J1332-3541",
+              "raw_value": "DAO"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        "other": []
+      },
+      "abundances": [
+        {
+          "raw_value": "0.65+/- 0.04",
+          "value": "0.65",
+          "error": "0.04",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "mass fraction",
+          "kind": "abundance",
+          "description": "Hydrogen abundance (mass fraction). Presence of hydrogen is puzzling for D^6 scenario.",
+          "element": "H",
+          "abundance_scale": "mass_fraction",
+          "reference_element": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 13,
+              "column": "col_004",
+              "column_header": "J1332-3541",
+              "raw_value": "0.65+/- 0.04"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "raw_value": "0.35+/- 0.04",
+          "value": "0.35",
+          "error": "0.04",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "mass fraction",
+          "kind": "abundance",
+          "description": "Helium abundance (mass fraction), roughly solar",
+          "element": "He",
+          "abundance_scale": "mass_fraction",
+          "reference_element": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2311.13388/catalog_tables/table-tab-resultsall.ecsv",
+              "line": 14,
+              "column": "col_004",
+              "column_header": "J1332-3541",
+              "raw_value": "0.35+/- 0.04"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        }
+      ],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": {
+          "raw_value": "D^6 scenario (tension with H-rich atmosphere)",
+          "value": "D6-tension",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "",
+          "kind": "classification",
+          "description": "D^6 scenario, but hydrogen-rich atmosphere difficult to reconcile. Paper suggests possible H accretion from ISM during fast cruise through the Galaxy.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2311.13388/arxiv_source/aa.tex",
+              "start_line": 379,
+              "end_line": 381,
+              "context": "J1332-3541: presence of hydrogen is puzzling and difficult to reconcile with D^6 scenario. May have collected H during fast cruise through ISM."
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": [
+        {
+          "name": "total_space_velocity_range",
+          "raw_value": "1500-2800 km/s",
+          "value": "2150",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "unit": "km/s",
+          "kind": "total_space_velocity",
+          "description": "Collective space velocity range for the three hypervelocity stars, from El-Badry et al. (2023). Far exceeds Galactic escape velocity.",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2311.13388/arxiv_source/aa.tex",
+              "start_line": 107,
+              "end_line": 108,
+              "context": "Abstract: space velocities between ~1500-2800 km/s"
+            }
+          ],
+          "method_refs": [
+            "step-05"
+          ]
+        }
+      ]
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2311.13388:group-01",
+      "description": "The three hottest hypervelocity stars (J0546+0836, J0927-6335, J1332-3541). Discovered by El-Badry et al. (2023, Open Journal of Astrophysics, 6, 28) as D^6 hypervelocity white dwarf candidates, with space velocities ranging 1500-2800 km/s (far exceeding the Milky Way escape velocity ~500-600 km/s). This paper performs NLTE atmospheric model analysis, determines atmospheric parameters and chemical compositions, and confirms the D^6 scenario is plausible for J0546+0836 and J0927-6335, but notes tension with the hydrogen-rich atmosphere of J1332-3541.",
+      "decision": "accepted",
+      "reason": "All three stars are hypervelocity stars discovered by El-Badry et al. (2023), with space velocities of 1500-2800 km/s far exceeding the Milky Way escape velocity ~500-600 km/s, making them clear candidates for Galactic gravitational unbinding. This paper validates these candidates at the atmospheric parameter analysis level and confirms the plausibility of the D^6 origin scenario. All three stars should be included in the HVS candidate catalog.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2311.13388/arxiv_source/aa.tex",
+          "start_line": 107,
+          "end_line": 109,
+          "context": "Abstract: three hottest hypervelocity stars (space velocities ~1500-2800 km/s), identified as runaways from Type Ia supernovae"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2311.13388/arxiv_source/aa.tex",
+          "start_line": 126,
+          "end_line": 129,
+          "context": "Introduction: D^6 model - surviving WD escapes at orbital velocity 1000-2500 km/s"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2311.13388/arxiv_source/aa.tex",
+          "start_line": 348,
+          "end_line": 381,
+          "context": "Summary and Discussion: confirms D^6 scenario plausible for J0546+0836 and J0927-6335; J1332-3541 has tension due to H-rich atmosphere"
+        }
+      ]
+    }
+  ]
+}

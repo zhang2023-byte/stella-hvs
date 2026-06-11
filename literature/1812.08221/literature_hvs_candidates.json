@@ -1,0 +1,70 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:54:00",
+  "paper": {
+    "arxiv_id": "1812.08221",
+    "bibcode": null,
+    "title": "Faint, high proper motion star candidates selected from the SDSS and PS1 catalogs",
+    "month": "2018-12",
+    "source_note_json": "notes/2018/2018-12/2018-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1812.08221",
+      "pdf": "https://arxiv.org/pdf/1812.08221"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1812.08221",
+    "audit_path": "literature/1812.08221/audit.json",
+    "catalog_review_path": "literature/1812.08221/catalog_review.json",
+    "catalog_extraction_path": "literature/1812.08221/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:54:00",
+    "extractor": "agent",
+    "summary": "本文通过交叉匹配SDSS DR10和PS1 DR1星表，搜索暗弱（r>19.5）高自行（>~200 mas/yr）恒星候选体，发现2923颗。论文摘要虽提及超高速星（hyper-velocity stars）作为可能的研究对象之一，但论文仅提供高自行星星表，未识别或列出具体的HVS候选体。属于普查性星表，不产生HVS候选体列表。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "Quick scan of paper abstract and title for HVS relevance assessment.",
+      "inputs": [
+        "arXiv abstract",
+        "Monthly literature notes"
+      ],
+      "outputs": [
+        "HVS relevance classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1812.08221/paper_abstract.txt",
+          "start_line": 5,
+          "end_line": 5,
+          "context": "Paper abstract"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "quick-scan-review",
+      "description": "本文通过比较SDSS DR10和PS1 DR1星表，利用位置偏移选择高自行候选体（移动>1.5-7 arcsec），得到2923颗暗弱高自行恒星。其中826颗在Gaia DR2中无自行数据，565颗未列入Gaia DR2。SDSS-PS1自行与Gaia测量一致（rms~10 mas/yr）。论文提及超高速星作为潜在科学目标之一，但实际未对HVS候选体进行筛选或分类。",
+      "decision": "excluded",
+      "reason": "本文是暗弱高自行恒星普查性星表，提及HVS仅为背景科学动机，未识别或列出具名HVS候选体。论文发表的2923颗高自行星中可能包含HVS，但作者未进行HVS候选体筛选或标注。需要后续工作从该星表中提取可能的HVS候选体。按严格标准，本文不产生可直接纳入的HVS候选体列表。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1812.08221/paper_abstract.txt",
+          "start_line": 5,
+          "end_line": 5,
+          "context": "Paper abstract"
+        }
+      ]
+    }
+  ]
+}

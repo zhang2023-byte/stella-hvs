@@ -1,0 +1,275 @@
+{
+    "schema_version": "stella.article_data_assets.review.v1",
+    "paper": {
+        "arxiv_id": "2404.07731",
+        "title": "High speed stars: III. Detailed abundances and binary nature of the extreme speed star GHS143",
+        "month": "2024-04",
+        "source_note_json": "notes/2024/2024-04/2024-04.json",
+        "links": {
+            "abs": "https://arxiv.org/abs/2404.07731",
+            "pdf": "https://arxiv.org/pdf/2404.07731"
+        }
+    },
+    "source": {
+        "paper_dir": "literature/2404.07731",
+        "audit_path": "literature/2404.07731/audit.json",
+        "source_dir": "literature/2404.07731/arxiv_source",
+        "tex_root": "literature/2404.07731/arxiv_source/49485corr.tex",
+        "source_available": true
+    },
+    "review": {
+        "status": "reviewed",
+        "reviewed_at": "2026-05-17T12:33:57",
+        "reviewer": "agent",
+        "summary": "Auto-filled review: 2 internal table(s), 6 external resource(s)."
+    },
+    "internal_tables": [
+        {
+            "id": "table-tab-abbo",
+            "kind": "latex_table",
+            "asset_type": "data_table",
+            "role_in_paper": "Abundances",
+            "source_refs": [
+                {
+                    "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+                    "start_line": 593,
+                    "end_line": 641,
+                    "caption": "Abundances.",
+                    "label": "tab:abbo"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Element",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Nlin",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\rm A(X)\\odot",
+                    "meaning": "Column from table header",
+                    "unit_text": "X",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "A(X)",
+                    "meaning": "Column from table header",
+                    "unit_text": "X",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "[X/H]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[X/H]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\sigma",
+                    "meaning": "Column from table header",
+                    "unit_text": "mA",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "[X/Fe]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[X/Fe]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\sigma",
+                    "meaning": "Column from table header",
+                    "unit_text": "mA",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Cor(NLTE)",
+                    "meaning": "Column from table header",
+                    "unit_text": "NLTE",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Abundances.",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-sist",
+            "kind": "latex_table",
+            "asset_type": "data_table",
+            "role_in_paper": "Uncertanties on [X/Fe]",
+            "source_refs": [
+                {
+                    "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+                    "start_line": 646,
+                    "end_line": 693,
+                    "caption": "Uncertanties on [X/Fe].",
+                    "label": "tab:sist"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Ellement",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "[X/H] | random",
+                    "meaning": "Column from table header",
+                    "unit_text": "[X/H]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Nlines",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\teff\\ | +/- 100 K",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\logg\\ | +/- 0.4 dex",
+                    "meaning": "Column from table header",
+                    "unit_text": "+/- 0.4 dex",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\xi | +/- 0.2 \\kms",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Uncertanties on [X/Fe].",
+            "comments": ""
+        }
+    ],
+    "external_resources": [
+        {
+            "id": "resource-001",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+                    "start_line": 43,
+                    "end_line": 43,
+                    "context": "\\title{High speed stars: III.\\\\ Detailed abundances and binary nature of the extreme speed star GHS143\n\\thanks{Based on observations made with UVES at VLT 111.24J1.001 and 112.25EH.001.}\n\\thanks{The lines investigated are on an on-line table at CDS.}\n}\n\\titlerunning{High speed stars III}"
+                }
+            ],
+            "evidence": "\\title{High speed stars: III.\\\\ Detailed abundances and binary nature of the extreme speed star GHS143\n\\thanks{Based on observations made with UVES at VLT 111.24J1.001 and 112.25EH.001.}\n\\thanks{The lines investigated are on an on-line table at CDS.}\n}\n\\titlerunning{High speed stars III}",
+            "comments": ""
+        },
+        {
+            "id": "resource-002",
+            "kind": "external_url",
+            "url": "https://nlte.mpia.de/gui-siuAC_secE.php",
+            "local_path": "",
+            "description": "Observatory or institute data portal referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+                    "start_line": 225,
+                    "end_line": 225,
+                    "context": "and forcing the ionisation equilibrium does not take into account the NLTE effects.\nThe NLTE correction we expect for this star is about 0.1\\,dex. \nWe selected the \\ion{Fe}{i} lines retained by \\mygi\\ and also available from the  web site of MPIA,\\footnote{\\url{https://nlte.mpia.de/gui-siuAC_secE.php}} \nand with these 39 \\ion{Fe}{i} lines (providing $\\rm [Fe/H]=-1.76$) we derived the NLTE corrections \\citep{bergemann12fe}.\nFor a sample of 30 \\ion{Fe}{i} lines with NLTE corrections from \\citep{bergemann12fe}, we verified the NLTE corrections as"
+                }
+            ],
+            "evidence": "and forcing the ionisation equilibrium does not take into account the NLTE effects.\nThe NLTE correction we expect for this star is about 0.1\\,dex. \nWe selected the \\ion{Fe}{i} lines retained by \\mygi\\ and also available from the  web site of MPIA,\\footnote{\\url{https://nlte.mpia.de/gui-siuAC_secE.php}} \nand with these 39 \\ion{Fe}{i} lines (providing $\\rm [Fe/H]=-1.76$) we derived the NLTE corrections \\citep{bergemann12fe}.\nFor a sample of 30 \\ion{Fe}{i} lines with NLTE corrections from \\citep{bergemann12fe}, we verified the NLTE corrections as",
+            "comments": ""
+        },
+        {
+            "id": "resource-003",
+            "kind": "external_url",
+            "url": "http://stev.oapd.inaf.it/cmd_3.1/faq.html",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+                    "start_line": 282,
+                    "end_line": 282,
+                    "context": "With the adopted parameters (\\teff=5159, \\logg=2.1, [Fe/H]=--1.8), we derived these possible masses and ages (see Fig.\\,\\ref{fig:iso}):\n\\begin{itemize}\n\\item $\\rm M=2.3 M_\\odot$ and age of 493\\,Ma (3, RGB, red giant branch, or the quick stage of red giant for intermediate+massive stars\\footnote{\\url{http://stev.oapd.inaf.it/cmd_3.1/faq.html}}); \n\\item $\\rm M=2.3 M_\\odot$ and age of 504\\,Ma (4, CHEB, core He-burning for low mass stars, or the very initial stage of CHeB for intermediate+massive stars);\n\\item $\\rm M=1.9 M_\\odot$ and age of 904\\,Ma (7, EAGB, the early asymptotic giant branch)."
+                }
+            ],
+            "evidence": "With the adopted parameters (\\teff=5159, \\logg=2.1, [Fe/H]=--1.8), we derived these possible masses and ages (see Fig.\\,\\ref{fig:iso}):\n\\begin{itemize}\n\\item $\\rm M=2.3 M_\\odot$ and age of 493\\,Ma (3, RGB, red giant branch, or the quick stage of red giant for intermediate+massive stars\\footnote{\\url{http://stev.oapd.inaf.it/cmd_3.1/faq.html}}); \n\\item $\\rm M=2.3 M_\\odot$ and age of 504\\,Ma (4, CHEB, core He-burning for low mass stars, or the very initial stage of CHeB for intermediate+massive stars);\n\\item $\\rm M=1.9 M_\\odot$ and age of 904\\,Ma (7, EAGB, the early asymptotic giant branch).",
+            "comments": ""
+        },
+        {
+            "id": "resource-004",
+            "kind": "external_url",
+            "url": "https://www.cosmos.esa.int/gaia",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+                    "start_line": 511,
+                    "end_line": 511,
+                    "context": "We gratefully acknowledge support from the French National Research Agency (ANR) funded projects ``Pristine'' (ANR-18-CE31-0017).\nThis work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC"
+                }
+            ],
+            "evidence": "We gratefully acknowledge support from the French National Research Agency (ANR) funded projects ``Pristine'' (ANR-18-CE31-0017).\nThis work has made use of data from the European Space Agency (ESA) mission\n{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC",
+            "comments": ""
+        },
+        {
+            "id": "resource-005",
+            "kind": "external_url",
+            "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+                    "start_line": 513,
+                    "end_line": 513,
+                    "context": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement."
+                }
+            ],
+            "evidence": "{\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia}\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement.",
+            "comments": ""
+        },
+        {
+            "id": "resource-006",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2404.07731/arxiv_source/49485corr.tex",
+                    "start_line": 516,
+                    "end_line": 516,
+                    "context": "has been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement.\nThis research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n\\end{acknowledgements}"
+                }
+            ],
+            "evidence": "has been provided by national institutions, in particular the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement.\nThis research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n\\end{acknowledgements}",
+            "comments": ""
+        }
+    ]
+}

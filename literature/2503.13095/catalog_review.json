@@ -1,0 +1,204 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2503.13095",
+    "title": "A slowly pulsating run-away B star at high Galactic latitude ejected from a spiral arm",
+    "month": "2025-03",
+    "source_note_json": "notes/2025/2025-03/2025-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2503.13095",
+      "pdf": "https://arxiv.org/pdf/2503.13095"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2503.13095",
+    "audit_path": "literature/2503.13095/audit.json",
+    "source_dir": "literature/2503.13095/arxiv_source",
+    "tex_root": "literature/2503.13095/arxiv_source/runaway_AN_final.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:34:16",
+    "reviewer": "agent",
+    "summary": "Paper reports a slowly pulsating runaway B star (J0833+4308) at high Galactic latitude, ejected from the Carina-Sagittarius spiral arm. Internal tables include atmospheric parameters and chemical abundances, MIST-derived stellar parameters (mass, radius, luminosity, age), and kinematic traceback results (Galactic rest-frame velocity, plane crossing positions/velocities, ejection velocity, time of flight). External resources are Python packages (lightkurve, pywhiten) and a Keaton Bell gist for spectral window calculation. Gaia acknowledgements are generic and removed."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-atmos",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Atmospheric parameters and chemical abundances of J0833+4308 compared to the present-day cosmic abundance standard (CAS).",
+      "source_refs": [
+        {
+          "path": "literature/2503.13095/arxiv_source/runaway_AN_final.tex",
+          "start_line": 112,
+          "end_line": 135,
+          "caption": "Atmospheric parameters and chemical abundances compared to the present-day cosmic abundance standard \\citet[CAS, ][]{2012A&A...539A.143N}. The uncertainties are statistical 1$\\sigma$ except for $T_{\\mathrm{eff}}$ and $\\log g$ (see text).",
+          "label": "tab:atmos"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Physical parameter or chemical species name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Measured or derived value with uncertainty",
+          "unit_text": "",
+          "source_of_definition": "table cell",
+          "confidence": 1.0
+        },
+        {
+          "name": "CAS",
+          "meaning": "Present-day cosmic abundance standard reference value",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Atmospheric parameters and chemical abundances compared to the present-day cosmic abundance standard \\citet[CAS, ][]{2012A&A...539A.143N}. The uncertainties are statistical 1$\\sigma$ except for $T_{\\mathrm{eff}}$ and $\\log g$ (see text).",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-stellar",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Stellar parameters (mass, radius, luminosity, age) derived from MIST evolutionary models via Monte Carlo simulations.",
+      "source_refs": [
+        {
+          "path": "literature/2503.13095/arxiv_source/runaway_AN_final.tex",
+          "start_line": 164,
+          "end_line": 177,
+          "caption": "Stellar parameters derived from MIST models (see Fig. \\ref{fig:kiel_age_mass}).",
+          "label": "tab:stellar"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Stellar parameter name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Derived value with uncertainty",
+          "unit_text": "",
+          "source_of_definition": "table cell",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Stellar parameters derived from MIST models (see Fig. \\ref{fig:kiel_age_mass}).",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-kinematic",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Kinematic traceback results: Galactic rest-frame velocity, plane crossing positions and velocities, disk ejection velocity, and time of flight for J0833+4308.",
+      "source_refs": [
+        {
+          "path": "literature/2503.13095/arxiv_source/runaway_AN_final.tex",
+          "start_line": 206,
+          "end_line": 225,
+          "caption": "Galactic restframe velocity $v_{\\textnormal{grf}}$, plane crossing positions ($x_{\\textnormal{d}}$,$y_{\\textnormal{d}}$,$r_{\\textnormal{d}}$), plane crossing velocities ($v_{x\\textnormal{,d}}$,$v_{y\\textnormal{,d}}$,$v_{z\\textnormal{,d}}$), disk ejection velocity $v_{\\textnormal{ej}}$, and time of flight $\\tau_{\\textnormal{flight}}$.",
+          "label": "tab:kinematic"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Kinematic quantity name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Derived value with uncertainty",
+          "unit_text": "",
+          "source_of_definition": "table cell",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Galactic restframe velocity $v_{\\textnormal{grf}}$, plane crossing positions ($x_{\\textnormal{d}}$,$y_{\\textnormal{d}}$,$r_{\\textnormal{d}}$), plane crossing velocities ($v_{x\\textnormal{,d}}$,$v_{y\\textnormal{,d}}$,$v_{z\\textnormal{,d}}$), disk ejection velocity $v_{\\textnormal{ej}}$, and time of flight $\\tau_{\\textnormal{flight}}$.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://lightkurve.github.io/lightkurve",
+      "local_path": "",
+      "description": "Python package for downloading and analyzing TESS light curves.",
+      "source_refs": [
+        {
+          "path": "literature/2503.13095/arxiv_source/runaway_AN_final.tex",
+          "start_line": 230,
+          "end_line": 230,
+          "context": "\\textit{TESS} observed J0833+4308 (aka TIC 409272428) with 2 minute cadence in Sector 47 for 27 d with a gap of 3.5 d. \nWe used the Python package \\textsc{lightkurve}\\footnote{\\url{https://lightkurve.github.io/lightkurve}} to download the TESS data. \nThe Pre-search Data Conditioning SAP flux (PDCSAP) was used, which has long term trends removed from the simple\naperture photometry (SAP), and corrects for"
+        }
+      ],
+      "evidence": "\\textit{TESS} observed J0833+4308 (aka TIC 409272428) with 2 minute cadence in Sector 47 for 27 d with a gap of 3.5 d. \nWe used the Python package \\textsc{lightkurve}\\footnote{\\url{https://lightkurve.github.io/lightkurve}} to download the TESS data. \nThe Pre-search Data Conditioning SAP flux (PDCSAP) was used, which has long term trends removed from the simple\naperture photometry (SAP), and corrects for",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://gist.github.com/keatonb/51b52a7d564e6b470421f4b5b8cad4ed",
+      "local_path": "",
+      "description": "Keaton Bell Jupyter notebook providing spectral window function calculation for Lomb-Scargle periodograms.",
+      "source_refs": [
+        {
+          "path": "literature/2503.13095/arxiv_source/runaway_AN_final.tex",
+          "start_line": 239,
+          "end_line": 239,
+          "context": "For J0833+4308 almost 98\\% of the light (CROWDSAP parameter of 0.97733873) comes from the target. Hence, we can ignore the contaminating light and analyse its light curve.\n\nWe calculated a Lomb Scargle periodogram (Lomb 1976; Scargle 1982) of the light curve up to the Nyquist frequency with an oversampling by a factor of ten, using the function available in the \\textsc{lightkurve} package. The periodogram shows three neighbouring peaks around $3.7747\\pm0.0041$~d ($f=0.26492\\pm0.00029$~1/d). However, the window function, which we calculated using the code provided by Keaton Bell\\footnote{\\url{https://gist.github.com/keatonb/51b52a7d564e6b470421f4b5b8cad4ed\\#file-spectralwindow-ipynb}} shows that the smaller peaks are created by the limited data, which is only a few periods long."
+        }
+      ],
+      "evidence": "For J0833+4308 almost 98\\% of the light (CROWDSAP parameter of 0.97733873) comes from the target. Hence, we can ignore the contaminating light and analyse its light curve.\n\nWe calculated a Lomb Scargle periodogram (Lomb 1976; Scargle 1982) of the light curve up to the Nyquist frequency with an oversampling by a factor of ten, using the function available in the \\textsc{lightkurve} package. The periodogram shows three neighbouring peaks around $3.7747\\pm0.0041$~d ($f=0.26492\\pm0.00029$~1/d). However, the window function, which we calculated using the code provided by Keaton Bell\\footnote{\\url{https://gist.github.com/keatonb/51b52a7d564e6b470421f4b5b8cad4ed\\#file-spectralwindow-ipynb}} shows that the smaller peaks are created by the limited data, which is only a few periods long.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://gist.github.com/keatonb/51b52a7d564e6b470421f4b5b8cad4ed\\#file-spectralwindow-ipynb",
+      "local_path": "",
+      "description": "Keaton Bell Jupyter notebook providing spectral window function calculation for Lomb-Scargle periodograms.",
+      "source_refs": [
+        {
+          "path": "literature/2503.13095/arxiv_source/runaway_AN_final.tex",
+          "start_line": 239,
+          "end_line": 239,
+          "context": "For J0833+4308 almost 98\\% of the light (CROWDSAP parameter of 0.97733873) comes from the target. Hence, we can ignore the contaminating light and analyse its light curve.\n\nWe calculated a Lomb Scargle periodogram (Lomb 1976; Scargle 1982) of the light curve up to the Nyquist frequency with an oversampling by a factor of ten, using the function available in the \\textsc{lightkurve} package. The periodogram shows three neighbouring peaks around $3.7747\\pm0.0041$~d ($f=0.26492\\pm0.00029$~1/d). However, the window function, which we calculated using the code provided by Keaton Bell\\footnote{\\url{https://gist.github.com/keatonb/51b52a7d564e6b470421f4b5b8cad4ed\\#file-spectralwindow-ipynb}} shows that the smaller peaks are created by the limited data, which is only a few periods long."
+        }
+      ],
+      "evidence": "For J0833+4308 almost 98\\% of the light (CROWDSAP parameter of 0.97733873) comes from the target. Hence, we can ignore the contaminating light and analyse its light curve.\n\nWe calculated a Lomb Scargle periodogram (Lomb 1976; Scargle 1982) of the light curve up to the Nyquist frequency with an oversampling by a factor of ten, using the function available in the \\textsc{lightkurve} package. The periodogram shows three neighbouring peaks around $3.7747\\pm0.0041$~d ($f=0.26492\\pm0.00029$~1/d). However, the window function, which we calculated using the code provided by Keaton Bell\\footnote{\\url{https://gist.github.com/keatonb/51b52a7d564e6b470421f4b5b8cad4ed\\#file-spectralwindow-ipynb}} shows that the smaller peaks are created by the limited data, which is only a few periods long.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://pywhiten.readthedocs.io/",
+      "local_path": "",
+      "description": "Python package for pre-whitening time-series data to identify periodic signals.",
+      "source_refs": [
+        {
+          "path": "literature/2503.13095/arxiv_source/runaway_AN_final.tex",
+          "start_line": 242,
+          "end_line": 242,
+          "context": "The periodic variation (see Fig. \\ref{fig:lc_fc}) with 3.77 days period has an amplitude of 3~mmag, which is typical for Slowly Pulsating B stars (SPBs). The amplitude is varying, indicating beating, which is caused by additional periodicities close to the main peak, which cannot be resolved due to the short light curve. To look for additional periods we used the python package \\textsc{pywhiten}\\footnote{https://pywhiten.readthedocs.io/}. No other significant peaks could be found. However, there are discrepancies between the observed periodogram and the window function, which could indicate nearby close peaks. \n\nB stars also have been found to show light variations with the rotational period due to spots (Shen et al. 2023). As we have only an upper limit for $v\\sin i$ and {available data are insufficient to} constrain the inclination, we do not know the rotational period. Typically, they are in the range of a few days. Due to the differential rotation, often alias peaks with half the orbital periods and additional periodicities near the main period are observed. We do not see any alias peaks."
+        }
+      ],
+      "evidence": "The periodic variation (see Fig. \\ref{fig:lc_fc}) with 3.77 days period has an amplitude of 3~mmag, which is typical for Slowly Pulsating B stars (SPBs). The amplitude is varying, indicating beating, which is caused by additional periodicities close to the main peak, which cannot be resolved due to the short light curve. To look for additional periods we used the python package \\textsc{pywhiten}\\footnote{https://pywhiten.readthedocs.io/}. No other significant peaks could be found. However, there are discrepancies between the observed periodogram and the window function, which could indicate nearby close peaks. \n\nB stars also have been found to show light variations with the rotational period due to spots (Shen et al. 2023). As we have only an upper limit for $v\\sin i$ and {available data are insufficient to} constrain the inclination, we do not know the rotational period. Typically, they are in the range of a few days. Due to the differential rotation, often alias peaks with half the orbital periods and additional periodicities near the main period are observed. We do not see any alias peaks.",
+      "comments": ""
+    }
+  ]
+}

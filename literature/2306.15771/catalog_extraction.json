@@ -1,0 +1,1522 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:57:44",
+  "paper": {
+    "arxiv_id": "2306.15771",
+    "title": "A Multi-Year Photopolarimetric Study of the Semi-Regular Variable V CVn and Identification of Analogue Sources",
+    "month": "2023-06"
+  },
+  "review": {
+    "path": "literature/2306.15771/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225744",
+    "started_at": "2026-05-22T22:57:44",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2306.15771",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 9,
+      "work_count": 9,
+      "table_count": 9,
+      "success_count": 9,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 9,
+      "file_success_count": 9,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.15771/arxiv_source/main_2.tex",
+        "start_line": 159,
+        "end_line": 171,
+        "caption": "Unpolarized stars used as standards, and their polarization according to \\cite{Schmidt1992}\\label{tab1}",
+        "label": "tab1"
+      },
+      "source_path": "literature/2306.15771/arxiv_source/main_2.tex",
+      "excerpt_path": "literature/2306.15771/catalog_sources/table-tab1/excerpt.tex",
+      "sha256": "2f022592326df69bbea41b256409b6fa52e46dd0602a58ebbedcc11b8c808abd",
+      "line_count": 13,
+      "error": ""
+    },
+    {
+      "id": "table-tab2",
+      "internal_table_id": "table-tab2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.15771/arxiv_source/main_2.tex",
+        "start_line": 182,
+        "end_line": 209,
+        "caption": "Highly polarized stars measurements and comparison to reference",
+        "label": "tab2"
+      },
+      "source_path": "literature/2306.15771/arxiv_source/main_2.tex",
+      "excerpt_path": "literature/2306.15771/catalog_sources/table-tab2/excerpt.tex",
+      "sha256": "2092c7a51d3be11aee28734039063aaf66ad636051a6bc41f6f7736d5c0b4577",
+      "line_count": 28,
+      "error": ""
+    },
+    {
+      "id": "table-tab4",
+      "internal_table_id": "table-tab4",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.15771/arxiv_source/main_2.tex",
+        "start_line": 220,
+        "end_line": 228,
+        "caption": "Estimate of interstellar polarization based on nearby star BD+46 1863 \\label{tab4}",
+        "label": "tab4"
+      },
+      "source_path": "literature/2306.15771/arxiv_source/main_2.tex",
+      "excerpt_path": "literature/2306.15771/catalog_sources/table-tab4/excerpt.tex",
+      "sha256": "ce18587e8946764c80392e4d1dab2f99f5260e59bdbe738104eccfca933f6561",
+      "line_count": 9,
+      "error": ""
+    },
+    {
+      "id": "table-tab-var_stars",
+      "internal_table_id": "table-tab-var_stars",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.15771/arxiv_source/main_2.tex",
+        "start_line": 434,
+        "end_line": 474,
+        "caption": "\\label{tab:var_stars} V CVn type stars: semi-regular variables with significant variable polarization.",
+        "label": "tab:var_stars"
+      },
+      "source_path": "literature/2306.15771/arxiv_source/main_2.tex",
+      "excerpt_path": "literature/2306.15771/catalog_sources/table-tab-var_stars/excerpt.tex",
+      "sha256": "ecde0f2e577474f9513d78754c02f39adab8e8e1850a9bf01caedb45f4a7ed39",
+      "line_count": 41,
+      "error": ""
+    },
+    {
+      "id": "table-tab-journal_2020",
+      "internal_table_id": "table-tab-journal_2020",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.15771/arxiv_source/main_2.tex",
+        "start_line": 478,
+        "end_line": 543,
+        "caption": "\\label{tab:journal_2020} Photopolarimetry journal of pulsation cycle 1/2020.",
+        "label": "tab:journal_2020"
+      },
+      "source_path": "literature/2306.15771/arxiv_source/main_2.tex",
+      "excerpt_path": "literature/2306.15771/catalog_sources/table-tab-journal_2020/excerpt.tex",
+      "sha256": "ec086161ba746b1e61bd214b38a92c7cbb0810478890c3c9f03013e1ab1b4b11",
+      "line_count": 66,
+      "error": ""
+    },
+    {
+      "id": "table-tab-journal_2021-1",
+      "internal_table_id": "table-tab-journal_2021-1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.15771/arxiv_source/main_2.tex",
+        "start_line": 547,
+        "end_line": 612,
+        "caption": "\\label{tab:journal_2021-1} Journal of measurements from 2021, part 1.",
+        "label": "tab:journal_2021-1"
+      },
+      "source_path": "literature/2306.15771/arxiv_source/main_2.tex",
+      "excerpt_path": "literature/2306.15771/catalog_sources/table-tab-journal_2021-1/excerpt.tex",
+      "sha256": "7fa5fea705bba4195f87a81b5c2a80852471fdb33aa4a63e36f7c942c44d05d0",
+      "line_count": 66,
+      "error": ""
+    },
+    {
+      "id": "table-tab-journal_2021-2",
+      "internal_table_id": "table-tab-journal_2021-2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.15771/arxiv_source/main_2.tex",
+        "start_line": 616,
+        "end_line": 666,
+        "caption": "\\label{tab:journal_2021-2} Journal of measurements from 2021, part 2.",
+        "label": "tab:journal_2021-2"
+      },
+      "source_path": "literature/2306.15771/arxiv_source/main_2.tex",
+      "excerpt_path": "literature/2306.15771/catalog_sources/table-tab-journal_2021-2/excerpt.tex",
+      "sha256": "d6d16ac1ae3ee4bf428bee144f8380ff74a9d24b07c46668bcba3a52ebca9c48",
+      "line_count": 51,
+      "error": ""
+    },
+    {
+      "id": "table-tab-journal_2022-1",
+      "internal_table_id": "table-tab-journal_2022-1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.15771/arxiv_source/main_2.tex",
+        "start_line": 672,
+        "end_line": 729,
+        "caption": "\\label{tab:journal_2022-1} Journal of measurements from 2022, part 1.",
+        "label": "tab:journal_2022-1"
+      },
+      "source_path": "literature/2306.15771/arxiv_source/main_2.tex",
+      "excerpt_path": "literature/2306.15771/catalog_sources/table-tab-journal_2022-1/excerpt.tex",
+      "sha256": "540f45fb02422bcf918ed550c7c24b8a60aaa36fbaa148d0f85a5c87a0470aab",
+      "line_count": 58,
+      "error": ""
+    },
+    {
+      "id": "table-tab-journal_2022-2",
+      "internal_table_id": "table-tab-journal_2022-2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2306.15771/arxiv_source/main_2.tex",
+        "start_line": 732,
+        "end_line": 788,
+        "caption": "\\label{tab:journal_2022-2} Journal of measurements from 2022, part 2.",
+        "label": "tab:journal_2022-2"
+      },
+      "source_path": "literature/2306.15771/arxiv_source/main_2.tex",
+      "excerpt_path": "literature/2306.15771/catalog_sources/table-tab-journal_2022-2/excerpt.tex",
+      "sha256": "2dfc60fc0b33545f4975d4cd08bd73141937ea09d17594d50c079e1768fecab8",
+      "line_count": 57,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "status": "success",
+      "ecsv_path": "literature/2306.15771/catalog_tables/table-tab1.ecsv",
+      "caption": "Unpolarized stars used as standards, and their polarization according to \\cite{Schmidt1992}\\label{tab1}",
+      "label": "tab1",
+      "row_count": 4,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "mag(V)",
+          "P (%)",
+          "\\sigma_P (%)",
+          "Observer"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "mag(V)",
+          "unit_text": "mag(V)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "P (%)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\sigma_P (%)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Observer",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp22i4ic3i/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.15771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp22i4ic3i/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.15771/catalog_sources/table-tab1/wrapped.tex",
+            "html": "literature/2306.15771/catalog_sources/table-tab1/latexml.html",
+            "stdout": "literature/2306.15771/catalog_sources/table-tab1/latexml.stdout.txt",
+            "stderr": "literature/2306.15771/catalog_sources/table-tab1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2f022592326df69bbea41b256409b6fa52e46dd0602a58ebbedcc11b8c808abd"
+    },
+    {
+      "id": "table-tab2",
+      "internal_table_id": "table-tab2",
+      "status": "success",
+      "ecsv_path": "literature/2306.15771/catalog_tables/table-tab2.ecsv",
+      "caption": "Highly polarized stars measurements and comparison to reference",
+      "label": "tab2",
+      "row_count": 18,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "JD",
+          "P_cal",
+          "PA_cal",
+          "Ob"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "JD",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "P_cal",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "PA_cal",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Ob",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcq_j6pg2/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.15771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcq_j6pg2/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.15771/catalog_sources/table-tab2/wrapped.tex",
+            "html": "literature/2306.15771/catalog_sources/table-tab2/latexml.html",
+            "stdout": "literature/2306.15771/catalog_sources/table-tab2/latexml.stdout.txt",
+            "stderr": "literature/2306.15771/catalog_sources/table-tab2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2092c7a51d3be11aee28734039063aaf66ad636051a6bc41f6f7736d5c0b4577"
+    },
+    {
+      "id": "table-tab4",
+      "internal_table_id": "table-tab4",
+      "status": "success",
+      "ecsv_path": "literature/2306.15771/catalog_tables/table-tab4.ecsv",
+      "caption": "Estimate of interstellar polarization based on nearby star BD+46 1863 \\label{tab4}",
+      "label": "tab4",
+      "row_count": 1,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "P_is",
+          "PA_is",
+          "Q_is",
+          "U_is",
+          "\\sigma_Q",
+          "\\sigma_U"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "P_is",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "PA_is",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Q_is",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "U_is",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_Q",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\sigma_U",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz5_a39do/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.15771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz5_a39do/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.15771/catalog_sources/table-tab4/wrapped.tex",
+            "html": "literature/2306.15771/catalog_sources/table-tab4/latexml.html",
+            "stdout": "literature/2306.15771/catalog_sources/table-tab4/latexml.stdout.txt",
+            "stderr": "literature/2306.15771/catalog_sources/table-tab4/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ce18587e8946764c80392e4d1dab2f99f5260e59bdbe738104eccfca933f6561"
+    },
+    {
+      "id": "table-tab-var_stars",
+      "internal_table_id": "table-tab-var_stars",
+      "status": "success",
+      "ecsv_path": "literature/2306.15771/catalog_tables/table-tab-var_stars.ecsv",
+      "caption": "\\label{tab:var_stars} V CVn type stars: semi-regular variables with significant variable polarization.",
+      "label": "tab:var_stars",
+      "row_count": 12,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "V CVn",
+          "UZ Ari",
+          "AK Peg",
+          "RX Boo",
+          "Z UMa",
+          "L 2 Pup"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "V CVn",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "UZ Ari",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "AK Peg",
+          "unit_text": "AK Peg",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "RX Boo",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Z UMa",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "L 2 Pup",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "pandoc",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0zgs8vtk/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.15771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0zgs8vtk/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.15771/catalog_sources/table-tab-var_stars/wrapped.tex",
+            "html": "literature/2306.15771/catalog_sources/table-tab-var_stars/latexml.html",
+            "stdout": "literature/2306.15771/catalog_sources/table-tab-var_stars/latexml.stdout.txt",
+            "stderr": "literature/2306.15771/catalog_sources/table-tab-var_stars/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpluzh3x9m/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpluzh3x9m/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.15771/catalog_sources/table-tab-var_stars/wrapped.tex",
+            "html": "literature/2306.15771/catalog_sources/table-tab-var_stars/pandoc.html",
+            "stdout": "literature/2306.15771/catalog_sources/table-tab-var_stars/pandoc.stdout.txt",
+            "stderr": "literature/2306.15771/catalog_sources/table-tab-var_stars/pandoc.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ecde0f2e577474f9513d78754c02f39adab8e8e1850a9bf01caedb45f4a7ed39"
+    },
+    {
+      "id": "table-tab-journal_2020",
+      "internal_table_id": "table-tab-journal_2020",
+      "status": "success",
+      "ecsv_path": "literature/2306.15771/catalog_tables/table-tab-journal_2020.ecsv",
+      "caption": "\\label{tab:journal_2020} Photopolarimetry journal of pulsation cycle 1/2020.",
+      "label": "tab:journal_2020",
+      "row_count": 51,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "JD",
+          "P_cal",
+          "PA_cal",
+          "Q_cal",
+          "\\sigma_Q",
+          "U_cal",
+          "\\sigma_U",
+          "mag(V)",
+          "\\sigma_mag(V)",
+          "Exp.",
+          "Ob."
+        ],
+        [
+          "(d)",
+          "(debiased)",
+          "( ∘ )",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "(sec)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "JD | (d)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "P_cal | (debiased)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "PA_cal | ( ∘ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Q_cal",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_Q",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "U_cal",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_U",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "mag(V)",
+          "unit_text": "mag(V)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_mag(V)",
+          "unit_text": "\\sigma_mag(V)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Exp. | (sec)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Ob.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfoixbsrl/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.15771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfoixbsrl/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.15771/catalog_sources/table-tab-journal_2020/wrapped.tex",
+            "html": "literature/2306.15771/catalog_sources/table-tab-journal_2020/latexml.html",
+            "stdout": "literature/2306.15771/catalog_sources/table-tab-journal_2020/latexml.stdout.txt",
+            "stderr": "literature/2306.15771/catalog_sources/table-tab-journal_2020/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ec086161ba746b1e61bd214b38a92c7cbb0810478890c3c9f03013e1ab1b4b11"
+    },
+    {
+      "id": "table-tab-journal_2021-1",
+      "internal_table_id": "table-tab-journal_2021-1",
+      "status": "success",
+      "ecsv_path": "literature/2306.15771/catalog_tables/table-tab-journal_2021-1.ecsv",
+      "caption": "\\label{tab:journal_2021-1} Journal of measurements from 2021, part 1.",
+      "label": "tab:journal_2021-1",
+      "row_count": 52,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "JD",
+          "P_cal",
+          "PA_cal",
+          "Q_cal",
+          "\\sigma_Q",
+          "U_cal",
+          "\\sigma_U",
+          "mag(V)",
+          "\\sigma_mag(V)",
+          "Exp.",
+          "Ob."
+        ],
+        [
+          "(d)",
+          "(debiased)",
+          "( ∘ )",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "(sec)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "JD | (d)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "P_cal | (debiased)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "PA_cal | ( ∘ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Q_cal",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_Q",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "U_cal",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_U",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "mag(V)",
+          "unit_text": "mag(V)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_mag(V)",
+          "unit_text": "\\sigma_mag(V)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Exp. | (sec)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Ob.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3g8ja4ze/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.15771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3g8ja4ze/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.15771/catalog_sources/table-tab-journal_2021-1/wrapped.tex",
+            "html": "literature/2306.15771/catalog_sources/table-tab-journal_2021-1/latexml.html",
+            "stdout": "literature/2306.15771/catalog_sources/table-tab-journal_2021-1/latexml.stdout.txt",
+            "stderr": "literature/2306.15771/catalog_sources/table-tab-journal_2021-1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7fa5fea705bba4195f87a81b5c2a80852471fdb33aa4a63e36f7c942c44d05d0"
+    },
+    {
+      "id": "table-tab-journal_2021-2",
+      "internal_table_id": "table-tab-journal_2021-2",
+      "status": "success",
+      "ecsv_path": "literature/2306.15771/catalog_tables/table-tab-journal_2021-2.ecsv",
+      "caption": "\\label{tab:journal_2021-2} Journal of measurements from 2021, part 2.",
+      "label": "tab:journal_2021-2",
+      "row_count": 37,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "JD",
+          "P_cal",
+          "PA_cal",
+          "Q_cal",
+          "\\sigma_Q",
+          "U_cal",
+          "\\sigma_U",
+          "mag(V)",
+          "\\sigma_mag(V)",
+          "Exp.",
+          "Ob."
+        ],
+        [
+          "(d)",
+          "(debiased)",
+          "( ∘ )",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "(sec)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "JD | (d)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "P_cal | (debiased)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "PA_cal | ( ∘ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Q_cal",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_Q",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "U_cal",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_U",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "mag(V)",
+          "unit_text": "mag(V)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_mag(V)",
+          "unit_text": "\\sigma_mag(V)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Exp. | (sec)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Ob.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqga_p7wr/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.15771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqga_p7wr/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.15771/catalog_sources/table-tab-journal_2021-2/wrapped.tex",
+            "html": "literature/2306.15771/catalog_sources/table-tab-journal_2021-2/latexml.html",
+            "stdout": "literature/2306.15771/catalog_sources/table-tab-journal_2021-2/latexml.stdout.txt",
+            "stderr": "literature/2306.15771/catalog_sources/table-tab-journal_2021-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d6d16ac1ae3ee4bf428bee144f8380ff74a9d24b07c46668bcba3a52ebca9c48"
+    },
+    {
+      "id": "table-tab-journal_2022-1",
+      "internal_table_id": "table-tab-journal_2022-1",
+      "status": "success",
+      "ecsv_path": "literature/2306.15771/catalog_tables/table-tab-journal_2022-1.ecsv",
+      "caption": "\\label{tab:journal_2022-1} Journal of measurements from 2022, part 1.",
+      "label": "tab:journal_2022-1",
+      "row_count": 44,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "JD",
+          "P_cal",
+          "PA_cal",
+          "Q_cal",
+          "\\sigma_Q",
+          "U_cal",
+          "\\sigma_U",
+          "mag(V)",
+          "\\sigma_mag(V)",
+          "Exp.",
+          "Ob."
+        ],
+        [
+          "(d)",
+          "(debiased)",
+          "( ∘ )",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "(sec)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "JD | (d)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "P_cal | (debiased)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "PA_cal | ( ∘ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Q_cal",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_Q",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "U_cal",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_U",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "mag(V)",
+          "unit_text": "mag(V)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_mag(V)",
+          "unit_text": "\\sigma_mag(V)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Exp. | (sec)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Ob.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyanjyarb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.15771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpyanjyarb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.15771/catalog_sources/table-tab-journal_2022-1/wrapped.tex",
+            "html": "literature/2306.15771/catalog_sources/table-tab-journal_2022-1/latexml.html",
+            "stdout": "literature/2306.15771/catalog_sources/table-tab-journal_2022-1/latexml.stdout.txt",
+            "stderr": "literature/2306.15771/catalog_sources/table-tab-journal_2022-1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "540f45fb02422bcf918ed550c7c24b8a60aaa36fbaa148d0f85a5c87a0470aab"
+    },
+    {
+      "id": "table-tab-journal_2022-2",
+      "internal_table_id": "table-tab-journal_2022-2",
+      "status": "success",
+      "ecsv_path": "literature/2306.15771/catalog_tables/table-tab-journal_2022-2.ecsv",
+      "caption": "\\label{tab:journal_2022-2} Journal of measurements from 2022, part 2.",
+      "label": "tab:journal_2022-2",
+      "row_count": 43,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "JD",
+          "P_cal",
+          "PA_cal",
+          "Q_cal",
+          "\\sigma_Q",
+          "U_cal",
+          "\\sigma_U",
+          "mag(V)",
+          "\\sigma_mag(V)",
+          "Exp.",
+          "Ob."
+        ],
+        [
+          "(d)",
+          "(debiased)",
+          "( ∘ )",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "(sec)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "JD | (d)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "P_cal | (debiased)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "PA_cal | ( ∘ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Q_cal",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_Q",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "U_cal",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_U",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "mag(V)",
+          "unit_text": "mag(V)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_mag(V)",
+          "unit_text": "\\sigma_mag(V)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Exp. | (sec)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Ob.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgtlk1e56/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2306.15771/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgtlk1e56/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2306.15771/catalog_sources/table-tab-journal_2022-2/wrapped.tex",
+            "html": "literature/2306.15771/catalog_sources/table-tab-journal_2022-2/latexml.html",
+            "stdout": "literature/2306.15771/catalog_sources/table-tab-journal_2022-2/latexml.stdout.txt",
+            "stderr": "literature/2306.15771/catalog_sources/table-tab-journal_2022-2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2dfc60fc0b33545f4975d4cd08bd73141937ea09d17594d50c079e1768fecab8"
+    }
+  ]
+}

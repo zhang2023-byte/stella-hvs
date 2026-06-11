@@ -1,0 +1,2398 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:46:17",
+  "paper": {
+    "arxiv_id": "2102.10210",
+    "title": "Bayesian Cross-Matching of High Proper Motion Stars in Gaia DR2 and Photometric Metallicities for $\\\\sim$1.7 million K and M Dwarfs",
+    "month": "2021-02"
+  },
+  "review": {
+    "path": "literature/2102.10210/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084617",
+    "started_at": "2026-06-07T08:46:17",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2102.10210",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 13,
+      "work_count": 13,
+      "table_count": 13,
+      "success_count": 13,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 13,
+      "file_success_count": 13,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-best_match_results",
+      "internal_table_id": "table-tab-best_match_results",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+        "start_line": 280,
+        "end_line": 291,
+        "caption": "Number of sources matched with a total probability $>95\\%$\\label{tab:best_match_results}",
+        "label": "tab:best_match_results"
+      },
+      "source_path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+      "excerpt_path": "literature/2102.10210/catalog_sources/table-tab-best_match_results/excerpt.tex",
+      "sha256": "7635c3a5814def047da3cff48f04590484bfbf703ef6f2eef55a249eae65854b",
+      "line_count": 12,
+      "error": ""
+    },
+    {
+      "id": "table-tab-best_match_results_descrip",
+      "internal_table_id": "table-tab-best_match_results_descrip",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+        "start_line": 296,
+        "end_line": 408,
+        "caption": "Best matches found in this study with a Bayesian probability greater than 95\\% for all cross matches in this study.\\label{tab:best_match_results_descrip}",
+        "label": "tab:best_match_results_descrip"
+      },
+      "source_path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+      "excerpt_path": "literature/2102.10210/catalog_sources/table-tab-best_match_results_descrip/excerpt.tex",
+      "sha256": "0b1ee61f8b9509755ef1f4a7b1d9234635276b436871ac6b4ea6df6462c76544",
+      "line_count": 113,
+      "error": ""
+    },
+    {
+      "id": "table-tab-2MASS_all_matches",
+      "internal_table_id": "table-tab-2MASS_all_matches",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+        "start_line": 413,
+        "end_line": 431,
+        "caption": "All of the possible matches for the cross match between \\textit{Gaia} and 2MASS. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:2MASS_all_matches}",
+        "label": "tab:2MASS_all_matches"
+      },
+      "source_path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+      "excerpt_path": "literature/2102.10210/catalog_sources/table-tab-2MASS_all_matches/excerpt.tex",
+      "sha256": "8aabd8e85256956d4e46332ec4944945fe87f9e0a3743a74be05e08d2074e1b7",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-ALLWISE_all_matches",
+      "internal_table_id": "table-tab-ALLWISE_all_matches",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+        "start_line": 437,
+        "end_line": 456,
+        "caption": "All of the possible matches for the cross match between \\textit{Gaia} and AllWISE. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:ALLWISE_all_matches}",
+        "label": "tab:ALLWISE_all_matches"
+      },
+      "source_path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+      "excerpt_path": "literature/2102.10210/catalog_sources/table-tab-ALLWISE_all_matches/excerpt.tex",
+      "sha256": "deff5d34a7a0f8f5f361cbcc82ba9fbb44f0edb02afb0c7ea957c461322c8222",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-GALEX_all_matches",
+      "internal_table_id": "table-tab-GALEX_all_matches",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+        "start_line": 460,
+        "end_line": 478,
+        "caption": "All of the possible matches for the cross match between \\textit{Gaia} and GALEX DR5. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:GALEX_all_matches}",
+        "label": "tab:GALEX_all_matches"
+      },
+      "source_path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+      "excerpt_path": "literature/2102.10210/catalog_sources/table-tab-GALEX_all_matches/excerpt.tex",
+      "sha256": "b797d6a9cff8706a8e35c136961be982a2e651eecdd63798e32d7a76c78149b9",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-PS1_all_matches",
+      "internal_table_id": "table-tab-PS1_all_matches",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+        "start_line": 484,
+        "end_line": 503,
+        "caption": "All of the possible matches for the cross match between \\textit{Gaia} and Pan-STARRS. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:PS1_all_matches}",
+        "label": "tab:PS1_all_matches"
+      },
+      "source_path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+      "excerpt_path": "literature/2102.10210/catalog_sources/table-tab-PS1_all_matches/excerpt.tex",
+      "sha256": "1f2e1d36a2ad24828447c6eaa7289303e4656f606013ac99f766581e4ae3422f",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-SDSS_all_matches",
+      "internal_table_id": "table-tab-SDSS_all_matches",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+        "start_line": 509,
+        "end_line": 528,
+        "caption": "All of the possible matches for the cross match between \\textit{Gaia} and SDSS DR12. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:SDSS_all_matches}",
+        "label": "tab:SDSS_all_matches"
+      },
+      "source_path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+      "excerpt_path": "literature/2102.10210/catalog_sources/table-tab-SDSS_all_matches/excerpt.tex",
+      "sha256": "9bb2d125674e5aed98ecd2d2e0f5a0aa5c4a9214184ef607177e2f26112b2811",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-RAVE_all_matches",
+      "internal_table_id": "table-tab-RAVE_all_matches",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+        "start_line": 533,
+        "end_line": 552,
+        "caption": "All of the possible matches for the cross match between \\textit{Gaia} and RAVE DR5. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:RAVE_all_matches}",
+        "label": "tab:RAVE_all_matches"
+      },
+      "source_path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+      "excerpt_path": "literature/2102.10210/catalog_sources/table-tab-RAVE_all_matches/excerpt.tex",
+      "sha256": "bcf084b11c700ed0c27ffc53fa200aa17d65df5820f841b3cb513cdfbc2abc43",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-KM_poly",
+      "internal_table_id": "table-tab-KM_poly",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+        "start_line": 568,
+        "end_line": 587,
+        "caption": "Polynomial fits to the single star main sequence for thirteen bins of metallicity for K and early M dwarfs. Coefficients of the polynomial fits describe the relationship $y=a_0+a_1x+a_2x^2+a_3x^3+a_4x^4$ where $y=M_{K}$ and $x=g-W1$. The last two columns of the table give the mean offset and standard deviation, in absolute magnitude, from the relationship; these are used to identify stars deemed over- or under-luminous. \\label{tab:KM_poly}",
+        "label": "tab:KM_poly"
+      },
+      "source_path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+      "excerpt_path": "literature/2102.10210/catalog_sources/table-tab-KM_poly/excerpt.tex",
+      "sha256": "c536a14a00314bc60a2cf6f19d95b3a0aca39dc3d71ed958acd141a15f3b71db",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-M_poly",
+      "internal_table_id": "table-tab-M_poly",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+        "start_line": 612,
+        "end_line": 630,
+        "caption": "Polynomial fits to the single star main sequence for thirteen bins of metallicity for M dwarfs. Coefficients of the polynomial fits describe the relationship $y=a_0+a_1x+a_2x^2+a_3x^3+a_4x^4$ where $y=M_{W1}$ and $x=g-W1$. The last two columns of the table give the mean offset and standard deviation, in absolute magnitude, from the relationship; these are used to identify stars deemed over- or under-luminous.\\label{tab:M_poly}",
+        "label": "tab:M_poly"
+      },
+      "source_path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+      "excerpt_path": "literature/2102.10210/catalog_sources/table-tab-M_poly/excerpt.tex",
+      "sha256": "28bb87b30de0dbb2c492bc1107d26e4cab5f7741c8d12832a567143df34f9eb5",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-best_match_results_compare",
+      "internal_table_id": "table-tab-best_match_results_compare",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+        "start_line": 654,
+        "end_line": 666,
+        "caption": "Number of high proper motion sources matched with a total probability $>95\\%$\\label{tab:best_match_results_compare}",
+        "label": "tab:best_match_results_compare"
+      },
+      "source_path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+      "excerpt_path": "literature/2102.10210/catalog_sources/table-tab-best_match_results_compare/excerpt.tex",
+      "sha256": "da7dfdfefc1c80e6b470390e667acd60f70229aafc79d79f71830f973a89deb6",
+      "line_count": 13,
+      "error": ""
+    },
+    {
+      "id": "table-tab-K_metals",
+      "internal_table_id": "table-tab-K_metals",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+        "start_line": 735,
+        "end_line": 751,
+        "caption": "List of predicted metallicities for 716,651 K and early M dwarfs using the Gaussian Process Regressor outlined in Section \\ref{sec:KM_metals}. The regressor uses the following data inputs, $M_g$, $g-y$, $y-W2$, $J-W2$, $W1-W2$, and stars are included only if they pass the single star polynomial cuts outline in Table \\ref{tab:KM_poly}.\\label{tab:K_metals}",
+        "label": "tab:K_metals"
+      },
+      "source_path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+      "excerpt_path": "literature/2102.10210/catalog_sources/table-tab-K_metals/excerpt.tex",
+      "sha256": "9b29b4d568a9b763c97496b686ce10d1603105bbfef1abd884e274a817135465",
+      "line_count": 17,
+      "error": ""
+    },
+    {
+      "id": "table-tab-M_metals",
+      "internal_table_id": "table-tab-M_metals",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+        "start_line": 754,
+        "end_line": 770,
+        "caption": "List of predicted metallicities for 1,030,761 M dwarfs using the Gaussian Process Regressor outlined in Section \\ref{sec:M_metals}. The regressor uses the following data inputs, $M_r$, $r-W1$ and $i-K$, and stars are included only if they pass the single star polynomial cuts outline in Table \\ref{tab:M_poly}.\\label{tab:M_metals}",
+        "label": "tab:M_metals"
+      },
+      "source_path": "literature/2102.10210/arxiv_source/cross_match_paper_w_metallicities_submitted_arxiv.tex",
+      "excerpt_path": "literature/2102.10210/catalog_sources/table-tab-M_metals/excerpt.tex",
+      "sha256": "5405e8812bf152c4e94adfa5af4c853a2ddbaca2795e489f69d592eca832aa3f",
+      "line_count": 17,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-best_match_results",
+      "internal_table_id": "table-tab-best_match_results",
+      "status": "success",
+      "ecsv_path": "literature/2102.10210/catalog_tables/table-tab-best_match_results.ecsv",
+      "caption": "Number of sources matched with a total probability $>95\\%$\\label{tab:best_match_results}",
+      "label": "tab:best_match_results",
+      "row_count": 5,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "External Catalog",
+          "% Matched"
+        ],
+        [
+          "2MASS",
+          "75.40%"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "External Catalog | 2MASS",
+          "unit_text": "2MASS",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "% Matched | 75.40%",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpns223hf6/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2102.10210/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpns223hf6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2102.10210/catalog_sources/table-tab-best_match_results/wrapped.tex",
+            "html": "literature/2102.10210/catalog_sources/table-tab-best_match_results/latexml.html",
+            "stdout": "literature/2102.10210/catalog_sources/table-tab-best_match_results/latexml.stdout.txt",
+            "stderr": "literature/2102.10210/catalog_sources/table-tab-best_match_results/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7635c3a5814def047da3cff48f04590484bfbf703ef6f2eef55a249eae65854b"
+    },
+    {
+      "id": "table-tab-best_match_results_descrip",
+      "internal_table_id": "table-tab-best_match_results_descrip",
+      "status": "success",
+      "ecsv_path": "literature/2102.10210/catalog_tables/table-tab-best_match_results_descrip.ecsv",
+      "caption": "Best matches found in this study with a Bayesian probability greater than 95\\% for all cross matches in this study.\\label{tab:best_match_results_descrip}",
+      "label": "tab:best_match_results_descrip",
+      "row_count": 82,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Column Number",
+          "Label",
+          "Units",
+          "Column Description"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Column Number",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Label",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Units",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Column Description",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpeidlgsv0/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2102.10210/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpeidlgsv0/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2102.10210/catalog_sources/table-tab-best_match_results_descrip/wrapped.tex",
+            "html": "literature/2102.10210/catalog_sources/table-tab-best_match_results_descrip/latexml.html",
+            "stdout": "literature/2102.10210/catalog_sources/table-tab-best_match_results_descrip/latexml.stdout.txt",
+            "stderr": "literature/2102.10210/catalog_sources/table-tab-best_match_results_descrip/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0b1ee61f8b9509755ef1f4a7b1d9234635276b436871ac6b4ea6df6462c76544"
+    },
+    {
+      "id": "table-tab-2MASS_all_matches",
+      "internal_table_id": "table-tab-2MASS_all_matches",
+      "status": "success",
+      "ecsv_path": "literature/2102.10210/catalog_tables/table-tab-2MASS_all_matches.ecsv",
+      "caption": "All of the possible matches for the cross match between \\textit{Gaia} and 2MASS. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:2MASS_all_matches}",
+      "label": "tab:2MASS_all_matches",
+      "row_count": 10,
+      "column_count": 15,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia ID",
+          "G",
+          "\\alpha_Gaia",
+          "\\delta_Gaia",
+          "2MASS ID",
+          "J",
+          "\\sigma_J",
+          "H",
+          "\\sigma_H",
+          "K",
+          "\\sigma_K",
+          "\\alpha_2MASS",
+          "\\delta_2MASS",
+          "Bayes Prob.",
+          "\\Delta\\theta"
+        ],
+        [
+          "",
+          "[mag]",
+          "[deg]",
+          "[deg]",
+          "",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[deg]",
+          "[deg]",
+          "",
+          "[arcsec]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\alpha_Gaia | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\delta_Gaia | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "2MASS ID",
+          "unit_text": "2MASS ID",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "J | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_J | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "H | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_H | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "K | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\sigma_K | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\alpha_2MASS | [deg]",
+          "unit_text": "\\alpha_2MASS",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "\\delta_2MASS | [deg]",
+          "unit_text": "\\delta_2MASS",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "Bayes Prob.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "\\Delta\\theta | [arcsec]",
+          "unit_text": "[arcsec]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8deoa_i8/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2102.10210/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8deoa_i8/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2102.10210/catalog_sources/table-tab-2MASS_all_matches/wrapped.tex",
+            "html": "literature/2102.10210/catalog_sources/table-tab-2MASS_all_matches/latexml.html",
+            "stdout": "literature/2102.10210/catalog_sources/table-tab-2MASS_all_matches/latexml.stdout.txt",
+            "stderr": "literature/2102.10210/catalog_sources/table-tab-2MASS_all_matches/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8aabd8e85256956d4e46332ec4944945fe87f9e0a3743a74be05e08d2074e1b7"
+    },
+    {
+      "id": "table-tab-ALLWISE_all_matches",
+      "internal_table_id": "table-tab-ALLWISE_all_matches",
+      "status": "success",
+      "ecsv_path": "literature/2102.10210/catalog_tables/table-tab-ALLWISE_all_matches.ecsv",
+      "caption": "All of the possible matches for the cross match between \\textit{Gaia} and AllWISE. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:ALLWISE_all_matches}",
+      "label": "tab:ALLWISE_all_matches",
+      "row_count": 10,
+      "column_count": 17,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia ID",
+          "G",
+          "\\alpha_Gaia",
+          "\\delta_Gaia",
+          "AllWISE ID",
+          "W1",
+          "\\sigma_W1",
+          "W2",
+          "\\sigma_W2",
+          "W3",
+          "\\sigma_W3",
+          "W4",
+          "\\sigma_W4",
+          "\\alpha_AllWISE",
+          "\\delta_AllWISE",
+          "Bayes Prob.",
+          "\\Delta\\theta"
+        ],
+        [
+          "",
+          "[mag]",
+          "[deg]",
+          "[deg]",
+          "",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[deg]",
+          "[deg]",
+          "",
+          "[arcsec]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\alpha_Gaia | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\delta_Gaia | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "AllWISE ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "W1 | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_W1 | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "W2 | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_W2 | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "W3 | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\sigma_W3 | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "W4 | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "\\sigma_W4 | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "\\alpha_AllWISE | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "\\delta_AllWISE | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "Bayes Prob.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "\\Delta\\theta | [arcsec]",
+          "unit_text": "[arcsec]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp01u5i28m/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2102.10210/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp01u5i28m/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2102.10210/catalog_sources/table-tab-ALLWISE_all_matches/wrapped.tex",
+            "html": "literature/2102.10210/catalog_sources/table-tab-ALLWISE_all_matches/latexml.html",
+            "stdout": "literature/2102.10210/catalog_sources/table-tab-ALLWISE_all_matches/latexml.stdout.txt",
+            "stderr": "literature/2102.10210/catalog_sources/table-tab-ALLWISE_all_matches/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "deff5d34a7a0f8f5f361cbcc82ba9fbb44f0edb02afb0c7ea957c461322c8222"
+    },
+    {
+      "id": "table-tab-GALEX_all_matches",
+      "internal_table_id": "table-tab-GALEX_all_matches",
+      "status": "success",
+      "ecsv_path": "literature/2102.10210/catalog_tables/table-tab-GALEX_all_matches.ecsv",
+      "caption": "All of the possible matches for the cross match between \\textit{Gaia} and GALEX DR5. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:GALEX_all_matches}",
+      "label": "tab:GALEX_all_matches",
+      "row_count": 10,
+      "column_count": 13,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia ID",
+          "G",
+          "\\alpha_Gaia",
+          "\\delta_Gaia",
+          "GALEX DR5 ID",
+          "FUV",
+          "\\sigma_FUV",
+          "NUV",
+          "\\sigma_NUV",
+          "\\alpha_GALEX",
+          "\\delta_GALEX",
+          "Bayes Prob.",
+          "\\Delta\\theta"
+        ],
+        [
+          "",
+          "[mag]",
+          "[deg]",
+          "[deg]",
+          "",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[deg]",
+          "[deg]",
+          "",
+          "[arcsec]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\alpha_Gaia | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\delta_Gaia | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "GALEX DR5 ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "FUV | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_FUV | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "NUV | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_NUV | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\alpha_GALEX | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\delta_GALEX | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "Bayes Prob.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "\\Delta\\theta | [arcsec]",
+          "unit_text": "[arcsec]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpach4g0kk/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2102.10210/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpach4g0kk/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2102.10210/catalog_sources/table-tab-GALEX_all_matches/wrapped.tex",
+            "html": "literature/2102.10210/catalog_sources/table-tab-GALEX_all_matches/latexml.html",
+            "stdout": "literature/2102.10210/catalog_sources/table-tab-GALEX_all_matches/latexml.stdout.txt",
+            "stderr": "literature/2102.10210/catalog_sources/table-tab-GALEX_all_matches/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b797d6a9cff8706a8e35c136961be982a2e651eecdd63798e32d7a76c78149b9"
+    },
+    {
+      "id": "table-tab-PS1_all_matches",
+      "internal_table_id": "table-tab-PS1_all_matches",
+      "status": "success",
+      "ecsv_path": "literature/2102.10210/catalog_tables/table-tab-PS1_all_matches.ecsv",
+      "caption": "All of the possible matches for the cross match between \\textit{Gaia} and Pan-STARRS. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:PS1_all_matches}",
+      "label": "tab:PS1_all_matches",
+      "row_count": 10,
+      "column_count": 19,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia ID",
+          "G",
+          "\\alpha_Gaia",
+          "\\delta_Gaia",
+          "Pan-STARRS ID",
+          "g",
+          "\\sigma_g",
+          "r",
+          "\\sigma_r",
+          "i",
+          "\\sigma_i",
+          "z",
+          "\\sigma_z",
+          "y",
+          "\\sigma_y",
+          "\\alpha_PS1",
+          "\\delta_PS1",
+          "Bayes Prob.",
+          "\\Delta\\theta"
+        ],
+        [
+          "",
+          "[mag]",
+          "[deg]",
+          "[deg]",
+          "",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[deg]",
+          "[deg]",
+          "",
+          "[arcsec]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\alpha_Gaia | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\delta_Gaia | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Pan-STARRS ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "g | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_g | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "r | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_r | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "i | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\sigma_i | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "z | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "\\sigma_z | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "y | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "\\sigma_y | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "\\alpha_PS1 | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "\\delta_PS1 | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "Bayes Prob.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "\\Delta\\theta | [arcsec]",
+          "unit_text": "[arcsec]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplwuhu0ng/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2102.10210/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplwuhu0ng/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2102.10210/catalog_sources/table-tab-PS1_all_matches/wrapped.tex",
+            "html": "literature/2102.10210/catalog_sources/table-tab-PS1_all_matches/latexml.html",
+            "stdout": "literature/2102.10210/catalog_sources/table-tab-PS1_all_matches/latexml.stdout.txt",
+            "stderr": "literature/2102.10210/catalog_sources/table-tab-PS1_all_matches/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "1f2e1d36a2ad24828447c6eaa7289303e4656f606013ac99f766581e4ae3422f"
+    },
+    {
+      "id": "table-tab-SDSS_all_matches",
+      "internal_table_id": "table-tab-SDSS_all_matches",
+      "status": "success",
+      "ecsv_path": "literature/2102.10210/catalog_tables/table-tab-SDSS_all_matches.ecsv",
+      "caption": "All of the possible matches for the cross match between \\textit{Gaia} and SDSS DR12. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:SDSS_all_matches}",
+      "label": "tab:SDSS_all_matches",
+      "row_count": 10,
+      "column_count": 19,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia ID",
+          "G",
+          "\\alpha_Gaia",
+          "\\delta_Gaia",
+          "SDSS DR12 ID",
+          "u",
+          "\\sigma_u",
+          "g",
+          "\\sigma_g",
+          "r",
+          "\\sigma_r",
+          "i",
+          "\\sigma_i",
+          "z",
+          "\\sigma_z",
+          "\\alpha_SDSS",
+          "\\delta_SDSS",
+          "Bayes Prob.",
+          "\\Delta\\theta"
+        ],
+        [
+          "",
+          "[mag]",
+          "[deg]",
+          "[deg]",
+          "",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[deg]",
+          "[deg]",
+          "",
+          "[arcsec]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\alpha_Gaia | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\delta_Gaia | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "SDSS DR12 ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "u | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_u | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "g | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_g | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "r | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\sigma_r | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "i | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "\\sigma_i | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "z | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "\\sigma_z | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "\\alpha_SDSS | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "\\delta_SDSS | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "Bayes Prob.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "\\Delta\\theta | [arcsec]",
+          "unit_text": "[arcsec]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphj8nzsxz/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2102.10210/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphj8nzsxz/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2102.10210/catalog_sources/table-tab-SDSS_all_matches/wrapped.tex",
+            "html": "literature/2102.10210/catalog_sources/table-tab-SDSS_all_matches/latexml.html",
+            "stdout": "literature/2102.10210/catalog_sources/table-tab-SDSS_all_matches/latexml.stdout.txt",
+            "stderr": "literature/2102.10210/catalog_sources/table-tab-SDSS_all_matches/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9bb2d125674e5aed98ecd2d2e0f5a0aa5c4a9214184ef607177e2f26112b2811"
+    },
+    {
+      "id": "table-tab-RAVE_all_matches",
+      "internal_table_id": "table-tab-RAVE_all_matches",
+      "status": "success",
+      "ecsv_path": "literature/2102.10210/catalog_tables/table-tab-RAVE_all_matches.ecsv",
+      "caption": "All of the possible matches for the cross match between \\textit{Gaia} and RAVE DR5. For more detailed descriptions of the columns in this table, look at the corresponding columns in Table \\ref{tab:best_match_results_descrip}.\\label{tab:RAVE_all_matches}",
+      "label": "tab:RAVE_all_matches",
+      "row_count": 10,
+      "column_count": 13,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia ID",
+          "G",
+          "\\alpha_Gaia",
+          "\\delta_Gaia",
+          "RAVE DR5 ID",
+          "B_T",
+          "\\sigma_B_T",
+          "V_T",
+          "\\sigma_V_T",
+          "\\alpha_RAVE",
+          "\\delta_RAVE",
+          "Bayes Prob.",
+          "\\Delta\\theta"
+        ],
+        [
+          "",
+          "[mag]",
+          "[deg]",
+          "[deg]",
+          "",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[mag]",
+          "[deg]",
+          "[deg]",
+          "",
+          "[arcsec]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "G | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\alpha_Gaia | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\delta_Gaia | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "RAVE DR5 ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "B_T | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_B_T | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "V_T | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\sigma_V_T | [mag]",
+          "unit_text": "[mag]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\alpha_RAVE | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\delta_RAVE | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "Bayes Prob.",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "\\Delta\\theta | [arcsec]",
+          "unit_text": "[arcsec]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprv2_rlmw/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2102.10210/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprv2_rlmw/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2102.10210/catalog_sources/table-tab-RAVE_all_matches/wrapped.tex",
+            "html": "literature/2102.10210/catalog_sources/table-tab-RAVE_all_matches/latexml.html",
+            "stdout": "literature/2102.10210/catalog_sources/table-tab-RAVE_all_matches/latexml.stdout.txt",
+            "stderr": "literature/2102.10210/catalog_sources/table-tab-RAVE_all_matches/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "bcf084b11c700ed0c27ffc53fa200aa17d65df5820f841b3cb513cdfbc2abc43"
+    },
+    {
+      "id": "table-tab-KM_poly",
+      "internal_table_id": "table-tab-KM_poly",
+      "status": "success",
+      "ecsv_path": "literature/2102.10210/catalog_tables/table-tab-KM_poly.ecsv",
+      "caption": "Polynomial fits to the single star main sequence for thirteen bins of metallicity for K and early M dwarfs. Coefficients of the polynomial fits describe the relationship $y=a_0+a_1x+a_2x^2+a_3x^3+a_4x^4$ where $y=M_{K}$ and $x=g-W1$. The last two columns of the table give the mean offset and standard deviation, in absolute magnitude, from the relationship; these are used to identify stars deemed over- or under-luminous. \\label{tab:KM_poly}",
+      "label": "tab:KM_poly",
+      "row_count": 13,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "M/H Range",
+          "a_0",
+          "a_1",
+          "a_2",
+          "a_3",
+          "a_4",
+          "\\overlined_M",
+          "\\sigma_d_M"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "M/H Range",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "a_0",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "a_1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "a_2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "a_3",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "a_4",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\overlined_M",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\sigma_d_M",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmph_j7n920/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2102.10210/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmph_j7n920/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2102.10210/catalog_sources/table-tab-KM_poly/wrapped.tex",
+            "html": "literature/2102.10210/catalog_sources/table-tab-KM_poly/latexml.html",
+            "stdout": "literature/2102.10210/catalog_sources/table-tab-KM_poly/latexml.stdout.txt",
+            "stderr": "literature/2102.10210/catalog_sources/table-tab-KM_poly/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c536a14a00314bc60a2cf6f19d95b3a0aca39dc3d71ed958acd141a15f3b71db"
+    },
+    {
+      "id": "table-tab-M_poly",
+      "internal_table_id": "table-tab-M_poly",
+      "status": "success",
+      "ecsv_path": "literature/2102.10210/catalog_tables/table-tab-M_poly.ecsv",
+      "caption": "Polynomial fits to the single star main sequence for thirteen bins of metallicity for M dwarfs. Coefficients of the polynomial fits describe the relationship $y=a_0+a_1x+a_2x^2+a_3x^3+a_4x^4$ where $y=M_{W1}$ and $x=g-W1$. The last two columns of the table give the mean offset and standard deviation, in absolute magnitude, from the relationship; these are used to identify stars deemed over- or under-luminous.\\label{tab:M_poly}",
+      "label": "tab:M_poly",
+      "row_count": 13,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "M/H Range",
+          "a_0",
+          "a_1",
+          "a_2",
+          "a_3",
+          "a_4",
+          "\\overlined_M",
+          "\\sigma_d_M"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "M/H Range",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "a_0",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "a_1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "a_2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "a_3",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "a_4",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\overlined_M",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\sigma_d_M",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0lpj_83p/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2102.10210/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp0lpj_83p/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2102.10210/catalog_sources/table-tab-M_poly/wrapped.tex",
+            "html": "literature/2102.10210/catalog_sources/table-tab-M_poly/latexml.html",
+            "stdout": "literature/2102.10210/catalog_sources/table-tab-M_poly/latexml.stdout.txt",
+            "stderr": "literature/2102.10210/catalog_sources/table-tab-M_poly/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "28bb87b30de0dbb2c492bc1107d26e4cab5f7741c8d12832a567143df34f9eb5"
+    },
+    {
+      "id": "table-tab-best_match_results_compare",
+      "internal_table_id": "table-tab-best_match_results_compare",
+      "status": "success",
+      "ecsv_path": "literature/2102.10210/catalog_tables/table-tab-best_match_results_compare.ecsv",
+      "caption": "Number of high proper motion sources matched with a total probability $>95\\%$\\label{tab:best_match_results_compare}",
+      "label": "tab:best_match_results_compare",
+      "row_count": 5,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "External Catalog",
+          "% Matched",
+          "% Matched"
+        ],
+        [
+          "",
+          "[ gaia_cross_match ]",
+          "[This Study]"
+        ],
+        [
+          "2MASS",
+          "74.8%",
+          "75.40%"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "External Catalog | 2MASS",
+          "unit_text": "2MASS",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "% Matched | [ gaia_cross_match ] | 74.8%",
+          "unit_text": "[ gaia_cross_match ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "% Matched | [This Study] | 75.40%",
+          "unit_text": "[This Study]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8wfguygy/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2102.10210/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8wfguygy/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2102.10210/catalog_sources/table-tab-best_match_results_compare/wrapped.tex",
+            "html": "literature/2102.10210/catalog_sources/table-tab-best_match_results_compare/latexml.html",
+            "stdout": "literature/2102.10210/catalog_sources/table-tab-best_match_results_compare/latexml.stdout.txt",
+            "stderr": "literature/2102.10210/catalog_sources/table-tab-best_match_results_compare/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "da7dfdfefc1c80e6b470390e667acd60f70229aafc79d79f71830f973a89deb6"
+    },
+    {
+      "id": "table-tab-K_metals",
+      "internal_table_id": "table-tab-K_metals",
+      "status": "success",
+      "ecsv_path": "literature/2102.10210/catalog_tables/table-tab-K_metals.ecsv",
+      "caption": "List of predicted metallicities for 716,651 K and early M dwarfs using the Gaussian Process Regressor outlined in Section \\ref{sec:KM_metals}. The regressor uses the following data inputs, $M_g$, $g-y$, $y-W2$, $J-W2$, $W1-W2$, and stars are included only if they pass the single star polynomial cuts outline in Table \\ref{tab:KM_poly}.\\label{tab:K_metals}",
+      "label": "tab:K_metals",
+      "row_count": 10,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia ID",
+          "\\alpha_Gaia",
+          "\\delta_Gaia",
+          "M/H",
+          "\\sigma_M/H"
+        ],
+        [
+          "",
+          "[deg]",
+          "[deg]",
+          "[dex]",
+          "[dex]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha_Gaia | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta_Gaia | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "M/H | [dex]",
+          "unit_text": "[dex]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_M/H | [dex]",
+          "unit_text": "[dex]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8hdogyyv/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2102.10210/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8hdogyyv/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2102.10210/catalog_sources/table-tab-K_metals/wrapped.tex",
+            "html": "literature/2102.10210/catalog_sources/table-tab-K_metals/latexml.html",
+            "stdout": "literature/2102.10210/catalog_sources/table-tab-K_metals/latexml.stdout.txt",
+            "stderr": "literature/2102.10210/catalog_sources/table-tab-K_metals/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9b29b4d568a9b763c97496b686ce10d1603105bbfef1abd884e274a817135465"
+    },
+    {
+      "id": "table-tab-M_metals",
+      "internal_table_id": "table-tab-M_metals",
+      "status": "success",
+      "ecsv_path": "literature/2102.10210/catalog_tables/table-tab-M_metals.ecsv",
+      "caption": "List of predicted metallicities for 1,030,761 M dwarfs using the Gaussian Process Regressor outlined in Section \\ref{sec:M_metals}. The regressor uses the following data inputs, $M_r$, $r-W1$ and $i-K$, and stars are included only if they pass the single star polynomial cuts outline in Table \\ref{tab:M_poly}.\\label{tab:M_metals}",
+      "label": "tab:M_metals",
+      "row_count": 10,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia ID",
+          "\\alpha_Gaia",
+          "\\delta_Gaia",
+          "M/H",
+          "\\sigma_M/H"
+        ],
+        [
+          "",
+          "[deg]",
+          "[deg]",
+          "[dex]",
+          "[dex]"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha_Gaia | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta_Gaia | [deg]",
+          "unit_text": "[deg]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "M/H | [dex]",
+          "unit_text": "[dex]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_M/H | [dex]",
+          "unit_text": "[dex]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5kzw5nnb/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2102.10210/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5kzw5nnb/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2102.10210/catalog_sources/table-tab-M_metals/wrapped.tex",
+            "html": "literature/2102.10210/catalog_sources/table-tab-M_metals/latexml.html",
+            "stdout": "literature/2102.10210/catalog_sources/table-tab-M_metals/latexml.stdout.txt",
+            "stderr": "literature/2102.10210/catalog_sources/table-tab-M_metals/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5405e8812bf152c4e94adfa5af4c853a2ddbaca2795e489f69d592eca832aa3f"
+    }
+  ]
+}

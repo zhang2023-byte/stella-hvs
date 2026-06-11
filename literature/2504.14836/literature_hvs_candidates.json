@@ -1,0 +1,5790 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:11:21.878310",
+  "paper": {
+    "arxiv_id": "2504.14836",
+    "bibcode": "2025ApJ...986...22S",
+    "title": "Systematic search for blue hyper-velocity stars from LAMOST survey",
+    "month": "2025-04",
+    "source_note_json": "notes/2025/2025-04/2025-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2504.14836",
+      "pdf": "https://arxiv.org/pdf/2504.14836"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2504.14836",
+    "audit_path": "literature/2504.14836/audit.json",
+    "catalog_review_path": "literature/2504.14836/catalog_review.json",
+    "catalog_extraction_path": "literature/2504.14836/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2504.14836/catalog_tables/table-tab-selection.ecsv",
+      "literature/2504.14836/catalog_tables/table-tab-hivel.ecsv",
+      "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+      "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+      "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-05-22T20:11:21.878320",
+    "extractor": "agent",
+    "summary": "Extracted 10 new unbound HVS candidates (LAMOST-HVS5 through LAMOST-HVS14) explicitly identified by the paper as exceeding the local Milky Way escape velocity."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "step_type": "input_catalog",
+      "summary": "LAMOST DR10 low-resolution spectra and Gaia DR3 astrometry/photometry",
+      "depends_on": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 338,
+          "end_line": 342,
+          "context": "LAMOST spectra and Gaia data sections"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "step_type": "sample_selection",
+      "summary": "Blue objects from Gaia CMD with color cut and SNR cuts",
+      "depends_on": [
+        "step-01"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 344,
+          "end_line": 349,
+          "context": "Target selection criteria"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "step_type": "cross_match",
+      "summary": "Cross-matching LAMOST DR10 with Gaia DR3",
+      "depends_on": [
+        "step-02"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 344,
+          "end_line": 349,
+          "context": "Target selection combining LAMOST and Gaia"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "step_type": "quality_filter",
+      "summary": "Visual inspection, QSO/Gal exclusion, ZTF variability check",
+      "depends_on": [
+        "step-03"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 380,
+          "end_line": 383,
+          "context": "Quality cuts and visual inspection"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "step_type": "radial_velocity_measurement",
+      "summary": "LAMOST radial velocities with AFGK catalog zero-point correction",
+      "depends_on": [
+        "step-04"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 339,
+          "end_line": 339,
+          "context": "LAMOST redshift pipeline"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 435,
+          "end_line": 435,
+          "context": "AFGK catalog RVs with correction"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "step_type": "stellar_parameter_inference",
+      "summary": "MKCLASS spectral classification for early-type stars",
+      "depends_on": [
+        "step-04"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 412,
+          "end_line": 416,
+          "context": "MKCLASS spectral classification"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "step_type": "photometric_or_sed_modeling",
+      "summary": "Absolute magnitude from MKCLASS spectral type or H-delta line index for A-type stars",
+      "depends_on": [
+        "step-06"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 412,
+          "end_line": 430,
+          "context": "Absolute magnitude determination methods"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "step_type": "distance_estimation",
+      "summary": "Photometric distances from absolute magnitude and Gaia G magnitude with extinction correction",
+      "depends_on": [
+        "step-07"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 429,
+          "end_line": 430,
+          "context": "Photometric distance calculation"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "step_type": "velocity_calculation",
+      "summary": "3D velocities and Galactocentric total velocity with solar motion correction",
+      "depends_on": [
+        "step-05",
+        "step-08"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 357,
+          "end_line": 378,
+          "context": "Velocity calculations"
+        }
+      ]
+    },
+    {
+      "id": "step-10",
+      "step_type": "galactic_potential_model",
+      "summary": "MWPotential2014 model with R0=8.34 kpc and Vc=230 km/s",
+      "depends_on": [],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 474,
+          "end_line": 474,
+          "context": "Galactic potential model"
+        }
+      ]
+    },
+    {
+      "id": "step-11",
+      "step_type": "orbit_integration",
+      "summary": "Backward orbital integration with Monte Carlo sampling",
+      "depends_on": [
+        "step-09",
+        "step-10"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 474,
+          "end_line": 475,
+          "context": "Backward orbit integration"
+        }
+      ]
+    },
+    {
+      "id": "step-12",
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Comparison with Milky Way escape velocity curve",
+      "depends_on": [
+        "step-09",
+        "step-10"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 471,
+          "end_line": 472,
+          "context": "Identification of unbound HVSs"
+        }
+      ]
+    },
+    {
+      "id": "step-13",
+      "step_type": "origin_assessment",
+      "summary": "Assessment of GC, dynamical interaction, supernova, LMC, Sgr dSph origins",
+      "depends_on": [
+        "step-11",
+        "step-12"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 474,
+          "end_line": 604,
+          "context": "Origin discussions for individual candidates"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2504.14836:cand-001",
+        "paper_candidate_id": "LAMOST-HVS5",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LAMOST-HVS5",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+                "start_line": 477,
+                "end_line": 489,
+                "context": "LAMOST-HVS5 discussion: unbound A0III star with v_tot=806 km/s"
+              }
+            ]
+          },
+          {
+            "value": "J161649.39-030624.9",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 11,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS5",
+                "raw_value": "J161649.39-030624.9"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies LAMOST-HVS5 as a new unbound hypervelocity star candidate with total velocity 806.1+/-276.6 km/s exceeding the local Milky Way escape velocity.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this object as a new unbound HVS candidate with total velocity exceeding the local escape velocity.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 477,
+            "end_line": 489,
+            "context": "LAMOST-HVS5 discussion: unbound A0III star with v_tot=806 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 471,
+            "end_line": 472,
+            "context": "Section 3.1: identification of ten new unbound HVSs"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 477,
+            "end_line": 489,
+            "context": "LAMOST-HVS5 discussion: unbound A0III star with v_tot=806 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 281,
+            "end_line": 287,
+            "context": "Abstract: ten new unbound HVS candidates reported"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "244.205784",
+            "value": "244.205784",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                  "line": 12,
+                  "column": "col_002",
+                  "column_header": "LAMOST-HVS5",
+                  "raw_value": "(244.205784,-3.106973)",
+                  "component_raw_value": "244.205784"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                  "line": 12,
+                  "column": "col_002",
+                  "column_header": "LAMOST-HVS5",
+                  "raw_value": "(244.205784,-3.106973)",
+                  "component_raw_value": "244.205784"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 12,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS5",
+                "raw_value": "(244.205784,-3.106973)",
+                "component_raw_value": "244.205784"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "-3.106973",
+            "value": "-3.106973",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                  "line": 12,
+                  "column": "col_002",
+                  "column_header": "LAMOST-HVS5",
+                  "raw_value": "(244.205784,-3.106973)",
+                  "component_raw_value": "-3.106973"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                  "line": 12,
+                  "column": "col_002",
+                  "column_header": "LAMOST-HVS5",
+                  "raw_value": "(244.205784,-3.106973)",
+                  "component_raw_value": "-3.106973"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 12,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS5",
+                "raw_value": "(244.205784,-3.106973)",
+                "component_raw_value": "-3.106973"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "mu_alpharmcosdelta=-12.138+/-0.090",
+            "value": "-12.138",
+            "error": "0.090",
+            "unit": "mas/yr",
+            "description": "Proper motion in right ascension direction (mu_alpha*cos(delta))",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 19,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS5",
+                "raw_value": "mu_alpharmcosdelta=-12.138+/-0.090"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "mu_delta=-24.642+/-0.058",
+            "value": "-24.642",
+            "error": "0.058",
+            "unit": "mas/yr",
+            "description": "Proper motion in declination direction",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 20,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS5",
+                "raw_value": "mu_delta=-24.642+/-0.058"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "v_rmlos=-207.5+/-7.0",
+            "value": "-207.5",
+            "error": "7.0",
+            "unit": "km/s",
+            "description": "Heliocentric radial velocity",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 22,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS5",
+                "raw_value": "v_rmlos=-207.5+/-7.0"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "distance": {
+            "raw_value": "7.85+/-2.20tnoted",
+            "value": "7.85",
+            "error": "2.20",
+            "unit": "kpc",
+            "description": "Heliocentric distance",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 21,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS5",
+                "raw_value": "7.85+/-2.20tnoted"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_z": {
+            "raw_value": "4.18+/-1.16",
+            "value": "4.18",
+            "error": "1.16",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 29,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS5",
+                "raw_value": "4.18+/-1.16"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vx": {
+            "raw_value": "U = 90.9+/-70.6",
+            "value": "90.9",
+            "error": "70.6",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 25,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS5",
+                "raw_value": "U = 90.9+/-70.6"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "V = -766.6+/-272.3",
+            "value": "-766.6",
+            "error": "272.3",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 26,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS5",
+                "raw_value": "V = -766.6+/-272.3"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "W = -233.1+/-36.6",
+            "value": "-233.1",
+            "error": "36.6",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 27,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS5",
+                "raw_value": "W = -233.1+/-36.6"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "806.1+/-276.6",
+            "value": "806.1",
+            "error": "276.6",
+            "unit": "km/s",
+            "description": "Galactocentric total velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 24,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS5",
+                "raw_value": "806.1+/-276.6"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "v_rmrf=-157.1+/-7.0",
+            "value": "-157.1",
+            "error": "7.0",
+            "unit": "km/s",
+            "description": "Radial velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 23,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS5",
+                "raw_value": "v_rmrf=-157.1+/-7.0"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "G",
+          "measurement_type": "magnitude",
+          "raw_value": "G=16.909+/-0.003",
+          "value": "16.909",
+          "error": "0.003",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 14,
+              "column": "col_002",
+              "column_header": "LAMOST-HVS5",
+              "raw_value": "G=16.909+/-0.003"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "BP-RP",
+          "measurement_type": "color",
+          "raw_value": "0.34",
+          "value": "0.34",
+          "unit": "mag",
+          "description": "Dereddened Gaia BP-RP color",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 31,
+              "column": "col_002",
+              "column_header": "LAMOST-HVS5",
+              "raw_value": "0.34"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "G",
+          "measurement_type": "absolute_magnitude",
+          "raw_value": "M_G=2.01+/-0.60tnoted",
+          "value": "2.01",
+          "error": "0.60",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 32,
+              "column": "col_002",
+              "column_header": "LAMOST-HVS5",
+              "raw_value": "M_G=2.01+/-0.60tnoted"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "measurement_type": "spectral_type",
+          "spectral_type": "A0III",
+          "raw_value": "A0III",
+          "value": "A0III",
+          "unit": "",
+          "description": "MK spectral classification from MKCLASS code",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 30,
+              "column": "col_002",
+              "column_header": "LAMOST-HVS5",
+              "raw_value": "A0III"
+            },
+            {
+              "kind": "text",
+              "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+              "start_line": 477,
+              "end_line": 489,
+              "context": "LAMOST-HVS5 discussion: unbound A0III star with v_tot=806 km/s"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "A0III",
+          "value": "A0III",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 30,
+              "column": "col_002",
+              "column_header": "LAMOST-HVS5",
+              "raw_value": "A0III"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2504.14836:cand-002",
+        "paper_candidate_id": "LAMOST-HVS6",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LAMOST-HVS6",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+                "start_line": 491,
+                "end_line": 493,
+                "context": "LAMOST-HVS6 discussion: unbound A9V? candidate with v_tot=627 km/s"
+              }
+            ]
+          },
+          {
+            "value": "J171230.82+110924.5",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 11,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS6",
+                "raw_value": "J171230.82+110924.5"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies LAMOST-HVS6 as a new unbound hypervelocity star candidate with total velocity 627.4+/-168.5 km/s exceeding the local Milky Way escape velocity.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this object as a new unbound HVS candidate with total velocity exceeding the local escape velocity.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 491,
+            "end_line": 493,
+            "context": "LAMOST-HVS6 discussion: unbound A9V? candidate with v_tot=627 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 471,
+            "end_line": 472,
+            "context": "Section 3.1: identification of ten new unbound HVSs"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 491,
+            "end_line": 493,
+            "context": "LAMOST-HVS6 discussion: unbound A9V? candidate with v_tot=627 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 281,
+            "end_line": 287,
+            "context": "Abstract: ten new unbound HVS candidates reported"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "258.128288",
+            "value": "258.128288",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                  "line": 12,
+                  "column": "col_003",
+                  "column_header": "LAMOST-HVS6",
+                  "raw_value": "(258.128288,11.156784)",
+                  "component_raw_value": "258.128288"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                  "line": 12,
+                  "column": "col_003",
+                  "column_header": "LAMOST-HVS6",
+                  "raw_value": "(258.128288,11.156784)",
+                  "component_raw_value": "258.128288"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 12,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS6",
+                "raw_value": "(258.128288,11.156784)",
+                "component_raw_value": "258.128288"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "11.156784",
+            "value": "11.156784",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                  "line": 12,
+                  "column": "col_003",
+                  "column_header": "LAMOST-HVS6",
+                  "raw_value": "(258.128288,11.156784)",
+                  "component_raw_value": "11.156784"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                  "line": 12,
+                  "column": "col_003",
+                  "column_header": "LAMOST-HVS6",
+                  "raw_value": "(258.128288,11.156784)",
+                  "component_raw_value": "11.156784"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 12,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS6",
+                "raw_value": "(258.128288,11.156784)",
+                "component_raw_value": "11.156784"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "mu_alpharmcosdelta=-14.817+/-0.098",
+            "value": "-14.817",
+            "error": "0.098",
+            "unit": "mas/yr",
+            "description": "Proper motion in right ascension direction (mu_alpha*cos(delta))",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 19,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS6",
+                "raw_value": "mu_alpharmcosdelta=-14.817+/-0.098"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "mu_delta=2.330+/-0.079",
+            "value": "2.330",
+            "error": "0.079",
+            "unit": "mas/yr",
+            "description": "Proper motion in declination direction",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 20,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS6",
+                "raw_value": "mu_delta=2.330+/-0.079"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "v_rmlos-318.6+/-2.7",
+            "value": "-318.6",
+            "error": "2.7",
+            "unit": "km/s",
+            "description": "Heliocentric radial velocity",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 22,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS6",
+                "raw_value": "v_rmlos-318.6+/-2.7"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "distance": {
+            "raw_value": "9.54+/-2.68tnoted",
+            "value": "9.54",
+            "error": "2.68",
+            "unit": "kpc",
+            "description": "Heliocentric distance",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 21,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS6",
+                "raw_value": "9.54+/-2.68tnoted"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_z": {
+            "raw_value": "4.29+/-1.20",
+            "value": "4.29",
+            "error": "1.20",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 29,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS6",
+                "raw_value": "4.29+/-1.20"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vx": {
+            "raw_value": "U =-381.5+/-41.9",
+            "value": "-381.5",
+            "error": "41.9",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 25,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS6",
+                "raw_value": "U =-381.5+/-41.9"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "V =-225.2+/-86.4",
+            "value": "-225.2",
+            "error": "86.4",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 26,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS6",
+                "raw_value": "V =-225.2+/-86.4"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "W =444.9+/-159.9",
+            "value": "444.9",
+            "error": "159.9",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 27,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS6",
+                "raw_value": "W =444.9+/-159.9"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "627.4+/-168.5",
+            "value": "627.4",
+            "error": "168.5",
+            "unit": "km/s",
+            "description": "Galactocentric total velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 24,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS6",
+                "raw_value": "627.4+/-168.5"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "v_rmrf=-187.2+/-2.6",
+            "value": "-187.2",
+            "error": "2.6",
+            "unit": "km/s",
+            "description": "Radial velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 23,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS6",
+                "raw_value": "v_rmrf=-187.2+/-2.6"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "G",
+          "measurement_type": "magnitude",
+          "raw_value": "G=17.687+/-0.003",
+          "value": "17.687",
+          "error": "0.003",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 14,
+              "column": "col_003",
+              "column_header": "LAMOST-HVS6",
+              "raw_value": "G=17.687+/-0.003"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "BP-RP",
+          "measurement_type": "color",
+          "raw_value": "0.40",
+          "value": "0.40",
+          "unit": "mag",
+          "description": "Dereddened Gaia BP-RP color",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 31,
+              "column": "col_003",
+              "column_header": "LAMOST-HVS6",
+              "raw_value": "0.40"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "G",
+          "measurement_type": "absolute_magnitude",
+          "raw_value": "M_G=2.44+/-0.60tnoted",
+          "value": "2.44",
+          "error": "0.60",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 32,
+              "column": "col_003",
+              "column_header": "LAMOST-HVS6",
+              "raw_value": "M_G=2.44+/-0.60tnoted"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "measurement_type": "spectral_type",
+          "spectral_type": "A9V",
+          "raw_value": "A9V?",
+          "value": "A9V",
+          "unit": "",
+          "description": "MK spectral classification from MKCLASS code",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 30,
+              "column": "col_003",
+              "column_header": "LAMOST-HVS6",
+              "raw_value": "A9V?"
+            },
+            {
+              "kind": "text",
+              "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+              "start_line": 491,
+              "end_line": 493,
+              "context": "LAMOST-HVS6 discussion: unbound A9V? candidate with v_tot=627 km/s"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "A9V?",
+          "value": "A9V",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 30,
+              "column": "col_003",
+              "column_header": "LAMOST-HVS6",
+              "raw_value": "A9V?"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2504.14836:cand-003",
+        "paper_candidate_id": "LAMOST-HVS7",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LAMOST-HVS7",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+                "start_line": 495,
+                "end_line": 497,
+                "context": "LAMOST-HVS7 discussion: unbound A0III star with v_tot=511 km/s"
+              }
+            ]
+          },
+          {
+            "value": "J110108.23+360918.0",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 11,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS7",
+                "raw_value": "J110108.23+360918.0"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies LAMOST-HVS7 as a new unbound hypervelocity star candidate with total velocity 511.0+/-59.2 km/s exceeding the local Milky Way escape velocity.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this object as a new unbound HVS candidate with total velocity exceeding the local escape velocity.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 495,
+            "end_line": 497,
+            "context": "LAMOST-HVS7 discussion: unbound A0III star with v_tot=511 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 471,
+            "end_line": 472,
+            "context": "Section 3.1: identification of ten new unbound HVSs"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 495,
+            "end_line": 497,
+            "context": "LAMOST-HVS7 discussion: unbound A0III star with v_tot=511 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 281,
+            "end_line": 287,
+            "context": "Abstract: ten new unbound HVS candidates reported"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "165.284255",
+            "value": "165.284255",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                  "line": 12,
+                  "column": "col_004",
+                  "column_header": "LAMOST-HVS7",
+                  "raw_value": "(165.284255,36.154960)",
+                  "component_raw_value": "165.284255"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                  "line": 12,
+                  "column": "col_004",
+                  "column_header": "LAMOST-HVS7",
+                  "raw_value": "(165.284255,36.154960)",
+                  "component_raw_value": "165.284255"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 12,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS7",
+                "raw_value": "(165.284255,36.154960)",
+                "component_raw_value": "165.284255"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "36.154960",
+            "value": "36.154960",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                  "line": 12,
+                  "column": "col_004",
+                  "column_header": "LAMOST-HVS7",
+                  "raw_value": "(165.284255,36.154960)",
+                  "component_raw_value": "36.154960"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                  "line": 12,
+                  "column": "col_004",
+                  "column_header": "LAMOST-HVS7",
+                  "raw_value": "(165.284255,36.154960)",
+                  "component_raw_value": "36.154960"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 12,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS7",
+                "raw_value": "(165.284255,36.154960)",
+                "component_raw_value": "36.154960"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "mu_alpharmcosdelta=-11.819+/-0.054",
+            "value": "-11.819",
+            "error": "0.054",
+            "unit": "mas/yr",
+            "description": "Proper motion in right ascension direction (mu_alpha*cos(delta))",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 19,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS7",
+                "raw_value": "mu_alpharmcosdelta=-11.819+/-0.054"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "mu_delta=-7.881+/-0.060",
+            "value": "-7.881",
+            "error": "0.060",
+            "unit": "mas/yr",
+            "description": "Proper motion in declination direction",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 20,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS7",
+                "raw_value": "mu_delta=-7.881+/-0.060"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "v_rmlos=-417.1+/-6.7",
+            "value": "-417.1",
+            "error": "6.7",
+            "unit": "km/s",
+            "description": "Heliocentric radial velocity",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 22,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS7",
+                "raw_value": "v_rmlos=-417.1+/-6.7"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "distance": {
+            "raw_value": "6.61+/-1.85tnoted",
+            "value": "6.61",
+            "error": "1.85",
+            "unit": "kpc",
+            "description": "Heliocentric distance",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 21,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS7",
+                "raw_value": "6.61+/-1.85tnoted"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_z": {
+            "raw_value": "6.06+/-1.66",
+            "value": "6.06",
+            "error": "1.66",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 29,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS7",
+                "raw_value": "6.06+/-1.66"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vx": {
+            "raw_value": "U =-59.5+/-68.6",
+            "value": "-59.5",
+            "error": "68.6",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 25,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS7",
+                "raw_value": "U =-59.5+/-68.6"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "V =-93.5+/-97.1",
+            "value": "-93.5",
+            "error": "97.1",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 26,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS7",
+                "raw_value": "V =-93.5+/-97.1"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "W =-498.8+/-36.5",
+            "value": "-498.8",
+            "error": "36.5",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 27,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS7",
+                "raw_value": "W =-498.8+/-36.5"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "511.0+/-59.2",
+            "value": "511.0",
+            "error": "59.2",
+            "unit": "km/s",
+            "description": "Galactocentric total velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 24,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS7",
+                "raw_value": "511.0+/-59.2"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "v_rmrf=-424.4+/-6.6",
+            "value": "-424.4",
+            "error": "6.6",
+            "unit": "km/s",
+            "description": "Radial velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 23,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS7",
+                "raw_value": "v_rmrf=-424.4+/-6.6"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "G",
+          "measurement_type": "magnitude",
+          "raw_value": "G=16.406+/-0.003",
+          "value": "16.406",
+          "error": "0.003",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 14,
+              "column": "col_004",
+              "column_header": "LAMOST-HVS7",
+              "raw_value": "G=16.406+/-0.003"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "BP-RP",
+          "measurement_type": "color",
+          "raw_value": "0.40",
+          "value": "0.40",
+          "unit": "mag",
+          "description": "Dereddened Gaia BP-RP color",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 31,
+              "column": "col_004",
+              "column_header": "LAMOST-HVS7",
+              "raw_value": "0.40"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "G",
+          "measurement_type": "absolute_magnitude",
+          "raw_value": "M_G=2.30+/-0.60tnoted",
+          "value": "2.30",
+          "error": "0.60",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 32,
+              "column": "col_004",
+              "column_header": "LAMOST-HVS7",
+              "raw_value": "M_G=2.30+/-0.60tnoted"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "measurement_type": "spectral_type",
+          "spectral_type": "A0III",
+          "raw_value": "A0III",
+          "value": "A0III",
+          "unit": "",
+          "description": "MK spectral classification from MKCLASS code",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 30,
+              "column": "col_004",
+              "column_header": "LAMOST-HVS7",
+              "raw_value": "A0III"
+            },
+            {
+              "kind": "text",
+              "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+              "start_line": 495,
+              "end_line": 497,
+              "context": "LAMOST-HVS7 discussion: unbound A0III star with v_tot=511 km/s"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "A0III",
+          "value": "A0III",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 30,
+              "column": "col_004",
+              "column_header": "LAMOST-HVS7",
+              "raw_value": "A0III"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2504.14836:cand-004",
+        "paper_candidate_id": "LAMOST-HVS8",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LAMOST-HVS8",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+                "start_line": 499,
+                "end_line": 501,
+                "context": "LAMOST-HVS8 discussion: unbound A0III star with v_tot=502 km/s"
+              }
+            ]
+          },
+          {
+            "value": "J023346.69+103930.7",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 11,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS8",
+                "raw_value": "J023346.69+103930.7"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies LAMOST-HVS8 as a new unbound hypervelocity star candidate with total velocity 501.6+/-124.2 km/s exceeding the local Milky Way escape velocity.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this object as a new unbound HVS candidate with total velocity exceeding the local escape velocity.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 499,
+            "end_line": 501,
+            "context": "LAMOST-HVS8 discussion: unbound A0III star with v_tot=502 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 471,
+            "end_line": 472,
+            "context": "Section 3.1: identification of ten new unbound HVSs"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 499,
+            "end_line": 501,
+            "context": "LAMOST-HVS8 discussion: unbound A0III star with v_tot=502 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 281,
+            "end_line": 287,
+            "context": "Abstract: ten new unbound HVS candidates reported"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "38.444620",
+            "value": "38.444620",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                  "line": 12,
+                  "column": "col_005",
+                  "column_header": "LAMOST-HVS8",
+                  "raw_value": "(38.444620,10.658501)",
+                  "component_raw_value": "38.444620"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                  "line": 12,
+                  "column": "col_005",
+                  "column_header": "LAMOST-HVS8",
+                  "raw_value": "(38.444620,10.658501)",
+                  "component_raw_value": "38.444620"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 12,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS8",
+                "raw_value": "(38.444620,10.658501)",
+                "component_raw_value": "38.444620"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "10.658501",
+            "value": "10.658501",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                  "line": 12,
+                  "column": "col_005",
+                  "column_header": "LAMOST-HVS8",
+                  "raw_value": "(38.444620,10.658501)",
+                  "component_raw_value": "10.658501"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                  "line": 12,
+                  "column": "col_005",
+                  "column_header": "LAMOST-HVS8",
+                  "raw_value": "(38.444620,10.658501)",
+                  "component_raw_value": "10.658501"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 12,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS8",
+                "raw_value": "(38.444620,10.658501)",
+                "component_raw_value": "10.658501"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "mu_alpharmcosdelta=13.364+/-0.108",
+            "value": "13.364",
+            "error": "0.108",
+            "unit": "mas/yr",
+            "description": "Proper motion in right ascension direction (mu_alpha*cos(delta))",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 19,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS8",
+                "raw_value": "mu_alpharmcosdelta=13.364+/-0.108"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "mu_delta=-5.728+/-0.112",
+            "value": "-5.728",
+            "error": "0.112",
+            "unit": "mas/yr",
+            "description": "Proper motion in declination direction",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 20,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS8",
+                "raw_value": "mu_delta=-5.728+/-0.112"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "v_rmlos=264.7+/-1.2",
+            "value": "264.7",
+            "error": "1.2",
+            "unit": "km/s",
+            "description": "Heliocentric radial velocity",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 22,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS8",
+                "raw_value": "v_rmlos=264.7+/-1.2"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "distance": {
+            "raw_value": "8.68+/-2.43tnoted",
+            "value": "8.68",
+            "error": "2.43",
+            "unit": "kpc",
+            "description": "Heliocentric distance",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 21,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS8",
+                "raw_value": "8.68+/-2.43tnoted"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_z": {
+            "raw_value": "-6.06+/-1.70",
+            "value": "-6.06",
+            "error": "1.70",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 29,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS8",
+                "raw_value": "-6.06+/-1.70"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vx": {
+            "raw_value": "U =-435.5+/-75.3",
+            "value": "-435.5",
+            "error": "75.3",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 25,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS8",
+                "raw_value": "U =-435.5+/-75.3"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "V =-224.0+/-147.7",
+            "value": "-224.0",
+            "error": "147.7",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 26,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS8",
+                "raw_value": "V =-224.0+/-147.7"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "W =-108.0+/-19.9",
+            "value": "-108.0",
+            "error": "19.9",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 27,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS8",
+                "raw_value": "W =-108.0+/-19.9"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "501.6+/-124.2",
+            "value": "501.6",
+            "error": "124.2",
+            "unit": "km/s",
+            "description": "Galactocentric total velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 24,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS8",
+                "raw_value": "501.6+/-124.2"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "v_rmrf=313.7+/-1.2",
+            "value": "313.7",
+            "error": "1.2",
+            "unit": "km/s",
+            "description": "Radial velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+                "line": 23,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS8",
+                "raw_value": "v_rmrf=313.7+/-1.2"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "G",
+          "measurement_type": "magnitude",
+          "raw_value": "G=17.300+/-0.003",
+          "value": "17.300",
+          "error": "0.003",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 14,
+              "column": "col_005",
+              "column_header": "LAMOST-HVS8",
+              "raw_value": "G=17.300+/-0.003"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "BP-RP",
+          "measurement_type": "color",
+          "raw_value": "0.46",
+          "value": "0.46",
+          "unit": "mag",
+          "description": "Dereddened Gaia BP-RP color",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 31,
+              "column": "col_005",
+              "column_header": "LAMOST-HVS8",
+              "raw_value": "0.46"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "G",
+          "measurement_type": "absolute_magnitude",
+          "raw_value": "M_G=2.38+/-0.60tnoted",
+          "value": "2.38",
+          "error": "0.60",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 32,
+              "column": "col_005",
+              "column_header": "LAMOST-HVS8",
+              "raw_value": "M_G=2.38+/-0.60tnoted"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "measurement_type": "spectral_type",
+          "spectral_type": "A0III",
+          "raw_value": "A0III",
+          "value": "A0III",
+          "unit": "",
+          "description": "MK spectral classification from MKCLASS code",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 30,
+              "column": "col_005",
+              "column_header": "LAMOST-HVS8",
+              "raw_value": "A0III"
+            },
+            {
+              "kind": "text",
+              "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+              "start_line": 499,
+              "end_line": 501,
+              "context": "LAMOST-HVS8 discussion: unbound A0III star with v_tot=502 km/s"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "A0III",
+          "value": "A0III",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs.ecsv",
+              "line": 30,
+              "column": "col_005",
+              "column_header": "LAMOST-HVS8",
+              "raw_value": "A0III"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2504.14836:cand-005",
+        "paper_candidate_id": "LAMOST-HVS9",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LAMOST-HVS9",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+                "start_line": 502,
+                "end_line": 504,
+                "context": "LAMOST-HVS9 discussion: unbound A1IV star with v_tot=536 km/s"
+              }
+            ]
+          },
+          {
+            "value": "J125538.89+352338.8",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 11,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS9",
+                "raw_value": "J125538.89+352338.8"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies LAMOST-HVS9 as a new unbound hypervelocity star candidate with total velocity 535.6+/-93.6 km/s exceeding the local Milky Way escape velocity.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this object as a new unbound HVS candidate with total velocity exceeding the local escape velocity.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 502,
+            "end_line": 504,
+            "context": "LAMOST-HVS9 discussion: unbound A1IV star with v_tot=536 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 471,
+            "end_line": 472,
+            "context": "Section 3.1: identification of ten new unbound HVSs"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 502,
+            "end_line": 504,
+            "context": "LAMOST-HVS9 discussion: unbound A1IV star with v_tot=536 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 281,
+            "end_line": 287,
+            "context": "Abstract: ten new unbound HVS candidates reported"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "193.912015",
+            "value": "193.912015",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                  "line": 12,
+                  "column": "col_002",
+                  "column_header": "LAMOST-HVS9",
+                  "raw_value": "(193.912015,35.394107)",
+                  "component_raw_value": "193.912015"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                  "line": 12,
+                  "column": "col_002",
+                  "column_header": "LAMOST-HVS9",
+                  "raw_value": "(193.912015,35.394107)",
+                  "component_raw_value": "193.912015"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 12,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS9",
+                "raw_value": "(193.912015,35.394107)",
+                "component_raw_value": "193.912015"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "35.394107",
+            "value": "35.394107",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                  "line": 12,
+                  "column": "col_002",
+                  "column_header": "LAMOST-HVS9",
+                  "raw_value": "(193.912015,35.394107)",
+                  "component_raw_value": "35.394107"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                  "line": 12,
+                  "column": "col_002",
+                  "column_header": "LAMOST-HVS9",
+                  "raw_value": "(193.912015,35.394107)",
+                  "component_raw_value": "35.394107"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 12,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS9",
+                "raw_value": "(193.912015,35.394107)",
+                "component_raw_value": "35.394107"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "mu_alpharmcosdelta=-7.222+/-0.046",
+            "value": "-7.222",
+            "error": "0.046",
+            "unit": "mas/yr",
+            "description": "Proper motion in right ascension direction (mu_alpha*cos(delta))",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 19,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS9",
+                "raw_value": "mu_alpharmcosdelta=-7.222+/-0.046"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "mu_delta=1.071+/-0.056",
+            "value": "1.071",
+            "error": "0.056",
+            "unit": "mas/yr",
+            "description": "Proper motion in declination direction",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 20,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS9",
+                "raw_value": "mu_delta=1.071+/-0.056"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "v_rmlos=280.3+/-3.4",
+            "value": "280.3",
+            "error": "3.4",
+            "unit": "km/s",
+            "description": "Heliocentric radial velocity",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 22,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS9",
+                "raw_value": "v_rmlos=280.3+/-3.4"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "distance": {
+            "raw_value": "14.16+/-3.94tnotea",
+            "value": "14.16",
+            "error": "3.94",
+            "unit": "kpc",
+            "description": "Heliocentric distance",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 21,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS9",
+                "raw_value": "14.16+/-3.94tnotea"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_z": {
+            "raw_value": "13.99+/-3.98",
+            "value": "13.99",
+            "error": "3.98",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 29,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS9",
+                "raw_value": "13.99+/-3.98"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vx": {
+            "raw_value": "U =-449.9+/-122.0",
+            "value": "-449.9",
+            "error": "122.0",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 25,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS9",
+                "raw_value": "U =-449.9+/-122.0"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "V =68.8+/-57.3",
+            "value": "68.8",
+            "error": "57.3",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 26,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS9",
+                "raw_value": "V =68.8+/-57.3"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "W =282.5+/-3.5",
+            "value": "282.5",
+            "error": "3.5",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 27,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS9",
+                "raw_value": "W =282.5+/-3.5"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "535.6+/-93.6",
+            "value": "535.6",
+            "error": "93.6",
+            "unit": "km/s",
+            "description": "Galactocentric total velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 24,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS9",
+                "raw_value": "535.6+/-93.6"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "v_rmrf=319.7+/-3.4",
+            "value": "319.7",
+            "error": "3.4",
+            "unit": "km/s",
+            "description": "Radial velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 23,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS9",
+                "raw_value": "v_rmrf=319.7+/-3.4"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "G",
+          "measurement_type": "magnitude",
+          "raw_value": "G=17.428+/-0.003",
+          "value": "17.428",
+          "error": "0.003",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 14,
+              "column": "col_002",
+              "column_header": "LAMOST-HVS9",
+              "raw_value": "G=17.428+/-0.003"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "BP-RP",
+          "measurement_type": "color",
+          "raw_value": "0.24",
+          "value": "0.24",
+          "unit": "mag",
+          "description": "Dereddened Gaia BP-RP color",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 31,
+              "column": "col_002",
+              "column_header": "LAMOST-HVS9",
+              "raw_value": "0.24"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "G",
+          "measurement_type": "absolute_magnitude",
+          "raw_value": "M_G=1.68+/-0.60tnotea",
+          "value": "1.68",
+          "error": "0.60",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 32,
+              "column": "col_002",
+              "column_header": "LAMOST-HVS9",
+              "raw_value": "M_G=1.68+/-0.60tnotea"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "measurement_type": "spectral_type",
+          "spectral_type": "A1IV",
+          "raw_value": "A1IV",
+          "value": "A1IV",
+          "unit": "",
+          "description": "MK spectral classification from MKCLASS code",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 30,
+              "column": "col_002",
+              "column_header": "LAMOST-HVS9",
+              "raw_value": "A1IV"
+            },
+            {
+              "kind": "text",
+              "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+              "start_line": 502,
+              "end_line": 504,
+              "context": "LAMOST-HVS9 discussion: unbound A1IV star with v_tot=536 km/s"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "A1IV",
+          "value": "A1IV",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 30,
+              "column": "col_002",
+              "column_header": "LAMOST-HVS9",
+              "raw_value": "A1IV"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2504.14836:cand-006",
+        "paper_candidate_id": "LAMOST-HVS10",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LAMOST-HVS10",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+                "start_line": 544,
+                "end_line": 547,
+                "context": "LAMOST-HVS10 discussion: unbound A0V star with v_tot=758 km/s"
+              }
+            ]
+          },
+          {
+            "value": "J015725.24+323539.3",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 11,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS10",
+                "raw_value": "J015725.24+323539.3"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies LAMOST-HVS10 as a new unbound hypervelocity star candidate with total velocity 758.0+/-61.3 km/s exceeding the local Milky Way escape velocity.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this object as a new unbound HVS candidate with total velocity exceeding the local escape velocity.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 544,
+            "end_line": 547,
+            "context": "LAMOST-HVS10 discussion: unbound A0V star with v_tot=758 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 471,
+            "end_line": 472,
+            "context": "Section 3.1: identification of ten new unbound HVSs"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 544,
+            "end_line": 547,
+            "context": "LAMOST-HVS10 discussion: unbound A0V star with v_tot=758 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 281,
+            "end_line": 287,
+            "context": "Abstract: ten new unbound HVS candidates reported"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "29.355280",
+            "value": "29.355280",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                  "line": 12,
+                  "column": "col_003",
+                  "column_header": "LAMOST-HVS10",
+                  "raw_value": "(29.355280,32.594310)",
+                  "component_raw_value": "29.355280"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                  "line": 12,
+                  "column": "col_003",
+                  "column_header": "LAMOST-HVS10",
+                  "raw_value": "(29.355280,32.594310)",
+                  "component_raw_value": "29.355280"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 12,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS10",
+                "raw_value": "(29.355280,32.594310)",
+                "component_raw_value": "29.355280"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "32.594310",
+            "value": "32.594310",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                  "line": 12,
+                  "column": "col_003",
+                  "column_header": "LAMOST-HVS10",
+                  "raw_value": "(29.355280,32.594310)",
+                  "component_raw_value": "32.594310"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                  "line": 12,
+                  "column": "col_003",
+                  "column_header": "LAMOST-HVS10",
+                  "raw_value": "(29.355280,32.594310)",
+                  "component_raw_value": "32.594310"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 12,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS10",
+                "raw_value": "(29.355280,32.594310)",
+                "component_raw_value": "32.594310"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "mu_alpharmcosdelta=14.859+/-0.070",
+            "value": "14.859",
+            "error": "0.070",
+            "unit": "mas/yr",
+            "description": "Proper motion in right ascension direction (mu_alpha*cos(delta))",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 19,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS10",
+                "raw_value": "mu_alpharmcosdelta=14.859+/-0.070"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "mu_delta=-7.980+/-0.071",
+            "value": "-7.980",
+            "error": "0.071",
+            "unit": "mas/yr",
+            "description": "Proper motion in declination direction",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 20,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS10",
+                "raw_value": "mu_delta=-7.980+/-0.071"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "v_rmlos=169.8+/-2.9",
+            "value": "169.8",
+            "error": "2.9",
+            "unit": "km/s",
+            "description": "Heliocentric radial velocity",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 22,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS10",
+                "raw_value": "v_rmlos=169.8+/-2.9"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "distance": {
+            "raw_value": "11.20+/-0.82tnoteb",
+            "value": "11.20",
+            "error": "0.82",
+            "unit": "kpc",
+            "description": "Heliocentric distance",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 21,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS10",
+                "raw_value": "11.20+/-0.82tnoteb"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_z": {
+            "raw_value": "-5.27+/-0.38",
+            "value": "-5.27",
+            "error": "0.38",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 29,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS10",
+                "raw_value": "-5.27+/-0.38"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vx": {
+            "raw_value": "U =-615.5+/-37.6",
+            "value": "-615.5",
+            "error": "37.6",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 25,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS10",
+                "raw_value": "U =-615.5+/-37.6"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "V =-375.4+/-55.2",
+            "value": "-375.4",
+            "error": "55.2",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 26,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS10",
+                "raw_value": "V =-375.4+/-55.2"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "W =-229.9+/-33.2",
+            "value": "-229.9",
+            "error": "33.2",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 27,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS10",
+                "raw_value": "W =-229.9+/-33.2"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "758.0+/-61.3",
+            "value": "758.0",
+            "error": "61.3",
+            "unit": "km/s",
+            "description": "Galactocentric total velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 24,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS10",
+                "raw_value": "758.0+/-61.3"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "v_rmrf=305.0+/-2.8",
+            "value": "305.0",
+            "error": "2.8",
+            "unit": "km/s",
+            "description": "Radial velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 23,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS10",
+                "raw_value": "v_rmrf=305.0+/-2.8"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "G",
+          "measurement_type": "magnitude",
+          "raw_value": "G=16.329+/-0.003",
+          "value": "16.329",
+          "error": "0.003",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 14,
+              "column": "col_003",
+              "column_header": "LAMOST-HVS10",
+              "raw_value": "G=16.329+/-0.003"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "BP-RP",
+          "measurement_type": "color",
+          "raw_value": "0.25",
+          "value": "0.25",
+          "unit": "mag",
+          "description": "Dereddened Gaia BP-RP color",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 31,
+              "column": "col_003",
+              "column_header": "LAMOST-HVS10",
+              "raw_value": "0.25"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "G",
+          "measurement_type": "absolute_magnitude",
+          "raw_value": "M_G=1.00+/-0.16tnoteb",
+          "value": "1.00",
+          "error": "0.16",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 32,
+              "column": "col_003",
+              "column_header": "LAMOST-HVS10",
+              "raw_value": "M_G=1.00+/-0.16tnoteb"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "measurement_type": "spectral_type",
+          "spectral_type": "A0V",
+          "raw_value": "A0V",
+          "value": "A0V",
+          "unit": "",
+          "description": "MK spectral classification from MKCLASS code",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 30,
+              "column": "col_003",
+              "column_header": "LAMOST-HVS10",
+              "raw_value": "A0V"
+            },
+            {
+              "kind": "text",
+              "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+              "start_line": 544,
+              "end_line": 547,
+              "context": "LAMOST-HVS10 discussion: unbound A0V star with v_tot=758 km/s"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "A0V",
+          "value": "A0V",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 30,
+              "column": "col_003",
+              "column_header": "LAMOST-HVS10",
+              "raw_value": "A0V"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2504.14836:cand-007",
+        "paper_candidate_id": "LAMOST-HVS11",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LAMOST-HVS11",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+                "start_line": 548,
+                "end_line": 550,
+                "context": "LAMOST-HVS11 discussion: unbound B5V star with v_tot=437 km/s"
+              }
+            ]
+          },
+          {
+            "value": "J101018.82+302028.1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 11,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS11",
+                "raw_value": "J101018.82+302028.1"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies LAMOST-HVS11 as a new unbound hypervelocity star candidate with total velocity 437.0+/-4.2 km/s exceeding the local Milky Way escape velocity.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this object as a new unbound HVS candidate with total velocity exceeding the local escape velocity.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 548,
+            "end_line": 550,
+            "context": "LAMOST-HVS11 discussion: unbound B5V star with v_tot=437 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 471,
+            "end_line": 472,
+            "context": "Section 3.1: identification of ten new unbound HVSs"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 548,
+            "end_line": 550,
+            "context": "LAMOST-HVS11 discussion: unbound B5V star with v_tot=437 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 281,
+            "end_line": 287,
+            "context": "Abstract: ten new unbound HVS candidates reported"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "152.578431",
+            "value": "152.578431",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                  "line": 12,
+                  "column": "col_004",
+                  "column_header": "LAMOST-HVS11",
+                  "raw_value": "(152.578431,30.341158)",
+                  "component_raw_value": "152.578431"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                  "line": 12,
+                  "column": "col_004",
+                  "column_header": "LAMOST-HVS11",
+                  "raw_value": "(152.578431,30.341158)",
+                  "component_raw_value": "152.578431"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 12,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS11",
+                "raw_value": "(152.578431,30.341158)",
+                "component_raw_value": "152.578431"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "30.341158",
+            "value": "30.341158",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                  "line": 12,
+                  "column": "col_004",
+                  "column_header": "LAMOST-HVS11",
+                  "raw_value": "(152.578431,30.341158)",
+                  "component_raw_value": "30.341158"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                  "line": 12,
+                  "column": "col_004",
+                  "column_header": "LAMOST-HVS11",
+                  "raw_value": "(152.578431,30.341158)",
+                  "component_raw_value": "30.341158"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 12,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS11",
+                "raw_value": "(152.578431,30.341158)",
+                "component_raw_value": "30.341158"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "mu_alpharmcosdelta=-0.891+/-0.061",
+            "value": "-0.891",
+            "error": "0.061",
+            "unit": "mas/yr",
+            "description": "Proper motion in right ascension direction (mu_alpha*cos(delta))",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 19,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS11",
+                "raw_value": "mu_alpharmcosdelta=-0.891+/-0.061"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "mu_delta=-0.071+/-0.054",
+            "value": "-0.071",
+            "error": "0.054",
+            "unit": "mas/yr",
+            "description": "Proper motion in declination direction",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 20,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS11",
+                "raw_value": "mu_delta=-0.071+/-0.054"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "v_rmlos=414.6+/-1.4",
+            "value": "414.6",
+            "error": "1.4",
+            "unit": "km/s",
+            "description": "Heliocentric radial velocity",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 22,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS11",
+                "raw_value": "v_rmlos=414.6+/-1.4"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "distance": {
+            "raw_value": "27.29+/-3.75tnotec",
+            "value": "27.29",
+            "error": "3.75",
+            "unit": "kpc",
+            "description": "Heliocentric distance",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 21,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS11",
+                "raw_value": "27.29+/-3.75tnotec"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_z": {
+            "raw_value": "22.39+/-3.07",
+            "value": "22.39",
+            "error": "3.07",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 29,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS11",
+                "raw_value": "22.39+/-3.07"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vx": {
+            "raw_value": "U =-305.8+/-13.9",
+            "value": "-305.8",
+            "error": "13.9",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 25,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS11",
+                "raw_value": "U =-305.8+/-13.9"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "V =138.6+/-7.9",
+            "value": "138.6",
+            "error": "7.9",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 26,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS11",
+                "raw_value": "V =138.6+/-7.9"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "W =279.6+/-10.2",
+            "value": "279.6",
+            "error": "10.2",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 27,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS11",
+                "raw_value": "W =279.6+/-10.2"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "437.0+/-4.2",
+            "value": "437.0",
+            "error": "4.2",
+            "unit": "km/s",
+            "description": "Galactocentric total velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 24,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS11",
+                "raw_value": "437.0+/-4.2"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "v_rmrf=369.5+/-1.4",
+            "value": "369.5",
+            "error": "1.4",
+            "unit": "km/s",
+            "description": "Radial velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 23,
+                "column": "col_004",
+                "column_header": "LAMOST-HVS11",
+                "raw_value": "v_rmrf=369.5+/-1.4"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "G",
+          "measurement_type": "magnitude",
+          "raw_value": "G=16.338+/-0.003",
+          "value": "16.338",
+          "error": "0.003",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 14,
+              "column": "col_004",
+              "column_header": "LAMOST-HVS11",
+              "raw_value": "G=16.338+/-0.003"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "BP-RP",
+          "measurement_type": "color",
+          "raw_value": "-0.21",
+          "value": "-0.21",
+          "unit": "mag",
+          "description": "Dereddened Gaia BP-RP color",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 31,
+              "column": "col_004",
+              "column_header": "LAMOST-HVS11",
+              "raw_value": "-0.21"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "G",
+          "measurement_type": "absolute_magnitude",
+          "raw_value": "M_G=-0.84+/-0.30tnotec",
+          "value": "-0.84",
+          "error": "0.30",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 32,
+              "column": "col_004",
+              "column_header": "LAMOST-HVS11",
+              "raw_value": "M_G=-0.84+/-0.30tnotec"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "measurement_type": "spectral_type",
+          "spectral_type": "B5V",
+          "raw_value": "B5V",
+          "value": "B5V",
+          "unit": "",
+          "description": "MK spectral classification from MKCLASS code",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 30,
+              "column": "col_004",
+              "column_header": "LAMOST-HVS11",
+              "raw_value": "B5V"
+            },
+            {
+              "kind": "text",
+              "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+              "start_line": 548,
+              "end_line": 550,
+              "context": "LAMOST-HVS11 discussion: unbound B5V star with v_tot=437 km/s"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "B5V",
+          "value": "B5V",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 30,
+              "column": "col_004",
+              "column_header": "LAMOST-HVS11",
+              "raw_value": "B5V"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2504.14836:cand-008",
+        "paper_candidate_id": "LAMOST-HVS12",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LAMOST-HVS12",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+                "start_line": 552,
+                "end_line": 554,
+                "context": "LAMOST-HVS12 discussion: unbound B3V star with v_tot=509 km/s"
+              }
+            ]
+          },
+          {
+            "value": "J014106.87+163157.3",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 11,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS12",
+                "raw_value": "J014106.87+163157.3"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies LAMOST-HVS12 as a new unbound hypervelocity star candidate with total velocity 508.7+/-12.8 km/s exceeding the local Milky Way escape velocity.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this object as a new unbound HVS candidate with total velocity exceeding the local escape velocity.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 552,
+            "end_line": 554,
+            "context": "LAMOST-HVS12 discussion: unbound B3V star with v_tot=509 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 471,
+            "end_line": 472,
+            "context": "Section 3.1: identification of ten new unbound HVSs"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 552,
+            "end_line": 554,
+            "context": "LAMOST-HVS12 discussion: unbound B3V star with v_tot=509 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 281,
+            "end_line": 287,
+            "context": "Abstract: ten new unbound HVS candidates reported"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "25.278694",
+            "value": "25.278694",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                  "line": 12,
+                  "column": "col_005",
+                  "column_header": "LAMOST-HVS12",
+                  "raw_value": "(25.278694,16.532547)",
+                  "component_raw_value": "25.278694"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                  "line": 12,
+                  "column": "col_005",
+                  "column_header": "LAMOST-HVS12",
+                  "raw_value": "(25.278694,16.532547)",
+                  "component_raw_value": "25.278694"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 12,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS12",
+                "raw_value": "(25.278694,16.532547)",
+                "component_raw_value": "25.278694"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "16.532547",
+            "value": "16.532547",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                  "line": 12,
+                  "column": "col_005",
+                  "column_header": "LAMOST-HVS12",
+                  "raw_value": "(25.278694,16.532547)",
+                  "component_raw_value": "16.532547"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                  "line": 12,
+                  "column": "col_005",
+                  "column_header": "LAMOST-HVS12",
+                  "raw_value": "(25.278694,16.532547)",
+                  "component_raw_value": "16.532547"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 12,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS12",
+                "raw_value": "(25.278694,16.532547)",
+                "component_raw_value": "16.532547"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "mu_alpharmcosdelta=1.461+/-0.117",
+            "value": "1.461",
+            "error": "0.117",
+            "unit": "mas/yr",
+            "description": "Proper motion in right ascension direction (mu_alpha*cos(delta))",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 19,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS12",
+                "raw_value": "mu_alpharmcosdelta=1.461+/-0.117"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "mu_delta=-1.564+/-0.093",
+            "value": "-1.564",
+            "error": "0.093",
+            "unit": "mas/yr",
+            "description": "Proper motion in declination direction",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 20,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS12",
+                "raw_value": "mu_delta=-1.564+/-0.093"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "v_rmlos=384.3+/-4.0",
+            "value": "384.3",
+            "error": "4.0",
+            "unit": "km/s",
+            "description": "Heliocentric radial velocity",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 22,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS12",
+                "raw_value": "v_rmlos=384.3+/-4.0"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "distance": {
+            "raw_value": "37.28+/-3.42tnoted",
+            "value": "37.28",
+            "error": "3.42",
+            "unit": "kpc",
+            "description": "Heliocentric distance",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 21,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS12",
+                "raw_value": "37.28+/-3.42tnoted"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_z": {
+            "raw_value": "-26.20+/-2.39",
+            "value": "-26.20",
+            "error": "2.39",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 29,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS12",
+                "raw_value": "-26.20+/-2.39"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vx": {
+            "raw_value": "U =-299.1+/-19.1",
+            "value": "-299.1",
+            "error": "19.1",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 25,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS12",
+                "raw_value": "U =-299.1+/-19.1"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "V =80.5+/-34.6",
+            "value": "80.5",
+            "error": "34.6",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 26,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS12",
+                "raw_value": "V =80.5+/-34.6"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "W =-401.9+/-17.6",
+            "value": "-401.9",
+            "error": "17.6",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 27,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS12",
+                "raw_value": "W =-401.9+/-17.6"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "508.7+/-12.8",
+            "value": "508.7",
+            "error": "12.8",
+            "unit": "km/s",
+            "description": "Galactocentric total velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 24,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS12",
+                "raw_value": "508.7+/-12.8"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "v_rmrf=488.3+/-3.9",
+            "value": "488.3",
+            "error": "3.9",
+            "unit": "km/s",
+            "description": "Radial velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+                "line": 23,
+                "column": "col_005",
+                "column_header": "LAMOST-HVS12",
+                "raw_value": "v_rmrf=488.3+/-3.9"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "G",
+          "measurement_type": "magnitude",
+          "raw_value": "G=16.980+/-0.003",
+          "value": "16.980",
+          "error": "0.003",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 14,
+              "column": "col_005",
+              "column_header": "LAMOST-HVS12",
+              "raw_value": "G=16.980+/-0.003"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "BP-RP",
+          "measurement_type": "color",
+          "raw_value": "-0.21",
+          "value": "-0.21",
+          "unit": "mag",
+          "description": "Dereddened Gaia BP-RP color",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 31,
+              "column": "col_005",
+              "column_header": "LAMOST-HVS12",
+              "raw_value": "-0.21"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "G",
+          "measurement_type": "absolute_magnitude",
+          "raw_value": "M_G=-1.19+/-0.20tnoted",
+          "value": "-1.19",
+          "error": "0.20",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 32,
+              "column": "col_005",
+              "column_header": "LAMOST-HVS12",
+              "raw_value": "M_G=-1.19+/-0.20tnoted"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "measurement_type": "spectral_type",
+          "spectral_type": "B3V",
+          "raw_value": "B3V",
+          "value": "B3V",
+          "unit": "",
+          "description": "MK spectral classification from MKCLASS code",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 30,
+              "column": "col_005",
+              "column_header": "LAMOST-HVS12",
+              "raw_value": "B3V"
+            },
+            {
+              "kind": "text",
+              "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+              "start_line": 552,
+              "end_line": 554,
+              "context": "LAMOST-HVS12 discussion: unbound B3V star with v_tot=509 km/s"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "B3V",
+          "value": "B3V",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs9.ecsv",
+              "line": 30,
+              "column": "col_005",
+              "column_header": "LAMOST-HVS12",
+              "raw_value": "B3V"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2504.14836:cand-009",
+        "paper_candidate_id": "LAMOST-HVS13",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LAMOST-HVS13",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+                "start_line": 555,
+                "end_line": 557,
+                "context": "LAMOST-HVS13 discussion: unbound B9III star with v_tot=797 km/s"
+              }
+            ]
+          },
+          {
+            "value": "J212520.96+190802.1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 9,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS13",
+                "raw_value": "J212520.96+190802.1"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies LAMOST-HVS13 as a new unbound hypervelocity star candidate with total velocity 796.7+/-191.7 km/s exceeding the local Milky Way escape velocity.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this object as a new unbound HVS candidate with total velocity exceeding the local escape velocity.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 555,
+            "end_line": 557,
+            "context": "LAMOST-HVS13 discussion: unbound B9III star with v_tot=797 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 471,
+            "end_line": 472,
+            "context": "Section 3.1: identification of ten new unbound HVSs"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 555,
+            "end_line": 557,
+            "context": "LAMOST-HVS13 discussion: unbound B9III star with v_tot=797 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 281,
+            "end_line": 287,
+            "context": "Abstract: ten new unbound HVS candidates reported"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "321.337282",
+            "value": "321.337282",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                  "line": 10,
+                  "column": "col_002",
+                  "column_header": "LAMOST-HVS13",
+                  "raw_value": "(321.337282,19.133907)",
+                  "component_raw_value": "321.337282"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                  "line": 10,
+                  "column": "col_002",
+                  "column_header": "LAMOST-HVS13",
+                  "raw_value": "(321.337282,19.133907)",
+                  "component_raw_value": "321.337282"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 10,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS13",
+                "raw_value": "(321.337282,19.133907)",
+                "component_raw_value": "321.337282"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "19.133907",
+            "value": "19.133907",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                  "line": 10,
+                  "column": "col_002",
+                  "column_header": "LAMOST-HVS13",
+                  "raw_value": "(321.337282,19.133907)",
+                  "component_raw_value": "19.133907"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                  "line": 10,
+                  "column": "col_002",
+                  "column_header": "LAMOST-HVS13",
+                  "raw_value": "(321.337282,19.133907)",
+                  "component_raw_value": "19.133907"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 10,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS13",
+                "raw_value": "(321.337282,19.133907)",
+                "component_raw_value": "19.133907"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "mu_alpharmcosdelta=-8.535+/-0.057",
+            "value": "-8.535",
+            "error": "0.057",
+            "unit": "mas/yr",
+            "description": "Proper motion in right ascension direction (mu_alpha*cos(delta))",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 17,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS13",
+                "raw_value": "mu_alpharmcosdelta=-8.535+/-0.057"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "mu_delta=-7.985+/-0.037",
+            "value": "-7.985",
+            "error": "0.037",
+            "unit": "mas/yr",
+            "description": "Proper motion in declination direction",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 18,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS13",
+                "raw_value": "mu_delta=-7.985+/-0.037"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "v_rmlos=-398.3+/-9.4",
+            "value": "-398.3",
+            "error": "9.4",
+            "unit": "km/s",
+            "description": "Heliocentric radial velocity",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 20,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS13",
+                "raw_value": "v_rmlos=-398.3+/-9.4"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "distance": {
+            "raw_value": "15.02+/-3.65tnotea",
+            "value": "15.02",
+            "error": "3.65",
+            "unit": "kpc",
+            "description": "Heliocentric distance",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 19,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS13",
+                "raw_value": "15.02+/-3.65tnotea"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_z": {
+            "raw_value": "-5.60+/-1.35",
+            "value": "-5.60",
+            "error": "1.35",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 27,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS13",
+                "raw_value": "-5.60+/-1.35"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vx": {
+            "raw_value": "U =671.6+/-189.5",
+            "value": "671.6",
+            "error": "189.5",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 23,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS13",
+                "raw_value": "U =671.6+/-189.5"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "V =-360.7+/-60.9",
+            "value": "-360.7",
+            "error": "60.9",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 24,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS13",
+                "raw_value": "V =-360.7+/-60.9"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "W =231.4+/-18.6",
+            "value": "231.4",
+            "error": "18.6",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 25,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS13",
+                "raw_value": "W =231.4+/-18.6"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "796.7+/-191.7",
+            "value": "796.7",
+            "error": "191.7",
+            "unit": "km/s",
+            "description": "Galactocentric total velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 22,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS13",
+                "raw_value": "796.7+/-191.7"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "v_rmrf=-177.5+/-9.4",
+            "value": "-177.5",
+            "error": "9.4",
+            "unit": "km/s",
+            "description": "Radial velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 21,
+                "column": "col_002",
+                "column_header": "LAMOST-HVS13",
+                "raw_value": "v_rmrf=-177.5+/-9.4"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "G",
+          "measurement_type": "magnitude",
+          "raw_value": "G=16.245+/-0.003",
+          "value": "16.245",
+          "error": "0.003",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+              "line": 12,
+              "column": "col_002",
+              "column_header": "LAMOST-HVS13",
+              "raw_value": "G=16.245+/-0.003"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "BP-RP",
+          "measurement_type": "color",
+          "raw_value": "0.40",
+          "value": "0.40",
+          "unit": "mag",
+          "description": "Dereddened Gaia BP-RP color",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+              "line": 29,
+              "column": "col_002",
+              "column_header": "LAMOST-HVS13",
+              "raw_value": "0.40"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "G",
+          "measurement_type": "absolute_magnitude",
+          "raw_value": "M_G=0.515+/-0.525tnotea",
+          "value": "0.515",
+          "error": "0.525",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+              "line": 30,
+              "column": "col_002",
+              "column_header": "LAMOST-HVS13",
+              "raw_value": "M_G=0.515+/-0.525tnotea"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "measurement_type": "spectral_type",
+          "spectral_type": "B9III",
+          "raw_value": "B9III",
+          "value": "B9III",
+          "unit": "",
+          "description": "MK spectral classification from MKCLASS code",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+              "line": 28,
+              "column": "col_002",
+              "column_header": "LAMOST-HVS13",
+              "raw_value": "B9III"
+            },
+            {
+              "kind": "text",
+              "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+              "start_line": 555,
+              "end_line": 557,
+              "context": "LAMOST-HVS13 discussion: unbound B9III star with v_tot=797 km/s"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "B9III",
+          "value": "B9III",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+              "line": 28,
+              "column": "col_002",
+              "column_header": "LAMOST-HVS13",
+              "raw_value": "B9III"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    },
+    {
+      "identifiers": {
+        "record_id": "2504.14836:cand-010",
+        "paper_candidate_id": "LAMOST-HVS14",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LAMOST-HVS14",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+                "start_line": 560,
+                "end_line": 561,
+                "context": "LAMOST-HVS14 discussion: B8V star that might be unbound with v_tot=438 km/s"
+              }
+            ]
+          },
+          {
+            "value": "J015022.75+483631.1",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 9,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS14",
+                "raw_value": "J015022.75+483631.1"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "Paper explicitly identifies LAMOST-HVS14 as a new unbound hypervelocity star candidate with total velocity 438.0+/-16.1 km/s exceeding the local Milky Way escape velocity.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly identifies this object as a new unbound HVS candidate with total velocity exceeding the local escape velocity.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 560,
+            "end_line": 561,
+            "context": "LAMOST-HVS14 discussion: B8V star that might be unbound with v_tot=438 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 471,
+            "end_line": 472,
+            "context": "Section 3.1: identification of ten new unbound HVSs"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": false,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 560,
+            "end_line": 561,
+            "context": "LAMOST-HVS14 discussion: B8V star that might be unbound with v_tot=438 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+            "start_line": 281,
+            "end_line": 287,
+            "context": "Abstract: ten new unbound HVS candidates reported"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": {
+            "raw_value": "27.594853",
+            "value": "27.594853",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                  "line": 10,
+                  "column": "col_003",
+                  "column_header": "LAMOST-HVS14",
+                  "raw_value": "(27.594853,48.608665)",
+                  "component_raw_value": "27.594853"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                  "line": 10,
+                  "column": "col_003",
+                  "column_header": "LAMOST-HVS14",
+                  "raw_value": "(27.594853,48.608665)",
+                  "component_raw_value": "27.594853"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 10,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS14",
+                "raw_value": "(27.594853,48.608665)",
+                "component_raw_value": "27.594853"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "dec": {
+            "raw_value": "48.608665",
+            "value": "48.608665",
+            "unit": "deg",
+            "coordinate_format": "decimal_degrees",
+            "reference_frame": {
+              "value": "ICRS",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                  "line": 10,
+                  "column": "col_003",
+                  "column_header": "LAMOST-HVS14",
+                  "raw_value": "(27.594853,48.608665)",
+                  "component_raw_value": "48.608665"
+                }
+              ]
+            },
+            "epoch": {
+              "value": "J2016.0",
+              "epoch_kind": "reference_epoch",
+              "source_catalog": "Gaia",
+              "data_release": "DR3",
+              "inference_basis": "table_header",
+              "source_refs": [
+                {
+                  "kind": "ecsv_cell",
+                  "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                  "line": 10,
+                  "column": "col_003",
+                  "column_header": "LAMOST-HVS14",
+                  "raw_value": "(27.594853,48.608665)",
+                  "component_raw_value": "48.608665"
+                }
+              ]
+            },
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 10,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS14",
+                "raw_value": "(27.594853,48.608665)",
+                "component_raw_value": "48.608665"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": {
+            "raw_value": "mu_alpharmcosdelta=0.350+/-0.055",
+            "value": "0.350",
+            "error": "0.055",
+            "unit": "mas/yr",
+            "description": "Proper motion in right ascension direction (mu_alpha*cos(delta))",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 17,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS14",
+                "raw_value": "mu_alpharmcosdelta=0.350+/-0.055"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "mu_delta=-0.654+/-0.046",
+            "value": "-0.654",
+            "error": "0.046",
+            "unit": "mas/yr",
+            "description": "Proper motion in declination direction",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 18,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS14",
+                "raw_value": "mu_delta=-0.654+/-0.046"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "v_rmlos=254.7+/-16.6",
+            "value": "254.7",
+            "error": "16.6",
+            "unit": "km/s",
+            "description": "Heliocentric radial velocity",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 20,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS14",
+                "raw_value": "v_rmlos=254.7+/-16.6"
+              }
+            ],
+            "method_refs": [
+              "step-05"
+            ]
+          },
+          "distance": {
+            "raw_value": "16.33+/-4.00tnoteb",
+            "value": "16.33",
+            "error": "4.00",
+            "unit": "kpc",
+            "description": "Heliocentric distance",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 19,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS14",
+                "raw_value": "16.33+/-4.00tnoteb"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_z": {
+            "raw_value": "-3.65+/-0.90",
+            "value": "-3.65",
+            "error": "0.90",
+            "unit": "kpc",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 27,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS14",
+                "raw_value": "-3.65+/-0.90"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vx": {
+            "raw_value": "U =-178.4+/-12.5",
+            "value": "-178.4",
+            "error": "12.5",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 23,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS14",
+                "raw_value": "U =-178.4+/-12.5"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vy": {
+            "raw_value": "V =389.0+/-14.7",
+            "value": "389.0",
+            "error": "14.7",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 24,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS14",
+                "raw_value": "V =389.0+/-14.7"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactocentric_vz": {
+            "raw_value": "W =-91.7+/-11.3",
+            "value": "-91.7",
+            "error": "11.3",
+            "unit": "km/s",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 25,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS14",
+                "raw_value": "W =-91.7+/-11.3"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "total_velocity": {
+            "raw_value": "438.0+/-16.1",
+            "value": "438.0",
+            "error": "16.1",
+            "unit": "km/s",
+            "description": "Galactocentric total velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 22,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS14",
+                "raw_value": "438.0+/-16.1"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "v_rmrf=425.7+/-16.5",
+            "value": "425.7",
+            "error": "16.5",
+            "unit": "km/s",
+            "description": "Radial velocity in the Galactic rest frame",
+            "source_refs": [
+              {
+                "kind": "ecsv_cell",
+                "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+                "line": 21,
+                "column": "col_003",
+                "column_header": "LAMOST-HVS14",
+                "raw_value": "v_rmrf=425.7+/-16.5"
+              }
+            ],
+            "method_refs": [
+              "step-09"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [
+        {
+          "band": "G",
+          "measurement_type": "magnitude",
+          "raw_value": "G=16.376+/-0.003",
+          "value": "16.376",
+          "error": "0.003",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+              "line": 12,
+              "column": "col_003",
+              "column_header": "LAMOST-HVS14",
+              "raw_value": "G=16.376+/-0.003"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "BP-RP",
+          "measurement_type": "color",
+          "raw_value": "0.25",
+          "value": "0.25",
+          "unit": "mag",
+          "description": "Dereddened Gaia BP-RP color",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+              "line": 29,
+              "column": "col_003",
+              "column_header": "LAMOST-HVS14",
+              "raw_value": "0.25"
+            }
+          ],
+          "method_refs": [
+            "step-01"
+          ]
+        },
+        {
+          "band": "G",
+          "measurement_type": "absolute_magnitude",
+          "raw_value": "M_G=-0.01+/-0.53tnoteb",
+          "value": "-0.01",
+          "error": "0.53",
+          "unit": "mag",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+              "line": 30,
+              "column": "col_003",
+              "column_header": "LAMOST-HVS14",
+              "raw_value": "M_G=-0.01+/-0.53tnoteb"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        }
+      ],
+      "spectroscopy": [
+        {
+          "measurement_type": "spectral_type",
+          "spectral_type": "B8V",
+          "raw_value": "B8V",
+          "value": "B8V",
+          "unit": "",
+          "description": "MK spectral classification from MKCLASS code",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+              "line": 28,
+              "column": "col_003",
+              "column_header": "LAMOST-HVS14",
+              "raw_value": "B8V"
+            },
+            {
+              "kind": "text",
+              "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+              "start_line": 560,
+              "end_line": 561,
+              "context": "LAMOST-HVS14 discussion: B8V star that might be unbound with v_tot=438 km/s"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      ],
+      "stellar_parameters": {
+        "teff": null,
+        "log_g": null,
+        "metallicity": null,
+        "mass": null,
+        "radius": null,
+        "age": null,
+        "luminosity": null,
+        "spectral_type": {
+          "raw_value": "B8V",
+          "value": "B8V",
+          "unit": "",
+          "source_refs": [
+            {
+              "kind": "ecsv_cell",
+              "path": "literature/2504.14836/catalog_tables/table-tab-hvs13.ecsv",
+              "line": 28,
+              "column": "col_003",
+              "column_header": "LAMOST-HVS14",
+              "raw_value": "B8V"
+            }
+          ],
+          "method_refs": [
+            "step-06"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "flight_time": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": null,
+        "origin_classification": null,
+        "ejection_velocity": null,
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": [
+    {
+      "group_id": "table-tab-hivel-non-unbound",
+      "description": "The remaining high-velocity star candidates from the 125-object catalog that are not explicitly identified as new unbound HVS candidates.",
+      "decision": "excluded",
+      "reason": "The paper presents these objects as high-velocity star candidates but does not explicitly identify them as unbound from the Milky Way. Only ten candidates (LAMOST-HVS5-14) are explicitly labeled as new unbound HVSs.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 505,
+          "end_line": 542,
+          "context": "Table tab-hivel: 125 high-velocity candidates"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 434,
+          "end_line": 436,
+          "context": "Final sample of 125 high-velocity candidates with velocity criteria"
+        }
+      ]
+    },
+    {
+      "group_id": "known-bound-hvs",
+      "description": "SDSS J081828.07+570922.1, recovered in the sample and explicitly identified as a bound HVS.",
+      "decision": "excluded",
+      "reason": "The paper explicitly identifies this object as a bound HVS discovered by Brown et al. 2007, not as an unbound candidate.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 383,
+          "end_line": 386,
+          "context": "Known HVSs recovered in the sample, with bound HVS explicitly noted"
+        }
+      ]
+    },
+    {
+      "group_id": "known-hyper-runaway",
+      "description": "HIP 60350, recovered in the sample and identified as a hyper-runaway star.",
+      "decision": "excluded",
+      "reason": "The paper identifies this object as a hyper-runaway star, not as a Galactic-unbound HVS candidate.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 383,
+          "end_line": 386,
+          "context": "Known hyper-runaway star recovered in the sample"
+        }
+      ]
+    },
+    {
+      "group_id": "special-wd",
+      "description": "J234921.86+090714.5, the only white dwarf in the sample, discussed as a possible halo member.",
+      "decision": "excluded",
+      "reason": "The paper discusses this white dwarf as a possible extreme halo member with a total velocity below 600 km/s, not as an unbound HVS candidate.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 572,
+          "end_line": 573,
+          "context": "Special white dwarf discussion"
+        }
+      ]
+    },
+    {
+      "group_id": "special-rr-lyrae",
+      "description": "J153747.37+034101.2, a type-c RR Lyrae star with high radial velocity discussed in the special stars section.",
+      "decision": "excluded",
+      "reason": "The paper discusses this RR Lyrae star as a high-velocity star but does not present it as an unbound HVS candidate.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2504.14836/arxiv_source/LM_HVS.tex",
+          "start_line": 575,
+          "end_line": 578,
+          "context": "RR Lyrae star discussion"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,881 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-23T11:40:02",
+  "paper": {
+    "arxiv_id": "2209.03560",
+    "title": "High Velocity Stars in SDSS/APOGEE DR17",
+    "month": "2022-09"
+  },
+  "review": {
+    "path": "literature/2209.03560/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260523T114002",
+    "started_at": "2026-05-23T11:40:02",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2209.03560",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": true
+    },
+    "summary": {
+      "internal_table_count": 7,
+      "work_count": 7,
+      "table_count": 7,
+      "success_count": 7,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 7,
+      "file_success_count": 7,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-hvs_astrometric_parameter1",
+      "internal_table_id": "table-tab-hvs_astrometric_parameter1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+        "start_line": 154,
+        "end_line": 193,
+        "caption": "Equatorial coordinates, paralaxes from Gaia eDR3, and distances from \\citet{BailerJones2021} for the HiVel stars. The last three rows list the stars that exceed the escape velocity in the MWPotential2014 model (unbound candidates; Sect. \\ref{subsec:unb_cand}).",
+        "label": "tab:hvs_astrometric_parameter1"
+      },
+      "source_path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+      "excerpt_path": "literature/2209.03560/catalog_sources/table-tab-hvs_astrometric_parameter1/excerpt.tex",
+      "sha256": "d84e3d905bd59f385d502514fca3f001fe19222ab5f32a48330e7d1eae65f5fa",
+      "line_count": 40,
+      "error": ""
+    },
+    {
+      "id": "table-tab-hvs_astrometric_parameter2",
+      "internal_table_id": "table-tab-hvs_astrometric_parameter2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+        "start_line": 195,
+        "end_line": 240,
+        "caption": "Proper motions from Gaia eDR3, radial velocities from APOGEE DR17, radial velocity from Gaia eDR3 (when available), and estimated Galactocentric velocity for the HiVel stars. The last three rows correspond to the unbound candidates.",
+        "label": "tab:hvs_astrometric_parameter2"
+      },
+      "source_path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+      "excerpt_path": "literature/2209.03560/catalog_sources/table-tab-hvs_astrometric_parameter2/excerpt.tex",
+      "sha256": "a861807a5f22847329675ee0c52968696ec268ed8c8365ed41de550cc4cccce2",
+      "line_count": 46,
+      "error": ""
+    },
+    {
+      "id": "table-tab-Orbital-parameters",
+      "internal_table_id": "table-tab-Orbital-parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+        "start_line": 300,
+        "end_line": 336,
+        "caption": "Orbital parameters derived for the HiVel stars in the Irrgang Model I potential: perigalacticon and apogalacticon, orbital eccentricity, maximum height over the Galactic plane, and orbital energy. The last three rows correspond to the unbound candidates.",
+        "label": "tab:Orbital parameters"
+      },
+      "source_path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+      "excerpt_path": "literature/2209.03560/catalog_sources/table-tab-Orbital-parameters/excerpt.tex",
+      "sha256": "7488bcc81048dcef71d6e7602dd63d72741afa7573a2aec55305b03435551db9",
+      "line_count": 37,
+      "error": ""
+    },
+    {
+      "id": "table-tab-Stellar_parameters",
+      "internal_table_id": "table-tab-Stellar_parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+        "start_line": 374,
+        "end_line": 411,
+        "caption": "Observed properties of the HiVel stars: absolute magnitudes from Gaia eDR3, effective temperature, metalicity and $\\alpha$-elements abundance from APOGEE DR17. The last three rows correspond to the unbound candidates.",
+        "label": "tab:Stellar_parameters"
+      },
+      "source_path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+      "excerpt_path": "literature/2209.03560/catalog_sources/table-tab-Stellar_parameters/excerpt.tex",
+      "sha256": "c2afa2db63c5bc14606c31b0457b440dac309ca3dcfc1fcca92e05055eaa1657",
+      "line_count": 38,
+      "error": ""
+    },
+    {
+      "id": "table-tab-stellar_masses",
+      "internal_table_id": "table-tab-stellar_masses",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+        "start_line": 413,
+        "end_line": 451,
+        "caption": "Comparison of the $\\log g$ values from APOGEE DR17 and the corresponding isochrone-derived masses and radii, with the values provided by the StarHorse2 catalog \\citep{Anders2022}. The StarHorse2 radius has been derived from the corresponding $\\log g$ and $M$ values. The two stars that do not have entries in the StarHorse2 catalog, have mass estimates in \\citet{Anders2019} -- see text for details. The last three rows correspond to the unbound candidates.",
+        "label": "tab:stellar_masses"
+      },
+      "source_path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+      "excerpt_path": "literature/2209.03560/catalog_sources/table-tab-stellar_masses/excerpt.tex",
+      "sha256": "d32c774f703927c77dfff491653cdc08934763e5ec4ed1645fee1100da939778",
+      "line_count": 39,
+      "error": ""
+    },
+    {
+      "id": "table-tab-cemp_properties",
+      "internal_table_id": "table-tab-cemp_properties",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+        "start_line": 541,
+        "end_line": 560,
+        "caption": "Comparison of stellar parameters, chemical abundances [X/Fe], and radial velocities of the star 2M22242563-0438021 (HE 2221-0453), as given by \\citet{Aoki2007} and by APOGEE DR17. All abundances are in dex.",
+        "label": "tab:cemp_properties"
+      },
+      "source_path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+      "excerpt_path": "literature/2209.03560/catalog_sources/table-tab-cemp_properties/excerpt.tex",
+      "sha256": "ff7d5e1e836cbcbc3b6a527c5ad6224a06dfffad225469101f0fea0821121d35",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-model-I-parameters",
+      "internal_table_id": "table-tab-model-I-parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+        "start_line": 651,
+        "end_line": 668,
+        "caption": "Irrgang Model I parameters",
+        "label": "tab:model I parameters"
+      },
+      "source_path": "literature/2209.03560/arxiv_source/manuscript-hvs.tex",
+      "excerpt_path": "literature/2209.03560/catalog_sources/table-tab-model-I-parameters/excerpt.tex",
+      "sha256": "60480cd60079dcbb688596b6af2bb9e5204e4fd129b57c9f788c6433f5e92c72",
+      "line_count": 18,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-hvs_astrometric_parameter1",
+      "internal_table_id": "table-tab-hvs_astrometric_parameter1",
+      "status": "success",
+      "ecsv_path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter1.ecsv",
+      "caption": "Equatorial coordinates, paralaxes from Gaia eDR3, and distances from \\citet{BailerJones2021} for the HiVel stars. The last three rows list the stars that exceed the escape velocity in the MWPotential2014 model (unbound candidates; Sect. \\ref{subsec:unb_cand}).",
+      "label": "tab:hvs_astrometric_parameter1",
+      "row_count": 23,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "APOGEE ID",
+          "\\alpha",
+          "\\delta",
+          "\\varpi",
+          "d_\\mathrmBJ"
+        ],
+        [
+          "",
+          "( deg+/- mas )",
+          "( deg+/- mas )",
+          "( mas )",
+          "( kpc )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "APOGEE ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha | ( deg+/- mas )",
+          "unit_text": "( deg+/- mas )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\delta | ( deg+/- mas )",
+          "unit_text": "( deg+/- mas )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\varpi | ( mas )",
+          "unit_text": "( mas )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "d_\\mathrmBJ | ( kpc )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmqh0fsjf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2209.03560/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmqh0fsjf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2209.03560/catalog_sources/table-tab-hvs_astrometric_parameter1/wrapped.tex",
+            "html": "literature/2209.03560/catalog_sources/table-tab-hvs_astrometric_parameter1/latexml.html",
+            "stdout": "literature/2209.03560/catalog_sources/table-tab-hvs_astrometric_parameter1/latexml.stdout.txt",
+            "stderr": "literature/2209.03560/catalog_sources/table-tab-hvs_astrometric_parameter1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d84e3d905bd59f385d502514fca3f001fe19222ab5f32a48330e7d1eae65f5fa"
+    },
+    {
+      "id": "table-tab-hvs_astrometric_parameter2",
+      "internal_table_id": "table-tab-hvs_astrometric_parameter2",
+      "status": "success",
+      "ecsv_path": "literature/2209.03560/catalog_tables/table-tab-hvs_astrometric_parameter2.ecsv",
+      "caption": "Proper motions from Gaia eDR3, radial velocities from APOGEE DR17, radial velocity from Gaia eDR3 (when available), and estimated Galactocentric velocity for the HiVel stars. The last three rows correspond to the unbound candidates.",
+      "label": "tab:hvs_astrometric_parameter2",
+      "row_count": 23,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "APOGEE ID",
+          "\\mu_\\alpha\\cos\\delta",
+          "\\mu_\\delta",
+          "v_rad_APOGEE",
+          "v_rad_Gaia",
+          "v_GC"
+        ],
+        [
+          "",
+          "( \\mathrmmas yr^-1 )",
+          "( \\mathrmmas yr^-1 )",
+          "( \\mathrmkm s^-1 )",
+          "( \\mathrmkm s^-1 )",
+          "( \\mathrmkm s^-1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "APOGEE ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\mu_\\alpha\\cos\\delta | ( \\mathrmmas yr^-1 )",
+          "unit_text": "( \\mathrmmas yr^-1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mu_\\delta | ( \\mathrmmas yr^-1 )",
+          "unit_text": "( \\mathrmmas yr^-1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "v_rad_APOGEE | ( \\mathrmkm s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "v_rad_Gaia | ( \\mathrmkm s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v_GC | ( \\mathrmkm s^-1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpig10cd4f/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2209.03560/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpig10cd4f/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2209.03560/catalog_sources/table-tab-hvs_astrometric_parameter2/wrapped.tex",
+            "html": "literature/2209.03560/catalog_sources/table-tab-hvs_astrometric_parameter2/latexml.html",
+            "stdout": "literature/2209.03560/catalog_sources/table-tab-hvs_astrometric_parameter2/latexml.stdout.txt",
+            "stderr": "literature/2209.03560/catalog_sources/table-tab-hvs_astrometric_parameter2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a861807a5f22847329675ee0c52968696ec268ed8c8365ed41de550cc4cccce2"
+    },
+    {
+      "id": "table-tab-Orbital-parameters",
+      "internal_table_id": "table-tab-Orbital-parameters",
+      "status": "success",
+      "ecsv_path": "literature/2209.03560/catalog_tables/table-tab-Orbital-parameters.ecsv",
+      "caption": "Orbital parameters derived for the HiVel stars in the Irrgang Model I potential: perigalacticon and apogalacticon, orbital eccentricity, maximum height over the Galactic plane, and orbital energy. The last three rows correspond to the unbound candidates.",
+      "label": "tab:Orbital parameters",
+      "row_count": 24,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "APOGEE ID",
+          "R_\\mathrmperi",
+          "R_\\mathrmapo",
+          "e",
+          "Z_\\mathrmmax",
+          "E"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "APOGEE ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R_\\mathrmperi",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "R_\\mathrmapo",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "e",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Z_\\mathrmmax",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "E",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm2socbqr/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2209.03560/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm2socbqr/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2209.03560/catalog_sources/table-tab-Orbital-parameters/wrapped.tex",
+            "html": "literature/2209.03560/catalog_sources/table-tab-Orbital-parameters/latexml.html",
+            "stdout": "literature/2209.03560/catalog_sources/table-tab-Orbital-parameters/latexml.stdout.txt",
+            "stderr": "literature/2209.03560/catalog_sources/table-tab-Orbital-parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7488bcc81048dcef71d6e7602dd63d72741afa7573a2aec55305b03435551db9"
+    },
+    {
+      "id": "table-tab-Stellar_parameters",
+      "internal_table_id": "table-tab-Stellar_parameters",
+      "status": "success",
+      "ecsv_path": "literature/2209.03560/catalog_tables/table-tab-Stellar_parameters.ecsv",
+      "caption": "Observed properties of the HiVel stars: absolute magnitudes from Gaia eDR3, effective temperature, metalicity and $\\alpha$-elements abundance from APOGEE DR17. The last three rows correspond to the unbound candidates.",
+      "label": "tab:Stellar_parameters",
+      "row_count": 23,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "APOGEE ID",
+          "G",
+          "BP",
+          "RP",
+          "T_eff",
+          "[Fe/H]",
+          "[ \\alpha /Fe]"
+        ],
+        [
+          "",
+          "(mag)",
+          "(mag)",
+          "(mag)",
+          "(K)",
+          "(dex)",
+          "(dex)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "APOGEE ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "G | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "BP | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RP | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "T_eff | (K)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "[Fe/H] | (dex)",
+          "unit_text": "[Fe/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "[ \\alpha /Fe] | (dex)",
+          "unit_text": "[ \\alpha /Fe]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpom38vz9w/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2209.03560/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpom38vz9w/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2209.03560/catalog_sources/table-tab-Stellar_parameters/wrapped.tex",
+            "html": "literature/2209.03560/catalog_sources/table-tab-Stellar_parameters/latexml.html",
+            "stdout": "literature/2209.03560/catalog_sources/table-tab-Stellar_parameters/latexml.stdout.txt",
+            "stderr": "literature/2209.03560/catalog_sources/table-tab-Stellar_parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c2afa2db63c5bc14606c31b0457b440dac309ca3dcfc1fcca92e05055eaa1657"
+    },
+    {
+      "id": "table-tab-stellar_masses",
+      "internal_table_id": "table-tab-stellar_masses",
+      "status": "success",
+      "ecsv_path": "literature/2209.03560/catalog_tables/table-tab-stellar_masses.ecsv",
+      "caption": "Comparison of the $\\log g$ values from APOGEE DR17 and the corresponding isochrone-derived masses and radii, with the values provided by the StarHorse2 catalog \\citep{Anders2022}. The StarHorse2 radius has been derived from the corresponding $\\log g$ and $M$ values. The two stars that do not have entries in the StarHorse2 catalog, have mass estimates in \\citet{Anders2019} -- see text for details. The last three rows correspond to the unbound candidates.",
+      "label": "tab:stellar_masses",
+      "row_count": 26,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq5i64n4e/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2209.03560/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq5i64n4e/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2209.03560/catalog_sources/table-tab-stellar_masses/wrapped.tex",
+            "html": "literature/2209.03560/catalog_sources/table-tab-stellar_masses/latexml.html",
+            "stdout": "literature/2209.03560/catalog_sources/table-tab-stellar_masses/latexml.stdout.txt",
+            "stderr": "literature/2209.03560/catalog_sources/table-tab-stellar_masses/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d32c774f703927c77dfff491653cdc08934763e5ec4ed1645fee1100da939778"
+    },
+    {
+      "id": "table-tab-cemp_properties",
+      "internal_table_id": "table-tab-cemp_properties",
+      "status": "success",
+      "ecsv_path": "literature/2209.03560/catalog_tables/table-tab-cemp_properties.ecsv",
+      "caption": "Comparison of stellar parameters, chemical abundances [X/Fe], and radial velocities of the star 2M22242563-0438021 (HE 2221-0453), as given by \\citet{Aoki2007} and by APOGEE DR17. All abundances are in dex.",
+      "label": "tab:cemp_properties",
+      "row_count": 8,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "Aoki et al. (2007)",
+          "APOGEE DR17"
+        ],
+        [
+          "T_eff (K)",
+          "4400",
+          "4136"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "T_eff (K)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Aoki et al. (2007) | 4400",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "APOGEE DR17 | 4136",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmdf3_cvf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2209.03560/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmdf3_cvf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2209.03560/catalog_sources/table-tab-cemp_properties/wrapped.tex",
+            "html": "literature/2209.03560/catalog_sources/table-tab-cemp_properties/latexml.html",
+            "stdout": "literature/2209.03560/catalog_sources/table-tab-cemp_properties/latexml.stdout.txt",
+            "stderr": "literature/2209.03560/catalog_sources/table-tab-cemp_properties/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ff7d5e1e836cbcbc3b6a527c5ad6224a06dfffad225469101f0fea0821121d35"
+    },
+    {
+      "id": "table-tab-model-I-parameters",
+      "internal_table_id": "table-tab-model-I-parameters",
+      "status": "success",
+      "ecsv_path": "literature/2209.03560/catalog_tables/table-tab-model-I-parameters.ecsv",
+      "caption": "Irrgang Model I parameters",
+      "label": "tab:model I parameters",
+      "row_count": 9,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpt2ihszmh/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2209.03560/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpt2ihszmh/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2209.03560/catalog_sources/table-tab-model-I-parameters/wrapped.tex",
+            "html": "literature/2209.03560/catalog_sources/table-tab-model-I-parameters/latexml.html",
+            "stdout": "literature/2209.03560/catalog_sources/table-tab-model-I-parameters/latexml.stdout.txt",
+            "stderr": "literature/2209.03560/catalog_sources/table-tab-model-I-parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "60480cd60079dcbb688596b6af2bb9e5204e4fd129b57c9f788c6433f5e92c72"
+    }
+  ]
+}

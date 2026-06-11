@@ -1,0 +1,3086 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T13:17:15",
+  "paper": {
+    "arxiv_id": "2509.24010",
+    "title": "Search for Distant Hypervelocity Star Candidates Using RR Lyrae Stars",
+    "month": "2025-09"
+  },
+  "review": {
+    "path": "literature/2509.24010/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T131715",
+    "started_at": "2026-05-17T13:17:15",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2509.24010",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 19,
+      "work_count": 19,
+      "table_count": 19,
+      "success_count": 19,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 19,
+      "file_success_count": 19,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/HVS2023.tex",
+        "start_line": 164,
+        "end_line": 178,
+        "caption": "\\label{tab1}Number of RRLs after data quality control and HVS selection",
+        "label": "tab1"
+      },
+      "source_path": "literature/2509.24010/arxiv_source/HVS2023.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-tab1/excerpt.tex",
+      "sha256": "b479be4236cad7ef07c1f9ffd3452a400d10dc000d394e170c817b7cd058487b",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-tab_total",
+      "internal_table_id": "table-tab_total",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/HVS2023.tex",
+        "start_line": 233,
+        "end_line": 253,
+        "caption": "\\label{tab_total}Basic parameters for 165 HV-RRL candidates",
+        "label": "tab_total"
+      },
+      "source_path": "literature/2509.24010/arxiv_source/HVS2023.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-tab_total/excerpt.tex",
+      "sha256": "7a86625c80206b6c1d65e59f4d6efe2ce7908e6c07034ef9e97a52290420d194",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-tab_Punb",
+      "internal_table_id": "table-tab_Punb",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/HVS2023.tex",
+        "start_line": 255,
+        "end_line": 273,
+        "caption": "\\label{tab_Punb} Unbound probabilities $P_{\\rm unb}$ for different potential models",
+        "label": "tab_Punb"
+      },
+      "source_path": "literature/2509.24010/arxiv_source/HVS2023.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-tab_Punb/excerpt.tex",
+      "sha256": "a29a2b127b2fd7abbc32e2dd815b30e18ec68201fbd6aee86d7b05803261b9a4",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-007",
+      "internal_table_id": "table-007",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+        "start_line": 10,
+        "end_line": 49,
+        "caption": "Additional \\aastex\\ symbols",
+        "label": ""
+      },
+      "source_path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-007/excerpt.tex",
+      "sha256": "d84795cc00cbfb5fe297b343848a483e300784902ecc4dfe1cb979202b96731b",
+      "line_count": 40,
+      "error": ""
+    },
+    {
+      "id": "table-008",
+      "internal_table_id": "table-008",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+        "start_line": 51,
+        "end_line": 62,
+        "caption": "Text-mode accents",
+        "label": ""
+      },
+      "source_path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-008/excerpt.tex",
+      "sha256": "4d1aaf561932a2a3670fc860aba514a75ba039b32afaafb5c025368a52b572f0",
+      "line_count": 12,
+      "error": ""
+    },
+    {
+      "id": "table-009",
+      "internal_table_id": "table-009",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+        "start_line": 64,
+        "end_line": 74,
+        "caption": "National symbols",
+        "label": ""
+      },
+      "source_path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-009/excerpt.tex",
+      "sha256": "e40d28ccb381bf2e793b6fd0984d931eea9be22ae718d850b18d566710c49163",
+      "line_count": 11,
+      "error": ""
+    },
+    {
+      "id": "table-010",
+      "internal_table_id": "table-010",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+        "start_line": 76,
+        "end_line": 87,
+        "caption": "Math-mode accents",
+        "label": ""
+      },
+      "source_path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-010/excerpt.tex",
+      "sha256": "30cf1dcc1cdcf0fbaf96e7ce50290b18a13a3c3792e6ffb20500d36367218e91",
+      "line_count": 12,
+      "error": ""
+    },
+    {
+      "id": "table-011",
+      "internal_table_id": "table-011",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+        "start_line": 89,
+        "end_line": 125,
+        "caption": "Greek and Hebrew letters (math mode)",
+        "label": ""
+      },
+      "source_path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-011/excerpt.tex",
+      "sha256": "95084d66d50fdcb541025065466dc23924cff2060706f9dffd4506da1338e28e",
+      "line_count": 37,
+      "error": ""
+    },
+    {
+      "id": "table-012",
+      "internal_table_id": "table-012",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+        "start_line": 127,
+        "end_line": 151,
+        "caption": "Binary operators (math mode)",
+        "label": ""
+      },
+      "source_path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-012/excerpt.tex",
+      "sha256": "42bcc6c489dd14c2b27d32bf5471f64ef1957254c9905b3ea0cb022c87c01cd6",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-013",
+      "internal_table_id": "table-013",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+        "start_line": 155,
+        "end_line": 185,
+        "caption": "AMS binary operators (math mode)",
+        "label": ""
+      },
+      "source_path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-013/excerpt.tex",
+      "sha256": "5e2f779321f865bd57ef8db04145ab43bf3c397904a25ab7f07def35de9649ec",
+      "line_count": 31,
+      "error": ""
+    },
+    {
+      "id": "table-014",
+      "internal_table_id": "table-014",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+        "start_line": 187,
+        "end_line": 200,
+        "caption": "Miscellaneous symbols",
+        "label": ""
+      },
+      "source_path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-014/excerpt.tex",
+      "sha256": "5ec9c1b179c52d76e3d04c0774ec65eeecbdefe9e30f4fd30381710e4c6f6d76",
+      "line_count": 14,
+      "error": ""
+    },
+    {
+      "id": "table-015",
+      "internal_table_id": "table-015",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+        "start_line": 202,
+        "end_line": 225,
+        "caption": "Miscellaneous symbols (math mode)",
+        "label": ""
+      },
+      "source_path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-015/excerpt.tex",
+      "sha256": "924c5dcdbc91c11e181fc2296fd5062e9bc60ca58c8c5c0658900264e70d338a",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-016",
+      "internal_table_id": "table-016",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+        "start_line": 227,
+        "end_line": 261,
+        "caption": "AMS miscellaneous symbols (math mode)",
+        "label": ""
+      },
+      "source_path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-016/excerpt.tex",
+      "sha256": "531557ad27ff66c618a59dfe73eb86cc4be76d88abda4e83b88ac64bfd92f803",
+      "line_count": 35,
+      "error": ""
+    },
+    {
+      "id": "table-017",
+      "internal_table_id": "table-017",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+        "start_line": 263,
+        "end_line": 302,
+        "caption": "Arrows (math mode)",
+        "label": ""
+      },
+      "source_path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-017/excerpt.tex",
+      "sha256": "5e39cad76ac38b81120d2d8e4c28fd4703f1e8cc608209a022f964bf351fb0b6",
+      "line_count": 40,
+      "error": ""
+    },
+    {
+      "id": "table-018",
+      "internal_table_id": "table-018",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+        "start_line": 304,
+        "end_line": 349,
+        "caption": "AMS arrows (math mode)",
+        "label": ""
+      },
+      "source_path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-018/excerpt.tex",
+      "sha256": "783103df57b4e203975f36dfb5576ef9e455b7ab8c4752858dd94a63c9632a05",
+      "line_count": 46,
+      "error": ""
+    },
+    {
+      "id": "table-019",
+      "internal_table_id": "table-019",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+        "start_line": 351,
+        "end_line": 377,
+        "caption": "Relations (math mode)",
+        "label": ""
+      },
+      "source_path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-019/excerpt.tex",
+      "sha256": "c6f13b200870c57f1b023cfed6f1d7047f94f5b912d48c8faeb1afa1e0e520ac",
+      "line_count": 27,
+      "error": ""
+    },
+    {
+      "id": "table-020",
+      "internal_table_id": "table-020",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+        "start_line": 379,
+        "end_line": 454,
+        "caption": "AMS binary relations (math mode)",
+        "label": ""
+      },
+      "source_path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-020/excerpt.tex",
+      "sha256": "cc2f1f12aa4cdb7d2ba0cf5ef973cd98d0e36ee25cf69b5e6e1535b977fb619a",
+      "line_count": 76,
+      "error": ""
+    },
+    {
+      "id": "table-021",
+      "internal_table_id": "table-021",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+        "start_line": 456,
+        "end_line": 516,
+        "caption": "AMS negated relations (math mode)",
+        "label": ""
+      },
+      "source_path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-021/excerpt.tex",
+      "sha256": "9d9ca04b03bf5b298f01e7509a73c6f80a8f878bf4e976f6b454f3acbc54ddee",
+      "line_count": 61,
+      "error": ""
+    },
+    {
+      "id": "table-023",
+      "internal_table_id": "table-023",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+        "start_line": 542,
+        "end_line": 564,
+        "caption": "Delimiters (math mode)",
+        "label": ""
+      },
+      "source_path": "literature/2509.24010/arxiv_source/aassymbols.tex",
+      "excerpt_path": "literature/2509.24010/catalog_sources/table-023/excerpt.tex",
+      "sha256": "ec3888932410faeeda5f7a1be550d3c8b54a605e64a02bbd8b5085fd28f6f7f4",
+      "line_count": 23,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-tab1.ecsv",
+      "caption": "\\label{tab1}Number of RRLs after data quality control and HVS selection",
+      "label": "tab1",
+      "row_count": 6,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "selection",
+          "W22",
+          "L23",
+          "total"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "selection",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "W22",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "L23",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "total",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprx3indb5/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprx3indb5/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-tab1/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-tab1/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-tab1/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-tab1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b479be4236cad7ef07c1f9ffd3452a400d10dc000d394e170c817b7cd058487b"
+    },
+    {
+      "id": "table-tab_total",
+      "internal_table_id": "table-tab_total",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-tab_total.ecsv",
+      "caption": "\\label{tab_total}Basic parameters for 165 HV-RRL candidates",
+      "label": "tab_total",
+      "row_count": 11,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia ID",
+          "RA",
+          "Dec",
+          "\\mu_\\alpha\\cos\\delta",
+          "\\mu_\\delta",
+          "D",
+          "R_\\rm GC",
+          "v_\\rm GC,t",
+          "Ref.",
+          "Quality"
+        ],
+        [
+          "",
+          "(deg)",
+          "(deg)",
+          "( \\rm mas yr^-1 )",
+          "( \\rm mas yr^-1 )",
+          "(kpc)",
+          "(kpc)",
+          "( \\rm km s^-1 )",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia ID",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\alpha\\cos\\delta | ( \\rm mas yr^-1 )",
+          "unit_text": "( \\rm mas yr^-1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\delta | ( \\rm mas yr^-1 )",
+          "unit_text": "( \\rm mas yr^-1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "D | (kpc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "R_\\rm GC | (kpc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "v_\\rm GC,t | ( \\rm km s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Ref.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Quality",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplt1csu5n/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmplt1csu5n/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-tab_total/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-tab_total/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-tab_total/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-tab_total/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7a86625c80206b6c1d65e59f4d6efe2ce7908e6c07034ef9e97a52290420d194"
+    },
+    {
+      "id": "table-tab_Punb",
+      "internal_table_id": "table-tab_Punb",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-tab_Punb.ecsv",
+      "caption": "\\label{tab_Punb} Unbound probabilities $P_{\\rm unb}$ for different potential models",
+      "label": "tab_Punb",
+      "row_count": 11,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia ID",
+          "Bovy15",
+          "Cautun20",
+          "Monari18",
+          "McMillan17",
+          "Irrgang13I",
+          "Bovy15+LMC"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia ID",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Bovy15",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Cautun20",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Monari18",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "McMillan17",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Irrgang13I",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Bovy15+LMC",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpkph7vufy/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpkph7vufy/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-tab_Punb/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-tab_Punb/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-tab_Punb/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-tab_Punb/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a29a2b127b2fd7abbc32e2dd815b30e18ec68201fbd6aee86d7b05803261b9a4"
+    },
+    {
+      "id": "table-007",
+      "internal_table_id": "table-007",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-007.ecsv",
+      "caption": "Additional \\aastex\\ symbols",
+      "label": "",
+      "row_count": 15,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\lesssim",
+          "\\verb\"\\lesssim\", \\verb\"\\la\"",
+          "\\gtrsim",
+          "\\verb\"\\gtrsim\", \\verb\"\\ga\""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\lesssim",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\verb\"\\lesssim\", \\verb\"\\la\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\gtrsim",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\verb\"\\gtrsim\", \\verb\"\\ga\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\arcdeg",
+        "unresolved LaTeX macro preserved: \\arcmin",
+        "unresolved LaTeX macro preserved: \\arcsec",
+        "unresolved LaTeX macro preserved: \\bv",
+        "unresolved LaTeX macro preserved: \\dbond",
+        "unresolved LaTeX macro preserved: \\degr",
+        "unresolved LaTeX macro preserved: \\diameter",
+        "unresolved LaTeX macro preserved: \\earth",
+        "unresolved LaTeX macro preserved: \\farcm",
+        "unresolved LaTeX macro preserved: \\farcs",
+        "unresolved LaTeX macro preserved: \\fd",
+        "unresolved LaTeX macro preserved: \\fdg",
+        "unresolved LaTeX macro preserved: \\fh",
+        "unresolved LaTeX macro preserved: \\fm",
+        "unresolved LaTeX macro preserved: \\fp",
+        "unresolved LaTeX macro preserved: \\fs",
+        "unresolved LaTeX macro preserved: \\ga",
+        "unresolved LaTeX macro preserved: \\gtrsim",
+        "unresolved LaTeX macro preserved: \\la",
+        "unresolved LaTeX macro preserved: \\lesssim",
+        "unresolved LaTeX macro preserved: \\micron",
+        "unresolved LaTeX macro preserved: \\onehalf",
+        "unresolved LaTeX macro preserved: \\onequarter",
+        "unresolved LaTeX macro preserved: \\onethird",
+        "unresolved LaTeX macro preserved: \\sbond",
+        "unresolved LaTeX macro preserved: \\sq",
+        "unresolved LaTeX macro preserved: \\sun",
+        "unresolved LaTeX macro preserved: \\tbond",
+        "unresolved LaTeX macro preserved: \\threequarters",
+        "unresolved LaTeX macro preserved: \\twothirds",
+        "unresolved LaTeX macro preserved: \\ub",
+        "unresolved LaTeX macro preserved: \\ubvr",
+        "unresolved LaTeX macro preserved: \\ur",
+        "unresolved LaTeX macro preserved: \\verb",
+        "unresolved LaTeX macro preserved: \\vr"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpw90r3ru9/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpw90r3ru9/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-007/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-007/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-007/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-007/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwz3g7gfl/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwz3g7gfl/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-007/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-007/pandoc.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-007/pandoc.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-007/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "d84795cc00cbfb5fe297b343848a483e300784902ecc4dfe1cb979202b96731b"
+    },
+    {
+      "id": "table-008",
+      "internal_table_id": "table-008",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-008.ecsv",
+      "caption": "Text-mode accents",
+      "label": "",
+      "row_count": 4,
+      "column_count": 6,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\`o",
+          "\\verb\"\\`o\"",
+          "\\=o",
+          "\\verb\"\\=o\"",
+          "\\too",
+          "\\verb\"\\too\""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\`o",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\verb\"\\`o\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\=o",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\verb\"\\=o\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\too",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\verb\"\\too\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\Ho",
+        "unresolved LaTeX macro preserved: \\bo",
+        "unresolved LaTeX macro preserved: \\co",
+        "unresolved LaTeX macro preserved: \\do",
+        "unresolved LaTeX macro preserved: \\too",
+        "unresolved LaTeX macro preserved: \\uo",
+        "unresolved LaTeX macro preserved: \\verb",
+        "unresolved LaTeX macro preserved: \\vo"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdp0ukgtp/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdp0ukgtp/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-008/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-008/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-008/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-008/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpaf2p4kv7/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpaf2p4kv7/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-008/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-008/pandoc.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-008/pandoc.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-008/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "4d1aaf561932a2a3670fc860aba514a75ba039b32afaafb5c025368a52b572f0"
+    },
+    {
+      "id": "table-009",
+      "internal_table_id": "table-009",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-009.ecsv",
+      "caption": "National symbols",
+      "label": "",
+      "row_count": 3,
+      "column_count": 6,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\oe",
+          "\\verb\"\\oe\"",
+          "\\aa",
+          "\\verb\"\\aa\"",
+          "\\l",
+          "\\verb\"\\l\""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\oe",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\verb\"\\oe\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\aa",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\verb\"\\aa\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\l",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\verb\"\\l\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\AA",
+        "unresolved LaTeX macro preserved: \\AE",
+        "unresolved LaTeX macro preserved: \\L",
+        "unresolved LaTeX macro preserved: \\O",
+        "unresolved LaTeX macro preserved: \\OE",
+        "unresolved LaTeX macro preserved: \\aa",
+        "unresolved LaTeX macro preserved: \\ae",
+        "unresolved LaTeX macro preserved: \\l",
+        "unresolved LaTeX macro preserved: \\o",
+        "unresolved LaTeX macro preserved: \\oe",
+        "unresolved LaTeX macro preserved: \\ss",
+        "unresolved LaTeX macro preserved: \\verb"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfyupg8qs/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfyupg8qs/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-009/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-009/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-009/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-009/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp17atr_l6/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp17atr_l6/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-009/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-009/pandoc.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-009/pandoc.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-009/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "e40d28ccb381bf2e793b6fd0984d931eea9be22ae718d850b18d566710c49163"
+    },
+    {
+      "id": "table-010",
+      "internal_table_id": "table-010",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-010.ecsv",
+      "caption": "Math-mode accents",
+      "label": "",
+      "row_count": 4,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\hata",
+          "\\verb\"\\hata\"",
+          "\\dota",
+          "\\verb\"\\dota\""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\hata",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\verb\"\\hata\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\dota",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\verb\"\\dota\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\acutea",
+        "unresolved LaTeX macro preserved: \\bara",
+        "unresolved LaTeX macro preserved: \\brevea",
+        "unresolved LaTeX macro preserved: \\checka",
+        "unresolved LaTeX macro preserved: \\ddota",
+        "unresolved LaTeX macro preserved: \\dota",
+        "unresolved LaTeX macro preserved: \\gravea",
+        "unresolved LaTeX macro preserved: \\hata",
+        "unresolved LaTeX macro preserved: \\tildea",
+        "unresolved LaTeX macro preserved: \\veca",
+        "unresolved LaTeX macro preserved: \\verb"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmposb2ds80/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmposb2ds80/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-010/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-010/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-010/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-010/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6jbl3d_3/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp6jbl3d_3/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-010/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-010/pandoc.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-010/pandoc.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-010/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "30cf1dcc1cdcf0fbaf96e7ce50290b18a13a3c3792e6ffb20500d36367218e91"
+    },
+    {
+      "id": "table-011",
+      "internal_table_id": "table-011",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-011.ecsv",
+      "caption": "Greek and Hebrew letters (math mode)",
+      "label": "",
+      "row_count": 23,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\alpha",
+          "\\verb\"\\alpha\"",
+          "\\nu",
+          "\\verb\"\\nu\""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\alpha",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\verb\"\\alpha\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\nu",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\verb\"\\nu\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\Delta",
+        "unresolved LaTeX macro preserved: \\Gamma",
+        "unresolved LaTeX macro preserved: \\Lambda",
+        "unresolved LaTeX macro preserved: \\Omega",
+        "unresolved LaTeX macro preserved: \\Phi",
+        "unresolved LaTeX macro preserved: \\Pi",
+        "unresolved LaTeX macro preserved: \\Psi",
+        "unresolved LaTeX macro preserved: \\Sigma",
+        "unresolved LaTeX macro preserved: \\Theta",
+        "unresolved LaTeX macro preserved: \\Upsilon",
+        "unresolved LaTeX macro preserved: \\Xi",
+        "unresolved LaTeX macro preserved: \\aleph",
+        "unresolved LaTeX macro preserved: \\alpha",
+        "unresolved LaTeX macro preserved: \\beta",
+        "unresolved LaTeX macro preserved: \\beth",
+        "unresolved LaTeX macro preserved: \\chi",
+        "unresolved LaTeX macro preserved: \\daleth",
+        "unresolved LaTeX macro preserved: \\delta",
+        "unresolved LaTeX macro preserved: \\digamma",
+        "unresolved LaTeX macro preserved: \\epsilon",
+        "unresolved LaTeX macro preserved: \\eta",
+        "unresolved LaTeX macro preserved: \\gamma",
+        "unresolved LaTeX macro preserved: \\gimel",
+        "unresolved LaTeX macro preserved: \\iota",
+        "unresolved LaTeX macro preserved: \\kappa",
+        "unresolved LaTeX macro preserved: \\lambda",
+        "unresolved LaTeX macro preserved: \\mu",
+        "unresolved LaTeX macro preserved: \\nu",
+        "unresolved LaTeX macro preserved: \\omega",
+        "unresolved LaTeX macro preserved: \\phi",
+        "unresolved LaTeX macro preserved: \\pi",
+        "unresolved LaTeX macro preserved: \\psi",
+        "unresolved LaTeX macro preserved: \\rho",
+        "unresolved LaTeX macro preserved: \\sigma",
+        "unresolved LaTeX macro preserved: \\tau",
+        "unresolved LaTeX macro preserved: \\theta",
+        "unresolved LaTeX macro preserved: \\upsilon",
+        "unresolved LaTeX macro preserved: \\varepsilon",
+        "unresolved LaTeX macro preserved: \\varkappa",
+        "unresolved LaTeX macro preserved: \\varphi",
+        "unresolved LaTeX macro preserved: \\varrho",
+        "unresolved LaTeX macro preserved: \\varsigma",
+        "unresolved LaTeX macro preserved: \\vartheta",
+        "unresolved LaTeX macro preserved: \\verb",
+        "unresolved LaTeX macro preserved: \\xi",
+        "unresolved LaTeX macro preserved: \\zeta"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9pknmltn/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9pknmltn/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-011/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-011/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-011/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-011/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4_3zgmmd/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4_3zgmmd/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-011/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-011/pandoc.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-011/pandoc.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-011/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "95084d66d50fdcb541025065466dc23924cff2060706f9dffd4506da1338e28e"
+    },
+    {
+      "id": "table-012",
+      "internal_table_id": "table-012",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-012.ecsv",
+      "caption": "Binary operators (math mode)",
+      "label": "",
+      "row_count": 17,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "+/-",
+          "\\verb\"+/-\"",
+          "\\cap",
+          "\\verb\"\\cap\""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "+/-",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\verb\"+/-\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\cap",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\verb\"\\cap\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\amalg",
+        "unresolved LaTeX macro preserved: \\ast",
+        "unresolved LaTeX macro preserved: \\bigcirc",
+        "unresolved LaTeX macro preserved: \\bigtriangledown",
+        "unresolved LaTeX macro preserved: \\bigtriangleup",
+        "unresolved LaTeX macro preserved: \\bullet",
+        "unresolved LaTeX macro preserved: \\cap",
+        "unresolved LaTeX macro preserved: \\cdot",
+        "unresolved LaTeX macro preserved: \\circ",
+        "unresolved LaTeX macro preserved: \\cup",
+        "unresolved LaTeX macro preserved: \\dagger",
+        "unresolved LaTeX macro preserved: \\ddagger",
+        "unresolved LaTeX macro preserved: \\diamond",
+        "unresolved LaTeX macro preserved: \\div",
+        "unresolved LaTeX macro preserved: \\lhd",
+        "unresolved LaTeX macro preserved: \\mp",
+        "unresolved LaTeX macro preserved: \\odot",
+        "unresolved LaTeX macro preserved: \\ominus",
+        "unresolved LaTeX macro preserved: \\oplus",
+        "unresolved LaTeX macro preserved: \\oslash",
+        "unresolved LaTeX macro preserved: \\otimes",
+        "unresolved LaTeX macro preserved: \\rhd",
+        "unresolved LaTeX macro preserved: \\setminus",
+        "unresolved LaTeX macro preserved: \\sqcap",
+        "unresolved LaTeX macro preserved: \\sqcup",
+        "unresolved LaTeX macro preserved: \\star",
+        "unresolved LaTeX macro preserved: \\times",
+        "unresolved LaTeX macro preserved: \\triangleleft",
+        "unresolved LaTeX macro preserved: \\triangleright",
+        "unresolved LaTeX macro preserved: \\u",
+        "unresolved LaTeX macro preserved: \\unlhd",
+        "unresolved LaTeX macro preserved: \\unrhd",
+        "unresolved LaTeX macro preserved: \\uplus",
+        "unresolved LaTeX macro preserved: \\vee",
+        "unresolved LaTeX macro preserved: \\verb",
+        "unresolved LaTeX macro preserved: \\wedge",
+        "unresolved LaTeX macro preserved: \\wr"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9kddpfqt/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9kddpfqt/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-012/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-012/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-012/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-012/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpbs9qmt7m/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpbs9qmt7m/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-012/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-012/pandoc.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-012/pandoc.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-012/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "42bcc6c489dd14c2b27d32bf5471f64ef1957254c9905b3ea0cb022c87c01cd6"
+    },
+    {
+      "id": "table-013",
+      "internal_table_id": "table-013",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-013.ecsv",
+      "caption": "AMS binary operators (math mode)",
+      "label": "",
+      "row_count": 11,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\dotplus",
+          "\\verb\"\\dotplus\"",
+          "\\ltimes",
+          "\\verb\"\\ltimes\""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\dotplus",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\verb\"\\dotplus\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\ltimes",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\verb\"\\ltimes\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\Cap",
+        "unresolved LaTeX macro preserved: \\Cup",
+        "unresolved LaTeX macro preserved: \\barwedge",
+        "unresolved LaTeX macro preserved: \\boxdot",
+        "unresolved LaTeX macro preserved: \\boxminus",
+        "unresolved LaTeX macro preserved: \\boxplus",
+        "unresolved LaTeX macro preserved: \\boxtimes",
+        "unresolved LaTeX macro preserved: \\centerdot",
+        "unresolved LaTeX macro preserved: \\circledast",
+        "unresolved LaTeX macro preserved: \\circledcirc",
+        "unresolved LaTeX macro preserved: \\circleddash",
+        "unresolved LaTeX macro preserved: \\curlyvee",
+        "unresolved LaTeX macro preserved: \\curlywedge",
+        "unresolved LaTeX macro preserved: \\divideontimes",
+        "unresolved LaTeX macro preserved: \\dotplus",
+        "unresolved LaTeX macro preserved: \\doublebarwedge",
+        "unresolved LaTeX macro preserved: \\doublecap",
+        "unresolved LaTeX macro preserved: \\doublecup",
+        "unresolved LaTeX macro preserved: \\intercal",
+        "unresolved LaTeX macro preserved: \\leftthreetimes",
+        "unresolved LaTeX macro preserved: \\ltimes",
+        "unresolved LaTeX macro preserved: \\rightthreetimes",
+        "unresolved LaTeX macro preserved: \\rtimes",
+        "unresolved LaTeX macro preserved: \\smallsetminus",
+        "unresolved LaTeX macro preserved: \\veebar",
+        "unresolved LaTeX macro preserved: \\verb"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprkb_bktg/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprkb_bktg/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-013/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-013/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-013/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-013/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppme39cha/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppme39cha/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-013/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-013/pandoc.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-013/pandoc.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-013/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "5e2f779321f865bd57ef8db04145ab43bf3c397904a25ab7f07def35de9649ec"
+    },
+    {
+      "id": "table-014",
+      "internal_table_id": "table-014",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-014.ecsv",
+      "caption": "Miscellaneous symbols",
+      "label": "",
+      "row_count": 6,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\dag",
+          "\\verb\"\\dag\"",
+          "\\S",
+          "\\verb\"\\S\""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\dag",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\verb\"\\dag\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\S",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\verb\"\\S\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\P",
+        "unresolved LaTeX macro preserved: \\S",
+        "unresolved LaTeX macro preserved: \\copyright",
+        "unresolved LaTeX macro preserved: \\dag",
+        "unresolved LaTeX macro preserved: \\ddag",
+        "unresolved LaTeX macro preserved: \\pounds",
+        "unresolved LaTeX macro preserved: \\verb"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpevlz0p7d/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpevlz0p7d/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-014/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-014/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-014/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-014/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1aiovdb5/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1aiovdb5/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-014/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-014/pandoc.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-014/pandoc.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-014/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "5ec9c1b179c52d76e3d04c0774ec65eeecbdefe9e30f4fd30381710e4c6f6d76"
+    },
+    {
+      "id": "table-015",
+      "internal_table_id": "table-015",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-015.ecsv",
+      "caption": "Miscellaneous symbols (math mode)",
+      "label": "",
+      "row_count": 16,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\aleph",
+          "\\verb\"\\aleph\"",
+          "\\prime",
+          "\\verb\"\\prime\""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\aleph",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\verb\"\\aleph\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\prime",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\verb\"\\prime\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\Box",
+        "unresolved LaTeX macro preserved: \\Diamond",
+        "unresolved LaTeX macro preserved: \\Im",
+        "unresolved LaTeX macro preserved: \\Re",
+        "unresolved LaTeX macro preserved: \\aleph",
+        "unresolved LaTeX macro preserved: \\angle",
+        "unresolved LaTeX macro preserved: \\backslash",
+        "unresolved LaTeX macro preserved: \\bot",
+        "unresolved LaTeX macro preserved: \\clubsuit",
+        "unresolved LaTeX macro preserved: \\diamondsuit",
+        "unresolved LaTeX macro preserved: \\ell",
+        "unresolved LaTeX macro preserved: \\emptyset",
+        "unresolved LaTeX macro preserved: \\exists",
+        "unresolved LaTeX macro preserved: \\flat",
+        "unresolved LaTeX macro preserved: \\forall",
+        "unresolved LaTeX macro preserved: \\hbar",
+        "unresolved LaTeX macro preserved: \\heartsuit",
+        "unresolved LaTeX macro preserved: \\imath",
+        "unresolved LaTeX macro preserved: \\infty",
+        "unresolved LaTeX macro preserved: \\jmath",
+        "unresolved LaTeX macro preserved: \\mho",
+        "unresolved LaTeX macro preserved: \\nabla",
+        "unresolved LaTeX macro preserved: \\natural",
+        "unresolved LaTeX macro preserved: \\neg",
+        "unresolved LaTeX macro preserved: \\partial",
+        "unresolved LaTeX macro preserved: \\prime",
+        "unresolved LaTeX macro preserved: \\sharp",
+        "unresolved LaTeX macro preserved: \\spadesuit",
+        "unresolved LaTeX macro preserved: \\surd",
+        "unresolved LaTeX macro preserved: \\top",
+        "unresolved LaTeX macro preserved: \\triangle",
+        "unresolved LaTeX macro preserved: \\verb",
+        "unresolved LaTeX macro preserved: \\wp"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp98nysv8a/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp98nysv8a/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-015/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-015/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-015/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-015/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxu11ezjs/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpxu11ezjs/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-015/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-015/pandoc.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-015/pandoc.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-015/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "924c5dcdbc91c11e181fc2296fd5062e9bc60ca58c8c5c0658900264e70d338a"
+    },
+    {
+      "id": "table-016",
+      "internal_table_id": "table-016",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-016.ecsv",
+      "caption": "AMS miscellaneous symbols (math mode)",
+      "label": "",
+      "row_count": 13,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\hbar",
+          "\\verb\"\\hbar\"",
+          "\\backprime",
+          "\\verb\"\\backprime\""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\hbar",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\verb\"\\hbar\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\backprime",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\verb\"\\backprime\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\Bbbk",
+        "unresolved LaTeX macro preserved: \\Finv",
+        "unresolved LaTeX macro preserved: \\Game",
+        "unresolved LaTeX macro preserved: \\angle",
+        "unresolved LaTeX macro preserved: \\backprime",
+        "unresolved LaTeX macro preserved: \\bigstar",
+        "unresolved LaTeX macro preserved: \\blacklozenge",
+        "unresolved LaTeX macro preserved: \\blacksquare",
+        "unresolved LaTeX macro preserved: \\blacktriangle",
+        "unresolved LaTeX macro preserved: \\blacktriangledown",
+        "unresolved LaTeX macro preserved: \\circledS",
+        "unresolved LaTeX macro preserved: \\complement",
+        "unresolved LaTeX macro preserved: \\diagdown",
+        "unresolved LaTeX macro preserved: \\diagup",
+        "unresolved LaTeX macro preserved: \\eth",
+        "unresolved LaTeX macro preserved: \\hbar",
+        "unresolved LaTeX macro preserved: \\hslash",
+        "unresolved LaTeX macro preserved: \\lozenge",
+        "unresolved LaTeX macro preserved: \\measuredangle",
+        "unresolved LaTeX macro preserved: \\mho",
+        "unresolved LaTeX macro preserved: \\nexists",
+        "unresolved LaTeX macro preserved: \\restriction",
+        "unresolved LaTeX macro preserved: \\sphericalangle",
+        "unresolved LaTeX macro preserved: \\square",
+        "unresolved LaTeX macro preserved: \\triangledown",
+        "unresolved LaTeX macro preserved: \\varnothing",
+        "unresolved LaTeX macro preserved: \\vartriangle",
+        "unresolved LaTeX macro preserved: \\verb"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp19npvu1/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpp19npvu1/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-016/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-016/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-016/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-016/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpkt8q629n/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpkt8q629n/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-016/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-016/pandoc.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-016/pandoc.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-016/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "531557ad27ff66c618a59dfe73eb86cc4be76d88abda4e83b88ac64bfd92f803"
+    },
+    {
+      "id": "table-017",
+      "internal_table_id": "table-017",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-017.ecsv",
+      "caption": "Arrows (math mode)",
+      "label": "",
+      "row_count": 15,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\leftarrow",
+          "\\verb\"\\leftarrow\"",
+          "\\longleftarrow",
+          "\\verb\"\\longleftarrow\""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\leftarrow",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\verb\"\\leftarrow\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\longleftarrow",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\verb\"\\longleftarrow\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\Downarrow",
+        "unresolved LaTeX macro preserved: \\Leftarrow",
+        "unresolved LaTeX macro preserved: \\Leftrightarrow",
+        "unresolved LaTeX macro preserved: \\Longleftarrow",
+        "unresolved LaTeX macro preserved: \\Longleftrightarrow",
+        "unresolved LaTeX macro preserved: \\Longrightarrow",
+        "unresolved LaTeX macro preserved: \\Rightarrow",
+        "unresolved LaTeX macro preserved: \\Uparrow",
+        "unresolved LaTeX macro preserved: \\Updownarrow",
+        "unresolved LaTeX macro preserved: \\downarrow",
+        "unresolved LaTeX macro preserved: \\hookleftarrow",
+        "unresolved LaTeX macro preserved: \\hookrightarrow",
+        "unresolved LaTeX macro preserved: \\leadsto",
+        "unresolved LaTeX macro preserved: \\leftarrow",
+        "unresolved LaTeX macro preserved: \\leftharpoondown",
+        "unresolved LaTeX macro preserved: \\leftharpoonup",
+        "unresolved LaTeX macro preserved: \\leftrightarrow",
+        "unresolved LaTeX macro preserved: \\longleftarrow",
+        "unresolved LaTeX macro preserved: \\longleftrightarrow",
+        "unresolved LaTeX macro preserved: \\longmapsto",
+        "unresolved LaTeX macro preserved: \\longrightarrow",
+        "unresolved LaTeX macro preserved: \\mapsto",
+        "unresolved LaTeX macro preserved: \\nearrow",
+        "unresolved LaTeX macro preserved: \\nwarrow",
+        "unresolved LaTeX macro preserved: \\rightarrow",
+        "unresolved LaTeX macro preserved: \\rightharpoondown",
+        "unresolved LaTeX macro preserved: \\rightharpoonup",
+        "unresolved LaTeX macro preserved: \\rightleftharpoons",
+        "unresolved LaTeX macro preserved: \\searrow",
+        "unresolved LaTeX macro preserved: \\swarrow",
+        "unresolved LaTeX macro preserved: \\uparrow",
+        "unresolved LaTeX macro preserved: \\updownarrow",
+        "unresolved LaTeX macro preserved: \\verb"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppb298vwp/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppb298vwp/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-017/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-017/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-017/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-017/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1ay1k2f4/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1ay1k2f4/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-017/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-017/pandoc.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-017/pandoc.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-017/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "5e39cad76ac38b81120d2d8e4c28fd4703f1e8cc608209a022f964bf351fb0b6"
+    },
+    {
+      "id": "table-018",
+      "internal_table_id": "table-018",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-018.ecsv",
+      "caption": "AMS arrows (math mode)",
+      "label": "",
+      "row_count": 18,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\dashleftarrow",
+          "\\verb\"\\dashleftarrow\"",
+          "\\dashrightarrow",
+          "\\verb\"\\dashrightarrow\""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\dashleftarrow",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\verb\"\\dashleftarrow\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\dashrightarrow",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\verb\"\\dashrightarrow\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\Lleftarrow",
+        "unresolved LaTeX macro preserved: \\Lsh",
+        "unresolved LaTeX macro preserved: \\Rrightarrow",
+        "unresolved LaTeX macro preserved: \\Rsh",
+        "unresolved LaTeX macro preserved: \\circlearrowleft",
+        "unresolved LaTeX macro preserved: \\circlearrowright",
+        "unresolved LaTeX macro preserved: \\curvearrowleft",
+        "unresolved LaTeX macro preserved: \\curvearrowright",
+        "unresolved LaTeX macro preserved: \\dashleftarrow",
+        "unresolved LaTeX macro preserved: \\dashrightarrow",
+        "unresolved LaTeX macro preserved: \\downdownarrows",
+        "unresolved LaTeX macro preserved: \\downharpoonleft",
+        "unresolved LaTeX macro preserved: \\downharpoonright",
+        "unresolved LaTeX macro preserved: \\leftarrowtail",
+        "unresolved LaTeX macro preserved: \\leftleftarrows",
+        "unresolved LaTeX macro preserved: \\leftrightarrows",
+        "unresolved LaTeX macro preserved: \\leftrightharpoons",
+        "unresolved LaTeX macro preserved: \\leftrightsquigarrow",
+        "unresolved LaTeX macro preserved: \\looparrowleft",
+        "unresolved LaTeX macro preserved: \\looparrowright",
+        "unresolved LaTeX macro preserved: \\multimap",
+        "unresolved LaTeX macro preserved: \\nLeftarrow",
+        "unresolved LaTeX macro preserved: \\nLeftrightarrow",
+        "unresolved LaTeX macro preserved: \\nRightarrow",
+        "unresolved LaTeX macro preserved: \\nleftarrow",
+        "unresolved LaTeX macro preserved: \\nleftrightarrow",
+        "unresolved LaTeX macro preserved: \\nrightarrow",
+        "unresolved LaTeX macro preserved: \\rightarrowtail",
+        "unresolved LaTeX macro preserved: \\rightleftarrows",
+        "unresolved LaTeX macro preserved: \\rightleftharpoons",
+        "unresolved LaTeX macro preserved: \\rightrightarrows",
+        "unresolved LaTeX macro preserved: \\rightsquigarrow",
+        "unresolved LaTeX macro preserved: \\twoheadleftarrow",
+        "unresolved LaTeX macro preserved: \\twoheadrightarrow",
+        "unresolved LaTeX macro preserved: \\upharpoonleft",
+        "unresolved LaTeX macro preserved: \\upharpoonright",
+        "unresolved LaTeX macro preserved: \\upuparrows",
+        "unresolved LaTeX macro preserved: \\verb"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpbmmelg1a/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpbmmelg1a/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-018/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-018/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-018/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-018/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcmy08153/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcmy08153/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-018/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-018/pandoc.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-018/pandoc.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-018/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "783103df57b4e203975f36dfb5576ef9e455b7ab8c4752858dd94a63c9632a05"
+    },
+    {
+      "id": "table-019",
+      "internal_table_id": "table-019",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-019.ecsv",
+      "caption": "Relations (math mode)",
+      "label": "",
+      "row_count": 18,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\leq",
+          "\\verb\"\\leq\"",
+          "\\geq",
+          "\\verb\"\\geq\""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\leq",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\verb\"\\leq\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\geq",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\verb\"\\geq\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\Join",
+        "unresolved LaTeX macro preserved: \\approx",
+        "unresolved LaTeX macro preserved: \\asymp",
+        "unresolved LaTeX macro preserved: \\bowtie",
+        "unresolved LaTeX macro preserved: \\cong",
+        "unresolved LaTeX macro preserved: \\dashv",
+        "unresolved LaTeX macro preserved: \\doteq",
+        "unresolved LaTeX macro preserved: \\equiv",
+        "unresolved LaTeX macro preserved: \\frown",
+        "unresolved LaTeX macro preserved: \\geq",
+        "unresolved LaTeX macro preserved: \\gg",
+        "unresolved LaTeX macro preserved: \\in",
+        "unresolved LaTeX macro preserved: \\leq",
+        "unresolved LaTeX macro preserved: \\ll",
+        "unresolved LaTeX macro preserved: \\mid",
+        "unresolved LaTeX macro preserved: \\models",
+        "unresolved LaTeX macro preserved: \\neq",
+        "unresolved LaTeX macro preserved: \\ni",
+        "unresolved LaTeX macro preserved: \\parallel",
+        "unresolved LaTeX macro preserved: \\perp",
+        "unresolved LaTeX macro preserved: \\prec",
+        "unresolved LaTeX macro preserved: \\preceq",
+        "unresolved LaTeX macro preserved: \\propto",
+        "unresolved LaTeX macro preserved: \\sim",
+        "unresolved LaTeX macro preserved: \\simeq",
+        "unresolved LaTeX macro preserved: \\smile",
+        "unresolved LaTeX macro preserved: \\sqsubset",
+        "unresolved LaTeX macro preserved: \\sqsubseteq",
+        "unresolved LaTeX macro preserved: \\sqsupset",
+        "unresolved LaTeX macro preserved: \\sqsupseteq",
+        "unresolved LaTeX macro preserved: \\subset",
+        "unresolved LaTeX macro preserved: \\subseteq",
+        "unresolved LaTeX macro preserved: \\succ",
+        "unresolved LaTeX macro preserved: \\succeq",
+        "unresolved LaTeX macro preserved: \\supset",
+        "unresolved LaTeX macro preserved: \\supseteq",
+        "unresolved LaTeX macro preserved: \\vdash",
+        "unresolved LaTeX macro preserved: \\verb"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5i5b3tnr/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5i5b3tnr/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-019/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-019/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-019/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-019/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpw9um9ffx/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpw9um9ffx/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-019/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-019/pandoc.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-019/pandoc.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-019/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "c6f13b200870c57f1b023cfed6f1d7047f94f5b912d48c8faeb1afa1e0e520ac"
+    },
+    {
+      "id": "table-020",
+      "internal_table_id": "table-020",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-020.ecsv",
+      "caption": "AMS binary relations (math mode)",
+      "label": "",
+      "row_count": 33,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\leqq",
+          "\\verb\"\\leqq\"",
+          "\\geqq",
+          "\\verb\"\\geqq\""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\leqq",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\verb\"\\leqq\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\geqq",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\verb\"\\geqq\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\Bumpeq",
+        "unresolved LaTeX macro preserved: \\Doteq",
+        "unresolved LaTeX macro preserved: \\Subset",
+        "unresolved LaTeX macro preserved: \\Supset",
+        "unresolved LaTeX macro preserved: \\Vdash",
+        "unresolved LaTeX macro preserved: \\Vvdash",
+        "unresolved LaTeX macro preserved: \\approxeq",
+        "unresolved LaTeX macro preserved: \\backepsilon",
+        "unresolved LaTeX macro preserved: \\backsim",
+        "unresolved LaTeX macro preserved: \\backsimeq",
+        "unresolved LaTeX macro preserved: \\because",
+        "unresolved LaTeX macro preserved: \\between",
+        "unresolved LaTeX macro preserved: \\blacktriangleleft",
+        "unresolved LaTeX macro preserved: \\blacktriangleright",
+        "unresolved LaTeX macro preserved: \\bumpeq",
+        "unresolved LaTeX macro preserved: \\circeq",
+        "unresolved LaTeX macro preserved: \\curlyeqprec",
+        "unresolved LaTeX macro preserved: \\curlyeqsucc",
+        "unresolved LaTeX macro preserved: \\doteqdot",
+        "unresolved LaTeX macro preserved: \\eqcirc",
+        "unresolved LaTeX macro preserved: \\eqsim",
+        "unresolved LaTeX macro preserved: \\eqslantgtr",
+        "unresolved LaTeX macro preserved: \\eqslantless",
+        "unresolved LaTeX macro preserved: \\fallingdotseq",
+        "unresolved LaTeX macro preserved: \\geqq",
+        "unresolved LaTeX macro preserved: \\geqslant",
+        "unresolved LaTeX macro preserved: \\ggg",
+        "unresolved LaTeX macro preserved: \\gggtr",
+        "unresolved LaTeX macro preserved: \\gtrapprox",
+        "unresolved LaTeX macro preserved: \\gtrdot",
+        "unresolved LaTeX macro preserved: \\gtreqless",
+        "unresolved LaTeX macro preserved: \\gtreqqless",
+        "unresolved LaTeX macro preserved: \\gtrless",
+        "unresolved LaTeX macro preserved: \\gtrsim",
+        "unresolved LaTeX macro preserved: \\leqq",
+        "unresolved LaTeX macro preserved: \\leqslant",
+        "unresolved LaTeX macro preserved: \\lessapprox",
+        "unresolved LaTeX macro preserved: \\lessdot",
+        "unresolved LaTeX macro preserved: \\lesseqgtr",
+        "unresolved LaTeX macro preserved: \\lesseqqgtr",
+        "unresolved LaTeX macro preserved: \\lessgtr",
+        "unresolved LaTeX macro preserved: \\lesssim",
+        "unresolved LaTeX macro preserved: \\lll",
+        "unresolved LaTeX macro preserved: \\llless",
+        "unresolved LaTeX macro preserved: \\pitchfork",
+        "unresolved LaTeX macro preserved: \\precapprox",
+        "unresolved LaTeX macro preserved: \\preccurlyeq",
+        "unresolved LaTeX macro preserved: \\precsim",
+        "unresolved LaTeX macro preserved: \\risingdotseq",
+        "unresolved LaTeX macro preserved: \\shortmid",
+        "unresolved LaTeX macro preserved: \\shortparallel",
+        "unresolved LaTeX macro preserved: \\smallfrown",
+        "unresolved LaTeX macro preserved: \\smallsmile",
+        "unresolved LaTeX macro preserved: \\sqsubset",
+        "unresolved LaTeX macro preserved: \\sqsupset",
+        "unresolved LaTeX macro preserved: \\subseteqq",
+        "unresolved LaTeX macro preserved: \\succapprox",
+        "unresolved LaTeX macro preserved: \\succcurlyeq",
+        "unresolved LaTeX macro preserved: \\succsim",
+        "unresolved LaTeX macro preserved: \\supseteqq",
+        "unresolved LaTeX macro preserved: \\therefore",
+        "unresolved LaTeX macro preserved: \\thickapprox",
+        "unresolved LaTeX macro preserved: \\thicksim",
+        "unresolved LaTeX macro preserved: \\trianglelefteq",
+        "unresolved LaTeX macro preserved: \\triangleq",
+        "unresolved LaTeX macro preserved: \\trianglerighteq",
+        "unresolved LaTeX macro preserved: \\vDash",
+        "unresolved LaTeX macro preserved: \\varpropto",
+        "unresolved LaTeX macro preserved: \\vartriangleleft",
+        "unresolved LaTeX macro preserved: \\vartriangleright",
+        "unresolved LaTeX macro preserved: \\verb"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpk58qz8om/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpk58qz8om/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-020/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-020/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-020/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-020/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprcofbmze/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmprcofbmze/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-020/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-020/pandoc.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-020/pandoc.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-020/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "cc2f1f12aa4cdb7d2ba0cf5ef973cd98d0e36ee25cf69b5e6e1535b977fb619a"
+    },
+    {
+      "id": "table-021",
+      "internal_table_id": "table-021",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-021.ecsv",
+      "caption": "AMS negated relations (math mode)",
+      "label": "",
+      "row_count": 26,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "\\nless",
+          "\\verb\"\\nless\"",
+          "\\ngtr",
+          "\\verb\"\\ngtr\""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\nless",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\verb\"\\nless\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\ngtr",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\verb\"\\ngtr\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\gnapprox",
+        "unresolved LaTeX macro preserved: \\gneq",
+        "unresolved LaTeX macro preserved: \\gneqq",
+        "unresolved LaTeX macro preserved: \\gnsim",
+        "unresolved LaTeX macro preserved: \\gvertneqq",
+        "unresolved LaTeX macro preserved: \\lnapprox",
+        "unresolved LaTeX macro preserved: \\lneq",
+        "unresolved LaTeX macro preserved: \\lneqq",
+        "unresolved LaTeX macro preserved: \\lnsim",
+        "unresolved LaTeX macro preserved: \\lvertneqq",
+        "unresolved LaTeX macro preserved: \\nVDash",
+        "unresolved LaTeX macro preserved: \\nVdash",
+        "unresolved LaTeX macro preserved: \\ncong",
+        "unresolved LaTeX macro preserved: \\ngeq",
+        "unresolved LaTeX macro preserved: \\ngeqq",
+        "unresolved LaTeX macro preserved: \\ngeqslant",
+        "unresolved LaTeX macro preserved: \\ngtr",
+        "unresolved LaTeX macro preserved: \\nleq",
+        "unresolved LaTeX macro preserved: \\nleqq",
+        "unresolved LaTeX macro preserved: \\nleqslant",
+        "unresolved LaTeX macro preserved: \\nless",
+        "unresolved LaTeX macro preserved: \\nmid",
+        "unresolved LaTeX macro preserved: \\nparallel",
+        "unresolved LaTeX macro preserved: \\nprec",
+        "unresolved LaTeX macro preserved: \\npreceq",
+        "unresolved LaTeX macro preserved: \\nshortmid",
+        "unresolved LaTeX macro preserved: \\nshortparallel",
+        "unresolved LaTeX macro preserved: \\nsim",
+        "unresolved LaTeX macro preserved: \\nsubseteq",
+        "unresolved LaTeX macro preserved: \\nsubseteqq",
+        "unresolved LaTeX macro preserved: \\nsucc",
+        "unresolved LaTeX macro preserved: \\nsucceq",
+        "unresolved LaTeX macro preserved: \\nsupseteq",
+        "unresolved LaTeX macro preserved: \\nsupseteqq",
+        "unresolved LaTeX macro preserved: \\ntriangleleft",
+        "unresolved LaTeX macro preserved: \\ntrianglelefteq",
+        "unresolved LaTeX macro preserved: \\ntriangleright",
+        "unresolved LaTeX macro preserved: \\ntrianglerighteq",
+        "unresolved LaTeX macro preserved: \\nvDash",
+        "unresolved LaTeX macro preserved: \\nvdash",
+        "unresolved LaTeX macro preserved: \\precnapprox",
+        "unresolved LaTeX macro preserved: \\precneqq",
+        "unresolved LaTeX macro preserved: \\precnsim",
+        "unresolved LaTeX macro preserved: \\subsetneq",
+        "unresolved LaTeX macro preserved: \\subsetneqq",
+        "unresolved LaTeX macro preserved: \\succnapprox",
+        "unresolved LaTeX macro preserved: \\succneqq",
+        "unresolved LaTeX macro preserved: \\succnsim",
+        "unresolved LaTeX macro preserved: \\supsetneq",
+        "unresolved LaTeX macro preserved: \\supsetneqq",
+        "unresolved LaTeX macro preserved: \\varsubsetneq",
+        "unresolved LaTeX macro preserved: \\varsubsetneqq",
+        "unresolved LaTeX macro preserved: \\varsupsetneq",
+        "unresolved LaTeX macro preserved: \\varsupsetneqq",
+        "unresolved LaTeX macro preserved: \\verb"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4oqkft2y/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4oqkft2y/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-021/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-021/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-021/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-021/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpaqbpq68v/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpaqbpq68v/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-021/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-021/pandoc.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-021/pandoc.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-021/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "9d9ca04b03bf5b298f01e7509a73c6f80a8f878bf4e976f6b454f3acbc54ddee"
+    },
+    {
+      "id": "table-023",
+      "internal_table_id": "table-023",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2509.24010/catalog_tables/table-023.ecsv",
+      "caption": "Delimiters (math mode)",
+      "label": "",
+      "row_count": 12,
+      "column_count": 4,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "(",
+          "\\verb\"(\"",
+          ")",
+          "\\verb\")\""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "(",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\verb\"(\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": ")",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\verb\")\"",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\Downarrow",
+        "unresolved LaTeX macro preserved: \\Uparrow",
+        "unresolved LaTeX macro preserved: \\Updownarrow",
+        "unresolved LaTeX macro preserved: \\Vert",
+        "unresolved LaTeX macro preserved: \\backslash",
+        "unresolved LaTeX macro preserved: \\downarrow",
+        "unresolved LaTeX macro preserved: \\langle",
+        "unresolved LaTeX macro preserved: \\lceil",
+        "unresolved LaTeX macro preserved: \\lfloor",
+        "unresolved LaTeX macro preserved: \\llcorner",
+        "unresolved LaTeX macro preserved: \\lrcorner",
+        "unresolved LaTeX macro preserved: \\rangle",
+        "unresolved LaTeX macro preserved: \\rceil",
+        "unresolved LaTeX macro preserved: \\rfloor",
+        "unresolved LaTeX macro preserved: \\ulcorner",
+        "unresolved LaTeX macro preserved: \\uparrow",
+        "unresolved LaTeX macro preserved: \\updownarrow",
+        "unresolved LaTeX macro preserved: \\urcorner",
+        "unresolved LaTeX macro preserved: \\verb",
+        "unresolved LaTeX macro preserved: \\vert"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzvjx6wkc/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2509.24010/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzvjx6wkc/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-023/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-023/latexml.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-023/latexml.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-023/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3ro8vv01/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3ro8vv01/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/2509.24010/catalog_sources/table-023/wrapped.tex",
+            "html": "literature/2509.24010/catalog_sources/table-023/pandoc.html",
+            "stdout": "literature/2509.24010/catalog_sources/table-023/pandoc.stdout.txt",
+            "stderr": "literature/2509.24010/catalog_sources/table-023/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "ec3888932410faeeda5f7a1be550d3c8b54a605e64a02bbd8b5085fd28f6f7f4"
+    }
+  ]
+}

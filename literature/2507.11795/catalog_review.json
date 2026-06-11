@@ -1,0 +1,516 @@
+{
+    "schema_version": "stella.article_data_assets.review.v1",
+    "paper": {
+        "arxiv_id": "2507.11795",
+        "title": "The origin of the most recently ejected OB runaway star from the R136 cluster",
+        "month": "2025-07",
+        "source_note_json": "notes/2025/2025-07/2025-07.json",
+        "links": {
+            "abs": "https://arxiv.org/abs/2507.11795",
+            "pdf": "https://arxiv.org/pdf/2507.11795"
+        }
+    },
+    "source": {
+        "paper_dir": "literature/2507.11795",
+        "audit_path": "literature/2507.11795/audit.json",
+        "source_dir": "literature/2507.11795/arxiv_source",
+        "tex_root": "literature/2507.11795/arxiv_source/Mel34.tex",
+        "source_available": true
+    },
+    "review": {
+        "status": "reviewed",
+        "reviewed_at": "2026-05-17T12:34:23",
+        "reviewer": "agent",
+        "summary": "Auto-filled review: 6 internal table(s), 5 external resource(s)."
+    },
+    "internal_tables": [
+        {
+            "id": "table-tab-cross_sections",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "The 8 initial configurations for a triple-binary encounter",
+            "source_refs": [
+                {
+                    "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+                    "start_line": 433,
+                    "end_line": 462,
+                    "caption": "The 8 initial configurations for a triple-binary encounter. The target triple has an inner separation $a_{\\rm in} = 4$\\,au, and outer separation $a_{\\rm out} = 40$\\,au. The projectile binary with $a_{\\rm p} = 6$\\,au, encounters the terget triple with a relative velocity of $v_{\\rm enc} = 7$\\,km/s. The last four columns give the interaction cross-section ($\\sigma$), the fraction of cases in which VFTS~590 is ejected ($f_{\\rm esc, VFTS590}$), with a velocity of at least $v_{\\rm ej} \\apgt 27.6$\\,km/s ($f_{\\rm run}$), and the corresponding rate that VFTS~590 and the two surviving binaries are ejected with at least $v_{\\rm ej} \\apgt 27.6$\\,km/s calculated for the core collapsed cluster R136 ($\\Gamma_{\\rm esc, VFTS590}$). The most likely scenario is G.",
+                    "label": "tab:cross_sections"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "id",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "initial configuration",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\sigma | [10^6 au^2]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[10^6 au^2]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "f_\\rm esc, VFTS590",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "f_\\rm run",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\Gamma_\\rm esc, VFTS590 | Myr^-1",
+                    "meaning": "Column from table header",
+                    "unit_text": "Myr^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "The 8 initial configurations for a triple-binary encounter. The target triple has an inner separation $a_{\\rm in} = 4$\\,au, and outer separation $a_{\\rm out} = 40$\\,au. The projectile binary with $a_{\\rm p} = 6$\\,au, encounters the terget triple with a relative velocity of $v_{\\rm enc} = 7$\\,km/s. The last four columns give the interaction cross-section ($\\sigma$), the fraction of cases in which VFTS~590 is ejected ($f_{\\rm esc, VFTS590}$), with a velocity of at least $v_{\\rm ej} \\apgt 27.6$\\,km/s ($f_{\\rm run}$), and the corresponding rate that VFTS~590 and the two surviving binaries are ejected with at least $v_{\\rm ej} \\apgt 27.6$\\,km/s calculated for the core collapsed cluster R136 ($\\Gamma_{\\rm esc, VFTS590}$). The most likely scenario is G.",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-final_orbits",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Pre and post-encounter orbital parameters for the two binaries and the tertiary component",
+            "source_refs": [
+                {
+                    "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+                    "start_line": 608,
+                    "end_line": 627,
+                    "caption": "Pre and post-encounter orbital parameters for the two binaries and the tertiary component. The first row identifies the binary components followed by the name of the third star. The subsequent column gives the initial orbital separation ($a_{\\rm init}$). The last three columns give the final semi-major axis ($a_{\\rm fin}$), eccentricity ($e_{\\rm fin}$) and the mean ejection velocity (with respect to the barycenter, $v_{\\rm run}$).",
+                    "label": "tab:final_orbits"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Binary",
+                    "meaning": "Classification or quality flag",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_002",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Tertiary",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "a_\\rm init | [au]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[au]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "a_\\rm fin | [au]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[au]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "e_\\rm fin",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "v_\\rm run | km/s",
+                    "meaning": "Heliocentric radial velocity",
+                    "unit_text": "km/s",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Pre and post-encounter orbital parameters for the two binaries and the tertiary component. The first row identifies the binary components followed by the name of the third star. The subsequent column gives the initial orbital separation ($a_{\\rm init}$). The last three columns give the final semi-major axis ($a_{\\rm fin}$), eccentricity ($e_{\\rm fin}$) and the mean ejection velocity (with respect to the barycenter, $v_{\\rm run}$).",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-interaction_frequency",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Identification of the escaping star and relative outcome frequency for scenarios A till H for the encounter in which $a_{\\rm in} = 4$\\,au, $a_{\\rm out} = 40$\\,au, $a_{\\rm projectile} = 6$\\,au",
+            "source_refs": [
+                {
+                    "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+                    "start_line": 1028,
+                    "end_line": 1052,
+                    "caption": "Identification of the escaping star and relative outcome frequency for scenarios A till H for the encounter in which $a_{\\rm in} = 4$\\,au, $a_{\\rm out} = 40$\\,au, $a_{\\rm projectile} = 6$\\,au. For an encounter velocity of $v_{\\rm enc} = 7$\\,km/s. Scenario G in which \\tB\\, escapes as a single and (\\pA, \\pB) as well as (\\tAa, \\tAb) escape as binaries give the most probable outcome.",
+                    "label": "tab:interaction_frequency"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "id",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "escaper | (VFTS~590)",
+                    "meaning": "High-velocity or runaway classification flag",
+                    "unit_text": "VFTS~590",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "(\\pA, \\pB)",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\pA, \\pB",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "(\\pA, \\tAa)",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\pA, \\tAa",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "(\\pA, \\tB)",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\pA, \\tB",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "(\\pA, \\tAb)",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\pA, \\tAb",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Identification of the escaping star and relative outcome frequency for scenarios A till H for the encounter in which $a_{\\rm in} = 4$\\,au, $a_{\\rm out} = 40$\\,au, $a_{\\rm projectile} = 6$\\,au. For an encounter velocity of $v_{\\rm enc} = 7$\\,km/s. Scenario G in which \\tB\\, escapes as a single and (\\pA, \\pB) as well as (\\tAa, \\tAb) escape as binaries give the most probable outcome.",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-cross_sections_velocity_dependence",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Cross section for scenario G but with varying the encounter velocity",
+            "source_refs": [
+                {
+                    "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+                    "start_line": 1055,
+                    "end_line": 1084,
+                    "caption": "Cross section for scenario G but with varying the encounter velocity. Here we adopted the binary (\\tAa,\\tAb) to have a semi-major axis of $a_{\\rm in} =4$\\,au, The initial tertiary \\tB\\, (that eventually escapes) orbits the target binary with a semimajor-axis of $a_{\\rm out} = 40$\\,au. The projectile binary (\\pA, \\pB), has a semi-major axis of 6\\,au. The first column gives the relative encounter velocity, followed by the cross section, and the fraction of systems for which VFTS~590 escapes. The following columns give the cross section for VFTS~590 and the two binaries to acquire a minimum runaway velocity of 27.6km/s, and the encounter rate associated with this cross section. The last three columns give the branching ratios of the eventual surviving binaries with \\pA\\, as primary.",
+                    "label": "tab:cross_sections_velocity_dependence"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "v_\\rm enc | [km/s]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[km/s]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\sigma | [10^6 au^2]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[10^6 au^2]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "f_\\rm esc, VFTS590",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\sigma_\\rm run | [10^6 au^2]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[10^6 au^2]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\Gamma_\\rm esc, VFTS590 | [Myr^-1]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[Myr^-1]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "(\\pA, \\pB)",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\pA, \\pB",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "(\\pA, \\tAa)",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\pA, \\tAa",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "(\\pA, \\tAb)",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\pA, \\tAb",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Cross section for scenario G but with varying the encounter velocity. Here we adopted the binary (\\tAa,\\tAb) to have a semi-major axis of $a_{\\rm in} =4$\\,au, The initial tertiary \\tB\\, (that eventually escapes) orbits the target binary with a semimajor-axis of $a_{\\rm out} = 40$\\,au. The projectile binary (\\pA, \\pB), has a semi-major axis of 6\\,au. The first column gives the relative encounter velocity, followed by the cross section, and the fraction of systems for which VFTS~590 escapes. The following columns give the cross section for VFTS~590 and the two binaries to acquire a minimum runaway velocity of 27.6km/s, and the encounter rate associated with this cross section. The last three columns give the branching ratios of the eventual surviving binaries with \\pA\\, as primary.",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-cross_sections_orbital_separation",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Branching ratios and cross-section for scenario G (\\tB\\, escapes) for the varying orbit of the tertiary star (VFTS~590) around the inner binary (\\tAa, \\tAb)",
+            "source_refs": [
+                {
+                    "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+                    "start_line": 1096,
+                    "end_line": 1129,
+                    "caption": "Branching ratios and cross-section for scenario G (\\tB\\, escapes) for the varying orbit of the tertiary star (VFTS~590) around the inner binary (\\tAa, \\tAb). The inner target binary has an adopted semi-major axis of 4\\,au, while the projectile binary has a semi-major axis of 6\\,au. The relative encounter velocity is 7\\,km/s. The first column gives the semi-major axis of the tertiary star (\\tB) around the target binary (\\tAa, \\tAb). The following column gives the cross section for this interaction to happen. The next three columns give the fraction of systems, cross-section and the rate for the escaper (VFTS~590) to acquire a runaway speed of at least 27.6\\,km/s. The last three columns give the branching ratios of the eventual surviving binaries with \\pA\\, as primary.",
+                    "label": "tab:cross_sections_orbital_separation"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "a_\\rm out | [au]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[au]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\sigma | [10^6 au^2]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[10^6 au^2]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "f_\\rm esc, VFTS590 | [au^2]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[au^2]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\sigma_\\rm run | [au^2]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[au^2]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\Gamma_\\rm esc, VFTS590 | [Myr]^-1",
+                    "meaning": "Column from table header",
+                    "unit_text": "[Myr]^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "(\\pA, \\pB) | (\\tAa, \\tAb)",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\pA, \\pB",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "(\\pA, \\tAa) | (\\pB, \\tAb)",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\pA, \\tAa",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "(\\pA, \\tAb) | (\\pB, \\tAa)",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\pA, \\tAb",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Branching ratios and cross-section for scenario G (\\tB\\, escapes) for the varying orbit of the tertiary star (VFTS~590) around the inner binary (\\tAa, \\tAb). The inner target binary has an adopted semi-major axis of 4\\,au, while the projectile binary has a semi-major axis of 6\\,au. The relative encounter velocity is 7\\,km/s. The first column gives the semi-major axis of the tertiary star (\\tB) around the target binary (\\tAa, \\tAb). The following column gives the cross section for this interaction to happen. The next three columns give the fraction of systems, cross-section and the rate for the escaper (VFTS~590) to acquire a runaway speed of at least 27.6\\,km/s. The last three columns give the branching ratios of the eventual surviving binaries with \\pA\\, as primary.",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-cross_sections_for_1010010",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Cross sections for the 8 reduced cases for which we adopt Mel39B as a 80\\,\\MSun\\, star, and 50\\,\\MSun\\, for VFTS~590",
+            "source_refs": [
+                {
+                    "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+                    "start_line": 1132,
+                    "end_line": 1160,
+                    "caption": "Cross sections for the 8 reduced cases for which we adopt Mel39B as a 80\\,\\MSun\\, star, and 50\\,\\MSun\\, for VFTS~590. All the other stars are 140\\,\\MSun. Calculations are performed with a semi-major axis for the inner target binary of $a = 10$\\,au and an outer orbit of $100$\\,au. For the projectile binary, we also adopt $10$\\,au. The relative encounter velocity is $v_{\\rm enc} = 7$\\,km/s. The first column identifies the scenario, explains the second column. The third and fourth columns give the total cross section for this interaction and the fraction of cases in which VFTS~590 is ejected. The last two columns give the cross-section and rate for VFTS~590 to be ejected with a velocity of at least 27.6km/s.",
+                    "label": "tab:cross_sections_for_1010010"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "id",
+                    "meaning": "Object identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Encounter",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\sigma | [10^6 au^2]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[10^6 au^2]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "f_\\rm esc, VFTS590 | [au^2]",
+                    "meaning": "Column from table header",
+                    "unit_text": "[au^2]",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "f_\\rm run",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\Gamma_\\rm esc, VFTS590 | [Myr]^-1",
+                    "meaning": "Column from table header",
+                    "unit_text": "[Myr]^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Cross sections for the 8 reduced cases for which we adopt Mel39B as a 80\\,\\MSun\\, star, and 50\\,\\MSun\\, for VFTS~590. All the other stars are 140\\,\\MSun. Calculations are performed with a semi-major axis for the inner target binary of $a = 10$\\,au and an outer orbit of $100$\\,au. For the projectile binary, we also adopt $10$\\,au. The relative encounter velocity is $v_{\\rm enc} = 7$\\,km/s. The first column identifies the scenario, explains the second column. The third and fourth columns give the total cross section for this interaction and the fraction of cases in which VFTS~590 is ejected. The last two columns give the cross-section and rate for VFTS~590 to be ejected with a velocity of at least 27.6km/s.",
+            "comments": ""
+        }
+    ],
+    "external_resources": [
+        {
+            "id": "resource-001",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+                    "start_line": 667,
+                    "end_line": 667,
+                    "context": "\\section*{Data and code availability}\n\nAll data is available at zenodo\n\\url{https://zenodo.org/uploads/10256841} under DOI:\n10.5281/zenodo.10256841, and all the source code is on github"
+                }
+            ],
+            "evidence": "\\section*{Data and code availability}\n\nAll data is available at zenodo\n\\url{https://zenodo.org/uploads/10256841} under DOI:\n10.5281/zenodo.10256841, and all the source code is on github",
+            "comments": ""
+        },
+        {
+            "id": "resource-002",
+            "kind": "external_url",
+            "url": "https://zenodo.org/uploads/10256841",
+            "local_path": "",
+            "description": "Zenodo data repository entry referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+                    "start_line": 668,
+                    "end_line": 668,
+                    "context": "All data is available at zenodo\n\\url{https://zenodo.org/uploads/10256841} under DOI:\n10.5281/zenodo.10256841, and all the source code is on github\n\\url{https://github.com/amusecode/Starlab}."
+                }
+            ],
+            "evidence": "All data is available at zenodo\n\\url{https://zenodo.org/uploads/10256841} under DOI:\n10.5281/zenodo.10256841, and all the source code is on github\n\\url{https://github.com/amusecode/Starlab}.",
+            "comments": ""
+        },
+        {
+            "id": "resource-003",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+                    "start_line": 669,
+                    "end_line": 669,
+                    "context": "All data is available at zenodo\n\\url{https://zenodo.org/uploads/10256841} under DOI:\n10.5281/zenodo.10256841, and all the source code is on github\n\\url{https://github.com/amusecode/Starlab}."
+                }
+            ],
+            "evidence": "All data is available at zenodo\n\\url{https://zenodo.org/uploads/10256841} under DOI:\n10.5281/zenodo.10256841, and all the source code is on github\n\\url{https://github.com/amusecode/Starlab}.",
+            "comments": ""
+        },
+        {
+            "id": "resource-004",
+            "kind": "external_url",
+            "url": "https://github.com/amusecode/Starlab",
+            "local_path": "",
+            "description": "GitHub repository or code release referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+                    "start_line": 670,
+                    "end_line": 670,
+                    "context": "\\url{https://zenodo.org/uploads/10256841} under DOI:\n10.5281/zenodo.10256841, and all the source code is on github\n\\url{https://github.com/amusecode/Starlab}.\n\n%%\\section*{Acknowledgements}"
+                }
+            ],
+            "evidence": "\\url{https://zenodo.org/uploads/10256841} under DOI:\n10.5281/zenodo.10256841, and all the source code is on github\n\\url{https://github.com/amusecode/Starlab}.\n\n%%\\section*{Acknowledgements}",
+            "comments": ""
+        },
+        {
+            "id": "resource-005",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+                    "start_line": 858,
+                    "end_line": 858,
+                    "context": "ejected. A collision between two or even three of the participating\nstars will not lead to high-velocity runaways.  The data for these\ncalculations are available at Zenodo\n(\\url{https://zenodo.org/uploads/10256841})."
+                }
+            ],
+            "evidence": "ejected. A collision between two or even three of the participating\nstars will not lead to high-velocity runaways.  The data for these\ncalculations are available at Zenodo\n(\\url{https://zenodo.org/uploads/10256841}).",
+            "comments": ""
+        }
+    ]
+}

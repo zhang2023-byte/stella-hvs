@@ -1,0 +1,256 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:29",
+  "paper": {
+    "arxiv_id": "2604.21646",
+    "title": "An Old, Low-mass, Metal-poor Hypervelocity Star Candidate Consistent with a Galactic Center Origin",
+    "month": "2026-04"
+  },
+  "review": {
+    "path": "literature/2604.21646/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124029",
+    "started_at": "2026-05-17T12:40:29",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2604.21646",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+        "start_line": 97,
+        "end_line": 139,
+        "caption": "Detailed information of the HVS candidate DESI-HVS1.",
+        "label": "tab1"
+      },
+      "source_path": "literature/2604.21646/arxiv_source/deng25b.tex",
+      "excerpt_path": "literature/2604.21646/catalog_sources/table-tab1/excerpt.tex",
+      "sha256": "bab42542630647fbb0cafe229d20604f844ff43268f6b7d583e65f92c307b276",
+      "line_count": 43,
+      "error": ""
+    },
+    {
+      "id": "table-tab2",
+      "internal_table_id": "table-tab2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2604.21646/arxiv_source/deng25b.tex",
+        "start_line": 405,
+        "end_line": 424,
+        "caption": "Closest-approach properties of DESI-HVS1 under three different Galactic potential models.",
+        "label": "tab2"
+      },
+      "source_path": "literature/2604.21646/arxiv_source/deng25b.tex",
+      "excerpt_path": "literature/2604.21646/catalog_sources/table-tab2/excerpt.tex",
+      "sha256": "af7c550b4e001634b9d3efd674861e798745e44fc8421c69f2161b17c008288c",
+      "line_count": 20,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "status": "success",
+      "ecsv_path": "literature/2604.21646/catalog_tables/table-tab1.ecsv",
+      "caption": "Detailed information of the HVS candidate DESI-HVS1.",
+      "label": "tab1",
+      "row_count": 31,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value",
+          "Units"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Units",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpg3py87i3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2604.21646/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpg3py87i3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2604.21646/catalog_sources/table-tab1/wrapped.tex",
+            "html": "literature/2604.21646/catalog_sources/table-tab1/latexml.html",
+            "stdout": "literature/2604.21646/catalog_sources/table-tab1/latexml.stdout.txt",
+            "stderr": "literature/2604.21646/catalog_sources/table-tab1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "bab42542630647fbb0cafe229d20604f844ff43268f6b7d583e65f92c307b276"
+    },
+    {
+      "id": "table-tab2",
+      "internal_table_id": "table-tab2",
+      "status": "success",
+      "ecsv_path": "literature/2604.21646/catalog_tables/table-tab2.ecsv",
+      "caption": "Closest-approach properties of DESI-HVS1 under three different Galactic potential models.",
+      "label": "tab2",
+      "row_count": 3,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Potentials",
+          "P\\mathrm_cross",
+          "r\\mathrm_closest",
+          "v\\mathrm_closest",
+          "t\\mathrm_fly"
+        ],
+        [
+          "…",
+          "…",
+          "(kpc)",
+          "(km s -1 )",
+          "(Myr)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Potentials | …",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "P\\mathrm_cross | …",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "r\\mathrm_closest | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "v\\mathrm_closest | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "t\\mathrm_fly | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5vtze3oz/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2604.21646/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp5vtze3oz/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2604.21646/catalog_sources/table-tab2/wrapped.tex",
+            "html": "literature/2604.21646/catalog_sources/table-tab2/latexml.html",
+            "stdout": "literature/2604.21646/catalog_sources/table-tab2/latexml.stdout.txt",
+            "stderr": "literature/2604.21646/catalog_sources/table-tab2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "af7c550b4e001634b9d3efd674861e798745e44fc8421c69f2161b17c008288c"
+    }
+  ]
+}

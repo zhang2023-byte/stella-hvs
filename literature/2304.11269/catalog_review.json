@@ -1,0 +1,379 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2304.11269",
+    "title": "High-velocity CP2 stars in the Galactic halo",
+    "month": "2023-04",
+    "source_note_json": "notes/2023/2023-04/2023-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2304.11269",
+      "pdf": "https://arxiv.org/pdf/2304.11269"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2304.11269",
+    "audit_path": "literature/2304.11269/audit.json",
+    "source_dir": "literature/2304.11269/arxiv_source",
+    "tex_root": "literature/2304.11269/arxiv_source/45464corr.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:31:23",
+    "reviewer": "agent",
+    "summary": "本文通过对 Gaia EDR3 天体测量数据、LAMOST/SDSS 视向速度以及 ZTF/ATLAS 测光数据的分析，在银河系晕中确认了 6 颗 CP2 星（化学丰度特殊星），它们是已知的首批 runaway CP2 星。论文包含 4 个 LaTeX 表格：(1) 15 个候选体的天体测量数据表；(2) 15 个候选体的光谱分类表；(3) 5 颗变星的周期分析表；(4) 6 颗确认晕 CP2 星的运动学性质表。外部资源包括 LAMOST、SDSS 数据存档、Gaia EDR3 视差校正代码、MKCLASS 光谱分类代码库、galpy 轨道积分软件以及 ZTF/ATLAS 测光巡天数据。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-table1_astrometry",
+      "kind": "latex_table",
+      "asset_type": "candidate_table",
+      "role_in_paper": "列出 15 个候选晕 CP2 星的天体测量数据（来自 Gaia EDR3），包括坐标、视向速度（来自 LAMOST/SDSS）、视差和自行。这是初始运动学筛选的输入样本，其中 1 颗来自 LAMOST 样本，14 颗来自 SDSS 样本。",
+      "source_refs": [
+        {
+          "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+          "start_line": 177,
+          "end_line": 204,
+          "caption": "Astrometric data for the candidate halo objects. The star Gaia DR3 3907547639444408064 (LAMOST 122746.05+113635.3) is from the sample of candidate halo CP2 stars from \\citet{huemmerich_2020}; all other objects are from the unpublished sample of CP star candidates by Paunzen et al. (in prep.).",
+          "label": "table1_astrometry"
+        }
+      ],
+      "columns": [
+        {
+          "name": "GDR3 source_id",
+          "meaning": "Gaia DR3 唯一源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA",
+          "meaning": "赤经 (Right Ascension)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec",
+          "meaning": "赤纬 (Declination)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_r",
+          "meaning": "视向速度 (radial velocity)，来自 LAMOST 或 SDSS 光谱",
+          "unit_text": "km s^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\varpi",
+          "meaning": "视差 (parallax)，已做零点偏差校正",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_{\\alpha}^{\\star}",
+          "meaning": "赤经方向自行 (proper motion in RA, cos(Dec) corrected)",
+          "unit_text": "mas yr^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_{\\delta}",
+          "meaning": "赤纬方向自行 (proper motion in Dec)",
+          "unit_text": "mas yr^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 展示了 15 颗基于 Toomre 图运动学预筛选后的候选晕 CP2 星的天体测量参数。数据来源为 Gaia EDR3（位置、视差、自行）及 LAMOST/SDSS（视向速度）。",
+      "comments": "该表包含 15 行数据，对应 15 个运动学候选体。这些候选体随后在 Table 2 (table_SpT) 中进行了光谱分类筛选，最终 6 颗被确认为 CP2 星。"
+    },
+    {
+      "id": "table-table_SpT",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "列出全部 15 个候选体的光谱分类结果，包括 6 颗确认为 CP2 星的天体、7 颗 metal-weak 星和 2 颗 non-CP 星。这是从运动学候选体中筛选 bona fide CP2 星的关键步骤。",
+      "source_refs": [
+        {
+          "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+          "start_line": 228,
+          "end_line": 258,
+          "caption": "Spectral types derived in this study (see Section \\ref{spectral_classification} for details). Stars are ordered first by type and then by increasing right ascension. The classification for Gaia DR3 3907547639444408064 was adopted from \\citet{huemmerich_2020}.",
+          "label": "table_SpT"
+        }
+      ],
+      "columns": [
+        {
+          "name": "GDR3 source_id",
+          "meaning": "Gaia DR3 唯一源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ID_alt",
+          "meaning": "替代标识符（2MASS 编号或 LAMOST 编号）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "SpT",
+          "meaning": "MK 光谱分类，包含 h-line type、k-line type 和 m-line type 信息及化学丰度异常特征（元素符号表示增强的谱线）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Type",
+          "meaning": "最终天体物理分类：CP2 star（化学丰度特殊星）、metal-weak（金属弱星）或 non-CP star（非特殊星）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 2 展示了使用 MKCLASS 代码和 libr18_225 标准星库对 LAMOST/SDSS 光谱进行分类的结果。6 颗 CP2 星中有 5 颗为 cool CP2 星（EuCrSr 特征为主），1 颗为 hot Si CP2 星。",
+      "comments": "表格按类型分组排列：6 颗 CP2 星（含 LAMOST J122746.05+113635.3）、7 颗 metal-weak 星、2 颗 non-CP 星。注释中标注了每颗星对应的 SDSS 光谱文件编号（specXXXXX.dat）。"
+    },
+    {
+      "id": "table-table_period_analysis",
+      "kind": "latex_table",
+      "asset_type": "follow_up_measurement_table",
+      "role_in_paper": "列出 5 颗被确认为 ACV 变星的晕 CP2 星的光变周期分析结果，使用 ZTF 和 ATLAS 巡天数据通过 Lomb-Scargle GLS 算法得出。",
+      "source_refs": [
+        {
+          "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+          "start_line": 279,
+          "end_line": 296,
+          "caption": "Variability periods of the five halo CP2 stars, derived from an analysis of ZTF and ATLAS data with the Lomb-Scargle GLS algorithm. Periods are given to the last significant digit. Data sources are indicated in the remarks.",
+          "label": "table_period_analysis"
+        }
+      ],
+      "columns": [
+        {
+          "name": "GDR3 source_id",
+          "meaning": "Gaia DR3 唯一源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P",
+          "meaning": "光变周期（旋转周期），由 Lomb-Scargle GLS 算法从 ZTF 或 ATLAS 光变曲线中测定",
+          "unit_text": "d (days)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "remark",
+          "meaning": "光变特征说明：反相位变化(antiphase var.)、仅在 r 波段可见变化(var in r only)、双波段一致变化(consistent var.)等，并注明数据来源(ZTF/ATLAS)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 3 展示了对 5 颗光变 CP2 星的周期分析结果。2 颗星显示 g 和 r 波段反相位变化（CP2 星的典型特征），2 颗仅在 r 波段显示变化，1 颗（LAMOST J122746）在 ATLAS c 和 o 波段均显示一致变化。第 6 颗 CP2 星（676074826449368704）未检测到显著光变。",
+      "comments": "周期分析使用 PERANSO 软件包中的 Lomb-Scargle GLS 算法。附带的傅里叶谱和相位折叠光变曲线见论文附录 Fig. 1-10。"
+    },
+    {
+      "id": "table-table2_kinematics",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "列出 6 颗确认晕 CP2 星在银心坐标系中的三维位置、三维速度和银道面穿越时间。这是论文的核心结果表，用于论证这些天体属于银河系晕，并且是银河系盘中被 eject 出来的 runaway stars。",
+      "source_refs": [
+        {
+          "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+          "start_line": 302,
+          "end_line": 320,
+          "caption": "Positions and kinematical properties of the halo CP stars.",
+          "label": "table2_kinematics"
+        }
+      ],
+      "columns": [
+        {
+          "name": "GDR3 source_id",
+          "meaning": "Gaia DR3 唯一源标识符",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "X",
+          "meaning": "银心直角坐标系 X 坐标（X 轴指向太阳方向，太阳位于 X=-8.122 kpc）",
+          "unit_text": "kpc",
+          "source_of_definition": "table header + Section 3 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "Y",
+          "meaning": "银心直角坐标系 Y 坐标（Y 轴近似指向银经 l=90° 方向）",
+          "unit_text": "kpc",
+          "source_of_definition": "table header + Section 3 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "Z",
+          "meaning": "银心直角坐标系 Z 坐标（Z 轴指向北银极 b=90°）",
+          "unit_text": "kpc",
+          "source_of_definition": "table header + Section 3 text",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_{\\mathrm{X}}",
+          "meaning": "银心直角坐标系 X 方向速度分量",
+          "unit_text": "km s^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_{\\mathrm{Y}}",
+          "meaning": "银心直角坐标系 Y 方向速度分量（沿银河系旋转方向）",
+          "unit_text": "km s^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_{\\mathrm{Z}}",
+          "meaning": "银心直角坐标系 Z 方向速度分量（垂直银道面方向）",
+          "unit_text": "km s^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_{\\mathrm{cross}}",
+          "meaning": "最近一次穿越银道面的时间 (time of last crossing of the Galactic plane)，通过 galpy 轨道积分回溯 200 Myr 计算",
+          "unit_text": "Myr",
+          "source_of_definition": "table header + Section 6 text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 4 中的位置和速度通过 Gaia EDR3 天体测量参数和 LAMOST/SDSS 视向速度经蒙特卡洛方法（10^5 次实现）计算得出。轨道使用 galpy 的 MWPotential2014 势模型积分。所有天体的 TD/H < 0.01，运动学性质与晕星一致。t_cross 远小于 CP2 星的典型主序寿命，表明这些天体多次穿越银道面。",
+      "comments": "所有值带有上下不对称误差（蒙特卡洛 10^5 次实现的结果）。太阳位置采用 X=-8.122 kpc (Gravity 2018)，太阳速度采用 [12.9, 245.6, 7.78] km/s (Drimmel 2018)，太阳距银道面高度 20.8 pc (Bennett 2019)。"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://www.lamost.org/lmusers/",
+      "local_path": "",
+      "description": "LAMOST 光谱巡天数据存档。论文使用 LAMOST DR8 的视向速度和光谱数据进行运动学分析和光谱分类。",
+      "source_refs": [
+        {
+          "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+          "start_line": 125,
+          "end_line": 125,
+          "context": "LAMOST data products are periodically released to the public in consecutive data releases which can be accessed via the LAMOST archive.\\footnote{\\url{http://www.lamost.org/lmusers/}}"
+        }
+      ],
+      "evidence": "论文第 2 节明确引用 LAMOST 数据存档 URL，作为视向速度和光谱数据的来源。",
+      "comments": "实际使用的是 LAMOST DR8 数据。论文使用了来自 Hummerich et al. (2020) 的 10 颗候选体和 LAMOST 光谱。"
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.sdss.org/dr17",
+      "local_path": "",
+      "description": "SDSS DR17 数据发布页面。论文使用 SDSS 的视向速度和光谱数据补充 Gaia 天体测量，同时使用了 Paunzen et al. (in prep.) 从 SDSS 光谱中识别的 CP 星候选体样本。",
+      "source_refs": [
+        {
+          "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+          "start_line": 127,
+          "end_line": 127,
+          "context": "The most recent data release is DR17 \\citep{Abdurro_2022},\\footnote{\\url{https://www.sdss.org/dr17}}"
+        }
+      ],
+      "evidence": "论文第 2 节明确引用 SDSS DR17 URL。SDSS 样本提供了 171 颗满足视差误差标准的 CP 星候选体，最终 14 颗通过了运动学预筛选。",
+      "comments": "光谱分类使用了 SDSS 光谱文件（specXXXXX.dat），具体文件名在 Table 2 的 LaTeX 注释中标注。"
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://gitlab.com/icc-ub/public/gaiadr3_zeropoint",
+      "local_path": "",
+      "description": "Gaia EDR3 视差零点偏差校正代码包 (gaiadr3_zeropoint)。论文使用该代码对 Gaia EDR3 原始视差进行系统偏差校正。",
+      "source_refs": [
+        {
+          "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+          "start_line": 138,
+          "end_line": 138,
+          "context": "First, we performed parallax bias correction for all sample stars using the procedure from \\citet{gaia_edr3_parallax_correction} via the accompanying code \\texttt{gaiadr3\\_zeropoint}.\\footnote{The package was downloaded from \\url{https://gitlab.com/icc-ub/public/gaiadr3_zeropoint}}"
+        }
+      ],
+      "evidence": "论文第 3 节详细描述了视差校正流程。偏差校正取决于星等、颜色、天球位置和天体测量解类型。所有研究天体的偏差均为负值，LAMOST 样本视差中值增加 0.039 mas，SDSS 样本增加 0.034 mas。",
+      "comments": "该代码基于 Lindegren et al. (2021) 的 Gaia EDR3 视差校正方法。"
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "http://www.appstate.edu/~grayro/mkclass/",
+      "local_path": "",
+      "description": "Richard O. Gray 的 MKCLASS 代码分发页面，包含 libr18_225 标准星光谱库。论文使用该代码和标准星库对候选体进行 MK 光谱分类，以确认 CP2 星身份。",
+      "source_refs": [
+        {
+          "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+          "start_line": 213,
+          "end_line": 213,
+          "context": "This library is distributed with Richard O. Gray's MKCLASS code,\\footnote{\\url{http://www.appstate.edu/~grayro/mkclass/}}"
+        }
+      ],
+      "evidence": "论文第 4 节说明光谱分类使用 refined MK classification system，将目标星蓝紫波段 (3800-4600 Å) 光谱与 libr18_225 标准星库叠加比对。",
+      "comments": "libr18_225 库包含分辨率降至 2.25 Å 的标准星光谱，由 Appalachian State University Dark Sky Observatory 的 32 英寸望远镜 Gray Miller Spectrograph 获取。"
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://dso.appstate.edu/",
+      "local_path": "",
+      "description": "Appalachian State University Dark Sky Observatory (DSO) 网站。libr18_225 标准星光谱库的数据获取地点，为 MKCLASS 光谱分类提供参考光谱。",
+      "source_refs": [
+        {
+          "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+          "start_line": 213,
+          "end_line": 213,
+          "context": "consists of standard star spectra smoothed to a reduced resolution of 2.25\\,\\AA\\ that were obtained with the Gray Miller Spectrograph at the 32-inch telescope of Appalachian State University's Dark Sky Observatory.\\footnote{\\url{https://dso.appstate.edu/}}"
+        }
+      ],
+      "evidence": "论文第 4 节脚注引用 DSO 网站，说明 MKCLASS 标准星库的观测来源。",
+      "comments": "该资源本身不是数据存档，而是标准星光谱的观测设施。"
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Zwicky Transient Facility (ZTF) 和 Asteroid Terrestrial-impact Last Alert System (ATLAS) 时域巡天测光数据。用于分析 6 颗确认 CP2 星的光变特性并测定旋转周期。ZTF 数据（g 和 r 波段）为主要数据源，ATLAS 数据（c 和 o 波段）为补充。",
+      "source_refs": [
+        {
+          "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+          "start_line": 265,
+          "end_line": 277,
+          "context": "We examined the photometric variability of the confirmed CP2 stars in our sample using data from the Zwicky Transient Facility (ZTF) and the Asteroid Terrestrial-impact Last Alert System (ATLAS)."
+        }
+      ],
+      "evidence": "论文第 5 节详细描述了 ZTF 和 ATLAS 的数据使用。ZTF 数据通过 Palomar 48 英寸望远镜获取，极限星等 20.5 mag。ATLAS 使用 Haleakala 和 Mauna Loa 的 0.5m 望远镜。周期分析使用 PERANSO 软件包中的 Lomb-Scargle GLS 算法。",
+      "comments": "论文未直接提供 ZTF/ATLAS 的数据访问 URL，但这两者是公开可访问的时域巡天项目。ZTF: https://www.ztf.caltech.edu/；ATLAS: https://fallingstar-data.com/。1 颗 CP2 星无 ZTF 数据，仅使用 ATLAS 数据。"
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "http://github.com/jobovy/galpy",
+      "local_path": "",
+      "description": "galpy 银河系动力学 Python 软件包。论文使用 galpy 的 MWPotential2014 势模型对 6 颗晕 CP2 星进行轨道积分（回溯 200 Myr），计算银道面穿越时间。",
+      "source_refs": [
+        {
+          "path": "literature/2304.11269/arxiv_source/45464corr.tex",
+          "start_line": 334,
+          "end_line": 334,
+          "context": "For each star identified as a halo candidate, we calculated its orbit in the Galaxy using the software package \\textit{galpy}\\footnote{\\url{http://github.com/jobovy/galpy}}"
+        }
+      ],
+      "evidence": "论文第 6 节描述了轨道计算方法。使用 MWPotential2014 模型（包含 bulge、Miyamoto-Nagai disk 和 NFW dark matter halo），时间步长 0.1 Myr，对每颗星进行 500 次蒙特卡洛实现。",
+      "comments": "galpy 由 Jo Bovy 开发维护。MWPotential2014 详见 Bovy (2015)。"
+    }
+  ]
+}

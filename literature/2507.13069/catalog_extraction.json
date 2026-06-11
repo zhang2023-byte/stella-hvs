@@ -1,0 +1,1243 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:02",
+  "paper": {
+    "arxiv_id": "2507.13069",
+    "title": "A kinematic and structural study of young open clusters in the Milky Way Galaxy using Gaia DR3 catalogue",
+    "month": "2025-07"
+  },
+  "review": {
+    "path": "literature/2507.13069/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124002",
+    "started_at": "2026-05-17T12:40:02",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2507.13069",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 7,
+      "work_count": 7,
+      "table_count": 7,
+      "success_count": 7,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 7,
+      "file_success_count": 7,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table-GMM",
+      "internal_table_id": "table-table-GMM",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2507.13069/arxiv_source/main.tex",
+        "start_line": 295,
+        "end_line": 324,
+        "caption": "\\textit{Cluster parameters obtained for each cluster using GMM. Columns 2-3 are the two components of PM along with their errors. $N_{star}$ represents the number of sources with probability $\\ge$90$\\%$}",
+        "label": "table:GMM"
+      },
+      "source_path": "literature/2507.13069/arxiv_source/main.tex",
+      "excerpt_path": "literature/2507.13069/catalog_sources/table-table-GMM/excerpt.tex",
+      "sha256": "70386eb90ea359fc2c97cfcf69d1bf7321b3910a63f407d7664c2f12f50e7338",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-table_isofit",
+      "internal_table_id": "table-table_isofit",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2507.13069/arxiv_source/main.tex",
+        "start_line": 327,
+        "end_line": 358,
+        "caption": "\\textit{Isochrone fitting results from least-square minimization and MCMC. D, $log_{10}(age)$, [M/H], and $A_G$ are the distance, $log_{10}(age)$, metallicity, and extinction in G mag, respectively, for least-square minimization and MCMC.}",
+        "label": "table_isofit"
+      },
+      "source_path": "literature/2507.13069/arxiv_source/main.tex",
+      "excerpt_path": "literature/2507.13069/catalog_sources/table-table_isofit/excerpt.tex",
+      "sha256": "0aecf2ae11448306ab856ce6674b26417816c7c874f45a8a6f53840291b86262",
+      "line_count": 32,
+      "error": ""
+    },
+    {
+      "id": "table-table_sp_vel",
+      "internal_table_id": "table-table_sp_vel",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2507.13069/arxiv_source/main.tex",
+        "start_line": 369,
+        "end_line": 398,
+        "caption": "\\textit{Radial velocity and space velocity estimation for the clusters. $N_{RV}$ represents the number of stars in a cluster with radial velocity information available in the \\textit{Gaia} DR3. Columns 3--6 represent the Radial velocity mean and its dispersion, standard error, and measurement error, respectively. $N_{star}$ is the number of cluster members. Columns 8--10 are the Transverse velocity mean and its dispersion and standard error, respectively. Columns 11 and 12 represent the space velocity and its error.}",
+        "label": "table_sp_vel"
+      },
+      "source_path": "literature/2507.13069/arxiv_source/main.tex",
+      "excerpt_path": "literature/2507.13069/catalog_sources/table-table_sp_vel/excerpt.tex",
+      "sha256": "692ad39ab027c417442ebdf141d6f1716cef42f7c7cc9f9602b65bc502cece05",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-table_obfdisp",
+      "internal_table_id": "table-table_obfdisp",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2507.13069/arxiv_source/main.tex",
+        "start_line": 400,
+        "end_line": 429,
+        "caption": "\\textit{Transverse velocity and its dispersion for each spectral type. Columns 2--5 represent the mean mass of each spectral type, and columns 6--9 represent the dispersion in transverse velocity along with their errors for the mentioned group of spectral types.}",
+        "label": "table_obfdisp"
+      },
+      "source_path": "literature/2507.13069/arxiv_source/main.tex",
+      "excerpt_path": "literature/2507.13069/catalog_sources/table-table_obfdisp/excerpt.tex",
+      "sha256": "cbdc2d32234e4c179ce940f0fe739b6a7e44fab7e9ccc199c045088fbd4f97ec",
+      "line_count": 30,
+      "error": ""
+    },
+    {
+      "id": "table-table_obf",
+      "internal_table_id": "table-table_obf",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2507.13069/arxiv_source/main.tex",
+        "start_line": 431,
+        "end_line": 459,
+        "caption": "\\textit{Spectral type classification of cluster members. Columns 2--7 represent the number of sources belonging to each spectral type for the corresponding clusters mentioned in column 1. Columns 8 and 9 represent the mass range of the cluster, with Mass\\_min representing minimum mass and Mass\\_max representing maximum mass in solar mass ($M_\\odot$). Column 10 represents the observed ratio of M-type stars to the K-type stars in corresponding clusters, which are the lower bound values. Columns 11 and 12 represent expected M/K ratios from Salpeter \\citep{Salpeter1955} and Kroupa \\citep{Kroupa2001}, respectively. }",
+        "label": "table_obf"
+      },
+      "source_path": "literature/2507.13069/arxiv_source/main.tex",
+      "excerpt_path": "literature/2507.13069/catalog_sources/table-table_obf/excerpt.tex",
+      "sha256": "45a43f0c09b73df598ad8cdea19fdf02aedcec4524f19e40edfd027358cd0353",
+      "line_count": 29,
+      "error": ""
+    },
+    {
+      "id": "table-table_apx",
+      "internal_table_id": "table-table_apx",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2507.13069/arxiv_source/main.tex",
+        "start_line": 574,
+        "end_line": 608,
+        "caption": "\\textit{Cluster parameters obtained from literature survey \\cite{CG}. Column 2 and 3 represent the coordinates of the corresponding cluster, RA and Dec, respectively. Columns 4 and 5 represent the PM along RA and Dec, respectively. D is the distance to the cluster, r50 is the radius containing half of the cluster members, Rmax is the r50$\\times$2 in arcminutes, and the last column represents the $log_{10}(age)$.}",
+        "label": "table_apx"
+      },
+      "source_path": "literature/2507.13069/arxiv_source/main.tex",
+      "excerpt_path": "literature/2507.13069/catalog_sources/table-table_apx/excerpt.tex",
+      "sha256": "ba0baf66ff51ce16aa53c571df4280d0f32e9fdd2ca54b20f868c172d736b689",
+      "line_count": 35,
+      "error": ""
+    },
+    {
+      "id": "table-Table-Compare",
+      "internal_table_id": "table-Table-Compare",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2507.13069/arxiv_source/main.tex",
+        "start_line": 613,
+        "end_line": 642,
+        "caption": "\\textit{Comparison of cluster parameters with previous studies such as \\cite{CG, Kharchenko2016, Dias2021}}",
+        "label": "Table:Compare"
+      },
+      "source_path": "literature/2507.13069/arxiv_source/main.tex",
+      "excerpt_path": "literature/2507.13069/catalog_sources/table-Table-Compare/excerpt.tex",
+      "sha256": "8718d6730881825b1fc0575cffb4bcd4ce2ae7eb661a95539da4c34e94debaed",
+      "line_count": 30,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table-GMM",
+      "internal_table_id": "table-table-GMM",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2507.13069/catalog_tables/table-table-GMM.ecsv",
+      "caption": "\\textit{Cluster parameters obtained for each cluster using GMM. Columns 2-3 are the two components of PM along with their errors. $N_{star}$ represents the number of sources with probability $\\ge$90$\\%$}",
+      "label": "table:GMM",
+      "row_count": 14,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster name",
+          "pmra",
+          "pmdec",
+          "N_star"
+        ],
+        [
+          "",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "pmra | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "pmdec | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "N_star",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpe2mqai7t/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.13069/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpe2mqai7t/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.13069/catalog_sources/table-table-GMM/wrapped.tex",
+            "html": "literature/2507.13069/catalog_sources/table-table-GMM/latexml.html",
+            "stdout": "literature/2507.13069/catalog_sources/table-table-GMM/latexml.stdout.txt",
+            "stderr": "literature/2507.13069/catalog_sources/table-table-GMM/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "70386eb90ea359fc2c97cfcf69d1bf7321b3910a63f407d7664c2f12f50e7338"
+    },
+    {
+      "id": "table-table_isofit",
+      "internal_table_id": "table-table_isofit",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2507.13069/catalog_tables/table-table_isofit.ecsv",
+      "caption": "\\textit{Isochrone fitting results from least-square minimization and MCMC. D, $log_{10}(age)$, [M/H], and $A_G$ are the distance, $log_{10}(age)$, metallicity, and extinction in G mag, respectively, for least-square minimization and MCMC.}",
+      "label": "table_isofit",
+      "row_count": 16,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster name",
+          "Least-square minimization",
+          "",
+          "",
+          "",
+          "MCMC",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Least-square minimization",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "MCMC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp91feeo2y/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.13069/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp91feeo2y/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.13069/catalog_sources/table-table_isofit/wrapped.tex",
+            "html": "literature/2507.13069/catalog_sources/table-table_isofit/latexml.html",
+            "stdout": "literature/2507.13069/catalog_sources/table-table_isofit/latexml.stdout.txt",
+            "stderr": "literature/2507.13069/catalog_sources/table-table_isofit/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "0aecf2ae11448306ab856ce6674b26417816c7c874f45a8a6f53840291b86262"
+    },
+    {
+      "id": "table-table_sp_vel",
+      "internal_table_id": "table-table_sp_vel",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2507.13069/catalog_tables/table-table_sp_vel.ecsv",
+      "caption": "\\textit{Radial velocity and space velocity estimation for the clusters. $N_{RV}$ represents the number of stars in a cluster with radial velocity information available in the \\textit{Gaia} DR3. Columns 3--6 represent the Radial velocity mean and its dispersion, standard error, and measurement error, respectively. $N_{star}$ is the number of cluster members. Columns 8--10 are the Transverse velocity mean and its dispersion and standard error, respectively. Columns 11 and 12 represent the space velocity and its error.}",
+      "label": "table_sp_vel",
+      "row_count": 15,
+      "column_count": 12,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster name",
+          "N_RV",
+          "RV_mean",
+          "RV_disp",
+          "RV_std_er",
+          "RV_er",
+          "N_star",
+          "Tvel_mean",
+          "Tvel_disp",
+          "Tvel_std_er",
+          "Space_V",
+          "Space_V_er"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "N_RV",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "RV_mean",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RV_disp",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "RV_std_er",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "RV_er",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "N_star",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Tvel_mean",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Tvel_disp",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Tvel_std_er",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Space_V",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "Space_V_er",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdyw5bt32/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.13069/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdyw5bt32/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.13069/catalog_sources/table-table_sp_vel/wrapped.tex",
+            "html": "literature/2507.13069/catalog_sources/table-table_sp_vel/latexml.html",
+            "stdout": "literature/2507.13069/catalog_sources/table-table_sp_vel/latexml.stdout.txt",
+            "stderr": "literature/2507.13069/catalog_sources/table-table_sp_vel/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "692ad39ab027c417442ebdf141d6f1716cef42f7c7cc9f9602b65bc502cece05"
+    },
+    {
+      "id": "table-table_obfdisp",
+      "internal_table_id": "table-table_obfdisp",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2507.13069/catalog_tables/table-table_obfdisp.ecsv",
+      "caption": "\\textit{Transverse velocity and its dispersion for each spectral type. Columns 2--5 represent the mean mass of each spectral type, and columns 6--9 represent the dispersion in transverse velocity along with their errors for the mentioned group of spectral types.}",
+      "label": "table_obfdisp",
+      "row_count": 15,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster name",
+          "Mass_BA",
+          "Mass_FG",
+          "Mass_K",
+          "Mass_M",
+          "BA_Tvel_disp",
+          "FG_Tvel_disp",
+          "K_Tvel_disp",
+          "M_Tvel_disp"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Mass_BA",
+          "unit_text": "Mass_BA",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Mass_FG",
+          "unit_text": "Mass_FG",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Mass_K",
+          "unit_text": "Mass_K",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Mass_M",
+          "unit_text": "Mass_M",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "BA_Tvel_disp",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "FG_Tvel_disp",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "K_Tvel_disp",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "M_Tvel_disp",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3ga0cati/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.13069/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3ga0cati/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.13069/catalog_sources/table-table_obfdisp/wrapped.tex",
+            "html": "literature/2507.13069/catalog_sources/table-table_obfdisp/latexml.html",
+            "stdout": "literature/2507.13069/catalog_sources/table-table_obfdisp/latexml.stdout.txt",
+            "stderr": "literature/2507.13069/catalog_sources/table-table_obfdisp/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "cbdc2d32234e4c179ce940f0fe739b6a7e44fab7e9ccc199c045088fbd4f97ec"
+    },
+    {
+      "id": "table-table_obf",
+      "internal_table_id": "table-table_obf",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2507.13069/catalog_tables/table-table_obf.ecsv",
+      "caption": "\\textit{Spectral type classification of cluster members. Columns 2--7 represent the number of sources belonging to each spectral type for the corresponding clusters mentioned in column 1. Columns 8 and 9 represent the mass range of the cluster, with Mass\\_min representing minimum mass and Mass\\_max representing maximum mass in solar mass ($M_\\odot$). Column 10 represents the observed ratio of M-type stars to the K-type stars in corresponding clusters, which are the lower bound values. Columns 11 and 12 represent expected M/K ratios from Salpeter \\citep{Salpeter1955} and Kroupa \\citep{Kroupa2001}, respectively. }",
+      "label": "table_obf",
+      "row_count": 14,
+      "column_count": 12,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster name",
+          "B",
+          "A",
+          "F",
+          "G",
+          "K",
+          "M",
+          "Mass_min",
+          "Mass_max",
+          "M/K",
+          "M/K Salpeter",
+          "M/K Kroupa"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "( M_\\odot )",
+          "( M_\\odot )",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "B",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "A",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "F",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "G",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "K",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "M",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Mass_min | ( M_\\odot )",
+          "unit_text": "Mass_min",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Mass_max | ( M_\\odot )",
+          "unit_text": "Mass_max",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "M/K",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "M/K Salpeter",
+          "unit_text": "M/K Salpeter",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "M/K Kroupa",
+          "unit_text": "M/K Kroupa",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpklee08cq/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.13069/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpklee08cq/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.13069/catalog_sources/table-table_obf/wrapped.tex",
+            "html": "literature/2507.13069/catalog_sources/table-table_obf/latexml.html",
+            "stdout": "literature/2507.13069/catalog_sources/table-table_obf/latexml.stdout.txt",
+            "stderr": "literature/2507.13069/catalog_sources/table-table_obf/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "45a43f0c09b73df598ad8cdea19fdf02aedcec4524f19e40edfd027358cd0353"
+    },
+    {
+      "id": "table-table_apx",
+      "internal_table_id": "table-table_apx",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2507.13069/catalog_tables/table-table_apx.ecsv",
+      "caption": "\\textit{Cluster parameters obtained from literature survey \\cite{CG}. Column 2 and 3 represent the coordinates of the corresponding cluster, RA and Dec, respectively. Columns 4 and 5 represent the PM along RA and Dec, respectively. D is the distance to the cluster, r50 is the radius containing half of the cluster members, Rmax is the r50$\\times$2 in arcminutes, and the last column represents the $log_{10}(age)$.}",
+      "label": "table_apx",
+      "row_count": 15,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster name",
+          "R.A. ∗",
+          "Dec. ∗",
+          "pmra ∗",
+          "pmdec ∗",
+          "D ∗",
+          "r50 ∗",
+          "Rmax",
+          "r50 \\times 2",
+          "log_10(age)^*"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R.A. ∗",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dec. ∗",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "pmra ∗",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "pmdec ∗",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "D ∗",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "r50 ∗",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Rmax",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "r50 \\times 2",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "log_10(age)^*",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb8cne6w3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.13069/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb8cne6w3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.13069/catalog_sources/table-table_apx/wrapped.tex",
+            "html": "literature/2507.13069/catalog_sources/table-table_apx/latexml.html",
+            "stdout": "literature/2507.13069/catalog_sources/table-table_apx/latexml.stdout.txt",
+            "stderr": "literature/2507.13069/catalog_sources/table-table_apx/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ba0baf66ff51ce16aa53c571df4280d0f32e9fdd2ca54b20f868c172d736b689"
+    },
+    {
+      "id": "table-Table-Compare",
+      "internal_table_id": "table-Table-Compare",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2507.13069/catalog_tables/table-Table-Compare.ecsv",
+      "caption": "\\textit{Comparison of cluster parameters with previous studies such as \\cite{CG, Kharchenko2016, Dias2021}}",
+      "label": "Table:Compare",
+      "row_count": 14,
+      "column_count": 12,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster name",
+          "N_star",
+          "",
+          "",
+          "D(pc)",
+          "",
+          "",
+          "",
+          "log_10(age) (dex)",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "This study",
+          "Cantat -Gaudin",
+          "Dias",
+          "This study",
+          "Cantat-Gaudin",
+          "Kharchenko",
+          "Dias",
+          "This study",
+          "Cantat-Gaudin",
+          "Kharchenko",
+          "Dias"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "N_star | This study",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Cantat -Gaudin",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Dias",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "D(pc) | This study",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Cantat-Gaudin",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Kharchenko",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Dias",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "log_10(age) (dex) | This study",
+          "unit_text": "log_10(age) (dex)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Cantat-Gaudin",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Kharchenko",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "Dias",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqjxvt8or/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.13069/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqjxvt8or/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.13069/catalog_sources/table-Table-Compare/wrapped.tex",
+            "html": "literature/2507.13069/catalog_sources/table-Table-Compare/latexml.html",
+            "stdout": "literature/2507.13069/catalog_sources/table-Table-Compare/latexml.stdout.txt",
+            "stderr": "literature/2507.13069/catalog_sources/table-Table-Compare/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8718d6730881825b1fc0575cffb4bcd4ce2ae7eb661a95539da4c34e94debaed"
+    }
+  ]
+}

@@ -1,0 +1,306 @@
+{
+    "schema_version": "stella.article_data_assets.review.v1",
+    "paper": {
+        "arxiv_id": "2603.10826",
+        "title": "Kinematics of Wolf-Rayet Stars in the LMC: Clues to Subtype Origins",
+        "month": "2026-03",
+        "source_note_json": "notes/2026/2026-03/2026-03.json",
+        "links": {
+            "abs": "https://arxiv.org/abs/2603.10826",
+            "pdf": "https://arxiv.org/pdf/2603.10826"
+        }
+    },
+    "source": {
+        "paper_dir": "literature/2603.10826",
+        "audit_path": "literature/2603.10826/audit.json",
+        "source_dir": "literature/2603.10826/arxiv_source",
+        "tex_root": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+        "source_available": true
+    },
+    "review": {
+        "status": "reviewed",
+        "reviewed_at": "2026-05-17T12:34:44",
+        "reviewer": "agent",
+        "summary": "Auto-filled review: 3 internal table(s), 3 external resource(s)."
+    },
+    "internal_tables": [
+        {
+            "id": "table-tab-subpop",
+            "kind": "latex_table",
+            "asset_type": "model_fit_table",
+            "role_in_paper": "Kinematic Properties of WR Populations",
+            "source_refs": [
+                {
+                    "path": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+                    "start_line": 89,
+                    "end_line": 152,
+                    "caption": "Kinematic Properties of WR Populations",
+                    "label": "tab:subpop"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Population",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "N | Total",
+                    "meaning": "Number of objects or count",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "N | Gaia",
+                    "meaning": "Number of objects or count",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "median v_\\perp",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "wt med v_\\perp",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "std err",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "N (30 Dor) | Total",
+                    "meaning": "Number of objects or count",
+                    "unit_text": "30 Dor",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "N (30 Dor) | Gaia",
+                    "meaning": "Number of objects or count",
+                    "unit_text": "30 Dor",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "wt med v_\\perp | 30 Dor",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "wt med v_\\perp | Non-30 Dor",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Kinematic Properties of WR Populations",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-HII",
+            "kind": "latex_table",
+            "asset_type": "observation_log",
+            "role_in_paper": "\\hii\\ region morphologies for various subpopulations",
+            "source_refs": [
+                {
+                    "path": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+                    "start_line": 205,
+                    "end_line": 249,
+                    "caption": "\\hii\\ region morphologies for various subpopulations",
+                    "label": "tab:HII"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "\\colhead\\parbox[t]2.75cm\\centering Sub-population",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\colhead\\parbox[t]2.75cm\\centering Sub-population",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colhead\\parbox[t]1.5cm\\centering Total",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\colhead\\parbox[t]1.5cm\\centering Total",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colhead\\parbox[t]1.5cm\\centering Class 1",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\colhead\\parbox[t]1.5cm\\centering Class 1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colhead\\parbox[t]1.5cm\\centering Class 2",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\colhead\\parbox[t]1.5cm\\centering Class 2",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colhead\\parbox[t]1.5cm\\centering Class 3",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\colhead\\parbox[t]1.5cm\\centering Class 3",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "\\hii\\ region morphologies for various subpopulations",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-Full",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Proper Motion Velocities for WR stars in the LMC",
+            "source_refs": [
+                {
+                    "path": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+                    "start_line": 527,
+                    "end_line": 667,
+                    "caption": "Proper Motion Velocities for WR stars in the LMC",
+                    "label": "tab:Full"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "\\colhead\\parbox[t]1.5cm\\centering Star | Name(s) | \\vphantom | Field Stars | km s^-1 | km s^-1 | km s^-1 | km s^-1 | km s^-1",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\colhead\\parbox[t]1.5cm\\centering Star",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colhead\\parbox[t]1.5cm\\centering Spectral Type | \\colhead\\parbox[t]2cm\\centering Number of | \\colhead\\parbox[t]2cm\\centering v_\\alpha (target) | \\colhead\\parbox[t]2cm\\centering v_\\delta (target) | \\colhead\\parbox[t]1.5cm\\centering v_\\alpha (field) | \\colhead\\parbox[t]1.5cm\\centering v_\\delta (field) | \\colhead\\parbox[t]1.5cm\\centering v_\\perp | \\colhead\\parbox[t]1.5cm\\centering \\log_10L/L_\\odot\\tablenotemarka",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\colhead\\parbox[t]1.5cm\\centering Spectral Type",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_003",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_004",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_005",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_006",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_007",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_008",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_009",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Proper Motion Velocities for WR stars in the LMC",
+            "comments": ""
+        }
+    ],
+    "external_resources": [
+        {
+            "id": "resource-001",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+                    "start_line": 406,
+                    "end_line": 406,
+                    "context": "\\hspace*{-0.75in}\n    \\includegraphics[width=1.2\\linewidth]{scatter_WC_WN3O3.pdf}\n    \\caption{Left panel: Luminosity vs our measured $v_\\perp$ for the WC and WN3/O3 stars for which luminosity data is available in the literature from \\citet{Aadland2022a, Aadland2022b} and \\citet{Neugent2017}, respectively, along with the WN4/O4 star studied by \\citet{Massey2024}.  Right panel: $V$ magnitude vs $v_\\perp$ for all of the WC stars and WN3/O3 stars in our Gaia samples. The blue stars show the single WC stars that appear in both panels. Arrows indicate lower limits for objects with no Gaia velocity measurements; these objects are likely still bound within clusters (see text). }\n    \\label{fig:magvsvel}\n\\end{figure*}"
+                }
+            ],
+            "evidence": "\\hspace*{-0.75in}\n    \\includegraphics[width=1.2\\linewidth]{scatter_WC_WN3O3.pdf}\n    \\caption{Left panel: Luminosity vs our measured $v_\\perp$ for the WC and WN3/O3 stars for which luminosity data is available in the literature from \\citet{Aadland2022a, Aadland2022b} and \\citet{Neugent2017}, respectively, along with the WN4/O4 star studied by \\citet{Massey2024}.  Right panel: $V$ magnitude vs $v_\\perp$ for all of the WC stars and WN3/O3 stars in our Gaia samples. The blue stars show the single WC stars that appear in both panels. Arrows indicate lower limits for objects with no Gaia velocity measurements; these objects are likely still bound within clusters (see text). }\n    \\label{fig:magvsvel}\n\\end{figure*}",
+            "comments": ""
+        },
+        {
+            "id": "resource-002",
+            "kind": "external_url",
+            "url": "https://www.cosmos.esa.int/gaia",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+                    "start_line": 511,
+                    "end_line": 511,
+                    "context": "N.I. acknowledges funding from NSERC under Discovery grant No. RGPIN-2025-05603, and M.R. \nand F. H. acknowledge\nsupport from NASA (ATP: 80NSSC24K0932). This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n\\end{acknowledgments}"
+                }
+            ],
+            "evidence": "N.I. acknowledges funding from NSERC under Discovery grant No. RGPIN-2025-05603, and M.R. \nand F. H. acknowledge\nsupport from NASA (ATP: 80NSSC24K0932). This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n\\end{acknowledgments}",
+            "comments": ""
+        },
+        {
+            "id": "resource-003",
+            "kind": "external_url",
+            "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2603.10826/arxiv_source/Burkhardt-_LMC_WR_Kinematics.tex",
+                    "start_line": 511,
+                    "end_line": 511,
+                    "context": "N.I. acknowledges funding from NSERC under Discovery grant No. RGPIN-2025-05603, and M.R. \nand F. H. acknowledge\nsupport from NASA (ATP: 80NSSC24K0932). This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n\\end{acknowledgments}"
+                }
+            ],
+            "evidence": "N.I. acknowledges funding from NSERC under Discovery grant No. RGPIN-2025-05603, and M.R. \nand F. H. acknowledge\nsupport from NASA (ATP: 80NSSC24K0932). This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement.\n\\end{acknowledgments}",
+            "comments": ""
+        }
+    ]
+}

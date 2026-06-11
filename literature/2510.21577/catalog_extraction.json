@@ -1,0 +1,1198 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:13",
+  "paper": {
+    "arxiv_id": "2510.21577",
+    "title": "An observational study of rotation and binarity of Galactic O-type runaway stars",
+    "month": "2025-10"
+  },
+  "review": {
+    "path": "literature/2510.21577/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124013",
+    "started_at": "2026-05-17T12:40:13",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2510.21577",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 7,
+      "work_count": 7,
+      "table_count": 7,
+      "success_count": 7,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 7,
+      "file_success_count": 7,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-Tab-rotSnormRun",
+      "internal_table_id": "table-Tab-rotSnormRun",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2510.21577/arxiv_source/main.tex",
+        "start_line": 217,
+        "end_line": 234,
+        "caption": "Number and percentage for normal and runaway stars in the rotation sample, subdivided in slow and fast rotators.",
+        "label": "Tab:rotSnormRun"
+      },
+      "source_path": "literature/2510.21577/arxiv_source/main.tex",
+      "excerpt_path": "literature/2510.21577/catalog_sources/table-Tab-rotSnormRun/excerpt.tex",
+      "sha256": "21575cc77c6e954c535967a6e21e2cf72f332f8fe9a51f2ab6d63f9b7bb3e373",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-rotSslowFast",
+      "internal_table_id": "table-Tab-rotSslowFast",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2510.21577/arxiv_source/main.tex",
+        "start_line": 238,
+        "end_line": 255,
+        "caption": "Number and percentage for slow and fast stars in the rotation sample, subdivided in normal and runaway stars.",
+        "label": "Tab:rotSslowFast"
+      },
+      "source_path": "literature/2510.21577/arxiv_source/main.tex",
+      "excerpt_path": "literature/2510.21577/catalog_sources/table-Tab-rotSslowFast/excerpt.tex",
+      "sha256": "440ef912a01227babd19fe1a44d1ac62909ab581dcc4dffe00b9d4acd5d9cdf2",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-percent_rotLSSB1_regs",
+      "internal_table_id": "table-Tab-percent_rotLSSB1_regs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2510.21577/arxiv_source/main.tex",
+        "start_line": 311,
+        "end_line": 332,
+        "caption": "Number and percentage for normal and runaway stars in the rotation LS-SB1 subsample, subdivided in slow and fast rotators, and further subdivided in LS and SB1.",
+        "label": "Tab:percent_rotLSSB1_regs"
+      },
+      "source_path": "literature/2510.21577/arxiv_source/main.tex",
+      "excerpt_path": "literature/2510.21577/catalog_sources/table-Tab-percent_rotLSSB1_regs/excerpt.tex",
+      "sha256": "7b3174761cf6003b2a616504fa73bf4fc911f996f320fe09279eac27b261f070",
+      "line_count": 22,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-percent_rotLSSB1",
+      "internal_table_id": "table-Tab-percent_rotLSSB1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2510.21577/arxiv_source/main.tex",
+        "start_line": 344,
+        "end_line": 368,
+        "caption": "Number and percentage for normal and runaway stars in the rotation LS-SB1 subsample, subdivided in LS and SB1, and further subdivided in slow and fast rotators.",
+        "label": "Tab:percent_rotLSSB1"
+      },
+      "source_path": "literature/2510.21577/arxiv_source/main.tex",
+      "excerpt_path": "literature/2510.21577/catalog_sources/table-Tab-percent_rotLSSB1/excerpt.tex",
+      "sha256": "3e3903b7311951f0450162e817b0c4e8b8c5a3041d810ca9f0b68f33a2117cb9",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-SB1_runaways",
+      "internal_table_id": "table-Tab-SB1_runaways",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2510.21577/arxiv_source/main.tex",
+        "start_line": 399,
+        "end_line": 427,
+        "caption": "Data of the runaway SB1 systems with the higher values of $E$ in decreasing order.",
+        "label": "Tab:SB1_runaways"
+      },
+      "source_path": "literature/2510.21577/arxiv_source/main.tex",
+      "excerpt_path": "literature/2510.21577/catalog_sources/table-Tab-SB1_runaways/excerpt.tex",
+      "sha256": "79293230bc63871d6c140de7a46ca71a08b9a7dfcb970171a3d37216f7c3694d",
+      "line_count": 29,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-rotsample",
+      "internal_table_id": "table-Tab-rotsample",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2510.21577/arxiv_source/main.tex",
+        "start_line": 603,
+        "end_line": 627,
+        "caption": "Data of the first 10 stars of the rotation sample with the higher values of $E$ in decreasing order.",
+        "label": "Tab:rotsample"
+      },
+      "source_path": "literature/2510.21577/arxiv_source/main.tex",
+      "excerpt_path": "literature/2510.21577/catalog_sources/table-Tab-rotsample/excerpt.tex",
+      "sha256": "ca3bb195cc37df24c3155e4ba7b77068d93acfc97a72e89ba0ff4f6afdb25edb",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-KStest_LS_SB1",
+      "internal_table_id": "table-Tab-KStest_LS_SB1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2510.21577/arxiv_source/main.tex",
+        "start_line": 696,
+        "end_line": 710,
+        "caption": "Results of the Kolmogorov-Smirnov tests in $v \\sin{i}$ for different sets: Runaway LS stars (Run-LS), runaway SB1 systems (Run-SB1), normal LS stars (Norm-LS), normal SB1 systems (Norm-SB1). Lower-diagonal values mirror upper-diagonal ones. Dashes indicate self-comparisons of identical populations.",
+        "label": "Tab:KStest_LS_SB1"
+      },
+      "source_path": "literature/2510.21577/arxiv_source/main.tex",
+      "excerpt_path": "literature/2510.21577/catalog_sources/table-Tab-KStest_LS_SB1/excerpt.tex",
+      "sha256": "ebe0b08605409d21928b12ee4257b4c4bd6396ba9f3cc1bd5d86b74f55e9c490",
+      "line_count": 15,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-Tab-rotSnormRun",
+      "internal_table_id": "table-Tab-rotSnormRun",
+      "status": "success",
+      "ecsv_path": "literature/2510.21577/catalog_tables/table-Tab-rotSnormRun.ecsv",
+      "caption": "Number and percentage for normal and runaway stars in the rotation sample, subdivided in slow and fast rotators.",
+      "label": "Tab:rotSnormRun",
+      "row_count": 3,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Normal Stars",
+          "",
+          "Runaway Stars",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Normal Stars",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Runaway Stars",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9g2s1c_u/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2510.21577/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9g2s1c_u/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2510.21577/catalog_sources/table-Tab-rotSnormRun/wrapped.tex",
+            "html": "literature/2510.21577/catalog_sources/table-Tab-rotSnormRun/latexml.html",
+            "stdout": "literature/2510.21577/catalog_sources/table-Tab-rotSnormRun/latexml.stdout.txt",
+            "stderr": "literature/2510.21577/catalog_sources/table-Tab-rotSnormRun/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "21575cc77c6e954c535967a6e21e2cf72f332f8fe9a51f2ab6d63f9b7bb3e373"
+    },
+    {
+      "id": "table-Tab-rotSslowFast",
+      "internal_table_id": "table-Tab-rotSslowFast",
+      "status": "success",
+      "ecsv_path": "literature/2510.21577/catalog_tables/table-Tab-rotSslowFast.ecsv",
+      "caption": "Number and percentage for slow and fast stars in the rotation sample, subdivided in normal and runaway stars.",
+      "label": "Tab:rotSslowFast",
+      "row_count": 3,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Slow Rotators",
+          "",
+          "Fast Rotators",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Slow Rotators",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Fast Rotators",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppd8wgs9c/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2510.21577/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmppd8wgs9c/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2510.21577/catalog_sources/table-Tab-rotSslowFast/wrapped.tex",
+            "html": "literature/2510.21577/catalog_sources/table-Tab-rotSslowFast/latexml.html",
+            "stdout": "literature/2510.21577/catalog_sources/table-Tab-rotSslowFast/latexml.stdout.txt",
+            "stderr": "literature/2510.21577/catalog_sources/table-Tab-rotSslowFast/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "440ef912a01227babd19fe1a44d1ac62909ab581dcc4dffe00b9d4acd5d9cdf2"
+    },
+    {
+      "id": "table-Tab-percent_rotLSSB1_regs",
+      "internal_table_id": "table-Tab-percent_rotLSSB1_regs",
+      "status": "success",
+      "ecsv_path": "literature/2510.21577/catalog_tables/table-Tab-percent_rotLSSB1_regs.ecsv",
+      "caption": "Number and percentage for normal and runaway stars in the rotation LS-SB1 subsample, subdivided in slow and fast rotators, and further subdivided in LS and SB1.",
+      "label": "Tab:percent_rotLSSB1_regs",
+      "row_count": 5,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Normal Stars",
+          "",
+          "",
+          "",
+          "Runaway stars",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Normal Stars",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Runaway stars",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp31olnm80/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2510.21577/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp31olnm80/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2510.21577/catalog_sources/table-Tab-percent_rotLSSB1_regs/wrapped.tex",
+            "html": "literature/2510.21577/catalog_sources/table-Tab-percent_rotLSSB1_regs/latexml.html",
+            "stdout": "literature/2510.21577/catalog_sources/table-Tab-percent_rotLSSB1_regs/latexml.stdout.txt",
+            "stderr": "literature/2510.21577/catalog_sources/table-Tab-percent_rotLSSB1_regs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7b3174761cf6003b2a616504fa73bf4fc911f996f320fe09279eac27b261f070"
+    },
+    {
+      "id": "table-Tab-percent_rotLSSB1",
+      "internal_table_id": "table-Tab-percent_rotLSSB1",
+      "status": "success",
+      "ecsv_path": "literature/2510.21577/catalog_tables/table-Tab-percent_rotLSSB1.ecsv",
+      "caption": "Number and percentage for normal and runaway stars in the rotation LS-SB1 subsample, subdivided in LS and SB1, and further subdivided in slow and fast rotators.",
+      "label": "Tab:percent_rotLSSB1",
+      "row_count": 5,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Normal Stars",
+          "",
+          "",
+          "",
+          "Runaway stars",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Normal Stars",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Runaway stars",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp05k8hk_l/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2510.21577/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp05k8hk_l/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2510.21577/catalog_sources/table-Tab-percent_rotLSSB1/wrapped.tex",
+            "html": "literature/2510.21577/catalog_sources/table-Tab-percent_rotLSSB1/latexml.html",
+            "stdout": "literature/2510.21577/catalog_sources/table-Tab-percent_rotLSSB1/latexml.stdout.txt",
+            "stderr": "literature/2510.21577/catalog_sources/table-Tab-percent_rotLSSB1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3e3903b7311951f0450162e817b0c4e8b8c5a3041d810ca9f0b68f33a2117cb9"
+    },
+    {
+      "id": "table-Tab-SB1_runaways",
+      "internal_table_id": "table-Tab-SB1_runaways",
+      "status": "success",
+      "ecsv_path": "literature/2510.21577/catalog_tables/table-Tab-SB1_runaways.ecsv",
+      "caption": "Data of the runaway SB1 systems with the higher values of $E$ in decreasing order.",
+      "label": "Tab:SB1_runaways",
+      "row_count": 13,
+      "column_count": 20,
+      "environment": "",
+      "header_rows": [
+        [
+          "GOSC Name",
+          "RA",
+          "",
+          "",
+          "DEC",
+          "",
+          "",
+          "l",
+          "b",
+          "d",
+          "S.T.",
+          "V_PEC^2D",
+          "",
+          "E",
+          "P_orb",
+          "e",
+          "Radio",
+          "X-rays",
+          "Gamma rays",
+          "Comments"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "GOSC Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RA",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "DEC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "l",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "b",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "d",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "S.T.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "V_PEC^2D",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "E",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "P_orb",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "e",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "Radio",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "X-rays",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "Gamma rays",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_020",
+          "original_header": "Comments",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvxjil303/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2510.21577/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvxjil303/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2510.21577/catalog_sources/table-Tab-SB1_runaways/wrapped.tex",
+            "html": "literature/2510.21577/catalog_sources/table-Tab-SB1_runaways/latexml.html",
+            "stdout": "literature/2510.21577/catalog_sources/table-Tab-SB1_runaways/latexml.stdout.txt",
+            "stderr": "literature/2510.21577/catalog_sources/table-Tab-SB1_runaways/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "79293230bc63871d6c140de7a46ca71a08b9a7dfcb970171a3d37216f7c3694d"
+    },
+    {
+      "id": "table-Tab-rotsample",
+      "internal_table_id": "table-Tab-rotsample",
+      "status": "success",
+      "ecsv_path": "literature/2510.21577/catalog_tables/table-Tab-rotsample.ecsv",
+      "caption": "Data of the first 10 stars of the rotation sample with the higher values of $E$ in decreasing order.",
+      "label": "Tab:rotsample",
+      "row_count": 11,
+      "column_count": 17,
+      "environment": "",
+      "header_rows": [
+        [
+          "GOSC Name",
+          "Gaia DR3 id",
+          "RA",
+          "",
+          "",
+          "DEC",
+          "",
+          "",
+          "l",
+          "b",
+          "d",
+          "G",
+          "S.T.",
+          "V_PEC^2D",
+          "",
+          "E",
+          "v\\sini"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "GOSC Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR3 id",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "RA",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "DEC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "l",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "b",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "d",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "G",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "S.T.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "V_PEC^2D",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "E",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "v\\sini",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjkdy1ocf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2510.21577/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjkdy1ocf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2510.21577/catalog_sources/table-Tab-rotsample/wrapped.tex",
+            "html": "literature/2510.21577/catalog_sources/table-Tab-rotsample/latexml.html",
+            "stdout": "literature/2510.21577/catalog_sources/table-Tab-rotsample/latexml.stdout.txt",
+            "stderr": "literature/2510.21577/catalog_sources/table-Tab-rotsample/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ca3bb195cc37df24c3155e4ba7b77068d93acfc97a72e89ba0ff4f6afdb25edb"
+    },
+    {
+      "id": "table-Tab-KStest_LS_SB1",
+      "internal_table_id": "table-Tab-KStest_LS_SB1",
+      "status": "success",
+      "ecsv_path": "literature/2510.21577/catalog_tables/table-Tab-KStest_LS_SB1.ecsv",
+      "caption": "Results of the Kolmogorov-Smirnov tests in $v \\sin{i}$ for different sets: Runaway LS stars (Run-LS), runaway SB1 systems (Run-SB1), normal LS stars (Norm-LS), normal SB1 systems (Norm-SB1). Lower-diagonal values mirror upper-diagonal ones. Dashes indicate self-comparisons of identical populations.",
+      "label": "Tab:KStest_LS_SB1",
+      "row_count": 4,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "N",
+          "Run-LS",
+          "Run-SB1",
+          "Norm-LS",
+          "Norm-SB1"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Run-LS",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Run-SB1",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Norm-LS",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Norm-SB1",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcwcz9eea/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2510.21577/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcwcz9eea/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2510.21577/catalog_sources/table-Tab-KStest_LS_SB1/wrapped.tex",
+            "html": "literature/2510.21577/catalog_sources/table-Tab-KStest_LS_SB1/latexml.html",
+            "stdout": "literature/2510.21577/catalog_sources/table-Tab-KStest_LS_SB1/latexml.stdout.txt",
+            "stderr": "literature/2510.21577/catalog_sources/table-Tab-KStest_LS_SB1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ebe0b08605409d21928b12ee4257b4c4bd6396ba9f3cc1bd5d86b74f55e9c490"
+    }
+  ]
+}

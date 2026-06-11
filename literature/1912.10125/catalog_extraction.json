@@ -1,0 +1,1930 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:37:05",
+  "paper": {
+    "arxiv_id": "1912.10125",
+    "title": "Unlocking Galactic Wolf-Rayet stars with Gaia DR2 I: Distances and absolute magnitudes",
+    "month": "2019-12"
+  },
+  "review": {
+    "path": "literature/1912.10125/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083705",
+    "started_at": "2026-06-07T08:37:05",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1912.10125",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 12,
+      "work_count": 12,
+      "table_count": 12,
+      "success_count": 12,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 12,
+      "file_success_count": 12,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table-final",
+      "internal_table_id": "table-table-final",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+        "start_line": 275,
+        "end_line": 315,
+        "caption": "Gaia DR2 astrometric, photometric and parallax properties for 383 Galactic WR stars, including WR11 using a parallax and photometry from Hipparcos. The distance for WR11 was calculated in the same manner as WR with Gaia results, except the adjustments to calculate ω and σ_ω were not applied. Stellar luminosities, updated from Hamann et al. (2019) and Sander et al. (2019) according to our revised distances, are restricted to sources with no error flags. The full table is available in the online supplementary material.",
+        "label": "table:final"
+      },
+      "source_path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+      "excerpt_path": "literature/1912.10125/catalog_sources/table-table-final/excerpt.tex",
+      "sha256": "abee6bb1deb779ed06a5f4ae154509163bb1267f1d218c75cf857118a870463d",
+      "line_count": 41,
+      "error": ""
+    },
+    {
+      "id": "table-table-powr_types",
+      "internal_table_id": "table-table-powr_types",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+        "start_line": 317,
+        "end_line": 356,
+        "caption": "Intrinsic colours of WR stars from PoWR models (Hamann & Gräfener 2004 and Todt et al. 2015 for WN, Sander et al. 2012 for WC) for (b-v)_0^WR and monochromatic (J-K)^mono_0 and (H-K)^mono_0, and Rosslowe & Crowther (2015) for (J-Ks)_0 and (H-Ks)_0.",
+        "label": "table:powr_types"
+      },
+      "source_path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+      "excerpt_path": "literature/1912.10125/catalog_sources/table-table-powr_types/excerpt.tex",
+      "sha256": "26473c00ada46d8c361e5c40c75a49e16c0dfe21479ea4c80df799ac54a84873",
+      "line_count": 40,
+      "error": ""
+    },
+    {
+      "id": "table-table-sed_ir",
+      "internal_table_id": "table-table-sed_ir",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+        "start_line": 426,
+        "end_line": 447,
+        "caption": "The relative continuum flux contribution of WR stars to O-type companions at near-IR wavelengths for various subtypes, adopting a Kurucz ATLAS O star model with T_eff = 37500K and log g = 5 for the companion, assuming each contribute 50% of the V-band continuum flux.",
+        "label": "table:sed_ir"
+      },
+      "source_path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+      "excerpt_path": "literature/1912.10125/catalog_sources/table-table-sed_ir/excerpt.tex",
+      "sha256": "c60c8362d5dbfd4257e78f68109fb93b911f759164464bc53b8a389f69395505",
+      "line_count": 22,
+      "error": ""
+    },
+    {
+      "id": "table-table-intrinsic_col",
+      "internal_table_id": "table-table-intrinsic_col",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+        "start_line": 472,
+        "end_line": 491,
+        "caption": "Conversion equations between narrowband v^WR and Gaia G band filters for (G_BP-G_RP)_0 of different spectral types, using results from Carrasco & Jordi (valid for A_v < 12).",
+        "label": "table:intrinsic_col"
+      },
+      "source_path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+      "excerpt_path": "literature/1912.10125/catalog_sources/table-table-intrinsic_col/excerpt.tex",
+      "sha256": "ca1889d2e8f5c45dd1cabdeebeeaac7c40741150e5b13a4be744298da21be200",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-table-avg_absmag",
+      "internal_table_id": "table-table-avg_absmag",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+        "start_line": 494,
+        "end_line": 518,
+        "caption": "Average absolute magnitudes for Galactic Wolf-Rayet subtypes in v^WR and K_s band filters. In the v^WR band, the WC9d sample has been combined with non dusty WC9 stars.",
+        "label": "table:avg_absmag"
+      },
+      "source_path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+      "excerpt_path": "literature/1912.10125/catalog_sources/table-table-avg_absmag/excerpt.tex",
+      "sha256": "52fc9e29ee48cb5203f346bcf8f4dadf2ac32aca81418cd63349d82c3b16beda",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-table-final_absmagk",
+      "internal_table_id": "table-table-final_absmagk",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+        "start_line": 571,
+        "end_line": 605,
+        "caption": "Absolute K_s-band magnitudes for Galactic WR stars. The full table is available in the online supplementary material.",
+        "label": "table:final_absmagk"
+      },
+      "source_path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+      "excerpt_path": "literature/1912.10125/catalog_sources/table-table-final_absmagk/excerpt.tex",
+      "sha256": "2516294ba69b0d6a2d99eea08b1d1299bd033c9c30f1ba9fa4d4fe820474e69f",
+      "line_count": 35,
+      "error": ""
+    },
+    {
+      "id": "table-table-final_absmagv",
+      "internal_table_id": "table-table-final_absmagv",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+        "start_line": 607,
+        "end_line": 627,
+        "caption": "Absolute v^WR-band magnitudes for Galactic WR stars. The full table is available in the online supplementary material.",
+        "label": "table:final_absmagv"
+      },
+      "source_path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+      "excerpt_path": "literature/1912.10125/catalog_sources/table-table-final_absmagv/excerpt.tex",
+      "sha256": "252a3be5d4f386c9bd9881ffd6d768d1487ef7eb6c114c2608dceaab6f919337",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-table-in_2kpc",
+      "internal_table_id": "table-table-in_2kpc",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+        "start_line": 640,
+        "end_line": 675,
+        "caption": "WR stars within 2 kpc of the Sun, including colour excess, K-band extinction and A_Ks/kpc, extinction per kpc.",
+        "label": "table:in_2kpc"
+      },
+      "source_path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+      "excerpt_path": "literature/1912.10125/catalog_sources/table-table-in_2kpc/excerpt.tex",
+      "sha256": "2b91046ddc18fa8febd3eda68f4c3cdc94bd3a8746aa2541d130b35eede93d0c",
+      "line_count": 36,
+      "error": ""
+    },
+    {
+      "id": "table-table-zheights",
+      "internal_table_id": "table-table-zheights",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+        "start_line": 789,
+        "end_line": 829,
+        "caption": "Distance of WR stars from the midplane |z|, for which excesses exceed 3σ, where σ=52 pc, the HII region scale height of 52 pc. Previously identified runaways with |z| ≥300 pc according to Rosslowe & Crowther (2015) are also indicated.",
+        "label": "table:zheights"
+      },
+      "source_path": "literature/1912.10125/arxiv_source/paperI_amended.tex",
+      "excerpt_path": "literature/1912.10125/catalog_sources/table-table-zheights/excerpt.tex",
+      "sha256": "05759dfb50bde539646f5ebd08597297a562aead564ac0b8fb2cf6a61843764c",
+      "line_count": 41,
+      "error": ""
+    },
+    {
+      "id": "table-010",
+      "internal_table_id": "table-010",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1912.10125/arxiv_source/table1_pc.tex",
+        "start_line": 114,
+        "end_line": 509,
+        "caption": "Gaia DR2 astrometric, photometric and parallax properties for 383 Galactic WR stars, including WR11 using a parallax and photometry from Hipparcos (van Leeuwen 2007). The distance for WR11 was calculated in the same manner as WR with Gaia results, except the adjustments to calculate ω and σ_ω were not applied. Stellar luminosities, updated from Hamann et al. (2019) and Sander et al. (2019) according to our revised distances, are restricted to sources with no error flags.",
+        "label": ""
+      },
+      "source_path": "literature/1912.10125/arxiv_source/table1_pc.tex",
+      "excerpt_path": "literature/1912.10125/catalog_sources/table-010/excerpt.tex",
+      "sha256": "3dee0985034696a20b4a1790975caabab5b3ef5f444ee67123ef1e17a5f7a289",
+      "line_count": 396,
+      "error": ""
+    },
+    {
+      "id": "table-011",
+      "internal_table_id": "table-011",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1912.10125/arxiv_source/table6_amended.tex",
+        "start_line": 116,
+        "end_line": 501,
+        "caption": "Absolute K_s-band magnitudes for Galactic WR stars.",
+        "label": ""
+      },
+      "source_path": "literature/1912.10125/arxiv_source/table6_amended.tex",
+      "excerpt_path": "literature/1912.10125/catalog_sources/table-011/excerpt.tex",
+      "sha256": "15d4eadb3e0513aed8526c7236bf646e134ee7efe0054fde193e6da681420727",
+      "line_count": 386,
+      "error": ""
+    },
+    {
+      "id": "table-012",
+      "internal_table_id": "table-012",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1912.10125/arxiv_source/table7_amended.tex",
+        "start_line": 116,
+        "end_line": 501,
+        "caption": "Absolute v^WR-band magnitudes for Galactic WR stars.",
+        "label": ""
+      },
+      "source_path": "literature/1912.10125/arxiv_source/table7_amended.tex",
+      "excerpt_path": "literature/1912.10125/catalog_sources/table-012/excerpt.tex",
+      "sha256": "5b41945461b7c06aee35a75a57bb5c75abd6022d806e1c788a521510c37085b1",
+      "line_count": 386,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table-final",
+      "internal_table_id": "table-table-final",
+      "status": "success",
+      "ecsv_path": "literature/1912.10125/catalog_tables/table-table-final.ecsv",
+      "caption": "Gaia DR2 astrometric, photometric and parallax properties for 383 Galactic WR stars, including WR11 using a parallax and photometry from Hipparcos. The distance for WR11 was calculated in the same manner as WR with Gaia results, except the adjustments to calculate ω and σ_ω were not applied. Stellar luminosities, updated from Hamann et al. (2019) and Sander et al. (2019) according to our revised distances, are restricted to sources with no error flags. The full table is available in the online supplementary material.",
+      "label": "table:final",
+      "row_count": 12,
+      "column_count": 13,
+      "environment": "",
+      "header_rows": [
+        [
+          "WR",
+          "Spectral",
+          "Alias",
+          "RA",
+          "Dec",
+          "\\omega+/-\\sigma_w",
+          "d",
+          "—z—",
+          "G",
+          "G_BP-G_RP",
+          "Excess",
+          "\\log L",
+          "Flags"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "WR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Spectral",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Alias",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RA",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Dec",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\omega+/-\\sigma_w",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "d",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "—z—",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "G",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "G_BP-G_RP",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Excess",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\log L",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "Flags",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp76jd07dc/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1912.10125/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp76jd07dc/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.10125/catalog_sources/table-table-final/wrapped.tex",
+            "html": "literature/1912.10125/catalog_sources/table-table-final/latexml.html",
+            "stdout": "literature/1912.10125/catalog_sources/table-table-final/latexml.stdout.txt",
+            "stderr": "literature/1912.10125/catalog_sources/table-table-final/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "abee6bb1deb779ed06a5f4ae154509163bb1267f1d218c75cf857118a870463d"
+    },
+    {
+      "id": "table-table-powr_types",
+      "internal_table_id": "table-table-powr_types",
+      "status": "success",
+      "ecsv_path": "literature/1912.10125/catalog_tables/table-table-powr_types.ecsv",
+      "caption": "Intrinsic colours of WR stars from PoWR models (Hamann & Gräfener 2004 and Todt et al. 2015 for WN, Sander et al. 2012 for WC) for (b-v)_0^WR and monochromatic (J-K)^mono_0 and (H-K)^mono_0, and Rosslowe & Crowther (2015) for (J-Ks)_0 and (H-Ks)_0.",
+      "label": "table:powr_types",
+      "row_count": 13,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "WR subtype",
+          "PoWR model",
+          "\\log(T/k)",
+          "\\mathrm\\log(R_t)",
+          "(b-v)_0^WR",
+          "(J -\\mathrmK_s ) 0",
+          "(H -\\mathrmK_s ) 0",
+          "(J - K) ^\\rm mono_0",
+          "(H - K) ^\\rm mono_0"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "WR subtype",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "PoWR model",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\log(T/k)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mathrm\\log(R_t)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "(b-v)_0^WR",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "(J -\\mathrmK_s ) 0",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "(H -\\mathrmK_s ) 0",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "(J - K) ^\\rm mono_0",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "(H - K) ^\\rm mono_0",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpculrp1tf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1912.10125/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpculrp1tf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.10125/catalog_sources/table-table-powr_types/wrapped.tex",
+            "html": "literature/1912.10125/catalog_sources/table-table-powr_types/latexml.html",
+            "stdout": "literature/1912.10125/catalog_sources/table-table-powr_types/latexml.stdout.txt",
+            "stderr": "literature/1912.10125/catalog_sources/table-table-powr_types/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "26473c00ada46d8c361e5c40c75a49e16c0dfe21479ea4c80df799ac54a84873"
+    },
+    {
+      "id": "table-table-sed_ir",
+      "internal_table_id": "table-table-sed_ir",
+      "status": "success",
+      "ecsv_path": "literature/1912.10125/catalog_tables/table-table-sed_ir.ecsv",
+      "caption": "The relative continuum flux contribution of WR stars to O-type companions at near-IR wavelengths for various subtypes, adopting a Kurucz ATLAS O star model with T_eff = 37500K and log g = 5 for the companion, assuming each contribute 50% of the V-band continuum flux.",
+      "label": "table:sed_ir",
+      "row_count": 10,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "WR subtypes",
+          "",
+          "F_WR/F_0",
+          "",
+          ""
+        ],
+        [
+          "",
+          "V",
+          "J",
+          "H",
+          "K"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "WR subtypes",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "V",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "F_WR/F_0 | J",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "H",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "K",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvamkn0j8/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1912.10125/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvamkn0j8/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.10125/catalog_sources/table-table-sed_ir/wrapped.tex",
+            "html": "literature/1912.10125/catalog_sources/table-table-sed_ir/latexml.html",
+            "stdout": "literature/1912.10125/catalog_sources/table-table-sed_ir/latexml.stdout.txt",
+            "stderr": "literature/1912.10125/catalog_sources/table-table-sed_ir/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c60c8362d5dbfd4257e78f68109fb93b911f759164464bc53b8a389f69395505"
+    },
+    {
+      "id": "table-table-intrinsic_col",
+      "internal_table_id": "table-table-intrinsic_col",
+      "status": "success",
+      "ecsv_path": "literature/1912.10125/catalog_tables/table-table-intrinsic_col.ecsv",
+      "caption": "Conversion equations between narrowband v^WR and Gaia G band filters for (G_BP-G_RP)_0 of different spectral types, using results from Carrasco & Jordi (valid for A_v < 12).",
+      "label": "table:intrinsic_col",
+      "row_count": 10,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "WR class",
+          "(G_BP-G_RP)_0",
+          "A\\beginsubarraycWR v\\endsubarray to A_G"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "WR class",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "(G_BP-G_RP)_0",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "A\\beginsubarraycWR v\\endsubarray to A_G",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnvkes6ww/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1912.10125/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnvkes6ww/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.10125/catalog_sources/table-table-intrinsic_col/wrapped.tex",
+            "html": "literature/1912.10125/catalog_sources/table-table-intrinsic_col/latexml.html",
+            "stdout": "literature/1912.10125/catalog_sources/table-table-intrinsic_col/latexml.stdout.txt",
+            "stderr": "literature/1912.10125/catalog_sources/table-table-intrinsic_col/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ca1889d2e8f5c45dd1cabdeebeeaac7c40741150e5b13a4be744298da21be200"
+    },
+    {
+      "id": "table-table-avg_absmag",
+      "internal_table_id": "table-table-avg_absmag",
+      "status": "success",
+      "ecsv_path": "literature/1912.10125/catalog_tables/table-table-avg_absmag.ecsv",
+      "caption": "Average absolute magnitudes for Galactic Wolf-Rayet subtypes in v^WR and K_s band filters. In the v^WR band, the WC9d sample has been combined with non dusty WC9 stars.",
+      "label": "table:avg_absmag",
+      "row_count": 15,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "WR subtypes",
+          "M_v^WR (mag)",
+          "N( \\mathrmv^WR )",
+          "M_Ks (mag)",
+          "N( \\mathrmK_s )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "WR subtypes",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "M_v^WR (mag)",
+          "unit_text": "M_v^WR (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "N( \\mathrmv^WR )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "M_Ks (mag)",
+          "unit_text": "M_Ks (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "N( \\mathrmK_s )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7xan92fd/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1912.10125/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7xan92fd/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.10125/catalog_sources/table-table-avg_absmag/wrapped.tex",
+            "html": "literature/1912.10125/catalog_sources/table-table-avg_absmag/latexml.html",
+            "stdout": "literature/1912.10125/catalog_sources/table-table-avg_absmag/latexml.stdout.txt",
+            "stderr": "literature/1912.10125/catalog_sources/table-table-avg_absmag/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "52fc9e29ee48cb5203f346bcf8f4dadf2ac32aca81418cd63349d82c3b16beda"
+    },
+    {
+      "id": "table-table-final_absmagk",
+      "internal_table_id": "table-table-final_absmagk",
+      "status": "success",
+      "ecsv_path": "literature/1912.10125/catalog_tables/table-table-final_absmagk.ecsv",
+      "caption": "Absolute K_s-band magnitudes for Galactic WR stars. The full table is available in the online supplementary material.",
+      "label": "table:final_absmagk",
+      "row_count": 9,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "WR Number",
+          "Spectral type",
+          "\\mathrmK_s (mag)",
+          "\\mu (mag)",
+          "J -\\mathrmK_s (mag)",
+          "H -\\mathrmK_s (mag)",
+          "A_Ks (mag)",
+          "M\\beginsubarraycSys \\mathrm\\mathrmK_s\\endsubarray (mag)",
+          "F \\beginsubarraycWR \\mathrmK_s\\endsubarray / F \\beginsubarraycSys \\mathrmK_s\\endsubarray",
+          "M\\beginsubarraycWR \\mathrmK_s\\endsubarray (mag)",
+          "Flags"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "WR Number",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Spectral type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mathrmK_s (mag)",
+          "unit_text": "\\mathrmK_s (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu (mag)",
+          "unit_text": "\\mu (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "J -\\mathrmK_s (mag)",
+          "unit_text": "J -\\mathrmK_s (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "H -\\mathrmK_s (mag)",
+          "unit_text": "H -\\mathrmK_s (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "A_Ks (mag)",
+          "unit_text": "A_Ks (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "M\\beginsubarraycSys \\mathrm\\mathrmK_s\\endsubarray (mag)",
+          "unit_text": "M\\beginsubarraycSys \\mathrm\\mathrmK_s\\endsubarray (mag)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "F \\beginsubarraycWR \\mathrmK_s\\endsubarray / F \\beginsubarraycSys \\mathrmK_s\\endsubarray",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "M\\beginsubarraycWR \\mathrmK_s\\endsubarray (mag)",
+          "unit_text": "M\\beginsubarraycWR \\mathrmK_s\\endsubarray (mag)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Flags",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv9a2v61t/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1912.10125/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv9a2v61t/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.10125/catalog_sources/table-table-final_absmagk/wrapped.tex",
+            "html": "literature/1912.10125/catalog_sources/table-table-final_absmagk/latexml.html",
+            "stdout": "literature/1912.10125/catalog_sources/table-table-final_absmagk/latexml.stdout.txt",
+            "stderr": "literature/1912.10125/catalog_sources/table-table-final_absmagk/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2516294ba69b0d6a2d99eea08b1d1299bd033c9c30f1ba9fa4d4fe820474e69f"
+    },
+    {
+      "id": "table-table-final_absmagv",
+      "internal_table_id": "table-table-final_absmagv",
+      "status": "success",
+      "ecsv_path": "literature/1912.10125/catalog_tables/table-table-final_absmagv.ecsv",
+      "caption": "Absolute v^WR-band magnitudes for Galactic WR stars. The full table is available in the online supplementary material.",
+      "label": "table:final_absmagv",
+      "row_count": 9,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "WR Number",
+          "Spectral type",
+          "\\mathrmv^WR+/- 0.1 (mag)",
+          "\\mu (mag)",
+          "(b-v)^WR (mag)",
+          "A\\beginsubarraycWR v\\endsubarray (mag)",
+          "M\\beginsubarraycSys v\\endsubarray (mag)",
+          "F \\beginsubarraycWR v\\endsubarray / F \\beginsubarraycSys v\\endsubarray",
+          "M \\beginsubarraycWR v\\endsubarray (mag)",
+          "Flags"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "WR Number",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Spectral type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\mathrmv^WR+/- 0.1 (mag)",
+          "unit_text": "\\mathrmv^WR+/- 0.1 (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu (mag)",
+          "unit_text": "\\mu (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "(b-v)^WR (mag)",
+          "unit_text": "(b-v)^WR (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "A\\beginsubarraycWR v\\endsubarray (mag)",
+          "unit_text": "A\\beginsubarraycWR v\\endsubarray (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "M\\beginsubarraycSys v\\endsubarray (mag)",
+          "unit_text": "M\\beginsubarraycSys v\\endsubarray (mag)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "F \\beginsubarraycWR v\\endsubarray / F \\beginsubarraycSys v\\endsubarray",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "M \\beginsubarraycWR v\\endsubarray (mag)",
+          "unit_text": "M \\beginsubarraycWR v\\endsubarray (mag)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Flags",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzsodep9i/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1912.10125/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpzsodep9i/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.10125/catalog_sources/table-table-final_absmagv/wrapped.tex",
+            "html": "literature/1912.10125/catalog_sources/table-table-final_absmagv/latexml.html",
+            "stdout": "literature/1912.10125/catalog_sources/table-table-final_absmagv/latexml.stdout.txt",
+            "stderr": "literature/1912.10125/catalog_sources/table-table-final_absmagv/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "252a3be5d4f386c9bd9881ffd6d768d1487ef7eb6c114c2608dceaab6f919337"
+    },
+    {
+      "id": "table-table-in_2kpc",
+      "internal_table_id": "table-table-in_2kpc",
+      "status": "success",
+      "ecsv_path": "literature/1912.10125/catalog_tables/table-table-in_2kpc.ecsv",
+      "caption": "WR stars within 2 kpc of the Sun, including colour excess, K-band extinction and A_Ks/kpc, extinction per kpc.",
+      "label": "table:in_2kpc",
+      "row_count": 25,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "WR Number",
+          "Alias",
+          "Spectral type",
+          "Distance (kpc)",
+          "Flags",
+          "E(B-V)",
+          "\\mathrmA_Ks",
+          "\\mathrmA_Ks /kpc"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "WR Number",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Alias",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Spectral type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Distance (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Flags",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "E(B-V)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mathrmA_Ks",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\mathrmA_Ks /kpc",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjwy71ofu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1912.10125/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjwy71ofu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.10125/catalog_sources/table-table-in_2kpc/wrapped.tex",
+            "html": "literature/1912.10125/catalog_sources/table-table-in_2kpc/latexml.html",
+            "stdout": "literature/1912.10125/catalog_sources/table-table-in_2kpc/latexml.stdout.txt",
+            "stderr": "literature/1912.10125/catalog_sources/table-table-in_2kpc/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2b91046ddc18fa8febd3eda68f4c3cdc94bd3a8746aa2541d130b35eede93d0c"
+    },
+    {
+      "id": "table-table-zheights",
+      "internal_table_id": "table-table-zheights",
+      "status": "success",
+      "ecsv_path": "literature/1912.10125/catalog_tables/table-table-zheights.ecsv",
+      "caption": "Distance of WR stars from the midplane |z|, for which excesses exceed 3σ, where σ=52 pc, the HII region scale height of 52 pc. Previously identified runaways with |z| ≥300 pc according to Rosslowe & Crowther (2015) are also indicated.",
+      "label": "table:zheights",
+      "row_count": 31,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "WR Number",
+          "Spectral type",
+          "Dist (kpc)",
+          "|z| (pc)",
+          "σ",
+          "Known runaway"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "WR Number",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Spectral type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Dist (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "|z| (pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "σ",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Known runaway",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "pandoc",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3rmeo8ki/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1912.10125/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3rmeo8ki/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.10125/catalog_sources/table-table-zheights/wrapped.tex",
+            "html": "literature/1912.10125/catalog_sources/table-table-zheights/latexml.html",
+            "stdout": "literature/1912.10125/catalog_sources/table-table-zheights/latexml.stdout.txt",
+            "stderr": "literature/1912.10125/catalog_sources/table-table-zheights/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpe_oaqby6/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpe_oaqby6/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.10125/catalog_sources/table-table-zheights/wrapped.tex",
+            "html": "literature/1912.10125/catalog_sources/table-table-zheights/pandoc.html",
+            "stdout": "literature/1912.10125/catalog_sources/table-table-zheights/pandoc.stdout.txt",
+            "stderr": "literature/1912.10125/catalog_sources/table-table-zheights/pandoc.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "05759dfb50bde539646f5ebd08597297a562aead564ac0b8fb2cf6a61843764c"
+    },
+    {
+      "id": "table-010",
+      "internal_table_id": "table-010",
+      "status": "success",
+      "ecsv_path": "literature/1912.10125/catalog_tables/table-010.ecsv",
+      "caption": "Gaia DR2 astrometric, photometric and parallax properties for 383 Galactic WR stars, including WR11 using a parallax and photometry from Hipparcos (van Leeuwen 2007). The distance for WR11 was calculated in the same manner as WR with Gaia results, except the adjustments to calculate ω and σ_ω were not applied. Stellar luminosities, updated from Hamann et al. (2019) and Sander et al. (2019) according to our revised distances, are restricted to sources with no error flags.",
+      "label": "",
+      "row_count": 380,
+      "column_count": 13,
+      "environment": "",
+      "header_rows": [
+        [
+          "WR Number",
+          "Spectral Type",
+          "Alias",
+          "RA J2015",
+          "Dec J2015",
+          "\\omega+/-\\sigma_w (mas)",
+          "d (kpc)",
+          "—z— (pc)",
+          "G (mag)",
+          "G_BP-G_RP (mag)",
+          "Excess noise",
+          "\\log L/L_\\odot",
+          "Flags"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "WR Number",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Spectral Type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Alias",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RA J2015",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Dec J2015",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\omega+/-\\sigma_w (mas)",
+          "unit_text": "\\omega+/-\\sigma_w (mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "d (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "—z— (pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "G (mag)",
+          "unit_text": "G (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "G_BP-G_RP (mag)",
+          "unit_text": "G_BP-G_RP (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Excess noise",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\log L/L_\\odot",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "Flags",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvz283uyl/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1912.10125/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvz283uyl/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.10125/catalog_sources/table-010/wrapped.tex",
+            "html": "literature/1912.10125/catalog_sources/table-010/latexml.html",
+            "stdout": "literature/1912.10125/catalog_sources/table-010/latexml.stdout.txt",
+            "stderr": "literature/1912.10125/catalog_sources/table-010/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3dee0985034696a20b4a1790975caabab5b3ef5f444ee67123ef1e17a5f7a289"
+    },
+    {
+      "id": "table-011",
+      "internal_table_id": "table-011",
+      "status": "success",
+      "ecsv_path": "literature/1912.10125/catalog_tables/table-011.ecsv",
+      "caption": "Absolute K_s-band magnitudes for Galactic WR stars.",
+      "label": "",
+      "row_count": 375,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "WR Number",
+          "Spectral type",
+          "K_s (mag)",
+          "\\mu (mag)",
+          "J - K_s (mag)",
+          "H - K_s (mag)",
+          "A_Ks (mag)",
+          "M\\beginsubarraycSys \\mathrmK_s\\endsubarray (mag)",
+          "F \\beginsubarrayc\\mathrmK_s WR\\endsubarray /F \\beginsubarrayc\\mathrmK_s Sys\\endsubarray",
+          "M\\beginsubarraycWR \\mathrmK_s\\endsubarray (mag)",
+          "Flags"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "WR Number",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Spectral type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "K_s (mag)",
+          "unit_text": "K_s (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu (mag)",
+          "unit_text": "\\mu (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "J - K_s (mag)",
+          "unit_text": "J - K_s (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "H - K_s (mag)",
+          "unit_text": "H - K_s (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "A_Ks (mag)",
+          "unit_text": "A_Ks (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "M\\beginsubarraycSys \\mathrmK_s\\endsubarray (mag)",
+          "unit_text": "M\\beginsubarraycSys \\mathrmK_s\\endsubarray (mag)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "F \\beginsubarrayc\\mathrmK_s WR\\endsubarray /F \\beginsubarrayc\\mathrmK_s Sys\\endsubarray",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "M\\beginsubarraycWR \\mathrmK_s\\endsubarray (mag)",
+          "unit_text": "M\\beginsubarraycWR \\mathrmK_s\\endsubarray (mag)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Flags",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptuqip8t7/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1912.10125/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmptuqip8t7/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.10125/catalog_sources/table-011/wrapped.tex",
+            "html": "literature/1912.10125/catalog_sources/table-011/latexml.html",
+            "stdout": "literature/1912.10125/catalog_sources/table-011/latexml.stdout.txt",
+            "stderr": "literature/1912.10125/catalog_sources/table-011/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "15d4eadb3e0513aed8526c7236bf646e134ee7efe0054fde193e6da681420727"
+    },
+    {
+      "id": "table-012",
+      "internal_table_id": "table-012",
+      "status": "success",
+      "ecsv_path": "literature/1912.10125/catalog_tables/table-012.ecsv",
+      "caption": "Absolute v^WR-band magnitudes for Galactic WR stars.",
+      "label": "",
+      "row_count": 375,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "WR Number",
+          "Spectral type",
+          "v^WR+/- 0.1 (mag)",
+          "\\mu (mag)",
+          "(b-v)^WR (mag)",
+          "A\\beginsubarraycWR v\\endsubarray (mag)",
+          "M\\beginsubarraycSys v\\endsubarray (mag)",
+          "F \\beginsubarraycWR v\\endsubarray / F \\beginsubarraycSys v\\endsubarray",
+          "M\\beginsubarraycWR v\\endsubarray (mag)",
+          "Flags"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "WR Number",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Spectral type",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "v^WR+/- 0.1 (mag)",
+          "unit_text": "v^WR+/- 0.1 (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu (mag)",
+          "unit_text": "\\mu (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "(b-v)^WR (mag)",
+          "unit_text": "(b-v)^WR (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "A\\beginsubarraycWR v\\endsubarray (mag)",
+          "unit_text": "A\\beginsubarraycWR v\\endsubarray (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "M\\beginsubarraycSys v\\endsubarray (mag)",
+          "unit_text": "M\\beginsubarraycSys v\\endsubarray (mag)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "F \\beginsubarraycWR v\\endsubarray / F \\beginsubarraycSys v\\endsubarray",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "M\\beginsubarraycWR v\\endsubarray (mag)",
+          "unit_text": "M\\beginsubarraycWR v\\endsubarray (mag)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Flags",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnfu628zj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1912.10125/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnfu628zj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.10125/catalog_sources/table-012/wrapped.tex",
+            "html": "literature/1912.10125/catalog_sources/table-012/latexml.html",
+            "stdout": "literature/1912.10125/catalog_sources/table-012/latexml.stdout.txt",
+            "stderr": "literature/1912.10125/catalog_sources/table-012/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5b41945461b7c06aee35a75a57bb5c75abd6022d806e1c788a521510c37085b1"
+    }
+  ]
+}

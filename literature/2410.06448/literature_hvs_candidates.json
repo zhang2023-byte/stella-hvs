@@ -1,0 +1,83 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T18:12:00",
+  "paper": {
+    "arxiv_id": "2410.06448",
+    "bibcode": "2024ApJ...976..125D",
+    "title": "Kinematic Insights Into Luminous Blue Variables and B[e] Supergiants",
+    "month": "2024-10",
+    "source_note_json": "notes/2024/2024-10/2024-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2410.06448",
+      "pdf": "https://arxiv.org/pdf/2410.06448"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2410.06448",
+    "audit_path": "literature/2410.06448/audit.json",
+    "catalog_review_path": "literature/2410.06448/catalog_review.json",
+    "catalog_extraction_path": "literature/2410.06448/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2410.06448/catalog_tables/table-tab-samplelmc.ecsv",
+      "literature/2410.06448/catalog_tables/table-tab-samplesmc.ecsv",
+      "literature/2410.06448/catalog_tables/table-tab-vel_lmc.ecsv",
+      "literature/2410.06448/catalog_tables/table-tab-vel_smc.ecsv",
+      "literature/2410.06448/catalog_tables/table-tab-LMCmedians.ecsv",
+      "literature/2410.06448/catalog_tables/table-tab-LMCluminosities.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T18:12:00",
+    "extractor": "agent",
+    "summary": "Paper studies LBV and sgB[e] stars in the LMC and SMC, measuring transverse peculiar velocities relative to local fields to assess ejection from parent clusters. No objects are discussed as possibly unbound from the Milky Way or as Galactic HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "lmc-target-stars",
+      "description": "LMC LBV, LBVc, sgB[e], and sgB[e]-WL target stars with proper-motion measurements (Tables tab:samplelmc and tab:vel_lmc).",
+      "decision": "excluded",
+      "reason": "The paper discusses these objects as stars in the LMC, measuring their residual peculiar proper-motion velocities relative to the local field to test whether they were ejected from parent clusters by supernova kicks. It does not present any of them as possibly unbound from the Milky Way or as Galactic HVS/unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+          "start_line": 36,
+          "end_line": 50,
+          "context": "Abstract states the study measures proper-motion velocities for LBVs and sgB[e] stars in the LMC and SMC using Gaia DR3, focusing on ejection from clusters by partner supernovae, not Galactic escape."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+          "start_line": 97,
+          "end_line": 122,
+          "context": "Introduction and sample description explicitly frame the objects as LMC targets; velocities are measured as residuals against the local field systemic motion within the LMC."
+        }
+      ]
+    },
+    {
+      "group_id": "smc-target-stars",
+      "description": "SMC LBV, sgB[e], and sgB[e]-WL target stars with proper-motion measurements (Tables tab:samplesmc and tab:vel_smc).",
+      "decision": "excluded",
+      "reason": "The paper discusses these objects as stars in the SMC, measuring their residual peculiar proper-motion velocities relative to the local field to test cluster ejection. It does not present any of them as possibly unbound from the Milky Way or as Galactic HVS/unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+          "start_line": 36,
+          "end_line": 50,
+          "context": "Abstract states the study measures proper-motion velocities for LBVs and sgB[e] stars in the LMC and SMC using Gaia DR3, focusing on ejection from clusters by partner supernovae, not Galactic escape."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2410.06448/arxiv_source/Deman2024.tex",
+          "start_line": 113,
+          "end_line": 140,
+          "context": "Sample section describes SMC sample composition and states that velocities are measured as differences from local systemic proper-motion velocities within the SMC."
+        }
+      ]
+    }
+  ]
+}

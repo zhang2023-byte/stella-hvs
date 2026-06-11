@@ -1,0 +1,1391 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2111.14892",
+    "title": "Constraining the initial conditions of NGC 2264 using ejected stars found in Gaia DR2",
+    "month": "2021-11",
+    "source_note_json": "notes/2021/2021-11/2021-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2111.14892",
+      "pdf": "https://arxiv.org/pdf/2111.14892"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2111.14892",
+    "audit_path": "literature/2111.14892/audit.json",
+    "source_dir": "literature/2111.14892/arxiv_source",
+    "tex_root": "literature/2111.14892/arxiv_source/Main_document.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:01:35",
+    "reviewer": "agent",
+    "summary": "Paper searches for runaway (RW) and walkaway (WW) stars ejected from NGC 2264 subclusters (S Mon, IRS 1, IRS 2) using Gaia DR2 astrometry. Finds 5 RWs and 9 WWs from S Mon, 6 RWs and 5 WWs from IRS 1/2. Compares to N-body simulations with varied initial conditions (fractal dimension, virial ratio, initial radius) to constrain initial density (~10000 Msun/pc^3), spatial substructure (D=1.6), and virial state. Also checks results with Gaia EDR3."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-Centre_para",
+      "kind": "latex_table",
+      "asset_type": "observation_parameters",
+      "role_in_paper": "input_parameters",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 160,
+          "end_line": 179,
+          "caption": "NGC 2264 centre parameters used in the analysis from \\citet{RN264}",
+          "label": "tab:Centre_para"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "NGC 2264 subcluster centre parameter name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S Mon",
+          "meaning": "S Mon centre parameter value",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "IRS 1",
+          "meaning": "IRS 1 centre parameter value",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "IRS 2",
+          "meaning": "IRS 2 centre parameter value",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "NGC 2264 centre parameters used in the analysis from \\citet{RN264}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-RWC_2D_SMon",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "observational_results",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 329,
+          "end_line": 364,
+          "caption": "S\\,Mon 3D-RW and WW stars sorted by decreasing 3D-velocity. Column 2+3: velocity in S\\,Mon rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2016A&A...586A..52J}, $^{c}$\\citet{2019yCat.5164....0L}, $^{d}$\\citet{2019AJ....157..196K}, $^{e}$\\citet{1992A&AS...95..541F}, $^{f}$\\citet{1995A&AS..114..269D}; Column 4: minimum flight time since ejection (crossing of search boundary); Column 5: age from PARSEC isochrones \\citep{RN225}; Column 6--7: from literature sources - $^{1}$\\citet{2019yCat.5164....0L}, $^{2}$\\citet{2015A&A...581A..66V}, $^{3}$\\citet{2017A&A...599A..23V}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{2019AJ....157..196K}, $^{6}$\\citet{2004A&A...417..557L}, $^{7}$\\citet{1972A&AS....7...35K}, $^{8}$\\citet{1993yCat.3135....0C}, $^{9}$\\citet{1985cbvm.book.....V}, $^{10}$\\citet{2001A&A...373..625P}, $^{11}$\\citet{2002AJ....123.1528R}, $^{12}$\\citet{2019AJ....158..138S}, $^{13}$\\citet{2019A&A...628A..94A}, $^{14}$\\citet{2018A&A...609A..10V}.",
+          "label": "tab:RWC_2D_SMon"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "Gaia DR2 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "2D-velocity rf | (km s^-1)",
+          "meaning": "2D velocity in S Mon rest frame (proper motion only)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Radial velocity rf | (km s^-1)",
+          "meaning": "Radial velocity in S Mon rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flight time | (Myr)",
+          "meaning": "Minimum flight time since ejection (crossing of search boundary)",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Iso. age | (Myr)",
+          "meaning": "Age estimate from PARSEC isochrones",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mass | (M_\\sun)",
+          "meaning": "Stellar mass estimate from literature",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "Spectral type from literature",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "S\\,Mon 3D-RW and WW stars sorted by decreasing 3D-velocity. Column 2+3: velocity in S\\,Mon rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2016A&A...586A..52J}, $^{c}$\\citet{2019yCat.5164....0L}, $^{d}$\\citet{2019AJ....157..196K}, $^{e}$\\citet{1992A&AS...95..541F}, $^{f}$\\citet{1995A&AS..114..269D}; Column 4: minimum flight time since ejection (crossing of search boundary); Column 5: age from PARSEC isochrones \\citep{RN225}; Column 6--7: from literature sources - $^{1}$\\citet{2019yCat.5164....0L}, $^{2}$\\citet{2015A&A...581A..66V}, $^{3}$\\citet{2017A&A...599A..23V}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{2019AJ....157..196K}, $^{6}$\\citet{2004A&A...417..557L}, $^{7}$\\citet{1972A&AS....7...35K}, $^{8}$\\citet{1993yCat.3135....0C}, $^{9}$\\citet{1985cbvm.book.....V}, $^{10}$\\citet{2001A&A...373..625P}, $^{11}$\\citet{2002AJ....123.1528R}, $^{12}$\\citet{2019AJ....158..138S}, $^{13}$\\citet{2019A&A...628A..94A}, $^{14}$\\citet{2018A&A...609A..10V}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-RWC_2D_IRS",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "observational_results",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 472,
+          "end_line": 504,
+          "caption": "IRS\\,1/2 3D-RW and WW stars sorted by decreasing 3D-velocity. Column 2+3: velocity in respective IRS rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2016A&A...586A..52J}, $^{c}$\\citet{2019yCat.5164....0L}, $^{d}$\\citet{2019AJ....157..196K}, $^{e}$\\citet{1992A&AS...95..541F}, $^{f}$\\citet{1995A&AS..114..269D}; Column 4: minimum flight time since ejection (crossing of search boundary); Column 5: age from PARSEC isochrones \\citep{RN225}; Column 6: Subcluster identification; Column 7--8: from literature sources - $^{1}$\\citet{2019yCat.5164....0L}, $^{2}$\\citet{2015A&A...581A..66V}, $^{3}$\\citet{2017A&A...599A..23V}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{2019AJ....157..196K}, $^{6}$\\citet{2004A&A...417..557L}, $^{7}$\\citet{1972A&AS....7...35K}, $^{8}$\\citet{1993yCat.3135....0C}, $^{9}$\\citet{1985cbvm.book.....V}, $^{10}$\\citet{2001A&A...373..625P}, $^{11}$\\citet{2002AJ....123.1528R}, $^{12}$\\citet{2019AJ....158..138S}, $^{13}$\\citet{2019A&A...628A..94A}, $^{14}$\\citet{2018A&A...609A..10V}.",
+          "label": "tab:RWC_2D_IRS"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "Gaia DR2 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "2D-velocity rf | (km s^-1)",
+          "meaning": "2D velocity in IRS rest frame (proper motion only)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Radial velocity rf | (km s^-1)",
+          "meaning": "Radial velocity in IRS rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flight time | (Myr)",
+          "meaning": "Minimum flight time since ejection (crossing of search boundary)",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Iso. age | (Myr)",
+          "meaning": "Age estimate from PARSEC isochrones",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Subcluster",
+          "meaning": "Subcluster identification (IRS 1 or IRS 2)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mass | (M_\\sun)",
+          "meaning": "Stellar mass estimate from literature",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "Spectral type from literature",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "IRS\\,1/2 3D-RW and WW stars sorted by decreasing 3D-velocity. Column 2+3: velocity in respective IRS rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2016A&A...586A..52J}, $^{c}$\\citet{2019yCat.5164....0L}, $^{d}$\\citet{2019AJ....157..196K}, $^{e}$\\citet{1992A&AS...95..541F}, $^{f}$\\citet{1995A&AS..114..269D}; Column 4: minimum flight time since ejection (crossing of search boundary); Column 5: age from PARSEC isochrones \\citep{RN225}; Column 6: Subcluster identification; Column 7--8: from literature sources - $^{1}$\\citet{2019yCat.5164....0L}, $^{2}$\\citet{2015A&A...581A..66V}, $^{3}$\\citet{2017A&A...599A..23V}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{2019AJ....157..196K}, $^{6}$\\citet{2004A&A...417..557L}, $^{7}$\\citet{1972A&AS....7...35K}, $^{8}$\\citet{1993yCat.3135....0C}, $^{9}$\\citet{1985cbvm.book.....V}, $^{10}$\\citet{2001A&A...373..625P}, $^{11}$\\citet{2002AJ....123.1528R}, $^{12}$\\citet{2019AJ....158..138S}, $^{13}$\\citet{2019A&A...628A..94A}, $^{14}$\\citet{2018A&A...609A..10V}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-Init_cond",
+      "kind": "latex_table",
+      "asset_type": "simulation_parameters",
+      "role_in_paper": "simulation_setup",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 605,
+          "end_line": 624,
+          "caption": "Overview of all initial condition combinations used in our $N$-body simulations. Column 1 shows the Simulation ID, which is a number combination of the fractal dimension, initial virial ratio and initial radius; Column 2 shows the fractal dimension $D$; Column 3 shows the initial virial ratio $\\alpha_{\\text{vir}}$; Column 4 shows the initial radius of the simulated regions $r_F$; Column 5 shows the initial median stellar density $\\tilde{\\rho}$; Column 6 shows the initial (observable) median stellar surface density $\\tilde{\\sum}$.",
+          "label": "tab:Init_cond"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Sim. ID",
+          "meaning": "Simulation ID encoding fractal dimension, virial ratio, initial radius",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D",
+          "meaning": "Fractal dimension D (1.6=high substructure, 3.0=smooth)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\alpha_vir",
+          "meaning": "Initial virial ratio alpha_vir = T/|Omega|",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_F | (pc)",
+          "meaning": "Initial radius of simulated region",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\tilde\\rho | (M_\\sun pc^-3)",
+          "meaning": "Initial median stellar density",
+          "unit_text": "M_sun pc^-3",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\tilde\\sum | (stars pc^-2)",
+          "meaning": "Initial median stellar surface density",
+          "unit_text": "stars pc^-2",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Overview of all initial condition combinations used in our $N$-body simulations. Column 1 shows the Simulation ID, which is a number combination of the fractal dimension, initial virial ratio and initial radius; Column 2 shows the fractal dimension $D$; Column 3 shows the initial virial ratio $\\alpha_{\\text{vir}}$; Column 4 shows the initial radius of the simulated regions $r_F$; Column 5 shows the initial median stellar density $\\tilde{\\rho}$; Column 6 shows the initial (observable) median stellar surface density $\\tilde{\\sum}$.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-Bin_frac",
+      "kind": "latex_table",
+      "asset_type": "simulation_parameters",
+      "role_in_paper": "simulation_setup",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 646,
+          "end_line": 661,
+          "caption": "Binary fractions in the $N$-body simulations. Column 1 shows the mass range based on the mass of the primary star; Column 2 shows the binary fraction $f_{\\text{bin}}$.",
+          "label": "tab:Bin_frac"
+        }
+      ],
+      "columns": [
+        {
+          "name": "m_p [M_\\sun]",
+          "meaning": "Primary star mass range",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "f_bin",
+          "meaning": "Binary fraction f_bin = B/(S+B)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Source",
+          "meaning": "Literature source for binary fraction",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Binary fractions in the $N$-body simulations. Column 1 shows the mass range based on the mass of the primary star; Column 2 shows the binary fraction $f_{\\text{bin}}$.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-Bin_sep",
+      "kind": "latex_table",
+      "asset_type": "simulation_parameters",
+      "role_in_paper": "simulation_setup",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 693,
+          "end_line": 707,
+          "caption": "Mean binary separations in the $N$-body simulations. Column 1 shows the mass range based on the mass of the primary star; Column 2 shows the mean binary separation $\\bar{a}$; Column 3 represents the variance $\\sigma_{\\textrm{log}\\,\\bar{a}}$ of the log-normal fit to the binary separation distributions",
+          "label": "tab:Bin_sep"
+        }
+      ],
+      "columns": [
+        {
+          "name": "m_p [M_\\sun]",
+          "meaning": "Primary star mass range",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\bara [au]",
+          "meaning": "Mean binary separation (semi-major axis)",
+          "unit_text": "au",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\sigma_log \\bara",
+          "meaning": "Variance of log-normal fit to binary separation distribution",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Source",
+          "meaning": "Literature source for binary separation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Mean binary separations in the $N$-body simulations. Column 1 shows the mass range based on the mass of the primary star; Column 2 shows the mean binary separation $\\bar{a}$; Column 3 represents the variance $\\sigma_{\\textrm{log}\\,\\bar{a}}$ of the log-normal fit to the binary separation distributions",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-RW_WW_pred",
+      "kind": "latex_table",
+      "asset_type": "predicted_catalog",
+      "role_in_paper": "simulation_results",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 730,
+          "end_line": 763,
+          "caption": "Ejected RW and WW stars from $N$-body simulations within the search radius of 100 pc at different times during the simulations. For all our initial condition combinations, we show averages from all 20 simulations and the maximum from a single simulation in the format average $\\pm$ uncertainty / maximum. We count ejected binary systems as one star when calculating averages and maxima. The uncertainties in our averages are the standard deviations. We show ejected stars with masses from 0.3--8 M$_{\\sun}$.",
+          "label": "tab:RW_WW_pred"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Mass m (M_\\sun)",
+          "meaning": "Stellar mass range for ejected stars",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "16-03-1",
+          "meaning": "Ejected stars for Simulation ID 16-03-1 (avg ± std / max)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "30-03-1",
+          "meaning": "Ejected stars for Simulation ID 30-03-1 (avg ± std / max)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "16-05-1",
+          "meaning": "Ejected stars for Simulation ID 16-05-1 (avg ± std / max)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Simulation ID",
+          "meaning": "Ejected stars for Simulation ID Simulation ID (avg ± std / max)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "16-03-5",
+          "meaning": "Ejected stars for Simulation ID 16-03-5 (avg ± std / max)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "20-03-5",
+          "meaning": "Ejected stars for Simulation ID 20-03-5 (avg ± std / max)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "16-05-5",
+          "meaning": "Ejected stars for Simulation ID 16-05-5 (avg ± std / max)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "20-05-5",
+          "meaning": "Ejected stars for Simulation ID 20-05-5 (avg ± std / max)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Ejected RW and WW stars from $N$-body simulations within the search radius of 100 pc at different times during the simulations. For all our initial condition combinations, we show averages from all 20 simulations and the maximum from a single simulation in the format average $\\pm$ uncertainty / maximum. We count ejected binary systems as one star when calculating averages and maxima. The uncertainties in our averages are the standard deviations. We show ejected stars with masses from 0.3--8 M$_{\\sun}$.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-RW_WW_pred_bin",
+      "kind": "latex_table",
+      "asset_type": "predicted_catalog",
+      "role_in_paper": "simulation_results",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 766,
+          "end_line": 798,
+          "caption": "Ejected RW and WW stars from $N$-body simulations within the search radius of 100 pc at different times during the simulations for the initial condition ID 16-05-1 and the two alternative binary settings described in section~\\ref{sec:alt_set-up}. For these initial condition combinations, we show averages from all 20 simulations and the maximum from a single simulation in the format average $\\pm$ uncertainty / maximum. We count ejected binary systems as one star when calculating averages and maxima. The uncertainties in our averages are the standard deviations. We show ejected stars with masses from 0.3--8 M$_{\\sun}$.",
+          "label": "tab:RW_WW_pred_bin"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Mass m (M_\\sun)",
+          "meaning": "Stellar mass range for ejected stars",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "16-05-1",
+          "meaning": "Ejected stars for Simulation ID 16-05-1 (avg ± std / max)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Simulation ID",
+          "meaning": "Ejected stars for Simulation ID Simulation ID (avg ± std / max)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "16-05-1-eq-mass",
+          "meaning": "Ejected stars for Simulation ID 16-05-1-eq-mass (avg ± std / max)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Ejected RW and WW stars from $N$-body simulations within the search radius of 100 pc at different times during the simulations for the initial condition ID 16-05-1 and the two alternative binary settings described in section~\\ref{sec:alt_set-up}. For these initial condition combinations, we show averages from all 20 simulations and the maximum from a single simulation in the format average $\\pm$ uncertainty / maximum. We count ejected binary systems as one star when calculating averages and maxima. The uncertainties in our averages are the standard deviations. We show ejected stars with masses from 0.3--8 M$_{\\sun}$.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-RW_WW_pred_full_mass",
+      "kind": "latex_table",
+      "asset_type": "predicted_catalog",
+      "role_in_paper": "simulation_results",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 1079,
+          "end_line": 1122,
+          "caption": "Ejected RW and WW stars from $N$-body simulations within the search radius of 100 pc at different times during the simulations. For all our initial condition combinations, we show averages from all 20 simulations and the maximum from a single simulation in the format average $\\pm$ uncertainty / maximum. We count ejected binary systems as one star when calculating averages and maxima. The uncertainties in our averages are the standard deviations. We show ejected stars with masses from 0.1--50 M$_{\\sun}$.",
+          "label": "tab:RW_WW_pred_full_mass"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Mass m (M_\\sun)",
+          "meaning": "Stellar mass range for ejected stars (full 0.1-50 Msun)",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_002",
+          "meaning": "Ejected star counts per simulation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_003",
+          "meaning": "Ejected star counts per simulation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_004",
+          "meaning": "Ejected star counts per simulation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Simulation ID",
+          "meaning": "Simulation ID header for columns",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_006",
+          "meaning": "Ejected star counts per simulation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_007",
+          "meaning": "Ejected star counts per simulation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_008",
+          "meaning": "Ejected star counts per simulation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_009",
+          "meaning": "Ejected star counts per simulation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Ejected RW and WW stars from $N$-body simulations within the search radius of 100 pc at different times during the simulations. For all our initial condition combinations, we show averages from all 20 simulations and the maximum from a single simulation in the format average $\\pm$ uncertainty / maximum. We count ejected binary systems as one star when calculating averages and maxima. The uncertainties in our averages are the standard deviations. We show ejected stars with masses from 0.1--50 M$_{\\sun}$.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-RW_WW_pred_full_mass_bin",
+      "kind": "latex_table",
+      "asset_type": "predicted_catalog",
+      "role_in_paper": "simulation_results",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 1124,
+          "end_line": 1168,
+          "caption": "Ejected RW and WW stars from $N$-body simulations within the search radius of 100 pc at different times during the simulations. We show the results for the two alternative binary system set-ups in comparison to the original. For all our initial condition combinations, we show averages from all 20 simulations and the maximum from a single simulation in the format average $\\pm$ uncertainty / maximum. We count ejected binary systems as one star when calculating averages and maxima. The uncertainties in our averages are the standard deviations. We show ejected stars with masses from 0.1--50 M$_{\\sun}$.",
+          "label": "tab:RW_WW_pred_full_mass_bin"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Mass m (M_\\sun)",
+          "meaning": "Stellar mass range (full 0.1-50 Msun)",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_002",
+          "meaning": "Ejected star counts per simulation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Simulation ID",
+          "meaning": "Simulation ID header for columns",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_004",
+          "meaning": "Ejected star counts per simulation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Ejected RW and WW stars from $N$-body simulations within the search radius of 100 pc at different times during the simulations. We show the results for the two alternative binary system set-ups in comparison to the original. For all our initial condition combinations, we show averages from all 20 simulations and the maximum from a single simulation in the format average $\\pm$ uncertainty / maximum. We count ejected binary systems as one star when calculating averages and maxima. The uncertainties in our averages are the standard deviations. We show ejected stars with masses from 0.1--50 M$_{\\sun}$.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-RWC_2D_SMon_app",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "observational_results",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 1174,
+          "end_line": 1217,
+          "caption": "S\\,Mon RW star 2D candidates sorted by decreasing 2D-velocity. Column 2+3: velocity in S\\,Mon rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2016A&A...586A..52J}, $^{c}$\\citet{2019yCat.5164....0L}, $^{d}$\\citet{2019AJ....157..196K}, $^{e}$\\citet{1992A&AS...95..541F}, $^{f}$\\citet{1995A&AS..114..269D}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7--8: from literature sources - $^{1}$\\citet{2019yCat.5164....0L}, $^{2}$\\citet{2015A&A...581A..66V}, $^{3}$\\citet{2017A&A...599A..23V}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{2019AJ....157..196K}, $^{6}$\\citet{2004A&A...417..557L}, $^{7}$\\citet{1972A&AS....7...35K}, $^{8}$\\citet{1993yCat.3135....0C}, $^{9}$\\citet{1985cbvm.book.....V}, $^{10}$\\citet{2001A&A...373..625P}, $^{11}$\\citet{2002AJ....123.1528R}, $^{12}$\\citet{2019AJ....158..138S}, $^{13}$\\citet{2019A&A...628A..94A}, $^{14}$\\citet{2018A&A...609A..10V}.",
+          "label": "tab:RWC_2D_SMon_app"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "Gaia DR2 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "2D-velocity rf | (km s^-1)",
+          "meaning": "2D velocity in S Mon rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Radial velocity rf | (km s^-1)",
+          "meaning": "Radial velocity in S Mon rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "3D-cand.",
+          "meaning": "Indication of 3D-candidate status (Y/N)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flight time | (Myr)",
+          "meaning": "Minimum flight time since ejection",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Iso. age | (Myr)",
+          "meaning": "Age estimate from PARSEC isochrones",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mass | (M_\\sun)",
+          "meaning": "Stellar mass estimate from literature",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "Spectral type from literature",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_009",
+          "meaning": "Additional notes / literature references",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.7
+        }
+      ],
+      "evidence": "S\\,Mon RW star 2D candidates sorted by decreasing 2D-velocity. Column 2+3: velocity in S\\,Mon rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2016A&A...586A..52J}, $^{c}$\\citet{2019yCat.5164....0L}, $^{d}$\\citet{2019AJ....157..196K}, $^{e}$\\citet{1992A&AS...95..541F}, $^{f}$\\citet{1995A&AS..114..269D}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7--8: from literature sources - $^{1}$\\citet{2019yCat.5164....0L}, $^{2}$\\citet{2015A&A...581A..66V}, $^{3}$\\citet{2017A&A...599A..23V}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{2019AJ....157..196K}, $^{6}$\\citet{2004A&A...417..557L}, $^{7}$\\citet{1972A&AS....7...35K}, $^{8}$\\citet{1993yCat.3135....0C}, $^{9}$\\citet{1985cbvm.book.....V}, $^{10}$\\citet{2001A&A...373..625P}, $^{11}$\\citet{2002AJ....123.1528R}, $^{12}$\\citet{2019AJ....158..138S}, $^{13}$\\citet{2019A&A...628A..94A}, $^{14}$\\citet{2018A&A...609A..10V}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-WWC_2D_SMon_app",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "observational_results",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 1219,
+          "end_line": 1282,
+          "caption": "S\\,Mon WW star 2D candidates. Column 2+3: velocity in S\\,Mon rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2016A&A...586A..52J}, $^{c}$\\citet{2019yCat.5164....0L}, $^{d}$\\citet{2019AJ....157..196K}, $^{e}$\\citet{1992A&AS...95..541F}, $^{f}$\\citet{1995A&AS..114..269D}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7--8: from literature sources - $^{1}$\\citet{2019yCat.5164....0L}, $^{2}$\\citet{2015A&A...581A..66V}, $^{3}$\\citet{2017A&A...599A..23V}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{2019AJ....157..196K}, $^{6}$\\citet{2004A&A...417..557L}, $^{7}$\\citet{1972A&AS....7...35K}, $^{8}$\\citet{1993yCat.3135....0C}, $^{9}$\\citet{1985cbvm.book.....V}, $^{10}$\\citet{2001A&A...373..625P}, $^{11}$\\citet{2002AJ....123.1528R}, $^{12}$\\citet{2019AJ....158..138S}, $^{13}$\\citet{2019A&A...628A..94A}, $^{14}$\\citet{2018A&A...609A..10V}.",
+          "label": "tab:WWC_2D_SMon_app"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "Gaia DR2 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "2D-velocity rf | (km s^-1)",
+          "meaning": "2D velocity in S Mon rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Radial velocity rf | (km s^-1)",
+          "meaning": "Radial velocity in S Mon rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "3D-cand.",
+          "meaning": "Indication of 3D-candidate status (Y/N)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flight time | (Myr)",
+          "meaning": "Minimum flight time since ejection",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Iso. age | (Myr)",
+          "meaning": "Age estimate from PARSEC isochrones",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mass | (M_\\sun)",
+          "meaning": "Stellar mass estimate from literature",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "Spectral type from literature",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "S\\,Mon WW star 2D candidates. Column 2+3: velocity in S\\,Mon rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2016A&A...586A..52J}, $^{c}$\\citet{2019yCat.5164....0L}, $^{d}$\\citet{2019AJ....157..196K}, $^{e}$\\citet{1992A&AS...95..541F}, $^{f}$\\citet{1995A&AS..114..269D}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7--8: from literature sources - $^{1}$\\citet{2019yCat.5164....0L}, $^{2}$\\citet{2015A&A...581A..66V}, $^{3}$\\citet{2017A&A...599A..23V}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{2019AJ....157..196K}, $^{6}$\\citet{2004A&A...417..557L}, $^{7}$\\citet{1972A&AS....7...35K}, $^{8}$\\citet{1993yCat.3135....0C}, $^{9}$\\citet{1985cbvm.book.....V}, $^{10}$\\citet{2001A&A...373..625P}, $^{11}$\\citet{2002AJ....123.1528R}, $^{12}$\\citet{2019AJ....158..138S}, $^{13}$\\citet{2019A&A...628A..94A}, $^{14}$\\citet{2018A&A...609A..10V}.",
+      "comments": ""
+    },
+    {
+      "id": "table-013",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "observational_results",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 1286,
+          "end_line": 1308,
+          "caption": "",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Table B2 - continued",
+          "meaning": "Continuation of Gaia DR2 source-id column from parent table (WWC_2D_SMon_app)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_002",
+          "meaning": "Continued column from Appendix B2 (WWC_2D_SMon_app)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_003",
+          "meaning": "Continued column from Appendix B2 (WWC_2D_SMon_app)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_004",
+          "meaning": "Continued column from Appendix B2 (WWC_2D_SMon_app)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_005",
+          "meaning": "Continued column from Appendix B2 (WWC_2D_SMon_app)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_006",
+          "meaning": "Continued column from Appendix B2 (WWC_2D_SMon_app)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_007",
+          "meaning": "Continued column from Appendix B2 (WWC_2D_SMon_app)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_008",
+          "meaning": "Continued column from Appendix B2 (WWC_2D_SMon_app)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        }
+      ],
+      "evidence": "Continuation of S Mon WW star 2D candidates table (tab:WWC_2D_SMon_app, Appendix B). Columns match the parent table.",
+      "comments": "Continuation of tab:WWC_2D_SMon_app"
+    },
+    {
+      "id": "table-tab-RWC_2D_IRS_app",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "observational_results",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 1310,
+          "end_line": 1356,
+          "caption": "IRS\\,1/2 RW star 2D candidates sorted by decreasing 2D-velocity. Column 2+3: velocity in respective IRS rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2016A&A...586A..52J}, $^{c}$\\citet{2019yCat.5164....0L}, $^{d}$\\citet{2019AJ....157..196K}, $^{e}$\\citet{1992A&AS...95..541F}, $^{f}$\\citet{1995A&AS..114..269D}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7: Subcluster identification; Column 8--9: from literature sources - $^{1}$\\citet{2019yCat.5164....0L}, $^{2}$\\citet{2015A&A...581A..66V}, $^{3}$\\citet{2017A&A...599A..23V}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{2019AJ....157..196K}, $^{6}$\\citet{2004A&A...417..557L}, $^{7}$\\citet{1972A&AS....7...35K}, $^{8}$\\citet{1993yCat.3135....0C}, $^{9}$\\citet{1985cbvm.book.....V}, $^{10}$\\citet{2001A&A...373..625P}, $^{11}$\\citet{2002AJ....123.1528R}, $^{12}$\\citet{2019AJ....158..138S}, $^{13}$\\citet{2019A&A...628A..94A}, $^{14}$\\citet{2018A&A...609A..10V}.",
+          "label": "tab:RWC_2D_IRS_app"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "Gaia DR2 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "2D-velocity rf | (km s^-1)",
+          "meaning": "2D velocity in IRS rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Radial velocity rf | (km s^-1)",
+          "meaning": "Radial velocity in IRS rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "3D-cand.",
+          "meaning": "Indication of 3D-candidate status (Y/N)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flight time | (Myr)",
+          "meaning": "Minimum flight time since ejection",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Iso. age | (Myr)",
+          "meaning": "Age estimate from PARSEC isochrones",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Subcluster",
+          "meaning": "Subcluster identification (IRS 1 or IRS 2)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mass | (M_\\sun)",
+          "meaning": "Stellar mass estimate from literature",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "Spectral type from literature",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "IRS\\,1/2 RW star 2D candidates sorted by decreasing 2D-velocity. Column 2+3: velocity in respective IRS rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2016A&A...586A..52J}, $^{c}$\\citet{2019yCat.5164....0L}, $^{d}$\\citet{2019AJ....157..196K}, $^{e}$\\citet{1992A&AS...95..541F}, $^{f}$\\citet{1995A&AS..114..269D}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7: Subcluster identification; Column 8--9: from literature sources - $^{1}$\\citet{2019yCat.5164....0L}, $^{2}$\\citet{2015A&A...581A..66V}, $^{3}$\\citet{2017A&A...599A..23V}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{2019AJ....157..196K}, $^{6}$\\citet{2004A&A...417..557L}, $^{7}$\\citet{1972A&AS....7...35K}, $^{8}$\\citet{1993yCat.3135....0C}, $^{9}$\\citet{1985cbvm.book.....V}, $^{10}$\\citet{2001A&A...373..625P}, $^{11}$\\citet{2002AJ....123.1528R}, $^{12}$\\citet{2019AJ....158..138S}, $^{13}$\\citet{2019A&A...628A..94A}, $^{14}$\\citet{2018A&A...609A..10V}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-WWC_2D_IRS_app",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "observational_results",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 1358,
+          "end_line": 1424,
+          "caption": "IRS\\,1/2 WW star 2D candidates. Column 2+3: velocity in respective IRS rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2016A&A...586A..52J}, $^{c}$\\citet{2019yCat.5164....0L}, $^{d}$\\citet{2019AJ....157..196K}, $^{e}$\\citet{1992A&AS...95..541F}, $^{f}$\\citet{1995A&AS..114..269D}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7: Subcluster identification; Column 8--9: from literature sources - $^{1}$\\citet{2019yCat.5164....0L}, $^{2}$\\citet{2015A&A...581A..66V}, $^{3}$\\citet{2017A&A...599A..23V}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{2019AJ....157..196K}, $^{6}$\\citet{2004A&A...417..557L}, $^{7}$\\citet{1972A&AS....7...35K}, $^{8}$\\citet{1993yCat.3135....0C}, $^{9}$\\citet{1985cbvm.book.....V}, $^{10}$\\citet{2001A&A...373..625P}, $^{11}$\\citet{2002AJ....123.1528R}, $^{12}$\\citet{2019AJ....158..138S}, $^{13}$\\citet{2019A&A...628A..94A}, $^{14}$\\citet{2018A&A...609A..10V}.",
+          "label": "tab:WWC_2D_IRS_app"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "Gaia DR2 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "2D-velocity rf | (km s^-1)",
+          "meaning": "2D velocity in IRS rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Radial velocity rf | (km s^-1)",
+          "meaning": "Radial velocity in IRS rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "3D-cand.",
+          "meaning": "Indication of 3D-candidate status (Y/N)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flight time | (Myr)",
+          "meaning": "Minimum flight time since ejection",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Iso. age | (Myr)",
+          "meaning": "Age estimate from PARSEC isochrones",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Subcluster | (M_\\sun)",
+          "meaning": "Subcluster identification (IRS 1 or IRS 2)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mass",
+          "meaning": "Stellar mass estimate from literature",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "Spectral type from literature",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_010",
+          "meaning": "Additional notes / references",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.7
+        }
+      ],
+      "evidence": "IRS\\,1/2 WW star 2D candidates. Column 2+3: velocity in respective IRS rest frame [rf]; Column 3: RV sources - $^{a}$\\textit{Gaia} DR2, $^{b}$\\citet{2016A&A...586A..52J}, $^{c}$\\citet{2019yCat.5164....0L}, $^{d}$\\citet{2019AJ....157..196K}, $^{e}$\\citet{1992A&AS...95..541F}, $^{f}$\\citet{1995A&AS..114..269D}; Column 4: indication of 3D-candidate status; Column 5: minimum flight time since ejection (crossing of search boundary); Column 6: age from PARSEC isochrones \\citep{RN225}; Column 7: Subcluster identification; Column 8--9: from literature sources - $^{1}$\\citet{2019yCat.5164....0L}, $^{2}$\\citet{2015A&A...581A..66V}, $^{3}$\\citet{2017A&A...599A..23V}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{2019AJ....157..196K}, $^{6}$\\citet{2004A&A...417..557L}, $^{7}$\\citet{1972A&AS....7...35K}, $^{8}$\\citet{1993yCat.3135....0C}, $^{9}$\\citet{1985cbvm.book.....V}, $^{10}$\\citet{2001A&A...373..625P}, $^{11}$\\citet{2002AJ....123.1528R}, $^{12}$\\citet{2019AJ....158..138S}, $^{13}$\\citet{2019A&A...628A..94A}, $^{14}$\\citet{2018A&A...609A..10V}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-Past_visitors_list",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "observational_results",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 1432,
+          "end_line": 1508,
+          "caption": "Past visitors to NGC 2264 (3D trace-backs). Column 2+3: velocity in the respective NGC 2264 rest frame [rf]; Column 3: RV sources -- $^{a}$\\textit{Gaia} DR2; Column 4: age from PARSEC isochrones \\citep{RN225}; Column 5: from literature sources -- $^{1}$\\citet{1985cbvm.book.....V}, $^{2}$\\citet{1959ApJS....4...23M}, $^{3}$\\citet{1993yCat.3135....0C}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{1972A&AS....7...35K}; Column 6: Subcluster identification.",
+          "label": "tab:Past_visitors_list"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "Gaia DR2 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "2D-velocity rf | (km s^-1)",
+          "meaning": "2D velocity in NGC 2264 rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Radial velocity rf | (km s^-1)",
+          "meaning": "Radial velocity in NGC 2264 rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Iso. age | (Myr)",
+          "meaning": "Age estimate from PARSEC isochrones",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "Spectral type from literature",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Subcluster",
+          "meaning": "Subcluster identification",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_007",
+          "meaning": "Additional notes / references",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.7
+        }
+      ],
+      "evidence": "Past visitors to NGC 2264 (3D trace-backs). Column 2+3: velocity in the respective NGC 2264 rest frame [rf]; Column 3: RV sources -- $^{a}$\\textit{Gaia} DR2; Column 4: age from PARSEC isochrones \\citep{RN225}; Column 5: from literature sources -- $^{1}$\\citet{1985cbvm.book.....V}, $^{2}$\\citet{1959ApJS....4...23M}, $^{3}$\\citet{1993yCat.3135....0C}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{1972A&AS....7...35K}; Column 6: Subcluster identification.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-Visitors_list_fut_RW",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "observational_results",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 1514,
+          "end_line": 1573,
+          "caption": "Future 3D-RW visitors to NGC 2264. Column 2+3: velocity in the respective NGC 2264 rest frame [rf]; Column 3: RV sources -- $^{a}$\\textit{Gaia} DR2; Column 4: age from PARSEC isochrones \\citep{RN225}; Column 5: from literature sources -- $^{1}$\\citet{1985cbvm.book.....V}, $^{2}$\\citet{1959ApJS....4...23M}, $^{3}$\\citet{1993yCat.3135....0C}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{2019MNRAS.490.3158C}.",
+          "label": "tab:Visitors_list_fut_RW"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "Gaia DR2 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "2D-velocity rf | (km s^-1)",
+          "meaning": "2D velocity in NGC 2264 rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Radial velocity rf | (km s^-1)",
+          "meaning": "Radial velocity in NGC 2264 rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Iso. age | (Myr)",
+          "meaning": "Age estimate from PARSEC isochrones",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "Spectral type from literature",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Future 3D-RW visitors to NGC 2264. Column 2+3: velocity in the respective NGC 2264 rest frame [rf]; Column 3: RV sources -- $^{a}$\\textit{Gaia} DR2; Column 4: age from PARSEC isochrones \\citep{RN225}; Column 5: from literature sources -- $^{1}$\\citet{1985cbvm.book.....V}, $^{2}$\\citet{1959ApJS....4...23M}, $^{3}$\\citet{1993yCat.3135....0C}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{2019MNRAS.490.3158C}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-Visitors_list_fut_WW",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "observational_results",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 1576,
+          "end_line": 1643,
+          "caption": "Future WW visitors to NGC 2264. Column 2+3: velocity in the respective NGC 2264 rest frame [rf]; Column 3: RV sources -- $^{a}$\\textit{Gaia} DR2; Column 4: age from PARSEC isochrones \\citep{RN225}; Column 5: from literature sources -- $^{1}$\\citet{1985cbvm.book.....V}, $^{2}$\\citet{1959ApJS....4...23M}, $^{3}$\\citet{1993yCat.3135....0C}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{2019MNRAS.490.3158C}, $^{6}$\\citet{2018A&A...620A..87M}.",
+          "label": "tab:Visitors_list_fut_WW"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "Gaia DR2 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "2D-velocity rf | (km s^-1)",
+          "meaning": "2D velocity in NGC 2264 rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Radial velocity rf | (km s^-1)",
+          "meaning": "Radial velocity in NGC 2264 rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Iso. age | (Myr)",
+          "meaning": "Age estimate from PARSEC isochrones",
+          "unit_text": "(Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "Spectral type from literature",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Future WW visitors to NGC 2264. Column 2+3: velocity in the respective NGC 2264 rest frame [rf]; Column 3: RV sources -- $^{a}$\\textit{Gaia} DR2; Column 4: age from PARSEC isochrones \\citep{RN225}; Column 5: from literature sources -- $^{1}$\\citet{1985cbvm.book.....V}, $^{2}$\\citet{1959ApJS....4...23M}, $^{3}$\\citet{1993yCat.3135....0C}, $^{4}$\\citet{2014A&A...570A..82V}, $^{5}$\\citet{2019MNRAS.490.3158C}, $^{6}$\\citet{2018A&A...620A..87M}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-Visitors_list_fut_WW-2",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "observational_results",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 1645,
+          "end_line": 1667,
+          "caption": "",
+          "label": "tab:Visitors_list_fut_WW"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Table D2 - continued",
+          "meaning": "Continuation of Gaia DR2 source-id column from parent table (Visitors_list_fut_WW)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_002",
+          "meaning": "Continued column from tab:Visitors_list_fut_WW",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_003",
+          "meaning": "Continued column from tab:Visitors_list_fut_WW",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_004",
+          "meaning": "Continued column from tab:Visitors_list_fut_WW",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        },
+        {
+          "name": "col_005",
+          "meaning": "Continued column from tab:Visitors_list_fut_WW",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.5
+        }
+      ],
+      "evidence": "Continuation of Future WW visitors table (tab:Visitors_list_fut_WW, Appendix D). Columns match the parent table.",
+      "comments": "Continuation of tab:Visitors_list_fut_WW"
+    },
+    {
+      "id": "table-tab-Red_giant_visitors",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "observational_results",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 1677,
+          "end_line": 1716,
+          "caption": "2D trace-backs to NGC 2264 that are located on or near the red giant branch. Column 2+3: velocity in the respective NGC 2264 rest frame [rf]; Column 3: RV sources -- $^{a}$\\textit{Gaia} DR2.",
+          "label": "tab:Red_giant_visitors"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 source-id",
+          "meaning": "Gaia DR2 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "2D-velocity rf | (km s^-1)",
+          "meaning": "2D velocity in NGC 2264 rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Radial velocity rf | (km s^-1)",
+          "meaning": "Radial velocity in NGC 2264 rest frame",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_004",
+          "meaning": "Additional notes",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "2D trace-backs to NGC 2264 that are located on or near the red giant branch. Column 2+3: velocity in the respective NGC 2264 rest frame [rf]; Column 3: RV sources -- $^{a}$\\textit{Gaia} DR2.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Simbad/VizieR databases searched for circumstellar discs around ejected stars",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 189,
+          "end_line": 189,
+          "context": "There has not yet been any comprehensive search for RW/WW stars from NGC 2264, however, \\citet{2020A&A...643A.138M} found two potential RW 2D-candidates that appear to have been ejected from the northern region of the cluster: \\textit{Gaia} DR2 3326734332924414976 and \\textit{Gaia} DR2 3326951215889632128. We will seek to confirm these stars in our analysis.\n\nIn \\citet{2021MNRAS.501L..12S}, we searched for circumstellar discs around RW/WW stars from the ONC, as well as around future and past visitors to determine the resilience of protoplanetary discs to multiple encounters within dense environments. For NGC 2264, we repeat this search in the Simbad/VizieR databases \\citep{2000A&AS..143....9W, 2000A&AS..143...23O} for studies that have covered this cluster and search for circumstellar discs to possibly increase our sample size of ejected star-disc systems that have or will encounter a second dense star-forming region.\n\n\\subsection{Data selection and filtering}"
+        }
+      ],
+      "evidence": "There has not yet been any comprehensive search for RW/WW stars from NGC 2264, however, \\citet{2020A&A...643A.138M} found two potential RW 2D-candidates that appear to have been ejected from the northern region of the cluster: \\textit{Gaia} DR2 3326734332924414976 and \\textit{Gaia} DR2 3326951215889632128. We will seek to confirm these stars in our analysis.\n\nIn \\citet{2021MNRAS.501L..12S}, we searched for circumstellar discs around RW/WW stars from the ONC, as well as around future and past visitors to determine the resilience of protoplanetary discs to multiple encounters within dense environments. For NGC 2264, we repeat this search in the Simbad/VizieR databases \\citep{2000A&AS..143....9W, 2000A&AS..143...23O} for studies that have covered this cluster and search for circumstellar discs to possibly increase our sample size of ejected star-disc systems that have or will encounter a second dense star-forming region.\n\n\\subsection{Data selection and filtering}",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Radial velocity measurements from secondary literature: Gaia DR2, Jackson+2016, Kounkel+2019, Lamost DR5, Famaey+2005, Duflot+1995",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 253,
+          "end_line": 253,
+          "context": "As Fig.~\\ref{fig:2264_distance} does not allow us to put better constraints on the size in radial direction, we use the subcluster centre distance estimates in \\citet[][736--748 pc]{RN264}, which show upper uncertainties of 23--24 pc in the subcluster centres. We add these uncertainties to the assumed 2 pc on-the-sky cluster radius turning our chosen search radius in the radial direction to 25--26 pc depending on subcluster. However, we do not suggest that this value represents the actual radial extent of NGC 2264. The circular cluster boundary used in the xy-plane turns to an elliptical cluster boundary in the xz- and yz-plane with a semi-minor axis of 2 pc (in the x and y axes) and a semi-major axis of 25--26 pc (in the z axis) depending on the subcluster.\n\nOnly $\\sim$2 per cent of the stars in our NGC 2264 data set have RVs in \\textit{Gaia} DR2, which makes the search for ejected stars using 3D kinematics difficult. For our 2D-candidates without RV, we have searched through the Simbad/VizieR databases \\citep{2000A&AS..143....9W, 2000A&AS..143...23O} and find several additional RVs in \\citet{2016A&A...586A..52J}, \\citet{2019AJ....157..196K} and individual measurements in other sources. We also cross-match positions with Lamost DR5 data \\citep{2019yCat.5164....0L} via VizieR (using a target match radius of 2 arcsec) to complete our data set with RV measurements from secondary literature sources. \n\nWe then trace back any 2D-candidates with RV also in the xz- and yz-directions and if they positively trace back in these two additional planes, the 2D-candidate becomes a 3D-candidate. For the trace back, we consider errors in velocity and distance, due to their larger values. However, we do not consider the errors from \\textit{Gaia} DR2 for the on-the-sky positions as these are considerably smaller. In practice, this approach leads to any star becoming a candidate if it traces back using a combination of highest, average, lowest velocities and distances (e.g. a star will become a candidate if it traces back using its proper motion plus related uncertainty, its radial velocity minus related uncertainty and its average distance)."
+        }
+      ],
+      "evidence": "As Fig.~\\ref{fig:2264_distance} does not allow us to put better constraints on the size in radial direction, we use the subcluster centre distance estimates in \\citet[][736--748 pc]{RN264}, which show upper uncertainties of 23--24 pc in the subcluster centres. We add these uncertainties to the assumed 2 pc on-the-sky cluster radius turning our chosen search radius in the radial direction to 25--26 pc depending on subcluster. However, we do not suggest that this value represents the actual radial extent of NGC 2264. The circular cluster boundary used in the xy-plane turns to an elliptical cluster boundary in the xz- and yz-plane with a semi-minor axis of 2 pc (in the x and y axes) and a semi-major axis of 25--26 pc (in the z axis) depending on the subcluster.\n\nOnly $\\sim$2 per cent of the stars in our NGC 2264 data set have RVs in \\textit{Gaia} DR2, which makes the search for ejected stars using 3D kinematics difficult. For our 2D-candidates without RV, we have searched through the Simbad/VizieR databases \\citep{2000A&AS..143....9W, 2000A&AS..143...23O} and find several additional RVs in \\citet{2016A&A...586A..52J}, \\citet{2019AJ....157..196K} and individual measurements in other sources. We also cross-match positions with Lamost DR5 data \\citep{2019yCat.5164....0L} via VizieR (using a target match radius of 2 arcsec) to complete our data set with RV measurements from secondary literature sources. \n\nWe then trace back any 2D-candidates with RV also in the xz- and yz-directions and if they positively trace back in these two additional planes, the 2D-candidate becomes a 3D-candidate. For the trace back, we consider errors in velocity and distance, due to their larger values. However, we do not consider the errors from \\textit{Gaia} DR2 for the on-the-sky positions as these are considerably smaller. In practice, this approach leads to any star becoming a candidate if it traces back using a combination of highest, average, lowest velocities and distances (e.g. a star will become a candidate if it traces back using its proper motion plus related uncertainty, its radial velocity minus related uncertainty and its average distance).",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "http://stev.oapd.inaf.it/cgi-bin/cmd",
+      "local_path": "",
+      "description": "PARSEC isochrone web tool (v1.2S) used to generate age isochrones for CAMD analysis",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 279,
+          "end_line": 279,
+          "context": "\\subsubsection{Age estimate using PARSEC isochrones}\n\nWe use an upper age limit of 5 Myr for S\\,Mon and 2 Myr for IRS\\,1 and IRS\\,2 and only stars that are younger than these ages are considered as ejected stars from these subclusters. We use PARSEC isochrones \\citep[version 1.2S,][]{RN225}  in order to allow us to separate the stars in our data set into two age brackets. Younger stars are either fully located above the isochrones or when located below the isochrone have error bars crossing the age boundary. We download data\\footnote{http://stev.oapd.inaf.it/cgi-bin/cmd} to produce an isochrone using a linear age of 2 and 5 Myr and select an Initial Mass Function (IMF) option similar to the one we use in our simulations, i.e. a combination of \\citet{2001ApJ...554.1274C} and \\citet{RN204}. \n\nWe do not adjust for extinction in the isochrone, as we consider this in the stellar data and use the \\citet{2018A&A...619A.180M} passbands. Other passband options available for \\textit{Gaia} DR2 are \\citet{2018A&A...617A.138W} and \\citet{2018A&A...616A...4E}. Regardless of which of these three passbands options we apply to our data, the results do not change. The isochrones chosen for our analysis \\citep[passbands from][]{2018A&A...619A.180M} result in a better fit to the higher-mass end of the CAMD, where the stars have already reached the main-sequence."
+        }
+      ],
+      "evidence": "\\subsubsection{Age estimate using PARSEC isochrones}\n\nWe use an upper age limit of 5 Myr for S\\,Mon and 2 Myr for IRS\\,1 and IRS\\,2 and only stars that are younger than these ages are considered as ejected stars from these subclusters. We use PARSEC isochrones \\citep[version 1.2S,][]{RN225}  in order to allow us to separate the stars in our data set into two age brackets. Younger stars are either fully located above the isochrones or when located below the isochrone have error bars crossing the age boundary. We download data\\footnote{http://stev.oapd.inaf.it/cgi-bin/cmd} to produce an isochrone using a linear age of 2 and 5 Myr and select an Initial Mass Function (IMF) option similar to the one we use in our simulations, i.e. a combination of \\citet{2001ApJ...554.1274C} and \\citet{RN204}. \n\nWe do not adjust for extinction in the isochrone, as we consider this in the stellar data and use the \\citet{2018A&A...619A.180M} passbands. Other passband options available for \\textit{Gaia} DR2 are \\citet{2018A&A...617A.138W} and \\citet{2018A&A...616A...4E}. Regardless of which of these three passbands options we apply to our data, the results do not change. The isochrones chosen for our analysis \\citep[passbands from][]{2018A&A...619A.180M} result in a better fit to the higher-mass end of the CAMD, where the stars have already reached the main-sequence.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Simbad/VizieR search for protoplanetary discs around RW/WW/visitor stars; disc indicators from IR-excess and mid-IR colour indices",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 575,
+          "end_line": 575,
+          "context": "In \\citet{2021MNRAS.501L..12S}, we searched for evidence of the presence of protoplanetary discs around RWs and WWs (and past/future visitors) from the ONC identified in \\citet{2020MNRAS.495.3104S}. We showed that in addition to some of the protoplanetary discs surviving the ejection of their host stars from their birth clusters, these star-disc systems can encounter a second dense star-forming environment and possibly emerge with an intact disc from this encounter. \n\nWe repeat this analysis for NGC 2264 and search through the Simbad/VizieR databases \\citep{2000A&AS..143....9W, 2000A&AS..143...23O}. In Appendix Table~\\ref{tab:Past_visitors_list}, we show the older past visitors to the regions within the past 2 Myr (IRS\\,1 and IRS\\,2) and 5 Myr (S\\,Mon) and in Tables~\\ref{tab:Visitors_list_fut_RW} and \\ref{tab:Visitors_list_fut_WW} we show all future visitors to all subclusters of NGC 2264 up to a cluster age of 10 Myr. We have searched through the databases for any evidence of protoplanetary discs around the identified RW/WWs. We were successful in this endeavour for several of our ejected 3D-trace-back stars from the region. Also, one of the future visitors to the region shows clear evidence of a disc.\n\n\\textit{Gaia} DR2 3326704238089925120 is our faintest 3D-WW trace-back to IRS\\,1. It appears in \\citet{2002AJ....123.1528R} with an IR-excess value $\\Delta$(I$_{C}$-K) = 0.32 mag. The authors used the IR-excess limit stated in \\citet{1998AJ....116.1816H}, where a value of $\\Delta$(I$_{C}$-K) > 0.30 mag is a clear indicator of a protoplanetary disc. This star also appears in \\citet{2007ApJ...671..605C} with a value of [3.6 \\micro m] - [8 \\micro m] > 1 mag. A mid-IR colour index above 1 mag is suggested by \\citet{2006ApJ...646..297R} as an indicator of a disc."
+        }
+      ],
+      "evidence": "In \\citet{2021MNRAS.501L..12S}, we searched for evidence of the presence of protoplanetary discs around RWs and WWs (and past/future visitors) from the ONC identified in \\citet{2020MNRAS.495.3104S}. We showed that in addition to some of the protoplanetary discs surviving the ejection of their host stars from their birth clusters, these star-disc systems can encounter a second dense star-forming environment and possibly emerge with an intact disc from this encounter. \n\nWe repeat this analysis for NGC 2264 and search through the Simbad/VizieR databases \\citep{2000A&AS..143....9W, 2000A&AS..143...23O}. In Appendix Table~\\ref{tab:Past_visitors_list}, we show the older past visitors to the regions within the past 2 Myr (IRS\\,1 and IRS\\,2) and 5 Myr (S\\,Mon) and in Tables~\\ref{tab:Visitors_list_fut_RW} and \\ref{tab:Visitors_list_fut_WW} we show all future visitors to all subclusters of NGC 2264 up to a cluster age of 10 Myr. We have searched through the databases for any evidence of protoplanetary discs around the identified RW/WWs. We were successful in this endeavour for several of our ejected 3D-trace-back stars from the region. Also, one of the future visitors to the region shows clear evidence of a disc.\n\n\\textit{Gaia} DR2 3326704238089925120 is our faintest 3D-WW trace-back to IRS\\,1. It appears in \\citet{2002AJ....123.1528R} with an IR-excess value $\\Delta$(I$_{C}$-K) = 0.32 mag. The authors used the IR-excess limit stated in \\citet{1998AJ....116.1816H}, where a value of $\\Delta$(I$_{C}$-K) > 0.30 mag is a clear indicator of a protoplanetary disc. This star also appears in \\citet{2007ApJ...671..605C} with a value of [3.6 \\micro m] - [8 \\micro m] > 1 mag. A mid-IR colour index above 1 mag is suggested by \\citet{2006ApJ...646..297R} as an indicator of a disc.",
+      "comments": ""
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "https://gea.esac.esa.int/archive/",
+      "local_path": "",
+      "description": "Gaia archive - primary data source for Gaia DR2 astrometry, photometry, and radial velocities",
+      "source_refs": [
+        {
+          "path": "literature/2111.14892/arxiv_source/Main_document.tex",
+          "start_line": 1057,
+          "end_line": 1057,
+          "context": "\\section*{Data Availability Statement}\nThe data underlying this article were accessed from the \\textit{Gaia} archive, \\url{https://gea.esac.esa.int/archive/}. The derived data generated in this research will be shared on reasonable request to the corresponding author.\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        }
+      ],
+      "evidence": "\\section*{Data Availability Statement}\nThe data underlying this article were accessed from the \\textit{Gaia} archive, \\url{https://gea.esac.esa.int/archive/}. The derived data generated in this research will be shared on reasonable request to the corresponding author.\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%",
+      "comments": ""
+    }
+  ]
+}

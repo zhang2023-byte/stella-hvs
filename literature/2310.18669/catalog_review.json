@@ -1,0 +1,234 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2310.18669",
+    "title": "Probing the non-thermal physics of stellar bow shocks using radio observations",
+    "month": "2023-10",
+    "source_note_json": "notes/2023/2023-10/2023-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2310.18669",
+      "pdf": "https://arxiv.org/pdf/2310.18669"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2310.18669",
+    "audit_path": "literature/2310.18669/audit.json",
+    "source_dir": "literature/2310.18669/arxiv_source",
+    "tex_root": "literature/2310.18669/arxiv_source/paper_v1.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:41:33",
+    "reviewer": "agent",
+    "summary": "论文包含2个内部数据表（系统参数表 Table 1 和模型结果表 Table 2），以及4个外部URL资源（SKA、ngVLA、PANTERA-Stars 倡议、CARTA 软件）。Table 1 列出了5个星弓激波系统（BD+43°3654、BD+60°2522、G1、G3、Vela X-1）的物理参数，包括速度、密度、光谱类型、星风参数和距离。Table 2 总结了非热辐射模型拟合结果，包括注入电子能量比例、磁场/电子能量密度比和等温层宽度参数。论文本身未提供可直接下载的机器可读数据文件，观测数据来自已发表文献中的多个射电巡天（TGSS 150 MHz、WENSS 325 MHz、RACS 887.5 MHz、VLA、MeerKAT等）。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-table-systems",
+      "kind": "latex_table",
+      "asset_type": "system_parameters",
+      "role_in_paper": "input_data",
+      "source_refs": [
+        {
+          "path": "literature/2310.18669/arxiv_source/paper_v1.tex",
+          "start_line": 157,
+          "end_line": 176,
+          "caption": "Parameters of the systems studied (see Sect.~\\ref{sec:systems} for a discussion on their possible uncertainties). (a) \\cite{Benaglia_2021}; (b) \\cite{Gaia3} (stellar velocities are estimations based on tangential components);  (c) \\cite{Peri_2012}; (d) \\cite{Sota_2011}; (e) \\cite{Peri_2015}; (f) \\cite{Houk_1978}; (g) \\cite{Muijres_2012}; (h) \\cite{Moutzouri_2022}; (i) \\cite{Grinberg_2017}; (j) \\cite{Toala_2020}. The ambient densities are calculated in terms of the projections $R_{\\rm 0, proj}$ in the plane of the sky reported by \\cite{Peri_2012}, \\cite{Peri_2015}, \\cite{Benaglia_2021}, \\cite{Moutzouri_2022} and \\cite{Gvaramadze_2018}. We assume solar abundances.",
+          "label": "table:systems"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Physical parameter of the stellar bow shock system",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Symbol",
+          "meaning": "Notation used for the parameter in the paper",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "BD+43\\degree3654",
+          "meaning": "Parameter value for the bow shock system BD+43°3654",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "BD+60\\degree2522",
+          "meaning": "Parameter value for the bow shock system BD+60°2522 (Bubble Nebula)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G1",
+          "meaning": "Parameter value for the bow shock system G1 (O7V star ejected from NGC 6357)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G3",
+          "meaning": "Parameter value for the bow shock system G3 (O6Vn-O5V star ejected from NGC 6357)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Vela X-1",
+          "meaning": "Parameter value for the bow shock system Vela X-1 (high-mass X-ray binary)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 lists the six physical parameters (peculiar velocity, ambient density, spectral type, wind velocity, wind mass-loss rate, distance) for all five stellar bow shock systems studied in the paper. Parameters are compiled from literature including Gaia DR3, Benaglia_2021, Peri_2012, Peri_2015, Moutzouri_2022, and others as cited in the caption.",
+      "comments": "The table has 6 data rows (peculiar velocity V_star, ambient density n_ISM, spectral type, wind velocity v_w, wind mass-loss rate dot{M}_w, distance d) and 5 system columns. Peculiar velocities are estimates based mainly on tangential components given large radial velocity uncertainties. Ambient densities are derived from projected standoff distances."
+    },
+    {
+      "id": "table-table-parameters",
+      "kind": "latex_table",
+      "asset_type": "model_results",
+      "role_in_paper": "results_summary",
+      "source_refs": [
+        {
+          "path": "literature/2310.18669/arxiv_source/paper_v1.tex",
+          "start_line": 537,
+          "end_line": 559,
+          "caption": "Main results regarding the radio emission from the modelled stellar BSs. Column 3 shows the power injected in the RS by the stellar wind typically, $L_{\\rm w\\perp} \\approx 0.5 - 0.7 L_{\\rm w}$). Columns 4--6 are model parameters: the fraction of the injected power that goes into electrons, the electrons-to-magnetic energy density ratio, and the IL width parameter; we fix $\\eta_{\\rm B} = 0.2$ for all systems. Column 7 summarises our conclusions about the origin of the emission of each source.",
+          "label": "table:parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "System",
+          "meaning": "Name of the stellar bow shock system",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Radiation type",
+          "meaning": "Dominant radiation mechanism (NT=non-thermal/synchrotron, Thermal=free-free, or Hybrid/NT)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "L_w\\perp",
+          "meaning": "Power injected perpendicularly into the reverse shock by the stellar wind",
+          "unit_text": "erg s^{-1}",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "f_NT,e",
+          "meaning": "Fraction of the injected kinetic power that goes into non-thermal electrons",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "U_B / U_NT,e",
+          "meaning": "Ratio of magnetic energy density to non-thermal electron energy density",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "eta_H",
+          "meaning": "Isothermal layer (IL) width reduction factor; accounts for processes like instabilities that reduce IL thickness",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Comments",
+          "meaning": "Summary of conclusions regarding the origin of radio emission for each system",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 2 presents the model fitting results for all five bow shock systems. For BD+43°3654 and BD+60°2522, the observed negative spectral indices confirm non-thermal emission. For G1, G3, and Vela X-1, both thermal and non-thermal scenarios are considered, with the non-thermal scenario generally favored. Key model parameters include f_NT,e (0.01--0.04), U_B/U_NT,e (1.5--6), and eta_H (<0.15--0.45). The magnetic-to-thermal pressure ratio eta_B is fixed at 0.2 for all systems.",
+      "comments": "G3 and Vela X-1 have two rows each (NT and Thermal scenarios). The L_w\\perp values are approximate: BD+43 ~ 7e36, BD+60 ~ 1e36, G1/G3 ~ 1-2e35, Vela X-1 ~ 1e35 erg/s."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://ngvla.nrao.edu",
+      "local_path": "",
+      "description": "Next-generation Very Large Array (ngVLA) official website. Referenced in the paper as a next-generation radio observatory expected to provide breakthroughs in studying stellar bow shocks.",
+      "source_refs": [
+        {
+          "path": "literature/2310.18669/arxiv_source/paper_v1.tex",
+          "start_line": 103,
+          "end_line": 103,
+          "context": "Stellar winds play an important role in the evolution of massive stars and their feedback in the interstellar medium (ISM). An interesting case of study is when a massive OB star moves with a supersonic velocity with respect to its surrounding medium \\citep[see e.g.][for a recent review]{Mackey2022}. In this case, the interaction between the highly supersonic stellar wind and the ISM leads to the formation of a bow shock (BS), which includes a forward shock (FS) that propagates through the ISM and a reverse shock (RS) that propagates through the stellar wind \\citep{Weaver_1977}.  \n\nThe FS compresses and heats the ISM gas and dust. The heated dust can emit in the infrared, which has been one of the major tracers of stellar BSs \\citep{vB_1988, Peri_2012, Peri_2015, Kobulnicky2016}. Moreover, since radiative losses in the FS are usually efficient, the shocked gas can also produce significant free--free emission at radio wavelengths \\citep{VdE_2022}, together with optical lines such as H$_\\alpha$ \\citep{Gull1979}. On the other hand, the RS is fast and adiabatic. Relativistic particles can be accelerated in this shock via diffusive mechanisms. These particles, in turn, can interact with matter and electromagnetic fields emitting broadband non-thermal (NT) radiation. In particular, NT electrons can emit synchrotron emission in the radio band, which was first detected in the BS associated with the star \\BD \\citep{Benaglia_2010, Benaglia_2021}. The smoking gun of synchrotron radiation is a flux density with a negative spectral index, that is, $S_\\nu \\propto \\nu^\\alpha$ with $\\alpha<0$. More recently, \\cite{Moutzouri_2022} found evidence of NT emission in \\BN as well. A few putative radio counterparts were additionally suggested by \\cite{Peri_2015} and were further supported by \\cite{VdE_2022} using observations from the Rapid ASKAP Continuum Survey (RACS) at 887.5~MHz. MeerKAT observations also revealed a BS in Vela X-1 \\citep{VdE2022_VelaX1}. Nonetheless, the nature (thermal or NT) of the radiation in these objects could not be determined directly as it was not possible to derive spectral indices from the observations. The recent observational progress is encouraging, and further breakthroughs are expected with the next generation of radio telescopes such as the Square Kilometre Array (SKA) and the next-generation Very Large Array (ngVLA)"
+        }
+      ],
+      "evidence": "Mentioned in the Introduction (line 103-104) alongside SKA as a next-generation radio telescope expected to enable further breakthroughs in stellar bow shock studies.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.skao.int",
+      "local_path": "",
+      "description": "Square Kilometre Array Observatory (SKAO) official website. Referenced as a next-generation radio telescope that will provide promising prospects for detecting and characterizing stellar bow shocks.",
+      "source_refs": [
+        {
+          "path": "literature/2310.18669/arxiv_source/paper_v1.tex",
+          "start_line": 103,
+          "end_line": 103,
+          "context": "Stellar winds play an important role in the evolution of massive stars and their feedback in the interstellar medium (ISM). An interesting case of study is when a massive OB star moves with a supersonic velocity with respect to its surrounding medium \\citep[see e.g.][for a recent review]{Mackey2022}. In this case, the interaction between the highly supersonic stellar wind and the ISM leads to the formation of a bow shock (BS), which includes a forward shock (FS) that propagates through the ISM and a reverse shock (RS) that propagates through the stellar wind \\citep{Weaver_1977}.  \n\nThe FS compresses and heats the ISM gas and dust. The heated dust can emit in the infrared, which has been one of the major tracers of stellar BSs \\citep{vB_1988, Peri_2012, Peri_2015, Kobulnicky2016}. Moreover, since radiative losses in the FS are usually efficient, the shocked gas can also produce significant free--free emission at radio wavelengths \\citep{VdE_2022}, together with optical lines such as H$_\\alpha$ \\citep{Gull1979}. On the other hand, the RS is fast and adiabatic. Relativistic particles can be accelerated in this shock via diffusive mechanisms. These particles, in turn, can interact with matter and electromagnetic fields emitting broadband non-thermal (NT) radiation. In particular, NT electrons can emit synchrotron emission in the radio band, which was first detected in the BS associated with the star \\BD \\citep{Benaglia_2010, Benaglia_2021}. The smoking gun of synchrotron radiation is a flux density with a negative spectral index, that is, $S_\\nu \\propto \\nu^\\alpha$ with $\\alpha<0$. More recently, \\cite{Moutzouri_2022} found evidence of NT emission in \\BN as well. A few putative radio counterparts were additionally suggested by \\cite{Peri_2015} and were further supported by \\cite{VdE_2022} using observations from the Rapid ASKAP Continuum Survey (RACS) at 887.5~MHz. MeerKAT observations also revealed a BS in Vela X-1 \\citep{VdE2022_VelaX1}. Nonetheless, the nature (thermal or NT) of the radiation in these objects could not be determined directly as it was not possible to derive spectral indices from the observations. The recent observational progress is encouraging, and further breakthroughs are expected with the next generation of radio telescopes such as the Square Kilometre Array (SKA) and the next-generation Very Large Array (ngVLA)"
+        }
+      ],
+      "evidence": "Mentioned in the Introduction (line 103-104) as a next-generation radio telescope expected to enable breakthroughs. Also mentioned in the abstract/conclusions as promising for future detections.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://www.astro.uliege.be/~debecker/pantera/",
+      "local_path": "",
+      "description": "PANTERA-Stars (Particle Acceleration in Non-thermal Emission from Runaway Stars) initiative website. This work was carried out within the framework of this research collaboration.",
+      "source_refs": [
+        {
+          "path": "literature/2310.18669/arxiv_source/paper_v1.tex",
+          "start_line": 599,
+          "end_line": 599,
+          "context": "PID2019-105510GB-C31/AEI/10.13039/501100011033/ \nand PID2022-136828NB-C41/AEI/10.13039/501100011033/, and by \"ERDF A way of making Europe\" (EU),\nand through the ''Unit of Excellence Mar\\'ia de Maeztu 2020-2023'' award to the Institute of Cosmos Sciences (CEX2019-000918-M). V.B-R. is Correspondent Researcher of CONICET, Argentina, at the IAR. This work was carried out in the framework of the PANTERA-Stars\\footnote{\\url{https://www.astro.uliege.be/~debecker/pantera/}} initiative.\n\\end{acknowledgements}"
+        }
+      ],
+      "evidence": "Mentioned in the Acknowledgements section as the research framework under which this work was conducted.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://cartavis.org/",
+      "local_path": "",
+      "description": "CARTA (Cube Analysis and Rendering Tool for Astronomy) software website. Used by the authors to integrate radio flux within contours from survey maps (WENSS, TGSS) in Appendix A.",
+      "source_refs": [
+        {
+          "path": "literature/2310.18669/arxiv_source/paper_v1.tex",
+          "start_line": 626,
+          "end_line": 626,
+          "context": "\\section{Additional radio data} \\label{appendix:radio_data}\nHere we present the radio maps at 150~MHz from the TGSS survey \\citep{Intema_2017} and at 325~MHz from the WENSS survey \\citep{WENSS_1997}, as they have not been discussed in detail in the literature. We note that the WENSS map for \\BD was shown in \\cite{Brookes_2016}, but the more recent radio data from \\cite{Benaglia_2021} allow us to show a more insightful comparison (Fig.~\\ref{fig:WENSS_BD43}). We used CARTA\\footnote{\\url{https://cartavis.org/}} to integrate the flux within the contour in which significant emission from the BS is seen. The total flux (excluding the ES source corresponding to an HII region) is $\\approx 1.5$~Jy. We note that the map in Fig.~\\ref{fig:WENSS_BD43} seems to suggest the presence of a point-like source to the left side of the BS; excluding it, the integrated flux is $\\approx 1$~Jy. Given the low signal-to-noise in this map and the poor angular resolution, we refrained from over-interpreting these fluxes, but simply state that the total flux from \\BD at 325~MHz is within 1--1.5~Jy. For completeness, we also show the map at 150~MHz, though no significant emission is detected as the map is not very deep ($rms \\approx 7$~\\mJybeam; Fig.~\\ref{fig:TGSS_BD43}). \n\nIn the case of \\BN, the WENSS map resembles that from \\cite{Moutzouri_2022}, although with a poorer angular resolution. The dense ionised clumps close to the \\BN are not resolved from the BS emission. The peak flux from this region is 217~\\mJybeam (Fig.~\\ref{fig:WENSS_BD60})."
+        }
+      ],
+      "evidence": "Explicitly mentioned in Appendix A as the software tool used to integrate flux from radio survey maps (WENSS 325 MHz, TGSS 150 MHz).",
+      "comments": ""
+    }
+  ]
+}

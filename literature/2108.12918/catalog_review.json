@@ -1,0 +1,386 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2108.12918",
+    "title": "Confirming NGC 6231 as the parent cluster of the runaway high-mass X-ray binary HD 153919/4U 1700-37 with Gaia DR2",
+    "month": "2021-08",
+    "source_note_json": "notes/2021/2021-08/2021-08.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2108.12918",
+      "pdf": "https://arxiv.org/pdf/2108.12918"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2108.12918",
+    "audit_path": "literature/2108.12918/audit.json",
+    "source_dir": "literature/2108.12918/arxiv_source",
+    "tex_root": "literature/2108.12918/arxiv_source/hmxb.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:09:10",
+    "reviewer": "agent",
+    "summary": "论文利用 Gaia DR2 自行和视差数据，通过成员星分析确认高质量 X 射线双星 HD 153919/4U 1700-37 起源于疏散星团 NGC 6231（Sco OB1 核心）。确定 NGC 6231 有 273 名成员（其中 268 个具有高质量测光数据），距离 1.63±0.15 kpc，通过 PARSEC 和 MIST 等龄线拟合得到年龄 4.7±0.4 Myr、消光 A_V=1.7±0.1 mag。HD 153919/4U 1700-37 的空间速度为 63±5 km/s，运动学年龄 2.2±0.1 Myr。推测致密天体前身星初始质量 >60 M_⊙。论文讨论了双星演化历史——提出系统经历了 Case A 物质转移阶段，为解释目前观测到的短轨道周期（3.41 天）需要大量角动量损失和/或非对称超新星 kick。HD 153919/4U 1700-37 可能是银河系中 GW190412 引力波事件前身系统的原型。包含 7 个内部 LaTeX 表格和 2 个经过验证的外部资源链接。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-6231",
+      "kind": "latex_table",
+      "asset_type": "literature_review",
+      "role_in_paper": "汇总近年文献中对 NGC 6231 的年龄测定结果，列出年龄范围、等龄线拟合所用星族（PMS 或 MS）及参考文献。为本文的星团年龄测定提供背景对比，最终本文结果 4.7±0.4 Myr 也加入此表。",
+      "source_refs": [
+        {
+          "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+          "start_line": 131,
+          "end_line": 145,
+          "caption": "Overview of recent age determinations of NGC 6231. The second column indicates whether the isochrone is fit to the pre-main-sequence (PMS) or main-sequence (MS) population.",
+          "label": "tab:6231"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Age (Myr)",
+          "meaning": "NGC 6231 的年龄测定范围，单位为百万年（Myr）",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Isochrone",
+          "meaning": "等龄线拟合时使用的星族类型：PMS 表示前主序星，MS 表示主序星，PMS and MS 表示两者均使用",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Reference",
+          "meaning": "年龄测定结果的文献来源",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Table 1 in Section 1 (Introduction). The table caption states 'Overview of recent age determinations of NGC 6231. The second column indicates whether the isochrone is fit to the pre-main-sequence (PMS) or main-sequence (MS) population.' The text at line 129 says 'The most recent age determinations of NGC~6231 are listed in Tab.~\\ref{tab:6231}.'",
+      "comments": "表格包含 5 行数据：Damiani2016 (1-8 Myr, PMS)、Sana2007 (1-10 Myr, PMS)、Sung2013 (1-7 Myr PMS; 4-7 Myr MS)、本文 (4.7±0.4 Myr, PMS and MS)。"
+    },
+    {
+      "id": "table-tab-error",
+      "kind": "latex_table",
+      "asset_type": "calibration_parameters",
+      "role_in_paper": "提供改正 Gaia DR2 视差和自行测量误差所需的 σ_s 值（Lindegren+2018 外部误差改正公式中的参数）。针对亮源（G<13）和暗源（G>13）分别给出视差和自行的 σ_s 值，用于计算修正后的天体测量误差。",
+      "source_refs": [
+        {
+          "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+          "start_line": 193,
+          "end_line": 205,
+          "caption": "Values of $\\sigma_s$ needed to calculate the correct errors with Eq.~\\ref{eqn:error}.",
+          "label": "tab:error"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Measurement",
+          "meaning": "天体测量量的类型：parallax（视差）或 proper motion（自行）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "G < 13",
+          "meaning": "亮源（G 波段星等小于 13）对应的 σ_s 改正值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "G > 13",
+          "meaning": "暗源（G 波段星等大于 13）对应的 σ_s 改正值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Unit",
+          "meaning": "σ_s 值的单位：mas（毫角秒）用于视差，mas/yr（毫角秒/年）用于自行",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Table in Section 2.2.1 (Astrometric corrections, External uncertainty correction). The text explains: 'The corrections that should be applied are shown in Eq.~\\ref{eqn:error} in which σ_ext is the total error, σ_i is the error from the Gaia catalog and σ_s is a value computed by Lindegren+2018 shown in Tab.~\\ref{tab:error}.'",
+      "comments": "第一列（行标签）为 'parallax' 和 'proper motion' 两行。σ_s 值来源：Lindegren et al. 2018 (A&A 616, A2)。k=1.08 用于所有改正。"
+    },
+    {
+      "id": "table-tab-age_summary",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "论文核心科学结果表。展示使用 PARSEC 和 MIST 两种恒星演化模型对 NGC 6231 不同星族（全部星、仅主序星 MS、仅前主序星 PMS）进行等龄线拟合得到的年龄和消光值。突出显示本文最终采用的年龄 4.7±0.4 Myr 和消光 A_V=1.7±0.1 mag（PARSEC 模型拟合全部星族）。",
+      "source_refs": [
+        {
+          "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+          "start_line": 544,
+          "end_line": 575,
+          "caption": "Age determinations of NGC 6231 based on the {\\it Gaia} membership. The PARSEC and MIST models yield similar results on both the MS and whole population of NGC~6231. The fit to the PMS population failed to estimate the extinction and missed the MS population completely due to the lack of constraint in the MS section (see Fig.~{\\ref{fig:all_iso}}). The isochrone grid size is 0.1~Myr. In this work, we adopt the result of fitting to the PARSEC isochrone on the whole population as the age and extinction of the cluster.",
+          "label": "tab:age_summary"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Model",
+          "meaning": "使用的恒星演化模型：PARSEC（PAdova and TRieste Stellar Evolution Code）或 MIST（MESA Isochrones and Stellar Tracks）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Age (Myr)",
+          "meaning": "等龄线拟合得到的星团年龄，单位为百万年，附 bootstrap 法估计的不确定度",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "A_V (mag)",
+          "meaning": "等龄线拟合得到的星团 V 波段消光值，单位为星等，附 bootstrap 法估计的不确定度",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Population",
+          "meaning": "拟合所用的星族子样本：All（全部 268 颗成员星）、MS（仅主序星）、PMS（仅前主序星）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Table in Section 3 (Age determination of NGC 6231). The text states: 'Table~\\ref{tab:age_summary} and Fig.~\\ref{fig:age-av-bootstrap-results} show the results of the age and extinction determination with estimated uncertainty. In this work we adopt the results from the PARSEC isochrones fit to the whole sample... our analysis results in an age and extinction of NGC 6231 of 4.7±0.4 Myr and A_V = 1.7±0.1 mag.'",
+      "comments": "Bootstrap 方法：200 次随机抽样（每次取 90% 样本）。PMS 拟合因缺少 MS 约束导致消光值异常偏高（~3.0 mag），结果不可靠。等龄线网格步长 0.1 Myr。"
+    },
+    {
+      "id": "table-tab-4u",
+      "kind": "latex_table",
+      "asset_type": "system_parameters",
+      "role_in_paper": "列出 HD 153919/4U 1700-37 双星系统的更新物理和轨道参数，包括光谱型、有效温度、距离、光度、质量函数、轨道周期、径向速度振幅、偏心率、轨道倾角正弦、两子星质量、轨道间距、星食半角、O 超巨星半径、质量损失率、星风终端速度、Roche 瓣半径、视向速度、Gaia EDR3 自行。每条参数附误差估计和文献来源，是论文后续运动学分析和演化讨论的基础输入。",
+      "source_refs": [
+        {
+          "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+          "start_line": 588,
+          "end_line": 619,
+          "caption": "Updated parameters of the system HD 159313/4U1700-37, including error estimates and references.",
+          "label": "tab:4u"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Quantity",
+          "meaning": "HD 153919/4U 1700-37 系统的物理或轨道参数名称",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Value",
+          "meaning": "对应参数的测定值或计算值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Error",
+          "meaning": "参数值的 1σ 不确定度",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Reference",
+          "meaning": "参数值或测量方法的文献来源",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Table in Section 4 (Updating the system parameters of HD 153919/4U 1700-37). Text at line 586: 'A list of the updated parameters is given in Tab.~\\ref{tab:4u}. These parameters are internally consistent and will be used during the remainder of the paper.'",
+      "comments": "共 17 行数据。关键参数：M_P=60±11 M_⊙, M_X=2.54±0.27 M_⊙, P=3.411581±0.000027 天, e=0.22±0.04, a=38±1 R_⊙, d=1.58±0.07 kpc (Gaia EDR3), R_P=25.1±4.0 R_⊙。表格标题中 HD 159313 应为 HD 153919 的笔误。"
+    },
+    {
+      "id": "table-tab-radvel",
+      "kind": "latex_table",
+      "asset_type": "observational_data",
+      "role_in_paper": "列出 NGC 6231 星团 7 颗 OB 星成员及 HD 153919 的光谱型、文献视向速度、Gaia 成员概率和 EDR3 距离。用于计算星团平均视向速度（-33.5±4.0 km/s），并以此计算 HD 153919 相对星团的空间速度（63±5 km/s）。视向速度是运动学重构的必要输入。",
+      "source_refs": [
+        {
+          "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+          "start_line": 691,
+          "end_line": 709,
+          "caption": "Spectral type, radial velocity, membership probability, and the distance based on \\textit{Gaia} EDR3 \\citet{GaiaCollaboration2020}, for members of NGC 6231 and HD153919/4U1700-37. The mean radial velocity of the cluster members is $-33.4 \\pm 4.0$ km~s$^{-1}$. Notes: [1] \\citet{Sana2009}, [2] \\citet{Pourbaix2005}, [3] \\citet{Hill1974}, [4] \\citet{Wilson1953}, [5] \\citet{Gies1986}.",
+          "label": "tab:radvel"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "恒星标识符（HD 编号或 CPD 编号）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "MK 光谱分类",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "v_rad (km/s)",
+          "meaning": "视向速度，单位为 km/s，上标数字对应参考文献注释",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "error (km/s)",
+          "meaning": "视向速度测量误差，单位为 km/s",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "p_Member",
+          "meaning": "Gaia 成员星分析给出的成员概率（百分比），空白表示未参与成员分析（HD 153919）",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Distance (kpc)",
+          "meaning": "基于 Gaia EDR3 视差推算的距离，单位为 kpc，附上下限不确定度",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Table in Section 5.2.1 (Radial velocities: The radial velocity of NGC 6231). Text: 'We obtained the radial velocity of seven OB stars in NGC 6231 from the literature (see Tab.~\\ref{tab:radvel}) and used the mean value to represent the radial velocity of the cluster... The mean radial velocity of the cluster is -33.5±4.0 km/s.'",
+      "comments": "7 颗星团成员包括：HD 326331, HD 152248, HD 152219, HD 152270, HD 326329, CPD-41 7721, HD 152314。另加 HD 153919（HMXB 光学对应体）。参考文献注释：[1] Sana+2009, [2] Pourbaix+2005, [3] Hill+1974, [4] Wilson 1953, [5] Gies 1986 (应为 Gies 1987, 见 Kaper+1994)。"
+    },
+    {
+      "id": "table-test",
+      "kind": "latex_table",
+      "asset_type": "theoretical_calculation",
+      "role_in_paper": "展示使用 Renzo+2019 解析方法，在不同 γ_RLOF（比角动量参数，取 1, 2, 3）下，产生最大轨道间距的前身星系统参数组合。用于探索前身双星系统在物质转移阶段是否能够避免合并。给定当前系统参数（M_2=60 M_⊙, M_1=10 M_⊙, v_sys=63 km/s, P=3.41 天, a=38 R_⊙），只有高 γ_RLOF 和低 β_RLOF（大量角动量损失的非守恒物质转移）才能产生足够大的初始轨道间距避免并合。",
+      "source_refs": [
+        {
+          "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+          "start_line": 808,
+          "end_line": 823,
+          "caption": "Scenarios that resulted in the largest orbital separation for $\\gamma_{\\rm RLOF}$ = 1, 2, 3 for this system as described in Sect.\\ref{analyt}. Given are the current masses of the members of the binary: $M_2^{\\rm pre-CC}$ = 60 ${M}_\\odot$ and $M_1^{\\rm pre-CC}$ = 2.54 + 7.4 $\\simeq$ 10 ${M}_\\odot$, their relative velocity to NGC 6231: $v_{\\rm sys}$ = 63~km~s$^{-1}$, their current orbital period: $P_{\\rm cir}$ = 3.41 days and orbital separation: $a_{\\rm pre-CC}$ = 38 ${R}_\\odot$. The initial mass $M_1^{\\rm ZAMS}$ ranges from 30 to 80 ${M}_\\odot$ and $M_2^{\\rm ZAMS}$ ranges from 10 to 50 ${M}_\\odot$. Only solutions with a high $\\gamma_{\\rm RLOF}$ and a low $\\beta_{\\rm RLOF}$, so when a lot of angular momentum leaves the system due to nonconservative mass transfer, seem to give a $a_{\\rm ZAMS}$ that could be large enough to avoid merging of the system. For comparison: HD 153919 with a mass of 60 ${M}_\\odot$ has a radius of $25 {R}_\\odot$.",
+          "label": "test"
+        }
+      ],
+      "columns": [
+        {
+          "name": "γ_RLOF",
+          "meaning": "Roche 瓣 overflow 过程中离开系统的物质携带的比角动量参数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "1",
+          "meaning": "γ_RLOF=1 时产生最大 a_ZAMS 的参数组合：M_1^ZAMS, M_2^ZAMS, M_1^env, μ_env, β_RLOF, a_ZAMS",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "2",
+          "meaning": "γ_RLOF=2 时产生最大 a_ZAMS 的参数组合",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "3",
+          "meaning": "γ_RLOF=3 时产生最大 a_ZAMS 的参数组合",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Table in Section 6.2 (Possible progenitor systems). The text explains: 'We tested values of M_1^ZAMS ranging from 30 to 80 M_⊙ and M_2^ZAMS ranging from 10 to 50 M_⊙, with a γ_RLOF of 1, 2 and 3... The results of these tests are displayed in Tab.~\\ref{test}.'",
+      "comments": "γ_RLOF=1 时 a_ZAMS=22 R_⊙（小于 HD 153919 半径 25 R_⊙，会并合）；γ_RLOF=2 时 a_ZAMS=31 R_⊙（勉强可以）；γ_RLOF=3 时 a_ZAMS=64 R_⊙（足够大）。但 γ_RLOF=2 或 3 意味着极端的角动量损失，物理上不太可能。"
+    },
+    {
+      "id": "table-tab-pmin_n_relation",
+      "kind": "latex_table",
+      "asset_type": "methodology_parameters",
+      "role_in_paper": "展示 NGC 6231 成员星候选体数量 n_* 随成员概率阈值 p_min 的变化关系。用于说明选择 p_min=0.90 作为成员判定标准的依据：此时获得 268 颗高质量成员星。p_min=0.95 时成员数降至 0，说明该阈值过于严格。",
+      "source_refs": [
+        {
+          "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+          "start_line": 947,
+          "end_line": 967,
+          "caption": "The number of candidates $n_{*}$ in relation with the probability threshold $p_{min}$ for NGC 6231.",
+          "label": "tab:pmin_n_relation"
+        }
+      ],
+      "columns": [
+        {
+          "name": "p_min",
+          "meaning": "成员星概率阈值，取值从 0.50 到 0.95，步长 0.05",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "n_*",
+          "meaning": "成员概率大于等于 p_min 的候选星数量",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        }
+      ],
+      "evidence": "Appendix B (Membership probability thresholds for NGC 6231). Caption: 'The number of candidates n_* in relation with the probability threshold p_min for NGC 6231.' The table shows the threshold dependence used to select the final member sample.",
+      "comments": "数据点：p_min=0.50→786, 0.55→763, 0.60→731, 0.65→700, 0.70→667, 0.75→629, 0.80→546, 0.85→430, 0.90→268, 0.95→0。本文采用 p_min=0.90，获得 268 颗成员星。"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://www.starlink.ac.uk/topcat/",
+      "local_path": "",
+      "description": "TOPCAT（Tool for OPerations on Catalogues And Tables）交互式数据可视化和分析工具。论文中用于对 Gaia DR2 归档数据的手动筛选——通过可视化银河经度、纬度、视差和自行的密度分布来缩减候选样本（从 127,349 颗减至 9,101 颗），以便后续成员星分析。",
+      "source_refs": [
+        {
+          "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+          "start_line": 172,
+          "end_line": 172,
+          "context": "\\subsection{Manual selection}\n\nWe start with a sample downloaded from the \\textit{Gaia} archive with an ADQL query (Appendix~\\ref{ADQL}). This is done by selecting a range of Galactic longitude, Galactic latitude and parallax based on our prior knowledge of the cluster. The dataset includes astrometry and photometry information of 127,349 sources. The next step is to further reduce the sample based on Galactic longitude, Galactic latitude, parallax and proper motion over-densities using visualization tools such as TOPCAT (\\url{http://www.starlink.ac.uk/topcat/}), until we obtain a sample that spans the cluster parameter space, but also includes enough field stars to make a distinction between cluster members and field stars. This is an important prerequisite for the membership analysis program. The remaining sample consists of 9101 sources. After astrometric corrections (Sect.~\\ref{sec:astro} and Fig.~\\ref{fig:Flowchart}), the remaining sample consists of 3661 sources. The positions and proper motions of the selected stars are shown in Figs.~\\ref{fig:coord} and \\ref{fig:propa}. A cut was made in distance such that only stars with a distance between 1300~pc and 1900~pc were included in the membership analysis.\n\n\\subsection{Corrections to the \\textit{Gaia} DR2 data}"
+        }
+      ],
+      "evidence": "Section 2.1 (Manual selection): '...using visualization tools such as TOPCAT (\\url{http://www.starlink.ac.uk/topcat/}), until we obtain a sample that spans the cluster parameter space...' TOPCAT is an essential tool in the data reduction workflow.",
+      "comments": "TOPCAT 由 Starlink 项目维护，是天文数据表操作的标准工具。URL 通过 HTTP 协议（非 HTTPS），已验证可访问。"
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dr2-known-issues",
+      "local_path": "",
+      "description": "ESA Gaia DR2 已知问题网页，提供计算 RUWE（Renormalised Unit Weight Error）所需的归一化因子 u_0(G,C) 表格。论文使用 RUWE>1.4 作为天体测量拟合优度不足的判据，筛选不可靠源（本样本中无源被舍弃）。",
+      "source_refs": [
+        {
+          "path": "literature/2108.12918/arxiv_source/hmxb.tex",
+          "start_line": 210,
+          "end_line": 210,
+          "context": "\\paragraph{The Renormalised Unit Weight Error (RUWE)}\n\nThis is a recommended goodness of fit indicator for \\textit{Gaia} DR2 astrometry that was not directly listed in the \\textit{Gaia} Archive\\footnote{Now the archive provides an additional table for RUWE.}. It is a renormalization of the Unit Weight Error (UWE) by $u_0(G,C)$: an empirical normalization factor dependent on photometric properties provided by ESA. If for a source RUWE $>$ 1.4 holds, the goodness of fit is insufficient and it is advised to discard this source from the sample. The parameters needed to calculate UWE and tables with the correct normalization factor $u_0(G,C)$ can be found on, respectively, the \\textit{Gaia} archive and the {\\it Gaia} DR2 known issues web page\\footnote{\\url{https://www.cosmos.esa.int/web/gaia/dr2-known-issues}}. The parameters that were used from the \\textit{Gaia} archive are the following:\n\n\\begin{itemize}"
+        }
+      ],
+      "evidence": "Section 2.2.1 (Astrometric corrections, The Renormalised Unit Weight Error): '...tables with the correct normalization factor u_0(G,C) can be found on... the Gaia DR2 known issues web page\\footnote{\\url{https://www.cosmos.esa.int/web/gaia/dr2-known-issues}}.'",
+      "comments": "该网页由 ESA 维护，用于记录 Gaia DR2 数据发布的已知问题和改正方法。RUWE 是天体测量质量的重要指标，Lindegren+2018 推荐使用。"
+    }
+  ]
+}

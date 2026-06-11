@@ -1,0 +1,407 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:57",
+  "paper": {
+    "arxiv_id": "2507.17101",
+    "title": "Ancient, eclipsing, tidally-locked: A blue lurker progenitor in the population of extreme-velocity star candidates",
+    "month": "2025-07"
+  },
+  "review": {
+    "path": "literature/2507.17101/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123957",
+    "started_at": "2026-05-17T12:39:57",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2507.17101",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-params1",
+      "internal_table_id": "table-tab-params1",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2507.17101/arxiv_source/letter3.tex",
+        "start_line": 178,
+        "end_line": 196,
+        "caption": "Best fit parameters for X-shooter spectrum fitted using a $\\chi^2$ minimization method. Statistical uncertainties are provided.",
+        "label": "tab:params1"
+      },
+      "source_path": "literature/2507.17101/arxiv_source/letter3.tex",
+      "excerpt_path": "literature/2507.17101/catalog_sources/table-tab-params1/excerpt.tex",
+      "sha256": "87097428e67ca58878c331e694374db1ff10e9c992ff682a0dfc68584ed49245",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-lc_parameters",
+      "internal_table_id": "table-tab-lc_parameters",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2507.17101/arxiv_source/letter3.tex",
+        "start_line": 232,
+        "end_line": 248,
+        "caption": "Median light curve Parameters with $1\\sigma$ uncertanties",
+        "label": "tab:lc_parameters"
+      },
+      "source_path": "literature/2507.17101/arxiv_source/letter3.tex",
+      "excerpt_path": "literature/2507.17101/catalog_sources/table-tab-lc_parameters/excerpt.tex",
+      "sha256": "a2e356d47be90085a01058527a1f3b8894819f72074fc00e3f7403dd14e48237",
+      "line_count": 17,
+      "error": ""
+    },
+    {
+      "id": "table-tab-params2",
+      "internal_table_id": "table-tab-params2",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2507.17101/arxiv_source/letter3.tex",
+        "start_line": 261,
+        "end_line": 284,
+        "caption": "The combined spectro-photometric parameters for the two stars.",
+        "label": "tab:params2"
+      },
+      "source_path": "literature/2507.17101/arxiv_source/letter3.tex",
+      "excerpt_path": "literature/2507.17101/catalog_sources/table-tab-params2/excerpt.tex",
+      "sha256": "46fcbb3239b9dbb5172c09fe2402bff4a5b28e4c35d2d3e7178244066f073c38",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-Tab-compspec",
+      "internal_table_id": "table-Tab-compspec",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2507.17101/arxiv_source/letter3.tex",
+        "start_line": 394,
+        "end_line": 407,
+        "caption": "Radial velocity measurements from different instruments. Uncertainties are systematic.",
+        "label": "Tab:compspec"
+      },
+      "source_path": "literature/2507.17101/arxiv_source/letter3.tex",
+      "excerpt_path": "literature/2507.17101/catalog_sources/table-Tab-compspec/excerpt.tex",
+      "sha256": "802b2bf5e90c2312589d38a64b3298eeb350ad9922a330e3753373a196a2707f",
+      "line_count": 14,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-params1",
+      "internal_table_id": "table-tab-params1",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2507.17101/catalog_tables/table-tab-params1.ecsv",
+      "caption": "Best fit parameters for X-shooter spectrum fitted using a $\\chi^2$ minimization method. Statistical uncertainties are provided.",
+      "label": "tab:params1",
+      "row_count": 5,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "\\gstar",
+          "\\wise"
+        ],
+        [
+          "T_eff [K]",
+          "6416+/- 130",
+          "6320+/- 120"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter | T_eff [K]",
+          "unit_text": "T_eff [K]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\gstar | 6416+/- 130",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\wise | 6320+/- 120",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp56psl0r0/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.17101/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp56psl0r0/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.17101/catalog_sources/table-tab-params1/wrapped.tex",
+            "html": "literature/2507.17101/catalog_sources/table-tab-params1/latexml.html",
+            "stdout": "literature/2507.17101/catalog_sources/table-tab-params1/latexml.stdout.txt",
+            "stderr": "literature/2507.17101/catalog_sources/table-tab-params1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "87097428e67ca58878c331e694374db1ff10e9c992ff682a0dfc68584ed49245"
+    },
+    {
+      "id": "table-tab-lc_parameters",
+      "internal_table_id": "table-tab-lc_parameters",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2507.17101/catalog_tables/table-tab-lc_parameters.ecsv",
+      "caption": "Median light curve Parameters with $1\\sigma$ uncertanties",
+      "label": "tab:lc_parameters",
+      "row_count": 5,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Value"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Value",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdif506q2/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.17101/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdif506q2/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.17101/catalog_sources/table-tab-lc_parameters/wrapped.tex",
+            "html": "literature/2507.17101/catalog_sources/table-tab-lc_parameters/latexml.html",
+            "stdout": "literature/2507.17101/catalog_sources/table-tab-lc_parameters/latexml.stdout.txt",
+            "stderr": "literature/2507.17101/catalog_sources/table-tab-lc_parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a2e356d47be90085a01058527a1f3b8894819f72074fc00e3f7403dd14e48237"
+    },
+    {
+      "id": "table-tab-params2",
+      "internal_table_id": "table-tab-params2",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2507.17101/catalog_tables/table-tab-params2.ecsv",
+      "caption": "The combined spectro-photometric parameters for the two stars.",
+      "label": "tab:params2",
+      "row_count": 7,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "\\gstar",
+          "\\wise"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\gstar",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\wise",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9iee0o20/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.17101/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9iee0o20/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.17101/catalog_sources/table-tab-params2/wrapped.tex",
+            "html": "literature/2507.17101/catalog_sources/table-tab-params2/latexml.html",
+            "stdout": "literature/2507.17101/catalog_sources/table-tab-params2/latexml.stdout.txt",
+            "stderr": "literature/2507.17101/catalog_sources/table-tab-params2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "46fcbb3239b9dbb5172c09fe2402bff4a5b28e4c35d2d3e7178244066f073c38"
+    },
+    {
+      "id": "table-Tab-compspec",
+      "internal_table_id": "table-Tab-compspec",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2507.17101/catalog_tables/table-Tab-compspec.ecsv",
+      "caption": "Radial velocity measurements from different instruments. Uncertainties are systematic.",
+      "label": "Tab:compspec",
+      "row_count": 3,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Instrument",
+          "MJD",
+          "RV (km/s)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Instrument",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "MJD",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "RV (km/s)",
+          "unit_text": "RV (km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcjp31doh/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.17101/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcjp31doh/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.17101/catalog_sources/table-Tab-compspec/wrapped.tex",
+            "html": "literature/2507.17101/catalog_sources/table-Tab-compspec/latexml.html",
+            "stdout": "literature/2507.17101/catalog_sources/table-Tab-compspec/latexml.stdout.txt",
+            "stderr": "literature/2507.17101/catalog_sources/table-Tab-compspec/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "802b2bf5e90c2312589d38a64b3298eeb350ad9922a330e3753373a196a2707f"
+    }
+  ]
+}

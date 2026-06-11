@@ -1,0 +1,64 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:38:00",
+  "paper": {
+    "arxiv_id": "2301.03311",
+    "bibcode": "2023A&A...670A.128A",
+    "title": "Unbound stars hold the key to young star cluster history",
+    "month": "2023-01",
+    "source_note_json": "notes/2023/2023-01/2023-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2301.03311",
+      "pdf": "https://arxiv.org/pdf/2301.03311"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2301.03311",
+    "audit_path": "literature/2301.03311/audit.json",
+    "catalog_review_path": "literature/2301.03311/catalog_review.json",
+    "catalog_extraction_path": "literature/2301.03311/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2301.03311/catalog_tables/table-tab-cluster_parameters.ecsv",
+      "literature/2301.03311/catalog_tables/table-tab-subgroups.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:38:00",
+    "extractor": "agent",
+    "summary": "The 'Unbound stars' in the paper title refers to stars that become unbound from their young star cluster during the gas expulsion phase (cluster-unbound), not hypervelocity stars unbound from the Galaxy (Galactic-unbound HVS). The paper uses N-body simulations to study the dynamical evolution of young star clusters (2-10 Myr) after gas expulsion, methods for identifying cluster members, and using unbound stars to trace back cluster history. All occurrences of 'unbound' in the paper are cluster-unbound, and all 'escape velocity' references are to cluster escape velocity (~few km/s), with no discussion of Galactic escape velocity, hypervelocity stars (HVS), or Galactic unbinding. The paper also mentions runaway and walkaway stars but notes they are dynamical ejection products tracing cluster dense regions, not Galactic unbinding. No HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2301.03311:group-01",
+      "description": "N-body simulation cluster parameters (Table tab:cluster_parameters), containing parameters for young star cluster simulations under different initial conditions (stellar count N, half-mass radius, gas expulsion timescale, etc.). These are input/output parameters for simulating cluster dynamical evolution.",
+      "decision": "rejected",
+      "reason": "The 'unbound stars' in this paper refer to stars that become unbound from their birth star cluster (cluster-unbound) during the gas expulsion phase. These stars disperse into the Galactic disk field population but remain gravitationally bound to the Galaxy, with velocities on the order of a few km/s, far below the Galactic escape velocity (~500 km/s). The paper never discusses hypervelocity stars (HVS), Galactic-unbound, or Galactic escape. The 'runaway/walkaway stars' mentioned are also products of cluster dynamical ejection. No HVS candidates whatsoever.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2301.03311/arxiv_source/main_new.tex",
+          "start_line": 83,
+          "end_line": 87,
+          "context": "Abstract: 'many former members become unbound' — cluster-unbound after gas expulsion. 'Backtracking unbound stars can provide [information about] a cluster's dynamic history.' No mention of Galactic escape."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2301.03311/arxiv_source/main_new.tex",
+          "start_line": 313,
+          "end_line": 315,
+          "context": "Methods: 'escape velocity' refers to cluster escape velocity using Plummer profile approximation. This is ~few km/s for young clusters, not Galactic escape velocity."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2301.03311/arxiv_source/main_new.tex",
+          "start_line": 491,
+          "end_line": 493,
+          "context": "Conclusions: 'Runaway and walkaway stars are less suitable to determine past cluster properties because of their low number and their production by dynamical ejection.' — cluster ejectees, not HVS."
+        }
+      ]
+    }
+  ]
+}

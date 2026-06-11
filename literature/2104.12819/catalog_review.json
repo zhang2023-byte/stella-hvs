@@ -1,0 +1,143 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2104.12819",
+    "title": "Extreme adaptive optics astrometry of R136. Searching for high proper motion stars",
+    "month": "2021-04",
+    "source_note_json": "notes/2021/2021-04/2021-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2104.12819",
+      "pdf": "https://arxiv.org/pdf/2104.12819"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2104.12819",
+    "audit_path": "literature/2104.12819/audit.json",
+    "source_dir": "literature/2104.12819/arxiv_source",
+    "tex_root": "literature/2104.12819/arxiv_source/40668corr.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:23:59",
+    "reviewer": "agent",
+    "summary": "这篇 A&A Letter 利用 VLT/SPHERE/IRDIS 在 K 波段对 R136 星团核心进行了两个历元（间隔3.06年）的高对比度近红外观测，搜寻高自行候选体（HOMAs）。论文包含1个内部表格（Table 1）和1个外部资源（CDS 星表，但 URL 为期刊模板占位符已清空）。Table 1 列出了2颗 HOMA 候选体和5颗最亮源的 K/H/J/I/V/U 星等以及左右两通道测得的自行分量（μ_x, μ_y），是论文的核心结果数据表。论文在 339 颗可靠源中发现 2 颗 HOMA（HOMA1: 321±52 km/s; HOMA2: 273±26 km/s），位于 R136a1 和 R136c 附近。外部资源为论文提到的 CDS 可靠一致源星表，但论文中给出的 URL（http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/）是 A&A 期刊模板占位符，非真实星表地址。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-table-infoRun",
+      "kind": "latex_table",
+      "asset_type": "astrometric_and_photometric_results",
+      "role_in_paper": "primary_results_table",
+      "source_refs": [
+        {
+          "path": "literature/2104.12819/arxiv_source/40668corr.tex",
+          "start_line": 251,
+          "end_line": 277,
+          "caption": "Magnitudes and PMs of the HOMAs and the five brightest sources in the core of R136. H95 and K21 are the identification of these sources from Hunter et al. (1995) and Khorrami et al (2021), respectively. K$_{2018}$, K$_{2015}$, H, and J are the magnitudes in the SPHERE/IRDIS filters \\citep{khorrami2017,khorrami2021}. I, V, and U are the magnitudes in the HST F814W, F555W, and F336W filters \\citep{hunter95}. $\\mu_{x}$ and $\\mu_{y}$ are the 2D PMs estimated from their position shift within 3.06 years in the left and right data.",
+          "label": "table:infoRun"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name | (H95/K21)",
+          "meaning": "Source identifier, cross-referencing Hunter et al. (1995) catalogue (H95) and Khorrami et al. (2021) catalogue (K21) numbers",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K_2018, K_2015 | (SPHERE/IRDIS)",
+          "meaning": "K-band magnitudes from SPHERE/IRDIS in the 2018 and 2015 epochs respectively",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "H | (SPHERE/IRDIS)",
+          "meaning": "H-band magnitude from SPHERE/IRDIS (near-infrared)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J | (SPHERE/IRDIS)",
+          "meaning": "J-band magnitude from SPHERE/IRDIS (near-infrared)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "I | (HST/WFPC2)",
+          "meaning": "I-band magnitude from HST/WFPC2 F814W filter (optical)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V | (HST/WFPC2)",
+          "meaning": "V-band magnitude from HST/WFPC2 F555W filter (optical)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "U | (HST/WFPC2)",
+          "meaning": "U-band magnitude from HST/WFPC2 F336W filter (optical); empty for HOMA1 indicating non-detection",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_x [mas/yr] | (left)",
+          "meaning": "Proper motion in x-direction measured from left-channel IRDIS data, over 3.06 year baseline",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_y [mas/yr] | (left)",
+          "meaning": "Proper motion in y-direction measured from left-channel IRDIS data, over 3.06 year baseline",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_x [mas/yr] | (right)",
+          "meaning": "Proper motion in x-direction measured from right-channel IRDIS data, over 3.06 year baseline",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "μ_y [mas/yr] | (right)",
+          "meaning": "Proper motion in y-direction measured from right-channel IRDIS data, over 3.06 year baseline",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 presents the key results: magnitudes in 7 passbands (K_2018, K_2015, H, J from SPHERE/IRDIS; I, V, U from HST/WFPC2) and proper motions from left and right IRDIS channels for the two HOMA candidates (HOMA1, HOMA2) and the five brightest sources (R136a1, R136a2, R136a3, R136c, R136b). HOMA1 has PM of 1.36±0.22 mas/yr (321±52 km/s), HOMA2 has 1.15±0.11 mas/yr (273±26 km/s). The five bright comparison sources show near-zero PMs consistent with cluster membership.",
+      "comments": "The table has a two-row header with \\multicolumn grouping: columns 2-4 under SPHERE/IRDIS, columns 5-7 under HST/WFPC2, columns 8-9 under (left), columns 10-11 under (right). The auto-detection parser initially misassigned the column instrument labels (H was incorrectly marked HST/WFPC2, J as left, I as right); these have been corrected in this review."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "",
+      "local_path": "",
+      "description": "CDS catalogue of reliable-consistent (RC) sources. The paper states that a catalogue of reliable-consistent sources is available in electronic form at CDS. However, the URL provided in the paper (http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/) is an A&A journal template placeholder and not a valid catalogue address. The actual CDS catalogue URL is unknown.",
+      "source_refs": [
+        {
+          "path": "literature/2104.12819/arxiv_source/40668corr.tex",
+          "start_line": 28,
+          "end_line": 29,
+          "context": "\\title{Extreme adaptive optics astrometry of R136\\thanks{Catalogue of reliable-consistent sources is only available in electronic form\nat the CDS via {\\protect \\url{http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/}} }}"
+        }
+      ],
+      "evidence": "The paper title footnote (lines 28-29) states: 'Catalogue of reliable-consistent sources is only available in electronic form at the CDS via http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/'. The 'J/A+A/' path component is a generic A&A journal template placeholder, indicating the final CDS catalogue identifier was not yet assigned at the time of the arXiv submission.",
+      "comments": "URL cleared because it is a journal demo/template placeholder (J/A+A/). The paper references a real CDS data product but the actual identifier is unknown."
+    }
+  ]
+}

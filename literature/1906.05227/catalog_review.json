@@ -1,0 +1,625 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1906.05227",
+    "title": "Flying far and fast: the distribution of distant hypervelocity star candidates from Gaia DR2 data",
+    "month": "2019-06",
+    "source_note_json": "notes/2019/2019-06/2019-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1906.05227",
+      "pdf": "https://arxiv.org/pdf/1906.05227"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1906.05227",
+    "audit_path": "literature/1906.05227/audit.json",
+    "source_dir": "literature/1906.05227/arxiv_source",
+    "tex_root": "literature/1906.05227/arxiv_source/farfast.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:33:09",
+    "reviewer": "agent",
+    "summary": "本文利用Gaia DR2数据系统搜索银心距>30 kpc的遥远超高速星候选体。从87,733,672个有消光和红化值的源中筛选出4,831,731个有完整位置、视差、自行和视向速度的源，进一步选出15,681个银心距>30 kpc的源作为主样本，其中174个具有可靠天体测量解且银心速度>500 km/s的源构成最佳样本。论文包含7个LaTeX表格：Table valid（数据处理流程验证，对比4颗已知HVS候选体的文献值和本文计算值），Table best1/best2（10颗视差相对误差<0.5的HVS候选体的Gaia DR2 astrometry和导出的银心距/速度/角度/RUWE），Table vbest1/vbest2（174颗最佳样本的astrometry和导出量），Table vbesth1/vbesth2（|b|>30°高银纬子样本的astrometry和导出量）。所有数据源于Gaia DR2公开星表，RUWE指数来自海德堡Gaia单源查询服务。论文未提供独立机器可读星表文件，无CDS/VizieR归档数据产品。外部URL主要为Gaia DR2文档、尘埃消光图、恒星等时线工具等技术基础设施引用，以及Open Fast Stars Catalog参考资源。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-valid",
+      "kind": "latex_table",
+      "asset_type": "validation_table",
+      "role_in_paper": "数据处理流程验证表。对比本文计算值与Bromley et al. (2018, BR18)和Marchetti et al. (2019, MA19)对4颗已知HVS候选体（Gaia DR2 4326973843264734208、4395399303719163904、1383279090527227264、6456587609813249536）的银心距d_GC、银心速度v_GC和位置-速度矢量夹角θ，验证本文数据处理管道的可靠性。这4颗星不在本文主样本中。",
+      "source_refs": [
+        {
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 502,
+          "end_line": 544,
+          "caption": "Processing pipeline validation. Results from \\citet{2018ApJ...868...25B}, BR18, and \\citet{2018MNRAS.tmp.2466M}, MA19, as well as ours, OURS, for four hypervelocity star candidates, which are not part of our primary sample, are presented here.",
+          "label": "valid"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\it Gaia DR2 designation",
+          "meaning": "Gaia Data Release 2 源标识号（19位数字）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\alpha | (\\degr)",
+          "meaning": "赤经（J2000历元，度），Gaia DR2测量值",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\delta | (\\degr)",
+          "meaning": "赤纬（J2000历元，度），Gaia DR2测量值",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_\\rm GC | (kpc)",
+          "meaning": "银心距离，使用Monte Carlo方法计算的中值及16th/84th百分位数误差",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_\\rm GC | (km~s^-1)",
+          "meaning": "银心速度，使用Monte Carlo方法计算的中值及16th/84th百分位数误差",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\theta | (\\degr)",
+          "meaning": "位置矢量与速度矢量之间的夹角（度），用于判断源的可能起源（~90°暗示银河系外起源）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Source",
+          "meaning": "数据来源标识：BR18=Bromley et al. (2018), MA19=Marchetti et al. (2019), OURS=本文计算",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Processing pipeline validation. Results from \\citet{2018ApJ...868...25B}, BR18, and \\citet{2018MNRAS.tmp.2466M}, MA19, as well as ours, OURS, for four hypervelocity star candidates, which are not part of our primary sample, are presented here.",
+      "comments": "验证用表，非主样本数据。4颗星的sigma_pi/pi值分别为0.139、0.155、0.258、0.195，均优于主样本典型值(>0.4)。"
+    },
+    {
+      "id": "table-best1",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "HVS候选体星表(I)——天体测量数据。列出10颗视差相对误差<0.5的HVS候选体的Gaia DR2源标识、坐标、银道坐标、视差、自行和视向速度。该表与best2配对，提供原始Gaia DR2观测数据，是后续Monte Carlo导出分析的基础输入。",
+      "source_refs": [
+        {
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 755,
+          "end_line": 801,
+          "caption": "Hypervelocity star candidates (I). Coordinates, parallaxes, proper motions, radial velocities, and their uncertainties from {\\it Gaia} DR2. The candidates here have uncertainties in parallax that are smaller than half the value of the parallax (first 10).",
+          "label": "best1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\it Gaia DR2 designation",
+          "meaning": "Gaia Data Release 2 源标识号（19位数字）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\alpha | (\\degr)",
+          "meaning": "赤经（J2000历元，度），Gaia DR2测量值",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\delta | (\\degr)",
+          "meaning": "赤纬（J2000历元，度），Gaia DR2测量值",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l | (\\degr)",
+          "meaning": "银经（度）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b | (\\degr)",
+          "meaning": "银纬（度）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\pi | (mas)",
+          "meaning": "视差（毫角秒），Gaia DR2测量值，含测量不确定度",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha | (mas yr^-1)",
+          "meaning": "赤经方向自行 μα cos δ（毫角秒/年），含测量不确定度",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta | (mas yr^-1)",
+          "meaning": "赤纬方向自行 μδ（毫角秒/年），含测量不确定度",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_r | (km s^-1)",
+          "meaning": "日心视向速度（km/s），Gaia DR2测量值，含测量不确定度",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Hypervelocity star candidates (I). Coordinates, parallaxes, proper motions, radial velocities, and their uncertainties from {\\it Gaia} DR2. The candidates here have uncertainties in parallax that are smaller than half the value of the parallax (first 10).",
+      "comments": "表注说明视差和自行数据来自Gaia DR2。此表仅列出前10颗候选体，完整样本见表格下方说明。"
+    },
+    {
+      "id": "table-best2",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "HVS候选体星表(II)——导出量数据。与best1配对，列出同样10颗候选体通过Monte Carlo方法计算的银心距d_GC、银心速度v_GC、位置-速度夹角θ（中值及16th/84th百分位数误差），以及RUWE再归一化单位权重误差指数。该表展示论文核心科学产物。",
+      "source_refs": [
+        {
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 808,
+          "end_line": 839,
+          "caption": "Hypervelocity star candidates (II). Galactocentric distance and velocity, and the angle between the position and velocity vectors (median values and uncertainties derived from the 16th and 84th percentiles) have been computed using the Monte Carlo approach described in the text. RUWE index from \\url{http://gaia.ari.uni-heidelberg.de/singlesource.html}.",
+          "label": "best2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\it Gaia DR2 designation",
+          "meaning": "Gaia Data Release 2 源标识号（19位数字）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_\\rm GC | (kpc)",
+          "meaning": "银心距离，Monte Carlo中值及16th/84th百分位数误差",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_\\rm GC | (km~s^-1)",
+          "meaning": "银心速度大小，Monte Carlo中值及16th/84th百分位数误差",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\theta | (\\degr)",
+          "meaning": "位置矢量与速度矢量之间的夹角（度），~90°提示可能银河系外起源",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RUWE",
+          "meaning": "Re-normalised Unit Weight Error，天体测量解的再归一化单位权重误差，来自海德堡Gaia单源查询服务。RUWE≤1.4为良好天体测量解判据",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Hypervelocity star candidates (II). Galactocentric distance and velocity, and the angle between the position and velocity vectors (median values and uncertainties derived from the 16th and 84th percentiles) have been computed using the Monte Carlo approach described in the text. RUWE index from \\url{http://gaia.ari.uni-heidelberg.de/singlesource.html}.",
+      "comments": "导出量通过10^4次Monte Carlo采样计算。银心距使用太阳到银心距离8.18 kpc（Abuter et al. 2019）。所有候选体RUWE<1.4，确认天体测量解可靠。"
+    },
+    {
+      "id": "table-vbest1",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "最佳HVS候选体星表(I)——天体测量数据。列出174颗具有最佳天体测量解的遥远HVS候选体（银心距>30 kpc，银心速度>500 km/s，通过图quality中的可靠天体测量判据筛选）的Gaia DR2源标识、坐标、银道坐标、视差、自行和视向速度。仅1颗星（Gaia DR2 2130229806599268480）同时出现在best1/best2中。",
+      "source_refs": [
+        {
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 854,
+          "end_line": 892,
+          "caption": "Best hypervelocity star candidates (I). The candidates here belong to the sample of 174 sources, which are probably distant and have the best astrometric solutions. Only one star, {\\it Gaia}~DR2 2130229806599268480, is also included in Tables~\\ref{best1} and \\ref{best2}. Data source as in Table~\\ref{best1}.",
+          "label": "vbest1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\it Gaia DR2 designation",
+          "meaning": "Gaia Data Release 2 源标识号（19位数字）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\alpha | (\\degr)",
+          "meaning": "赤经（J2000历元，度），Gaia DR2测量值",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\delta | (\\degr)",
+          "meaning": "赤纬（J2000历元，度），Gaia DR2测量值",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l | (\\degr)",
+          "meaning": "银经（度）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b | (\\degr)",
+          "meaning": "银纬（度）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\pi | (mas)",
+          "meaning": "视差（毫角秒），Gaia DR2测量值",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha | (mas yr^-1)",
+          "meaning": "赤经方向自行 μα cos δ（毫角秒/年）",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta | (mas yr^-1)",
+          "meaning": "赤纬方向自行 μδ（毫角秒/年）",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_r | (km s^-1)",
+          "meaning": "日心视向速度（km/s），Gaia DR2测量值",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Best hypervelocity star candidates (I). The candidates here belong to the sample of 174 sources, which are probably distant and have the best astrometric solutions. Only one star, {\\it Gaia}~DR2 2130229806599268480, is also included in Tables~\\ref{best1} and \\ref{best2}. Data source as in Table~\\ref{best1}.",
+      "comments": "174颗最佳样本的完整天体测量数据。数据来源与Table best1相同（Gaia DR2）。"
+    },
+    {
+      "id": "table-vbest2",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "最佳HVS候选体星表(II)——导出量数据。与vbest1配对，列出174颗最佳候选体的银心距d_GC、银心速度v_GC、位置-速度夹角θ和RUWE指数。112颗候选体V分量<0（逆行），暗示可能为银河系外飞越星体。",
+      "source_refs": [
+        {
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 899,
+          "end_line": 923,
+          "caption": "Best hypervelocity star candidates (II). Data source as in Table~\\ref{best2}.",
+          "label": "vbest2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\it Gaia DR2 designation",
+          "meaning": "Gaia Data Release 2 源标识号（19位数字）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_\\rm GC | (kpc)",
+          "meaning": "银心距离，Monte Carlo中值及16th/84th百分位数误差",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_\\rm GC | (km~s^-1)",
+          "meaning": "银心速度大小，Monte Carlo中值及16th/84th百分位数误差",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\theta | (\\degr)",
+          "meaning": "位置矢量与速度矢量之间的夹角（度）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RUWE",
+          "meaning": "Re-normalised Unit Weight Error，再归一化单位权重误差，来自海德堡Gaia单源查询服务",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Best hypervelocity star candidates (II). Data source as in Table~\\ref{best2}.",
+      "comments": "导出方法同Table best2。所有候选体RUWE<1.4，确认天体测量解可靠。"
+    },
+    {
+      "id": "table-vbesth1",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "最佳高银纬HVS候选体星表(I)——天体测量数据。从174颗最佳样本中选取高银纬（|b|>30°）子样本的Gaia DR2天体测量数据，格式同vbest1。高银纬限制可减少银盘前景污染。",
+      "source_refs": [
+        {
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 986,
+          "end_line": 1023,
+          "caption": "Best high Galactic latitude ($|b|>30\\degr$) hypervelocity star candidates (I). The candidates here belong to the sample of 174 sources, which are probably distant and have the best astrometric solutions. Data source as in Table~\\ref{best1}.",
+          "label": "vbesth1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\it Gaia DR2 designation",
+          "meaning": "Gaia Data Release 2 源标识号（19位数字）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\alpha | (\\degr)",
+          "meaning": "赤经（J2000历元，度），Gaia DR2测量值",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\delta | (\\degr)",
+          "meaning": "赤纬（J2000历元，度），Gaia DR2测量值",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l | (\\degr)",
+          "meaning": "银经（度）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b | (\\degr)",
+          "meaning": "银纬（度），所有源满足|b|>30°",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\pi | (mas)",
+          "meaning": "视差（毫角秒），Gaia DR2测量值",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha | (mas yr^-1)",
+          "meaning": "赤经方向自行 μα cos δ（毫角秒/年）",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta | (mas yr^-1)",
+          "meaning": "赤纬方向自行 μδ（毫角秒/年）",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_r | (km s^-1)",
+          "meaning": "日心视向速度（km/s），Gaia DR2测量值",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Best high Galactic latitude ($|b|>30\\degr$) hypervelocity star candidates (I). The candidates here belong to the sample of 174 sources, which are probably distant and have the best astrometric solutions. Data source as in Table~\\ref{best1}.",
+      "comments": "高银纬子样本天体测量数据，数据来源同Table best1。"
+    },
+    {
+      "id": "table-vbesth2",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "最佳高银纬HVS候选体星表(II)——导出量数据。与vbesth1配对，列出高银纬子样本的银心距、银心速度、位置-速度夹角和RUWE指数。文中特别讨论了Gaia DR2 2079869356551980672 (KIC 8828284)作为可能的银河系外超巨星HVS。",
+      "source_refs": [
+        {
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 1030,
+          "end_line": 1054,
+          "caption": "Best high Galactic latitude ($|b|>30\\degr$) hypervelocity star candidates (II). Data source as in Table~\\ref{best2}.",
+          "label": "vbesth2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\it Gaia DR2 designation",
+          "meaning": "Gaia Data Release 2 源标识号（19位数字）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_\\rm GC | (kpc)",
+          "meaning": "银心距离，Monte Carlo中值及16th/84th百分位数误差",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_\\rm GC | (km~s^-1)",
+          "meaning": "银心速度大小，Monte Carlo中值及16th/84th百分位数误差",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\theta | (\\degr)",
+          "meaning": "位置矢量与速度矢量之间的夹角（度）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RUWE",
+          "meaning": "Re-normalised Unit Weight Error，再归一化单位权重误差，来自海德堡Gaia单源查询服务",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Best high Galactic latitude ($|b|>30\\degr$) hypervelocity star candidates (II). Data source as in Table~\\ref{best2}.",
+      "comments": "导出方法同Table best2。所有候选体RUWE<1.4。此表包含显著候选体Gaia DR2 2079869356551980672 (KIC 8828284, v_GC=869 km/s, θ≈99.8°)。注意Gaia DR2 1360405705322797312为假阳性（NGC 6341球状星团成员）。"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://faststars.space/",
+      "local_path": "",
+      "description": "Open Fast Stars Catalog——超高速星及相关天体的开放星表，由Boubert et al. (2017, 2018)维护。论文将其作为超高速星研究的参考数据源引用。",
+      "source_refs": [
+        {
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 97,
+          "end_line": 97,
+          "context": "term to refer exclusively to those stars that were ejected after interacting with the supermassive black hole in the Galactic centre \n      (see the review by \\citealt{2015ARA&A..53...15B}). An extensive and timely updated source of data on this subject is the Open Fast \n      Stars Catalog\\footnote{\\url{https://faststars.space/}} \\citep{2017ApJ...835...64G,2018MNRAS.479.2789B}. \n\n      The known hypervelocity stars with a probable origin in the Milky Way galaxy exhibit a statistically significant anisotropic spatial"
+        }
+      ],
+      "evidence": "Introduction: cites Open Fast Stars Catalog as an extensive and timely updated source of data on hypervelocity stars, with footnote URL.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dr2",
+      "local_path": "",
+      "description": "Gaia Data Release 2官方文档页面，欧洲空间局(ESA) Gaia任务。论文将其作为Gaia DR2数据使用说明的参考链接。",
+      "source_refs": [
+        {
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 144,
+          "end_line": 144,
+          "context": "In order to interpret our results with confidence (by using colour-magnitude diagrams for example), we focussed on those sources \n         with estimated values of the line-of-sight extinction $A_G$ and reddening $E(G_{\\rm BP}-G_{\\rm RP})$; {\\it Gaia} DR2 includes \n         87\\,733\\,672 such sources,\\footnote{\\url{https://www.cosmos.esa.int/web/gaia/dr2}} all of them have strictly positive values of the \n         parallax. Out of this sample, 4\\,831\\,731 sources have positions, parallax, radial velocity, and proper motions. This smaller \n         sample is suitable for an analysis in the Galactocentric frame of reference."
+        }
+      ],
+      "evidence": "Section 2.1: footnote giving Gaia DR2 URL as reference for the 87,733,672 sources with AG and E(BP-RP) values.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://irsa.ipac.caltech.edu/applications/DUST/",
+      "local_path": "",
+      "description": "NASA/IPAC红外科学档案馆(IRSA)的银河系尘埃消光和红化查询服务。论文使用该服务获取Schlegel et al. (1998)和Schlafly & Finkbeiner (2011)的尘埃图数据，与Gaia DR2消光值进行对比验证。",
+      "source_refs": [
+        {
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 310,
+          "end_line": 310,
+          "context": "accuracy in $A_G$ is of the order of 0.46~mag and that of $E(G_{\\rm BP}-G_{\\rm RP})$ could be 0.23~mag. Classical sources to obtain\n         estimates of Galactic dust reddening and extinction are \\citet{1998ApJ...500..525S} and \\citet{2011ApJ...737..103S}. Their\n         datasets are available from the NASA/IPAC InfraRed Science Archive\\footnote{\\url{https://irsa.ipac.caltech.edu/applications/DUST/}}\n         and we retrieved the relevant values to compare with those given by {\\it Gaia} DR2 (although the wavelengths are different)."
+        }
+      ],
+      "evidence": "Section 2.1: mentions retrieving dust extinction/reddening values from NASA/IPAC IRSA to compare with Gaia DR2 values.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "VizieR天文星表服务（CDS, Strasbourg）。论文使用VizieR的交叉匹配工具以0.8角秒半径匹配LMC和SMC食双星星表与Gaia DR2数据，用于评估Eddington-Trumpler-Weaver偏差效应。",
+      "source_refs": [
+        {
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 406,
+          "end_line": 406,
+          "context": "sources in \\citet{2014MNRAS.443..432M} (top panel, LMC) and \\citet{2013AcA....63..323P} (bottom panel, SMC) with strictly \n         positive values of the parallax in {\\it Gaia} DR2. The search for matching sources was carried out using the tools provided by \n         VizieR \\citep{2000A&AS..143...23O} with a radius of 0\\farcs8. The $x$-axis shows the value of $\\sigma_{\\pi}/\\pi$ from {\\it Gaia} \n         DR2, while the $y$-axis shows the difference between measured and true parallax divided by the uncertainty in the true parallax \n         (meaning that for an eclipsing binary in the LMC, top panel in Fig.~\\ref{ETWbias}, 0.0208~mas was subtracted from the value of"
+        }
+      ],
+      "evidence": "Section 2.3: uses VizieR cross-matching tools to match LMC/SMC eclipsing binary catalogs with Gaia DR2 for ETW bias evaluation.",
+      "comments": "VizieR作为交叉匹配工具使用，非数据产品。论文未提供具体VizieR查询URL。"
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "http://gaia.ari.uni-heidelberg.de/singlesource.html",
+      "local_path": "",
+      "description": "海德堡大学天文计算研究所(ARI)的Gaia DR2单源查询服务，提供RUWE（再归一化单位权重误差）指数。论文使用该服务获取所有最佳候选体的RUWE值，用于评估天体测量解质量。",
+      "source_refs": [
+        {
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 814,
+          "end_line": 814,
+          "context": "\\caption{Hypervelocity star candidates (II). Galactocentric distance and velocity, and the angle between the position and velocity \n                  vectors (median values and uncertainties derived from the 16th and 84th percentiles) have been computed using the Monte \n                  Carlo approach described in the text. RUWE index from \\url{http://gaia.ari.uni-heidelberg.de/singlesource.html}.}\n         \\begin{tabular}{ccccc}\n          \\hline"
+        }
+      ],
+      "evidence": "Table best2 caption: RUWE index obtained from Heidelberg Gaia single-source query service.",
+      "comments": "在论文讨论部分（第1118行）再次引用，指出所有最佳候选体RUWE<1.4，确认天体测量解可靠。"
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "http://stev.oapd.inaf.it/cgi-bin/cmd",
+      "local_path": "",
+      "description": "PARSEC v1.2S + COLIBRI S_35恒星等时线Web工具（意大利帕多瓦天文台）。论文使用该服务生成5条等时线（1, 5, 10, 25, 50 Myr, 太阳金属丰度），作为颜色-星等图中候选体年龄估计的参考。",
+      "source_refs": [
+        {
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 1068,
+          "end_line": 1068,
+          "context": "assumption). The same approximation was used to estimate the error bars in Fig.~\\ref{cmd}, right-hand side panel. As a reference, \n      five relevant PARSEC v1.2S + COLIBRI S\\_35 \\citep{2012MNRAS.427..127B,2017ApJ...835...77M,\n      2019MNRAS.485.5666P}\\footnote{\\url{http://stev.oapd.inaf.it/cgi-bin/cmd}} isochrones ---of ages 1~Myr (in violet), 5~Myr (in \n      purple), 10~Myr (in blue), 25~Myr (in cyan), and 50~Myr (in green)--- are also plotted. The entries in Tables~\\ref{best1}, \\ref{vbest1}, \n      and \\ref{vbesth1} (see Fig.~\\ref{cmd}, right-hand side panel) appear to be consistent with being massive stars, younger than about"
+        }
+      ],
+      "evidence": "Section 5 (Discussion): PARSEC isochrones from this web tool plotted as reference in CMD figure; candidates consistent with young (<50 Myr) massive stars.",
+      "comments": ""
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "http://www.rssd.esa.int/doc_fetch.php?id=3757412",
+      "local_path": "",
+      "description": "ESA Gaia技术文档GAIA-C3-TN-LU-LL-124-01，详细说明RUWE（再归一化单位权重误差）判据的定义和计算方法。论文引用此文档作为RUWE指标的技术定义来源。",
+      "source_refs": [
+        {
+          "path": "literature/1906.05227/arxiv_source/farfast.tex",
+          "start_line": 1117,
+          "end_line": 1117,
+          "context": "Regarding the other stars in Tables~\\ref{best1}, \\ref{vbest1}, and \\ref{vbesth1}, it may be argued that we have not discussed the\n      reliability of these candidates in terms of the Re-normalised Unit Weight Error (RUWE) criterion, which is based on the chi squared of\n      the astrometric fit and stellar colour (see technical note GAIA-C3-TN-LU-LL-124-01),\\footnote{\\url{http://www.rssd.esa.int/doc_fetch.php?id=3757412}} \n      and can be found from a number of {\\it Gaia}~DR2-related data servers.\\footnote{\\url{http://gaia.ari.uni-heidelberg.de/singlesource.html}} \n      \\citet{2018A&A...616A...2L} argues that RUWE$\\leq$1.4 is a reasonable criterion to identify sufficiently good solutions. The RUWE"
+        }
+      ],
+      "evidence": "Section 5 (Discussion): cites Gaia technical note as source for RUWE criterion definition.",
+      "comments": ""
+    }
+  ]
+}

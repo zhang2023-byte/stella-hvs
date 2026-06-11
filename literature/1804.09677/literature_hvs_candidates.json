@@ -1,0 +1,689 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:07:24",
+  "paper": {
+    "arxiv_id": "1804.09677",
+    "bibcode": "2018MNRAS.479L..96R",
+    "title": "Anatomy of the hyper-runaway star LP 40-365 with Gaia",
+    "month": "2018-04",
+    "source_note_json": "notes/2018/2018-04/2018-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1804.09677",
+      "pdf": "https://arxiv.org/pdf/1804.09677"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1804.09677",
+    "audit_path": "literature/1804.09677/audit.json",
+    "catalog_review_path": "literature/1804.09677/catalog_review.json",
+    "catalog_extraction_path": "literature/1804.09677/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1804.09677/catalog_tables/table-t-phys.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-06-07T10:14:10",
+    "extractor": "agent",
+    "summary": "1 candidate: LP 40-365 (GD 492), a hyper-runaway star confirmed unbound from the Milky Way. Rest-frame velocity v_rf=852±10 km/s exceeds Galactic escape velocity (1.5× v_esc). Gaia DR2 parallax 1.58±0.03 mas → d=632±14 pc. SN Iax partially-burnt remnant scenario."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR2 astrometry for LP 40-365: parallax 1.58±0.03 mas, proper motions with covariance.",
+      "inputs": [
+        "Gaia DR2"
+      ],
+      "outputs": [
+        "parallax, proper_motions"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+          "start_line": 150,
+          "end_line": 150,
+          "context": "Gaia DR2 parallax: 1.58±0.03 mas"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [],
+      "step_type": "reported_value_adoption",
+      "summary": "Radial velocity v_rad=499±6 km/s adopted from Raddi et al. (2018, Paper I) spectroscopy.",
+      "inputs": [
+        "Raddi et al. 2018"
+      ],
+      "outputs": [
+        "v_rad"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+          "start_line": 177,
+          "end_line": 178,
+          "context": "v_rad=499±6 km/s from Paper I"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "distance_estimation",
+      "summary": "Direct parallax inversion d=1/varpi = 632±14 pc from Gaia DR2 precision parallax.",
+      "inputs": [
+        "Gaia DR2 parallax"
+      ],
+      "outputs": [
+        "d=632±14 pc"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+          "start_line": 150,
+          "end_line": 150,
+          "context": "Gaia parallax precision allows direct conversion: 632±14 pc"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-01",
+        "step-02",
+        "step-03"
+      ],
+      "step_type": "velocity_calculation",
+      "summary": "Rest-frame velocity from Gaia astrometry + v_rad. MWPotential2014 in Galpy: R0=8.27±0.29 kpc, Vc=238±9 km/s, (U,V,W)=(11.1,12.24,7.25) km/s.",
+      "inputs": [
+        "Gaia DR2 astrometry",
+        "v_rad",
+        "Galactic parameters"
+      ],
+      "outputs": [
+        "v_rf=852±10 km/s"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+          "start_line": 177,
+          "end_line": 178,
+          "context": "Section 3: v_rf=852±10 km/s"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+          "start_line": 180,
+          "end_line": 181,
+          "context": "Galpy orbit integrator, MWPotential2014, solar params"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "MWPotential2014 (Bovy 2015): bulge+disk+halo + 4×10^6 M_sun central BH. Escape speed ~520-550 km/s at Solar neighbourhood.",
+      "inputs": [
+        "MWPotential2014 parameters"
+      ],
+      "outputs": [
+        "v_esc(r) profile"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+          "start_line": 177,
+          "end_line": 178,
+          "context": "v_esc~520-550 km/s (Piffl+2014, Williams+2017), MWPotential2014"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-04",
+        "step-05"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "v_rf=852±10 km/s vs v_esc~550 km/s. Exceeds escape by factor ~1.5. Confirmed gravitationally unbound.",
+      "inputs": [
+        "v_rf",
+        "v_esc(r)"
+      ],
+      "outputs": [
+        "unbound classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+          "start_line": 177,
+          "end_line": 178,
+          "context": "exceeds the Galactic escape velocity... confirmed as gravitationally unbound from the Milky Way"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [
+        "step-04",
+        "step-05"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "Galpy orbit integration back 250 Myr. Disc crossing 5.0±0.3 Myr ago in Carina direction at R_G≈6.0 kpc. Excluded: Galactic centre, LMC origin.",
+      "inputs": [
+        "v_rf",
+        "MWPotential2014"
+      ],
+      "outputs": [
+        "Disc crossing ~5 Myr ago",
+        "Ejection from binary ≥600 km/s"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+          "start_line": 182,
+          "end_line": 183,
+          "context": "Disc crossing 5.0±0.3 Myr ago at R_G=6.0±0.3 kpc. GC and MC excluded."
+        },
+        {
+          "kind": "text",
+          "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+          "start_line": 196,
+          "end_line": 201,
+          "context": "Ejection velocity v_ej ~600 km/s"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [
+        "step-01",
+        "step-03"
+      ],
+      "step_type": "stellar_parameter_inference",
+      "summary": "Physical parameters from Gaia DR2 parallax + flux: R=0.18±0.01 R_sun (Stefan-Boltzmann), M=0.37(+0.29/-0.17) M_sun (M∝gR²). T_eff=8900±300 K, log_g=5.50±0.25 from Raddi+2018.",
+      "inputs": [
+        "Gaia DR2 parallax",
+        "Gaia photometry",
+        "Raddi+2018 spectroscopy"
+      ],
+      "outputs": [
+        "T_eff, log_g, R, M, L"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+          "start_line": 150,
+          "end_line": 156,
+          "context": "Physical parameters from Gaia + Stefan-Boltzmann law"
+        },
+        {
+          "kind": "ecsv_cell",
+          "path": "literature/1804.09677/catalog_tables/table-t-phys.ecsv",
+          "line": 12,
+          "column": "col_001",
+          "column_header": "T_eff",
+          "raw_value": "8900+/- 300"
+        }
+      ]
+    },
+    {
+      "id": "step-09",
+      "depends_on": ["step-07"],
+      "step_type": "origin_assessment",
+      "summary": "Origin assessment: disc crossing in Carina at R_G≈6.0 kpc, 5.0±0.3 Myr ago. Excluded Galactic centre and LMC. Ejection velocity ~600 km/s if from disc. SN Iax partially-burnt remnant scenario.",
+      "inputs": ["orbit trajectory from step-07"],
+      "outputs": ["origin_site", "origin_classification", "ejection_velocity"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+          "start_line": 182,
+          "end_line": 183,
+          "context": "Disc crossing 5.0±0.3 Myr ago at R_G=6.0±0.3 kpc. GC and MC excluded."
+        },
+        {
+          "kind": "text",
+          "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+          "start_line": 196,
+          "end_line": 201,
+          "context": "Ejection velocity v_ej ~600 km/s; SN Iax survivor scenario"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "1804.09677:cand-001",
+        "paper_candidate_id": "LP 40-365",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LP 40-365",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+                "start_line": 93,
+                "end_line": 95,
+                "context": "Abstract names the star LP 40-365 (aka GD 492)"
+              }
+            ]
+          },
+          {
+            "value": "GD 492",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+                "start_line": 93,
+                "end_line": 95,
+                "context": "Abstract: also known as GD 492"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "LP 40-365 (GD 492): hyper-runaway star, v_rf=852±10 km/s exceeds Galactic escape velocity by factor ~1.5. Confirmed as gravitationally unbound from the Milky Way by Raddi et al. (2018). Originally proposed by Vennes et al. (2017); this paper confirms unbound status with Gaia DR2 astrometry.",
+        "paper_labels": [
+          "hyper_runaway_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Paper explicitly states 'it is confirmed as gravitationally unbound from the Milky Way' and computes v_rf=852±10 km/s > v_esc (~550 km/s) using Gaia DR2 astrometry.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+            "start_line": 93,
+            "end_line": 95,
+            "context": "Abstract: hyper-runaway star, v_rf=852±10 km/s, ~1.5× v_esc"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+            "start_line": 177,
+            "end_line": 178,
+            "context": "Section 3: exceeds Galactic escape velocity, confirmed unbound"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "cited_from_literature",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+            "start_line": 114,
+            "end_line": 115,
+            "context": "LP 40-365 proposed by Vennes et al. 2017 as SN Iax survivor"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+            "start_line": 116,
+            "end_line": 116,
+            "context": "This Letter uses Gaia DR2 for first detailed kinematic analysis"
+          }
+        ],
+        "citation": {
+          "bibkey": "vennes17",
+          "authors": [
+            "Vennes",
+            "S."
+          ],
+          "year": "2017",
+          "bibcode": "2017Sci...357..680V",
+          "arxiv_id": "",
+          "citation_context_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+              "start_line": 114,
+              "end_line": 115,
+              "context": "Vennes et al. 2017 originally proposed LP 40-365 as hyper-runaway"
+            }
+          ],
+          "bibliography_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.09677/arxiv_source/lp40-365_kin.bbl",
+              "start_line": 332,
+              "end_line": 336,
+              "context": "Vennes et al. 2017 Science 357 680 — bibitem vennes17"
+            }
+          ]
+        }
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "632",
+            "value": "632",
+            "unit": "pc",
+            "error": "",
+            "lower_error": "14",
+            "upper_error": "14",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+                "start_line": 150,
+                "end_line": 150,
+                "context": "d=632±14 pc from Gaia DR2 parallax"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          },
+          "parallax": {
+            "raw_value": "1.58",
+            "value": "1.58",
+            "unit": "mas",
+            "error": "",
+            "lower_error": "0.03",
+            "upper_error": "0.03",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+                "start_line": 150,
+                "end_line": 150,
+                "context": "Gaia DR2 parallax: 1.58±0.03 mas"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_ra": null,
+          "proper_motion_dec": null,
+          "radial_velocity": {
+            "raw_value": "499",
+            "value": "499",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "6",
+            "upper_error": "6",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+                "start_line": 177,
+                "end_line": 178,
+                "context": "v_rad=499±6 km/s from Raddi et al. 2018"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "852",
+            "value": "852",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "10",
+            "upper_error": "10",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+                "start_line": 177,
+                "end_line": 178,
+                "context": "v_rf=852±10 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          },
+          "galactic_rest_frame_velocity": null
+        },
+        "bound_assessment": {
+          "escape_velocity": {
+            "raw_value": "550",
+            "value": "550",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+                "start_line": 177,
+                "end_line": 178,
+                "context": "v_esc≈550 km/s for adopted Galactic model"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "escape_velocity_ratio": {
+            "raw_value": "1.5",
+            "value": "1.5",
+            "unit": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+                "start_line": 93,
+                "end_line": 95,
+                "context": "about 1.5 times the escape velocity"
+              }
+            ],
+            "method_refs": [
+              "step-06"
+            ]
+          },
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "8900",
+          "value": "8900",
+          "unit": "K",
+          "error": "",
+          "lower_error": "300",
+          "upper_error": "300",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+              "start_line": 142,
+              "end_line": 142,
+              "context": "T_eff=8900±300 K from Table 1"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "log_g": {
+          "raw_value": "5.50",
+          "value": "5.50",
+          "unit": "cgs",
+          "error": "",
+          "lower_error": "0.25",
+          "upper_error": "0.25",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+              "start_line": 142,
+              "end_line": 142,
+              "context": "log g=5.50±0.25 from Table 1"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "radius": {
+          "raw_value": "0.18",
+          "value": "0.18",
+          "unit": "R_sun",
+          "error": "",
+          "lower_error": "0.01",
+          "upper_error": "0.01",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+              "start_line": 142,
+              "end_line": 142,
+              "context": "R=0.18±0.01 R_sun from Table 1"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "mass": {
+          "raw_value": "0.37",
+          "value": "0.37",
+          "unit": "M_sun",
+          "error": "",
+          "lower_error": "0.17",
+          "upper_error": "0.29",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+              "start_line": 142,
+              "end_line": 142,
+              "context": "M=0.37(+0.29/-0.17) M_sun from Table 1"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        },
+        "luminosity": {
+          "raw_value": "0.18",
+          "value": "0.18",
+          "unit": "L_sun",
+          "error": "",
+          "lower_error": "0.01",
+          "upper_error": "0.01",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+              "start_line": 142,
+              "end_line": 142,
+              "context": "L=0.18±0.01 L_sun from Table 1"
+            }
+          ],
+          "method_refs": [
+            "step-08"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "Galactic disc crossing in Carina direction at R_G~6.0 kpc, 5.0 Myr ago",
+          "value": "disc-carina",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+              "start_line": 182,
+              "end_line": 183,
+              "context": "Disc crossing in Carina at R_G=6.0±0.3 kpc, 5.0±0.3 Myr ago"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        },
+        "origin_classification": {
+          "raw_value": "SN Iax partially-burnt white dwarf remnant ejected from binary",
+          "value": "sn-iax-survivor",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+              "start_line": 93,
+              "end_line": 95,
+              "context": "Abstract: remnant of WD that survived subluminous Type Ia SN"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        },
+        "ejection_velocity": {
+          "raw_value": "600",
+          "value": "600",
+          "unit": "km s^-1",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1804.09677/arxiv_source/lp40-365_kin.tex",
+              "start_line": 201,
+              "end_line": 201,
+              "context": "v_ej ~ 600 km/s if ejection from disc"
+            }
+          ],
+          "method_refs": [
+            "step-09"
+          ]
+        },
+        "travel_time": null,
+        "hypothesis_metrics": [],
+        "other": []
+      },
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": []
+}

@@ -1,0 +1,713 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:45:49",
+  "paper": {
+    "arxiv_id": "2101.10878",
+    "title": "Blue extreme disk-runaway stars with Gaia EDR3",
+    "month": "2021-01"
+  },
+  "review": {
+    "path": "literature/2101.10878/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084549",
+    "started_at": "2026-06-07T08:45:49",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2101.10878",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table-vejection",
+      "internal_table_id": "table-table-vejection",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2101.10878/arxiv_source/paper.tex",
+        "start_line": 99,
+        "end_line": 141,
+        "caption": "Ejection velocity, galactocentric radius at plane intersection, and stellar mass of the program stars.",
+        "label": "table:vejection"
+      },
+      "source_path": "literature/2101.10878/arxiv_source/paper.tex",
+      "excerpt_path": "literature/2101.10878/catalog_sources/table-table-vejection/excerpt.tex",
+      "sha256": "b1f6df15db7f311a1f209d27cebfce705a8cb3b3b157a1cfd0df9c50e190b7ac",
+      "line_count": 43,
+      "error": ""
+    },
+    {
+      "id": "table-table-spectrophotometry",
+      "internal_table_id": "table-table-spectrophotometry",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2101.10878/arxiv_source/paper.tex",
+        "start_line": 618,
+        "end_line": 664,
+        "caption": "Atmospheric and stellar parameters of the program stars.",
+        "label": "table:spectrophotometry"
+      },
+      "source_path": "literature/2101.10878/arxiv_source/paper.tex",
+      "excerpt_path": "literature/2101.10878/catalog_sources/table-table-spectrophotometry/excerpt.tex",
+      "sha256": "c34b79ade046486be41689d7be02b94ae2ac61a89f145834ce6e720e6b9a72a7",
+      "line_count": 47,
+      "error": ""
+    },
+    {
+      "id": "table-table-kinematics_AS",
+      "internal_table_id": "table-table-kinematics_AS",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2101.10878/arxiv_source/paper.tex",
+        "start_line": 669,
+        "end_line": 744,
+        "caption": "Kinematic parameters of the program stars for Galactic mass model I of Irrgang et al. (2013).",
+        "label": "table:kinematics_AS"
+      },
+      "source_path": "literature/2101.10878/arxiv_source/paper.tex",
+      "excerpt_path": "literature/2101.10878/catalog_sources/table-table-kinematics_AS/excerpt.tex",
+      "sha256": "f711c8766acaf1c1ac05d6056af89c3a3dfa0f0c7f0edf502c130364fc142bdb",
+      "line_count": 76,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table-vejection",
+      "internal_table_id": "table-table-vejection",
+      "status": "success",
+      "ecsv_path": "literature/2101.10878/catalog_tables/table-table-vejection.ecsv",
+      "caption": "Ejection velocity, galactocentric radius at plane intersection, and stellar mass of the program stars.",
+      "label": "table:vejection",
+      "row_count": 31,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "#",
+          "\\varv_ej",
+          "r_p",
+          "M",
+          "F"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "#",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\varv_ej",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "r_p",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "M",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "F",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz2510j6v/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2101.10878/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpz2510j6v/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2101.10878/catalog_sources/table-table-vejection/wrapped.tex",
+            "html": "literature/2101.10878/catalog_sources/table-table-vejection/latexml.html",
+            "stdout": "literature/2101.10878/catalog_sources/table-table-vejection/latexml.stdout.txt",
+            "stderr": "literature/2101.10878/catalog_sources/table-table-vejection/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b1f6df15db7f311a1f209d27cebfce705a8cb3b3b157a1cfd0df9c50e190b7ac"
+    },
+    {
+      "id": "table-table-spectrophotometry",
+      "internal_table_id": "table-table-spectrophotometry",
+      "status": "success",
+      "ecsv_path": "literature/2101.10878/catalog_tables/table-table-spectrophotometry.ecsv",
+      "caption": "Atmospheric and stellar parameters of the program stars.",
+      "label": "table:spectrophotometry",
+      "row_count": 30,
+      "column_count": 13,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "",
+          "Atmospheric parameters",
+          "",
+          "",
+          "",
+          "",
+          "Stellar parameters",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "#",
+          "Gaia EDR3 identifier",
+          "T_eff",
+          "\\log(g)",
+          "\\varv\\sin(i)",
+          "\\varv_rad",
+          "Spectrograph \\tablefootmark (a)",
+          "M",
+          "R",
+          "\\log(L/L_\\odot)",
+          "\\tau_evol",
+          "d",
+          "Ref. \\tablefootmark (b)"
+        ],
+        [
+          "",
+          "",
+          "(K)",
+          "(cgs)",
+          "(km s -1 )",
+          "",
+          "",
+          "( M_\\odot )",
+          "( R_\\odot )",
+          "",
+          "(Myr)",
+          "(kpc)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "#",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia EDR3 identifier",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Atmospheric parameters | T_eff | (K)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\log(g) | (cgs)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\varv\\sin(i) | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\varv_rad",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Spectrograph \\tablefootmark (a)",
+          "unit_text": "Spectrograph \\tablefootmark (a)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Stellar parameters | M | ( M_\\odot )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "R | ( R_\\odot )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\log(L/L_\\odot)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\tau_evol | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "d | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "Ref. \\tablefootmark (b)",
+          "unit_text": "Ref. \\tablefootmark (b)",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_dwnjk2z/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2101.10878/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_dwnjk2z/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2101.10878/catalog_sources/table-table-spectrophotometry/wrapped.tex",
+            "html": "literature/2101.10878/catalog_sources/table-table-spectrophotometry/latexml.html",
+            "stdout": "literature/2101.10878/catalog_sources/table-table-spectrophotometry/latexml.stdout.txt",
+            "stderr": "literature/2101.10878/catalog_sources/table-table-spectrophotometry/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c34b79ade046486be41689d7be02b94ae2ac61a89f145834ce6e720e6b9a72a7"
+    },
+    {
+      "id": "table-table-kinematics_AS",
+      "internal_table_id": "table-table-kinematics_AS",
+      "status": "success",
+      "ecsv_path": "literature/2101.10878/catalog_tables/table-table-kinematics_AS.ecsv",
+      "caption": "Kinematic parameters of the program stars for Galactic mass model I of Irrgang et al. (2013).",
+      "label": "table:kinematics_AS",
+      "row_count": 61,
+      "column_count": 23,
+      "environment": "",
+      "header_rows": [
+        [
+          "#",
+          "x",
+          "y",
+          "z",
+          "r",
+          "",
+          "\\varv_x",
+          "\\varv_y",
+          "\\varv_z",
+          "\\varv_Grf",
+          "\\varv_Grf-\\varv_esc",
+          "P_b",
+          "x_p",
+          "y_p",
+          "z_p",
+          "r_p",
+          "",
+          "\\varv_x,p",
+          "\\varv_y,p",
+          "\\varv_z,p",
+          "\\varv_Grf,p",
+          "\\varv_ej",
+          "\\tau_flight"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "#",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "x",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "y",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "z",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "r",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\varv_x",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\varv_y",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\varv_z",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\varv_Grf",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\varv_Grf-\\varv_esc",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "P_b",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "x_p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "y_p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "z_p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "r_p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "\\varv_x,p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "\\varv_y,p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_020",
+          "original_header": "\\varv_z,p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_021",
+          "original_header": "\\varv_Grf,p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_022",
+          "original_header": "\\varv_ej",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_023",
+          "original_header": "\\tau_flight",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpalf4f_uo/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2101.10878/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpalf4f_uo/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2101.10878/catalog_sources/table-table-kinematics_AS/wrapped.tex",
+            "html": "literature/2101.10878/catalog_sources/table-table-kinematics_AS/latexml.html",
+            "stdout": "literature/2101.10878/catalog_sources/table-table-kinematics_AS/latexml.stdout.txt",
+            "stderr": "literature/2101.10878/catalog_sources/table-table-kinematics_AS/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f711c8766acaf1c1ac05d6056af89c3a3dfa0f0c7f0edf502c130364fc142bdb"
+    }
+  ]
+}

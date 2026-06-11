@@ -1,0 +1,185 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2402.02878",
+    "title": "The Gaia RVS benchmark stars II. A sample of stars selected for their Gaia high radial velocity",
+    "month": "2024-02",
+    "source_note_json": "notes/2024/2024-02/2024-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2402.02878",
+      "pdf": "https://arxiv.org/pdf/2402.02878"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2402.02878",
+    "audit_path": "literature/2402.02878/audit.json",
+    "source_dir": "literature/2402.02878/arxiv_source",
+    "tex_root": "literature/2402.02878/arxiv_source/48191corr_rev.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T12:43:57",
+    "reviewer": "agent",
+    "summary": "This paper analyses a sample of metal-poor stars selected for their high Gaia RVS radial velocity, deriving stellar parameters and detailed chemical abundances from high-resolution spectroscopy. Internal assets consist of a solar-abundance reference table and an observation log with per-star S/N values. External resources include the PARSEC CMD FAQ and three CDS online tables (stellar parameters and abundances, NLTE corrections, and the line list). Generic Gaia/DPAC/SIMBAD acknowledgements have been removed."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-solarabbo",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Reference solar abundances A(X) for the chemical elements analysed in the paper, with literature references for each value.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02878/arxiv_source/48191corr_rev.tex",
+          "start_line": 304,
+          "end_line": 334,
+          "caption": "Solar abundances.",
+          "label": "tab:solarabbo"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Element",
+          "meaning": "Chemical element symbol",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A(X)",
+          "meaning": "Solar abundance on the logarithmic scale A(X)=log10(N_X/N_H)+12",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Reference",
+          "meaning": "Literature reference for the adopted solar abundance",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Solar abundances.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-snr",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Log of the spectroscopic observations listing each star, its Gaia DR3 identifier, observing period, and the signal-to-noise ratio of the spectrum at 600 nm.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02878/arxiv_source/48191corr_rev.tex",
+          "start_line": 356,
+          "end_line": 413,
+          "caption": "Signal-to-noise ratio of the spectra.",
+          "label": "tab:snr"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Star identifier (RVS number)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "ID Gaia DR3",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Period",
+          "meaning": "Observing period or run identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S/N | @600 nm",
+          "meaning": "Signal-to-noise ratio of the reduced spectrum",
+          "unit_text": "@600 nm",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Signal-to-noise ratio of the spectra.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://stev.oapd.inaf.it/cmd_3.1/faq.html",
+      "local_path": "",
+      "description": "PARSEC CMD FAQ web page, referenced in the context of stellar evolutionary phases for intermediate-mass stars.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02878/arxiv_source/48191corr_rev.tex",
+          "start_line": 290,
+          "end_line": 290,
+          "context": "$\\rm 3.2 M_\\odot$ with age of 230\\,Ma (as a sub-giant branch or a Hertzsprung gap for more intermediate and massive stars), \n$\\rm 2.9 M_\\odot$ with age of 280\\,Ma (still core He-burning, the blueward part of the Cepheid loop of intermediate and massive stars), \n$\\rm 2.6 M_\\odot$ with age of 390\\,Ma (the early asymptotic giant branch or a quick stage of red giant for massive stars\\footnote{\\url{http://stev.oapd.inaf.it/cmd_3.1/faq.html}}). \nFor RVS726 we have just one solution in the interpolation, which is\n$\\rm 1.9 M_\\odot$ with age of 900\\,Ma (the early asymptotic giant branch or a quick stage of red giant for massive stars)."
+        }
+      ],
+      "evidence": "$\\rm 3.2 M_\\odot$ with age of 230\\,Ma (as a sub-giant branch or a Hertzsprung gap for more intermediate and massive stars), \n$\\rm 2.9 M_\\odot$ with age of 280\\,Ma (still core He-burning, the blueward part of the Cepheid loop of intermediate and massive stars), \n$\\rm 2.6 M_\\odot$ with age of 390\\,Ma (the early asymptotic giant branch or a quick stage of red giant for massive stars\\footnote{\\url{http://stev.oapd.inaf.it/cmd_3.1/faq.html}}). \nFor RVS726 we have just one solution in the interpolation, which is\n$\\rm 1.9 M_\\odot$ with age of 900\\,Ma (the early asymptotic giant branch or a quick stage of red giant for massive stars).",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "The paper states that stellar parameters and abundances are provided at the CDS in an online table described in the appendix.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02878/arxiv_source/48191corr_rev.tex",
+          "start_line": 353,
+          "end_line": 353,
+          "context": "The stars analysed in this work are all metal poor ($\\rm [Fe/H]<-1.0$), but no star is extremely metal poor ($\\rm [Fe/H]<-3$).\nWe recall that RVS705 is metal rich, but this star has not been analysed.\nThe stellar parameters and the abundances derived are provided at CDS in an online table that is described in the appendix.\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        }
+      ],
+      "evidence": "The stars analysed in this work are all metal poor ($\\rm [Fe/H]<-1.0$), but no star is extremely metal poor ($\\rm [Fe/H]<-3$).\nWe recall that RVS705 is metal rich, but this star has not been analysed.\nThe stellar parameters and the abundances derived are provided at CDS in an online table that is described in the appendix.\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "The paper states that the abundance table (Table C.1) is available at the CDS, containing stellar parameters, abundances, and NLTE corrections.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02878/arxiv_source/48191corr_rev.tex",
+          "start_line": 928,
+          "end_line": 928,
+          "context": "The abundances are provided in an online table (Table\\,C.1) available at CDS.\nThe table contains the name of the star, the Gaia\\,DR3 identifier, the stellar parameters, the abundances, and the NLTE corrections discussed in the text."
+        }
+      ],
+      "evidence": "The abundances are provided in an online table (Table\\,C.1) available at CDS.\nThe table contains the name of the star, the Gaia\\,DR3 identifier, the stellar parameters, the abundances, and the NLTE corrections discussed in the text.",
+      "comments": ""
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "The paper states that the line list used in the star-by-star analysis (Table C.2) is available at the CDS.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02878/arxiv_source/48191corr_rev.tex",
+          "start_line": 931,
+          "end_line": 931,
+          "context": "The table contains the name of the star, the Gaia\\,DR3 identifier, the stellar parameters, the abundances, and the NLTE corrections discussed in the text.\n\nThe lines used in the star-by-star analysis for all elements are provided at CDS in an online table (Table\\,C.2). \nWe recall that \\mygi\\ performed a fit in chosen wavelength ranges. In the table, all the lines of the designated elements presented in the range are reported.\nExcept for the forbidden [OI] lines, we cut all the \\ion{Fe}{i} lines at $\\rm\\log{gf}<-3.5$, and for the other elements, we cut them at $\\rm\\log{gf}<-4.5$."
+        }
+      ],
+      "evidence": "The table contains the name of the star, the Gaia\\,DR3 identifier, the stellar parameters, the abundances, and the NLTE corrections discussed in the text.\n\nThe lines used in the star-by-star analysis for all elements are provided at CDS in an online table (Table\\,C.2). \nWe recall that \\mygi\\ performed a fit in chosen wavelength ranges. In the table, all the lines of the designated elements presented in the range are reported.\nExcept for the forbidden [OI] lines, we cut all the \\ion{Fe}{i} lines at $\\rm\\log{gf}<-3.5$, and for the other elements, we cut them at $\\rm\\log{gf}<-4.5$.",
+      "comments": ""
+    }
+  ]
+}

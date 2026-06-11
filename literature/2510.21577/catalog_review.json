@@ -1,0 +1,734 @@
+{
+    "schema_version": "stella.article_data_assets.review.v1",
+    "paper": {
+        "arxiv_id": "2510.21577",
+        "title": "An observational study of rotation and binarity of Galactic O-type runaway stars",
+        "month": "2025-10",
+        "source_note_json": "notes/2025/2025-10/2025-10.json",
+        "links": {
+            "abs": "https://arxiv.org/abs/2510.21577",
+            "pdf": "https://arxiv.org/pdf/2510.21577"
+        }
+    },
+    "source": {
+        "paper_dir": "literature/2510.21577",
+        "audit_path": "literature/2510.21577/audit.json",
+        "source_dir": "literature/2510.21577/arxiv_source",
+        "tex_root": "literature/2510.21577/arxiv_source/main.tex",
+        "source_available": true
+    },
+    "review": {
+        "status": "reviewed",
+        "reviewed_at": "2026-05-17T12:34:31",
+        "reviewer": "agent",
+        "summary": "Auto-filled review: 7 internal table(s), 6 external resource(s)."
+    },
+    "internal_tables": [
+        {
+            "id": "table-Tab-rotSnormRun",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Number and percentage for normal and runaway stars in the rotation sample, subdivided in slow and fast rotators",
+            "source_refs": [
+                {
+                    "path": "literature/2510.21577/arxiv_source/main.tex",
+                    "start_line": 217,
+                    "end_line": 234,
+                    "caption": "Number and percentage for normal and runaway stars in the rotation sample, subdivided in slow and fast rotators.",
+                    "label": "Tab:rotSnormRun"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "\\vspace-3mm | Normal Stars",
+                    "meaning": "Column from table header",
+                    "unit_text": "mA",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Runaway Stars",
+                    "meaning": "High-velocity or runaway classification flag",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_003",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_004",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Number and percentage for normal and runaway stars in the rotation sample, subdivided in slow and fast rotators.",
+            "comments": ""
+        },
+        {
+            "id": "table-Tab-rotSslowFast",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Number and percentage for slow and fast stars in the rotation sample, subdivided in normal and runaway stars",
+            "source_refs": [
+                {
+                    "path": "literature/2510.21577/arxiv_source/main.tex",
+                    "start_line": 238,
+                    "end_line": 255,
+                    "caption": "Number and percentage for slow and fast stars in the rotation sample, subdivided in normal and runaway stars.",
+                    "label": "Tab:rotSslowFast"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "\\vspace-3mm | Slow Rotators",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Fast Rotators",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_003",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_004",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Number and percentage for slow and fast stars in the rotation sample, subdivided in normal and runaway stars.",
+            "comments": ""
+        },
+        {
+            "id": "table-Tab-percent_rotLSSB1_regs",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Number and percentage for normal and runaway stars in the rotation LS-SB1 subsample, subdivided in slow and fast rotators, and further subdivided in LS and SB1",
+            "source_refs": [
+                {
+                    "path": "literature/2510.21577/arxiv_source/main.tex",
+                    "start_line": 311,
+                    "end_line": 332,
+                    "caption": "Number and percentage for normal and runaway stars in the rotation LS-SB1 subsample, subdivided in slow and fast rotators, and further subdivided in LS and SB1.",
+                    "label": "Tab:percent_rotLSSB1_regs"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "\\vspace-3mm | Normal Stars",
+                    "meaning": "Column from table header",
+                    "unit_text": "mA",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Runaway stars",
+                    "meaning": "High-velocity or runaway classification flag",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_003",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_004",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_005",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_006",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_007",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_008",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Number and percentage for normal and runaway stars in the rotation LS-SB1 subsample, subdivided in slow and fast rotators, and further subdivided in LS and SB1.",
+            "comments": ""
+        },
+        {
+            "id": "table-Tab-percent_rotLSSB1",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Number and percentage for normal and runaway stars in the rotation LS-SB1 subsample, subdivided in LS and SB1, and further subdivided in slow and fast rotators",
+            "source_refs": [
+                {
+                    "path": "literature/2510.21577/arxiv_source/main.tex",
+                    "start_line": 344,
+                    "end_line": 368,
+                    "caption": "Number and percentage for normal and runaway stars in the rotation LS-SB1 subsample, subdivided in LS and SB1, and further subdivided in slow and fast rotators.",
+                    "label": "Tab:percent_rotLSSB1"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "\\vspace-3mm | Normal Stars",
+                    "meaning": "Column from table header",
+                    "unit_text": "mA",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Runaway stars",
+                    "meaning": "High-velocity or runaway classification flag",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_003",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_004",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_005",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_006",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_007",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_008",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Number and percentage for normal and runaway stars in the rotation LS-SB1 subsample, subdivided in LS and SB1, and further subdivided in slow and fast rotators.",
+            "comments": ""
+        },
+        {
+            "id": "table-Tab-SB1_runaways",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Data of the runaway SB1 systems with the higher values of $E$ in decreasing order",
+            "source_refs": [
+                {
+                    "path": "literature/2510.21577/arxiv_source/main.tex",
+                    "start_line": 399,
+                    "end_line": 427,
+                    "caption": "Data of the runaway SB1 systems with the higher values of $E$ in decreasing order.",
+                    "label": "Tab:SB1_runaways"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "\\vspace-2mm | GOSC Name",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "RA | (hh",
+                    "meaning": "Right Ascension",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "DEC | mm",
+                    "meaning": "Declination",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "l | ss.ss)",
+                    "meaning": "Galactic longitude",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "b | (\\degr",
+                    "meaning": "Galactic latitude",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "d | \\arcmin",
+                    "meaning": "Distance",
+                    "unit_text": "arcmin or arcsec",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "S.T. | \\arcsec.\\arcsec)",
+                    "meaning": "Column from table header",
+                    "unit_text": "s",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\multicolumn2cV_PEC^2D | (\\degr)",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\degr",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "E | (\\degr)",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\degr",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "P_orb | (kpc)",
+                    "meaning": "Column from table header",
+                    "unit_text": "kpc",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "e",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Radio | \\multicolumn2c(km~s^-1)",
+                    "meaning": "Right Ascension",
+                    "unit_text": "km~s^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "X-rays",
+                    "meaning": "Galactic Cartesian coordinate",
+                    "unit_text": "pc or kpc",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Gamma rays | (d)",
+                    "meaning": "Column from table header",
+                    "unit_text": "d",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Comments",
+                    "meaning": "Note or comment",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_016",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_017",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_018",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_019",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_020",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Data of the runaway SB1 systems with the higher values of $E$ in decreasing order.",
+            "comments": ""
+        },
+        {
+            "id": "table-Tab-rotsample",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Data of the first 10 stars of the rotation sample with the higher values of $E$ in decreasing order",
+            "source_refs": [
+                {
+                    "path": "literature/2510.21577/arxiv_source/main.tex",
+                    "start_line": 603,
+                    "end_line": 627,
+                    "caption": "Data of the first 10 stars of the rotation sample with the higher values of $E$ in decreasing order.",
+                    "label": "Tab:rotsample"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "\\vspace-2mm | GOSC Name",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Gaia DR3 id",
+                    "meaning": "Gaia source identifier",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "RA | (hh",
+                    "meaning": "Right Ascension",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "DEC | mm",
+                    "meaning": "Declination",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "l | ss.ss)",
+                    "meaning": "Galactic longitude",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "b | (\\degr",
+                    "meaning": "Galactic latitude",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "d | \\arcmin",
+                    "meaning": "Distance",
+                    "unit_text": "arcmin or arcsec",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "G | \\arcsec.\\arcsec)",
+                    "meaning": "Gaia G-band magnitude",
+                    "unit_text": "s",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "S.T. | (\\degr)",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\degr",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\multicolumn2cV_PEC^2D | (\\degr)",
+                    "meaning": "Column from table header",
+                    "unit_text": "\\degr",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "E | (kpc)",
+                    "meaning": "Column from table header",
+                    "unit_text": "kpc",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "v \\sini",
+                    "meaning": "V-band magnitude",
+                    "unit_text": "mag",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_013",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\multicolumn2c(km~s^-1)",
+                    "meaning": "Column from table header",
+                    "unit_text": "km~s^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_015",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "(km~s^-1)",
+                    "meaning": "Column from table header",
+                    "unit_text": "km~s^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "col_017",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Data of the first 10 stars of the rotation sample with the higher values of $E$ in decreasing order.",
+            "comments": ""
+        },
+        {
+            "id": "table-Tab-KStest_LS_SB1",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Results of the Kolmogorov-Smirnov tests in $v \\sin{i}$ for different sets: Runaway LS stars (Run-LS), runaway SB1 systems (Run-SB1), normal LS stars (Norm-LS), normal SB1 systems (Norm-SB1)",
+            "source_refs": [
+                {
+                    "path": "literature/2510.21577/arxiv_source/main.tex",
+                    "start_line": 696,
+                    "end_line": 710,
+                    "caption": "Results of the Kolmogorov-Smirnov tests in $v \\sin{i}$ for different sets: Runaway LS stars (Run-LS), runaway SB1 systems (Run-SB1), normal LS stars (Norm-LS), normal SB1 systems (Norm-SB1). Lower-diagonal values mirror upper-diagonal ones. Dashes indicate self-comparisons of identical populations.",
+                    "label": "Tab:KStest_LS_SB1"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "col_001",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "N",
+                    "meaning": "Number of objects or count",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Run-LS",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Run-SB1",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Norm-LS",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Norm-SB1",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Results of the Kolmogorov-Smirnov tests in $v \\sin{i}$ for different sets: Runaway LS stars (Run-LS), runaway SB1 systems (Run-SB1), normal LS stars (Norm-LS), normal SB1 systems (Norm-SB1). Lower-diagonal values mirror upper-diagonal ones. Dashes indicate self-comparisons of identical populations.",
+            "comments": ""
+        }
+    ],
+    "external_resources": [
+        {
+            "id": "resource-001",
+            "kind": "external_url",
+            "url": "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/679/A109",
+            "local_path": "",
+            "description": "CDS/VizieR catalogue service referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.21577/arxiv_source/main.tex",
+                    "start_line": 147,
+                    "end_line": 147,
+                    "context": "In \\cite{MCC2023}, we searched for Galactic O runaway stars using \\textit{Gaia}~DR3 astrometric data\\footnote{We also searched for Be runaway stars. Both the O and Be runaway catalogs obtained in \\cite{MCC2023} are available at the \\href{https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/679/A109}{CDS}.}. For this, we first cross-matched the Galactic O-Star Catalog (GOSC; \\citealt{GOSC}) with \\textit{Gaia}~DR3 data. We also applied several quality cuts, and produced the GOSC-\\textit{Gaia}~DR3 catalog with 417 O-type stars. This catalog contains 106 O runaway stars (42 new identifications), corresponding to a runaway fraction of 25.4\\%. The runaway stars were identified through an $E$ parameter (see Eq.~3 in \\citealt{MCC2023}), which indicates the normalized significance at a 3-sigma confidence level of the runaway nature based on their 2-Dimensional (2D) velocities $(V_\\text{PEC}^\\text{2D})$ with respect to the mean Galactic rotation. In this way, stars with $E\\ge1$ were classified as runaways, while stars with $E<1$ were classified as \\textit{normal} stars\\footnote{Note that in \\cite{MCC2023} the authors called \\textit{field stars} to those with $E<1$, but here we change the nomenclature to \\textit{normal stars}, since this term is more commonly used.}. Therefore, higher $E$ values denote more confident runaway star identifications. This self-consistent methodology avoids using runaway velocity thresholds in contrast to the vast majority of previous works, and allows for the coherent identification of runaways, including stars moving at 2D peculiar velocities as small as $V_\\text{PEC}^\\text{2D}\\sim16$~km s$^{-1}$. The runaways with 3D peculiar velocities $V_\\text{PEC}^\\text{3D}<30$~km s$^{-1}$ have been referred to as walkaways in the literature \\citep{deMink2012, Renzo2019}. In particular, they have been defined in a theoretical context as those runaways coming from disrupted binaries after the SN explosion of the primary and former companion. In this work, we use an observational definition for the walkaways in our sample, as those identified as runaways in \\cite{MCC2023} ($E>1$), but that have $V_\\text{PEC}^\\text{2D}<25$~km~s$^{-1}$. This is a commonly used 2D runaway velocity threshold (e.g., \\citealt{Kobulnicky2022}), which corresponds to the scaled 3D value of 30~km~s$^{-1}$ to 2D ($30\\sqrt{2/3}\\simeq25$)."
+                }
+            ],
+            "evidence": "In \\cite{MCC2023}, we searched for Galactic O runaway stars using \\textit{Gaia}~DR3 astrometric data\\footnote{We also searched for Be runaway stars. Both the O and Be runaway catalogs obtained in \\cite{MCC2023} are available at the \\href{https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/679/A109}{CDS}.}. For this, we first cross-matched the Galactic O-Star Catalog (GOSC; \\citealt{GOSC}) with \\textit{Gaia}~DR3 data. We also applied several quality cuts, and produced the GOSC-\\textit{Gaia}~DR3 catalog with 417 O-type stars. This catalog contains 106 O runaway stars (42 new identifications), corresponding to a runaway fraction of 25.4\\%. The runaway stars were identified through an $E$ parameter (see Eq.~3 in \\citealt{MCC2023}), which indicates the normalized significance at a 3-sigma confidence level of the runaway nature based on their 2-Dimensional (2D) velocities $(V_\\text{PEC}^\\text{2D})$ with respect to the mean Galactic rotation. In this way, stars with $E\\ge1$ were classified as runaways, while stars with $E<1$ were classified as \\textit{normal} stars\\footnote{Note that in \\cite{MCC2023} the authors called \\textit{field stars} to those with $E<1$, but here we change the nomenclature to \\textit{normal stars}, since this term is more commonly used.}. Therefore, higher $E$ values denote more confident runaway star identifications. This self-consistent methodology avoids using runaway velocity thresholds in contrast to the vast majority of previous works, and allows for the coherent identification of runaways, including stars moving at 2D peculiar velocities as small as $V_\\text{PEC}^\\text{2D}\\sim16$~km s$^{-1}$. The runaways with 3D peculiar velocities $V_\\text{PEC}^\\text{3D}<30$~km s$^{-1}$ have been referred to as walkaways in the literature \\citep{deMink2012, Renzo2019}. In particular, they have been defined in a theoretical context as those runaways coming from disrupted binaries after the SN explosion of the primary and former companion. In this work, we use an observational definition for the walkaways in our sample, as those identified as runaways in \\cite{MCC2023} ($E>1$), but that have $V_\\text{PEC}^\\text{2D}<25$~km~s$^{-1}$. This is a commonly used 2D runaway velocity threshold (e.g., \\citealt{Kobulnicky2022}), which corresponds to the scaled 3D value of 30~km~s$^{-1}$ to 2D ($30\\sqrt{2/3}\\simeq25$).",
+            "comments": ""
+        },
+        {
+            "id": "resource-002",
+            "kind": "external_url",
+            "url": "https://research.iac.es/proyecto/iacob/iacobcat/",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.21577/arxiv_source/main.tex",
+                    "start_line": 159,
+                    "end_line": 159,
+                    "context": "We took advantage of the long-term efforts made by the IACOB project (P.I. Sim\\'on-D\\'iaz) to compile an extensive catalogue of empirical properties of Galactic massive OB-type stars, from high-quality spectroscopic observations\\footnote{\\href{https://research.iac.es/proyecto/iacob/iacobcat/}{https://research.iac.es/proyecto/iacob/iacobcat/}} (see, e.g., \\citealt{SimonDiaz2014,SimonDiaz2017,Holgado2018,Holgado2020,Holgado2022,deBurgos2024a,deBurgos2024b,deBurgos2025, MartinezSebastian2025}). Specifically, we benefited from the information on projected rotational velocities and detected signatures of spectroscopic binarity available -- either  publicly or through its internal catalogue -- for approximately 530 Galactic O-type stars.\n\nAs described in \\cite{Holgado2022}, only stars not identified as SB2 have projected rotational velocity estimations (360 O-type stars in total). While some of the stars considered in this study were not yet included in the sample analyzed by \\cite{Holgado2022}, we applied a similar analysis strategy."
+                }
+            ],
+            "evidence": "We took advantage of the long-term efforts made by the IACOB project (P.I. Sim\\'on-D\\'iaz) to compile an extensive catalogue of empirical properties of Galactic massive OB-type stars, from high-quality spectroscopic observations\\footnote{\\href{https://research.iac.es/proyecto/iacob/iacobcat/}{https://research.iac.es/proyecto/iacob/iacobcat/}} (see, e.g., \\citealt{SimonDiaz2014,SimonDiaz2017,Holgado2018,Holgado2020,Holgado2022,deBurgos2024a,deBurgos2024b,deBurgos2025, MartinezSebastian2025}). Specifically, we benefited from the information on projected rotational velocities and detected signatures of spectroscopic binarity available -- either  publicly or through its internal catalogue -- for approximately 530 Galactic O-type stars.\n\nAs described in \\cite{Holgado2022}, only stars not identified as SB2 have projected rotational velocity estimations (360 O-type stars in total). While some of the stars considered in this study were not yet included in the sample analyzed by \\cite{Holgado2022}, we applied a similar analysis strategy.",
+            "comments": ""
+        },
+        {
+            "id": "resource-003",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.21577/arxiv_source/main.tex",
+                    "start_line": 176,
+                    "end_line": 176,
+                    "context": "A cross-match of the O-type stars included in both the GOSC-\\textit{Gaia} DR3 and the IACOB resulted in 296 stars, which are both normal and runaway stars. From that initial sample, we removed 17 peculiar stars with spectral classifications such as Oe, Of?p, and extreme supergiants (\\citealt{Negueruela2004,MA2024}), as well as another sample of 65 stars clearly identified as SB2\\footnote{Although excluded of this sample, we will also comment on these SB2 systems in Sect.~\\ref{sec:discussion_scenarios}}. We hence ended up with a \\textit{clean} sample of non-peculiar LS and SB1 stars comprising 214 targets. For all the stars in this cleaned sample we have information available about their projected rotational velocities. Therefore, we call this sample the \"rotation sample\". In Table~\\ref{Tab:rotsample} we present information of the first 10 stars of the rotation sample with the higher values of $E$ in decreasing order, while the full version is available at the CDS. Of the stars in the rotation sample we have information on their LS or SB1 nature for 168 of them (due multiepoch spectroscopy, see Sect.~\\ref{sec:IACOBdata}), constituting a subsample that we call the \"rotation LS-SB1 subsample\"."
+                }
+            ],
+            "evidence": "A cross-match of the O-type stars included in both the GOSC-\\textit{Gaia} DR3 and the IACOB resulted in 296 stars, which are both normal and runaway stars. From that initial sample, we removed 17 peculiar stars with spectral classifications such as Oe, Of?p, and extreme supergiants (\\citealt{Negueruela2004,MA2024}), as well as another sample of 65 stars clearly identified as SB2\\footnote{Although excluded of this sample, we will also comment on these SB2 systems in Sect.~\\ref{sec:discussion_scenarios}}. We hence ended up with a \\textit{clean} sample of non-peculiar LS and SB1 stars comprising 214 targets. For all the stars in this cleaned sample we have information available about their projected rotational velocities. Therefore, we call this sample the \"rotation sample\". In Table~\\ref{Tab:rotsample} we present information of the first 10 stars of the rotation sample with the higher values of $E$ in decreasing order, while the full version is available at the CDS. Of the stars in the rotation sample we have information on their LS or SB1 nature for 168 of them (due multiepoch spectroscopy, see Sect.~\\ref{sec:IACOBdata}), constituting a subsample that we call the \"rotation LS-SB1 subsample\".",
+            "comments": ""
+        },
+        {
+            "id": "resource-004",
+            "kind": "external_url",
+            "url": "https://www.cosmos.esa.int/gaia",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.21577/arxiv_source/main.tex",
+                    "start_line": 581,
+                    "end_line": 581,
+                    "context": "{We thank the anonymous referee for useful comments. We thank J. Bodensteiner}, M. Gieles and M. Abdul-Masih for useful discussions. MC-C, MR, and JMP acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU,   \n      and through the Unit of Excellence María de Maeztu 2020-2023 and 2025-2029 awards to the Institute of Cosmos Sciences (CEX2019-000918-M, CEX2024-001451-M, MICIU/AEI/10.13039/501100011033). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds. GH, CMS, and SS-D acknowledge support from the Spanish Ministry of Science and Innovation and Universities (MICIU) through the Spanish State Research Agency (AEI) through grants PID2021-122397NB-C21, PID2022-136640NB-C22, 10.13039/501100011033, and the Severo Ochoa Program 2020-2023 (CEX2019-000920-S).\n      This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. Regarding the observing facilities, this research is based on observations made with the Mercator Telescope, operated by the Flemish Community at the Observatorio del Roque de los Muchachos (La Palma, Spain), of the Instituto de Astrofísica de Canarias. In particular, obtained with the HERMES spectrograph, which is supported by the Research Foundation – Flanders (FWO), Belgium, the Research Council of KU Leuven, Belgium, the Fonds National de la Recherche Scientifique (F.R.S.-FNRS), Belgium, the Royal Observatory of Belgium, the Observatoire de Genève, Switzerland, and the Thüringer Landessternwarte Tautenburg, Germany. This work is also based on observations with the Nordic Optical Telescope, owned in collaboration by the University of Turku and Aarhus University, and operated jointly by Aarhus University, the University of Turku and the University of Oslo, representing Denmark, Finland and Norway, the University of Iceland and Stockholm University, at the Observatorio del Roque de los Muchachos, of the Instituto de Astrofísica de Canarias. Additionally this work is based on observations obtained with the FEROS spectrograph attached to the 2.2 m MPG/ESO telescope at the La Silla observatory (Chile). This research has made use of NASA’s Astrophysics Data System. This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n\\end{acknowledgements}"
+                }
+            ],
+            "evidence": "{We thank the anonymous referee for useful comments. We thank J. Bodensteiner}, M. Gieles and M. Abdul-Masih for useful discussions. MC-C, MR, and JMP acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU,   \n      and through the Unit of Excellence María de Maeztu 2020-2023 and 2025-2029 awards to the Institute of Cosmos Sciences (CEX2019-000918-M, CEX2024-001451-M, MICIU/AEI/10.13039/501100011033). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds. GH, CMS, and SS-D acknowledge support from the Spanish Ministry of Science and Innovation and Universities (MICIU) through the Spanish State Research Agency (AEI) through grants PID2021-122397NB-C21, PID2022-136640NB-C22, 10.13039/501100011033, and the Severo Ochoa Program 2020-2023 (CEX2019-000920-S).\n      This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. Regarding the observing facilities, this research is based on observations made with the Mercator Telescope, operated by the Flemish Community at the Observatorio del Roque de los Muchachos (La Palma, Spain), of the Instituto de Astrofísica de Canarias. In particular, obtained with the HERMES spectrograph, which is supported by the Research Foundation – Flanders (FWO), Belgium, the Research Council of KU Leuven, Belgium, the Fonds National de la Recherche Scientifique (F.R.S.-FNRS), Belgium, the Royal Observatory of Belgium, the Observatoire de Genève, Switzerland, and the Thüringer Landessternwarte Tautenburg, Germany. This work is also based on observations with the Nordic Optical Telescope, owned in collaboration by the University of Turku and Aarhus University, and operated jointly by Aarhus University, the University of Turku and the University of Oslo, representing Denmark, Finland and Norway, the University of Iceland and Stockholm University, at the Observatorio del Roque de los Muchachos, of the Instituto de Astrofísica de Canarias. Additionally this work is based on observations obtained with the FEROS spectrograph attached to the 2.2 m MPG/ESO telescope at the La Silla observatory (Chile). This research has made use of NASA’s Astrophysics Data System. This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n\\end{acknowledgements}",
+            "comments": ""
+        },
+        {
+            "id": "resource-005",
+            "kind": "external_url",
+            "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.21577/arxiv_source/main.tex",
+                    "start_line": 581,
+                    "end_line": 581,
+                    "context": "{We thank the anonymous referee for useful comments. We thank J. Bodensteiner}, M. Gieles and M. Abdul-Masih for useful discussions. MC-C, MR, and JMP acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU,   \n      and through the Unit of Excellence María de Maeztu 2020-2023 and 2025-2029 awards to the Institute of Cosmos Sciences (CEX2019-000918-M, CEX2024-001451-M, MICIU/AEI/10.13039/501100011033). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds. GH, CMS, and SS-D acknowledge support from the Spanish Ministry of Science and Innovation and Universities (MICIU) through the Spanish State Research Agency (AEI) through grants PID2021-122397NB-C21, PID2022-136640NB-C22, 10.13039/501100011033, and the Severo Ochoa Program 2020-2023 (CEX2019-000920-S).\n      This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. Regarding the observing facilities, this research is based on observations made with the Mercator Telescope, operated by the Flemish Community at the Observatorio del Roque de los Muchachos (La Palma, Spain), of the Instituto de Astrofísica de Canarias. In particular, obtained with the HERMES spectrograph, which is supported by the Research Foundation – Flanders (FWO), Belgium, the Research Council of KU Leuven, Belgium, the Fonds National de la Recherche Scientifique (F.R.S.-FNRS), Belgium, the Royal Observatory of Belgium, the Observatoire de Genève, Switzerland, and the Thüringer Landessternwarte Tautenburg, Germany. This work is also based on observations with the Nordic Optical Telescope, owned in collaboration by the University of Turku and Aarhus University, and operated jointly by Aarhus University, the University of Turku and the University of Oslo, representing Denmark, Finland and Norway, the University of Iceland and Stockholm University, at the Observatorio del Roque de los Muchachos, of the Instituto de Astrofísica de Canarias. Additionally this work is based on observations obtained with the FEROS spectrograph attached to the 2.2 m MPG/ESO telescope at the La Silla observatory (Chile). This research has made use of NASA’s Astrophysics Data System. This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n\\end{acknowledgements}"
+                }
+            ],
+            "evidence": "{We thank the anonymous referee for useful comments. We thank J. Bodensteiner}, M. Gieles and M. Abdul-Masih for useful discussions. MC-C, MR, and JMP acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU,   \n      and through the Unit of Excellence María de Maeztu 2020-2023 and 2025-2029 awards to the Institute of Cosmos Sciences (CEX2019-000918-M, CEX2024-001451-M, MICIU/AEI/10.13039/501100011033). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds. GH, CMS, and SS-D acknowledge support from the Spanish Ministry of Science and Innovation and Universities (MICIU) through the Spanish State Research Agency (AEI) through grants PID2021-122397NB-C21, PID2022-136640NB-C22, 10.13039/501100011033, and the Severo Ochoa Program 2020-2023 (CEX2019-000920-S).\n      This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. Regarding the observing facilities, this research is based on observations made with the Mercator Telescope, operated by the Flemish Community at the Observatorio del Roque de los Muchachos (La Palma, Spain), of the Instituto de Astrofísica de Canarias. In particular, obtained with the HERMES spectrograph, which is supported by the Research Foundation – Flanders (FWO), Belgium, the Research Council of KU Leuven, Belgium, the Fonds National de la Recherche Scientifique (F.R.S.-FNRS), Belgium, the Royal Observatory of Belgium, the Observatoire de Genève, Switzerland, and the Thüringer Landessternwarte Tautenburg, Germany. This work is also based on observations with the Nordic Optical Telescope, owned in collaboration by the University of Turku and Aarhus University, and operated jointly by Aarhus University, the University of Turku and the University of Oslo, representing Denmark, Finland and Norway, the University of Iceland and Stockholm University, at the Observatorio del Roque de los Muchachos, of the Instituto de Astrofísica de Canarias. Additionally this work is based on observations obtained with the FEROS spectrograph attached to the 2.2 m MPG/ESO telescope at the La Silla observatory (Chile). This research has made use of NASA’s Astrophysics Data System. This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n\\end{acknowledgements}",
+            "comments": ""
+        },
+        {
+            "id": "resource-006",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2510.21577/arxiv_source/main.tex",
+                    "start_line": 626,
+                    "end_line": 626,
+                    "context": "\\hline\n\\end{tabular}}\n\\tablefoot{Columns up to $E$ were computed in \\cite{MCC2023}. Most of the $v \\sin{i}$ values are from \\cite{Holgado2022}. The complete version of this table, including the 214 normal and runaway stars with additional parameters and precision, is available at the CDS.}\n\\end{table*}"
+                }
+            ],
+            "evidence": "\\hline\n\\end{tabular}}\n\\tablefoot{Columns up to $E$ were computed in \\cite{MCC2023}. Most of the $v \\sin{i}$ values are from \\cite{Holgado2022}. The complete version of this table, including the 214 normal and runaway stars with additional parameters and precision, is available at the CDS.}\n\\end{table*}",
+            "comments": ""
+        }
+    ]
+}

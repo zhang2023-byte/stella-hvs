@@ -1,0 +1,1125 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:56:02",
+  "paper": {
+    "arxiv_id": "2302.01349",
+    "title": "The IACOB project VIII. Searching for empirical signatures of binarity in fast-rotating O-type stars",
+    "month": "2023-02"
+  },
+  "review": {
+    "path": "literature/2302.01349/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225602",
+    "started_at": "2026-05-22T22:56:02",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2302.01349",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 7,
+      "work_count": 7,
+      "table_count": 7,
+      "success_count": 7,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 7,
+      "file_success_count": 7,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table-b_fast",
+      "internal_table_id": "table-table-b_fast",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+        "start_line": 225,
+        "end_line": 296,
+        "caption": "Basic information about working sample of fast-rotating O-type stars extracted from the multi-epoch spectroscopy, TESS and Gaia data, as well as some other specific studies from the literature. The list of targets is ordered by increasing vsini.",
+        "label": "table:b_fast"
+      },
+      "source_path": "literature/2302.01349/arxiv_source/45145corr.tex",
+      "excerpt_path": "literature/2302.01349/catalog_sources/table-table-b_fast/excerpt.tex",
+      "sha256": "c943960530dba77dd96bc395f04cdac1fcb60364c8cc54724b97c01374d9cccd",
+      "line_count": 72,
+      "error": ""
+    },
+    {
+      "id": "table-table-fast_stat",
+      "internal_table_id": "table-table-fast_stat",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+        "start_line": 788,
+        "end_line": 815,
+        "caption": "Some statistics of interest for the cleaned slow- and fast-rotating samples (i.e. excluding three stars with V>10 and/or d>3 kpc from the initial sample, see text).",
+        "label": "table:fast_stat"
+      },
+      "source_path": "literature/2302.01349/arxiv_source/45145corr.tex",
+      "excerpt_path": "literature/2302.01349/catalog_sources/table-table-fast_stat/excerpt.tex",
+      "sha256": "1ca480aa4caa1d656b0928040b9635495edd83180bebce6c9326487e1d714d28",
+      "line_count": 28,
+      "error": ""
+    },
+    {
+      "id": "table-table-sb1_fast",
+      "internal_table_id": "table-table-sb1_fast",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+        "start_line": 879,
+        "end_line": 928,
+        "caption": "Some information of interest for the nine 'bona fide' SB1 systems found among the fast-rotating sample, ordered by increasing vsini estimates.",
+        "label": "table:sb1_fast"
+      },
+      "source_path": "literature/2302.01349/arxiv_source/45145corr.tex",
+      "excerpt_path": "literature/2302.01349/catalog_sources/table-table-sb1_fast/excerpt.tex",
+      "sha256": "a5242fb773846d956aefc365171319c9eda0b69206ecd584cb4a1d83530c8b82",
+      "line_count": 50,
+      "error": ""
+    },
+    {
+      "id": "table-table-sample",
+      "internal_table_id": "table-table-sample",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+        "start_line": 1301,
+        "end_line": 1368,
+        "caption": "Number of available spectra and total time-span of the compiled spectroscopic observations for the main working sample of 50 fast-rotating Galactic O-type stars ordered by increasing the vsini estimates. For completeness, the four SB2 systems identified as having at least one of the components with a vsini larger than 200 km/s are quoted at the bottom of the table.",
+        "label": "table:sample"
+      },
+      "source_path": "literature/2302.01349/arxiv_source/45145corr.tex",
+      "excerpt_path": "literature/2302.01349/catalog_sources/table-table-sample/excerpt.tex",
+      "sha256": "3e6418fa8d438aae7d4c4571f0366362532a92552023edf8c84b95956d333b0f",
+      "line_count": 68,
+      "error": ""
+    },
+    {
+      "id": "table-table-phys_parameters",
+      "internal_table_id": "table-table-phys_parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+        "start_line": 1372,
+        "end_line": 1436,
+        "caption": "Basic information about fundamental physical parameters of our sample of fast-rotating O-type stars ordered by increasing the vsini estimates. Extracted from Holgado PhD and Holgado+2020.",
+        "label": "table:phys_parameters"
+      },
+      "source_path": "literature/2302.01349/arxiv_source/45145corr.tex",
+      "excerpt_path": "literature/2302.01349/catalog_sources/table-table-phys_parameters/excerpt.tex",
+      "sha256": "8546106a4c3affd78183c1cf92ba8fb0181f10975dae4994de2a00068fa53e5e",
+      "line_count": 65,
+      "error": ""
+    },
+    {
+      "id": "table-table-info_imaging",
+      "internal_table_id": "table-table-info_imaging",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+        "start_line": 1440,
+        "end_line": 1481,
+        "caption": "Information about visible components for our sample of fast rotators. Only those cases with detected companions within 2 arcmin and having a difference in magnitude smaller than 3 mag are quoted in this table.",
+        "label": "table:info_imaging"
+      },
+      "source_path": "literature/2302.01349/arxiv_source/45145corr.tex",
+      "excerpt_path": "literature/2302.01349/catalog_sources/table-table-info_imaging/excerpt.tex",
+      "sha256": "d93fc2984129cccffd3ebaa0305df1024bda1c6841bb79008615a1c39db8d897",
+      "line_count": 42,
+      "error": ""
+    },
+    {
+      "id": "table-tab-app-eb-ev",
+      "internal_table_id": "table-tab-app-eb-ev",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2302.01349/arxiv_source/45145corr.tex",
+        "start_line": 1483,
+        "end_line": 1503,
+        "caption": "Some information of interest for the SB1 stars in the low vsini sample for which we have detected signatures of eclipses or ellipsoidal/reflection modulation in their TESS light curves.",
+        "label": "tab-app-eb-ev"
+      },
+      "source_path": "literature/2302.01349/arxiv_source/45145corr.tex",
+      "excerpt_path": "literature/2302.01349/catalog_sources/table-tab-app-eb-ev/excerpt.tex",
+      "sha256": "a078cd523fa443c19c5875b8d937c3621988d875f588165047d4092b60053202",
+      "line_count": 21,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table-b_fast",
+      "internal_table_id": "table-table-b_fast",
+      "status": "success",
+      "ecsv_path": "literature/2302.01349/catalog_tables/table-table-b_fast.ecsv",
+      "caption": "Basic information about working sample of fast-rotating O-type stars extracted from the multi-epoch spectroscopy, TESS and Gaia data, as well as some other specific studies from the literature. The list of targets is ordered by increasing vsini.",
+      "label": "table:b_fast",
+      "row_count": 51,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "SpC",
+          "\\vsini",
+          "RV PP",
+          "\\sigma_\\rm RV",
+          "SB tag",
+          "Phot. var.",
+          "X-ray",
+          "Contamination",
+          "Runaway?",
+          "Final binary"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "SpC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\vsini",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RV PP",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma_\\rm RV",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "SB tag",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Phot. var.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "X-ray",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Contamination",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Runaway?",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Final binary",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphw69n7pv/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2302.01349/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphw69n7pv/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2302.01349/catalog_sources/table-table-b_fast/wrapped.tex",
+            "html": "literature/2302.01349/catalog_sources/table-table-b_fast/latexml.html",
+            "stdout": "literature/2302.01349/catalog_sources/table-table-b_fast/latexml.stdout.txt",
+            "stderr": "literature/2302.01349/catalog_sources/table-table-b_fast/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c943960530dba77dd96bc395f04cdac1fcb60364c8cc54724b97c01374d9cccd"
+    },
+    {
+      "id": "table-table-fast_stat",
+      "internal_table_id": "table-table-fast_stat",
+      "status": "success",
+      "ecsv_path": "literature/2302.01349/catalog_tables/table-table-fast_stat.ecsv",
+      "caption": "Some statistics of interest for the cleaned slow- and fast-rotating samples (i.e. excluding three stars with V>10 and/or d>3 kpc from the initial sample, see text).",
+      "label": "table:fast_stat",
+      "row_count": 8,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwnfswkjz/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2302.01349/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpwnfswkjz/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2302.01349/catalog_sources/table-table-fast_stat/wrapped.tex",
+            "html": "literature/2302.01349/catalog_sources/table-table-fast_stat/latexml.html",
+            "stdout": "literature/2302.01349/catalog_sources/table-table-fast_stat/latexml.stdout.txt",
+            "stderr": "literature/2302.01349/catalog_sources/table-table-fast_stat/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "1ca480aa4caa1d656b0928040b9635495edd83180bebce6c9326487e1d714d28"
+    },
+    {
+      "id": "table-table-sb1_fast",
+      "internal_table_id": "table-table-sb1_fast",
+      "status": "success",
+      "ecsv_path": "literature/2302.01349/catalog_tables/table-table-sb1_fast.ecsv",
+      "caption": "Some information of interest for the nine 'bona fide' SB1 systems found among the fast-rotating sample, ordered by increasing vsini estimates.",
+      "label": "table:sb1_fast",
+      "row_count": 22,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgkrnm0xd/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2302.01349/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgkrnm0xd/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2302.01349/catalog_sources/table-table-sb1_fast/wrapped.tex",
+            "html": "literature/2302.01349/catalog_sources/table-table-sb1_fast/latexml.html",
+            "stdout": "literature/2302.01349/catalog_sources/table-table-sb1_fast/latexml.stdout.txt",
+            "stderr": "literature/2302.01349/catalog_sources/table-table-sb1_fast/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a5242fb773846d956aefc365171319c9eda0b69206ecd584cb4a1d83530c8b82"
+    },
+    {
+      "id": "table-table-sample",
+      "internal_table_id": "table-table-sample",
+      "status": "success",
+      "ecsv_path": "literature/2302.01349/catalog_tables/table-table-sample.ecsv",
+      "caption": "Number of available spectra and total time-span of the compiled spectroscopic observations for the main working sample of 50 fast-rotating Galactic O-type stars ordered by increasing the vsini estimates. For completeness, the four SB2 systems identified as having at least one of the components with a vsini larger than 200 km/s are quoted at the bottom of the table.",
+      "label": "table:sample",
+      "row_count": 55,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "SpC",
+          "# sp.",
+          "# sp.",
+          "# sp.",
+          "# sp.",
+          "# Total sp.",
+          "Time-span"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "SpC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "# sp.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "# sp.",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "# sp.",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "# sp.",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "# Total sp.",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Time-span",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb1i6kwks/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2302.01349/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb1i6kwks/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2302.01349/catalog_sources/table-table-sample/wrapped.tex",
+            "html": "literature/2302.01349/catalog_sources/table-table-sample/latexml.html",
+            "stdout": "literature/2302.01349/catalog_sources/table-table-sample/latexml.stdout.txt",
+            "stderr": "literature/2302.01349/catalog_sources/table-table-sample/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3e6418fa8d438aae7d4c4571f0366362532a92552023edf8c84b95956d333b0f"
+    },
+    {
+      "id": "table-table-phys_parameters",
+      "internal_table_id": "table-table-phys_parameters",
+      "status": "success",
+      "ecsv_path": "literature/2302.01349/catalog_tables/table-table-phys_parameters.ecsv",
+      "caption": "Basic information about fundamental physical parameters of our sample of fast-rotating O-type stars ordered by increasing the vsini estimates. Extracted from Holgado PhD and Holgado+2020.",
+      "label": "table:phys_parameters",
+      "row_count": 50,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "\\Teff",
+          "log( \\mathcalL/L_\\odot )",
+          "R",
+          "log( L / L_\\odot )",
+          "v_\\rm crit",
+          "\\vsini / v_\\rm crit",
+          "RUWE",
+          "distBJ"
+        ],
+        [
+          "",
+          "[kK]",
+          "[dex]",
+          "[ R_\\odot ]",
+          "[dex]",
+          "[km s^-1]",
+          "",
+          "[kpc]",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\Teff | [kK]",
+          "unit_text": "[kK]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "log( \\mathcalL/L_\\odot ) | [dex]",
+          "unit_text": "[dex]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "R | [ R_\\odot ]",
+          "unit_text": "[ R_\\odot ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "log( L / L_\\odot ) | [dex]",
+          "unit_text": "[dex]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v_\\rm crit | [km s^-1]",
+          "unit_text": "[km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\vsini / v_\\rm crit",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "RUWE | [kpc]",
+          "unit_text": "[kpc]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "distBJ",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4m2r0_65/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2302.01349/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp4m2r0_65/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2302.01349/catalog_sources/table-table-phys_parameters/wrapped.tex",
+            "html": "literature/2302.01349/catalog_sources/table-table-phys_parameters/latexml.html",
+            "stdout": "literature/2302.01349/catalog_sources/table-table-phys_parameters/latexml.stdout.txt",
+            "stderr": "literature/2302.01349/catalog_sources/table-table-phys_parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8546106a4c3affd78183c1cf92ba8fb0181f10975dae4994de2a00068fa53e5e"
+    },
+    {
+      "id": "table-table-info_imaging",
+      "internal_table_id": "table-table-info_imaging",
+      "status": "success",
+      "ecsv_path": "literature/2302.01349/catalog_tables/table-table-info_imaging.ecsv",
+      "caption": "Information about visible components for our sample of fast rotators. Only those cases with detected companions within 2 arcmin and having a difference in magnitude smaller than 3 mag are quoted in this table.",
+      "label": "table:info_imaging",
+      "row_count": 27,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp90nxoyug/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2302.01349/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp90nxoyug/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2302.01349/catalog_sources/table-table-info_imaging/wrapped.tex",
+            "html": "literature/2302.01349/catalog_sources/table-table-info_imaging/latexml.html",
+            "stdout": "literature/2302.01349/catalog_sources/table-table-info_imaging/latexml.stdout.txt",
+            "stderr": "literature/2302.01349/catalog_sources/table-table-info_imaging/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d93fc2984129cccffd3ebaa0305df1024bda1c6841bb79008615a1c39db8d897"
+    },
+    {
+      "id": "table-tab-app-eb-ev",
+      "internal_table_id": "table-tab-app-eb-ev",
+      "status": "success",
+      "ecsv_path": "literature/2302.01349/catalog_tables/table-tab-app-eb-ev.ecsv",
+      "caption": "Some information of interest for the SB1 stars in the low vsini sample for which we have detected signatures of eclipses or ellipsoidal/reflection modulation in their TESS light curves.",
+      "label": "tab-app-eb-ev",
+      "row_count": 7,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "SpC",
+          "\\vsini",
+          "\\RVpp",
+          "P",
+          "Phot."
+        ],
+        [
+          "",
+          "",
+          "[km s^-1]",
+          "[km s^-1]",
+          "[d]",
+          "var. tag"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "SpC",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\vsini | [km s^-1]",
+          "unit_text": "[km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\RVpp | [km s^-1]",
+          "unit_text": "[km s^-1]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "P | [d]",
+          "unit_text": "[d]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Phot. | var. tag",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa_lde7za/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2302.01349/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa_lde7za/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2302.01349/catalog_sources/table-tab-app-eb-ev/wrapped.tex",
+            "html": "literature/2302.01349/catalog_sources/table-tab-app-eb-ev/latexml.html",
+            "stdout": "literature/2302.01349/catalog_sources/table-tab-app-eb-ev/latexml.stdout.txt",
+            "stderr": "literature/2302.01349/catalog_sources/table-tab-app-eb-ev/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a078cd523fa443c19c5875b8d937c3621988d875f588165047d4092b60053202"
+    }
+  ]
+}

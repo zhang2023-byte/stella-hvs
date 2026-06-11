@@ -1,0 +1,293 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:32:35",
+  "paper": {
+    "arxiv_id": "1810.02029",
+    "title": "Origin of a massive hyper-runaway subgiant star LAMOST-HVS1 -- implication from Gaia and follow-up spectroscopy",
+    "month": "2018-10"
+  },
+  "review": {
+    "path": "literature/1810.02029/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083235",
+    "started_at": "2026-06-07T08:32:35",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1810.02029",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table-stellar_parameters",
+      "internal_table_id": "table-table-stellar_parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.02029/arxiv_source/tab1.tex",
+        "start_line": 2,
+        "end_line": 59,
+        "caption": "Basic properties of LAMOST-HVS1 \\label{table:stellar_parameters}",
+        "label": "table:stellar_parameters"
+      },
+      "source_path": "literature/1810.02029/arxiv_source/tab1.tex",
+      "excerpt_path": "literature/1810.02029/catalog_sources/table-table-stellar_parameters/excerpt.tex",
+      "sha256": "50a0c702882177f5a512ffae5f05b8cfaa0c560849e731f1d44e41be115e9e18",
+      "line_count": 58,
+      "error": ""
+    },
+    {
+      "id": "table-table-abundances",
+      "internal_table_id": "table-table-abundances",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1810.02029/arxiv_source/tab2.tex",
+        "start_line": 2,
+        "end_line": 65,
+        "caption": "Chemical abundances of LAMOST-HVS1 \\label{table:abundances}",
+        "label": "table:abundances"
+      },
+      "source_path": "literature/1810.02029/arxiv_source/tab2.tex",
+      "excerpt_path": "literature/1810.02029/catalog_sources/table-table-abundances/excerpt.tex",
+      "sha256": "5f83b12f889bbd5655b74d5fbe6c78b219be7d10293af3e1f1cb24ae22b19a43",
+      "line_count": 64,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table-stellar_parameters",
+      "internal_table_id": "table-table-stellar_parameters",
+      "status": "success",
+      "ecsv_path": "literature/1810.02029/catalog_tables/table-table-stellar_parameters.ecsv",
+      "caption": "Basic properties of LAMOST-HVS1 \\label{table:stellar_parameters}",
+      "label": "table:stellar_parameters",
+      "row_count": 27,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia data",
+          "LAMOST-HVS1"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia data",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "LAMOST-HVS1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm4s7daei/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.02029/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm4s7daei/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.02029/catalog_sources/table-table-stellar_parameters/wrapped.tex",
+            "html": "literature/1810.02029/catalog_sources/table-table-stellar_parameters/latexml.html",
+            "stdout": "literature/1810.02029/catalog_sources/table-table-stellar_parameters/latexml.stdout.txt",
+            "stderr": "literature/1810.02029/catalog_sources/table-table-stellar_parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "50a0c702882177f5a512ffae5f05b8cfaa0c560849e731f1d44e41be115e9e18"
+    },
+    {
+      "id": "table-table-abundances",
+      "internal_table_id": "table-table-abundances",
+      "status": "success",
+      "ecsv_path": "literature/1810.02029/catalog_tables/table-table-abundances.ecsv",
+      "caption": "Chemical abundances of LAMOST-HVS1 \\label{table:abundances}",
+      "label": "table:abundances",
+      "row_count": 5,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "",
+          "LAMOST-HVS1",
+          "",
+          "",
+          "B stars",
+          "",
+          "",
+          "Sun"
+        ],
+        [
+          "X",
+          "",
+          "[X/H] (a)",
+          "A(X)",
+          "",
+          "\\langleA_B^3\\kpc(X)\\rangle",
+          "\\langleA_B^8\\kpc(X)\\rangle",
+          "",
+          "A ⊙ (X)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "X",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "LAMOST-HVS1 | [X/H] (a)",
+          "unit_text": "[X/H] (a)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "A(X)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "B stars | \\langleA_B^3\\kpc(X)\\rangle",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\langleA_B^8\\kpc(X)\\rangle",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Sun | A ⊙ (X)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfhlibpsx/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1810.02029/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpfhlibpsx/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1810.02029/catalog_sources/table-table-abundances/wrapped.tex",
+            "html": "literature/1810.02029/catalog_sources/table-table-abundances/latexml.html",
+            "stdout": "literature/1810.02029/catalog_sources/table-table-abundances/latexml.stdout.txt",
+            "stderr": "literature/1810.02029/catalog_sources/table-table-abundances/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5f83b12f889bbd5655b74d5fbe6c78b219be7d10293af3e1f1cb24ae22b19a43"
+    }
+  ]
+}

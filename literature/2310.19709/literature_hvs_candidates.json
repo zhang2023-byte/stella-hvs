@@ -1,0 +1,47 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:26:23",
+  "paper": {
+    "arxiv_id": "2310.19709",
+    "bibcode": "2023AstL...49..410B",
+    "title": "Peculiarities of Open Star Clusters with High Vertical Velocities from the Region of the Sco-Cen OB Association",
+    "month": "2023-10",
+    "source_note_json": "notes/2023/2023-10/2023-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2310.19709",
+      "pdf": "https://arxiv.org/pdf/2310.19709"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2310.19709",
+    "audit_path": "literature/2310.19709/audit.json",
+    "catalog_review_path": "literature/2310.19709/catalog_review.json",
+    "catalog_extraction_path": "literature/2310.19709/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:26:23",
+    "extractor": "agent",
+    "summary": "This paper uses the Ogorodnikov-Milne model to study the kinematic features of young open clusters and member stars with high vertical velocities (15<W<40 km/s) in the Sco-Cen OB association region. The study finds cluster expansion along the y-axis (dV/dy=51+/-12 km/s/kpc) and rotation about the z and x axes in this region. It also analyzes ~1700 Sco-Cen member stars selected by Luhman (2022). The entire paper focuses on expansion coefficients, rotation, and velocity gradient analysis of clusters and associations; the vertical velocities are far below the Galactic escape velocity (~500 km/s). The paper does not mention hypervelocity stars (HVS), Galactic escape/unbound, or unbound objects. No HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2310.19709:group-01",
+      "description": "47 young open clusters with high vertical velocities (15<W<40 km/s) in the Sco-Cen region, plus 27 clusters in the Per OB3-Per OB2 region. The paper also analyzed the kinematics of ~1700 Sco-Cen member stars selected by Luhman (2022). All these objects have velocities within the normal range for Galactic disk stars, far below the Galactic escape velocity.",
+      "decision": "rejected",
+      "reason": "All objects studied in this paper have vertical velocities in the range 15-40 km/s, belonging to the normal kinematic range of Galactic disk stars, far below the Galactic escape velocity (~500 km/s). The paper focuses entirely on using the Ogorodnikov-Milne model to analyze kinematic parameters such as expansion coefficients and angular rotation velocities of clusters and associations, and does not involve hypervelocity stars (HVS), Galactic escape, or unbound objects. No stars are identified as Galactic-unbound.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2310.19709/arxiv_source/ArX_Sc0-Cen.tex",
+          "start_line": 1,
+          "end_line": 130,
+          "context": "全文研究高垂直速度(15<W<40 km/s)疏散星团的Ogorodnikov-Milne模型运动学分析，包括膨胀系数、旋转参数等。未提及HVS、银河系逃逸或非束缚天体。"
+        }
+      ]
+    }
+  ]
+}

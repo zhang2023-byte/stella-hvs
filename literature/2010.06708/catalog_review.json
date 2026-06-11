@@ -1,0 +1,229 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2010.06708",
+    "title": "BD+14°3061: A Luminous Yellow Post-AGB Star in the Galactic Halo",
+    "month": "2020-10",
+    "source_note_json": "notes/2020/2020-10/2020-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2010.06708",
+      "pdf": "https://arxiv.org/pdf/2010.06708"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2010.06708",
+    "audit_path": "literature/2010.06708/audit.json",
+    "source_dir": "literature/2010.06708/arxiv_source",
+    "tex_root": "literature/2010.06708/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:48:13",
+    "reviewer": "agent",
+    "summary": "本文报道了银河系晕中一颗亮黄色后渐近巨星支（PAGB）恒星 BD+14°3061 的发现。论文包含2个内部LaTeX表格：Table 1（table:basicdata）汇总该星基础天体测量（Gaia DR2视差、自行、视向速度、空间速度）、Strömgren uvby测光和导出量（红化、绝对星等）；Table 2（table:rvs）列出32次SMARTS 1.5-m光谱仪视向速度测量及其不确定度，用于探测视向速度变化并拟合出429.6天的暂定轨道周期。外部资源包括7个数据访问URL：VizieR（Gaia DR2星表查询）、Stilism在线消光工具、GALEX紫外测光、2MASS近红外测光、WISE中红外测光、APASS光学测光、ASAS V波段光变曲线。SMARTS望远镜主页和Gaia致谢中的ESA/DPAC链接为设施说明和通用致谢，非本文独特数据资产，已移除。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-table-basicdata",
+      "kind": "latex_table",
+      "asset_type": "object_data",
+      "role_in_paper": "汇总BD+14°3061的基础天体测量（Gaia DR2自行、视差、视向速度、空间速度分量）、Strömgren uvby测光和导出量（红化E(B-V)、绝对星等M_V），是全文的基础参考数据表。",
+      "source_refs": [
+        {
+          "path": "literature/2010.06708/arxiv_source/main.tex",
+          "start_line": 112,
+          "end_line": 146,
+          "caption": "Basic Data for BD+14°3061 \\label{table:basicdata}",
+          "label": "table:basicdata"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "BD+14°3061的各项基本参数名称，包括坐标、视差、自行、视向速度、空间速度、测光和导出量",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "对应参数的测量值或导出值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Source",
+          "meaning": "数据来源编号：(1) Gaia DR2, (2) 基于Gaia天体测量和视向速度计算的空间速度分量, (3) 本文Strömgren测光, (4) Stilism在线工具, (5) 本文基于表内数据计算",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1共12行，给出BD+14°3061的J2000坐标、Gaia DR2视差(0.251±0.032 mas)、自行、视向速度(-65.0±1.0 km/s)、空间速度(U,V,W)=(-120,-290,-51) km/s、Strömgren V=9.490±0.012及(b-y, m1, c1)色指数、E(B-V)=0.053、M_V=-3.44±0.27。",
+      "comments": ""
+    },
+    {
+      "id": "table-table-rvs",
+      "kind": "latex_table",
+      "asset_type": "radial_velocity_measurements",
+      "role_in_paper": "列出2003-2011年间SMARTS 1.5-m望远镜对BD+14°3061的32次视向速度测量及其不确定度，是探测视向速度变化、拟合429.6天轨道周期的基础数据。",
+      "source_refs": [
+        {
+          "path": "literature/2010.06708/arxiv_source/main.tex",
+          "start_line": 373,
+          "end_line": 419,
+          "caption": "SMARTS 1.5-m Radial Velocities of BD+14°3061 \\label{table:rvs}",
+          "label": "table:rvs"
+        }
+      ],
+      "columns": [
+        {
+          "name": "HJD-2400000",
+          "meaning": "日心儒略日减去2,400,000，即每次视向速度测量的历元",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Radial Velocity",
+          "meaning": "BD+14°3061的日心视向速度测量值",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Uncertainty",
+          "meaning": "视向速度测量的1-σ不确定度，典型值约±8-9 km/s",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 2共32行，历元覆盖HJD 2452692.9-2455816.5（2003年2月至2011年9月），视向速度范围-53.51至-89.67 km/s，典型不确定度8-9 km/s。正弦拟合得周期P=429.6±6.4天、半振幅K₁=7.5±2.0 km/s、质心速度γ=-66.0±1.6 km/s。",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://vizier.cfa.harvard.edu/viz-bin/VizieR-3?-source=I/345/gaia2",
+      "local_path": "",
+      "description": "VizieR访问Gaia DR2星表（I/345/gaia2），论文从此获取BD+14°3061的天体测量数据（视差、自行、视向速度）",
+      "source_refs": [
+        {
+          "path": "literature/2010.06708/arxiv_source/main.tex",
+          "start_line": 107,
+          "end_line": 107,
+          "context": "The astrometric measurements are from the Gaia Data Release~2 (DR2; \\citealt{Gaia2018}).\\footnote{\\url{http://vizier.cfa.harvard.edu/viz-bin/VizieR-3?-source=I/345/gaia2}}"
+        }
+      ],
+      "evidence": "Table 1中第1-6行数据来源标注为(1) Gaia DR2，脚注给出VizieR查询URL。",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://stilism.obspm.fr/",
+      "local_path": "",
+      "description": "Stilism在线星际消光工具，论文用其估算BD+14°3061及两颗原型星（HD 46703、BD+39°4926）在给定银道位置和距离处的色余E(B-V)",
+      "source_refs": [
+        {
+          "path": "literature/2010.06708/arxiv_source/main.tex",
+          "start_line": 160,
+          "end_line": 160,
+          "context": "I corrected the photometry for all three stars for interstellar reddening, using the {\\tt Stilism} online tool\\footnote{\\url{https://stilism.obspm.fr/}} \\citep{Capitanio2017}, which estimates reddening, $E(B-V)$, at any given Galactic position and distance"
+        }
+      ],
+      "evidence": "论文明确使用Stilism得到BD+14°3061的E(B-V)=0.053，用于Strömgren色指数和SED的红化改正。",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://galex.stsci.edu/GalexView/",
+      "local_path": "",
+      "description": "GALEX卫星远紫外和近紫外测光数据查询页面，论文用其获取BD+14°3061的FUV和NUV流量构建SED",
+      "source_refs": [
+        {
+          "path": "literature/2010.06708/arxiv_source/main.tex",
+          "start_line": 262,
+          "end_line": 262,
+          "context": "(1)~{\\it GALEX} \\citep{Morrissey2007} far- and near-UV fluxes\\footnote{\\url{https://galex.stsci.edu/GalexView/}}"
+        }
+      ],
+      "evidence": "论文SED构建明确列出GALEX FUV/NUV为第一项数据源，对应脚注URL。",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-scan?submit=Select&projshort=2MASS",
+      "local_path": "",
+      "description": "IRSA Gator查询2MASS近红外巡天JHKs星等数据，论文用其构建BD+14°3061的SED近红外部分",
+      "source_refs": [
+        {
+          "path": "literature/2010.06708/arxiv_source/main.tex",
+          "start_line": 262,
+          "end_line": 262,
+          "context": "(4)~magnitudes\\footnote{\\url{https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-scan?submit=Select&projshort=2MASS}} in the 2MASS \\citep{Skrutskie2006} near-IR bands ($J,H,K_s$)"
+        }
+      ],
+      "evidence": "论文SED构建明确列出2MASS JHKs为第四项数据源，对应脚注URL。",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-scan?submit=Select&projshort=WISE",
+      "local_path": "",
+      "description": "IRSA Gator查询WISE中红外巡天四波段（3.4-22 μm）星等数据，论文用其构建BD+14°3061的SED中红外部分以检验星周尘埃",
+      "source_refs": [
+        {
+          "path": "literature/2010.06708/arxiv_source/main.tex",
+          "start_line": 262,
+          "end_line": 262,
+          "context": "(5)~magnitudes\\footnote{\\url{https://irsa.ipac.caltech.edu/cgi-bin/Gator/nph-scan?submit=Select&projshort=WISE}} in the four {\\it WISE} \\citep{Wright2010} mid-IR bands"
+        }
+      ],
+      "evidence": "论文SED构建明确列出WISE四波段为第五项数据源，对应脚注URL。SED拟合显示无红外超量，表明无星周尘埃。",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://www.aavso.org/apass",
+      "local_path": "",
+      "description": "AAVSO Photometric All-Sky Survey (APASS) 数据主页，论文用其获取BD+14°3061的SDSS ugriz星等以构建SED光学部分",
+      "source_refs": [
+        {
+          "path": "literature/2010.06708/arxiv_source/main.tex",
+          "start_line": 262,
+          "end_line": 262,
+          "context": "(2)~magnitudes\\footnote{\\url{https://www.aavso.org/apass}} in the Sloan Digital Sky Survey bandpasses ({\\it ugriz}) from the AAVSO Photometric All-Sky Survey (APASS)"
+        }
+      ],
+      "evidence": "论文SED构建明确列出APASS ugriz为第二项数据源，对应脚注URL。",
+      "comments": ""
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "http://www.astrouw.edu.pl/cgi-asas/asas_variable/162949+1415.7,asas3,0,0,500,0,0",
+      "local_path": "",
+      "description": "ASAS巡天BD+14°3061的V波段光变曲线查询页面，论文下载2003-2009年共7个观测季的V波段时序测光数据，用于分析该星的脉动变光性质（半规则变星，典型周期30-32天）",
+      "source_refs": [
+        {
+          "path": "literature/2010.06708/arxiv_source/main.tex",
+          "start_line": 296,
+          "end_line": 296,
+          "context": "I downloaded photometric data obtained by the All Sky Automated Survey (ASAS; \\citealt{Pojmanski1997}).\\footnote{\\url{http://www.astrouw.edu.pl/cgi-asas/asas_variable/162949+1415.7,asas3,0,0,500,0,0}}"
+        }
+      ],
+      "evidence": "论文使用ASAS V波段数据绘制7季光变曲线（Figure 4），周期图分析得到典型周期30-32天，峰峰振幅可达~0.2 mag。",
+      "comments": ""
+    }
+  ]
+}

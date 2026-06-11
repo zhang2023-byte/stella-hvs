@@ -1,0 +1,769 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:42:16",
+  "paper": {
+    "arxiv_id": "1810.02029",
+    "bibcode": "2019ApJ...873..116H",
+    "title": "Origin of a massive hyper-runaway subgiant star LAMOST-HVS1 -- implication from Gaia and follow-up spectroscopy",
+    "month": "2018-10",
+    "source_note_json": "notes/2018/2018-10/2018-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1810.02029",
+      "pdf": "https://arxiv.org/pdf/1810.02029"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1810.02029",
+    "audit_path": "literature/1810.02029/audit.json",
+    "catalog_review_path": "literature/1810.02029/catalog_review.json",
+    "catalog_extraction_path": "literature/1810.02029/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1810.02029/catalog_tables/table-table-stellar_parameters.ecsv",
+      "literature/1810.02029/catalog_tables/table-table-abundances.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-06-07T10:42:16",
+    "extractor": "agent",
+    "summary": "LAMOST-HVS1: massive (8.3 Msun) B-type hyper-runaway subgiant ejected from inner Galactic disk with V_ej^int~568 km/s. Gaia DR2 rules out GC origin. Ejected ~33 Myr ago from R_ej~2.9 kpc via dynamical ejection (3/4-body interaction). Super-Solar metallicity. Total velocity ~553 km/s. First confirmed massive hyper-runaway star from the Galactic stellar disk."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR2 astrometry (Gaia DR2 590511484409775360): mu_alpha*=-3.54±0.11 mas/yr, mu_delta=-0.62±0.09 mas/yr. Parallax negative/unreliable. MIKE/Magellan high-resolution spectroscopy.",
+      "inputs": [
+        "Gaia DR2",
+        "MIKE/Magellan",
+        "LAMOST"
+      ],
+      "outputs": [
+        "Astrometric and spectroscopic input data"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 286,
+          "end_line": 302,
+          "context": "Sec 2: Gaia DR2 data"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.02029/arxiv_source/tab1.tex",
+          "start_line": 1,
+          "end_line": 60,
+          "context": "Tab. 1: Stellar parameters"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [],
+      "step_type": "distance_estimation",
+      "summary": "Spectrophotometric distance from FASTWIND SED fitting to BVI+2MASS photometry. d_spec=19.1(+5.1/-3.8) kpc. Then refined via orbital analysis to d=13.4(+1.7/-1.5) kpc.",
+      "inputs": [
+        "Teff, logg, R*",
+        "FASTWIND SED",
+        "Optical/IR photometry"
+      ],
+      "outputs": [
+        "Distance"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 479,
+          "end_line": 501,
+          "context": "Sec 3.2: Distance estimation"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.02029/arxiv_source/tab1.tex",
+          "start_line": 44,
+          "end_line": 49,
+          "context": "Tab. 1: d_spec and d"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [],
+      "step_type": "stellar_parameter_inference",
+      "summary": "FASTWIND atmosphere models + IACOB-BROAD. Teff=18100±400 K, logg=3.42±0.065. Mass=8.3(+0.5/-0.4) Msun, age=37.4(+4.0/-3.7) Myr. v sin i=130±20 km/s. Super-Solar metallicity. Ruled out BHB star. v_los=615±5 km/s.",
+      "inputs": [
+        "MIKE spectrum",
+        "FASTWIND",
+        "IACOB-BROAD"
+      ],
+      "outputs": [
+        "Teff, logg, mass, age, radius, abundances, v_los"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 420,
+          "end_line": 501,
+          "context": "Sec 3.2: Spectral analysis"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 505,
+          "end_line": 578,
+          "context": "Sec 3.2.1: Not a BHB star"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [],
+      "step_type": "radial_velocity_measurement",
+      "summary": "Heliocentric line-of-sight velocity from MIKE spectroscopy: v_los=615±5 km/s, consistent with LAMOST (611.65±4.63 km/s).",
+      "inputs": [
+        "MIKE spectrum"
+      ],
+      "outputs": [
+        "v_los"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 467,
+          "end_line": 475,
+          "context": "Sec 3.2: v_los measurement"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": [],
+      "step_type": "galactic_potential_model",
+      "summary": "MWPotential2014 (Bovy 2015): R0=8.0 kpc, v0=220 km/s. Solar peculiar velocity (11.1, 12.24, 7.25) km/s (Schonrich 2010).",
+      "inputs": [
+        "MWPotential2014"
+      ],
+      "outputs": [
+        "Galactic potential"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 601,
+          "end_line": 638,
+          "context": "Sec 4.1: Model potential"
+        }
+      ]
+    },
+    {
+      "id": "step-06",
+      "depends_on": [
+        "step-01",
+        "step-02",
+        "step-03",
+        "step-04",
+        "step-05"
+      ],
+      "step_type": "orbit_integration",
+      "summary": "1M MC orbits → 371,047 intersect disk within 50 Myr → 103,636 selected with exp(-R_ej/2.5 kpc) prior. Backward integration for 50 Myr.",
+      "inputs": [
+        "6D phase space",
+        "MWPotential2014"
+      ],
+      "outputs": [
+        "Orbit ensemble, ejection parameters"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 765,
+          "end_line": 867,
+          "context": "Sec 4.2: Monte Carlo orbits"
+        }
+      ]
+    },
+    {
+      "id": "step-07",
+      "depends_on": [
+        "step-06"
+      ],
+      "step_type": "origin_assessment",
+      "summary": "Ejected from inner disk: R_ej=2.9(+2.5/-0.9) kpc. Flight time=33.3(+6.4/-5.0) Myr. V_ej^int=568(+19/-17) km/s. Not from GC (prograde orbit, L_z≠0). DEM (dynamical) favored over BEM (binary supernova). Ejection agent near Norma spiral arm.",
+      "inputs": [
+        "Orbit ensemble"
+      ],
+      "outputs": [
+        "Ejection location, velocity, flight time, origin mechanism"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 897,
+          "end_line": 1146,
+          "context": "Sec 5: Orbital results"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 1358,
+          "end_line": 1600,
+          "context": "Sec 6: Ejection mechanism"
+        }
+      ]
+    },
+    {
+      "id": "step-08",
+      "depends_on": [
+        "step-06",
+        "step-05"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Almost unbound. Total velocity v=553(+11/-9) km/s. Marginally bound/unbound depending on mass model. Hyper-runaway star.",
+      "inputs": [
+        "Current velocity",
+        "Galactic potential"
+      ],
+      "outputs": [
+        "Bound/unbound status"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 305,
+          "end_line": 324,
+          "context": "Sec 2.1: Hyper-runaway star"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.02029/arxiv_source/main.tex",
+          "start_line": 940,
+          "end_line": 950,
+          "context": "Sec 5.2: v=553 km/s"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "1810.02029:cand-001",
+        "paper_candidate_id": "LAMOST-HVS1",
+        "gaia_source_id": "Gaia DR2 590511484409775360",
+        "all": [
+          {
+            "value": "LAMOST-HVS1",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.02029/arxiv_source/main.tex",
+                "start_line": 64,
+                "end_line": 64,
+                "context": "LAMOST-HVS1 = 2MASS J09120652+0916216"
+              }
+            ]
+          },
+          {
+            "value": "2MASS J09120652+0916216",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.02029/arxiv_source/main.tex",
+                "start_line": 64,
+                "end_line": 64,
+                "context": "2MASS identifier for LAMOST-HVS1"
+              }
+            ]
+          },
+          {
+            "value": "Gaia DR2 590511484409775360",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.02029/arxiv_source/tab1.tex",
+                "start_line": 13,
+                "end_line": 13,
+                "context": "Tab. 1: Gaia DR2 source_id"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "LAMOST-HVS1: B-type subgiant, M~8.3 Msun, Teff~18100 K. v_los=615 km/s, d~13.4 kpc. V_ej^int~568 km/s from inner disk (R_ej~2.9 kpc, ejection ~33 Myr ago). Dynamical ejection, not binary supernova. Almost unbound. First confirmed massive hyper-runaway from disk.",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_candidate_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "Comprehensive analysis: high-resolution spectroscopy confirms massive star (not BHB); Gaia DR2 proper motion rules out GC origin; 1M MC orbit integrations constrain ejection parameters. Results robust.",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1810.02029/arxiv_source/main.tex",
+            "start_line": 132,
+            "end_line": 159,
+            "context": "Abstract"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1810.02029/arxiv_source/main.tex",
+            "start_line": 2400,
+            "end_line": 2477,
+            "context": "Sec 8: Conclusions"
+          },
+          {
+            "kind": "text",
+            "path": "literature/1810.02029/arxiv_source/tab1.tex",
+            "start_line": 1,
+            "end_line": 60,
+            "context": "Tab. 1: Parameters"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/1810.02029/arxiv_source/main.tex",
+            "start_line": 259,
+            "end_line": 264,
+            "context": "This paper investigates origin of LAMOST-HVS1"
+          }
+        ],
+        "citation": null
+      },
+      "core": {
+        "observed_phase_space": {
+          "ra": null,
+          "dec": null,
+          "distance": {
+            "raw_value": "13.4 (+1.7/-1.5)",
+            "value": "13.4",
+            "unit": "kpc",
+            "error": "",
+            "lower_error": "1.5",
+            "upper_error": "1.7",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.02029/arxiv_source/tab1.tex",
+                "start_line": 49,
+                "end_line": 49,
+                "context": "Tab. 1: d=13.3+1.7/-1.5 kpc"
+              }
+            ],
+            "method_refs": [
+              "step-02"
+            ]
+          },
+          "parallax": null,
+          "proper_motion_ra": {
+            "raw_value": "-3.54 ± 0.11",
+            "value": "-3.54",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.02029/arxiv_source/tab1.tex",
+                "start_line": 27,
+                "end_line": 28,
+                "context": "Tab. 1: mu_alpha*=-3.54±0.11 mas/yr"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "proper_motion_dec": {
+            "raw_value": "-0.62 ± 0.09",
+            "value": "-0.62",
+            "unit": "mas yr^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.02029/arxiv_source/tab1.tex",
+                "start_line": 29,
+                "end_line": 30,
+                "context": "Tab. 1: mu_delta=-0.62±0.09 mas/yr"
+              }
+            ],
+            "method_refs": [
+              "step-01"
+            ]
+          },
+          "radial_velocity": {
+            "raw_value": "615 ± 5",
+            "value": "615",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.02029/arxiv_source/tab1.tex",
+                "start_line": 36,
+                "end_line": 36,
+                "context": "Tab. 1: v_los=615±5 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "derived_kinematics": {
+          "galactocentric_x": null,
+          "galactocentric_y": null,
+          "galactocentric_z": null,
+          "galactocentric_vx": null,
+          "galactocentric_vy": null,
+          "galactocentric_vz": null,
+          "tangential_velocity": null,
+          "galactocentric_tangential_velocity": null,
+          "total_velocity": {
+            "raw_value": "553 (+11/-9)",
+            "value": "553",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "9",
+            "upper_error": "11",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.02029/arxiv_source/main.tex",
+                "start_line": 940,
+                "end_line": 950,
+                "context": "Sec 5.2: v=553+11/-9 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-08"
+            ]
+          },
+          "galactic_rest_frame_velocity": {
+            "raw_value": "615 ± 5",
+            "value": "615",
+            "unit": "km s^-1",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.02029/arxiv_source/tab1.tex",
+                "start_line": 36,
+                "end_line": 36,
+                "context": "Tab. 1: v_los=615±5 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-04"
+            ]
+          }
+        },
+        "bound_assessment": {
+          "escape_velocity": null,
+          "escape_velocity_ratio": null,
+          "escape_margin": null,
+          "bound_probability": null,
+          "unbound_probability": null,
+          "bound_status_metric": null
+        }
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "18100 ± 400",
+          "value": "18100",
+          "unit": "K",
+          "error": "",
+          "lower_error": "400",
+          "upper_error": "400",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.02029/arxiv_source/tab1.tex",
+              "start_line": 34,
+              "end_line": 34,
+              "context": "Tab. 1: Teff=18100±400 K"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "log_g": {
+          "raw_value": "3.42 ± 0.065",
+          "value": "3.42",
+          "unit": "dex",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.02029/arxiv_source/tab1.tex",
+              "start_line": 35,
+              "end_line": 35,
+              "context": "Tab. 1: logg=3.42±0.065"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "mass": {
+          "raw_value": "8.3 (+0.5/-0.4)",
+          "value": "8.3",
+          "unit": "Msun",
+          "error": "",
+          "lower_error": "0.4",
+          "upper_error": "0.5",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.02029/arxiv_source/tab1.tex",
+              "start_line": 41,
+              "end_line": 41,
+              "context": "Tab. 1: M*=8.3+0.5/-0.4 Msun"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "age": {
+          "raw_value": "37.4 (+4.0/-3.7)",
+          "value": "37.4",
+          "unit": "Myr",
+          "error": "",
+          "lower_error": "3.7",
+          "upper_error": "4.0",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.02029/arxiv_source/tab1.tex",
+              "start_line": 40,
+              "end_line": 40,
+              "context": "Tab. 1: Age=37.4+4.0/-3.7 Myr"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "radius": {
+          "raw_value": "9.3 (+1.0/-0.9)",
+          "value": "9.3",
+          "unit": "Rsun",
+          "error": "",
+          "lower_error": "0.9",
+          "upper_error": "1.0",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.02029/arxiv_source/tab1.tex",
+              "start_line": 42,
+              "end_line": 42,
+              "context": "Tab. 1: R*=9.3+1.0/-0.9 Rsun"
+            }
+          ],
+          "method_refs": [
+            "step-03"
+          ]
+        },
+        "metallicity": null,
+        "luminosity": null,
+        "spectral_type": null,
+        "other": []
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {
+        "flight_time": {
+          "raw_value": "33.3 (+6.4/-5.0)",
+          "value": "33.3",
+          "unit": "Myr",
+          "error": "",
+          "lower_error": "5.0",
+          "upper_error": "6.4",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.02029/arxiv_source/main.tex",
+              "start_line": 962,
+              "end_line": 969,
+              "context": "Sec 5.3: T_flight=33.3+6.4/-5.0 Myr"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "eccentricity": null,
+        "pericenter": null,
+        "apocenter": null,
+        "zmax": null,
+        "disk_crossing_radius": null,
+        "angular_momentum": null,
+        "other": []
+      },
+      "astrophysical_origin": {
+        "origin_site": {
+          "raw_value": "Ejected from inner Galactic disk at R_ej~2.9 kpc",
+          "value": "galactic_disk",
+          "unit": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.02029/arxiv_source/main.tex",
+              "start_line": 972,
+              "end_line": 981,
+              "context": "Sec 5.4: R_ej=2.9+2.5/-0.9 kpc"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "origin_classification": {
+          "raw_value": "Dynamical ejection mechanism (DEM)",
+          "value": "dynamical_ejection",
+          "unit": "",
+          "error": "",
+          "lower_error": "",
+          "upper_error": "",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.02029/arxiv_source/main.tex",
+              "start_line": 1358,
+              "end_line": 1600,
+              "context": "Sec 6: DEM favored"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "ejection_velocity": {
+          "raw_value": "568 (+19/-17)",
+          "value": "568",
+          "unit": "km s^-1",
+          "error": "",
+          "lower_error": "17",
+          "upper_error": "19",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.02029/arxiv_source/main.tex",
+              "start_line": 1046,
+              "end_line": 1052,
+              "context": "Sec 5.5: V_ej^int=568+19/-17 km/s"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "travel_time": {
+          "raw_value": "33.3 (+6.4/-5.0)",
+          "value": "33.3",
+          "unit": "Myr",
+          "error": "",
+          "lower_error": "5.0",
+          "upper_error": "6.4",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/1810.02029/arxiv_source/main.tex",
+              "start_line": 962,
+              "end_line": 969,
+              "context": "Sec 5.3: T_flight=33.3+6.4/-5.0 Myr"
+            }
+          ],
+          "method_refs": [
+            "step-07"
+          ]
+        },
+        "hypothesis_metrics": [
+          {
+            "raw_value": "Ruled out by proper motion",
+            "value": "ruled_out",
+            "unit": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "kind": "",
+            "description": "GC origin excluded by Gaia proper motion and non-zero L_z",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.02029/arxiv_source/main.tex",
+                "start_line": 305,
+                "end_line": 324,
+                "context": "Sec 2.1: GC origin ruled out"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ],
+            "hypothesis": "galactic_center_origin",
+            "metric_type": "classification"
+          },
+          {
+            "raw_value": "Dynamical ejection from inner disk via 3/4-body interaction",
+            "value": "dynamical_ejection",
+            "unit": "",
+            "error": "",
+            "lower_error": "",
+            "upper_error": "",
+            "kind": "",
+            "description": "DEM preferred: IMBH, VMS, or multiple massive stars",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/1810.02029/arxiv_source/main.tex",
+                "start_line": 1382,
+                "end_line": 1600,
+                "context": "Sec 6.2: DEM analysis"
+              }
+            ],
+            "method_refs": [
+              "step-07"
+            ],
+            "hypothesis": "disk_runaway_origin",
+            "metric_type": "classification"
+          }
+        ],
+        "other": []
+      },
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": []
+}

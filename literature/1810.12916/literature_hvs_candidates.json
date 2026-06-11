@@ -1,0 +1,96 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:50:00",
+  "paper": {
+    "arxiv_id": "1810.12916",
+    "bibcode": "2019MNRAS.482.4408G",
+    "title": "CPD-64 2731: a massive spun-up and rejuvenated high-velocity runaway star",
+    "month": "2018-10",
+    "source_note_json": "notes/2018/2018-10/2018-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1810.12916",
+      "pdf": "https://arxiv.org/pdf/1810.12916"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1810.12916",
+    "audit_path": "literature/1810.12916/audit.json",
+    "catalog_review_path": "literature/1810.12916/catalog_review.json",
+    "catalog_extraction_path": "literature/1810.12916/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:50:00",
+    "extractor": "agent",
+    "summary": "本文研究大质量 runaway O 型星 CPD-64 2731 及其周围马蹄形星云。该星总空间速度约160 km/s (d=7.5 kpc)，是银河系内高速逃逸星 (runaway star)，被认为是通过星团内少体动力学作用被抛射出的。文中明确将 CPD-64 2731 分类为 runaway star（逃逸星），并未声称其为银河系非束缚天体或 HVS 候选体。论文重点讨论该星的双星演化产物性质（自转加速、 rejuvenation）以及星云起源的流体动力学模拟，不涉及超高速星候选体的识别。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Gaia DR2 自行数据 (μα cosδ = -6.69±0.03 mas/yr, μδ = -4.83±0.04 mas/yr) 及 SALT/HRS 光谱观测获取的视向速度。",
+      "inputs": ["Gaia DR2", "SALT/HRS spectroscopy"],
+      "outputs": ["CPD-64 2731 的 3D 运动学数据"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 463,
+          "end_line": 468,
+          "context": "Sec 5: Gaia DR2 proper motions"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": ["step-01"],
+      "step_type": "velocity_calculation",
+      "summary": "计算本动横向速度 v_l, v_b、本动视向速度 v_r 及总空间速度 v_*。采用太阳银心距离 R0=8.0 kpc、银河转动速度 Θ0=240 km/s、太阳本动 (U,V,W)=(11.1,12.2,7.3) km/s。",
+      "inputs": ["Gaia DR2 proper motions", "heliocentric radial velocity (-175.7±0.3 km/s)"],
+      "outputs": ["v_* ≈ 145-240 km/s (取决于距离)"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 460,
+          "end_line": 473,
+          "context": "Sec 5: velocity calculation"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "cpd64_2731",
+      "description": "CPD-64 2731：一颗高速 runaway O5.5 Vn((f)) 星，总空间速度约160 km/s (d=7.5 kpc)，远低于银河系逃逸速度 (~500-600 km/s)。论文将其明确分类为 runaway star（逃逸星），讨论了动力学抛射起源，但从未声称其为银河系非束缚天体或 HVS 候选体。",
+      "decision": "excluded",
+      "reason": "该星为银河系束缚态 runaway star。总空间速度约160 km/s，远低于银河系逃逸速度。论文未将其呈现为可能脱离银河系的非束缚天体或 HVS 候选体。根据提取边界规则，普通 runaway 对象除非论文同时将其视为可能脱离银河系的非束缚天体，否则不应纳入。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 460,
+          "end_line": 491,
+          "context": "Sec 5: CPD-64 2731 as a runaway star. v_* ~160 km/s, dynamical ejection origin."
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 31,
+          "end_line": 33,
+          "context": "Title: 'massive spun-up and rejuvenated high-velocity runaway star'"
+        },
+        {
+          "kind": "text",
+          "path": "literature/1810.12916/arxiv_source/CPD.tex",
+          "start_line": 54,
+          "end_line": 65,
+          "context": "Abstract: high-velocity runaway O star, no mention of unbound/HVS status"
+        }
+      ]
+    }
+  ]
+}

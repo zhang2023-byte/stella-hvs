@@ -1,0 +1,1003 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2204.01594",
+    "title": "The origin of early-type runaway stars from open clusters",
+    "month": "2022-04",
+    "source_note_json": "notes/2022/2022-04/2022-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2204.01594",
+      "pdf": "https://arxiv.org/pdf/2204.01594"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2204.01594",
+    "audit_path": "literature/2204.01594/audit.json",
+    "source_dir": "literature/2204.01594/arxiv_source",
+    "tex_root": "literature/2204.01594/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-23T03:02:09",
+    "reviewer": "agent",
+    "summary": "This paper presents a new p-value-based chi-squared distance minimization method to trace back runaway and walkaway stars to their parent open clusters. The main data assets include: (1) statistical reference tables defining significance thresholds for the fitting procedure; (2) spatial extent measurements of clusters justifying the 1 pc encounter threshold; (3) kinematic results for ONC runaway candidates from literature samples; (4) updated radial velocities and space velocities for the classical Hoogerwerf runaway sample, reclassifying half as walkaways; (5) comprehensive parent-cluster identification tables for both disk and halo runaways, including flight times, ejection velocities, cluster ages, and suggested ejection mechanisms (BSS vs DES); (6) appendix tables compiling astrometric data from Hipparcos, Gaia DR2, and EDR3 for the runaway sample and for candidate clusters; (7) kinematic parameters for Galactic halo B-type runaways from Fuhrmeister (2021). Two local machine-readable CSV files (Hypervel_Hooglist.csv and cluster_parameters.csv) back the pgfplotstable-generated appendix tables. External resources include the ESA Gaia mission portal and DPAC, plus acknowledged use of SIMBAD, VizieR, and TOPCAT."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-significance",
+      "kind": "latex_table",
+      "asset_type": "parameter_lookup",
+      "role_in_paper": "Statistical significance reference table defining p-value thresholds for 1-parameter and 8-parameter chi-squared distributions, used to set the 2-sigma rejection limit in the distance minimization procedure.",
+      "source_refs": [
+        {
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 297,
+          "end_line": 315,
+          "caption": "P-values corresponding to different significance levels for 1 and 8 parameters using the $\\chi^2$ distribution when all parameters are at the respective ends of the uncertainty.",
+          "label": "tab:significance"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Significance $\\alpha$",
+          "meaning": "Statistical significance level expressed in standard deviations",
+          "unit_text": "$\\sigma$",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P-val(1 Parameter)",
+          "meaning": "P-value for a single-parameter chi-squared distribution",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P-val(8 Parameters)",
+          "meaning": "P-value for an 8-parameter chi-squared distribution",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "P-values corresponding to different significance levels for 1 and 8 parameters using the $\\chi^2$ distribution when all parameters are at the respective ends of the uncertainty.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-extentofclusters",
+      "kind": "latex_table",
+      "asset_type": "cluster_property",
+      "role_in_paper": "Spatial extent of newly studied open clusters, providing the radius containing 50% of member stars to justify the 1 pc close-encounter threshold.",
+      "source_refs": [
+        {
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 321,
+          "end_line": 341,
+          "caption": "Radius containing 50\\% of the member stars of new clusters reported in this paper.",
+          "label": "tab:extentofclusters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster",
+          "meaning": "Name of the open cluster",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Extent (pc)",
+          "meaning": "Radius containing 50% of the cluster member stars",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Radius containing 50\\% of the member stars of new clusters reported in this paper.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-schoetller",
+      "kind": "latex_table",
+      "asset_type": "kinematic_results",
+      "role_in_paper": "Minimization results for 26 ONC three-dimensional runaway candidates compiled from Schoettler+2020 and Farias+, showing p-values, flight times, and closest distances using Gaia DR2 and EDR3 astrometry.",
+      "source_refs": [
+        {
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 419,
+          "end_line": 463,
+          "caption": "P values for the three-dimensional runaway samples of \\citetads{2020MNRAS.495.3104S} and \\citetads{Farias_orion}, thought to come from the ONC.",
+          "label": "tab:schoetller"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Number",
+          "meaning": "Sequential identifier for the star in the combined sample",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia DR2 Source ID",
+          "meaning": "Gaia DR2 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P2",
+          "meaning": "P-value from the distance minimization using Gaia DR2 astrometry",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T$_f$ (DR2)",
+          "meaning": "Best-fit time of flight to the ONC using Gaia DR2",
+          "unit_text": "Myrs",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P3",
+          "meaning": "P-value from the distance minimization using Gaia EDR3 astrometry",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T$_f$ (EDR3)",
+          "meaning": "Best-fit time of flight to the ONC using Gaia EDR3",
+          "unit_text": "Myrs",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D$_{p,2}$",
+          "meaning": "Minimum distance between the star and ONC center using DR2",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D$_{p,3}$",
+          "meaning": "Minimum distance between the star and ONC center using EDR3",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "P values for the three-dimensional runaway samples of \\citetads{2020MNRAS.495.3104S} and \\citetads{Farias_orion}, thought to come from the ONC.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-spacevelocity",
+      "kind": "latex_table",
+      "asset_type": "star_parameters",
+      "role_in_paper": "Updated radial velocities and derived space velocities for the Hoogerwerf et al. runaway sample, distinguishing walkaway stars (v_s < 30 km/s) from runaway stars.",
+      "source_refs": [
+        {
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 524,
+          "end_line": 575,
+          "caption": "Radial velocities v$_\\textrm{rad}$ and derived space velocities v$_\\textrm{s}$ for the sample of \\citetads{hoog}.",
+          "label": "tab:spacevelocity"
+        }
+      ],
+      "columns": [
+        {
+          "name": "HIP",
+          "meaning": "Hipparcos catalogue identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RVV",
+          "meaning": "Radial velocity variability flag (Y = variable/binary, N = single)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v$_\\textrm{rad}$",
+          "meaning": "Heliocentric radial velocity (systemic velocity for spectroscopic binaries)",
+          "unit_text": "km s$^{-1}$",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v$_\\textrm{s}$",
+          "meaning": "Space velocity with respect to Galactic rotation (Model I)",
+          "unit_text": "km s$^{-1}$",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Reference",
+          "meaning": "Literature reference for the adopted radial velocity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Radial velocities v$_\\textrm{rad}$ and derived space velocities v$_\\textrm{s}$ for the sample of \\citetads{hoog}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-identification",
+      "kind": "latex_table",
+      "asset_type": "kinematic_results",
+      "role_in_paper": "Main result table summarizing suggested parent clusters for the Hoogerwerf sample runaways and walkaways, including p-values, flight times, ejection velocities, cluster ages, age-compatibility flags, and ejection mechanisms.",
+      "source_refs": [
+        {
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 949,
+          "end_line": 1019,
+          "caption": "Suggested Clusters as places of origin for runaway stars based on spatial coincidence.",
+          "label": "tab:identification"
+        }
+      ],
+      "columns": [
+        {
+          "name": "HIP Num",
+          "meaning": "Hipparcos catalogue identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Origin",
+          "meaning": "Suggested parent open cluster or association",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "p-val",
+          "meaning": "Statistical p-value for the best-fit trajectory from the minimization procedure",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T$_\\textrm{f}$",
+          "meaning": "Time of flight to the parent cluster computed in the Galactic potential",
+          "unit_text": "Myrs",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T$_\\textrm{rel}$",
+          "meaning": "Relative time of flight assuming a straight-line trajectory",
+          "unit_text": "Myrs",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V$_\\textrm{rel}$",
+          "meaning": "Relative ejection velocity of the star with respect to the parent cluster",
+          "unit_text": "km s$^{-1}$",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T$_\\textrm{c}$",
+          "meaning": "Published age of the parent cluster",
+          "unit_text": "Myrs",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flag$_\\textrm{age}$",
+          "meaning": "Flag indicating whether the cluster age is compatible with the suggested origin mechanism (Y = compatible, N = incompatible)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Suggested Mechanism",
+          "meaning": "Ejection mechanism suggested by this study (BSS = binary supernova scenario, DES = dynamical ejection scenario)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Original Mechanism",
+          "meaning": "Ejection mechanism originally suggested by Hoogerwerf et al.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "References",
+          "meaning": "Literature references for the kinematic and age parameters",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Suggested Clusters as places of origin for runaway stars based on spatial coincidence.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-haloidenfication",
+      "kind": "latex_table",
+      "asset_type": "kinematic_results",
+      "role_in_paper": "Results for Galactic halo B-type runaway stars, listing candidate parent clusters, p-values, flight times, ejection velocities, cluster ages, and suggested ejection mechanisms.",
+      "source_refs": [
+        {
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 1222,
+          "end_line": 1254,
+          "caption": "Possible Clusters as sites of origin of the Halo runaway stars using spatial coincidence.",
+          "label": "tab:haloidenfication"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Name or identifier of the halo runaway star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Cluster Name",
+          "meaning": "Candidate parent open cluster",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "p-val",
+          "meaning": "P-value for the best-fit trajectory using EDR3 proper motions",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T$_f$",
+          "meaning": "Time of flight computed in the Galactic potential",
+          "unit_text": "Myrs",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T$_{rel}$",
+          "meaning": "Relative time of flight assuming a straight-line trajectory",
+          "unit_text": "Myrs",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v$_\\textrm{rel}$",
+          "meaning": "Relative ejection velocity with respect to the parent cluster",
+          "unit_text": "km s$^{-1}$",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T$_c$",
+          "meaning": "Age of the candidate parent cluster",
+          "unit_text": "Myrs",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flag$_{age}$",
+          "meaning": "Flag indicating temporal compatibility of cluster age with star origin (Y = possible, N = ruled out)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Suggested mechanism",
+          "meaning": "Suggested ejection mechanism (BSS or DES)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "References",
+          "meaning": "Literature references for cluster kinematics and ages",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_011",
+          "meaning": "Unspecified extra column (empty in the source table)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Possible Clusters as sites of origin of the Halo runaway stars using spatial coincidence.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-hypervelparams",
+      "kind": "latex_table",
+      "asset_type": "star_parameters",
+      "role_in_paper": "Appendix table compiling astrometric and kinematic parameters for the Hoogerwerf runaway sample across Hipparcos, Gaia DR2, and Gaia EDR3, together with adopted radial velocities and V magnitude.",
+      "source_refs": [
+        {
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 1406,
+          "end_line": 1452,
+          "caption": "Parameters of runaways from the \\citetads{hoog} sample. \\textit{Hipparcos}, \\textit{Gaia} DR2 \\citepads{2018A&A...616A...2L} and EDR3 \\citepads{2021A&A...649A...2L} astrometric data are given.",
+          "label": "tab:hypervelparams"
+        }
+      ],
+      "columns": [
+        {
+          "name": "HIP",
+          "meaning": "Hipparcos catalogue identifier",
+          "unit_text": "",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "$\\varpi$ (Hipparcos)",
+          "meaning": "Parallax from the new Hipparcos reduction",
+          "unit_text": "mas",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "$e_\\varpi$ (Hipparcos)",
+          "meaning": "Parallax uncertainty from Hipparcos",
+          "unit_text": "mas",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "$\\mu_{\\alpha*}$ (Hipparcos)",
+          "meaning": "Proper motion in right ascension from Hipparcos",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "e$\\mu_{\\alpha*}$ (Hipparcos)",
+          "meaning": "Proper motion uncertainty in RA from Hipparcos",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "$\\mu_{\\delta}$ (Hipparcos)",
+          "meaning": "Proper motion in declination from Hipparcos",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "e$\\mu_{\\delta}$ (Hipparcos)",
+          "meaning": "Proper motion uncertainty in Dec from Hipparcos",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "F2",
+          "meaning": "Goodness-of-fit parameter from the Hipparcos new reduction",
+          "unit_text": "",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "$\\varpi$ (DR2)",
+          "meaning": "Parallax from Gaia DR2",
+          "unit_text": "mas",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "$e_\\varpi$ (DR2)",
+          "meaning": "Parallax uncertainty from Gaia DR2",
+          "unit_text": "mas",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "$\\mu_{\\alpha*}$ (DR2)",
+          "meaning": "Proper motion in RA from Gaia DR2",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "e$\\mu_{\\alpha*}$ (DR2)",
+          "meaning": "Proper motion uncertainty in RA from Gaia DR2",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "$\\mu_{\\delta}$ (DR2)",
+          "meaning": "Proper motion in Dec from Gaia DR2",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "e$\\mu_{\\delta}$ (DR2)",
+          "meaning": "Proper motion uncertainty in Dec from Gaia DR2",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "RUWE(DR2)",
+          "meaning": "Renormalized unit weight error from Gaia DR2",
+          "unit_text": "",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "$\\varpi$ (EDR3)",
+          "meaning": "Parallax from Gaia EDR3",
+          "unit_text": "mas",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "e$\\varpi$ (EDR3)",
+          "meaning": "Parallax uncertainty from Gaia EDR3",
+          "unit_text": "mas",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "$\\mu_{\\alpha*}$ (EDR3)",
+          "meaning": "Proper motion in RA from Gaia EDR3",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "e$\\mu_{\\alpha*}$ (EDR3)",
+          "meaning": "Proper motion uncertainty in RA from Gaia EDR3",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "$\\mu_{\\delta}$ (EDR3)",
+          "meaning": "Proper motion in Dec from Gaia EDR3",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "e$\\mu_{\\delta}$ (EDR3)",
+          "meaning": "Proper motion uncertainty in Dec from Gaia EDR3",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "RUWE(EDR3)",
+          "meaning": "Renormalized unit weight error from Gaia EDR3",
+          "unit_text": "",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "Adopted heliocentric radial velocity",
+          "unit_text": "km s$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "e$_{RV}$",
+          "meaning": "Radial velocity uncertainty",
+          "unit_text": "km s$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "V mag",
+          "meaning": "Apparent V-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Parameters of runaways from the \\citetads{hoog} sample. Hipparcos, Gaia DR2 and EDR3 astrometric data are given.",
+      "comments": "Table is rendered from local CSV via pgfplotstable."
+    },
+    {
+      "id": "table-tab-clusterparams",
+      "kind": "latex_table",
+      "asset_type": "cluster_parameters",
+      "role_in_paper": "Appendix table compiling kinematic parameters (parallax, proper motions, radial velocity) for open clusters used as candidate origin sites in the traceback analysis.",
+      "source_refs": [
+        {
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 1455,
+          "end_line": 1486,
+          "caption": "Kinematic parameters of stellar clusters.",
+          "label": "tab:clusterparams"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Simbad name of the open cluster",
+          "unit_text": "",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "$\\varpi$",
+          "meaning": "Mean parallax of cluster members",
+          "unit_text": "mas",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "$e_\\varpi$",
+          "meaning": "Parallax uncertainty",
+          "unit_text": "mas",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "$\\mu_{\\alpha*}$",
+          "meaning": "Mean proper motion in right ascension of cluster members",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "e$\\mu_{\\alpha*}$",
+          "meaning": "Proper motion uncertainty in RA",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "$\\mu_{\\delta}$",
+          "meaning": "Mean proper motion in declination of cluster members",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "e$\\mu_{\\delta}$",
+          "meaning": "Proper motion uncertainty in Dec",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "Mean heliocentric radial velocity of cluster members",
+          "unit_text": "km s$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "eRV",
+          "meaning": "Radial velocity uncertainty or standard deviation",
+          "unit_text": "km s$^{-1}$",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "N$_\\textrm{PM}$",
+          "meaning": "Number of cluster members used for the proper motion calculation",
+          "unit_text": "",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        },
+        {
+          "name": "N$_\\textrm{RV}$",
+          "meaning": "Number of cluster members with measured radial velocities",
+          "unit_text": "",
+          "source_of_definition": "pgfplotstable column definition",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Kinematic parameters of stellar clusters.",
+      "comments": "Table is rendered from local CSV via pgfplotstable."
+    },
+    {
+      "id": "table-tab-hyperrun",
+      "kind": "latex_table",
+      "asset_type": "star_parameters",
+      "role_in_paper": "Appendix table listing kinematic and evolutionary parameters for B-type runaway stars in the Galactic halo, adopted from Fuhrmeister (2021, PhD thesis).",
+      "source_refs": [
+        {
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 1489,
+          "end_line": 1511,
+          "caption": "Kinematic parameters of B type runaways in the Galactic halo taken from \\citeads{Markus:Thesis:2021}",
+          "label": "tab:hyperrun"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "Star identifier (common name or catalogue designation)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "$\\mu_\\alpha\\cos\\delta$",
+          "meaning": "Proper motion in right ascension (cosine-corrected)",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "$\\mu_\\delta$",
+          "meaning": "Proper motion in declination",
+          "unit_text": "mas yr$^{-1}$",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "$\\varpi$",
+          "meaning": "Parallax from Gaia EDR3",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RUWE",
+          "meaning": "Renormalized unit weight error from Gaia EDR3",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "$v_\\mathrm{rad}$",
+          "meaning": "Heliocentric radial velocity",
+          "unit_text": "km s$^{-1}$",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "$d_\\mathrm{spec}$",
+          "meaning": "Spectroscopic distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "$t_\\mathrm{evol}$",
+          "meaning": "Stellar evolutionary age",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "$t_\\mathrm{flight}$",
+          "meaning": "Flight time from the Galactic disk",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Kinematic parameters of B type runaways in the Galactic halo taken from \\citeads{Markus:Thesis:2021}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-table1",
+      "kind": "latex_table",
+      "asset_type": "kinematic_results",
+      "role_in_paper": "Appendix validation table reproducing the Hoogerwerf et al. sample results using Hipparcos astrometry and the new p-value minimization procedure.",
+      "source_refs": [
+        {
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 1580,
+          "end_line": 1660,
+          "caption": "P values for the list of stars in the sample of \\citetads{hoog}. The column p-val lists the p-values and the column T$_f$ lists the best fit times of flight for the \\textit{Hipparcos} astrometry.",
+          "label": "tab:table1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star Name",
+          "meaning": "Common name of the star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "HIP Number",
+          "meaning": "Hipparcos catalogue identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Star/Place of Origin",
+          "meaning": "Candidate place of origin (cluster, association, or other star)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "p-val (Hip)",
+          "meaning": "P-value using Hipparcos astrometry",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T$_f$",
+          "meaning": "Best-fit time of flight using Hipparcos data",
+          "unit_text": "Myrs",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Reference",
+          "meaning": "Literature reference for the adopted kinematic data",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "P values for the list of stars in the sample of \\citetads{hoog}. The column p-val lists the p-values and the column T$_f$ lists the best fit times of flight for the Hipparcos astrometry.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-oldtars",
+      "kind": "latex_table",
+      "asset_type": "kinematic_results",
+      "role_in_paper": "Appendix validation table showing p-values and flight times for previously known single and binary stars in the Hoogerwerf sample using Gaia DR2 and EDR3 astrometries.",
+      "source_refs": [
+        {
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 1664,
+          "end_line": 1728,
+          "caption": "P values for the previously known single and binary stars in the sample of \\citetads{hoog} with \\textit{Gaia} DR2 \\citepads{2018A&A...616A...2L} and EDR3 \\citepads{2021A&A...649A...2L} astrometries.",
+          "label": "tab:oldtars"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star Name",
+          "meaning": "Common name of the star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "HIP Number",
+          "meaning": "Hipparcos catalogue identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Star/Place of Origin",
+          "meaning": "Candidate place of origin",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "p-val (DR2)",
+          "meaning": "P-value using Gaia DR2 astrometry",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T$_f$(DR2)",
+          "meaning": "Best-fit flight time using Gaia DR2",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "p-val (EDR3)",
+          "meaning": "P-value using Gaia EDR3 astrometry",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "T$_f$(EDR3)",
+          "meaning": "Best-fit flight time using Gaia EDR3",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Reference",
+          "meaning": "Literature reference for the adopted kinematic data",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "P values for the previously known single and binary stars in the sample of \\citetads{hoog} with Gaia DR2 and EDR3 astrometries.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission data portal, the primary source of astrometric (proper motions, parallaxes) and photometric data used in this study.",
+      "source_refs": [
+        {
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 1375,
+          "end_line": 1375,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium})."
+        }
+      ],
+      "evidence": "Acknowledged in the paper as the source of Gaia DR2 and EDR3 astrometric data used for the kinematic traceback of runaway stars.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "Gaia Data Processing and Analysis Consortium (DPAC) website, responsible for processing and calibrating Gaia survey data.",
+      "source_refs": [
+        {
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 1377,
+          "end_line": 1377,
+          "context": "Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions."
+        }
+      ],
+      "evidence": "Acknowledged in the paper as the processing pipeline for the Gaia data releases used in this work.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "SIMBAD astronomical database, VizieR catalog access tool, and TOPCAT table processing software, used for cross-matching and visualizing astronomical catalogues.",
+      "source_refs": [
+        {
+          "path": "literature/2204.01594/arxiv_source/main.tex",
+          "start_line": 1380,
+          "end_line": 1381,
+          "context": "This research has made use of the SIMBAD database, operated at CDS, the VizieR catalog access tool, CDS, Strasbourg, France (DOI : 10.26093/cds/vizier), and TOPCAT table processing software."
+        }
+      ],
+      "evidence": "Mentioned in the acknowledgements as resources used for this research. No direct download URLs are provided in the paper.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/2204.01594/arxiv_source/tables/Hypervel_Hooglist.csv",
+      "description": "Local CSV file containing compiled astrometric parameters for the Hoogerwerf runaway sample across Hipparcos, Gaia DR2, and Gaia EDR3, plus radial velocities and V magnitude.",
+      "source_refs": [],
+      "evidence": "Referenced in Table \\ref{tab:hypervelparams} via \\texttt{pgfplotstableread} in the LaTeX source (lines 1405-1406).",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/2204.01594/arxiv_source/tables/cluster_parameters.csv",
+      "description": "Local CSV file containing kinematic parameters (parallax, proper motions, radial velocities) for open clusters used as candidate origin sites in the traceback analysis.",
+      "source_refs": [],
+      "evidence": "Referenced in Table \\ref{tab:clusterparams} via \\texttt{pgfplotstableread} in the LaTeX source (lines 1454-1455).",
+      "comments": ""
+    }
+  ]
+}

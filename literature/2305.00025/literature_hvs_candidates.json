@@ -1,0 +1,61 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:36:00",
+  "paper": {
+    "arxiv_id": "2305.00025",
+    "bibcode": "2023MNRAS.522.5879A",
+    "title": "The rocket effect mechanism in neutron stars in supernova remnants",
+    "month": "2023-04",
+    "source_note_json": "notes/2023/2023-04/2023-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2305.00025",
+      "pdf": "https://arxiv.org/pdf/2305.00025"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2305.00025",
+    "audit_path": "literature/2305.00025/audit.json",
+    "catalog_review_path": "literature/2305.00025/catalog_review.json",
+    "catalog_extraction_path": "literature/2305.00025/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2305.00025/catalog_tables/table-kicks.ecsv",
+      "literature/2305.00025/catalog_tables/table-sample-population.ecsv",
+      "literature/2305.00025/catalog_tables/table-braking-indices.ecsv",
+      "literature/2305.00025/catalog_tables/table-kick-velocities.ecsv",
+      "literature/2305.00025/catalog_tables/table-displacement-s.ecsv",
+      "literature/2305.00025/catalog_tables/table-case-study-params.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:36:00",
+    "extractor": "agent",
+    "summary": "The paper studies the electromagnetic rocket effect acceleration mechanism for neutron stars in supernova remnants. It discusses neutron star natal kick velocities (up to ~1000 km/s), but these are the peculiar velocities of neutron stars produced by supernova explosions, not hypervelocity stars on the Galactic scale. The paper never discusses Galactic escape velocity, hypervelocity stars (HVS), Galactic gravitational unbinding, or Galactic escape. The research focuses on neutron star/pulsar kick mechanisms, unrelated to HVS. No HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2305.00025:group-01",
+      "description": "The pulsar sample discussed in the paper (Tables: sample-population and case-study-params). MCMC analysis is used to study the kick velocities produced by the electromagnetic rocket effect for 10 young pulsars (such as PSR J0030+0451, J0538+2817, etc.), with initial spin periods of ~3.8 ms and kick velocities reaching ~500-1000 km/s.",
+      "decision": "rejected",
+      "reason": "The paper studies the natal kick mechanism at neutron star birth — the peculiar velocity imparted during the supernova explosion. These velocities (up to ~1000 km/s) refer to the neutron star's motion relative to its birthplace and are unrelated to Galactic gravitational unbinding. The paper does not discuss Galactic escape velocity, hypervelocity stars (HVS), or Galactic escape orbits. High pulsar space velocities do not equate to HVS candidates — HVS refers to stars that reach escape velocity in the Galactic gravitational potential and may escape the Galaxy. This paper contains no HVS candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+          "start_line": 98,
+          "end_line": 100,
+          "context": "Abstract: 'This post-natal kick mechanism relies on asymmetric electromagnetic radiation from an off-centre dipole may be relevant to the high spatial velocities of pulsars ~10^3 km/s.' — discusses pulsar natal kick, not Galactic-scale escape."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2305.00025/arxiv_source/mnras_template.tex",
+          "start_line": 113,
+          "end_line": 115,
+          "context": "Introduction: 'The velocities of neutron stars are in several occasions rather high, with average values reaching up to 200-500 km/s, while in some cases they are exceeding 1000 km/s.' — the entire paper discusses neutron star kick velocities; no content related to Galactic escape/hypervelocity stars."
+        }
+      ]
+    }
+  ]
+}

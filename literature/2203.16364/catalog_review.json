@@ -1,0 +1,642 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2203.16364",
+    "title": "The Chemical Composition of Extreme-Velocity Stars",
+    "month": "2022-03",
+    "source_note_json": "notes/2022/2022-03/2022-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2203.16364",
+      "pdf": "https://arxiv.org/pdf/2203.16364"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2203.16364",
+    "audit_path": "literature/2203.16364/audit.json",
+    "source_dir": "literature/2203.16364/arxiv_source",
+    "tex_root": "literature/2203.16364/arxiv_source/hvs.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-23T10:55:17",
+    "reviewer": "agent",
+    "summary": "This paper presents high-resolution spectroscopic observations of 15 extreme-velocity star candidates. Internal data assets include: (1) an observation log (Table~\\\\ref{obs_log}) recording coordinates, dates, exposure times, S/N, and instruments; (2) a line-by-line atomic data, equivalent width, and abundance table (Table~\\\\ref{measured_ews}) with a full machine-readable version available; (3) a comprehensive stellar parameters and orbital properties table (Table~\\\\ref{stellar_params}) combining photometry, derived atmospheric parameters (Teff, log g, [Fe/H], xi), and Galactic orbit integrations (RV, v, Rperi, Rapo, e, zmax, Etot, Lz); and (4) a chemical abundances table (Table~\\\\ref{chem_abundances_tbl}) reporting mean abundances and uncertainties for 20+ elements across all stars. External resources include spectroscopic reduction/analysis software (CarPy, iSpec, q2, MOOG, isochrones, MultiNest, galpy), atomic line data repositories (linemake, Kurucz linelists, INSPECT project), and astrometric/photometric surveys (Gaia EDR3, 2MASS, WISE, SkyMapper)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-obs_log",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Records the observational details for each of the 15 target stars, including Gaia EDR3 source identifiers, celestial coordinates, observation dates/times, spectrograph slit widths, exposure times, signal-to-noise ratios at two wavelengths, and the instruments used (ARCES or MIKE).",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 191,
+          "end_line": 219,
+          "caption": "Log of Observations\\\\label{obs_log}",
+          "label": "obs_log"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Source ID | EDR3",
+          "meaning": "Gaia EDR3 source identifier for the target star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A. | (h:m:s)",
+          "meaning": "Right Ascension in hours:minutes:seconds",
+          "unit_text": "h:m:s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Decl. | (d:m:s)",
+          "meaning": "Declination in degrees:arcminutes:arcseconds",
+          "unit_text": "d:m:s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "UT Date",
+          "meaning": "Universal Time date of the observation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Start",
+          "meaning": "Local start time of the observation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Slit | Width",
+          "meaning": "Spectrograph slit width",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Exposure | Time (s)",
+          "meaning": "Total exposure time of the observation",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S/N | \\\\colhead4500 \\\\rm\\\\AA",
+          "meaning": "Signal-to-noise ratio at 4500 Angstroms",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "S/N | \\\\colhead6500 \\\\rm\\\\AA",
+          "meaning": "Signal-to-noise ratio at 6500 Angstroms",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Instrument",
+          "meaning": "Spectrograph used for the observation (ARCES or MIKE)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Log of Observations\\\\label{obs_log}",
+      "comments": ""
+    },
+    {
+      "id": "table-measured_ews",
+      "kind": "latex_table",
+      "asset_type": "atomic_data",
+      "role_in_paper": "Contains the input atomic line data, measured equivalent widths, and line-by-line absolute abundances for each spectral line used in the chemical analysis. The full version is published in machine-readable format.",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 1022,
+          "end_line": 1044,
+          "caption": "Atomic data, Equivalent Widths and line Abundances. Full version online.\\\\label{measured_ews}",
+          "label": "measured_ews"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia EDR3 Source ID",
+          "meaning": "Gaia EDR3 source identifier for the target star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Wavelength | (\\\\AA)",
+          "meaning": "Rest wavelength of the atomic absorption line",
+          "unit_text": "Angstrom",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Species",
+          "meaning": "Ion species of the atomic line (e.g., Na I, Mg I, Fe II)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Excitation Potential | (eV)",
+          "meaning": "Excitation potential of the lower energy level of the transition",
+          "unit_text": "eV",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(gf)",
+          "meaning": "Logarithm of the product of the statistical weight and oscillator strength of the transition",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "EW | (m\\\\AA)",
+          "meaning": "Measured equivalent width of the absorption line",
+          "unit_text": "mAngstrom",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\\\colhead\\\\log_\\\\epsilon(\\\\rmX)",
+          "meaning": "Absolute abundance of element X in the log-epsilon scale derived from the individual line",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Atomic data, Equivalent Widths and line Abundances. Full version online.\\\\label{measured_ews}",
+      "comments": ""
+    },
+    {
+      "id": "table-stellar_params",
+      "kind": "latex_table",
+      "asset_type": "stellar_parameters",
+      "role_in_paper": "Presents photometric properties, adopted stellar atmospheric parameters (effective temperature, surface gravity, metallicity, microturbulence), and orbital parameters (radial velocity, total Galactic velocity, pericenter, apocenter, eccentricity, maximum distance from plane, total energy, angular momentum) for all 15 program stars.",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 1047,
+          "end_line": 1184,
+          "caption": "Stellar Properties and Adopted Parameters\\\\label{stellar_params}",
+          "label": "stellar_params"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Property",
+          "meaning": "Name of the physical or observational property (e.g., photometric band, stellar parameter, or orbital parameter)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "2853089398265954432",
+          "meaning": "Values for target Gaia EDR3 2853089398265954432 (TYC 1732-2222-1)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "330414789019026944",
+          "meaning": "Values for target Gaia EDR3 330414789019026944 (TYC 2319-713-1)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "2260163008363761664",
+          "meaning": "Values for target Gaia EDR3 2260163008363761664 (ES26)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "2233912206910720000",
+          "meaning": "Values for target Gaia EDR3 2233912206910720000 (ES10)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "1765600930139450752",
+          "meaning": "Values for target Gaia EDR3 1765600930139450752 (TYC 1126-382-1)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Units",
+          "meaning": "Units of the property listed in the corresponding row",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Stellar Properties and Adopted Parameters\\\\label{stellar_params}",
+      "comments": ""
+    },
+    {
+      "id": "table-chem_abundances_tbl",
+      "kind": "latex_table",
+      "asset_type": "chemical_abundances",
+      "role_in_paper": "Reports the adopted mean chemical abundances and associated uncertainties for each measured element (alpha, light odd-Z, iron-peak, and neutron-capture elements) across all 15 program stars. Each star occupies four columns: number of lines, mean log-epsilon abundance, mean [X/Fe] ratio, and standard deviation.",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 1189,
+          "end_line": 1292,
+          "caption": "Chemical Abundances\\\\label{chem_abundances_tbl}",
+          "label": "chem_abundances_tbl"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Species",
+          "meaning": "Ion species of the element (e.g., Na I, Mg I, Fe II)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "n",
+          "meaning": "Number of spectral lines used for the abundance measurement",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(\\\\epsilon_X)",
+          "meaning": "Mean absolute abundance of element X in the log-epsilon scale",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[X/Fe]",
+          "meaning": "Mean abundance ratio of element X relative to iron",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\\\colhead\\\\sigma_[X/Fe]",
+          "meaning": "Standard deviation or uncertainty of the [X/Fe] abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "n",
+          "meaning": "Number of spectral lines used for the abundance measurement",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(\\\\epsilon_X)",
+          "meaning": "Mean absolute abundance of element X in the log-epsilon scale",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[X/Fe]",
+          "meaning": "Mean abundance ratio of element X relative to iron",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\\\colhead\\\\sigma_[X/Fe]",
+          "meaning": "Standard deviation or uncertainty of the [X/Fe] abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "n",
+          "meaning": "Number of spectral lines used for the abundance measurement",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(\\\\epsilon_X)",
+          "meaning": "Mean absolute abundance of element X in the log-epsilon scale",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[X/Fe]",
+          "meaning": "Mean abundance ratio of element X relative to iron",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\\\colhead\\\\sigma_[X/Fe]",
+          "meaning": "Standard deviation or uncertainty of the [X/Fe] abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "n",
+          "meaning": "Number of spectral lines used for the abundance measurement",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(\\\\epsilon_X)",
+          "meaning": "Mean absolute abundance of element X in the log-epsilon scale",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[X/Fe]",
+          "meaning": "Mean abundance ratio of element X relative to iron",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\\\colhead\\\\sigma_[X/Fe]",
+          "meaning": "Standard deviation or uncertainty of the [X/Fe] abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "n",
+          "meaning": "Number of spectral lines used for the abundance measurement",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(\\\\epsilon_X)",
+          "meaning": "Mean absolute abundance of element X in the log-epsilon scale",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[X/Fe]",
+          "meaning": "Mean abundance ratio of element X relative to iron",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\\\colhead\\\\sigma_[X/Fe]",
+          "meaning": "Standard deviation or uncertainty of the [X/Fe] abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Chemical Abundances\\\\label{chem_abundances_tbl}",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://code.obs.carnegiescience.edu/mike",
+      "local_path": "",
+      "description": "CarPy software package for reducing raw MIKE spectrograph data and calibration frames.",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 177,
+          "end_line": 177,
+          "context": "lamp frames) in the afternoon before each night of observations.\\nWe reduced the raw spectra and calibration frames using the\\n\\\\texttt{CarPy}\\\\footnote{\\\\url{http://code.obs.carnegiescience.edu/mike}}\\nsoftware package \\\\citep{kelson2000,kelson2003,kelson2014}. On ARCES, we used \\nthe standard 1\\\\farcs6 slit yielding effective spectra with continuous coverage"
+        }
+      ],
+      "evidence": "Used to reduce raw spectra and calibration frames from the MIKE spectrograph.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.blancocuaresma.com/s/iSpec",
+      "local_path": "",
+      "description": "iSpec software used for calculating radial velocities, barycentric corrections, and spectral normalization.",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 185,
+          "end_line": 185,
+          "context": "CERES pipeline \\\\citep{brahm2017}. \\nWe present a log of these observations in Table~\\\\ref{obs_log}.\\nWe used \\\\texttt{iSpec}\\\\footnote{\\\\url{https://www.blancocuaresma.com/s/iSpec}}\\n\\\\citep{blanco-cuaresma2014,blanco-cuaresma2019} to calculate radial\\nvelocities and barycentric corrections and to normalize the spectra. Our"
+        }
+      ],
+      "evidence": "Used to calculate radial velocities and barycentric corrections and to normalize the spectra.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://github.com/vmplacco/linemake",
+      "local_path": "",
+      "description": "linemake code providing atomic and molecular line data for spectroscopic abundance analysis.",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 241,
+          "end_line": 241,
+          "context": "lines from \\\\cite{ji2020} and \\\\cite{reggiani2018}. The atomic and molecular data \\nfor the selected lines are from the \\\\texttt{linemake}\\ncode\\\\footnote{\\\\url{https://github.com/vmplacco/linemake}}\\n\\\\citep{sneden2009,sneden2016,placco2021}, maintained by Vinicius Placco and \\nIan Roederer."
+        }
+      ],
+      "evidence": "Source of atomic and molecular data for selected spectral lines used in abundance analysis.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://github.com/astroChasqui/q2",
+      "local_path": "",
+      "description": "q2 MOOG wrapper used for deriving stellar metallicities from spectroscopic data.",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 255,
+          "end_line": 255,
+          "context": "\\\\citep{castelli2004}, the 2019 version of the \\\\texttt{MOOG}\\nradiative transfer code \\\\citep{sneden1973}, and the \\\\texttt{q$^2$}\\n\\\\texttt{MOOG} wrapper\\\\footnote{\\\\url{https://github.com/astroChasqui/q2}}\\n\\\\citep{ramirez2014} to derive stellar metallicities."
+        }
+      ],
+      "evidence": "Used with ATLAS9 model atmospheres and MOOG radiative transfer code to derive stellar metallicities.",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://github.com/timothydmorton/isochrones",
+      "local_path": "",
+      "description": "isochrones Python package used to self-consistently infer atmospheric and fundamental stellar parameters by fitting isochrones to photometric and astrometric data.",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 259,
+          "end_line": 259,
+          "context": "We use the \\\\texttt{isochrones} \\npackage\\\\footnote{\\\\url{https://github.com/timothydmorton/isochrones}}\\n\\\\citep{morton2015} in an iterative process to self-consistently infer\\natmospheric and fundamental stellar parameters for each star using"
+        }
+      ],
+      "evidence": "Used to self-consistently infer atmospheric and fundamental stellar parameters for each star.",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://ccpforge.cse.rl.ac.uk/gf/project/multinest/",
+      "local_path": "",
+      "description": "MultiNest nested sampling algorithm used for Bayesian parameter estimation when fitting stellar isochrones.",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 287,
+          "end_line": 287,
+          "context": "\\\\cite[MIST;][]{dotter2016,choi2016,paxton2011,paxton2013,paxton2015}\\nlibrary to these data using\\n\\\\texttt{MultiNest}\\\\footnote{\\\\url{https://ccpforge.cse.rl.ac.uk/gf/project/multinest/}}\\n\\\\citep{feroz2008,feroz2009,feroz2019} through \\\\textit{PyMultinest} \\\\citep{buchner2014}.  We restricted the  MIST \\nlibrary based on the photo-geometric distances from \\\\cite{bailer-jones2021},"
+        }
+      ],
+      "evidence": "Used through PyMultinest to fit the MIST isochrone library to observational data.",
+      "comments": ""
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "https://github.com/jobovy/galpy",
+      "local_path": "",
+      "description": "galpy Python library for Galactic dynamics used to calculate the Galactic orbits of the sample stars.",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 387,
+          "end_line": 387,
+          "context": "We calculated the Galactic orbits of our sample stars using\\n\\\\texttt{galpy}\\\\footnote{\\\\url{https://github.com/jobovy/galpy}}. \\n\\\\texttt{Galpy} uses a left-handed coordinate system, with the Sun at positive X \\nand positive L$_{\\\\mathrm{Z}}$ indicates a prograde orbit."
+        }
+      ],
+      "evidence": "Used to calculate the Galactic orbits of the sample stars.",
+      "comments": ""
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "http://inspect-stars.com/",
+      "local_path": "",
+      "description": "INSPECT project website providing non-LTE abundance correction grids, used for sodium abundance corrections.",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 577,
+          "end_line": 577,
+          "context": "by departures from LTE, but scandium abundances from \\\\ion{Sc}{2} lines are not\\nstrongly affected \\\\citep{zhao2016}. We corrected sodium abundances using the \\\\citet{lind2011}\\ngrid through the INSPECT project\\\\footnote{http://inspect-stars.com/}. \\nThe aluminum non-LE abundance corrections are from \\\\cite{nordlander2017}. \\nWe obtained potassium abundance corrections via a linear interpolation"
+        }
+      ],
+      "evidence": "Used to apply non-LTE corrections to sodium abundances via the Lind et al. 2011 grid.",
+      "comments": ""
+    },
+    {
+      "id": "resource-009",
+      "kind": "external_url",
+      "url": "http://kurucz.harvard.edu/linelists.html",
+      "local_path": "",
+      "description": "Kurucz atomic line lists providing hyperfine structure data used for yttrium abundance estimation.",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 670,
+          "end_line": 670,
+          "context": "Yttrium abundances were estimated \\nusing hyperfine structure data from the \\nKurucz\\\\footnote{http://kurucz.harvard.edu/linelists.html} linelists. Barium abundances \\nwere calculated using the isotopic splitting from \\\\cite{mcwilliam1998} and \\\\cite{klose2002}. \\nEuropium abundances were estimated using spectral synthesis from"
+        }
+      ],
+      "evidence": "Source of hyperfine structure data used for yttrium abundance estimation.",
+      "comments": ""
+    },
+    {
+      "id": "resource-010",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission website. This work used Gaia astrometric and photometric data.",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 966,
+          "end_line": 966,
+          "context": "3.5-meter telescope, which is owned and operated by the Astrophysical Research Consortium. \\nThis work has made use of data from the European Space Agency (ESA) mission\\n{\\\\it Gaia} (\\\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\\\it Gaia}\\nData Processing and Analysis Consortium (DPAC,\\n\\\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC"
+        }
+      ],
+      "evidence": "This work used data from the ESA Gaia mission for astrometry and parallaxes.",
+      "comments": ""
+    },
+    {
+      "id": "resource-011",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "Gaia Data Processing and Analysis Consortium (DPAC) website.",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 968,
+          "end_line": 968,
+          "context": "{\\\\it Gaia} (\\\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\\\it Gaia}\\nData Processing and Analysis Consortium (DPAC,\\n\\\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\\nhas been provided by national institutions, in particular the institutions\\nparticipating in the {\\\\it Gaia} Multilateral Agreement."
+        }
+      ],
+      "evidence": "The Gaia data were processed by the DPAC.",
+      "comments": ""
+    },
+    {
+      "id": "resource-012",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Acknowledgment of observational facilities and data archives used in this work: ARC (ARCES), Magellan:Clay (MIKE), CDS, Gaia, IRSA, Skymapper, CTIO:2MASS, WISE.",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 1015,
+          "end_line": 1015,
+          "context": "}\\n\\n\\\\facilities{ARC (ARCES), Magellan:Clay (MIKE),\\tCDS, Gaia, IRSA, Skymapper, CTIO:2MASS, WISE}\\n\\n%\\\\end{acknowledgments}"
+        }
+      ],
+      "evidence": "Listed in the \\\\facilities command in the acknowledgments section.",
+      "comments": ""
+    },
+    {
+      "id": "resource-013",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "Machine-readable full version of Table measured_ews (atomic data, equivalent widths, and line abundances) published alongside the paper.",
+      "source_refs": [
+        {
+          "path": "literature/2203.16364/arxiv_source/hvs.tex",
+          "start_line": 1043,
+          "end_line": 1043,
+          "context": "3252546886080448384 & $4283.011$ & \\\\ion{Ca}{1} & $1.886$ & $-0.224$ & $61.40$ & $4.616$\\n\\\\enddata\\n\\\\tablecomments{This table is published in its entirety in the machine-readable format.  A portion is shown here for guidance regarding its form and content.} \\n\\\\end{deluxetable*}"
+        }
+      ],
+      "evidence": "Table comments state the full table is published in machine-readable format.",
+      "comments": ""
+    }
+  ]
+}

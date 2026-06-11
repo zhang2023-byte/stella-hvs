@@ -1,0 +1,367 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1902.05061",
+    "title": "Partly burnt runaway stellar remnants from peculiar thermonuclear supernovae",
+    "month": "2019-02",
+    "source_note_json": "notes/2019/2019-02/2019-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1902.05061",
+      "pdf": "https://arxiv.org/pdf/1902.05061"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1902.05061",
+    "audit_path": "literature/1902.05061/audit.json",
+    "source_dir": "literature/1902.05061/arxiv_source",
+    "tex_root": "literature/1902.05061/arxiv_source/lp40stars.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:45:00",
+    "reviewer": "agent",
+    "summary": "该论文为MNRAS文章，报道了三颗新发现的LP 40-365型恒星（J1603-6613、J1825-3757、J0905+2510），与原型星LP 40-365共同构成一类化学性质特殊的、部分燃烧的后热核超新星逃逸恒星。论文编制了六份结构化数据表：(1) Gaia天体测量和测光参数表（2颗星，含坐标、视差、自行、Gaia/GALEX/SkyMapper/VHS多波段测光）；(2) 观测日志表（3颗星的光谱和测光观测记录）；(3) SDSS候选体参数表（2颗星，含天体测量、测光、模板匹配结果）；(4) 大气参数和元素丰度拟合结果表（3颗星，含Teff、log g、径向速度及22种元素的丰度或上限）；(5) 轨道运动学参数表（3颗星，含距离、银心半径、静止系速度、偏心率、角动量、逃逸概率等）；(6) 物理参数表（3颗星，含Teff、log g、光度、半径、质量及置信区间）。所有表格均为论文内置展示表（每个表仅含少数几颗目标星的数据行），无大型机器可读星表。外部资源方面，论文将分析光谱存放于Open Fast Star Catalogue (https://faststars.space/)，模型计算使用了Kurucz原子谱线数据库 (http://kurucz.harvard.edu/)。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-t-gaia",
+      "kind": "latex_table",
+      "asset_type": "astrometric_catalog_table",
+      "role_in_paper": "该表列出从Gaia DR2中筛选出的两颗新LP 40-365型恒星（J1603-6613和J1825-3757）的天体测量和测光参数，是论文核心观测数据表之一。提供Gaia DR2 designation、赤经赤纬、银经银纬、视差、自行、Gaia三波段星等（G、Bp、Rp），以及GALEX NUV、SkyMapper uvgriz、VHS J等多波段测光数据。",
+      "source_refs": [
+        {
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 185,
+          "end_line": 232,
+          "caption": "Astrometric and photometric parameters of J1603-6613 and J1825-3757, including broad-band photometry from GALEX (NUV), SkyMapper (uvgriz), and Vista Hemisphere Survey (J).",
+          "label": "t:gaia"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameters",
+          "meaning": "参数名称（Designation, Right Ascension, Declination, Galactic longitude, Galactic latitude, Parallax, Proper motions, Fluxes）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Symbols",
+          "meaning": "参数符号（如α, δ, ℓ, b, ϖ, μαcosδ, μδ, G, Bp, Rp, NUV, u, v, g, r, i, z, J）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J1603-6613",
+          "meaning": "J1603-6613的参数值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J1825-3757",
+          "meaning": "J1825-3757的参数值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "表头包含Parameters、Symbols、J1603-6613、J1825-3757四列。数据行为参数-符号-双星数值的转置格式。包含Gaia DR2 designation、坐标（hms/dms和deg）、视差（mas）、自行（mas/yr）、G/Bp/Rp星等（mag），以及GALEX NUV、SkyMapper uvgriz、VHS J等多波段测光及其误差。",
+      "comments": "该表为展示表，仅含2颗星。表中J1603-6613的SkyMapper z波段数据缺失（标记为-），其Gaia颜色超出因子(f_BP+f_RP)/f_G=1.6提示可能存在测光问题（星场较拥挤）。J1825-3757的视差精度较高（ϖ/σ_ϖ≈18），距离更近。"
+    },
+    {
+      "id": "table-t-logs",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "该记录论文中所有新观测数据的日志，列出三颗LP 40-365型恒星的光谱和测光观测所使用的仪器、观测模式及观测日期。",
+      "source_refs": [
+        {
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 269,
+          "end_line": 282,
+          "caption": "Observing logs of the data presented and analysed in this work.",
+          "label": "t:logs"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Mode",
+          "meaning": "观测模式（Spectroscopy或Photometry）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Instrument",
+          "meaning": "观测仪器（SOAR/Goodman、VLT/X-shooter、HST/STIS）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "LP 40-365",
+          "meaning": "LP 40-365的观测日期",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J1603-6613",
+          "meaning": "J1603-6613的观测日期",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J1825-3757",
+          "meaning": "J1825-3757的观测日期",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "表头包含Mode、Instrument、LP 40-365、J1603-6613、J1825-3757五列。数据行列出：SOAR/Goodman光谱（J1603: 2018 May 6）、VLT/X-shooter光谱（J1603: 2018 Jul 9; J1825: 2016 Sep 27）、HST/STIS光谱（LP 40-365: 2018 May 21,25）、SOAR/Goodman测光（J1603: 2018 May 10; J1825: 2018 Jul 8）。",
+      "comments": "该表为简单观测日志，不含科学数据。LP 40-365的WHT/ISIS和Asiago光谱来自前序工作（Raddi et al. 2018a），不在此表中。"
+    },
+    {
+      "id": "table-tab-sdss",
+      "kind": "latex_table",
+      "asset_type": "astrometric_catalog_table",
+      "role_in_paper": "该表列出通过SDSS光谱数据库模板匹配识别出的两颗候选LP 40-365型恒星（J0905+2510和J1637+3631）的天体测量、多波段测光、星际红化、测光温度以及模板匹配参数。是论文中SDSS候选体分析的核心数据表。",
+      "source_refs": [
+        {
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 391,
+          "end_line": 428,
+          "caption": "Astrometry, photometry, and spectroscopic parameters for the objects identified from SDSS spectra, J0905+2510 and J1637+3631. Reddening values were determined from the Pan-STARRS dust-maps. Photometric Teff were calculated from fitting our 'LP 40-365 star' models to the GALEX NUV and SDSS photometry including the quoted reddening. Results from our template matching are given at the bottom.",
+          "label": "tab:sdss"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter [units]",
+          "meaning": "参数名称及单位",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Symbol",
+          "meaning": "参数符号",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J0905+2510",
+          "meaning": "J0905+2510的参数值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J1637+3631",
+          "meaning": "J1637+3631的参数值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "表头含Parameter [units]、Symbol、J0905+2510、J1637+3631四列。数据行包括Gaia DR2 designation、赤经赤纬（hms/dms）、银经银纬（deg）、视差（mas）、自行（mas/yr）、G/Bp/Rp/NUV/ugriz多波段星等（mag）、星际红化E(B-V)（mag）、测光温度Teff（K），以及底部模板匹配结果（模板Teff、RV、χ²_ν、SDSS Plate-MJD-fiber）。",
+      "comments": "J0905+2510在Gaia DR2中仅有两参数解（位置），无Gaia自行数据——其自行取自Pan-STARRS-SDSS交叉匹配（Tian 2017）。J1637+3631的视差为0.39±0.60 mas（无约束力），此前被Kleinman 2013误分类为DBQ（碳-rich氦主导大气）白矮星。"
+    },
+    {
+      "id": "table-tab-fits_new",
+      "kind": "latex_table",
+      "asset_type": "stellar_properties_table",
+      "role_in_paper": "该表为论文核心科学结果表，列出三颗LP 40-365型恒星（LP 40-365、J1603-6613、J1825-3757）的大气参数和元素丰度拟合结果。包含有效温度、表面重力、径向速度，以及H、He、C、O、Ne、Na、Mg、Al、Si、P、S、Ca、Sc、Ti、V、Cr、Mn、Fe、Co、Ni、Cu、Zn、Sr共23种元素的丰度或上限值。",
+      "source_refs": [
+        {
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 582,
+          "end_line": 618,
+          "caption": "Composition of our best-fitting synthetic spectra of LP 40-365, J1603-6613, and J1825-3757. Abundances are expressed as the number fraction of the total, log(Z/Tot), where the contribution from H and He is not included.",
+          "label": "tab:fits_new"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameters",
+          "meaning": "参数和元素名称（Teff, log g, v_rad, H, He, C, O, Ne, Na, Mg, Al, Si, P, S, Ca, Sc, Ti, V, Cr, Mn, Fe, Co, Ni, Cu, Zn, Sr）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "LP 40-365",
+          "meaning": "LP 40-365的参数值/元素丰度",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J1603-6613",
+          "meaning": "J1603-6613的参数值/元素丰度",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J1825-3757",
+          "meaning": "J1825-3757的参数值/元素丰度",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "表头含Parameters、LP 40-365、J1603-6613、J1825-3757四列。数据行前三行为大气参数（Teff [K]、log g [cgs]、v_rad [km/s]），后续20行为各元素丰度（log(Z/Tot)）或上限值。H和He丰度为上限（如H<-4.30即表示未检测到）。P、V、Sc、Co、Cu、Zn、Sr在部分恒星中为上限。",
+      "comments": "LP 40-365的丰度来自重新分析（含新HST/STIS NUV光谱），与Raddi et al. 2018a中假定He主导大气的结果不同，现支持ONe主导大气。三颗恒星的O、Ne、Mg为主要大气成分（O:Ne:Mg质量比约34:54:6），痕量元素丰度模式高度相似（典型弥散仅0.25 dex）。Si-burning产生的铁峰元素（Cr、Mn、Fe、Ni）呈超太阳丰度。"
+    },
+    {
+      "id": "table-t-kin",
+      "kind": "latex_table",
+      "asset_type": "kinematic_parameters_table",
+      "role_in_paper": "该表列出三颗LP 40-365型恒星（LP 40-365、J1603-6613、J1825-3757）的银河系轨道运动学参数，是论文运动学分析的核心结果表。包含距离、银心半径、银面高程、静止系速度、偏心率、角动量、远银心距/近银心距、方位周期、逃逸概率以及银面穿越时间和位置。",
+      "source_refs": [
+        {
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 702,
+          "end_line": 753,
+          "caption": "Orbital parameters of LP 40-365, J1603-6613, and J1825-3757.",
+          "label": "t:kin"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameters",
+          "meaning": "运动学参数名称（Distance, Galactocentric radius, Elevation, Rest frame velocity, Eccentricity, Vertical component of angular moment, Maximum elevation, Pericentre, Apocentre, Azimutal period, Escape probability, Flight time from plane crossing, Galactocentric radius at plane crossing, Distance at plane crossing）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Symbols",
+          "meaning": "参数符号（d, R_G, Z, v_rf, e, J_Z, Z_max, R_peri, R_apo, Tp, τ_fl(Z=0), R_G(Z=0), d(Z=0)）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "LP 40-365",
+          "meaning": "LP 40-365的运动学参数值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J1603-6613",
+          "meaning": "J1603-6613的运动学参数值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J1825-3757",
+          "meaning": "J1825-3757的运动学参数值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "表头含Parameters、Symbols、LP 40-365、J1603-6613、J1825-3757五列。数据行包括：距离d [kpc]、银心半径R_G [kpc]、银面高程Z [kpc]、静止系速度v_rf [km/s]、偏心率e、角动量垂直分量J_Z [kpc·km/s]、最大高程Z_max [kpc]、近银心距R_peri [kpc]、远银心距R_apo [kpc]、方位周期Tp [Myr]、逃逸概率[%]、银面穿越飞行时间τ_fl(Z=0) [Myr]、穿越点银心半径R_G(Z=0) [kpc]、穿越点距离d(Z=0) [kpc]。LP 40-365和J1603-6613为非束缚轨道（e=1），远银心距、方位周期标记为-。",
+      "comments": "轨道计算使用galpy的MWPotential2014势模型，考虑Gaia DR2协方差矩阵通过蒙特卡洛（10,000次采样）传播误差。LP 40-365的静止系速度v_rf=852±11 km/s（逃逸速度约550 km/s），J1603-6613的v_rf=804^(+49)_(-32) km/s，两者均非束缚。J1825-3757的v_rf=408^(+39)_(-34) km/s，受银河系引力束缚（e=0.69±0.12），逃逸概率<10%。"
+    },
+    {
+      "id": "table-tab-phys",
+      "kind": "latex_table",
+      "asset_type": "stellar_properties_table",
+      "role_in_paper": "该表汇总三颗LP 40-365型恒星的物理参数（有效温度、表面重力、光度、半径、质量），包含1σ误差和5-95%置信区间。是论文中恒星物理性质讨论的核心参考表。",
+      "source_refs": [
+        {
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 833,
+          "end_line": 862,
+          "caption": "Physical parameters of the LP 40-365 stars. The 1σ errors and the 5-95 per cent ranges were estimated via Monte Carlo sampling. The apparent fluxes are listed without errors, because they carry very small errors from precise broad-band photometry and we did not include the effect of Teff uncertainties in the error budget. The errors on radius, luminosity, and mass, account for those on parallax, Teff, and log g.",
+          "label": "tab:phys"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameters",
+          "meaning": "参数名称（Effective Temperature, Surface gravity, Luminosity, Radius, Mass）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Symbols",
+          "meaning": "参数符号（Teff, log g, L, R, M）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "LP 40-365 (16-84% / 5-95%)",
+          "meaning": "LP 40-365的1σ和5-95%置信区间估计值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J1603-6613 (16-84% / 5-95%)",
+          "meaning": "J1603-6613的1σ和5-95%置信区间估计值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J1825-3757 (16-84% / 5-95%)",
+          "meaning": "J1825-3757的1σ和5-95%置信区间估计值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "表头含Parameters、Symbols、LP 40-365（16-84%和5-95%两列）、J1603-6613（两列）、J1825-3757（两列）共八列。数据行包括：Teff [K]（9800±300 / 10600±370 / 12830±450）、log g [cgs]（5.50±0.30 / 5.34±0.20 / 4.21±0.18）、L [L_⊙]（0.20±0.04 / 0.29^(+0.13)_(-0.10) / 8.766^(+1.82)_(-1.57)）、R [R_⊙]（0.16±0.01 / 0.16±0.04 / 0.60±0.04）、M [M_⊙]（0.28^(+0.28)_(-0.14) / 0.20^(+0.16)_(-0.09) / 0.21^(+0.12)_(-0.07)）。",
+      "comments": "半径通过Gaia视差和Pan-STARRS/SkyMapper测光数据结合光谱拟合确定。质量由g=GM/R²推导。三颗星质量均低于典型白矮星质量（~0.621 M_⊙），半径则比典型白矮星大约一个数量级（热膨胀状态）。J1825-3757的半径最大（0.60 R_⊙）、光度最高（~8.8 L_⊙），可能是最年轻的演化阶段。"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://faststars.space/",
+      "local_path": "",
+      "description": "Open Fast Star Catalogue——论文中分析的光谱数据存放于该开放快星数据库中，由Douglas Boubert和James Guillochon维护。",
+      "source_refs": [
+        {
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 167,
+          "end_line": 167,
+          "context": "The spectra analysed here are made available at the Open Fast Star Catalogue (https://faststars.space/), which is currently maintained by Douglas Boubert and James Guillochon."
+        }
+      ],
+      "evidence": "论文第167行脚注明确给出URL https://faststars.space/ 作为分析光谱的存放位置。",
+      "comments": "该URL在论文LaTeX源文件的\\footnote中以\\url{}命令给出，是论文唯一明确声明数据存放地的外部资源。"
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://kurucz.harvard.edu/",
+      "local_path": "",
+      "description": "Robert Kurucz的原子谱线数据库——论文使用该数据库中的O I和Mg II谱线数据（含波长、振子强度、Stark致宽参数等）来改进合成光谱模型，特别是用于拟合J1825-3757光谱中缺少的Mg II高激发态谱线。",
+      "source_refs": [
+        {
+          "path": "literature/1902.05061/arxiv_source/lp40stars.tex",
+          "start_line": 482,
+          "end_line": 482,
+          "context": "Robert Kurucz's line lists for O I and Mg II (http://kurucz.harvard.edu/)"
+        }
+      ],
+      "evidence": "论文第482行在描述合成光谱模型所使用的原子数据时，以\\url{}命令给出了Kurucz谱线列表的URL http://kurucz.harvard.edu/。",
+      "comments": "该URL用于获取原子谱线参数，是光谱建模的关键输入数据源。论文明确指出Kurucz数据库提供了NIST和VALD数据库中缺失的Mg II高激发态谱线（4014、4094、4110 Å等），这些谱线的加入显著改善了模型与观测光谱的一致性。"
+    }
+  ]
+}

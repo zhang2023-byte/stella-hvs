@@ -1,0 +1,324 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2412.06982",
+    "title": "Resolving the Young 2 Cygni Run-away Star into a Binary using iLocater",
+    "month": "2024-12",
+    "source_note_json": "notes/2024/2024-12/2024-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2412.06982",
+      "pdf": "https://arxiv.org/pdf/2412.06982"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2412.06982",
+    "audit_path": "literature/2412.06982/audit.json",
+    "source_dir": "literature/2412.06982/arxiv_source",
+    "tex_root": "literature/2412.06982/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T20:34:11",
+    "reviewer": "agent",
+    "summary": "This paper reports the serendipitous AO imaging discovery of a candidate companion to the young runaway star 2 Cygni using the iLocater SX acquisition camera at LBT, with follow-up Keck/NIRC2 imaging and Lili spectroscopy. The paper contains five internal LaTeX tables: a parameter summary of the 2 Cygni system, a literature reference summary, an observing log, deblended NIRC2 photometry for the A and B components, and astrometric measurements across epochs. One external resource is cited: the BT-Settl spectral model database used for temperature comparison."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-2cyg",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Summarizes the basic observational properties of the 2 Cygni system (coordinates, proper motion, parallax, and multi-band photometry) drawn from Gaia and literature sources.",
+      "source_refs": [
+        {
+          "path": "literature/2412.06982/arxiv_source/main.tex",
+          "start_line": 157,
+          "end_line": 182,
+          "caption": "Observational properties of the 2 Cygni system. Gaia Early Data Release 3 (DR3) is from the \\cite{gaia_dr3_21}.",
+          "label": "tab:2cyg"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name of the observed stellar property",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Measured or adopted numerical value",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Units",
+          "meaning": "Physical unit of the value",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Reference",
+          "meaning": "Source catalog or literature reference for the value",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Observational properties of the 2 Cygni system. Gaia Early Data Release 3 (DR3) is from the \\cite{gaia_dr3_21}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-literature",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Lists select literature references that mention 2 Cygni, together with brief comments on their multiplicity claims.",
+      "source_refs": [
+        {
+          "path": "literature/2412.06982/arxiv_source/main.tex",
+          "start_line": 201,
+          "end_line": 225,
+          "caption": "Select literature references that mention 2~Cygni.",
+          "label": "tab:literature"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Reference",
+          "meaning": "Bibliographic reference to the catalog or study",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Comments",
+          "meaning": "Brief note on what the reference says about multiplicity or binary status",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Select literature references that mention 2~Cygni.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-log",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Observing log summarizing the dates, instruments, filters, integration parameters, airmass, and seeing for each AO imaging or spectroscopic epoch.",
+      "source_refs": [
+        {
+          "path": "literature/2412.06982/arxiv_source/main.tex",
+          "start_line": 279,
+          "end_line": 297,
+          "caption": "Observing log for AO measurements of 2~Cygni. iLocater's custom imaging channel senses light within a narrow range of wavelengths ($\\lambda=0.927-0.960 \\; \\mu$m). The number of frames ($N_{\\rm frames}$), integration time per frame ($\\Delta t_{\\rm int}$), and total integration time ($\\Delta t_{\\rm tot}$) are shown for each data set. Seeing measurements ($\\theta$) were made using the LBT DIMM system (within 25$^{\\circ}$ of target) and Keck MASS/DIMM system.",
+          "label": "tab:log"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Date (UT)",
+          "meaning": "Universal date of the observation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Instrument",
+          "meaning": "Telescope/instrument used for the observation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Filter",
+          "meaning": "Filter or wavelength bandpass employed",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mode",
+          "meaning": "Observation mode (imaging or spectroscopy)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "N_\\rm frames",
+          "meaning": "Number of frames recorded",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\Delta t_\\rm int [sec]",
+          "meaning": "Integration time per individual frame",
+          "unit_text": "sec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\Delta t_\\rm tot [sec]",
+          "meaning": "Total integration time for the epoch",
+          "unit_text": "sec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Airmass",
+          "meaning": "Airmass during the observation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\theta [\\arcsec]",
+          "meaning": "Estimated seeing full-width at half-maximum",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Observing log for AO measurements of 2~Cygni. iLocater's custom imaging channel senses light within a narrow range of wavelengths ($\\lambda=0.927-0.960 \\; \\mu$m). The number of frames ($N_{\\rm frames}$), integration time per frame ($\\Delta t_{\\rm int}$), and total integration time ($\\Delta t_{\\rm tot}$) are shown for each data set. Seeing measurements ($\\theta$) were made using the LBT DIMM system (within 25$^{\\circ}$ of target) and Keck MASS/DIMM system.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-photometry",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Presents deblended apparent and absolute near-infrared photometry for the resolved 2 Cygni A and B components from NIRC2 AO imaging.",
+      "source_refs": [
+        {
+          "path": "literature/2412.06982/arxiv_source/main.tex",
+          "start_line": 383,
+          "end_line": 398,
+          "caption": "Deblended photometry for the 2~Cygni components using NIRC2. $H$-band data is based on $H_{\\rm cont}$ measurements and $K_s$-band data is based on $K_{\\rm cont}$ measurements.",
+          "label": "tab:photometry"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Identifier of the binary component (A or B)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "m_H",
+          "meaning": "Apparent magnitude in H-band (continuum filter)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "m_K_s",
+          "meaning": "Apparent magnitude in K_s-band (continuum filter)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_H",
+          "meaning": "Absolute magnitude in H-band",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_K_s",
+          "meaning": "Absolute magnitude in K_s-band",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "H-K_s",
+          "meaning": "Color index between H and K_s bands",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Deblended photometry for the 2~Cygni components using NIRC2. $H$-band data is based on $H_{\\rm cont}$ measurements and $K_s$-band data is based on $K_{\\rm cont}$ measurements.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-astrometry",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Reports astrometric measurements of angular separation, position angle, and magnitude difference for 2 Cygni across multiple epochs and instruments.",
+      "source_refs": [
+        {
+          "path": "literature/2412.06982/arxiv_source/main.tex",
+          "start_line": 402,
+          "end_line": 419,
+          "caption": "2~Cygni astrometry showing angular separation ($\\rho$), position angle (PA) measured east of north, and magnitude difference in the iLocater filter. Uncertainty in angular separation for iLocater astrometry measurements is dominated by uncertainty in the plate scale; calibration of iLocater's north-east orientation with changing parallactic angle is on-going.",
+          "label": "tab:astrometry"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Instrument",
+          "meaning": "Telescope/instrument used for the astrometric measurement",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Epoch",
+          "meaning": "Date of the observation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\rho [mas]",
+          "meaning": "Angular separation between the two components",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PA [^\\circ]",
+          "meaning": "Position angle of the secondary relative to the primary, measured east of north",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\Delta m",
+          "meaning": "Magnitude difference between the two components",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "2~Cygni astrometry showing angular separation ($\\rho$), position angle (PA) measured east of north, and magnitude difference in the iLocater filter. Uncertainty in angular separation for iLocater astrometry measurements is dominated by uncertainty in the plate scale; calibration of iLocater's north-east orientation with changing parallactic angle is on-going.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://svo2.cab.inta-csic.es/theory/newov2/",
+      "local_path": "",
+      "description": "BT-Settl spectral model database (via the Spanish Virtual Observatory) used to compare theoretical atmospheric models with the observed near-infrared spectra of 2 Cygni A and B.",
+      "source_refs": [
+        {
+          "path": "literature/2412.06982/arxiv_source/main.tex",
+          "start_line": 510,
+          "end_line": 510,
+          "context": "For comparison, we over-plot BT-Settl spectral models\\footnote{\\url{http://svo2.cab.inta-csic.es/theory/newov2/}} for different effective temperatures assuming a surface gravity of $\\log(g)=4.0$ \\citep{allard_11}."
+        }
+      ],
+      "evidence": "For comparison, we over-plot BT-Settl spectral models\\footnote{\\url{http://svo2.cab.inta-csic.es/theory/newov2/}} for different effective temperatures assuming a surface gravity of $\\log(g)=4.0$ \\citep{allard_11}.",
+      "comments": ""
+    }
+  ]
+}

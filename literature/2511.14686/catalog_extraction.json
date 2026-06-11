@@ -1,0 +1,1549 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:36",
+  "paper": {
+    "arxiv_id": "2511.14686",
+    "title": "Massive runaway star HD 254577: the pre-supernova binary companion to the progenitor of the supernova remnant IC 443",
+    "month": "2025-11"
+  },
+  "review": {
+    "path": "literature/2511.14686/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124036",
+    "started_at": "2026-05-17T12:40:36",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2511.14686",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 12,
+      "work_count": 12,
+      "table_count": 12,
+      "success_count": 12,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 12,
+      "file_success_count": 12,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-clustermembers11",
+      "internal_table_id": "table-clustermembers11",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+        "start_line": 205,
+        "end_line": 232,
+        "caption": "\\label{clustermembers11}Identified members of the detected potential cluster. \\textit{\\textit{Gaia}} DR3 names, geometric distances, parallaxes, G-band brightnesses, G$_{BP}-$G$_{RP}$ color indices, and proper motion values are given. \\textit{\\textit{Gaia}} DR3 3377009162805147136 (the last row) is HD~254577, and \\textit{Gaia} DR3 3377012731919116416 (the second row) is HD~254477.",
+        "label": "clustermembers11"
+      },
+      "source_path": "literature/2511.14686/arxiv_source/hd254577.tex",
+      "excerpt_path": "literature/2511.14686/catalog_sources/table-clustermembers11/excerpt.tex",
+      "sha256": "1a469278b36adee6e84462ef8624aa65e9f4e4a4cdc448b5ea58e51328451a34",
+      "line_count": 28,
+      "error": ""
+    },
+    {
+      "id": "table-obss",
+      "internal_table_id": "table-obss",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+        "start_line": 309,
+        "end_line": 337,
+        "caption": "\\label{obss}Log of observations for HD~254577 and HD~254477. The observation dates are given together with the spectrograph used, the preferred binning, the detector integration time (DIT) in seconds, and the signal-to-noise ratio obtained around the H$\\beta$ $\\lambda 4860$ line. The number of DITs is three (NDIT=3) for each observation.",
+        "label": "obss"
+      },
+      "source_path": "literature/2511.14686/arxiv_source/hd254577.tex",
+      "excerpt_path": "literature/2511.14686/catalog_sources/table-obss/excerpt.tex",
+      "sha256": "11ede0639a098a5bed54535ba0e8abe07b2101cdba9c93140453261ad13f3c58",
+      "line_count": 29,
+      "error": ""
+    },
+    {
+      "id": "table-rav",
+      "internal_table_id": "table-rav",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+        "start_line": 381,
+        "end_line": 401,
+        "caption": "\\label{rav}Radial velocity measurements of HD~254577.",
+        "label": "rav"
+      },
+      "source_path": "literature/2511.14686/arxiv_source/hd254577.tex",
+      "excerpt_path": "literature/2511.14686/catalog_sources/table-rav/excerpt.tex",
+      "sha256": "c6e851063740b1a0b722f472f1fb0d5e89be0bd87af60bd2a3a94cb110c12021",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-sp577",
+      "internal_table_id": "table-sp577",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+        "start_line": 402,
+        "end_line": 416,
+        "caption": "\\label{sp577}Measured parameters of HD~254577. We determined the same spectral type (SpT\\_tw) as \\citet{1955ApJ...121...24C} (SpT).",
+        "label": "sp577"
+      },
+      "source_path": "literature/2511.14686/arxiv_source/hd254577.tex",
+      "excerpt_path": "literature/2511.14686/catalog_sources/table-sp577/excerpt.tex",
+      "sha256": "95f6e4e026e17fb159e799d97df1a893b97e50a4e72a66d3def1bd0aa1dd3a51",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-sp",
+      "internal_table_id": "table-sp",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+        "start_line": 554,
+        "end_line": 586,
+        "caption": "\\label{sp}% Measured parameters of the observed stars with LAMOST. The spectral types suggested for the stars in this work (SpT\\_tw), with the most precise determination available in the literature (SpT\\_lit), are given. References: (1) \\cite{1955ApJ...121...24C} and (2) \\cite{2002A&A...386..709F}",
+        "label": "sp"
+      },
+      "source_path": "literature/2511.14686/arxiv_source/hd254577.tex",
+      "excerpt_path": "literature/2511.14686/catalog_sources/table-sp/excerpt.tex",
+      "sha256": "cd4ec525426a8b8924211a98b7eb6537e2d365ae9d9d514f902c7ada0b3371d2",
+      "line_count": 33,
+      "error": ""
+    },
+    {
+      "id": "table-mass",
+      "internal_table_id": "table-mass",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+        "start_line": 616,
+        "end_line": 632,
+        "caption": "\\label{mass}The initial and current (final) masses for the runaway star and the progenitor are given for different cluster ages. The masses are in M$_\\odot$.",
+        "label": "mass"
+      },
+      "source_path": "literature/2511.14686/arxiv_source/hd254577.tex",
+      "excerpt_path": "literature/2511.14686/catalog_sources/table-mass/excerpt.tex",
+      "sha256": "83c24407975dddb1471d78fb7eb1b7f42adcc311913feb874ea1fe02258f39ff",
+      "line_count": 17,
+      "error": ""
+    },
+    {
+      "id": "table-psrvel",
+      "internal_table_id": "table-psrvel",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+        "start_line": 648,
+        "end_line": 665,
+        "caption": "\\label{psrvel}Parameters found by tracing back the runaway star. The coordinates of the explosion center and the related NS transverse velocities are given for various SNR-NS ages.",
+        "label": "psrvel"
+      },
+      "source_path": "literature/2511.14686/arxiv_source/hd254577.tex",
+      "excerpt_path": "literature/2511.14686/catalog_sources/table-psrvel/excerpt.tex",
+      "sha256": "8b59e213dfefae8b142627e283d858bc05c386cef4217116b1c45da13e2330bb",
+      "line_count": 18,
+      "error": ""
+    },
+    {
+      "id": "table-preSN",
+      "internal_table_id": "table-preSN",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+        "start_line": 803,
+        "end_line": 825,
+        "caption": "\\label{preSN}Calculated parameters of the pre-SN binary for the peculiar velocity of 31 km~s$^{-1}$. The binary separation, the period, the orbital velocity of the primary, and the Roche-Lobe radius for different configurations are given, respectively.",
+        "label": "preSN"
+      },
+      "source_path": "literature/2511.14686/arxiv_source/hd254577.tex",
+      "excerpt_path": "literature/2511.14686/catalog_sources/table-preSN/excerpt.tex",
+      "sha256": "6cc85616780c00d6d6d92af5843efd0228c056a4a5be401192388fbb1c35f5a6",
+      "line_count": 23,
+      "error": ""
+    },
+    {
+      "id": "table-preSN2",
+      "internal_table_id": "table-preSN2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2511.14686/arxiv_source/hd254577.tex",
+        "start_line": 827,
+        "end_line": 840,
+        "caption": "\\label{preSN2}Roche Lobe radii. See text.",
+        "label": "preSN2"
+      },
+      "source_path": "literature/2511.14686/arxiv_source/hd254577.tex",
+      "excerpt_path": "literature/2511.14686/catalog_sources/table-preSN2/excerpt.tex",
+      "sha256": "6c6000de479614ae1c2c06fa14e8078b949b4638b87d80dfdd235faf7206380d",
+      "line_count": 14,
+      "error": ""
+    },
+    {
+      "id": "table-clustermembers",
+      "internal_table_id": "table-clustermembers",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2511.14686/arxiv_source/tab/cluster.tex",
+        "start_line": 1,
+        "end_line": 113,
+        "caption": "\\label{clustermembers}Cluster members.",
+        "label": "clustermembers"
+      },
+      "source_path": "literature/2511.14686/arxiv_source/tab/cluster.tex",
+      "excerpt_path": "literature/2511.14686/catalog_sources/table-clustermembers/excerpt.tex",
+      "sha256": "f59a4b5219e872b787d5ab8eb552f66827c65620c9143d5955cf994ba9cc013c",
+      "line_count": 113,
+      "error": ""
+    },
+    {
+      "id": "table-Lines",
+      "internal_table_id": "table-Lines",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2511.14686/arxiv_source/tab/lineflux.tex",
+        "start_line": 1,
+        "end_line": 147,
+        "caption": "\\label{Lines} Line fluxes $F$ relative to H$\\alpha$. The line ratios are presented.",
+        "label": "Lines"
+      },
+      "source_path": "literature/2511.14686/arxiv_source/tab/lineflux.tex",
+      "excerpt_path": "literature/2511.14686/catalog_sources/table-Lines/excerpt.tex",
+      "sha256": "b363d7c2958093a3af517e97b046c711ed40d40cf102f47b5f8b7c2226d585a8",
+      "line_count": 147,
+      "error": ""
+    },
+    {
+      "id": "table-parameters",
+      "internal_table_id": "table-parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2511.14686/arxiv_source/tab/parameters.tex",
+        "start_line": 1,
+        "end_line": 144,
+        "caption": "\\label{parameters} The Physical parameters of the SNR.",
+        "label": "parameters"
+      },
+      "source_path": "literature/2511.14686/arxiv_source/tab/parameters.tex",
+      "excerpt_path": "literature/2511.14686/catalog_sources/table-parameters/excerpt.tex",
+      "sha256": "8d65ddec43707e7dadeb848bf146ed919b837695860f36880ae62a8f881e7d52",
+      "line_count": 144,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-clustermembers11",
+      "internal_table_id": "table-clustermembers11",
+      "status": "success",
+      "ecsv_path": "literature/2511.14686/catalog_tables/table-clustermembers11.ecsv",
+      "caption": "\\label{clustermembers11}Identified members of the detected potential cluster. \\textit{\\textit{Gaia}} DR3 names, geometric distances, parallaxes, G-band brightnesses, G$_{BP}-$G$_{RP}$ color indices, and proper motion values are given. \\textit{\\textit{Gaia}} DR3 3377009162805147136 (the last row) is HD~254577, and \\textit{Gaia} DR3 3377012731919116416 (the second row) is HD~254477.",
+      "label": "clustermembers11",
+      "row_count": 11,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR3 Source",
+          "r geo (pc)",
+          "\\varpi (mas)",
+          "G (mag)",
+          "G _BP- G RP (mag)",
+          "\\mu_\\alpha^\\star (mas yr -1 )",
+          "\\mu_\\delta (mas yr -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR3 Source",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "r geo (pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\varpi (mas)",
+          "unit_text": "\\varpi (mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "G (mag)",
+          "unit_text": "G (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "G _BP- G RP (mag)",
+          "unit_text": "G _BP- G RP (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_\\alpha^\\star (mas yr -1 )",
+          "unit_text": "\\mu_\\alpha^\\star (mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_\\delta (mas yr -1 )",
+          "unit_text": "\\mu_\\delta (mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvga2wdzk/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2511.14686/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpvga2wdzk/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2511.14686/catalog_sources/table-clustermembers11/wrapped.tex",
+            "html": "literature/2511.14686/catalog_sources/table-clustermembers11/latexml.html",
+            "stdout": "literature/2511.14686/catalog_sources/table-clustermembers11/latexml.stdout.txt",
+            "stderr": "literature/2511.14686/catalog_sources/table-clustermembers11/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "1a469278b36adee6e84462ef8624aa65e9f4e4a4cdc448b5ea58e51328451a34"
+    },
+    {
+      "id": "table-obss",
+      "internal_table_id": "table-obss",
+      "status": "success",
+      "ecsv_path": "literature/2511.14686/catalog_tables/table-obss.ecsv",
+      "caption": "\\label{obss}Log of observations for HD~254577 and HD~254477. The observation dates are given together with the spectrograph used, the preferred binning, the detector integration time (DIT) in seconds, and the signal-to-noise ratio obtained around the H$\\beta$ $\\lambda 4860$ line. The number of DITs is three (NDIT=3) for each observation.",
+      "label": "obss",
+      "row_count": 12,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Date",
+          "Instrument",
+          "Binning",
+          "DIT",
+          "S/N"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Date",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Instrument",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Binning",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "DIT",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "S/N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnqvcb3l_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2511.14686/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnqvcb3l_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2511.14686/catalog_sources/table-obss/wrapped.tex",
+            "html": "literature/2511.14686/catalog_sources/table-obss/latexml.html",
+            "stdout": "literature/2511.14686/catalog_sources/table-obss/latexml.stdout.txt",
+            "stderr": "literature/2511.14686/catalog_sources/table-obss/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "11ede0639a098a5bed54535ba0e8abe07b2101cdba9c93140453261ad13f3c58"
+    },
+    {
+      "id": "table-rav",
+      "internal_table_id": "table-rav",
+      "status": "success",
+      "ecsv_path": "literature/2511.14686/catalog_tables/table-rav.ecsv",
+      "caption": "\\label{rav}Radial velocity measurements of HD~254577.",
+      "label": "rav",
+      "row_count": 8,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Date",
+          "MJD",
+          "Instrument",
+          "RV (km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Date",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "MJD",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Instrument",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RV (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpei0mztdw/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2511.14686/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpei0mztdw/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2511.14686/catalog_sources/table-rav/wrapped.tex",
+            "html": "literature/2511.14686/catalog_sources/table-rav/latexml.html",
+            "stdout": "literature/2511.14686/catalog_sources/table-rav/latexml.stdout.txt",
+            "stderr": "literature/2511.14686/catalog_sources/table-rav/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c6e851063740b1a0b722f472f1fb0d5e89be0bd87af60bd2a3a94cb110c12021"
+    },
+    {
+      "id": "table-sp577",
+      "internal_table_id": "table-sp577",
+      "status": "success",
+      "ecsv_path": "literature/2511.14686/catalog_tables/table-sp577.ecsv",
+      "caption": "\\label{sp577}Measured parameters of HD~254577. We determined the same spectral type (SpT\\_tw) as \\citet{1955ApJ...121...24C} (SpT).",
+      "label": "sp577",
+      "row_count": 1,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Stars",
+          "T_\\rmeff (K)",
+          "\\log(g)",
+          "SpT_tw",
+          "SpT"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Stars",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "T_\\rmeff (K)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\log(g)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "SpT_tw",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "SpT",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdz7fqwv0/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2511.14686/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdz7fqwv0/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2511.14686/catalog_sources/table-sp577/wrapped.tex",
+            "html": "literature/2511.14686/catalog_sources/table-sp577/latexml.html",
+            "stdout": "literature/2511.14686/catalog_sources/table-sp577/latexml.stdout.txt",
+            "stderr": "literature/2511.14686/catalog_sources/table-sp577/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "95f6e4e026e17fb159e799d97df1a893b97e50a4e72a66d3def1bd0aa1dd3a51"
+    },
+    {
+      "id": "table-sp",
+      "internal_table_id": "table-sp",
+      "status": "success",
+      "ecsv_path": "literature/2511.14686/catalog_tables/table-sp.ecsv",
+      "caption": "\\label{sp}% Measured parameters of the observed stars with LAMOST. The spectral types suggested for the stars in this work (SpT\\_tw), with the most precise determination available in the literature (SpT\\_lit), are given. References: (1) \\cite{1955ApJ...121...24C} and (2) \\cite{2002A&A...386..709F}",
+      "label": "sp",
+      "row_count": 17,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR3",
+          "T_\\rmeff (K)",
+          "\\log(g)",
+          "SpT_tw",
+          "SpT_lit"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR3",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "T_\\rmeff (K)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\log(g)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "SpT_tw",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "SpT_lit",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpror05zht/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2511.14686/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpror05zht/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2511.14686/catalog_sources/table-sp/wrapped.tex",
+            "html": "literature/2511.14686/catalog_sources/table-sp/latexml.html",
+            "stdout": "literature/2511.14686/catalog_sources/table-sp/latexml.stdout.txt",
+            "stderr": "literature/2511.14686/catalog_sources/table-sp/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "cd4ec525426a8b8924211a98b7eb6537e2d365ae9d9d514f902c7ada0b3371d2"
+    },
+    {
+      "id": "table-mass",
+      "internal_table_id": "table-mass",
+      "status": "success",
+      "ecsv_path": "literature/2511.14686/catalog_tables/table-mass.ecsv",
+      "caption": "\\label{mass}The initial and current (final) masses for the runaway star and the progenitor are given for different cluster ages. The masses are in M$_\\odot$.",
+      "label": "mass",
+      "row_count": 3,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "\\log(age[yr])",
+          "M_ini-run",
+          "M_ini-pro",
+          "M_run",
+          "M_pro"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "\\log(age[yr])",
+          "unit_text": "\\log(age[yr])",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "M_ini-run",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "M_ini-pro",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "M_run",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "M_pro",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq6fy15km/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2511.14686/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpq6fy15km/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2511.14686/catalog_sources/table-mass/wrapped.tex",
+            "html": "literature/2511.14686/catalog_sources/table-mass/latexml.html",
+            "stdout": "literature/2511.14686/catalog_sources/table-mass/latexml.stdout.txt",
+            "stderr": "literature/2511.14686/catalog_sources/table-mass/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "83c24407975dddb1471d78fb7eb1b7f42adcc311913feb874ea1fe02258f39ff"
+    },
+    {
+      "id": "table-psrvel",
+      "internal_table_id": "table-psrvel",
+      "status": "success",
+      "ecsv_path": "literature/2511.14686/catalog_tables/table-psrvel.ecsv",
+      "caption": "\\label{psrvel}Parameters found by tracing back the runaway star. The coordinates of the explosion center and the related NS transverse velocities are given for various SNR-NS ages.",
+      "label": "psrvel",
+      "row_count": 5,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [
+        [
+          "Age",
+          "Exp. R.A.",
+          "Exp. Dec.",
+          "v_NS"
+        ],
+        [
+          "(kyr)",
+          "(deg)",
+          "(deg)",
+          "(km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Age | (kyr)",
+          "unit_text": "(kyr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Exp. R.A. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Exp. Dec. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "v_NS | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpor3frghv/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2511.14686/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpor3frghv/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2511.14686/catalog_sources/table-psrvel/wrapped.tex",
+            "html": "literature/2511.14686/catalog_sources/table-psrvel/latexml.html",
+            "stdout": "literature/2511.14686/catalog_sources/table-psrvel/latexml.stdout.txt",
+            "stderr": "literature/2511.14686/catalog_sources/table-psrvel/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8b59e213dfefae8b142627e283d858bc05c386cef4217116b1c45da13e2330bb"
+    },
+    {
+      "id": "table-preSN",
+      "internal_table_id": "table-preSN",
+      "status": "success",
+      "ecsv_path": "literature/2511.14686/catalog_tables/table-preSN.ecsv",
+      "caption": "\\label{preSN}Calculated parameters of the pre-SN binary for the peculiar velocity of 31 km~s$^{-1}$. The binary separation, the period, the orbital velocity of the primary, and the Roche-Lobe radius for different configurations are given, respectively.",
+      "label": "preSN",
+      "row_count": 12,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "Conf. (M ⊙ )",
+          "Sep. (R ⊙ )",
+          "P (days)",
+          "v_orb (km s -1 )",
+          "RL (R ⊙ )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Conf. (M ⊙ )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Sep. (R ⊙ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "P (days)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "v_orb (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "RL (R ⊙ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpf2pp_rs3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2511.14686/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpf2pp_rs3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2511.14686/catalog_sources/table-preSN/wrapped.tex",
+            "html": "literature/2511.14686/catalog_sources/table-preSN/latexml.html",
+            "stdout": "literature/2511.14686/catalog_sources/table-preSN/latexml.stdout.txt",
+            "stderr": "literature/2511.14686/catalog_sources/table-preSN/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6cc85616780c00d6d6d92af5843efd0228c056a4a5be401192388fbb1c35f5a6"
+    },
+    {
+      "id": "table-preSN2",
+      "internal_table_id": "table-preSN2",
+      "status": "success",
+      "ecsv_path": "literature/2511.14686/catalog_tables/table-preSN2.ecsv",
+      "caption": "\\label{preSN2}Roche Lobe radii. See text.",
+      "label": "preSN2",
+      "row_count": 4,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Conf. (M ⊙ )",
+          "Sep. (R ⊙ )",
+          "RL (R ⊙ )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Conf. (M ⊙ )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Sep. (R ⊙ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "RL (R ⊙ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv6qkbxau/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2511.14686/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv6qkbxau/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2511.14686/catalog_sources/table-preSN2/wrapped.tex",
+            "html": "literature/2511.14686/catalog_sources/table-preSN2/latexml.html",
+            "stdout": "literature/2511.14686/catalog_sources/table-preSN2/latexml.stdout.txt",
+            "stderr": "literature/2511.14686/catalog_sources/table-preSN2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "6c6000de479614ae1c2c06fa14e8078b949b4638b87d80dfdd235faf7206380d"
+    },
+    {
+      "id": "table-clustermembers",
+      "internal_table_id": "table-clustermembers",
+      "status": "success",
+      "ecsv_path": "literature/2511.14686/catalog_tables/table-clustermembers.ecsv",
+      "caption": "\\label{clustermembers}Cluster members.",
+      "label": "clustermembers",
+      "row_count": 85,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Gaia DR3 Source",
+          "r geo (pc)",
+          "\\varpi (mas)",
+          "G (mag)",
+          "G _BP- G RP (mag)",
+          "\\mu_\\alpha^* (mas yr -1 )",
+          "\\mu_\\delta (mas yr -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Gaia DR3 Source",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "r geo (pc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\varpi (mas)",
+          "unit_text": "\\varpi (mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "G (mag)",
+          "unit_text": "G (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "G _BP- G RP (mag)",
+          "unit_text": "G _BP- G RP (mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\mu_\\alpha^* (mas yr -1 )",
+          "unit_text": "\\mu_\\alpha^* (mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mu_\\delta (mas yr -1 )",
+          "unit_text": "\\mu_\\delta (mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgn2zocn1/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2511.14686/arxiv_source/tab",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpgn2zocn1/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2511.14686/catalog_sources/table-clustermembers/wrapped.tex",
+            "html": "literature/2511.14686/catalog_sources/table-clustermembers/latexml.html",
+            "stdout": "literature/2511.14686/catalog_sources/table-clustermembers/latexml.stdout.txt",
+            "stderr": "literature/2511.14686/catalog_sources/table-clustermembers/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f59a4b5219e872b787d5ab8eb552f66827c65620c9143d5955cf994ba9cc013c"
+    },
+    {
+      "id": "table-Lines",
+      "internal_table_id": "table-Lines",
+      "status": "success",
+      "ecsv_path": "literature/2511.14686/catalog_tables/table-Lines.ecsv",
+      "caption": "\\label{Lines} Line fluxes $F$ relative to H$\\alpha$. The line ratios are presented.",
+      "label": "Lines",
+      "row_count": 94,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "RA",
+          "Dec",
+          "H \\beta",
+          "[ O iii ]",
+          "[ O iii ]",
+          "[ N ii ]",
+          "H \\alpha",
+          "[ N ii ]",
+          "[ S ii ]",
+          "[ S ii ]"
+        ],
+        [
+          "[hh mm ss.ss]",
+          "[dd mm ss.s]",
+          "( \\lambda 4861)",
+          "( \\lambda 4959)",
+          "( \\lambda 5007)",
+          "( \\lambda 6548)",
+          "( \\lambda 6563)",
+          "( \\lambda 6584)",
+          "( \\lambda 6716)",
+          "( \\lambda 6731)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "RA | [hh mm ss.ss]",
+          "unit_text": "[hh mm ss.ss]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Dec | [dd mm ss.s]",
+          "unit_text": "[dd mm ss.s]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "H \\beta | ( \\lambda 4861)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "[ O iii ] | ( \\lambda 4959)",
+          "unit_text": "[ O iii ]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "[ O iii ] | ( \\lambda 5007)",
+          "unit_text": "[ O iii ]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "[ N ii ] | ( \\lambda 6548)",
+          "unit_text": "[ N ii ]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "H \\alpha | ( \\lambda 6563)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "[ N ii ] | ( \\lambda 6584)",
+          "unit_text": "[ N ii ]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "[ S ii ] | ( \\lambda 6716)",
+          "unit_text": "[ S ii ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "[ S ii ] | ( \\lambda 6731)",
+          "unit_text": "[ S ii ]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsiwj4xf5/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2511.14686/arxiv_source/tab",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsiwj4xf5/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2511.14686/catalog_sources/table-Lines/wrapped.tex",
+            "html": "literature/2511.14686/catalog_sources/table-Lines/latexml.html",
+            "stdout": "literature/2511.14686/catalog_sources/table-Lines/latexml.stdout.txt",
+            "stderr": "literature/2511.14686/catalog_sources/table-Lines/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b363d7c2958093a3af517e97b046c711ed40d40cf102f47b5f8b7c2226d585a8"
+    },
+    {
+      "id": "table-parameters",
+      "internal_table_id": "table-parameters",
+      "status": "success",
+      "ecsv_path": "literature/2511.14686/catalog_tables/table-parameters.ecsv",
+      "caption": "\\label{parameters} The Physical parameters of the SNR.",
+      "label": "parameters",
+      "row_count": 94,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "RA",
+          "Dec",
+          "[ S ii ] /H ~\\alpha",
+          "N_\\rm e",
+          "[ O iii ] /H \\beta",
+          "V_\\rm s",
+          "N_\\rm H",
+          "E(B-V)",
+          "A_\\rm v"
+        ],
+        [
+          "[hh mm ss.ss]",
+          "[dd mm ss.s]",
+          "",
+          "(cm -3 )",
+          "",
+          "(km s -1 )",
+          "( 10^21 cm -2 )",
+          "(mag)",
+          "(mag)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "RA | [hh mm ss.ss]",
+          "unit_text": "[hh mm ss.ss]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Dec | [dd mm ss.s]",
+          "unit_text": "[dd mm ss.s]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "[ S ii ] /H ~\\alpha",
+          "unit_text": "[ S ii ] /H ~\\alpha",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "N_\\rm e | (cm -3 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "[ O iii ] /H \\beta",
+          "unit_text": "[ O iii ] /H \\beta",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "V_\\rm s | (km s -1 )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "N_\\rm H | ( 10^21 cm -2 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "E(B-V) | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "A_\\rm v | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9k7ar683/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2511.14686/arxiv_source/tab",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9k7ar683/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2511.14686/catalog_sources/table-parameters/wrapped.tex",
+            "html": "literature/2511.14686/catalog_sources/table-parameters/latexml.html",
+            "stdout": "literature/2511.14686/catalog_sources/table-parameters/latexml.stdout.txt",
+            "stderr": "literature/2511.14686/catalog_sources/table-parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8d65ddec43707e7dadeb848bf146ed919b837695860f36880ae62a8f881e7d52"
+    }
+  ]
+}

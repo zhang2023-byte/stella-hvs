@@ -1,0 +1,336 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:59",
+  "paper": {
+    "arxiv_id": "2507.22569",
+    "title": "The Binary Fraction of B-type Runaway Stars from LAMOST DR8",
+    "month": "2025-07"
+  },
+  "review": {
+    "path": "literature/2507.22569/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123959",
+    "started_at": "2026-05-17T12:39:59",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2507.22569",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-catalogs",
+      "internal_table_id": "table-tab-catalogs",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2507.22569/arxiv_source/paper.tex",
+        "start_line": 325,
+        "end_line": 347,
+        "caption": "The RVs of the Runaway Star Sample \\label{tab:catalogs}",
+        "label": "tab:catalogs"
+      },
+      "source_path": "literature/2507.22569/arxiv_source/paper.tex",
+      "excerpt_path": "literature/2507.22569/catalog_sources/table-tab-catalogs/excerpt.tex",
+      "sha256": "2688970482b1d08ad72a3f4a95664beeab87295740af8d1058242346f769d35c",
+      "line_count": 23,
+      "error": ""
+    },
+    {
+      "id": "table-tab-parameters",
+      "internal_table_id": "table-tab-parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2507.22569/arxiv_source/paper.tex",
+        "start_line": 396,
+        "end_line": 415,
+        "caption": "Properties of the Parameters and Variables Used in our Monte Carlo Simulation \\label{tab:parameters}",
+        "label": "tab:parameters"
+      },
+      "source_path": "literature/2507.22569/arxiv_source/paper.tex",
+      "excerpt_path": "literature/2507.22569/catalog_sources/table-tab-parameters/excerpt.tex",
+      "sha256": "d01772ca1bd6f549bcdd61dddd459d9e3cf10e5cf5b84ddca8b453e2bcc08019",
+      "line_count": 20,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-catalogs",
+      "internal_table_id": "table-tab-catalogs",
+      "status": "success",
+      "ecsv_path": "literature/2507.22569/catalog_tables/table-tab-catalogs.ecsv",
+      "caption": "The RVs of the Runaway Star Sample \\label{tab:catalogs}",
+      "label": "tab:catalogs",
+      "row_count": 8,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "OBSID",
+          "R.A.",
+          "Decl.",
+          "LMJD",
+          "S/N",
+          "RV",
+          "\\sigma_\\rm RV",
+          "GroupID"
+        ],
+        [
+          "",
+          "(deg)",
+          "(deg)",
+          "(day)",
+          "",
+          "( \\rm km~s^-1 )",
+          "( \\rm km~s^-1 )",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "OBSID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "R.A. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Decl. | (deg)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "LMJD | (day)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "S/N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "RV | ( \\rm km~s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\sigma_\\rm RV | ( \\rm km~s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "GroupID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpctonl6m8/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.22569/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpctonl6m8/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.22569/catalog_sources/table-tab-catalogs/wrapped.tex",
+            "html": "literature/2507.22569/catalog_sources/table-tab-catalogs/latexml.html",
+            "stdout": "literature/2507.22569/catalog_sources/table-tab-catalogs/latexml.stdout.txt",
+            "stderr": "literature/2507.22569/catalog_sources/table-tab-catalogs/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "2688970482b1d08ad72a3f4a95664beeab87295740af8d1058242346f769d35c"
+    },
+    {
+      "id": "table-tab-parameters",
+      "internal_table_id": "table-tab-parameters",
+      "status": "success",
+      "ecsv_path": "literature/2507.22569/catalog_tables/table-tab-parameters.ecsv",
+      "caption": "Properties of the Parameters and Variables Used in our Monte Carlo Simulation \\label{tab:parameters}",
+      "label": "tab:parameters",
+      "row_count": 8,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "PDF",
+          "Domain",
+          "Unit",
+          "Variable",
+          "Range",
+          "Step"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "PDF",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Domain",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "Unit",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Variable",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Range",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Step",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpaka2b9hy/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.22569/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpaka2b9hy/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.22569/catalog_sources/table-tab-parameters/wrapped.tex",
+            "html": "literature/2507.22569/catalog_sources/table-tab-parameters/latexml.html",
+            "stdout": "literature/2507.22569/catalog_sources/table-tab-parameters/latexml.stdout.txt",
+            "stderr": "literature/2507.22569/catalog_sources/table-tab-parameters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d01772ca1bd6f549bcdd61dddd459d9e3cf10e5cf5b84ddca8b453e2bcc08019"
+    }
+  ]
+}

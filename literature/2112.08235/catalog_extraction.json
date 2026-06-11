@@ -1,0 +1,273 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:48:48",
+  "paper": {
+    "arxiv_id": "2112.08235",
+    "title": "The Transformative Journey of HD 93521",
+    "month": "2021-12"
+  },
+  "review": {
+    "path": "literature/2112.08235/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084848",
+    "started_at": "2026-06-07T08:48:48",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2112.08235",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-vr",
+      "internal_table_id": "table-tab-vr",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2112.08235/arxiv_source/ms1.tex",
+        "start_line": 167,
+        "end_line": 198,
+        "caption": "Average Radial Velocity Measurements",
+        "label": "tab:vr"
+      },
+      "source_path": "literature/2112.08235/arxiv_source/ms1.tex",
+      "excerpt_path": "literature/2112.08235/catalog_sources/table-tab-vr/excerpt.tex",
+      "sha256": "1f441a7c9be6bc7ed062487a8aa2b1b9e4dd949dde4474824dcc6bfcc86b8645",
+      "line_count": 32,
+      "error": ""
+    },
+    {
+      "id": "table-tab-properties",
+      "internal_table_id": "table-tab-properties",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2112.08235/arxiv_source/ms1.tex",
+        "start_line": 381,
+        "end_line": 415,
+        "caption": "Stellar Parameters",
+        "label": "tab:properties"
+      },
+      "source_path": "literature/2112.08235/arxiv_source/ms1.tex",
+      "excerpt_path": "literature/2112.08235/catalog_sources/table-tab-properties/excerpt.tex",
+      "sha256": "e2d1a96f743a031263534e3380b1fd5c645e957717b16072a64e7c3a0a30f01b",
+      "line_count": 35,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-vr",
+      "internal_table_id": "table-tab-vr",
+      "status": "success",
+      "ecsv_path": "literature/2112.08235/catalog_tables/table-tab-vr.ecsv",
+      "caption": "Average Radial Velocity Measurements",
+      "label": "tab:vr",
+      "row_count": 9,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Source",
+          "Number of",
+          "Mean Date",
+          "<V_r>",
+          "\\sigma(E)",
+          "\\sigma(I)"
+        ],
+        [
+          "",
+          "Measurements",
+          "(HJD-2400000)",
+          "(km s -1 )",
+          "(km s -1 )",
+          "(km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Source",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Number of | Measurements",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Mean Date | (HJD-2400000)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "<V_r> | (km s -1 )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\sigma(E) | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\sigma(I) | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnhs3_g3w/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2112.08235/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpnhs3_g3w/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2112.08235/catalog_sources/table-tab-vr/wrapped.tex",
+            "html": "literature/2112.08235/catalog_sources/table-tab-vr/latexml.html",
+            "stdout": "literature/2112.08235/catalog_sources/table-tab-vr/latexml.stdout.txt",
+            "stderr": "literature/2112.08235/catalog_sources/table-tab-vr/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "1f441a7c9be6bc7ed062487a8aa2b1b9e4dd949dde4474824dcc6bfcc86b8645"
+    },
+    {
+      "id": "table-tab-properties",
+      "internal_table_id": "table-tab-properties",
+      "status": "success",
+      "ecsv_path": "literature/2112.08235/catalog_tables/table-tab-properties.ecsv",
+      "caption": "Stellar Parameters",
+      "label": "tab:properties",
+      "row_count": 18,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Parameter",
+          "Howarth & Smith (2001)",
+          "This Paper"
+        ],
+        [
+          "Gravity darkening",
+          "von Zeipel",
+          "\\omega -model"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Parameter | Gravity darkening",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Howarth & Smith (2001) | von Zeipel",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "This Paper | \\omega -model",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7hyy11lp/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2112.08235/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7hyy11lp/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2112.08235/catalog_sources/table-tab-properties/wrapped.tex",
+            "html": "literature/2112.08235/catalog_sources/table-tab-properties/latexml.html",
+            "stdout": "literature/2112.08235/catalog_sources/table-tab-properties/latexml.stdout.txt",
+            "stderr": "literature/2112.08235/catalog_sources/table-tab-properties/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e2d1a96f743a031263534e3380b1fd5c645e957717b16072a64e7c3a0a30f01b"
+    }
+  ]
+}

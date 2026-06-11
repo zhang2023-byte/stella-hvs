@@ -1,0 +1,151 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1907.11725",
+    "title": "The Great Escape: Discovery of a nearby 1700 km/s star ejected from the Milky Way by Sgr A*",
+    "month": "2019-07",
+    "source_note_json": "notes/2019/2019-07/2019-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1907.11725",
+      "pdf": "https://arxiv.org/pdf/1907.11725"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1907.11725",
+    "audit_path": "literature/1907.11725/audit.json",
+    "source_dir": "literature/1907.11725/arxiv_source",
+    "tex_root": "literature/1907.11725/arxiv_source/mnras_template.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T21:55:31",
+    "reviewer": "agent",
+    "summary": "Paper contains 2 LaTeX data tables and 2 external software/data resources. Table 1 (tab:hvspar) is the primary object parameter table listing all measured and derived properties of hyper-velocity star S5-HVS1 (astrometry, photometry, spectroscopy, kinematics). Table 2 (tab:sed_fitres) presents SED fitting results from MIST isochrones under photometric-only (Model P) and spectro-photometric (Model SP) models. External resources: rvspecfit software used for radial velocity determination; filter extinction coefficient reference table. Generic Gaia/DPAC acknowledgement URLs excluded per policy. No other structured data tables or data-access URLs found in the paper."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-hvspar",
+      "kind": "latex_table",
+      "asset_type": "object_parameters_table",
+      "role_in_paper": "Primary summary table listing all measured and derived astrometric, photometric, spectroscopic, distance, and kinematic parameters of the hyper-velocity star S5-HVS1. Top section reports Gaia DR2 and survey measurements; bottom section reports this paper's derived quantities (radial velocity, stellar atmosphere parameters, distances, GSR velocities, ejection velocity, predicted proper motions).",
+      "source_refs": [
+        {
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 136,
+          "end_line": 171,
+          "caption": "The measured parameters of the hyper-velocity star S5-HVS1. The top part of the Table refers to the measurements from previous surveys, while the bottom one summarises the measurements presented in the paper. HRV is the heliocentric radial velocity. $\\dhel$, $D_{\\rm hel,GC}$ are heliocentric distance constraints without and with the Galactocentric origin assumption respectively. $V_{\\rm GSR}$, $V_{\\rm GSR,GC}$ are the inferred Galactic standard of rest (GSR) velocities of S5-HVS1 determined without and with the Galactocentric origin assumption respectively. $V_{\\rm ej,GC}$ is the expected ejection speed from the Galactic Centre. $\\mu_{\\alpha,\\rm pred} \\cos \\delta$, $\\mu_{\\delta,\\rm pred}$ are the predicted proper motions of S5-HVS1 based on the Galactocentric origin.",
+          "label": "tab:hvspar"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name of the measured or derived quantity for S5-HVS1",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Measured or derived value for the corresponding parameter, with uncertainty where available",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "unit",
+          "meaning": "Physical unit of the parameter value",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The measured parameters of the hyper-velocity star S5-HVS1. The top part of the Table refers to the measurements from previous surveys, while the bottom one summarises the measurements presented in the paper. HRV is the heliocentric radial velocity. $\\dhel$, $D_{\\rm hel,GC}$ are heliocentric distance constraints without and with the Galactocentric origin assumption respectively. $V_{\\rm GSR}$, $V_{\\rm GSR,GC}$ are the inferred Galactic standard of rest (GSR) velocities of S5-HVS1 determined without and with the Galactocentric origin assumption respectively. $V_{\\rm ej,GC}$ is the expected ejection speed from the Galactic Centre. $\\mu_{\\alpha,\\rm pred} \\cos \\delta$, $\\mu_{\\delta,\\rm pred}$ are the predicted proper motions of S5-HVS1 based on the Galactocentric origin.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-sed_fitres",
+      "kind": "latex_table",
+      "asset_type": "fit_results_table",
+      "role_in_paper": "Presents stellar parameters (mass, log10 age, [Fe/H], distance modulus m-M, systematic scatter sigma_sys) derived from fitting MIST isochrones to the S5-HVS1 spectral energy distribution. Two model columns: Photometric-only (Model P) and Spectro-Photometric combined with spectroscopic priors (Model SP).",
+      "source_refs": [
+        {
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 231,
+          "end_line": 248,
+          "caption": "The parameters measured from fitting MIST isochrones to the S5-HVS1 SED (Model P) and by combining SED constraints with spectroscopic constraints (Model SP).",
+          "label": "tab:sed_fitres"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Derived stellar parameter name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value | Photometric",
+          "meaning": "Best-fit value with upper/lower uncertainties from photometric-only SED fitting (Model P)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value | Spectro-Photometric",
+          "meaning": "Best-fit value with upper/lower uncertainties from combined SED + spectroscopic prior fitting (Model SP)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "unit",
+          "meaning": "Physical unit of the parameter value (M_sun for mass, dex for log age and [Fe/H], mag for distance modulus and systematic scatter)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "The parameters measured from fitting MIST isochrones to the S5-HVS1 SED (Model P) and by combining SED constraints with spectroscopic constraints (Model SP).",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://github.com/segasai/rvspecfit",
+      "local_path": "",
+      "description": "RVSpecFit software used by the S5 survey for spectral modelling to determine radial velocities and stellar atmospheric parameters from AAT/AAOmega spectra. Applied to S5-HVS1 for simultaneous blue+red arm fitting to derive Teff, log g, and [Fe/H].",
+      "source_refs": [
+        {
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 123,
+          "end_line": 123,
+          "context": "The data processing of the \\SSSSS data includes standard data reduction steps by the AAT pipeline, followed by spectral modelling by the \\code{rvspecfit}\\footnote{\\url{http://github.com/segasai/rvspecfit}} software in order to determine the radial velocities and stellar atmospheric parameters. \n\n\\subsection{HVS star search}"
+        }
+      ],
+      "evidence": "The data processing of the \\SSSSS data includes standard data reduction steps by the AAT pipeline, followed by spectral modelling by the \\code{rvspecfit}\\footnote{\\url{http://github.com/segasai/rvspecfit}} software in order to determine the radial velocities and stellar atmospheric parameters.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://www.mso.anu.edu.au/~brad/filters.html",
+      "local_path": "",
+      "description": "Reference table of extinction coefficients k_i for photometric filters used in the MIST isochrone SED fitting model (Equation 1). The coefficients are applied to the E(B-V) reddening value in each band i.",
+      "source_refs": [
+        {
+          "path": "literature/1907.11725/arxiv_source/mnras_template.tex",
+          "start_line": 270,
+          "end_line": 270,
+          "context": "where $\\sigma_i$ is the uncertainty on the magnitude measurement in band $i$,  $\\sigma_{\\mathrm{sys}}$ is an additional (systematic) scatter around the model, $D_{\\mathrm{hel}}$ is the heliocentric distance to the star, and $k_i$ is the extinction coefficient\\footnote{Taken from \\url{http://www.mso.anu.edu.au/~brad/filters.html}} in the filter $i$."
+        }
+      ],
+      "evidence": "where $\\sigma_i$ is the uncertainty on the magnitude measurement in band $i$,  $\\sigma_{\\mathrm{sys}}$ is an additional (systematic) scatter around the model, $D_{\\mathrm{hel}}$ is the heliocentric distance to the star, and $k_i$ is the extinction coefficient\\footnote{Taken from \\url{http://www.mso.anu.edu.au/~brad/filters.html}} in the filter $i$.",
+      "comments": ""
+    }
+  ]
+}

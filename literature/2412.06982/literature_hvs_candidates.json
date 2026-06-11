@@ -1,0 +1,53 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T18:14:02",
+  "paper": {
+    "arxiv_id": "2412.06982",
+    "bibcode": "2025AJ....169...48C",
+    "title": "Resolving the Young 2 Cygni Run-away Star into a Binary using iLocater",
+    "month": "2024-12",
+    "source_note_json": "notes/2024/2024-12/2024-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2412.06982",
+      "pdf": "https://arxiv.org/pdf/2412.06982"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2412.06982",
+    "audit_path": "literature/2412.06982/audit.json",
+    "catalog_review_path": "literature/2412.06982/catalog_review.json",
+    "catalog_extraction_path": "literature/2412.06982/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2412.06982/catalog_tables/table-tab-2cyg.ecsv",
+      "literature/2412.06982/catalog_tables/table-tab-literature.ecsv",
+      "literature/2412.06982/catalog_tables/table-tab-log.ecsv",
+      "literature/2412.06982/catalog_tables/table-tab-photometry.ecsv",
+      "literature/2412.06982/catalog_tables/table-tab-astrometry.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T18:14:02",
+    "extractor": "agent",
+    "summary": "The paper characterizes 2 Cygni as a young runaway star with a peculiar velocity of 22.9 +/- 2.9 km/s, but does not present it as a Galactic-unbound or HVS candidate. The object is treated as a bound runaway star whose anomalous velocity may arise from binary supernova or dynamical ejection from a young cluster. No other candidate groups are discussed as possibly unbound from the Milky Way."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2-cygni-runaway",
+      "description": "The 2 Cygni system, a young runaway star with peculiar velocity 22.9 +/- 2.9 km/s discussed in the paper background.",
+      "decision": "excluded",
+      "reason": "The paper explicitly characterizes 2 Cygni as a runaway star, not as a Galactic-unbound or HVS candidate. Its peculiar velocity (22.9 km/s) is described as placing it above the peak in the peculiar-star velocity histogram, but the paper does not claim or assess it as escaping the Milky Way potential. Ordinary runaways are excluded per Stella inclusion rules.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2412.06982/arxiv_source/main.tex",
+          "start_line": 186,
+          "end_line": 192,
+          "context": "paper discussion of 2 Cygni as a runaway star with peculiar velocity"
+        }
+      ]
+    }
+  ]
+}

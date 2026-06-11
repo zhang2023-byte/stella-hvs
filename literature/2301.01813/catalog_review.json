@@ -1,0 +1,893 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2301.01813",
+    "title": "The HH 24 Complex: Jets, Multiple Star Formation, and Orphaned Protostars",
+    "month": "2023-01",
+    "source_note_json": "notes/2023/2023-01/2023-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2301.01813",
+      "pdf": "https://arxiv.org/pdf/2301.01813"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2301.01813",
+    "audit_path": "literature/2301.01813/audit.json",
+    "source_dir": "literature/2301.01813/arxiv_source",
+    "tex_root": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:18:25",
+    "reviewer": "agent",
+    "summary": "Catalog review of arXiv 2301.01813 (HH 24 Complex). Paper contains 12 LaTeX tables covering jet overview, ALMA observations, source coordinates/photometry (2MASS+Spitzer+WISE), VLT photometry, VLA radio parameters, giant bow shocks catalog, proper motion images, parsec-scale proper motions, Gaia EDR3 proper motions, ALMA 1.3mm continuum Gaussian fits, disk properties and stellar masses, and C18O kinematical disk model fits. Two external URLs found: VLA data processing pipeline and MHO catalog. No dedicated data-availability section; ALMA data reference (ADS/JAO.ALMA#2018.1.01194.S) listed in acknowledgements."
+  },
+  "internal_tables": [
+    {
+      "id": "table-table-overview",
+      "kind": "latex_table",
+      "asset_type": "sample_summary",
+      "role_in_paper": "Overview summary of all jets in the HH 24 Complex, listing jet name, position angle, orientation (blue/redshift), associated giant bow shocks, and driving source",
+      "source_refs": [
+        {
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 388,
+          "end_line": 415,
+          "caption": "Overview of the HH 24 Complex\\label{table:overview}",
+          "label": "table:overview"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Jet",
+          "meaning": "Jet designation (C, E, A, G, J, L, X, B)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PA",
+          "meaning": "Position angle of jet axis in degrees",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Orient.",
+          "meaning": "Orientation: Blue = blueshifted (approaching), Red = redshifted (receding)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Giant Bow-Shocks",
+          "meaning": "Associated giant bow shock designations (e.g., HH 20/21/37/70, HH 19/27)",
+          "unit_text": "",
+          "source_of_definition": "table header + paper text",
+          "confidence": 1.0
+        },
+        {
+          "name": "Source",
+          "meaning": "Driving source (Ea, NE, Wb, HOPS317, Wa, S)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 in paper. Provides a high-level catalog of all 8 jets in the HH 24 complex with their basic properties.",
+      "comments": "Table has footnotes: (a) Additional very distant bow shocks exist; (b) Deduced from the blue-shift of HH 19."
+    },
+    {
+      "id": "table-table-almamaps",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Summary of ALMA observation configurations and map properties (beam size, velocity resolution, rms) for continuum and molecular line maps",
+      "source_refs": [
+        {
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 715,
+          "end_line": 739,
+          "caption": "ALMA Observations \\label{table:almamaps}",
+          "label": "table:almamaps"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Map",
+          "meaning": "Type of map: Continuum or molecular line (C18O, 12CO, 13CO, H2CO)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Configurations",
+          "meaning": "ALMA array configurations used (C43-3, C43-6, or both)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Beam Size",
+          "meaning": "Synthesized beam size (major x minor axis)",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Beam P.A.",
+          "meaning": "Beam position angle, east of north",
+          "unit_text": "deg E of N",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Delta V",
+          "meaning": "Velocity resolution of molecular line maps",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header + table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "rms",
+          "meaning": "RMS noise per velocity channel at the quoted velocity resolution",
+          "unit_text": "mJy beam^-1",
+          "source_of_definition": "table header + table comments",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table summarizing ALMA Band 6 observations. Data from ALMA Cycle 6 project 2018.1.01194.",
+      "comments": "Continuum map uses combined C43-3+C43-6 with highest resolution (0.13x0.08 arcsec). Line maps from compact configuration (C43-3) have ~0.8 arcsec resolution."
+    },
+    {
+      "id": "table-table-coordinates",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Master catalog of all sources in the HH 24 region with coordinates and multi-wavelength photometry (2MASS JHK, WISE W1-W4, Spitzer IRAC I1-I4, MIPS M1). Primary source inventory.",
+      "source_refs": [
+        {
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 1068,
+          "end_line": 1145,
+          "caption": "Coordinates and 2MASS-, SPITZER-, and WISE-Photometry of HH~24 Sources and H$\\alpha$ emission stars \\label{table:coordinates}",
+          "label": "table:coordinates"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Object",
+          "meaning": "Source designation (IRS1, HH24-Wb/Wa/S/Eb/Ea, HOPS317, HH24-N/NE, Halpha1-5, IRS2)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "alpha(2000)",
+          "meaning": "Right Ascension J2000",
+          "unit_text": "hh:mm:ss.ss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "delta(2000)",
+          "meaning": "Declination J2000",
+          "unit_text": "dd:mm:ss.s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J",
+          "meaning": "2MASS J-band magnitude (1.25 um)",
+          "unit_text": "mag",
+          "source_of_definition": "table header + wavelength sub-header",
+          "confidence": 1.0
+        },
+        {
+          "name": "H",
+          "meaning": "2MASS H-band magnitude (1.65 um)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K",
+          "meaning": "2MASS Ks-band magnitude (2.2 um)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "W1",
+          "meaning": "WISE W1 magnitude (3.4 um)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "I1",
+          "meaning": "Spitzer IRAC channel 1 magnitude (3.6 um)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "I2",
+          "meaning": "Spitzer IRAC channel 2 magnitude (4.5 um)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "W2",
+          "meaning": "WISE W2 magnitude (4.6 um)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "I3",
+          "meaning": "Spitzer IRAC channel 3 magnitude (5.8 um)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "I4",
+          "meaning": "Spitzer IRAC channel 4 magnitude (8.0 um)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "W3",
+          "meaning": "WISE W3 magnitude (12 um)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "W4",
+          "meaning": "WISE W4 magnitude (22 um)",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M1",
+          "meaning": "Spitzer MIPS 24 um magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Comprehensive photometric catalog of 16 sources in the HH 24 region. Coordinates from VLA 3.6cm astrometry (Reipurth et al. 2002), ALMA (this paper), 2MASS, WISE, and Spitzer images. Spitzer photometry from Megeath et al. (2012).",
+      "comments": "Some sources lack 2MASS photometry due to high extinction (e.g., IRS1, sources embedded in reflection nebulae). Sources Eb, S, and N not detected in near-IR. N only detected by ALMA at submm."
+    },
+    {
+      "id": "table-table-vlt",
+      "kind": "latex_table",
+      "asset_type": "follow_up_measurement",
+      "role_in_paper": "High-resolution VLT/NACO adaptive optics photometry (Ks and L' bands) for individual components of the SSV 63 multiple system",
+      "source_refs": [
+        {
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 1150,
+          "end_line": 1170,
+          "caption": "VLT Photometry of SSV 63 Components\\label{table:vlt}",
+          "label": "table:vlt"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "SSV 63 component designation (Wb, Wa, Eb, Ea, S, NE)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ks",
+          "meaning": "VLT/NACO Ks-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "L'",
+          "meaning": "VLT/NACO L'-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table presents VLT/NACO adaptive optics photometry of 6 SSV 63 components. Data from ESO archive (unpublished NACO dataset from Dec 2007/Jan 2008). Ks calibrated to Persson et al. (1998), L' to Leggett et al. (2003).",
+      "comments": "Sources Wb, Eb, NE not detected in Ks (upper limits >16.5 mag), indicating high extinction. Ea, Wa, Eb, NE clearly detected at L'."
+    },
+    {
+      "id": "table-table-vla-parameters",
+      "kind": "latex_table",
+      "asset_type": "follow_up_measurement",
+      "role_in_paper": "VLA radio continuum measurements (X-band 10 GHz and Q-band 44 GHz) of the five dominant sources in SSV 63 plus HH 24 MMS, including coordinates, flux densities, and spectral indices",
+      "source_refs": [
+        {
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 1265,
+          "end_line": 1289,
+          "caption": "Parameters of the Radio Sources in the SSV 63 Region\\label{table:vla-parameters}",
+          "label": "table:vla-parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Source",
+          "meaning": "Radio source designation (Wb, Wa, Ea, Eb, NE, HH24 MMS)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "X Band: alpha(2000)",
+          "meaning": "Right Ascension from X-band (10 GHz) observations",
+          "unit_text": "hh:mm:ss.sss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "X Band: delta(2000)",
+          "meaning": "Declination from X-band (10 GHz) observations",
+          "unit_text": "dd:mm:ss.ss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "X Band: S",
+          "meaning": "Total flux density at X-band (10.0 GHz)",
+          "unit_text": "uJy",
+          "source_of_definition": "table header + footnotes",
+          "confidence": 1.0
+        },
+        {
+          "name": "Q Band: alpha(2000)",
+          "meaning": "Right Ascension from Q-band (44 GHz) observations",
+          "unit_text": "hh:mm:ss.sss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Q Band: delta(2000)",
+          "meaning": "Declination from Q-band (44 GHz) observations",
+          "unit_text": "dd:mm:ss.ss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Q Band: S",
+          "meaning": "Total flux density at Q-band (44.0 GHz)",
+          "unit_text": "uJy",
+          "source_of_definition": "table header + footnotes",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral Index",
+          "meaning": "Radio spectral index between X and Q bands",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "VLA project 19A-012, A-configuration observations. Deepest VLA observations to date of HH 24 region in X and Q bands. Maps made with robust=2 weighting.",
+      "comments": "Eb not detected at Q-band (upper limit). Coordinates given as offsets from 05h46m, -00deg. Spectral indices range 0.8-2.9, indicating partially optically thick free-free emission."
+    },
+    {
+      "id": "table-table-giant-bowshocks",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Catalog of giant parsec-scale bow shocks associated with HH 24 jets, listing coordinates, associated jet/driving source, position angle, separation, and projected length",
+      "source_refs": [
+        {
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 2419,
+          "end_line": 2455,
+          "caption": "Giant Bow Shocks^a\\label{table:giant-bowshocks}",
+          "label": "table:giant-bowshocks"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Shock",
+          "meaning": "Shock designation (HH 19, 20, 21, 21east, 27, 37, 70, HH 24 NNW, SSE, SSE2e, SSE2w)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "alpha_2000",
+          "meaning": "Right Ascension J2000 of bright feature or geometric center",
+          "unit_text": "hh:mm:ss.s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "delta_2000",
+          "meaning": "Declination J2000 of bright feature or geometric center",
+          "unit_text": "dd:mm:ss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Assoc. Jet",
+          "meaning": "Associated jet driving the bow shock (Jet J for HH19/27, Jet C for HH20/21/37/70, Jet E for SSE shocks)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Source",
+          "meaning": "Driving protostellar source (Wb for Jet J, Ea for Jets C and E)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Pos.Angle",
+          "meaning": "Position angle from driving source to bow shock",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Sep.",
+          "meaning": "Angular separation from driving source",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Length",
+          "meaning": "Projected physical length from driving source",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Catalog of 11 giant bow shocks. Distances computed assuming d=400 pc. HH24 NNW/SSE shocks discovered in this work, extending total HH 24 E/C flow to 3.1 pc extent.",
+      "comments": "All objects are very extended. Coordinates refer to bright features or geometric center. SSE2e and SSE2w measured on Spitzer IRAC2 images, others on optical images."
+    },
+    {
+      "id": "table-table-images-pm-giant-bowshocks",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Log of multi-epoch images used for proper motion measurements of giant bow shocks, spanning 20 years (2001-2021)",
+      "source_refs": [
+        {
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 2506,
+          "end_line": 2524,
+          "caption": "Images used for Proper Motions of Giant Bow Shocks\\label{table:images-pm-giant-bowshocks}",
+          "label": "table:images-pm-giant-bowshocks"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Date",
+          "meaning": "Observation date",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "MJD",
+          "meaning": "Modified Julian Date of observation",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Instrument & Filter",
+          "meaning": "Telescope, instrument, and filter used (CTIO 4m Mosaic, Subaru SuprimeCam, HST WFC3/ACS, APO ARCTIC)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Five epochs spanning 2001-12-18 to 2021-12-01, covering a 20-year baseline. Includes HST [FeII], Halpha, [SII] from programs GO-13485 and GO-14344.",
+      "comments": "CTIO epoch is the earliest (2001), providing the longest baseline for proper motion measurements."
+    },
+    {
+      "id": "table-table-pm-giant-bowshocks",
+      "kind": "latex_table",
+      "asset_type": "follow_up_measurement",
+      "role_in_paper": "Proper motion measurements of parsec-scale bow shock components: coordinates, PM in mas/yr and km/s, position angle, and comments on each feature",
+      "source_refs": [
+        {
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 2536,
+          "end_line": 2579,
+          "caption": "Parsec-Scale Components \\& Proper Motions\\label{table:pm-giant-bowshocks}",
+          "label": "table:pm-giant-bowshocks"
+        }
+      ],
+      "columns": [
+        {
+          "name": "R.A. & Dec. (J2000)",
+          "meaning": "Coordinates of the measured component",
+          "unit_text": "hh:mm:ss.s dd:mm:ss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PM",
+          "meaning": "Proper motion (tangential angular motion)",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V",
+          "meaning": "Tangential velocity (assuming d=400 pc)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PA",
+          "meaning": "Position angle of proper motion",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Comments",
+          "meaning": "Identification/description of the component (e.g., HH24 SSE2-east, HH27, jet J features, HH19 N/S, HH21east subcomponents)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Proper motions for 10 bow shock components. Typical tangential velocities 90-160 km/s. SSE1 has 156 km/s, HH21east E2 has 140 km/s. HH27 has upper limit <60 km/s.",
+      "comments": "Southern terminus components (SSE2e, SSE2w) have no PM measurements listed. PA values are relative to driving source direction."
+    },
+    {
+      "id": "table-table-gaia",
+      "kind": "latex_table",
+      "asset_type": "follow_up_measurement",
+      "role_in_paper": "Gaia EDR3 proper motions for the five Halpha emission stars in the vicinity of SSV 63, used to identify the runaway borderline brown dwarf Halpha 5",
+      "source_refs": [
+        {
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 3187,
+          "end_line": 3213,
+          "caption": "Gaia EDR3 Proper Motions for H$\\alpha$ 1-5\\label{table:gaia}",
+          "label": "table:gaia"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Halpha emission star designation (1-5)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PM(alpha)",
+          "meaning": "Gaia EDR3 proper motion in Right Ascension",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PM(delta)",
+          "meaning": "Gaia EDR3 proper motion in Declination",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_tan",
+          "meaning": "Tangential velocity corrected for L1630 cloud bulk motion; derived from PM(alpha), PM(delta) assuming d=400 pc",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header + table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "PA",
+          "meaning": "Position angle of proper motion vector",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Gaia EDR3 proper motions. Halpha 5 shows highest velocity (26.1 km/s, PA=121.6 deg), moving away from SSV 63. Bulk motion of L1630 cloud (-0.519, -0.741) mas/yr removed.",
+      "comments": "Bulk L1630 cloud motion determined from 129 YSOs. Halpha 1 has large uncertainties (0.5+/-2.9 km/s). Halpha 4 moves at 7.1 km/s at PA=231 deg."
+    },
+    {
+      "id": "table-table-cont-fit",
+      "kind": "latex_table",
+      "asset_type": "model_fit_parameters",
+      "role_in_paper": "Gaussian fitting results for ALMA 1.3 mm continuum emission from circumstellar disks around SSV 63 sources, including positions, fluxes, sizes, inclinations, and spectral indices",
+      "source_refs": [
+        {
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 3591,
+          "end_line": 3608,
+          "caption": "Gaussian fitting of the 1.3 mm continuum emission\\label{table:cont-fit}",
+          "label": "table:cont-fit"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Source",
+          "meaning": "Source designation (NE, Ea, Eb, Wa, Wb, N)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA (ICRS)",
+          "meaning": "Right Ascension from ALMA 1.3 mm continuum",
+          "unit_text": "hh:mm:ss.sss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec (ICRS)",
+          "meaning": "Declination from ALMA 1.3 mm continuum",
+          "unit_text": "dd:mm:ss.ss",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flux",
+          "meaning": "Integrated flux density at 1.3 mm",
+          "unit_text": "mJy",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PA",
+          "meaning": "Position angle of disk major axis (north to east)",
+          "unit_text": "deg",
+          "source_of_definition": "table header + table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "Major",
+          "meaning": "Deconvolved FWHM major axis of disk",
+          "unit_text": "mas",
+          "source_of_definition": "table header + table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "Minor",
+          "meaning": "Deconvolved FWHM minor axis of disk",
+          "unit_text": "mas",
+          "source_of_definition": "table header + table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "Residual",
+          "meaning": "Residual flux in twice the apparent size region after Gaussian subtraction",
+          "unit_text": "mJy",
+          "source_of_definition": "table header + table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "i",
+          "meaning": "Disk inclination angle to the plane of the sky (from major/minor axis ratio)",
+          "unit_text": "deg",
+          "source_of_definition": "table header + table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "alpha",
+          "meaning": "Spectral index between 1.3 mm and 0.9 mm (F_nu ~ nu^alpha)",
+          "unit_text": "",
+          "source_of_definition": "table header + table comments",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "ALMA Cycle 6 project 2018.1.01194. Continuum at 232.6 GHz. Six sources detected: NE(13.0mJy), Ea(48.9mJy), Eb(11.7mJy), Wa(14.2mJy), Wb(49.2mJy), N(0.9mJy, unresolved). Disk inclinations 50-70 deg.",
+      "comments": "Source N is unresolved and not detected at 0.9 mm. Alpha uncertainty includes 10% absolute flux calibration uncertainty. Most sources have alpha < 2 (optically thick), except Eb (alpha=3.1, optically thin)."
+    },
+    {
+      "id": "table-table-alma-disk",
+      "kind": "latex_table",
+      "asset_type": "model_fit_parameters",
+      "role_in_paper": "Summary of disk properties and stellar masses derived from ALMA continuum and C18O observations: disk masses, dust/gas radii, stellar masses, and systemic velocities",
+      "source_refs": [
+        {
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 3689,
+          "end_line": 3704,
+          "caption": "Disk properties and stellar masses\\label{table:alma-disk}",
+          "label": "table:alma-disk"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Source",
+          "meaning": "Source designation (NE, Ea, Eb, Wa, Wb)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_disk",
+          "meaning": "Disk mass (dust+gas); only measurable for optically thin source Eb",
+          "unit_text": "M_J (Jupiter masses)",
+          "source_of_definition": "table header + table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "R_dust",
+          "meaning": "Dust disk radius from 1.3 mm continuum (twice 1-sigma Gaussian width)",
+          "unit_text": "au",
+          "source_of_definition": "table header + table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "R_gas",
+          "meaning": "Gas disk radius from C18O emission (twice 1-sigma Gaussian width of best-fit profile)",
+          "unit_text": "au",
+          "source_of_definition": "table header + table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_star",
+          "meaning": "Stellar mass from C18O Keplerian disk model fitting (Gaussian intensity profile)",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_lsr",
+          "meaning": "Systemic LSR velocity from C18O disk model fitting",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Dust disks compact (35-159 au). Gas disks 2-6x larger (161-492 au). Stellar masses: NE=2.1, Ea=2.0, Eb=1.3, Wb=0.9 Msun (all +/-0.1 Msun). Wa has no gas disk detection.",
+      "comments": "Except Eb, continuum disks are optically thick at 1.3 mm so disk mass cannot be estimated. Eb mass 3-18 M_J. NE and Ea are proto-Herbig Ae stars. Wa lacks C18O disk detection."
+    },
+    {
+      "id": "table-table-line-fit",
+      "kind": "latex_table",
+      "asset_type": "model_fit_parameters",
+      "role_in_paper": "Detailed fitting results of C18O emission with kinematical Keplerian disk models using both power-law and Gaussian intensity profiles, including stellar masses and systemic velocities",
+      "source_refs": [
+        {
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 3840,
+          "end_line": 3868,
+          "caption": "Fitting of the C$^{18}$O emission with kinematical disk models\\label{table:line-fit}",
+          "label": "table:line-fit"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Source",
+          "meaning": "Source designation (NE, Ea, Eb, Wb)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R_out / sigma_R",
+          "meaning": "Power-law model: outer disk radius; Gaussian model: 1-sigma width",
+          "unit_text": "mas",
+          "source_of_definition": "table header + table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_star",
+          "meaning": "Stellar mass from Keplerian disk fitting",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_lsr",
+          "meaning": "Systemic LSR velocity from fitting",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log I0",
+          "meaning": "Logarithm of intensity normalization: at 100 au for power-law, peak for Gaussian",
+          "unit_text": "Jy",
+          "source_of_definition": "table header + table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "p",
+          "meaning": "Power-law index of intensity profile (I ~ r^p); only for power-law model",
+          "unit_text": "",
+          "source_of_definition": "table header + table comments",
+          "confidence": 1.0
+        },
+        {
+          "name": "Velocity ranges",
+          "meaning": "Blue and redshifted velocity ranges included in the fitting (excluding velocities near V_sys to avoid cloud contamination)",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header + table comments",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Two models fit: power-law and Gaussian intensity profiles. Power-law gives: NE M*=2.1, Ea M*=1.9, Eb M*=1.3, Wb M*=0.9 Msun. Gaussian gives similar masses (2.0, 2.0, 1.3, 0.9). Ea R_out fixed to 400 mas.",
+      "comments": "Additional 10-20% systematic uncertainty in M_star if disks are flared (geometrically thin assumption). Velocity channels near V_sys excluded to avoid cloud contamination. p=-2.0 for NE/Ea (steeper) vs -1.3 for Eb/Wb (shallower)."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://science.nrao.edu/facilities/vla/data-processing/pipeline",
+      "local_path": "",
+      "description": "NRAO VLA data processing pipeline documentation. Referenced as the pipeline used for VLA data reduction in this work.",
+      "source_refs": [
+        {
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 816,
+          "end_line": 819,
+          "context": "VLA data processing using the CASA package and NRAO pipeline"
+        }
+      ],
+      "evidence": "Footnote in VLA subsection: 'https://science.nrao.edu/facilities/vla/data-processing/pipeline'",
+      "comments": "Software/tool URL, not a data resource per se."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://astro.kent.ac.uk/$\\sim$df/MHCat",
+      "local_path": "",
+      "description": "Molecular Hydrogen emission-line Objects (MHO) catalog maintained by Dirk Froebrich. Used to cross-reference HH 24 outflow components with the MHO catalog nomenclature.",
+      "source_refs": [
+        {
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 2834,
+          "end_line": 2836,
+          "context": "MHO catalog reference for HH 24 outflow component designations"
+        }
+      ],
+      "evidence": "Footnote: 'The MHO catalog is maintained by Dirk Froebrich and is available at http://astro.kent.ac.uk/~df/MHCat and is described in Davis et al. (2010)'",
+      "comments": "External catalog resource used for cross-identification of molecular hydrogen outflow components."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "ALMA data: ADS/JAO.ALMA#2018.1.01194.S. ALMA Cycle 6 project (PI: Reipurth) providing Band 6 observations of continuum and molecular lines (12CO, 13CO, C18O, H2CO, SiO) for the HH 24 region.",
+      "source_refs": [
+        {
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 5245,
+          "end_line": 5252,
+          "context": "ALMA data acknowledgement in Acknowledgements section"
+        }
+      ],
+      "evidence": "Acknowledgements: 'This paper makes use of the following ALMA data: ADS/JAO.ALMA#2018.1.01194.S.'",
+      "comments": "ALMA data accessible through the ALMA Science Archive. Two array configurations (C43-3 and C43-6) used."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "ESO Science Archive Facility: VLT/NACO Ks and L' band images of SSV 63 (Dec 2007/Jan 2008). Unpublished dataset retrieved from ESO archive.",
+      "source_refs": [
+        {
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 623,
+          "end_line": 627,
+          "context": "VLT NACO archive data retrieval description"
+        }
+      ],
+      "evidence": "ESO Science Archive Facility mentioned as source of unpublished NACO data in VLT subsection.",
+      "comments": "Archival data; reduced using IRAF-based scripts."
+    }
+  ]
+}

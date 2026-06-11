@@ -1,0 +1,81 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:40:00",
+  "paper": {
+    "arxiv_id": "2009.03571",
+    "bibcode": "2020ApJ...903...43D",
+    "title": "Runaway OB Stars in the Small Magellanic Cloud: Dynamical Versus Supernova Ejections",
+    "month": "2020-09",
+    "source_note_json": "notes/2020/2020-09/2020-09.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2009.03571",
+      "pdf": "https://arxiv.org/pdf/2009.03571"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2009.03571",
+    "audit_path": "literature/2009.03571/audit.json",
+    "catalog_review_path": "literature/2009.03571/catalog_review.json",
+    "catalog_extraction_path": "literature/2009.03571/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2009.03571/catalog_tables/table-tab-data.ecsv",
+      "literature/2009.03571/catalog_tables/table-tab-frequencies.ecsv",
+      "literature/2009.03571/catalog_tables/table-tab-frequencies2.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:40:00",
+    "extractor": "agent",
+    "summary": "本文利用RIOTS4巡天的304颗小麦哲伦云（SMC）场OB星样本，通过Gaia DR2自行数据计算本地剩余横向速度（vperp，中位数约30 km/s），结合恒星质量和投影自转速度vsini，约束动力学抛射（DES）和双星超新星抛射（BSS）两种速逃星产生机制的相对贡献。发现DES主导，DES:BSS比例约2-3:1。论文中的'runaway stars'指从SMC星团中被弹射出来的OB型恒星（cluster escapees），速度量级为数十km/s，仍在SMC内或附近，并非银河系非束缚超高速星（HVS）。论文研究的是SMC星系内的星团逃逸机制，与银河系HVS完全无关。此外，SMC本身是银河系的卫星星系，其恒星不在银河系引力势的直接逃逸判定范围内。因此无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文研究SMC中从星团逃逸的OB型速逃星，区分动力学抛射和超新星抛射两种机制。这些是SMC内的星团逃逸星，并非银河系非束缚HVS，且速度远低于星系逃逸速度。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (ms.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2009.03571/arxiv_source/ms.tex",
+          "start_line": 1,
+          "end_line": 1,
+          "context": "Title: Runaway OB Stars in the Small Magellanic Cloud: Dynamical Versus Supernova Ejections"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2009.03571/arxiv_abs.html",
+          "start_line": 1,
+          "end_line": 1,
+          "context": "Abstract: 304 field OB stars in SMC; local residual transverse velocities from Gaia DR2; constrain DES vs BSS ejection mechanisms; runaway velocities ~30 km/s local"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "smc-runaways",
+      "description": "RIOTS4巡天中的304颗SMC场OB星，通过Gaia DR2自行数据计算了本地剩余横向速度vperp。其中vperp > 30 km/s的为速逃星，vperp < 30 km/s的为漫步星。297颗有质量测定，201颗有vsini测定。",
+      "decision": "excluded",
+      "reason": "论文中的'runaway OB stars'指从SMC星团中被动力学或超新星弹射出来的大质量恒星。这些恒星虽逃离出生星团，但仍在SMC星系内（或附近）。vperp约30 km/s的阈值仅对应3D空间速度≥37 km/s，远低于SMC的逃逸速度（约100+ km/s），更不涉及银河系逃逸速度。论文核心是区分DES和BSS两种弹射机制的统计贡献（通过质量、vsini、双星比例等约束），完全不涉及银河系非束缚HVS/hypervelocity star的判定。SMC位于银河系外，其恒星不应纳入银河系HVS候选体范畴。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2009.03571/arxiv_source/ms.tex",
+          "start_line": 54,
+          "end_line": 60,
+          "context": "Section 1: DES and BSS ejection mechanisms for SMC field OB runaways; local residual transverse velocities"
+        }
+      ]
+    }
+  ]
+}

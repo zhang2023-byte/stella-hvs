@@ -1,0 +1,85 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:58:30",
+  "paper": {
+    "arxiv_id": "1901.04559",
+    "bibcode": "2019ApJ...872...58H",
+    "title": "Identifying Sagittarius Stream Stars By Their APOGEE Chemical Abundance Signatures",
+    "month": "2019-01",
+    "source_note_json": "notes/2019/2019-01/2019-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1901.04559",
+      "pdf": "https://arxiv.org/pdf/1901.04559"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1901.04559",
+    "audit_path": "literature/1901.04559/audit.json",
+    "catalog_review_path": "literature/1901.04559/catalog_review.json",
+    "catalog_extraction_path": "literature/1901.04559/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "partial",
+    "extracted_at": "2026-06-07T10:58:30",
+    "extractor": "agent",
+    "summary": "快速扫描：本文利用APOGEE化学丰度数据识别Sgr星流恒星，摘要明确提及发现一颗超高速星候选体（'We also find one hypervelocity star candidate'）。候选体具体身份（名称、Gaia源ID、坐标、速度等）需通过完整论文正文和数据表获取。当前缺少arxiv_source和ECSV数据，无法提取候选体详细参数。需要获取完整论文后进行深入提取。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "Quick scan of paper abstract for HVS relevance assessment.",
+      "inputs": [
+        "arXiv abstract",
+        "Monthly literature notes"
+      ],
+      "outputs": [
+        "HVS relevance classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/paper_abstract.txt",
+          "start_line": 5,
+          "end_line": 5,
+          "context": "Paper abstract mentioning hypervelocity star candidate"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "quick-scan-hvs-candidate",
+      "description": "论文摘要明确提及发现一颗超高速星候选体（hypervelocity star candidate）。该候选体是62颗具有Sgr-like化学丰度恒星中的一颗，但摘要未提供该星的具体身份标识、天体测量参数或速度信息。需要完整论文（含数据表）来确认候选体身份并提取详细参数。",
+      "decision": "needs_review",
+      "reason": "论文明确声称存在超高速星候选体（hypervelocity star candidate），但快速扫描阶段无法获取候选体详细参数。候选体具体身份（Gaia源ID、坐标、径向速度、自行、距离、银河系非束缚状态评估等）需要完整论文正文和表格数据。后续需获取完整论文源文件（arXiv source）和进行catalog_review/catalog_extraction流程。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/paper_abstract.txt",
+          "start_line": 5,
+          "end_line": 5,
+          "context": "Paper abstract mentioning 'We also find one hypervelocity star candidate'"
+        }
+      ]
+    },
+    {
+      "group_id": "quick-scan-sgr-stream-stars",
+      "description": "论文识别的62颗具有Sgr-like化学丰度的恒星：其中35颗为Sgr星流恒星（被剥离的矮星系成员），20颗为'吸积晕'星族（可能来自8-11 Gyr前的独立并合事件）。这些恒星虽然可能具有高速度，但论文未将其描述为银河系非束缚星或超高速星候选体。",
+      "decision": "excluded",
+      "reason": "35颗Sgr星流恒星和20颗吸积晕恒星是银河系引力束缚的星族成员。Sgr星流恒星来自正在被银河系吸积的矮星系，其速度在银河系引力势中为束缚态。吸积晕恒星来自古老并合事件，同样为银河系束缚星。论文仅将其分类为化学/运动学星族，未声称其为银河系非束缚天体。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1901.04559/paper_abstract.txt",
+          "start_line": 5,
+          "end_line": 5,
+          "context": "Description of 35 Sgr stream stars and 20 accreted halo stars"
+        }
+      ]
+    }
+  ]
+}

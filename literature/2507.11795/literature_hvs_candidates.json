@@ -1,0 +1,90 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T19:45:07",
+  "paper": {
+    "arxiv_id": "2507.11795",
+    "bibcode": "2025PhRvL.135b1201P",
+    "title": "The origin of the most recently ejected OB runaway star from the R136 cluster",
+    "month": "2025-07",
+    "source_note_json": "notes/2025/2025-07/2025-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2507.11795",
+      "pdf": "https://arxiv.org/pdf/2507.11795"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2507.11795",
+    "audit_path": "literature/2507.11795/audit.json",
+    "catalog_review_path": "literature/2507.11795/catalog_review.json",
+    "catalog_extraction_path": "literature/2507.11795/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2507.11795/catalog_tables/table-tab-cross_sections.ecsv",
+      "literature/2507.11795/catalog_tables/table-tab-final_orbits.ecsv",
+      "literature/2507.11795/catalog_tables/table-tab-interaction_frequency.ecsv",
+      "literature/2507.11795/catalog_tables/table-tab-cross_sections_velocity_dependence.ecsv",
+      "literature/2507.11795/catalog_tables/table-tab-cross_sections_orbital_separation.ecsv",
+      "literature/2507.11795/catalog_tables/table-tab-cross_sections_for_1010010.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T19:45:07",
+    "extractor": "agent",
+    "summary": "The paper studies OB runaway stars ejected from the R136 cluster in the Large Magellanic Cloud. It does not present any object as possibly unbound from the Milky Way Galaxy. All discussed objects (Mel 34, VFTS 590, Mel 39) are cluster escapers/runaways, not Galactic-unbound HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "runaways-from-R136",
+      "description": "OB runaway stars dynamically ejected from the R136 cluster, including the binary Mel 34, the single star VFTS 590, and the binary Mel 39.",
+      "decision": "excluded",
+      "reason": "These objects are explicitly described as cluster runaways/escapers from R136 in the Large Magellanic Cloud. The paper does not present them as possibly unbound from the Milky Way Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+          "start_line": 132,
+          "end_line": 132,
+          "context": "Paper title explicitly identifies the subject as an OB runaway star from the R136 cluster"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+          "start_line": 154,
+          "end_line": 183,
+          "context": "Abstract describes massive stars moving away from R136 at projected velocities >= 27.5 km/s as runaway stars, and reconstructs the dynamical ejection of Mel 34 from the cluster"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+          "start_line": 210,
+          "end_line": 238,
+          "context": "Introduction and section on Mel 34 describe it and other stars as runaways ejected from the R136 cluster, not as Galactic-unbound objects"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+          "start_line": 630,
+          "end_line": 664,
+          "context": "Discussion and conclusions reiterate that Mel 34 and Mel 39 are runaway binaries ejected from R136, with no discussion of Milky Way unbound status"
+        }
+      ]
+    },
+    {
+      "group_id": "table-tab-final_orbits",
+      "description": "Table tab:final_orbits listing pre- and post-encounter orbital parameters for the binaries Mel 34, Mel 39 and the tertiary VFTS 590.",
+      "decision": "excluded",
+      "reason": "This table reports simulated/measured orbital and kinematic parameters for runaway stars ejected from the R136 cluster. The paper does not frame these objects as possibly unbound from the Milky Way.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2507.11795/arxiv_source/Mel34.tex",
+          "start_line": 608,
+          "end_line": 627,
+          "context": "Table caption states the table gives pre and post-encounter orbital parameters for the two binaries and the tertiary component, with respect to the barycenter of R136"
+        }
+      ]
+    }
+  ]
+}

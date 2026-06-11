@@ -1,0 +1,462 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:34:33",
+  "paper": {
+    "arxiv_id": "1907.06348",
+    "title": "New nearby hypervelocity stars and their spatial distribution from Gaia DR2",
+    "month": "2019-07"
+  },
+  "review": {
+    "path": "literature/1907.06348/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083433",
+    "started_at": "2026-06-07T08:34:33",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1907.06348",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-001",
+      "internal_table_id": "table-001",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1907.06348/arxiv_source/HVS_spatial.tex",
+        "start_line": 263,
+        "end_line": 273,
+        "caption": "The probability of stars are used as the classified criteria",
+        "label": "class"
+      },
+      "source_path": "literature/1907.06348/arxiv_source/HVS_spatial.tex",
+      "excerpt_path": "literature/1907.06348/catalog_sources/table-001/excerpt.tex",
+      "sha256": "349e2d0c4e76839992694caaf6e3a12bba465735177c75d053a0d5b5d3984c64",
+      "line_count": 11,
+      "error": ""
+    },
+    {
+      "id": "table-002",
+      "internal_table_id": "table-002",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1907.06348/arxiv_source/HVS_spatial.tex",
+        "start_line": 680,
+        "end_line": 716,
+        "caption": "HVS identified from tangential velocity selection of Gaia DR2 5D information",
+        "label": ""
+      },
+      "source_path": "literature/1907.06348/arxiv_source/HVS_spatial.tex",
+      "excerpt_path": "literature/1907.06348/catalog_sources/table-002/excerpt.tex",
+      "sha256": "d11146131af6719befe469a84fd6bab85888140a1edb994a1a175619ea70acf8",
+      "line_count": 37,
+      "error": ""
+    },
+    {
+      "id": "table-003",
+      "internal_table_id": "table-003",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1907.06348/arxiv_source/HVS_spatial.tex",
+        "start_line": 720,
+        "end_line": 761,
+        "caption": "HVS identified from total velocity selection of Gaia DR2 6D information",
+        "label": ""
+      },
+      "source_path": "literature/1907.06348/arxiv_source/HVS_spatial.tex",
+      "excerpt_path": "literature/1907.06348/catalog_sources/table-003/excerpt.tex",
+      "sha256": "ae7dc4cd66d59ccbec1553cc47905b5f0c015fcbe2ebd5ea389b65c2cb5f1b61",
+      "line_count": 42,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-001",
+      "internal_table_id": "table-001",
+      "status": "success",
+      "ecsv_path": "literature/1907.06348/catalog_tables/table-001.ecsv",
+      "caption": "The probability of stars are used as the classified criteria",
+      "label": "class",
+      "row_count": 3,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Class",
+          "P_gc",
+          "P_MW"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Class",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "P_gc",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "P_MW",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp52ymn7us/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1907.06348/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp52ymn7us/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1907.06348/catalog_sources/table-001/wrapped.tex",
+            "html": "literature/1907.06348/catalog_sources/table-001/latexml.html",
+            "stdout": "literature/1907.06348/catalog_sources/table-001/latexml.stdout.txt",
+            "stderr": "literature/1907.06348/catalog_sources/table-001/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "349e2d0c4e76839992694caaf6e3a12bba465735177c75d053a0d5b5d3984c64"
+    },
+    {
+      "id": "table-002",
+      "internal_table_id": "table-002",
+      "status": "success",
+      "ecsv_path": "literature/1907.06348/catalog_tables/table-002.ecsv",
+      "caption": "HVS identified from tangential velocity selection of Gaia DR2 5D information",
+      "label": "",
+      "row_count": 28,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "source-id",
+          "( l, b )",
+          "\\varpi",
+          "\\mu_\\alpha^*",
+          "\\mu_\\delta",
+          "d",
+          "r_gc",
+          "v_gc"
+        ],
+        [
+          "",
+          "(deg)",
+          "(mas)",
+          "(mas yr -1 )",
+          "(mas yr -1 )",
+          "(kpc)",
+          "(kpc)",
+          "(km s -1 )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "source-id",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "( l, b ) | (deg)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\varpi | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\alpha^* | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\delta | (mas yr -1 )",
+          "unit_text": "(mas yr -1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "d | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "r_gc | (kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "v_gc | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1oxvvyx4/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1907.06348/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1oxvvyx4/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1907.06348/catalog_sources/table-002/wrapped.tex",
+            "html": "literature/1907.06348/catalog_sources/table-002/latexml.html",
+            "stdout": "literature/1907.06348/catalog_sources/table-002/latexml.stdout.txt",
+            "stderr": "literature/1907.06348/catalog_sources/table-002/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d11146131af6719befe469a84fd6bab85888140a1edb994a1a175619ea70acf8"
+    },
+    {
+      "id": "table-003",
+      "internal_table_id": "table-003",
+      "status": "success",
+      "ecsv_path": "literature/1907.06348/catalog_tables/table-003.ecsv",
+      "caption": "HVS identified from total velocity selection of Gaia DR2 6D information",
+      "label": "",
+      "row_count": 32,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "source-id",
+          "( l, b )",
+          "\\varpi",
+          "\\mu_\\alpha^*",
+          "\\mu_\\delta",
+          "rv",
+          "d",
+          "r_gc",
+          "v_gc",
+          "P_ub"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "source-id",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "( l, b )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\varpi",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\mu_\\alpha^*",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\mu_\\delta",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "rv",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "d",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "r_gc",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "v_gc",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "P_ub",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphs_5pofa/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1907.06348/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphs_5pofa/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1907.06348/catalog_sources/table-003/wrapped.tex",
+            "html": "literature/1907.06348/catalog_sources/table-003/latexml.html",
+            "stdout": "literature/1907.06348/catalog_sources/table-003/latexml.stdout.txt",
+            "stderr": "literature/1907.06348/catalog_sources/table-003/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ae7dc4cd66d59ccbec1553cc47905b5f0c015fcbe2ebd5ea389b65c2cb5f1b61"
+    }
+  ]
+}

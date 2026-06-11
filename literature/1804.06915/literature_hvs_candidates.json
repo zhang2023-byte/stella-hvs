@@ -1,0 +1,86 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:17:00",
+  "paper": {
+    "arxiv_id": "1804.06915",
+    "bibcode": "2018A&A...616A.149M",
+    "title": "A search for Galactic runaway stars using Gaia Data Release 1 and Hipparcos proper motions",
+    "month": "2018-04",
+    "source_note_json": "notes/2018/2018-04/2018-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1804.06915",
+      "pdf": "https://arxiv.org/pdf/1804.06915"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1804.06915",
+    "audit_path": "literature/1804.06915/audit.json",
+    "catalog_review_path": "literature/1804.06915/catalog_review.json",
+    "catalog_extraction_path": "literature/1804.06915/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1804.06915/catalog_tables/table-samples.ecsv",
+      "literature/1804.06915/catalog_tables/table-tabGOSSS.ecsv",
+      "literature/1804.06915/catalog_tables/table-chorizos.ecsv",
+      "literature/1804.06915/catalog_tables/table-parameters.ecsv",
+      "literature/1804.06915/catalog_tables/table-linewidth.ecsv",
+      "literature/1804.06915/catalog_tables/table-tabs1.ecsv",
+      "literature/1804.06915/catalog_tables/table-tabs2.ecsv",
+      "literature/1804.06915/catalog_tables/table-tabs3a.ecsv",
+      "literature/1804.06915/catalog_tables/table-tabs3b.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:17:00",
+    "extractor": "agent",
+    "summary": "No HVS candidates found. This paper uses a 2-D proper-motion method with Gaia DR1 (TGAS) and Hipparcos data to detect Galactic runaway stars among O stars and BA supergiants. They find 76 runaway candidates (48 O stars, 1 B0 V, 27 BA supergiants), 17-19 of them new. The runaway threshold is Delta > 3.5 in normalized proper-motion deviation, which corresponds to a peculiar velocity of ~28 km/s (calibrated against Tetzlaff et al. 2011). These are classical runaway stars — stars with high peculiar velocities relative to Galactic rotation — not hypervelocity stars. All are bound to the Galaxy. Full paper text reviewed — zero mentions of hypervelocity, HVS, unbound stars, or Galactic escape velocity."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "o-star-runaways",
+      "description": "48 O-type runaway stars (29 previously known + 13 new from Paper I + 6 additional new candidates) and 1 B0 V star (ALS 18929, reclassified from O9.7). Detected via 2-D proper-motion deviation method with Delta > 3.5 threshold (equivalent to ~28 km/s peculiar velocity). Listed in Tables tabs1 (29 known), tabs2 (13 new), tabs3a (7 additional, including the B0 V and 6 O stars).",
+      "decision": "excluded",
+      "reason": "Not HVS candidates. These are classical runaway stars detected via proper-motion excess relative to mean Galactic rotation. The detection threshold of Delta > 3.5 corresponds to a peculiar velocity of only ~28 km/s, far below the ~500+ km/s needed for Galactic escape. The paper uses a 2-D proper-motion-only method (modified from Moffat et al. 1998) precisely because they lack radial velocities and distances for most stars — meaning they cannot compute 3-D space velocities or assess bound/unbound status. The paper's title and abstract explicitly state the goal is finding 'Galactic runaway stars,' not hypervelocity stars. Full paper text reviewed — no claims of hypervelocity or unbound status.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.06915/arxiv.txt",
+          "start_line": 25,
+          "end_line": 28,
+          "context": "Results. We detect 76 runaway stars, 17 (possibly 19) of them with no prior identification as such, with an estimated detection rate of approximately one half of the real runaway fraction."
+        },
+        {
+          "kind": "text",
+          "path": "literature/1804.06915/arxiv.txt",
+          "start_line": 226,
+          "end_line": 231,
+          "context": "The cut in Delta is the same in both cases and was empirically established at 3.5 by comparing our results with those of the 3-D method of Tetzlaff et al. (2011), who use a threshold of 28 km/s for the peculiar velocity of a runaway star."
+        },
+        {
+          "kind": "text",
+          "path": "literature/1804.06915/arxiv.txt",
+          "start_line": 33,
+          "end_line": 40,
+          "context": "Runaway stars are (usually massive) Population I stars that move at large peculiar velocities with respect to the mean Galactic rotation. Two mechanisms were proposed... the ejection of a close companion in a supernova explosion (Blaauw 1961) and a three- or more-body interaction at the core of a compact stellar cluster (Poveda et al. 1967)."
+        }
+      ]
+    },
+    {
+      "group_id": "ba-supergiant-runaways",
+      "description": "27 BA supergiant runaway candidates detected by the same 2-D proper-motion method with Delta > 3.5. Listed in Tables tabs3a (early subtypes) and tabs3b (late subtypes). The paper notes a lower runaway fraction among BA supergiants (3.1%) compared to O stars (15.7%), possibly due to an age effect — BA supergiants have had more time to travel away from their birth sites.",
+      "decision": "excluded",
+      "reason": "Same reasoning as O-star runaways. These are classical runaway stars detected via proper-motion excess, with peculiar velocities ~28+ km/s. The paper explicitly uses 'runaway' in the classical Blaauw (1961) sense and makes no claims about hypervelocity or unbound status. The paper's discussion of travel times, bow shocks, and origin clusters all assume these stars remain bound to the Galaxy.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1804.06915/arxiv.txt",
+          "start_line": 26,
+          "end_line": 28,
+          "context": "An age effect appears to be present, with objects of spectral subtype B1 and later having travelled for longer distances than runaways of earlier subtypes."
+        }
+      ]
+    }
+  ]
+}

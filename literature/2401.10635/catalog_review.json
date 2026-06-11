@@ -1,0 +1,57 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2401.10635",
+    "title": "Seventeen 2 Micron All Sky Survey (2MASS) hypervelocity stars (HVS) from Gaia DR3",
+    "month": "2024-01",
+    "source_note_json": "notes/2024/2024-01/2024-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2401.10635",
+      "pdf": "https://arxiv.org/pdf/2401.10635"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2401.10635",
+    "audit_path": "literature/2401.10635/audit.json",
+    "source_dir": "",
+    "tex_root": "",
+    "source_available": false
+  },
+  "review": {
+    "status": "source_missing",
+    "reviewed_at": "2026-05-17T20:17:48",
+    "reviewer": "agent",
+    "summary": "arXiv source unavailable (arXiv served PDF instead of source archive). One internal table (Table 1) identified from PDF text containing seventeen 2MASS HVS candidates with kinematic data."
+  },
+  "internal_tables": [
+    {
+      "table_id": "table-1",
+      "table_label": "Table 1",
+      "table_caption": "Selected 2MASS HVS",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2401.10635/arxiv.pdf",
+          "start_line": 1,
+          "end_line": 1,
+          "context": "PDF page 2 contains Table 1 with 2MASS HVS candidates"
+        }
+      ],
+      "role_in_paper": "Main data table presenting the seventeen 2MASS hypervelocity star candidates with Gaia DR3 kinematics.",
+      "columns": [
+        {"name": "2MASS", "description": "2MASS source identifier"},
+        {"name": "l", "description": "Galactic longitude in degrees"},
+        {"name": "b", "description": "Galactic latitude in degrees"},
+        {"name": "mu", "description": "Total proper motion in mas/yr"},
+        {"name": "G", "description": "Gaia G magnitude"},
+        {"name": "RV", "description": "Radial velocity in km/s"},
+        {"name": "d", "description": "Distance in pc"},
+        {"name": "U", "description": "Galactic velocity component U in km/s"},
+        {"name": "V", "description": "Galactic velocity component V in km/s"},
+        {"name": "W", "description": "Galactic velocity component W in km/s"},
+        {"name": "Vt", "description": "Tangential velocity in km/s"}
+      ]
+    }
+  ],
+  "external_resources": []
+}

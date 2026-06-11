@@ -1,0 +1,397 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T13:16:50",
+  "paper": {
+    "arxiv_id": "2508.12585",
+    "title": "The highest mass Kepler red giants -- II. Spectroscopic parameters, the amplitude-activity relation, and unexpected halo orbits",
+    "month": "2025-08"
+  },
+  "review": {
+    "path": "literature/2508.12585/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T131650",
+    "started_at": "2026-05-17T13:16:50",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2508.12585",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-teff_results_normal",
+      "internal_table_id": "table-tab-teff_results_normal",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2508.12585/arxiv_source/main.tex",
+        "start_line": 229,
+        "end_line": 285,
+        "caption": "Spectroscopic Parameters including \\Teff{}, surface gravity, metallicity, projected rotational velocity, and macroturbulent velocity. \\label{tab:teff_results_normal}",
+        "label": "tab:teff_results_normal"
+      },
+      "source_path": "literature/2508.12585/arxiv_source/main.tex",
+      "excerpt_path": "literature/2508.12585/catalog_sources/table-tab-teff_results_normal/excerpt.tex",
+      "sha256": "5963e00f4ef3618c0c6662f0cb941ac51012aded5e8d5e4cd4b95c62c9b25597",
+      "line_count": 57,
+      "error": ""
+    },
+    {
+      "id": "table-tab-massrad_actamp",
+      "internal_table_id": "table-tab-massrad_actamp",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2508.12585/arxiv_source/main.tex",
+        "start_line": 479,
+        "end_line": 535,
+        "caption": "Mass, Radius, Activity, and Amplitudes \\label{tab:massrad_actamp}",
+        "label": "tab:massrad_actamp"
+      },
+      "source_path": "literature/2508.12585/arxiv_source/main.tex",
+      "excerpt_path": "literature/2508.12585/catalog_sources/table-tab-massrad_actamp/excerpt.tex",
+      "sha256": "824733028e5e1ddbcbe34e9d81e3e523a78cab8cc411307164853b2fe873ec38",
+      "line_count": 57,
+      "error": ""
+    },
+    {
+      "id": "table-tab-kinematics",
+      "internal_table_id": "table-tab-kinematics",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2508.12585/arxiv_source/main.tex",
+        "start_line": 867,
+        "end_line": 923,
+        "caption": "Kinematic Information, including the KIC number, radial velocity (RV) and the Galactic spatial velocities ($U$, $V$, and $W$). All velocities are expressed in km/s. \\label{tab:kinematics}",
+        "label": "tab:kinematics"
+      },
+      "source_path": "literature/2508.12585/arxiv_source/main.tex",
+      "excerpt_path": "literature/2508.12585/catalog_sources/table-tab-kinematics/excerpt.tex",
+      "sha256": "af9d565e860bef64a4529fc660abc900ae309b2862d89b8e2aa6c3033c28b97b",
+      "line_count": 57,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-teff_results_normal",
+      "internal_table_id": "table-tab-teff_results_normal",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2508.12585/catalog_tables/table-tab-teff_results_normal.ecsv",
+      "caption": "Spectroscopic Parameters including \\Teff{}, surface gravity, metallicity, projected rotational velocity, and macroturbulent velocity. \\label{tab:teff_results_normal}",
+      "label": "tab:teff_results_normal",
+      "row_count": 48,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "KIC",
+          "T eff (K)",
+          "log(g)",
+          "[M/H]",
+          "v\\sin i (km/s)",
+          "v_\\rm mac (km/s)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "KIC",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "T eff (K)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "log(g)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "[M/H]",
+          "unit_text": "[M/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "v\\sin i (km/s)",
+          "unit_text": "v\\sin i (km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "v_\\rm mac (km/s)",
+          "unit_text": "v_\\rm mac (km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpu10e7x8w/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2508.12585/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpu10e7x8w/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2508.12585/catalog_sources/table-tab-teff_results_normal/wrapped.tex",
+            "html": "literature/2508.12585/catalog_sources/table-tab-teff_results_normal/latexml.html",
+            "stdout": "literature/2508.12585/catalog_sources/table-tab-teff_results_normal/latexml.stdout.txt",
+            "stderr": "literature/2508.12585/catalog_sources/table-tab-teff_results_normal/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5963e00f4ef3618c0c6662f0cb941ac51012aded5e8d5e4cd4b95c62c9b25597"
+    },
+    {
+      "id": "table-tab-massrad_actamp",
+      "internal_table_id": "table-tab-massrad_actamp",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2508.12585/catalog_tables/table-tab-massrad_actamp.ecsv",
+      "caption": "Mass, Radius, Activity, and Amplitudes \\label{tab:massrad_actamp}",
+      "label": "tab:massrad_actamp",
+      "row_count": 48,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "KIC",
+          "Mass (M ⊙ )",
+          "Radius (R ⊙ )",
+          "S -index",
+          "\\langle A_\\ell=0\\rangle (ppm)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "KIC",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Mass (M ⊙ )",
+          "unit_text": "Mass (M ⊙ )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Radius (R ⊙ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "S -index",
+          "unit_text": "S -index",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\langle A_\\ell=0\\rangle (ppm)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_v3cb6ay/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2508.12585/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_v3cb6ay/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2508.12585/catalog_sources/table-tab-massrad_actamp/wrapped.tex",
+            "html": "literature/2508.12585/catalog_sources/table-tab-massrad_actamp/latexml.html",
+            "stdout": "literature/2508.12585/catalog_sources/table-tab-massrad_actamp/latexml.stdout.txt",
+            "stderr": "literature/2508.12585/catalog_sources/table-tab-massrad_actamp/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "824733028e5e1ddbcbe34e9d81e3e523a78cab8cc411307164853b2fe873ec38"
+    },
+    {
+      "id": "table-tab-kinematics",
+      "internal_table_id": "table-tab-kinematics",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2508.12585/catalog_tables/table-tab-kinematics.ecsv",
+      "caption": "Kinematic Information, including the KIC number, radial velocity (RV) and the Galactic spatial velocities ($U$, $V$, and $W$). All velocities are expressed in km/s. \\label{tab:kinematics}",
+      "label": "tab:kinematics",
+      "row_count": 48,
+      "column_count": 5,
+      "environment": "",
+      "header_rows": [
+        [
+          "KIC",
+          "RV (km/s)",
+          "U (km/s)",
+          "V (km/s)",
+          "W (km/s)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "KIC",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "RV (km/s)",
+          "unit_text": "RV (km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "U (km/s)",
+          "unit_text": "U (km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "V (km/s)",
+          "unit_text": "V (km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "W (km/s)",
+          "unit_text": "W (km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7m12bb7v/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2508.12585/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7m12bb7v/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2508.12585/catalog_sources/table-tab-kinematics/wrapped.tex",
+            "html": "literature/2508.12585/catalog_sources/table-tab-kinematics/latexml.html",
+            "stdout": "literature/2508.12585/catalog_sources/table-tab-kinematics/latexml.stdout.txt",
+            "stderr": "literature/2508.12585/catalog_sources/table-tab-kinematics/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "af9d565e860bef64a4529fc660abc900ae309b2862d89b8e2aa6c3033c28b97b"
+    }
+  ]
+}

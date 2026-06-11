@@ -1,0 +1,644 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:22",
+  "paper": {
+    "arxiv_id": "2410.06255",
+    "title": "Two waves of massive stars running away from the young cluster R136",
+    "month": "2024-10"
+  },
+  "review": {
+    "path": "literature/2410.06255/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123922",
+    "started_at": "2026-05-17T12:39:22",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2410.06255",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 4,
+      "work_count": 4,
+      "table_count": 4,
+      "success_count": 4,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 4,
+      "file_success_count": 4,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-R136params",
+      "internal_table_id": "table-tab-R136params",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2410.06255/arxiv_source/MAIN.tex",
+        "start_line": 458,
+        "end_line": 504,
+        "caption": "\\textbf{$\\vert$ Astrometric, kinematic, and physical parameters of R136}.",
+        "label": "tab:R136params"
+      },
+      "source_path": "literature/2410.06255/arxiv_source/MAIN.tex",
+      "excerpt_path": "literature/2410.06255/catalog_sources/table-tab-R136params/excerpt.tex",
+      "sha256": "a8b512b7a64c6cb2127047e5c8e0605886e51237160cd19275dc8dc83674951d",
+      "line_count": 47,
+      "error": ""
+    },
+    {
+      "id": "table-tab-luminous_stars",
+      "internal_table_id": "table-tab-luminous_stars",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2410.06255/arxiv_source/MAIN.tex",
+        "start_line": 508,
+        "end_line": 576,
+        "caption": "\\textbf{$\\vert$ All stars in 30 Doradus with log($L$/L$_{\\odot}$) $>$ 6.0}. The uncertainty on the data is expressed as a 1$\\sigma$ confidence interval.",
+        "label": "tab:luminous_stars"
+      },
+      "source_path": "literature/2410.06255/arxiv_source/MAIN.tex",
+      "excerpt_path": "literature/2410.06255/catalog_sources/table-tab-luminous_stars/excerpt.tex",
+      "sha256": "342d813238fd42c091acffab9553a21887137c3e9cd4bfed53dd9b0960a1c725",
+      "line_count": 69,
+      "error": ""
+    },
+    {
+      "id": "table-tab-kinematic_runaways",
+      "internal_table_id": "table-tab-kinematic_runaways",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2410.06255/arxiv_source/MAIN.tex",
+        "start_line": 748,
+        "end_line": 787,
+        "caption": "\\textbf{$\\vert$ Runaways coming from R136 in the past 3 Myr}. The uncertainty on the data is denoted as a 1$\\sigma$ confidence interval.",
+        "label": "tab:kinematic_runaways"
+      },
+      "source_path": "literature/2410.06255/arxiv_source/MAIN.tex",
+      "excerpt_path": "literature/2410.06255/catalog_sources/table-tab-kinematic_runaways/excerpt.tex",
+      "sha256": "9135bf3c85e009d4edd2860db21bbe2b24a5eae4dfe031e77942695979fdfb6d",
+      "line_count": 40,
+      "error": ""
+    },
+    {
+      "id": "table-004",
+      "internal_table_id": "table-004",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2410.06255/arxiv_source/MAIN.tex",
+        "start_line": 791,
+        "end_line": 830,
+        "caption": "Continued.",
+        "label": ""
+      },
+      "source_path": "literature/2410.06255/arxiv_source/MAIN.tex",
+      "excerpt_path": "literature/2410.06255/catalog_sources/table-004/excerpt.tex",
+      "sha256": "992100a4eef7c3afae156e46504f1b35b1ee04e9b56d3d066071c93ee0a1e941",
+      "line_count": 40,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-R136params",
+      "internal_table_id": "table-tab-R136params",
+      "status": "success",
+      "ecsv_path": "literature/2410.06255/catalog_tables/table-tab-R136params.ecsv",
+      "caption": "\\textbf{$\\vert$ Astrometric, kinematic, and physical parameters of R136}.",
+      "label": "tab:R136params",
+      "row_count": 25,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Equatorial",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Equatorial",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb_5718x3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2410.06255/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpb_5718x3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2410.06255/catalog_sources/table-tab-R136params/wrapped.tex",
+            "html": "literature/2410.06255/catalog_sources/table-tab-R136params/latexml.html",
+            "stdout": "literature/2410.06255/catalog_sources/table-tab-R136params/latexml.stdout.txt",
+            "stderr": "literature/2410.06255/catalog_sources/table-tab-R136params/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a8b512b7a64c6cb2127047e5c8e0605886e51237160cd19275dc8dc83674951d"
+    },
+    {
+      "id": "table-tab-luminous_stars",
+      "internal_table_id": "table-tab-luminous_stars",
+      "status": "success",
+      "ecsv_path": "literature/2410.06255/catalog_tables/table-tab-luminous_stars.ecsv",
+      "caption": "\\textbf{$\\vert$ All stars in 30 Doradus with log($L$/L$_{\\odot}$) $>$ 6.0}. The uncertainty on the data is expressed as a 1$\\sigma$ confidence interval.",
+      "label": "tab:luminous_stars",
+      "row_count": 52,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "Identifier",
+          "Spectral type",
+          "r_\\rmsep,proj",
+          "log( L /L ⊙ )",
+          "v R",
+          "log( Q_0 )",
+          "Ref."
+        ],
+        [
+          "-",
+          "-",
+          "pc",
+          "-",
+          "km s -1",
+          "s -1",
+          "-"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Identifier | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Spectral type | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "r_\\rmsep,proj | pc",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "log( L /L ⊙ ) | -",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "v R | km s -1",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "log( Q_0 ) | s -1",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "Ref. | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpu0f9pv_4/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2410.06255/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpu0f9pv_4/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2410.06255/catalog_sources/table-tab-luminous_stars/wrapped.tex",
+            "html": "literature/2410.06255/catalog_sources/table-tab-luminous_stars/latexml.html",
+            "stdout": "literature/2410.06255/catalog_sources/table-tab-luminous_stars/latexml.stdout.txt",
+            "stderr": "literature/2410.06255/catalog_sources/table-tab-luminous_stars/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "342d813238fd42c091acffab9553a21887137c3e9cd4bfed53dd9b0960a1c725"
+    },
+    {
+      "id": "table-tab-kinematic_runaways",
+      "internal_table_id": "table-tab-kinematic_runaways",
+      "status": "success",
+      "ecsv_path": "literature/2410.06255/catalog_tables/table-tab-kinematic_runaways.ecsv",
+      "caption": "\\textbf{$\\vert$ Runaways coming from R136 in the past 3 Myr}. The uncertainty on the data is denoted as a 1$\\sigma$ confidence interval.",
+      "label": "tab:kinematic_runaways",
+      "row_count": 28,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Identifier",
+          "source_id",
+          "Spectral type",
+          "v_\\rmT",
+          "t_\\rmkin",
+          "\\phi",
+          "log( L /L ⊙ )",
+          "M_\\rmpri",
+          "t_\\rmevo",
+          "Ref."
+        ],
+        [
+          "-",
+          "-",
+          "-",
+          "km s -1",
+          "Myr",
+          "deg",
+          "-",
+          "M ⊙",
+          "Myr",
+          "-"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Identifier | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "source_id | -",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Spectral type | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "v_\\rmT | km s -1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "t_\\rmkin | Myr",
+          "unit_text": "Myr",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\phi | deg",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "log( L /L ⊙ ) | -",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "M_\\rmpri | M ⊙",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "t_\\rmevo | Myr",
+          "unit_text": "Myr",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Ref. | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3bu9q8eu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2410.06255/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp3bu9q8eu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2410.06255/catalog_sources/table-tab-kinematic_runaways/wrapped.tex",
+            "html": "literature/2410.06255/catalog_sources/table-tab-kinematic_runaways/latexml.html",
+            "stdout": "literature/2410.06255/catalog_sources/table-tab-kinematic_runaways/latexml.stdout.txt",
+            "stderr": "literature/2410.06255/catalog_sources/table-tab-kinematic_runaways/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "9135bf3c85e009d4edd2860db21bbe2b24a5eae4dfe031e77942695979fdfb6d"
+    },
+    {
+      "id": "table-004",
+      "internal_table_id": "table-004",
+      "status": "success",
+      "ecsv_path": "literature/2410.06255/catalog_tables/table-004.ecsv",
+      "caption": "Continued.",
+      "label": "",
+      "row_count": 27,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Identifier",
+          "source_id",
+          "Spectral type",
+          "v_\\rmT",
+          "t_\\rmkin",
+          "\\phi",
+          "log( L /L ⊙ )",
+          "M_\\rmpri",
+          "t_\\rmevo",
+          "Ref."
+        ],
+        [
+          "-",
+          "-",
+          "-",
+          "km s -1",
+          "Myr",
+          "deg",
+          "-",
+          "M ⊙",
+          "Myr",
+          "-"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Identifier | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "source_id | -",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Spectral type | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "v_\\rmT | km s -1",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "t_\\rmkin | Myr",
+          "unit_text": "Myr",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\phi | deg",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "log( L /L ⊙ ) | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "M_\\rmpri | M ⊙",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "t_\\rmevo | Myr",
+          "unit_text": "Myr",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Ref. | -",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp39tq54l8/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2410.06255/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp39tq54l8/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2410.06255/catalog_sources/table-004/wrapped.tex",
+            "html": "literature/2410.06255/catalog_sources/table-004/latexml.html",
+            "stdout": "literature/2410.06255/catalog_sources/table-004/latexml.stdout.txt",
+            "stderr": "literature/2410.06255/catalog_sources/table-004/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "992100a4eef7c3afae156e46504f1b35b1ee04e9b56d3d066071c93ee0a1e941"
+    }
+  ]
+}

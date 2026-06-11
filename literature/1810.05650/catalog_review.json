@@ -1,0 +1,155 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1810.05650",
+    "title": "Gaia and HST astrometry of the very massive $\\sim$150 $M_\\odot$ candidate runaway star VFTS682",
+    "month": "2018-10",
+    "source_note_json": "notes/2018/2018-10/2018-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1810.05650",
+      "pdf": "https://arxiv.org/pdf/1810.05650"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1810.05650",
+    "audit_path": "literature/1810.05650/audit.json",
+    "source_dir": "literature/1810.05650/arxiv_source",
+    "tex_root": "literature/1810.05650/arxiv_source/VFTS682_MNRASL.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T07:46:59",
+    "reviewer": "agent",
+    "summary": "本文为MNRAS Letters短文，研究大麦哲伦云30 Doradus区域中极亮恒星VFTS682（~150 M☉）的运动学性质。利用Gaia DR2和HST WFC3/UVIS两套独立天体测量数据，推导VFTS682相对中心星团R136的自行和二维投影速度。Gaia给出v_2D=32±21 km/s，HST给出v_2D=45±21 km/s，加权平均为38±17 km/s，表明VFTS682很可能为从R136动力学弹射的runaway star，如果确认将是已知质量最大的runaway。本文包含2个内部LaTeX表格：(1) Table 1 (tab:star_param) —— VFTS682的恒星参数汇总表（present day mass, initial mass, age, mass loss rate），数据来源于Schneider et al. (2018)和Bestenlehner et al. (2011)的光谱分析与演化模型拟合；(2) Table 2 (tab:vfts682) —— VFTS682运动学测量表，包含Gaia DR2绝对位置/自行、R136参考位置、相对自行、HST自行、加权平均结果以及预期弹射自行，是本文核心数据资产。本文无内部机器可读数据文件（如.csv/.fits/.ecsv），无CDS/VizieR数据提交。外部数据资源仅有Gaia DR2星表（VFTS682的Gaia source id为4657685637907503744），VizieR访问URL出现在被注释的脚注中。HST自行数据来源于Platais et al. (2018, AJ 156, 98)的已发表星表（VFTS682对应其source 330375），但文中未提供直接URL。Gaia和DPAC的致谢链接按fidelity规则不列为数据资源。参考文献中的ADS链接均为bibitem条目，非结构化数据资源，不纳入。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-star_param",
+      "kind": "latex_table",
+      "asset_type": "stellar_parameter_table",
+      "role_in_paper": "汇总VFTS682的恒星物理参数（present day mass, initial mass, age, mass loss rate），数据来源于光谱分析与BONNSAI演化模型拟合。为本文研究目标的基本物理性质提供参考，用于与运动学年龄进行比较。",
+      "source_refs": [
+        {
+          "path": "literature/1810.05650/arxiv_source/VFTS682_MNRASL.tex",
+          "start_line": 181,
+          "end_line": 205,
+          "caption": "Stellar parameters of VFTS682.",
+          "label": "tab:star_param"
+        }
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "meaning": "行序号（空白占位列，用于视觉分隔）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Parameter",
+          "meaning": "恒星参数名称（present day mass / initial mass / age / mass loss rate）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Units",
+          "meaning": "参数对应的物理单位（M☉, Myr, log10(Ṁ/[M☉ yr⁻¹])）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "参数值及其统计不确定度（不含系统误差）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ref.",
+          "meaning": "数据来源参考文献编号：(1) Schneider et al. 2018, (2) Bestenlehner et al. 2011",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\caption{Stellar parameters of VFTS682.} ... present day mass 137.8^{+27.5}_{-15.9} M☉ (1); initial mass 150.0^{+28.7}_{-17.4} M☉ (1); age 1.0±0.2 Myr (1); mass loss rate log10(Ṁ/[M☉ yr⁻¹]) = -4.1±0.2 (2). References: (1) Schneider et al. 2018, (2) Bestenlehner et al. 2011.",
+      "comments": "参数来源于光谱分析结合BONNSAI代码拟合演化轨迹。表中注明不确定度为统计误差，不包含模型系统误差。"
+    },
+    {
+      "id": "table-tab-vfts682",
+      "kind": "latex_table",
+      "asset_type": "astrometry_measurement_table",
+      "role_in_paper": "本文核心数据表，提供VFTS682完整的天体测量与运动学测量结果。包含Gaia DR2绝对位置和自行、R136参考位置与平均自行、Gaia DR2相对自行、HST相对自行、加权平均自行及推导速度、以及零年龄弹射预期自行。用于判断VFTS682是否为从R136弹射的runaway star。",
+      "source_refs": [
+        {
+          "path": "literature/1810.05650/arxiv_source/VFTS682_MNRASL.tex",
+          "start_line": 207,
+          "end_line": 317,
+          "caption": "Kinematics of VFTS682.",
+          "label": "tab:vfts682"
+        }
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "meaning": "行序号（空白占位列，用于视觉分隔）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Parameter",
+          "meaning": "测量量名称（位置坐标/自行分量/角距离/投影距离/二维速度/方位角等）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Units",
+          "meaning": "测量量对应的物理单位（degrees, mas, arcsec, pc, mas yr⁻¹, km s⁻¹, degrees）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "测量值及其1σ不确定度，或当无误差时仅列中心值",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Ref.",
+          "meaning": "数据来源参考文献编号：(1) Gaia DR2 (Brown et al. 2018), (2) Hénault-Brunet et al. 2012, (3) Bestenlehner et al. 2011, (4) Lennon et al. 2018, (5) Platais et al. 2018, (6) this study",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\caption{Kinematics of VFTS682.} Table contains five sections: Absolute position and position relative to R136 (RA/DEC VFTS682 & R136, δRA, δDEC, angular distance d∥=119.4 arcsec, projected distance L∥=29 pc); Gaia absolute proper motion (μRA=1.84±0.07 mas/yr, μDEC=0.79±0.08 mas/yr, correlation ρ=0.0226, average R136 motion); Gaia DR2 relative proper motion (δμRA=0.10±0.08, δμDEC=0.08±0.10 mas/yr, v2D=32±21 km/s, θ=14°); HST relative proper motion (δμRA=0.02±0.10, δμDEC=0.19±0.09 mas/yr, v2D=45±21 km/s, θ=-30°); Weighted average (δμavg=0.16±0.07 mas/yr, v2D=38±17 km/s); Expected proper motion if ejected at age zero (v2D=29±6 km/s, θ~0°).",
+      "comments": "表注说明：RA/DEC位置误差约0.01 mas/yr量级；1 mas/yr在50 kpc距离对应237 km/s；θ=0°定义为背离R136的径向运动方向；R136平均自行误差在θ_Gaia的不确定度计算中被忽略。参考文献完整列表见table footnote。"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://vizier.u-strasbg.fr/viz-bin/VizieR-3?-source=I/345/gaia2",
+      "local_path": "",
+      "description": "Gaia DR2星表（VizieR catalog I/345/gaia2）：VFTS682在Gaia DR2中的source id为4657685637907503744，G波段15.65 mag，17个visibility periods，天体测量解可靠（astrometric excess noise为零）。本文使用Gaia DR2获取VFTS682的绝对位置(RA, DEC)和绝对自行(μRA, μDEC)，并通过计算R136周围0.05度内亮星(G<17)的平均自行定义局域参考架，从而导出相对自行。",
+      "source_refs": [
+        {
+          "path": "literature/1810.05650/arxiv_source/VFTS682_MNRASL.tex",
+          "start_line": 424,
+          "end_line": 431,
+          "context": "VFTS682 is identified with the source id 4657685637907503744 in the\n\\emph{Gaia} DR2 catalog %\\footnote{\\url{https://vizier.u-strasbg.fr/viz-bin/VizieR-3?-source=I/345/gaia2}}\n  as a 15.65 mag star in the G band\n\\citep{gaia:16,brown:18}.   The number of visibility periods,\ni.e., groups of observations separated from each other by at\nleast four days, used in the astrometric solution is seventeen. The reported astrometric excess noise is zero.  These values\nsuggest that the \\emph{Gaia} DR2  data for VFTS682 are\nreliable."
+        }
+      ],
+      "evidence": "VFTS682 is identified with the source id 4657685637907503744 in the Gaia DR2 catalog as a 15.65 mag star in the G band. The number of visibility periods used in the astrometric solution is seventeen. The reported astrometric excess noise is zero.",
+      "comments": "VizieR URL出现在LaTeX注释掉的脚注中（%\\footnote{...}），未在正式发表的论文正文中显示，但Gaia DR2作为核心数据源在正文中明确引用。本文未提交自身数据至CDS/VizieR。HST自行数据来源于Platais et al. (2018, AJ 156, 98)的已发表星表（VFTS682对应其source 330375），但文中未提供该星表的直接访问URL，因此不单独列为外部资源。Gaia任务网站和DPAC联盟网站出现在致谢中，按fidelity规则不列为结构化数据资源。"
+    }
+  ]
+}

@@ -1,0 +1,308 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-22T22:55:52",
+  "paper": {
+    "arxiv_id": "2301.04031",
+    "title": "Catching a Milky Way open cluster in its last breath",
+    "month": "2023-01"
+  },
+  "review": {
+    "path": "literature/2301.04031/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260522T225552",
+    "started_at": "2026-05-22T22:55:52",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2301.04031",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.04031/arxiv_source/paper.tex",
+        "start_line": 197,
+        "end_line": 220,
+        "caption": "Properties of ASCC-92 (Alessi~31).",
+        "label": "tab1"
+      },
+      "source_path": "literature/2301.04031/arxiv_source/paper.tex",
+      "excerpt_path": "literature/2301.04031/catalog_sources/table-tab1/excerpt.tex",
+      "sha256": "b78fd4c0067c14e80932579ee486cc1e7ecb199acd10046b8aa7ea3654a70189",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-tab2",
+      "internal_table_id": "table-tab2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2301.04031/arxiv_source/paper.tex",
+        "start_line": 914,
+        "end_line": 929,
+        "caption": "Gaia IDs of stars selected in this work that are absent in the Cantat-Gaudin+2018's sample.",
+        "label": "tab2"
+      },
+      "source_path": "literature/2301.04031/arxiv_source/paper.tex",
+      "excerpt_path": "literature/2301.04031/catalog_sources/table-tab2/excerpt.tex",
+      "sha256": "a3597e418bdce59acafec6d161b4cdb17daedecea68b32aff56b8dafed8a07d3",
+      "line_count": 16,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab1",
+      "internal_table_id": "table-tab1",
+      "status": "success",
+      "ecsv_path": "literature/2301.04031/catalog_tables/table-tab1.ecsv",
+      "caption": "Properties of ASCC-92 (Alessi~31).",
+      "label": "tab1",
+      "row_count": 9,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "Ref.",
+          "radius",
+          "E(B-V)",
+          "distance",
+          "log(age /yr)",
+          "[Fe/H]",
+          "pmra",
+          "pmdec",
+          "RV"
+        ],
+        [
+          "",
+          "(arcmin)",
+          "(mag)",
+          "(pc)",
+          "",
+          "(dex)",
+          "(mas/yr)",
+          "(mas/yr)",
+          "(km/s)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Ref.",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "radius | (arcmin)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "E(B-V) | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "distance | (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "log(age /yr)",
+          "unit_text": "log(age /yr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "[Fe/H] | (dex)",
+          "unit_text": "[Fe/H]",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "pmra | (mas/yr)",
+          "unit_text": "(mas/yr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "pmdec | (mas/yr)",
+          "unit_text": "(mas/yr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "RV | (km/s)",
+          "unit_text": "(km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpi58rnqi1/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.04031/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpi58rnqi1/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.04031/catalog_sources/table-tab1/wrapped.tex",
+            "html": "literature/2301.04031/catalog_sources/table-tab1/latexml.html",
+            "stdout": "literature/2301.04031/catalog_sources/table-tab1/latexml.stdout.txt",
+            "stderr": "literature/2301.04031/catalog_sources/table-tab1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b78fd4c0067c14e80932579ee486cc1e7ecb199acd10046b8aa7ea3654a70189"
+    },
+    {
+      "id": "table-tab2",
+      "internal_table_id": "table-tab2",
+      "status": "success",
+      "ecsv_path": "literature/2301.04031/catalog_tables/table-tab2.ecsv",
+      "caption": "Gaia IDs of stars selected in this work that are absent in the Cantat-Gaudin+2018's sample.",
+      "label": "tab2",
+      "row_count": 8,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa_eqwhdj/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2301.04031/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpa_eqwhdj/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2301.04031/catalog_sources/table-tab2/wrapped.tex",
+            "html": "literature/2301.04031/catalog_sources/table-tab2/latexml.html",
+            "stdout": "literature/2301.04031/catalog_sources/table-tab2/latexml.stdout.txt",
+            "stderr": "literature/2301.04031/catalog_sources/table-tab2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "a3597e418bdce59acafec6d161b4cdb17daedecea68b32aff56b8dafed8a07d3"
+    }
+  ]
+}

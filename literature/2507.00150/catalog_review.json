@@ -1,0 +1,368 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2507.00150",
+    "title": "Searching for new Hypervelocity Stars with Gaia DR3 and VLT/FORS2 Spectroscopy",
+    "month": "2025-06",
+    "source_note_json": "notes/2025/2025-06/2025-06.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2507.00150",
+      "pdf": "https://arxiv.org/pdf/2507.00150"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2507.00150",
+    "audit_path": "literature/2507.00150/audit.json",
+    "source_dir": "literature/2507.00150/arxiv_source",
+    "tex_root": "literature/2507.00150/arxiv_source/aa54784-25.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T12:44:20",
+    "reviewer": "agent",
+    "summary": "This paper describes a search for hypervelocity stars using Gaia DR3 astrometry and follow-up VLT/FORS2 spectroscopy. It contains three internal tables: the FORS2 observation sample of 23 HVS candidates with Gaia source IDs, positions, escape probabilities, and exposure times; kinematic properties and orbital classifications for the analyzed candidates after incorporating measured radial velocities; and minimum Galactocentric distances and escape probabilities computed under five different Galactic potential models (MWPotential2014, McMillan2017, bar, LMC-frozen, LMC-live). External resources include the gaiadr3-zeropoint Python package, the MOLLY and Doppler spectral analysis tools, the AGAMA Galactic dynamics library, the SNRcat supernova remnant catalog, and Gaia/DPAC acknowledgements (the latter removed as generic)."
+  },
+  "internal_tables": [
+    {
+      "id": "table-table_fors",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Lists the 23 HVS candidates selected for VLT/FORS2 follow-up spectroscopy, with their Gaia DR3 IDs, positions, initial escape probabilities, exposure times, and magnitudes.",
+      "source_refs": [
+        {
+          "path": "literature/2507.00150/arxiv_source/aa54784-25.tex",
+          "start_line": 90,
+          "end_line": 125,
+          "caption": "Sample of HVS candidates selected for follow-spectroscopy.",
+          "label": "table_fors"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Star identifier (HVS01-HVS23)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Class.",
+          "meaning": "Astrometric quality classification (G = golden, S = silver)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\it Gaia DR3 source ID",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A. | (J2000.0)",
+          "meaning": "Right ascension (J2000.0)",
+          "unit_text": "J2000.0",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec. | (J2000.0)",
+          "meaning": "Declination (J2000.0)",
+          "unit_text": "J2000.0",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm esc, 0 | (%)",
+          "meaning": "Initial probability of being unbound from the Milky Way (before follow-up spectroscopy)",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_\\rm exp | (s)",
+          "meaning": "FORS2 exposure time (number of exposures in parentheses)",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G | (mag)",
+          "meaning": "Gaia DR3 G-band magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Sample of HVS candidates selected for follow-spectroscopy.",
+      "comments": ""
+    },
+    {
+      "id": "table-table_results",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Presents kinematic properties and orbital classifications for the 23 analyzed HVS candidates after incorporating FORS2 radial velocities and orbit integration.",
+      "source_refs": [
+        {
+          "path": "literature/2507.00150/arxiv_source/aa54784-25.tex",
+          "start_line": 150,
+          "end_line": 185,
+          "caption": "Kinematic properties and classification of the analyzed HVS candidates.",
+          "label": "table_results"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Star identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm esc | (%)",
+          "meaning": "Probability of being unbound from the Milky Way after incorporating measured radial velocity",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_\\rm los | (km/s)",
+          "meaning": "Line-of-sight radial velocity from FORS2 spectroscopy",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_\\rm T | (km/s)",
+          "meaning": "Total Galactocentric velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "z | (kpc)",
+          "meaning": "Vertical distance from the Galactic plane",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_\\rm min | (kpc)",
+          "meaning": "Minimum Galactocentric distance reached in the past orbit",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_\\rm rmin | (Myr)",
+          "meaning": "Time when the star reached its minimum Galactocentric distance",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_\\rm z=0 | (Myr)",
+          "meaning": "Time when the star last crossed the Galactic plane (z=0)",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Classification",
+          "meaning": "Orbital classification based on past trajectory (e.g. Extra-Galactic, Disk crossing, In disk)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Kinematic properties and classification of the analyzed HVS candidates.",
+      "comments": ""
+    },
+    {
+      "id": "table-table_results2",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Compares minimum Galactocentric distances and escape probabilities for the analyzed HVS candidates under five different Galactic potential models to assess robustness of the unbound classification.",
+      "source_refs": [
+        {
+          "path": "literature/2507.00150/arxiv_source/aa54784-25.tex",
+          "start_line": 267,
+          "end_line": 302,
+          "caption": "Minimum Galactocentric distances and escape probabilities for the analyzed HVS candidates under different Galactic potential models.",
+          "label": "table_results2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Star identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_\\rm min,PW | (kpc)",
+          "meaning": "Minimum Galactocentric distance using Price-Whelan 2017 potential",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm esc,PW | (%)",
+          "meaning": "Escape probability using Price-Whelan 2017 potential",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_\\rm min,MM | (kpc)",
+          "meaning": "Minimum Galactocentric distance using McMillan 2017 potential",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm esc,MM | (%)",
+          "meaning": "Escape probability using McMillan 2017 potential",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_\\rm min,MM55 | (kpc)",
+          "meaning": "Minimum Galactocentric distance using McMillan 2017 + bar potential",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm esc,MM55 | (%)",
+          "meaning": "Escape probability using McMillan 2017 + bar potential",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_\\rm min,LMCf | (kpc)",
+          "meaning": "Minimum Galactocentric distance using frozen LMC potential",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm esc,LMCf | (%)",
+          "meaning": "Escape probability using frozen LMC potential",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_\\rm min,LMCl | (kpc)",
+          "meaning": "Minimum Galactocentric distance using live LMC potential",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_\\rm esc,LMCl | (%)",
+          "meaning": "Escape probability using live LMC potential",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Minimum Galactocentric distances and escape probabilities for the analyzed HVS candidates under different Galactic potential models.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://pypi.org/project/gaiadr3-zeropoint/",
+      "local_path": "",
+      "description": "Python package gaiadr3-zeropoint implementing the Lindegren+2021 parallax zero-point correction recipe for Gaia DR3.",
+      "source_refs": [
+        {
+          "path": "literature/2507.00150/arxiv_source/aa54784-25.tex",
+          "start_line": 71,
+          "end_line": 71,
+          "context": "Our main goal with this work was to identify HVS candidates whose orbits  cannot be reconstructed due to the lack of $v_{\\rm los}$. Therefore, we exclude from our analysis all sources with $v_{\\rm los}$ already provided by {\\it Gaia} and will assume that the hypothetical HVSs in {\\it Gaia} DR3 have already been identified in previous studies if their $v_{\\rm los}$ were known. Here, we focus on high-quality astrometry sources with incomplete Gaia information in the 6D phase space.\n\nFirst, we restrict our sample to those stars whose parallaxes have relatively low associated uncertainties by only including sources with $\\sigma_{\\varpi} / \\varpi \\leq 0.2$. This limit, combined with additional quality cuts, allows us to derive heliocentric distances from the inversion of parallaxes alone, although we have checked that other estimates \\citep[e.g.][]{Bailer-Jones2021} are consistent within errors. We also used two parameters that account for the quality of the parameters provided by Gaia for a given source: the Renormalized Unit Weight Error \\citep[RUWE; see description in ][]{Lindegren2021} for which we set the usual limit of RUWE $<$ 1.4, and the astrometric fidelity parameter proposed by \\cite{Rybizki2022}, namely $fidelity\\_v2$, which classifies {\\it Gaia} sources using neural network models trained on a dataset of \\emph{good} and \\emph{bad} sources. For this parameter, we adopted a minimum threshold of 0.5. Parallaxes zero-point values were derived following the \\cite{Lindegren2021parallax} recipe\\footnote{\\href{https://pypi.org/project/gaiadr3-zeropoint/}{https://pypi.org/project/gaiadr3-zeropoint/}}.\n\nFor each of the $\\sim$ 190 million stars meeting our quality criteria, we derived 1,000 estimates of the total velocity ($v_{\\rm T}$) in the Galactic Standard of Rest frame, using a multivariate Gaussian distribution. This distribution accounts for the parameters provided by Gaia and their associated uncertainties. The correlations between parallax and proper motion were considered through the covariance matrix detailed in the Appendix, while uncertainties related to sky positions were assumed to be negligible. For each iteration, we estimated the hypothetical heliocentric radial velocity ($v_{\\rm los_{\\rm 0}}$) that minimizes $v_{\\rm T}$, which varies with the position within the Galaxy (e.g. $v_{\\rm los_{\\rm 0}}$ = 0\\,km\\,s$^{-1}$ for stars around $\\ell$ = 180$^{\\circ}$). This means that, although we refer to these values as total velocities, they are actually minimum total velocities. Thus, this approach provides a conservative method for identifying HVS candidates when assuming $v_{\\rm los_{\\rm 0}}$ to derive their total velocities."
+        }
+      ],
+      "evidence": "Our main goal with this work was to identify HVS candidates whose orbits  cannot be reconstructed due to the lack of $v_{\\rm los}$. Therefore, we exclude from our analysis all sources with $v_{\\rm los}$ already provided by {\\it Gaia} and will assume that the hypothetical HVSs in {\\it Gaia} DR3 have already been identified in previous studies if their $v_{\\rm los}$ were known. Here, we focus on high-quality astrometry sources with incomplete Gaia information in the 6D phase space.\n\nFirst, we restrict our sample to those stars whose parallaxes have relatively low associated uncertainties by only including sources with $\\sigma_{\\varpi} / \\varpi \\leq 0.2$. This limit, combined with additional quality cuts, allows us to derive heliocentric distances from the inversion of parallaxes alone, although we have checked that other estimates \\citep[e.g.][]{Bailer-Jones2021} are consistent within errors. We also used two parameters that account for the quality of the parameters provided by Gaia for a given source: the Renormalized Unit Weight Error \\citep[RUWE; see description in ][]{Lindegren2021} for which we set the usual limit of RUWE $<$ 1.4, and the astrometric fidelity parameter proposed by \\cite{Rybizki2022}, namely $fidelity\\_v2$, which classifies {\\it Gaia} sources using neural network models trained on a dataset of \\emph{good} and \\emph{bad} sources. For this parameter, we adopted a minimum threshold of 0.5. Parallaxes zero-point values were derived following the \\cite{Lindegren2021parallax} recipe\\footnote{\\href{https://pypi.org/project/gaiadr3-zeropoint/}{https://pypi.org/project/gaiadr3-zeropoint/}}.\n\nFor each of the $\\sim$ 190 million stars meeting our quality criteria, we derived 1,000 estimates of the total velocity ($v_{\\rm T}$) in the Galactic Standard of Rest frame, using a multivariate Gaussian distribution. This distribution accounts for the parameters provided by Gaia and their associated uncertainties. The correlations between parallax and proper motion were considered through the covariance matrix detailed in the Appendix, while uncertainties related to sky positions were assumed to be negligible. For each iteration, we estimated the hypothetical heliocentric radial velocity ($v_{\\rm los_{\\rm 0}}$) that minimizes $v_{\\rm T}$, which varies with the position within the Galaxy (e.g. $v_{\\rm los_{\\rm 0}}$ = 0\\,km\\,s$^{-1}$ for stars around $\\ell$ = 180$^{\\circ}$). This means that, although we refer to these values as total velocities, they are actually minimum total velocities. Thus, this approach provides a conservative method for identifying HVS candidates when assuming $v_{\\rm los_{\\rm 0}}$ to derive their total velocities.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://cygnus.astro.warwick.ac.uk/phsaap/software/molly/html/INDEX.html",
+      "local_path": "",
+      "description": "MOLLY spectral analysis software used for heliocentric velocity correction of the FORS2 spectra.",
+      "source_refs": [
+        {
+          "path": "literature/2507.00150/arxiv_source/aa54784-25.tex",
+          "start_line": 142,
+          "end_line": 142,
+          "context": "It is important to note that HVS01 was excluded by \\citep{Scholz2024} and has been classified as a carbon-enhanced metal-poor (CEMP) star candidate \\citep{Li2018,Fang2025}. Given that certain types of CEMP-s stars are known to exhibit radial velocity variability as a result of binarity \\citep[e.g.][]{Placco2014,Starkenburg2014}, caution is advised when interpreting the properties of this object. Nevertheless, we retain HVS01 in our sample due to the relevance of such peculiar stars for studies in Galactic archaeology. As for HVS20, it is classified as a c-type RR\\,Lyrae by {\\it Gaia} \\citep{Clementini2023,Eyer2023}, with an amplitude of $\\sim 0.4$\\,mag in $G - $band and a period of $\\sim 7$\\,h. The variability of HVS20 might impact the determination of $v_{\\rm los}$ and introduce an error of up to $\\sim$ 25\\,km\\,s$^{-1}$  \\citep[see][and references therein]{Prudil2024}. \n\nSources had magnitudes in the range $14.1 < G < 17.4$ (see their spatial distribution and their positions in the color-magnitude diagram in Figure \\ref{fig:plot2}), and were observed with FORS2 from the Paranal Observatory as part of an \"all-weather\" filler program (111.24P0.006, 110.23UC.007). A total of 23 stars were observed, accounting for a total time of 21.6\\,h. The observations were acquired in Service Mode, in the long-slit mode, using the grism 1200R+93 and 1.0\\,arcsec slit ($\\mathcal{R} \\sim$ 2140). The exposure times ranged from 600\\,s to $2 \\times 2400$\\,s (see Table \\ref{table_fors}). The data were reduced with the FORS2 v5.6.4 reduction pipeline, which included flat fielding, wavelength calibration, correction of spatial distortion, sky subtraction, optimal extraction of spectra, and flux calibration. All spectra were corrected for the heliocentric velocity using \\verb|MOLLY|\\footnote{\\url{https://cygnus.astro.warwick.ac.uk/phsaap/software/molly/html/INDEX.html}}. To ensure accurate wavelength calibration, the spectra were subsequently aligned by referencing the position of the sky emission line at 6300.34\\,\\AA. The same emission line was re-identified in the corrected spectra, yielding a mean residual for the centroid of the line better than 5\\% of the spectral dispersion across the entire sample.\n\n$v_{\\rm los}$ and a rough estimate of $[{\\rm Fe/H}]$ were derived for each star using \\textsc{Doppler}.\\footnote{https://github.com/dnidever/doppler}, which is designed to characterize stars by convolving a model spectrum to the resolution or Line Spread Function (LSF) of the observed spectrum. Uncertainties associated with the parameters are the $1\\sigma$ of the distributions obtained by bootstrapping 10,000 times the observed spectra. In the same way, a parallel approach with {\\tt pySME} \\citep{pysme} was performed to derive $v_{\\rm los}$ and $[{\\rm Fe/H}]$. We used typical values for micro and macroturbulence for dwarf stars, while using a fixed photometric log$g$ during the fitting process to reduce the number of free parameters. The values are in agreement with {\\tt Doppler} and consistent for main-sequence stars (see right panel in Figure \\ref{fig:plot2}); however, the low spectral resolution results in considerable uncertainties."
+        }
+      ],
+      "evidence": "It is important to note that HVS01 was excluded by \\citep{Scholz2024} and has been classified as a carbon-enhanced metal-poor (CEMP) star candidate \\citep{Li2018,Fang2025}. Given that certain types of CEMP-s stars are known to exhibit radial velocity variability as a result of binarity \\citep[e.g.][]{Placco2014,Starkenburg2014}, caution is advised when interpreting the properties of this object. Nevertheless, we retain HVS01 in our sample due to the relevance of such peculiar stars for studies in Galactic archaeology. As for HVS20, it is classified as a c-type RR\\,Lyrae by {\\it Gaia} \\citep{Clementini2023,Eyer2023}, with an amplitude of $\\sim 0.4$\\,mag in $G - $band and a period of $\\sim 7$\\,h. The variability of HVS20 might impact the determination of $v_{\\rm los}$ and introduce an error of up to $\\sim$ 25\\,km\\,s$^{-1}$  \\citep[see][and references therein]{Prudil2024}. \n\nSources had magnitudes in the range $14.1 < G < 17.4$ (see their spatial distribution and their positions in the color-magnitude diagram in Figure \\ref{fig:plot2}), and were observed with FORS2 from the Paranal Observatory as part of an \"all-weather\" filler program (111.24P0.006, 110.23UC.007). A total of 23 stars were observed, accounting for a total time of 21.6\\,h. The observations were acquired in Service Mode, in the long-slit mode, using the grism 1200R+93 and 1.0\\,arcsec slit ($\\mathcal{R} \\sim$ 2140). The exposure times ranged from 600\\,s to $2 \\times 2400$\\,s (see Table \\ref{table_fors}). The data were reduced with the FORS2 v5.6.4 reduction pipeline, which included flat fielding, wavelength calibration, correction of spatial distortion, sky subtraction, optimal extraction of spectra, and flux calibration. All spectra were corrected for the heliocentric velocity using \\verb|MOLLY|\\footnote{\\url{https://cygnus.astro.warwick.ac.uk/phsaap/software/molly/html/INDEX.html}}. To ensure accurate wavelength calibration, the spectra were subsequently aligned by referencing the position of the sky emission line at 6300.34\\,\\AA. The same emission line was re-identified in the corrected spectra, yielding a mean residual for the centroid of the line better than 5\\% of the spectral dispersion across the entire sample.\n\n$v_{\\rm los}$ and a rough estimate of $[{\\rm Fe/H}]$ were derived for each star using \\textsc{Doppler}.\\footnote{https://github.com/dnidever/doppler}, which is designed to characterize stars by convolving a model spectrum to the resolution or Line Spread Function (LSF) of the observed spectrum. Uncertainties associated with the parameters are the $1\\sigma$ of the distributions obtained by bootstrapping 10,000 times the observed spectra. In the same way, a parallel approach with {\\tt pySME} \\citep{pysme} was performed to derive $v_{\\rm los}$ and $[{\\rm Fe/H}]$. We used typical values for micro and macroturbulence for dwarf stars, while using a fixed photometric log$g$ during the fitting process to reduce the number of free parameters. The values are in agreement with {\\tt Doppler} and consistent for main-sequence stars (see right panel in Figure \\ref{fig:plot2}); however, the low spectral resolution results in considerable uncertainties.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://github.com/dnidever/doppler",
+      "local_path": "",
+      "description": "Doppler code repository (GitHub), used for deriving radial velocities and metallicities from the observed spectra by convolving model spectra to the instrument LSF.",
+      "source_refs": [
+        {
+          "path": "literature/2507.00150/arxiv_source/aa54784-25.tex",
+          "start_line": 144,
+          "end_line": 144,
+          "context": "Sources had magnitudes in the range $14.1 < G < 17.4$ (see their spatial distribution and their positions in the color-magnitude diagram in Figure \\ref{fig:plot2}), and were observed with FORS2 from the Paranal Observatory as part of an \"all-weather\" filler program (111.24P0.006, 110.23UC.007). A total of 23 stars were observed, accounting for a total time of 21.6\\,h. The observations were acquired in Service Mode, in the long-slit mode, using the grism 1200R+93 and 1.0\\,arcsec slit ($\\mathcal{R} \\sim$ 2140). The exposure times ranged from 600\\,s to $2 \\times 2400$\\,s (see Table \\ref{table_fors}). The data were reduced with the FORS2 v5.6.4 reduction pipeline, which included flat fielding, wavelength calibration, correction of spatial distortion, sky subtraction, optimal extraction of spectra, and flux calibration. All spectra were corrected for the heliocentric velocity using \\verb|MOLLY|\\footnote{\\url{https://cygnus.astro.warwick.ac.uk/phsaap/software/molly/html/INDEX.html}}. To ensure accurate wavelength calibration, the spectra were subsequently aligned by referencing the position of the sky emission line at 6300.34\\,\\AA. The same emission line was re-identified in the corrected spectra, yielding a mean residual for the centroid of the line better than 5\\% of the spectral dispersion across the entire sample.\n\n$v_{\\rm los}$ and a rough estimate of $[{\\rm Fe/H}]$ were derived for each star using \\textsc{Doppler}.\\footnote{https://github.com/dnidever/doppler}, which is designed to characterize stars by convolving a model spectrum to the resolution or Line Spread Function (LSF) of the observed spectrum. Uncertainties associated with the parameters are the $1\\sigma$ of the distributions obtained by bootstrapping 10,000 times the observed spectra. In the same way, a parallel approach with {\\tt pySME} \\citep{pysme} was performed to derive $v_{\\rm los}$ and $[{\\rm Fe/H}]$. We used typical values for micro and macroturbulence for dwarf stars, while using a fixed photometric log$g$ during the fitting process to reduce the number of free parameters. The values are in agreement with {\\tt Doppler} and consistent for main-sequence stars (see right panel in Figure \\ref{fig:plot2}); however, the low spectral resolution results in considerable uncertainties."
+        }
+      ],
+      "evidence": "Sources had magnitudes in the range $14.1 < G < 17.4$ (see their spatial distribution and their positions in the color-magnitude diagram in Figure \\ref{fig:plot2}), and were observed with FORS2 from the Paranal Observatory as part of an \"all-weather\" filler program (111.24P0.006, 110.23UC.007). A total of 23 stars were observed, accounting for a total time of 21.6\\,h. The observations were acquired in Service Mode, in the long-slit mode, using the grism 1200R+93 and 1.0\\,arcsec slit ($\\mathcal{R} \\sim$ 2140). The exposure times ranged from 600\\,s to $2 \\times 2400$\\,s (see Table \\ref{table_fors}). The data were reduced with the FORS2 v5.6.4 reduction pipeline, which included flat fielding, wavelength calibration, correction of spatial distortion, sky subtraction, optimal extraction of spectra, and flux calibration. All spectra were corrected for the heliocentric velocity using \\verb|MOLLY|\\footnote{\\url{https://cygnus.astro.warwick.ac.uk/phsaap/software/molly/html/INDEX.html}}. To ensure accurate wavelength calibration, the spectra were subsequently aligned by referencing the position of the sky emission line at 6300.34\\,\\AA. The same emission line was re-identified in the corrected spectra, yielding a mean residual for the centroid of the line better than 5\\% of the spectral dispersion across the entire sample.\n\n$v_{\\rm los}$ and a rough estimate of $[{\\rm Fe/H}]$ were derived for each star using \\textsc{Doppler}.\\footnote{https://github.com/dnidever/doppler}, which is designed to characterize stars by convolving a model spectrum to the resolution or Line Spread Function (LSF) of the observed spectrum. Uncertainties associated with the parameters are the $1\\sigma$ of the distributions obtained by bootstrapping 10,000 times the observed spectra. In the same way, a parallel approach with {\\tt pySME} \\citep{pysme} was performed to derive $v_{\\rm los}$ and $[{\\rm Fe/H}]$. We used typical values for micro and macroturbulence for dwarf stars, while using a fixed photometric log$g$ during the fitting process to reduce the number of free parameters. The values are in agreement with {\\tt Doppler} and consistent for main-sequence stars (see right panel in Figure \\ref{fig:plot2}); however, the low spectral resolution results in considerable uncertainties.",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "http://snrcat.physics.umanitoba.ca",
+      "local_path": "",
+      "description": "SNRcat supernova remnant catalog used to search for spatial coincidences between HVS past orbits and known supernova remnants.",
+      "source_refs": [
+        {
+          "path": "literature/2507.00150/arxiv_source/aa54784-25.tex",
+          "start_line": 225,
+          "end_line": 225,
+          "context": "We investigated the potential ejection of HVSs from Galactic globular clusters by reconstructing their past orbits. This analysis used the potential model MWPotential2014, along with the {\\it Gaia}\\,DR3 astrometric data for the globular clusters \\citep{Baumgardt2021,Vasiliev2021}. For this purpose, we computed 1,000 orbital trajectories for both the target stars and the globular clusters and analyzed the resulting minimum relative distance distributions. As a selection criterion, stars are considered potentially associated with a given cluster only if their mean past orbits approach within a minimum relative distance of 500\\,pc from the mean orbit of the cluster. Although the uncertainties in the astrometric parameters make these associations speculative, four stars satisfy the aforementioned criterion: HVS04, HVS07, HVS09, and HVS13. These stars approached NGC\\,6171, Terzan\\,6, IC\\,1276, and NGC\\,6121  at relative distances of $d$ = 0.3$\\pm$0.5 (10\\,Myr ago), 0.4$\\pm$ 0.4 (10\\,Myr), 0.4$\\pm$0.7\\,kpc (5\\,Myr), and 0.1$\\pm$ 0.1\\,kpc (1\\,Myr), respectively. However, if we further restrict the minimum relative distance to $d_{\\rm min}$ = 100\\,pc and compute the probability of having a relative distance below that threshold, we find that only HVS13 might be associated with NGC\\,6121 with $P_{\\rm cl}$ = 36$\\%$. Consequently, these associations, although possible, cannot be confirmed given the current level of uncertainty.\n\nThe destruction of binary systems after a supernova detonation is also among the plausible scenarios of HVSs formation \\citep[see][and references therein]{Ruiz-Lapuente2023}. In this case, the association of a HVS with a supernova remnant (SNR) is hindered by the difficulty to derive accurate distances and proper motions for the latter. In this case, we simply searched for HVSs whose past orbits intersect with the current sky position of known SNRs from the \\cite{Ferrand2012} catalog\\footnote{http://snrcat.physics.umanitoba.ca}. Only coincidences with a projected minimum distance of $\\leq$ 10\\,arcmin during the last 5\\,Myr  are considered. HVS09, HVS13, and HVS20 (all of them crossed the disk) might be associated with G018.0-00.7, G018.5-00.4, and G036.6+02.6, respectively. All these crossings took place between 2.5 and 3.9\\,Myr ago but, unfortunately, the mentioned SNRs are not completely characterized (e.g. distances). SNRs lifetimes are of around 10$^6$\\,yr under favorable environmental conditions \\cite[see][]{Bamba2022}, so our larger hypothetical ejection times would discard such associations. \n\nMW satellite galaxies might host massive black holes (MBHs), which could generate mechanisms similar to the Hills mechanism. These processes would provide nearby stars with enough energy to escape their host galaxies. For instance, \\cite{Li2022} identified 60 HiVel stars probably originated in the Sagittarius dwarf spheroidal galaxy, with at least 2 of them classified as HVSs. The LMC is also a well-established generator of HVSs, with a few examples of HVSs with reconstructed orbits pointing towards its past position \\citep[e.g.][]{Edelmann2005,Irrgang2018,Erkal2019}, implying the presence of MBHs \\citep[see also][]{Han2025}. We have repeated the same procedure followed for the GCs described above and assuming proper motions, distances, and $v_{\\rm los}$ from the literature for LMC \\citep{Pietrzynski2019,McConnachie2012} and Sagittarius \\citep{Gaia2018sat}. None of the HVSs included in this work approached in the past to those systems close enough to suggest an association: the closest encounter between the center of the LMC and one of our target stars have a minimum relative distance of $d = 18 \\pm 25$\\,kpc (HVS20) taking place $\\sim 230$\\,Myr ago; as for Sagittarius, the star with closest past trajectory is also HVS20, with a minimum relative distance of $d = 10 \\pm 3$\\,kpc. The association of HVS20 - an RR-Lyrae variable - with the LMC is compatible within the current uncertainties. However, due to its pulsating nature, the $v_{\\rm los}$  of HVS20 is likely to be poorly constrained from a single-epoch spectrum. A dedicated spectroscopic follow-up covering multiple phases of its pulsation cycle would be essential to better constrain its systemic radial velocity and test this intriguing association."
+        }
+      ],
+      "evidence": "We investigated the potential ejection of HVSs from Galactic globular clusters by reconstructing their past orbits. This analysis used the potential model MWPotential2014, along with the {\\it Gaia}\\,DR3 astrometric data for the globular clusters \\citep{Baumgardt2021,Vasiliev2021}. For this purpose, we computed 1,000 orbital trajectories for both the target stars and the globular clusters and analyzed the resulting minimum relative distance distributions. As a selection criterion, stars are considered potentially associated with a given cluster only if their mean past orbits approach within a minimum relative distance of 500\\,pc from the mean orbit of the cluster. Although the uncertainties in the astrometric parameters make these associations speculative, four stars satisfy the aforementioned criterion: HVS04, HVS07, HVS09, and HVS13. These stars approached NGC\\,6171, Terzan\\,6, IC\\,1276, and NGC\\,6121  at relative distances of $d$ = 0.3$\\pm$0.5 (10\\,Myr ago), 0.4$\\pm$ 0.4 (10\\,Myr), 0.4$\\pm$0.7\\,kpc (5\\,Myr), and 0.1$\\pm$ 0.1\\,kpc (1\\,Myr), respectively. However, if we further restrict the minimum relative distance to $d_{\\rm min}$ = 100\\,pc and compute the probability of having a relative distance below that threshold, we find that only HVS13 might be associated with NGC\\,6121 with $P_{\\rm cl}$ = 36$\\%$. Consequently, these associations, although possible, cannot be confirmed given the current level of uncertainty.\n\nThe destruction of binary systems after a supernova detonation is also among the plausible scenarios of HVSs formation \\citep[see][and references therein]{Ruiz-Lapuente2023}. In this case, the association of a HVS with a supernova remnant (SNR) is hindered by the difficulty to derive accurate distances and proper motions for the latter. In this case, we simply searched for HVSs whose past orbits intersect with the current sky position of known SNRs from the \\cite{Ferrand2012} catalog\\footnote{http://snrcat.physics.umanitoba.ca}. Only coincidences with a projected minimum distance of $\\leq$ 10\\,arcmin during the last 5\\,Myr  are considered. HVS09, HVS13, and HVS20 (all of them crossed the disk) might be associated with G018.0-00.7, G018.5-00.4, and G036.6+02.6, respectively. All these crossings took place between 2.5 and 3.9\\,Myr ago but, unfortunately, the mentioned SNRs are not completely characterized (e.g. distances). SNRs lifetimes are of around 10$^6$\\,yr under favorable environmental conditions \\cite[see][]{Bamba2022}, so our larger hypothetical ejection times would discard such associations. \n\nMW satellite galaxies might host massive black holes (MBHs), which could generate mechanisms similar to the Hills mechanism. These processes would provide nearby stars with enough energy to escape their host galaxies. For instance, \\cite{Li2022} identified 60 HiVel stars probably originated in the Sagittarius dwarf spheroidal galaxy, with at least 2 of them classified as HVSs. The LMC is also a well-established generator of HVSs, with a few examples of HVSs with reconstructed orbits pointing towards its past position \\citep[e.g.][]{Edelmann2005,Irrgang2018,Erkal2019}, implying the presence of MBHs \\citep[see also][]{Han2025}. We have repeated the same procedure followed for the GCs described above and assuming proper motions, distances, and $v_{\\rm los}$ from the literature for LMC \\citep{Pietrzynski2019,McConnachie2012} and Sagittarius \\citep{Gaia2018sat}. None of the HVSs included in this work approached in the past to those systems close enough to suggest an association: the closest encounter between the center of the LMC and one of our target stars have a minimum relative distance of $d = 18 \\pm 25$\\,kpc (HVS20) taking place $\\sim 230$\\,Myr ago; as for Sagittarius, the star with closest past trajectory is also HVS20, with a minimum relative distance of $d = 10 \\pm 3$\\,kpc. The association of HVS20 - an RR-Lyrae variable - with the LMC is compatible within the current uncertainties. However, due to its pulsating nature, the $v_{\\rm los}$  of HVS20 is likely to be poorly constrained from a single-epoch spectrum. A dedicated spectroscopic follow-up covering multiple phases of its pulsation cycle would be essential to better constrain its systemic radial velocity and test this intriguing association.",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://github.com/GalacticDynamics-Oxford/Agama",
+      "local_path": "",
+      "description": "AGAMA Galactic dynamics library (GitHub), used for orbit integration with multiple Galactic potential models including LMC reflex-motion variants.",
+      "source_refs": [
+        {
+          "path": "literature/2507.00150/arxiv_source/aa54784-25.tex",
+          "start_line": 254,
+          "end_line": 254,
+          "context": "In the previous section, we have seen that our ability to classify an object as an HVS and establish its place of origin is affected by the level of uncertainty in {\\it Gaia}’s astrometry. On the other hand, we have relied exclusively on the MWPotential2014 \\citep{Bovy2015}, but it is important to assess the robustness of our classification under alternative Galactic potential models  available in the literature.\n\nFor this purpose, we have used AGAMA\\footnote{https://github.com/GalacticDynamics-Oxford/Agama}, which allows us to easily integrate orbits back in time with different gravitational potentials, both analytical or extracted from N-body simulations via basis function expansions \\citep{Vasiliev2019}.  We considered the \\cite{McMillan2017} model of the Galactic gravitational potential and also a modified version, where the potential of a bar with a total mass of $10^{10}$\\,M$_{\\odot}$ is added using the \\cite{Pichardo2004} model with an angular velocity of $\\Omega_{\\rm b}$ = 35 km\\,s$^{-1}$\\,kpc$^{-1}$ and without modifying the total mass of the system; the MilkyWayModel contained in \\textsc{GALA} \\citep{Price-Whelan2017} was also included in this analysis. In order to account for the reflex motion that the existence of a massive (10$^{11}$\\,M$_{\\odot}$) satellite as the LMC causes in the evolution of the Galactic potential over time \\citep[see discussion in ][]{Boubert2018,Vasiliev2023}, we also adopted two MW+LMC potentials: one of them which assumes fixed mass  for both systems  (LMC-frozen) and a second one where the density distributions may vary over time (LMC-live). \n\nWe computed the past orbits for all the stars in our sample following the same procedure described above and considering the different potentials. New minimum Galactocentric distances were estimated for each of the potentials, as well as their $P_{\\rm esc}$ (see Table \\ref{table_results2}). Independently of the potential considered, the only star with an orbit consistent with $r \\leq 1$\\,kpc within uncertainties, thus being possibly originated via the Hills mechanism, is HVS07 with $r_{\\rm min} \\sim 1.2$\\,kpc (same value obtained before). It is not surprising that these minimum distances are similar to the one previously obtained, since these fast travelers are expected to be less influenced by the MW mass distribution than other objects within the Galaxy in only a few Myr."
+        }
+      ],
+      "evidence": "In the previous section, we have seen that our ability to classify an object as an HVS and establish its place of origin is affected by the level of uncertainty in {\\it Gaia}’s astrometry. On the other hand, we have relied exclusively on the MWPotential2014 \\citep{Bovy2015}, but it is important to assess the robustness of our classification under alternative Galactic potential models  available in the literature.\n\nFor this purpose, we have used AGAMA\\footnote{https://github.com/GalacticDynamics-Oxford/Agama}, which allows us to easily integrate orbits back in time with different gravitational potentials, both analytical or extracted from N-body simulations via basis function expansions \\citep{Vasiliev2019}.  We considered the \\cite{McMillan2017} model of the Galactic gravitational potential and also a modified version, where the potential of a bar with a total mass of $10^{10}$\\,M$_{\\odot}$ is added using the \\cite{Pichardo2004} model with an angular velocity of $\\Omega_{\\rm b}$ = 35 km\\,s$^{-1}$\\,kpc$^{-1}$ and without modifying the total mass of the system; the MilkyWayModel contained in \\textsc{GALA} \\citep{Price-Whelan2017} was also included in this analysis. In order to account for the reflex motion that the existence of a massive (10$^{11}$\\,M$_{\\odot}$) satellite as the LMC causes in the evolution of the Galactic potential over time \\citep[see discussion in ][]{Boubert2018,Vasiliev2023}, we also adopted two MW+LMC potentials: one of them which assumes fixed mass  for both systems  (LMC-frozen) and a second one where the density distributions may vary over time (LMC-live). \n\nWe computed the past orbits for all the stars in our sample following the same procedure described above and considering the different potentials. New minimum Galactocentric distances were estimated for each of the potentials, as well as their $P_{\\rm esc}$ (see Table \\ref{table_results2}). Independently of the potential considered, the only star with an orbit consistent with $r \\leq 1$\\,kpc within uncertainties, thus being possibly originated via the Hills mechanism, is HVS07 with $r_{\\rm min} \\sim 1.2$\\,kpc (same value obtained before). It is not surprising that these minimum distances are similar to the one previously obtained, since these fast travelers are expected to be less influenced by the MW mass distribution than other objects within the Galaxy in only a few Myr.",
+      "comments": ""
+    }
+  ]
+}

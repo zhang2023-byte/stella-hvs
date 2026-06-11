@@ -1,0 +1,70 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:30:00",
+  "paper": {
+    "arxiv_id": "2007.03350",
+    "bibcode": "2021A&A...650A.102I",
+    "title": "A proto-helium white dwarf stripped by a substellar companion via common-envelope ejection. Uncovering the true nature of a candidate hypervelocity B-type star",
+    "month": "2020-07",
+    "source_note_json": "notes/2020/2020-07/2020-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2007.03350",
+      "pdf": "https://arxiv.org/pdf/2007.03350"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2007.03350",
+    "audit_path": "literature/2007.03350/audit.json",
+    "catalog_review_path": "literature/2007.03350/catalog_review.json",
+    "catalog_extraction_path": "literature/2007.03350/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:30:00",
+    "extractor": "agent",
+    "summary": "本文重新审视了SDSS J160429.12+100002.2，该天体此前被光谱分类为BHB星并被认为是候选HVS。通过新的高分辨率光谱观测，作者发现它实际上是一颗短周期(P≈3.4 h)单线光谱双星，可见成分为低光度的B型星(Teff=15840±160 K, log g=4.86±0.04)，被解释为原初氦白矮星。该天体距离比原估计更近，因此其银河轨道是束缚的(bound)。论文的结论是否定了一个HVS候选体而非提出新候选体。论文未引入任何新的银河系非束缚超高速星候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS候选体相关性。论文研究单个天体SDSS J160429.12+100002.2，通过光谱分析否定其HVS候选体身份，将其重新分类为原初氦白矮星双星系统。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (paper.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2007.03350/arxiv_source/paper.tex",
+          "start_line": 80,
+          "end_line": 80,
+          "context": "Abstract: SDSS J160429.12+100002.2 was considered a hypervelocity star under BHB luminosity assumption, but new spectroscopy shows it's a short-period binary with lower luminosity, rendering its Galactic orbit bound."
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "sdss-j160429-hvs-debunked",
+      "description": "SDSS J160429.12+100002.2：此前被光谱分类为BHB星，若采用BHB典型光度，其Gaia EDR3运动学暗示银心静止系速度超过本地逃逸速度，将被视为HVS候选体。",
+      "decision": "excluded",
+      "reason": "论文通过新的高分辨率光谱观测证明该天体不是BHB星，而是一颗低光度B型星(Teff=15840±160 K, log g=4.86±0.04)，处于短周期(P≈3.4 h)单线光谱双星系统中，可见成分为原初氦白矮星。更近的距离估计使其银河轨道变为束缚的(bound)，因此该天体已被否定为HVS候选体。论文未引入任何新的HVS候选体，而是通过更精确的物理参数测定否定了一个先前的候选体。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2007.03350/arxiv_source/paper.tex",
+          "start_line": 80,
+          "end_line": 80,
+          "context": "Abstract: object was considered a hypervelocity star; new spectroscopy shows it's a short-period binary with a B-type visible star less luminous than typical BHB stars; Galactic orbit is bound."
+        }
+      ]
+    }
+  ]
+}

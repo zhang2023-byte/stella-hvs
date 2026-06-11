@@ -1,0 +1,74 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:00:00",
+  "paper": {
+    "arxiv_id": "1902.08312",
+    "bibcode": "2019ApJ...873L...5H",
+    "title": "Asteroseismology of massive stars with the TESS mission: the runaway Beta Cep pulsator PHL 346 = HN Aqr",
+    "month": "2019-02",
+    "source_note_json": "notes/2019/2019-02/2019-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1902.08312",
+      "pdf": "https://arxiv.org/pdf/1902.08312"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1902.08312",
+    "audit_path": "literature/1902.08312/audit.json",
+    "catalog_review_path": "literature/1902.08312/catalog_review.json",
+    "catalog_extraction_path": "literature/1902.08312/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/1902.08312/catalog_tables/table-tab-frequencies.ecsv",
+      "literature/1902.08312/catalog_tables/table-tab-parameters.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:00:00",
+    "extractor": "agent",
+    "summary": "本文利用TESS卫星观测数据对β Cep型脉动星PHL 346 = HN Aqr进行星震学分析，检测到至少34个独立振荡模式。该星被称为'runaway star'（逃逸星），其银盘弹射速度约420 km/s。然而，'runaway star'在天体物理中指从诞生星团中被弹射的大质量恒星，通常仍受银河系引力束缚。该星的弹射速度420 km/s低于太阳圈处银河系逃逸速度(~550 km/s)，论文核心关注的是星震学脉动建模，未声称该星为非束缚银河系超高速星(HVS)。因此本文无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "Quick scan of paper abstract and content for HVS relevance assessment.",
+      "inputs": [
+        "arXiv abstract",
+        "Paper full text",
+        "Catalog review"
+      ],
+      "outputs": [
+        "HVS relevance classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1902.08312/arxiv_source/hnaqr_final.tex",
+          "start_line": 296,
+          "end_line": 317,
+          "context": "Paper abstract"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "quick-scan-review",
+      "description": "本文研究β Cep型脉动星PHL 346 = HN Aqr的TESS星震学。该星为'runaway star'（逃逸星），弹射速度约420 km/s。论文重点为脉动频率检测和星震学建模，未涉及银河系逃逸或非束缚状态判定。'Runaway'在此语境下指OB星协弹射起源，不代表银河系非束缚。",
+      "decision": "excluded",
+      "reason": "PHL 346为经典'runaway star'（盘弹射大质量恒星），其盘弹射速度420 km/s低于银河系逃逸速度(~550 km/s at Sun)。论文核心关注星震学脉动建模（TESS测光数据），未涉及银河系非束缚状态判定。'Runaway'在此语境下指从诞生星团/星协中被弹射的恒星，不代表银河系非束缚HVS。无HVS候选体。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1902.08312/arxiv_source/hnaqr_final.tex",
+          "start_line": 296,
+          "end_line": 317,
+          "context": "Paper abstract: reports TESS asteroseismology of the runaway Beta Cep pulsator"
+        }
+      ]
+    }
+  ]
+}

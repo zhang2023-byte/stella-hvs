@@ -1,0 +1,331 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:13",
+  "paper": {
+    "arxiv_id": "2602.02666",
+    "title": "IRS 9: The Case for a Dynamically-Ejected Star from the Galactic Center",
+    "month": "2026-02"
+  },
+  "review": {
+    "path": "literature/2602.02666/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124013",
+    "started_at": "2026-05-17T12:40:13",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2602.02666",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 1,
+      "work_count": 1,
+      "table_count": 1,
+      "success_count": 1,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 1,
+      "file_success_count": 1,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-pm_cat",
+      "internal_table_id": "table-tab-pm_cat",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2602.02666/arxiv_source/ms.tex",
+        "start_line": 839,
+        "end_line": 892,
+        "caption": "HST Proper Motion Catalog of SiO Masers",
+        "label": "tab:pm_cat"
+      },
+      "source_path": "literature/2602.02666/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2602.02666/catalog_sources/table-tab-pm_cat/excerpt.tex",
+      "sha256": "f5a0cf71daf111f2905dd1b44d66173448c24f8efdf6434f5be123ecd14d988f",
+      "line_count": 54,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-pm_cat",
+      "internal_table_id": "table-tab-pm_cat",
+      "status": "success",
+      "ecsv_path": "literature/2602.02666/catalog_tables/table-tab-pm_cat.ecsv",
+      "caption": "HST Proper Motion Catalog of SiO Masers",
+      "label": "tab:pm_cat",
+      "row_count": 23,
+      "column_count": 19,
+      "environment": "",
+      "header_rows": [
+        [
+          "HST ID",
+          "Name",
+          "r_2d",
+          "F153M",
+          "\\delta_\\alpha^*_0^s",
+          "\\sigma_\\delta_\\alpha^*_0^s",
+          "\\delta_\\delta_0^s",
+          "\\sigma_\\delta_\\delta_0^s",
+          "\\mu_\\alpha*^s",
+          "\\sigma_\\mu_\\alpha*^s",
+          "\\mu_\\delta^s",
+          "\\sigma_\\mu_\\delta^s",
+          "t_0^s",
+          "v_3d",
+          "\\sigma_v_3d",
+          "v_esc,max",
+          "\\sigma_v_esc,max",
+          "Model",
+          "Ref"
+        ],
+        [
+          "",
+          "",
+          "(pc)",
+          "(mag)",
+          "( ′′ )",
+          "(mas)",
+          "( ′′ )",
+          "(mas)",
+          "(mas/yr)",
+          "(mas/yr)",
+          "(mas/yr)",
+          "(mas/yr)",
+          "(yr)",
+          "(km/s)",
+          "(km/s)",
+          "(km/s)",
+          "(km/s)",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "HST ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "r_2d | (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "F153M | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\delta_\\alpha^*_0^s | ( ′′ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\sigma_\\delta_\\alpha^*_0^s | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\delta_\\delta_0^s | ( ′′ )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\sigma_\\delta_\\delta_0^s | (mas)",
+          "unit_text": "(mas)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\mu_\\alpha*^s | (mas/yr)",
+          "unit_text": "(mas/yr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\sigma_\\mu_\\alpha*^s | (mas/yr)",
+          "unit_text": "(mas/yr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\mu_\\delta^s | (mas/yr)",
+          "unit_text": "(mas/yr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\sigma_\\mu_\\delta^s | (mas/yr)",
+          "unit_text": "(mas/yr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "t_0^s | (yr)",
+          "unit_text": "(yr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "v_3d | (km/s)",
+          "unit_text": "(km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "\\sigma_v_3d | (km/s)",
+          "unit_text": "(km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "v_esc,max | (km/s)",
+          "unit_text": "(km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "\\sigma_v_esc,max | (km/s)",
+          "unit_text": "(km/s)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "Model",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "Ref",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1cxu65fo/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2602.02666/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp1cxu65fo/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2602.02666/catalog_sources/table-tab-pm_cat/wrapped.tex",
+            "html": "literature/2602.02666/catalog_sources/table-tab-pm_cat/latexml.html",
+            "stdout": "literature/2602.02666/catalog_sources/table-tab-pm_cat/latexml.stdout.txt",
+            "stderr": "literature/2602.02666/catalog_sources/table-tab-pm_cat/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f5a0cf71daf111f2905dd1b44d66173448c24f8efdf6434f5be123ecd14d988f"
+    }
+  ]
+}

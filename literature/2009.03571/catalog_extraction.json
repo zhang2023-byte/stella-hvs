@@ -1,0 +1,455 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:43:18",
+  "paper": {
+    "arxiv_id": "2009.03571",
+    "title": "Runaway OB Stars in the Small Magellanic Cloud: Dynamical Versus Supernova Ejections",
+    "month": "2020-09"
+  },
+  "review": {
+    "path": "literature/2009.03571/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T084318",
+    "started_at": "2026-06-07T08:43:18",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2009.03571",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-data",
+      "internal_table_id": "table-tab-data",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.03571/arxiv_source/ms.tex",
+        "start_line": 168,
+        "end_line": 191,
+        "caption": "Kinematic Data and Fundamental Parameters for RIOTS4 Field OB Stars \\tablenotemark{a} \\label{tab:data}",
+        "label": "tab:data"
+      },
+      "source_path": "literature/2009.03571/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2009.03571/catalog_sources/table-tab-data/excerpt.tex",
+      "sha256": "da9f7d56f9995ff61c4e762df8fedc4657c13ae7aba4235cc80c90d2fcb80bfc",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-tab-frequencies",
+      "internal_table_id": "table-tab-frequencies",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.03571/arxiv_source/ms.tex",
+        "start_line": 267,
+        "end_line": 299,
+        "caption": "Runaway and Walkaway Frequencies: \\\\ Model-driven\\tablenotemark{a} \\label{tab:frequencies}",
+        "label": "tab:frequencies"
+      },
+      "source_path": "literature/2009.03571/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2009.03571/catalog_sources/table-tab-frequencies/excerpt.tex",
+      "sha256": "7f744b28ce2e56ac4fdb56b2fa733eb7bbb97109934a369314bfbe116e062fd5",
+      "line_count": 33,
+      "error": ""
+    },
+    {
+      "id": "table-tab-frequencies2",
+      "internal_table_id": "table-tab-frequencies2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2009.03571/arxiv_source/ms.tex",
+        "start_line": 301,
+        "end_line": 329,
+        "caption": "Runaway and Walkaway Frequencies: \\\\ Forced Match to Observations\\tablenotemark{a} \\label{tab:frequencies2}",
+        "label": "tab:frequencies2"
+      },
+      "source_path": "literature/2009.03571/arxiv_source/ms.tex",
+      "excerpt_path": "literature/2009.03571/catalog_sources/table-tab-frequencies2/excerpt.tex",
+      "sha256": "e3636331d8cbdfbc16d13b601a07a24892413e4c23bfe2f0cb0fc372dd5c463f",
+      "line_count": 29,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-data",
+      "internal_table_id": "table-tab-data",
+      "status": "success",
+      "ecsv_path": "literature/2009.03571/catalog_tables/table-tab-data.ecsv",
+      "caption": "Kinematic Data and Fundamental Parameters for RIOTS4 Field OB Stars \\tablenotemark{a} \\label{tab:data}",
+      "label": "tab:data",
+      "row_count": 10,
+      "column_count": 13,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID b b From Massey02 .",
+          "SpType c c Spectral types are from Lamb16 ; except for the four B[e] stars (M2002-29267, 46398, 62661, 83480), which are taken from Graus12 .",
+          "Subgroup d d “E”, “S”, and “X” indicate EB, SB2, and HMXB, respectively; “e” indicates emission-line star (Oe or Be).",
+          "\\vperp e e Local residual transverse velocity from Paper I.",
+          "err",
+          "M f f Masses that are uncertain are flagged with “:” (see Section LABEL:subsec:Estimates ). Masses flagged with “n” are one of the following: The mass for SMC X-1 (M2002-77458) is taken from Rawls2011 , and those for M2002-38024 and 59319 are taken from Lamb13 . For the mass of the “mid” Oe star M2002-73795 we calculated the average T_eff from adopting O5e and O7e spectral types, and for the Oe star M2002-75689 we adopted O3e and O9e spectral types. For Be stars without constrained spectral types, we calculate the average T_eff for B0e and B2e types. For the “O + B” binaries (M2002-11238, 22178, 66160) we calculated the average T_eff from adopting O3 and O9 spectral types, in estimating masses.",
+          "err g g Errors are based on +/- half a subtype. Errors for stars flagged with “:” are computed from the upper/lower limits on the spectral type range (see Section LABEL:subsec:Estimates ).",
+          "\\vsini",
+          "err",
+          "T_eff",
+          "err",
+          "\\log L",
+          "err"
+        ],
+        [
+          "",
+          "",
+          "",
+          "(km s^-1)",
+          "(km s^-1)",
+          "( M_\\odot )",
+          "( M_\\odot )",
+          "(km s^-1)",
+          "(km s^-1)",
+          "(kK)",
+          "(kK)",
+          "\\log ( L/L_\\odot )",
+          "\\log ( L/L_\\odot )"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID b b From Massey02 .",
+          "unit_text": "ID b b From Massey02 .",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "SpType c c Spectral types are from Lamb16 ; except for the four B[e] stars (M2002-29267, 46398, 62661, 83480), which are taken from Graus12 .",
+          "unit_text": "SpType c c Spectral types are from Lamb16 ; except for the four B[e] stars (M2002-29267, 46398, 62661, 83480), which are taken from Graus12 .",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Subgroup d d “E”, “S”, and “X” indicate EB, SB2, and HMXB, respectively; “e” indicates emission-line star (Oe or Be).",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\vperp e e Local residual transverse velocity from Paper I. | (km s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "err | (km s^-1)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "M f f Masses that are uncertain are flagged with “:” (see Section LABEL:subsec:Estimates ). Masses flagged with “n” are one of the following: The mass for SMC X-1 (M2002-77458) is taken from Rawls2011 , and those for M2002-38024 and 59319 are taken from Lamb13 . For the mass of the “mid” Oe star M2002-73795 we calculated the average T_eff from adopting O5e and O7e spectral types, and for the Oe star M2002-75689 we adopted O3e and O9e spectral types. For Be stars without constrained spectral types, we calculate the average T_eff for B0e and B2e types. For the “O + B” binaries (M2002-11238, 22178, 66160) we calculated the average T_eff from adopting O3 and O9 spectral types, in estimating masses. | ( M_\\odot )",
+          "unit_text": "M f f Masses that are uncertain are flagged with “:” (see Section LABEL:subsec:Estimates ). Masses flagged with “n” are one of the following: The mass for SMC X-1 (M2002-77458) is taken from Rawls2011 , and those for M2002-38024 and 59319 are taken from Lamb13 . For the mass of the “mid” Oe star M2002-73795 we calculated the average T_eff from adopting O5e and O7e spectral types, and for the Oe star M2002-75689 we adopted O3e and O9e spectral types. For Be stars without constrained spectral types, we calculate the average T_eff for B0e and B2e types. For the “O + B” binaries (M2002-11238, 22178, 66160) we calculated the average T_eff from adopting O3 and O9 spectral types, in estimating masses.",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "err g g Errors are based on +/- half a subtype. Errors for stars flagged with “:” are computed from the upper/lower limits on the spectral type range (see Section LABEL:subsec:Estimates ). | ( M_\\odot )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\vsini | (km s^-1)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "err | (km s^-1)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "T_eff | (kK)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "err | (kK)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\log L | \\log ( L/L_\\odot )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "err | \\log ( L/L_\\odot )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8u18nc6e/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.03571/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp8u18nc6e/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.03571/catalog_sources/table-tab-data/wrapped.tex",
+            "html": "literature/2009.03571/catalog_sources/table-tab-data/latexml.html",
+            "stdout": "literature/2009.03571/catalog_sources/table-tab-data/latexml.stdout.txt",
+            "stderr": "literature/2009.03571/catalog_sources/table-tab-data/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "da9f7d56f9995ff61c4e762df8fedc4657c13ae7aba4235cc80c90d2fcb80bfc"
+    },
+    {
+      "id": "table-tab-frequencies",
+      "internal_table_id": "table-tab-frequencies",
+      "status": "success",
+      "ecsv_path": "literature/2009.03571/catalog_tables/table-tab-frequencies.ecsv",
+      "caption": "Runaway and Walkaway Frequencies: \\\\ Model-driven\\tablenotemark{a} \\label{tab:frequencies}",
+      "label": "tab:frequencies",
+      "row_count": 16,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "Runaways",
+          "Walkaways"
+        ],
+        [
+          "DES",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "DES",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Runaways",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Walkaways",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsymdz5fi/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.03571/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpsymdz5fi/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.03571/catalog_sources/table-tab-frequencies/wrapped.tex",
+            "html": "literature/2009.03571/catalog_sources/table-tab-frequencies/latexml.html",
+            "stdout": "literature/2009.03571/catalog_sources/table-tab-frequencies/latexml.stdout.txt",
+            "stderr": "literature/2009.03571/catalog_sources/table-tab-frequencies/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "7f744b28ce2e56ac4fdb56b2fa733eb7bbb97109934a369314bfbe116e062fd5"
+    },
+    {
+      "id": "table-tab-frequencies2",
+      "internal_table_id": "table-tab-frequencies2",
+      "status": "success",
+      "ecsv_path": "literature/2009.03571/catalog_tables/table-tab-frequencies2.ecsv",
+      "caption": "Runaway and Walkaway Frequencies: \\\\ Forced Match to Observations\\tablenotemark{a} \\label{tab:frequencies2}",
+      "label": "tab:frequencies2",
+      "row_count": 16,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "Runaways",
+          "Walkaways"
+        ],
+        [
+          "DES",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "DES",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Runaways",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Walkaways",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9wluqqxu/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2009.03571/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp9wluqqxu/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2009.03571/catalog_sources/table-tab-frequencies2/wrapped.tex",
+            "html": "literature/2009.03571/catalog_sources/table-tab-frequencies2/latexml.html",
+            "stdout": "literature/2009.03571/catalog_sources/table-tab-frequencies2/latexml.stdout.txt",
+            "stderr": "literature/2009.03571/catalog_sources/table-tab-frequencies2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "e3636331d8cbdfbc16d13b601a07a24892413e4c23bfe2f0cb0fc372dd5c463f"
+    }
+  ]
+}

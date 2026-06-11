@@ -1,0 +1,210 @@
+{
+    "schema_version": "stella.article_data_assets.review.v1",
+    "paper": {
+        "arxiv_id": "2601.19866",
+        "title": "Discovery of Galactic center ejected star in DESI DR1",
+        "month": "2026-01",
+        "source_note_json": "notes/2026/2026-01/2026-01.json",
+        "links": {
+            "abs": "https://arxiv.org/abs/2601.19866",
+            "pdf": "https://arxiv.org/pdf/2601.19866"
+        }
+    },
+    "source": {
+        "paper_dir": "literature/2601.19866",
+        "audit_path": "literature/2601.19866/audit.json",
+        "source_dir": "literature/2601.19866/arxiv_source",
+        "tex_root": "literature/2601.19866/arxiv_source/aanda.tex",
+        "source_available": true
+    },
+    "review": {
+        "status": "reviewed",
+        "reviewed_at": "2026-05-17T12:34:39",
+        "reviewer": "agent",
+        "summary": "Auto-filled review: 4 internal table(s), 2 external resource(s)."
+    },
+    "internal_tables": [
+        {
+            "id": "table-tab-quality",
+            "kind": "latex_table",
+            "asset_type": "data_table",
+            "role_in_paper": "Quality selections",
+            "source_refs": [
+                {
+                    "path": "literature/2601.19866/arxiv_source/aanda.tex",
+                    "start_line": 154,
+                    "end_line": 167,
+                    "caption": "Quality selections.",
+                    "label": "tab:quality"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Selection Criteria",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Quality selections.",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-desi_hvs1",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Measured parameters of \\candidate from \\gaia and DESI DR1",
+            "source_refs": [
+                {
+                    "path": "literature/2601.19866/arxiv_source/aanda.tex",
+                    "start_line": 211,
+                    "end_line": 244,
+                    "caption": "Measured parameters of \\candidate from \\gaia and DESI DR1. Parallax corresponds to the zero-point corrected value. Reported \\feh corresponds to the corrected metallicity \\citep{DESIMW}.",
+                    "label": "tab:desi_hvs1"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Parameter",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Value",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "unit",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Measured parameters of \\candidate from \\gaia and DESI DR1. Parallax corresponds to the zero-point corrected value. Reported \\feh corresponds to the corrected metallicity \\citep{DESIMW}.",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-photometric_measurements",
+            "kind": "latex_table",
+            "asset_type": "data_table",
+            "role_in_paper": "Photometric measurements",
+            "source_refs": [
+                {
+                    "path": "literature/2601.19866/arxiv_source/aanda.tex",
+                    "start_line": 335,
+                    "end_line": 366,
+                    "caption": "Photometric measurements",
+                    "label": "tab:photometric_measurements"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Band",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Magnitude",
+                    "meaning": "Column from table header",
+                    "unit_text": "Magnitude",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Photometric measurements",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-nested_fit",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Parameters obtained from fitting MIST isochrones to DESI HVS1 photometry and by combining with spectroscopic constraints",
+            "source_refs": [
+                {
+                    "path": "literature/2601.19866/arxiv_source/aanda.tex",
+                    "start_line": 369,
+                    "end_line": 393,
+                    "caption": "Parameters obtained from fitting MIST isochrones to DESI HVS1 photometry and by combining with spectroscopic constraints. Values reported correspond to the median with 16th and 84th percentiles for the lower and upper limits.",
+                    "label": "tab:nested_fit"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Parameter",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Value | Photometric",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Value | Spectro-Photometric",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Unit",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Parameters obtained from fitting MIST isochrones to DESI HVS1 photometry and by combining with spectroscopic constraints. Values reported correspond to the median with 16th and 84th percentiles for the lower and upper limits.",
+            "comments": ""
+        }
+    ],
+    "external_resources": [
+        {
+            "id": "resource-001",
+            "kind": "external_url",
+            "url": "http://www.mso.anu.edu.au/",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2601.19866/arxiv_source/aanda.tex",
+                    "start_line": 277,
+                    "end_line": 277,
+                    "context": "%Here, $\\sigma_i$ denotes the uncertainty on the magnitude measurement in band $i$, $\\sigma_{\\mathrm{sys}}$ is an additional systematic scatter about the model, $D_{\\mathrm{hel}}$ is the heliocentric distance to the star, and $k_i$ is the extinction coefficient in filter $i$\\footnote{Taken from \\url{[http://www.mso.anu.edu.au/\\~brad/filters.html}}]. Beyond the purely photometric model in Eq.~~\\ref{eq:phot_model}, we also adopt a second spectro-photometric model, which augments Eq.~~\\ref{eq:phot_model} by incorporating Gaussian constraints on $\\log g$, and $\\teff$ from the spectroscopic measurement provided by DESI, i.e.\\ by multiplying the likelihood by normal‐distribution terms for each of these parameters.\n\n%We adopt the following priors for the parameters: uniform distribution on (linear) $\\mathrm{age} \\sim {\\mathcal U}(10^5, 1.2\\times10^{10})$, Salpeter IMF prior for the stellar mass from ${\\mathcal M}=0.1$\\,M$_\\odot$ to ${\\mathcal M}=5$\\,M$_\\odot$, distance is given by the parallax, which is constrained by a Gaussian prior around the \\gaia measurement, and a Gaussian prior is given for $[\\mathrm{Fe}/\\mathrm{H}]$ around the corrected value from DESI, for extinction we adopt a Gaussian prior around the \\citet{sfd_og} value with the recalibration given in \\citet{sfd_og}. The posterior of the model is sampled using the nested sampling implementation in \\software{dynesty} \\citep{dynesty, dynesty_sergey}."
+                }
+            ],
+            "evidence": "%Here, $\\sigma_i$ denotes the uncertainty on the magnitude measurement in band $i$, $\\sigma_{\\mathrm{sys}}$ is an additional systematic scatter about the model, $D_{\\mathrm{hel}}$ is the heliocentric distance to the star, and $k_i$ is the extinction coefficient in filter $i$\\footnote{Taken from \\url{[http://www.mso.anu.edu.au/\\~brad/filters.html}}]. Beyond the purely photometric model in Eq.~~\\ref{eq:phot_model}, we also adopt a second spectro-photometric model, which augments Eq.~~\\ref{eq:phot_model} by incorporating Gaussian constraints on $\\log g$, and $\\teff$ from the spectroscopic measurement provided by DESI, i.e.\\ by multiplying the likelihood by normal‐distribution terms for each of these parameters.\n\n%We adopt the following priors for the parameters: uniform distribution on (linear) $\\mathrm{age} \\sim {\\mathcal U}(10^5, 1.2\\times10^{10})$, Salpeter IMF prior for the stellar mass from ${\\mathcal M}=0.1$\\,M$_\\odot$ to ${\\mathcal M}=5$\\,M$_\\odot$, distance is given by the parallax, which is constrained by a Gaussian prior around the \\gaia measurement, and a Gaussian prior is given for $[\\mathrm{Fe}/\\mathrm{H}]$ around the corrected value from DESI, for extinction we adopt a Gaussian prior around the \\citet{sfd_og} value with the recalibration given in \\citet{sfd_og}. The posterior of the model is sampled using the nested sampling implementation in \\software{dynesty} \\citep{dynesty, dynesty_sergey}.",
+            "comments": ""
+        },
+        {
+            "id": "resource-002",
+            "kind": "external_url",
+            "url": "https://github.com/mncavieres/mistfit",
+            "local_path": "",
+            "description": "GitHub repository or code release referenced by the paper.",
+            "source_refs": [
+                {
+                    "path": "literature/2601.19866/arxiv_source/aanda.tex",
+                    "start_line": 317,
+                    "end_line": 317,
+                    "context": "given in \\citet{sfd_recal}. The posterior distribution is sampled with the \nnested-sampling implementation in \\software{dynesty} \n\\citep{dynesty,dynesty_sergey}.   The implementation of this fitting procedure is publicly available here \\footnote{https://github.com/mncavieres/mistfit}, and can be used to fit MIST isochrones using any available bands supported by minimint along with the atmospheric parameters, when available. The posterior samples are shown in Figure \\ref{fig:posterior_stellar}, while the best fit parameters are reported in Table~\\ref{tab:nested_fit}. \n\nIn Figure \\ref{fig:posterior_stellar}, the photometric model is shown in green, and we observe a degeneracy between the stellar mass and the distance, as is typical for photometric data.  We derive a stellar mass of $1.17^{+0.38}_{-0.21}M_{\\odot}$ and \\feh$= 0.27^{+0.17}_{-0.18}$. The age is weakly constrained,"
+                }
+            ],
+            "evidence": "given in \\citet{sfd_recal}. The posterior distribution is sampled with the \nnested-sampling implementation in \\software{dynesty} \n\\citep{dynesty,dynesty_sergey}.   The implementation of this fitting procedure is publicly available here \\footnote{https://github.com/mncavieres/mistfit}, and can be used to fit MIST isochrones using any available bands supported by minimint along with the atmospheric parameters, when available. The posterior samples are shown in Figure \\ref{fig:posterior_stellar}, while the best fit parameters are reported in Table~\\ref{tab:nested_fit}. \n\nIn Figure \\ref{fig:posterior_stellar}, the photometric model is shown in green, and we observe a degeneracy between the stellar mass and the distance, as is typical for photometric data.  We derive a stellar mass of $1.17^{+0.38}_{-0.21}M_{\\odot}$ and \\feh$= 0.27^{+0.17}_{-0.18}$. The age is weakly constrained,",
+            "comments": ""
+        }
+    ]
+}

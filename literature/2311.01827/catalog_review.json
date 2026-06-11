@@ -1,0 +1,1146 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2311.01827",
+    "title": "Galactic runaway O and Be stars found using Gaia DR3",
+    "month": "2023-11",
+    "source_note_json": "notes/2023/2023-11/2023-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2311.01827",
+      "pdf": "https://arxiv.org/pdf/2311.01827"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2311.01827",
+    "audit_path": "literature/2311.01827/audit.json",
+    "source_dir": "literature/2311.01827/arxiv_source",
+    "tex_root": "literature/2311.01827/arxiv_source/main.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:46:52",
+    "reviewer": "agent",
+    "summary": "Paper uses Gaia DR3 astrometric data to search for Galactic runaway O and Be stars in GOSC and BeSS catalogs. Contains 10 internal LaTeX tables: quality cuts (Tab:Cuts), field star velocity/spatial statistics (Tab:FitsAfterClippingField), runaway star velocity/spatial statistics (Tab:FitsAfterClippingRun), top-10 GOSC runaways (Tab:GOSC_Runaways), top-10 BeSS runaways (Tab:BeSS_Runaways), runaways by spectral type (Tab:SpectralType), literature comparison (Tab:Publications), Gaussian fits for RSR velocities (Tab:GuassianFits), simulation inputs (Tab:Simulations_Input), simulation outputs (Tab:Simulations_Output). External resources: CDS for complete runaway tables, ESA Gaia Archive, BeSS database, SIMBAD, NASA ADS. Complete runaway catalogs (106 GOSC + 69 BeSS) available only at CDS, not in paper."
+  },
+  "internal_tables": [
+    {
+      "id": "table-Tab-FitsAfterClippingField",
+      "kind": "latex_table",
+      "asset_type": "summary_statistics",
+      "role_in_paper": "Means and standard deviations of velocity/spatial distributions for field stars after 3-sigma clipping",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 308,
+          "end_line": 333,
+          "caption": "Means and standard deviations of different distributions for the field stars after clipping.",
+          "label": "Tab:FitsAfterClippingField"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-3mm | Catalog",
+          "meaning": "Catalog name (GOSC-Gaia DR3 or BeSS-Gaia DR3, full or d<2kpc)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Stars | \\#",
+          "meaning": "Total number of stars in catalog",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Field Stars | \\#",
+          "meaning": "Number of field stars after 3-sigma clipping",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\mu_V_TAN^GF | \\multicolumn2c(km~s^-1)",
+          "meaning": "Mean of V_TAN Gaussian fit for field stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_V_TAN^GF | \\multicolumn2c(km~s^-1)",
+          "meaning": "Standard deviation of V_TAN Gaussian fit for field stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\mu_W_RSR^GF | (kpc)",
+          "meaning": "Mean of W_RSR Gaussian fit for field stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_W_RSR^GF | (\\degr)",
+          "meaning": "Standard deviation of W_RSR Gaussian fit for field stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\mu_Z",
+          "meaning": "Mean of Z (height above Galactic plane) for field stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_Z",
+          "meaning": "Standard deviation of Z for field stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\mu_b",
+          "meaning": "Mean of Galactic latitude b for field stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_b",
+          "meaning": "Standard deviation of Galactic latitude b for field stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Means and standard deviations of different distributions for the field stars after clipping.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-FitsAfterClippingRun",
+      "kind": "latex_table",
+      "asset_type": "summary_statistics",
+      "role_in_paper": "Means and standard deviations of velocity/spatial distributions for runaway stars after clipping",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 337,
+          "end_line": 362,
+          "caption": "Means and standard deviations of different distributions for the runaway stars after clipping.",
+          "label": "Tab:FitsAfterClippingRun"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-3mm | Catalog",
+          "meaning": "Catalog name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Stars | \\#",
+          "meaning": "Total number of stars in catalog",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Runaway Stars | \\#",
+          "meaning": "Number of runaway stars identified",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\mu_V_TAN | \\multicolumn2c(km~s^-1)",
+          "meaning": "Mean of V_TAN for runaway stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_V_TAN | \\multicolumn2c(km~s^-1)",
+          "meaning": "Standard deviation of V_TAN for runaway stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\mu_W_RSR | (kpc)",
+          "meaning": "Mean of W_RSR for runaway stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_W_RSR | (\\degr)",
+          "meaning": "Standard deviation of W_RSR for runaway stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\mu_Z",
+          "meaning": "Mean of Z for runaway stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_Z",
+          "meaning": "Standard deviation of Z for runaway stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\mu_b",
+          "meaning": "Mean of Galactic latitude b for runaway stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_b",
+          "meaning": "Standard deviation of b for runaway stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Means and standard deviations of different distributions for the runaway stars after clipping.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-GOSC_Runaways",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "Top-10 GOSC runaway stars with highest E values; complete 106-star catalog at CDS",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 427,
+          "end_line": 450,
+          "caption": "Data of the 10 GOSC-\\textit{Gaia}~DR3 runaway stars with the higher values of $E$ in decreasing order.",
+          "label": "Tab:GOSC_Runaways"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-2mm | GOSC Name",
+          "meaning": "GOSC star name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Gaia DR3 id",
+          "meaning": "Gaia DR3 source_id",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "RA | (hh",
+          "meaning": "Right Ascension (J2000)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "DEC | mm",
+          "meaning": "Declination (J2000)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "l | ss.ss)",
+          "meaning": "Galactic longitude l",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "b | (\\degr",
+          "meaning": "Galactic latitude b",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "d | \\arcmin",
+          "meaning": "Distance from Sun",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "G | \\arcsec.\\arcsec)",
+          "meaning": "Gaia G magnitude",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "S.T. | (\\degr)",
+          "meaning": "Spectral type",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\multicolumn2cV_TAN | (\\degr)",
+          "meaning": "Tangential velocity V_TAN",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\multicolumn2cW_RSR | (kpc)",
+          "meaning": "Vertical velocity W_RSR",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\multicolumn2cV_PEC^2D",
+          "meaning": "2D peculiar velocity V_PEC^2D",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "E",
+          "meaning": "E parameter (runaway classification)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Run. Ref. | \\multicolumn2c(km~s^-1)",
+          "meaning": "Runaway reference",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Comments | \\multicolumn2c(km~s^-1)",
+          "meaning": "Comments (f=fast rotator, b=binary, h=HMXB, g=gamma-ray)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\multicolumn2c(km~s^-1)",
+          "meaning": "col16",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "col_017",
+          "meaning": "col17",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "col_018",
+          "meaning": "col18",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "col_019",
+          "meaning": "col19",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "col_020",
+          "meaning": "col20",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "col_021",
+          "meaning": "col21",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "col_022",
+          "meaning": "col22",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Data of the 10 GOSC-\\textit{Gaia}~DR3 runaway stars with the higher values of $E$ in decreasing order.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-BeSS_Runaways",
+      "kind": "latex_table",
+      "asset_type": "star_catalog",
+      "role_in_paper": "Top-10 BeSS runaway stars with highest E values; complete 69-star catalog at CDS",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 454,
+          "end_line": 478,
+          "caption": "Data of the 10 BeSS-\\textit{Gaia}~DR3 runaway stars with the higher values of $E$ in decreasing order.",
+          "label": "Tab:BeSS_Runaways"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-2mm | BeSS Name",
+          "meaning": "BeSS star name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Gaia DR3 id",
+          "meaning": "Gaia DR3 source_id",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "RA | (hh",
+          "meaning": "Right Ascension (J2000)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "DEC | mm",
+          "meaning": "Declination (J2000)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "l | ss.ss)",
+          "meaning": "Galactic longitude l",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "b | (\\degr",
+          "meaning": "Galactic latitude b",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "d | \\arcmin",
+          "meaning": "Distance from Sun",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "G | \\arcsec.\\arcsec)",
+          "meaning": "Gaia G magnitude",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "S.T. | (\\degr)",
+          "meaning": "Spectral type",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\multicolumn2cV_TAN | (\\degr)",
+          "meaning": "Tangential velocity V_TAN",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\multicolumn2cW_RSR | (kpc)",
+          "meaning": "Vertical velocity W_RSR",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\multicolumn2cV_PEC^2D",
+          "meaning": "2D peculiar velocity V_PEC^2D",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "E",
+          "meaning": "E parameter (runaway classification)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Run. Ref. | \\multicolumn2c(km~s^-1)",
+          "meaning": "Runaway reference",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Comments | \\multicolumn2c(km~s^-1)",
+          "meaning": "Comments (f=fast rotator, b=binary, h=HMXB, g=gamma-ray)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\multicolumn2c(km~s^-1)",
+          "meaning": "col16",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "col_017",
+          "meaning": "col17",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "col_018",
+          "meaning": "col18",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "col_019",
+          "meaning": "col19",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "col_020",
+          "meaning": "col20",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "col_021",
+          "meaning": "col21",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "col_022",
+          "meaning": "col22",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Data of the 10 BeSS-\\textit{Gaia}~DR3 runaway stars with the higher values of $E$ in decreasing order.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-SpectralType",
+      "kind": "latex_table",
+      "asset_type": "summary_statistics",
+      "role_in_paper": "Runaway star counts and percentages as a function of spectral type bins",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 529,
+          "end_line": 552,
+          "caption": "Stars and runaway stars as a function of spectral type.",
+          "label": "Tab:SpectralType"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\begintabularlcccc",
+          "meaning": "Spectral type bin",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "col_002",
+          "meaning": "Number of stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "col_003",
+          "meaning": "Number of runaway stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "col_004",
+          "meaning": "Percentage of runaways",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Stars and runaway stars as a function of spectral type.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-Publications",
+      "kind": "latex_table",
+      "asset_type": "literature_comparison",
+      "role_in_paper": "Comparison of this work with previous all-sky runaway searches",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 556,
+          "end_line": 580,
+          "caption": "Main characteristics of works on all-sky searches of runaways among young stars discussed in Sec.\\ref{Sec:Comparison}.",
+          "label": "Tab:Publications"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-3mm | Sample",
+          "meaning": "Sample description",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Method",
+          "meaning": "Method used",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Thresholds",
+          "meaning": "Velocity threshold",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Runaways",
+          "meaning": "Runaway percentage",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "References",
+          "meaning": "Reference",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Main characteristics of works on all-sky searches of runaways among young stars discussed in Sec.\\ref{Sec:Comparison}.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-Cuts",
+      "kind": "latex_table",
+      "asset_type": "methodology",
+      "role_in_paper": "Quality cuts applied to GOSC and BeSS cross-matches with Gaia DR3",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 673,
+          "end_line": 697,
+          "caption": "Quality cuts applied to the 598 and 1808 stars obtained after the cross matches of GOSC and BeSS with \\textit{Gaia} DR3, respectively.",
+          "label": "Tab:Cuts"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-3mm | Quality Cut",
+          "meaning": "Quality cut description",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "GOSC Stars | \\#",
+          "meaning": "GOSC stars affected (#)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "BeSS Stars | %",
+          "meaning": "GOSC stars affected (%)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\#",
+          "meaning": "BeSS stars affected (#)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "%",
+          "meaning": "BeSS stars affected (%)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Quality cuts applied to the 598 and 1808 stars obtained after the cross matches of GOSC and BeSS with \\textit{Gaia} DR3, respectively.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-GuassianFits",
+      "kind": "latex_table",
+      "asset_type": "summary_statistics",
+      "role_in_paper": "Means and standard deviations of Gaussian fits to RSR velocity distributions",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 738,
+          "end_line": 759,
+          "caption": "Means and standard deviations of the Gaussian fits applied to the RSR velocity distributions using a bin size of 2~km~s$^{-1}$.",
+          "label": "Tab:GuassianFits"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-3mm | Catalog",
+          "meaning": "Catalog name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Stars | \\#",
+          "meaning": "Number of stars",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\mu_U_RSR^GF | \\multicolumn2c(km~s^-1)",
+          "meaning": "Mean of U_RSR Gaussian fit",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_U_RSR^GF | \\multicolumn2c(km~s^-1)",
+          "meaning": "SD of U_RSR Gaussian fit",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\mu_V_RSR^GF | \\multicolumn2c(km~s^-1)",
+          "meaning": "Mean of V_RSR Gaussian fit",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_V_RSR^GF",
+          "meaning": "SD of V_RSR Gaussian fit",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\mu_W_RSR^GF",
+          "meaning": "Mean of W_RSR Gaussian fit",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_W_RSR^GF",
+          "meaning": "SD of W_RSR Gaussian fit",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Means and standard deviations of the Gaussian fits applied to the RSR velocity distributions using a bin size of 2~km~s$^{-1}$.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-Simulations_Input",
+      "kind": "latex_table",
+      "asset_type": "simulation_parameters",
+      "role_in_paper": "Input parameters for 3D runaway star simulations",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 845,
+          "end_line": 871,
+          "caption": "Input parameters for the simulations.",
+          "label": "Tab:Simulations_Input"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-3mm | Catalog",
+          "meaning": "Catalog name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\mu_\\widetildeV_LOS^GF | (km~s^-1)",
+          "meaning": "Mean of sim V_LOS GF",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\mu_\\widetildeV_TAN^GF | (km~s^-1)",
+          "meaning": "Mean of sim V_TAN GF",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\mu_\\widetildeW_RSR^GF | (km~s^-1)",
+          "meaning": "Mean of sim W_RSR GF",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_\\widetildeV_LOS^GF | (km~s^-1)",
+          "meaning": "SD of sim V_LOS GF",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_\\widetildeV_TAN^GF | (km~s^-1)",
+          "meaning": "SD of sim V_TAN GF",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_\\widetildeW_RSR^GF | (km~s^-1)",
+          "meaning": "SD of sim W_RSR GF",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_\\widetildeV_LOS,* | (km~s^-1)",
+          "meaning": "Individual uncertainty V_LOS",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_\\widetildeV_TAN,* | (km~s^-1)",
+          "meaning": "Individual uncertainty V_TAN",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_\\widetildeW_RSR,* | (km~s^-1)",
+          "meaning": "Individual uncertainty W_RSR",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Input parameters for the simulations.",
+      "comments": ""
+    },
+    {
+      "id": "table-Tab-Simulations_Output",
+      "kind": "latex_table",
+      "asset_type": "simulation_results",
+      "role_in_paper": "Output results of 3D runaway star simulations",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 875,
+          "end_line": 904,
+          "caption": "Output results of the simulations.",
+          "label": "Tab:Simulations_Output"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\vspace-3mm | Catalog",
+          "meaning": "Catalog name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Results of Simulated Runaway Stars in 2D | Number | \\#",
+          "meaning": "Number of 2D sim runaways",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Results of Simulated Runaway Stars in 3D | Percentage | %",
+          "meaning": "Percentage of 2D sim runaways",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_\\widetildeV_TAN | (km~s^-1)",
+          "meaning": "SD of V_TAN for 2D runaways",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_\\widetildeW_RSR | (km~s^-1)",
+          "meaning": "SD of W_RSR for 2D runaways",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Number | \\#",
+          "meaning": "Number of 3D sim runaways",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "Percentage | %",
+          "meaning": "Percentage of 3D sim runaways",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_\\widetildeV_LOS | (km~s^-1)",
+          "meaning": "SD of V_LOS for 3D runaways",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_\\widetildeV_TAN | (km~s^-1)",
+          "meaning": "SD of V_TAN for 3D runaways",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        },
+        {
+          "name": "\\sigma_\\widetildeW_RSR | (km~s^-1)",
+          "meaning": "SD of W_RSR for 3D runaways",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.0
+        }
+      ],
+      "evidence": "Output results of the simulations.",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://cdsarc.cds.unistra.fr",
+      "local_path": "",
+      "description": "CDS (Centre de Données astronomiques de Strasbourg) - complete versions of Tables Tab:GOSC_Runaways and Tab:BeSS_Runaways with full runaway catalogs (106 GOSC + 69 BeSS stars) available via anonymous ftp",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 51,
+          "end_line": 51,
+          "context": "The complete versions of Tables Tab:GOSC_Runaways and Tab:BeSS_Runaways are available at the CDS via anonymous ftp to cdsarc.cds.unistra.fr (130.79.128.5) or via https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/vol/page"
+        }
+      ],
+      "evidence": "Paper title footnote: complete tables at CDS",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/vol/page",
+      "local_path": "",
+      "description": "Direct CDS vizier link for the complete runaway star catalogs (J/A+A/vol/page)",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 51,
+          "end_line": 51,
+          "context": "\\begin{document} \n\n   \\title{Galactic runaway O and Be stars found using \\textit{Gaia} DR3 \\thanks{The complete versions of Tables~\\ref{Tab:GOSC_Runaways} and \\ref{Tab:BeSS_Runaways} are available at the CDS via anonymous ftp to \\href{https://cdsarc.cds.unistra.fr}{\\tt cdsarc.cds.unistra.fr} (\\href{ftp://130.79.128.5}{\\tt 130.79.128.5}) or via \\url{https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/vol/page}}}\n\n   \\author{M. Carretero-Castrillo"
+        }
+      ],
+      "evidence": "\\begin{document} \n\n   \\title{Galactic runaway O and Be stars found using \\textit{Gaia} DR3 \\thanks{The complete versions of Tables~\\ref{Tab:GOSC_Runaways} and \\ref{Tab:BeSS_Runaways} are available at the CDS via anonymous ftp to \\href{https://cdsarc.cds.unistra.fr}{\\tt cdsarc.cds.unistra.fr} (\\href{ftp://130.79.128.5}{\\tt 130.79.128.5}) or via \\url{https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/vol/page}}}\n\n   \\author{M. Carretero-Castrillo",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://gea.esac.esa.int/archive",
+      "local_path": "",
+      "description": "ESA Gaia Archive - cross-match tool used for GOSC/BeSS vs Gaia DR3 cross-matching",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 144,
+          "end_line": 144,
+          "context": "Gaia cross match tool of the ESA Gaia archive at gea.esac.esa.int/archive"
+        }
+      ],
+      "evidence": "Section 3.1 footnote: Gaia archive cross-match tool",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "CDS complete runaway catalogs mentioned in main text (all 106+69 stars)",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 421,
+          "end_line": 421,
+          "context": "\\end{figure*}\n\nIn Tables~\\ref{Tab:GOSC_Runaways}~and~\\ref{Tab:BeSS_Runaways} we show ten rows of data corresponding to the runaways with the higher $E$ values, in decreasing order, of the GOSC and BeSS-\\textit{Gaia}~DR3 catalogs, respectively. They include their names and identifications, coordinates, distances, magnitudes, spectral types, velocities, $E$ values, a column indicating the reference in the cases that they had already been reported as runaways, and a last column with additional information. In these tables, we include the 2D peculiar velocity, which is computed as $V_\\text{PEC}^\\text{2D} = \\sqrt{V_\\text{TAN}^2 + W_\\text{RSR}^2}$. For the GOSC-\\textit{Gaia}~DR3 runaway stars, it ranges from $16$ to $210$~km~s$^{-1}$ and has a median (mean) of $\\sim$40 ($\\sim$46)~km~s$^{-1}$. For the BeSS-\\textit{Gaia}~DR3 runaway stars, $V_\\text{PEC}^\\text{2D}$ ranges from $16$ to $132$~km~s$^{-1}$ and has a median (mean) of $\\sim$30 (37)~km~s$^{-1}$. The complete versions of these tables, including all classified runaways with additional parameters and precision, are available at the CDS.\n\nFinally, we note that the bin size of the $V_\\text{TAN}$ and $W_\\text{RSR}$ histograms is relevant when we apply Eq.~(\\ref{Eq:Criteria}) to classify the runaway stars. In this work, we used a bin size of 2~km~s$^{-1}$. However, we tried with a bin size of 3~km~s$^{-1}$ and the results did not change in the classification of the GOSC-\\textit{Gaia}~DR3 runaways. For the BeSS-\\textit{Gaia}~DR3 catalog, we only lost two runaways. The mean and standard deviations obtained from the Gaussian fits did not change significantly, except for $\\sigma_{V_{\\text{TAN}}}^{\\text{GF}}$ of the BeSS-\\textit{Gaia}~DR3 catalog, which changed from 9.3 to 9.5~km~s$^{-1}$."
+        }
+      ],
+      "evidence": "\\end{figure*}\n\nIn Tables~\\ref{Tab:GOSC_Runaways}~and~\\ref{Tab:BeSS_Runaways} we show ten rows of data corresponding to the runaways with the higher $E$ values, in decreasing order, of the GOSC and BeSS-\\textit{Gaia}~DR3 catalogs, respectively. They include their names and identifications, coordinates, distances, magnitudes, spectral types, velocities, $E$ values, a column indicating the reference in the cases that they had already been reported as runaways, and a last column with additional information. In these tables, we include the 2D peculiar velocity, which is computed as $V_\\text{PEC}^\\text{2D} = \\sqrt{V_\\text{TAN}^2 + W_\\text{RSR}^2}$. For the GOSC-\\textit{Gaia}~DR3 runaway stars, it ranges from $16$ to $210$~km~s$^{-1}$ and has a median (mean) of $\\sim$40 ($\\sim$46)~km~s$^{-1}$. For the BeSS-\\textit{Gaia}~DR3 runaway stars, $V_\\text{PEC}^\\text{2D}$ ranges from $16$ to $132$~km~s$^{-1}$ and has a median (mean) of $\\sim$30 (37)~km~s$^{-1}$. The complete versions of these tables, including all classified runaways with additional parameters and precision, are available at the CDS.\n\nFinally, we note that the bin size of the $V_\\text{TAN}$ and $W_\\text{RSR}$ histograms is relevant when we apply Eq.~(\\ref{Eq:Criteria}) to classify the runaway stars. In this work, we used a bin size of 2~km~s$^{-1}$. However, we tried with a bin size of 3~km~s$^{-1}$ and the results did not change in the classification of the GOSC-\\textit{Gaia}~DR3 runaways. For the BeSS-\\textit{Gaia}~DR3 catalog, we only lost two runaways. The mean and standard deviations obtained from the Gaussian fits did not change significantly, except for $\\sigma_{V_{\\text{TAN}}}^{\\text{GF}}$ of the BeSS-\\textit{Gaia}~DR3 catalog, which changed from 9.3 to 9.5~km~s$^{-1}$.",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "GOSC table footnote: complete 106-star runaway catalog at CDS",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 449,
+          "end_line": 449,
+          "context": "\\hline\n\\end{tabular}}\n\\tablefoot{Run. Ref. (Runaway Reference) column provides a reference in case the star had already been reported as runaway: (1)~\\citet{Ribo2002}; (2) \\citet{MA2018}; (3) \\citet{Kobulnicky2022}. Comments column contains additional information: `f' for fast rotator stars \\citep{Britavskiy2023}; `b' for binary hints \\citep{Brandt2021}, `h' for high-mass X-ray binaries \\citep{Fortin2023}; `g' for gamma-ray binaries \\citep{Bordas2023}. The complete version of this table, including the 106 classified runaways with additional parameters and precision, is available at the CDS}.\n\\end{table*}"
+        }
+      ],
+      "evidence": "\\hline\n\\end{tabular}}\n\\tablefoot{Run. Ref. (Runaway Reference) column provides a reference in case the star had already been reported as runaway: (1)~\\citet{Ribo2002}; (2) \\citet{MA2018}; (3) \\citet{Kobulnicky2022}. Comments column contains additional information: `f' for fast rotator stars \\citep{Britavskiy2023}; `b' for binary hints \\citep{Brandt2021}, `h' for high-mass X-ray binaries \\citep{Fortin2023}; `g' for gamma-ray binaries \\citep{Bordas2023}. The complete version of this table, including the 106 classified runaways with additional parameters and precision, is available at the CDS}.\n\\end{table*}",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "BeSS table footnote: complete 69-star runaway catalog at CDS",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 477,
+          "end_line": 477,
+          "context": "\\hline\n\\end{tabular}}\n\\tablefoot{Run. Ref. column provides a reference in case the star had already been reported as runaway: (1)~\\citet{Hoogerwerf2001}; (2) \\citet{Boubert2018}. Comments column contains additional information: `f' for fast rotator stars \\citep{Britavskiy2023}; `b' for binary hints \\citep{Brandt2021}, `h' for high-mass X-ray binaries \\citep{Fortin2023}; `g' for gamma-ray binaries \\citep{Bordas2023}. The complete version of this table, including the 69 classified runaways with additional parameters and precision, is available at the CDS.}\n\\end{table*}"
+        }
+      ],
+      "evidence": "\\hline\n\\end{tabular}}\n\\tablefoot{Run. Ref. column provides a reference in case the star had already been reported as runaway: (1)~\\citet{Hoogerwerf2001}; (2) \\citet{Boubert2018}. Comments column contains additional information: `f' for fast rotator stars \\citep{Britavskiy2023}; `b' for binary hints \\citep{Brandt2021}, `h' for high-mass X-ray binaries \\citep{Fortin2023}; `g' for gamma-ray binaries \\citep{Bordas2023}. The complete version of this table, including the 69 classified runaways with additional parameters and precision, is available at the CDS.}\n\\end{table*}",
+      "comments": ""
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "http://basebe.obspm.fr",
+      "local_path": "",
+      "description": "BeSS Database at LESIA/Observatoire de Meudon - input Be star catalog",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 647,
+          "end_line": 647,
+          "context": "We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU,   \n      and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This work has made use of the BeSS database, operated at LESIA, Observatoire de Meudon, France: \\url{http://basebe.obspm.fr}.\n      This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France."
+        }
+      ],
+      "evidence": "We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU,   \n      and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This work has made use of the BeSS database, operated at LESIA, Observatoire de Meudon, France: \\url{http://basebe.obspm.fr}.\n      This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.",
+      "comments": ""
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission homepage - primary astrometric data source (Gaia DR3)",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 647,
+          "end_line": 647,
+          "context": "We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU,   \n      and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This work has made use of the BeSS database, operated at LESIA, Observatoire de Meudon, France: \\url{http://basebe.obspm.fr}.\n      This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France."
+        }
+      ],
+      "evidence": "We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU,   \n      and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This work has made use of the BeSS database, operated at LESIA, Observatoire de Meudon, France: \\url{http://basebe.obspm.fr}.\n      This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.",
+      "comments": ""
+    },
+    {
+      "id": "resource-009",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "Gaia DPAC consortium - processed Gaia data",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 647,
+          "end_line": 647,
+          "context": "We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU,   \n      and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This work has made use of the BeSS database, operated at LESIA, Observatoire de Meudon, France: \\url{http://basebe.obspm.fr}.\n      This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France."
+        }
+      ],
+      "evidence": "We acknowledge financial support from the State Agency for Research of the Spanish Ministry of Science and Innovation under grants PID2019-105510GB-C31/AEI/10.13039/501100011033, PID2019-104114RB-C33/AEI/10.13039/501100011033, PID2022-136828NB-C41/AEI/10.13039/501100011033/ERDF/EU, and PID2022-138172NB-C43/AEI/10.13039/501100011033/ERDF/EU,   \n      and through the Unit of Excellence María de Maeztu 2020-2023 award to the Institute of Cosmos Sciences (CEX2019-000918-M). We acknowledge financial support from Departament de Recerca i Universitats of Generalitat de Catalunya through grant 2021SGR00679. MC-C acknowledges the grant PRE2020-094140 funded by MCIN/AEI/10.13039/501100011033 and FSE/ESF funds.\n      This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This work has made use of the BeSS database, operated at LESIA, Observatoire de Meudon, France: \\url{http://basebe.obspm.fr}.\n      This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.",
+      "comments": ""
+    },
+    {
+      "id": "resource-010",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "NASA ADS and SIMBAD database (CDS Strasbourg) for literature/cross-referencing",
+      "source_refs": [
+        {
+          "path": "literature/2311.01827/arxiv_source/main.tex",
+          "start_line": 649,
+          "end_line": 649,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This work has made use of the BeSS database, operated at LESIA, Observatoire de Meudon, France: \\url{http://basebe.obspm.fr}.\n      This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n\\end{acknowledgements}"
+        }
+      ],
+      "evidence": "This work has made use of data from the European Space Agency (ESA) mission {\\it Gaia} (\\url{https://www.cosmos.esa.int/gaia}), processed by the {\\it Gaia} Data Processing and Analysis Consortium (DPAC, \\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC has been provided by national institutions, in particular the institutions participating in the {\\it Gaia} Multilateral Agreement. This work has made use of the BeSS database, operated at LESIA, Observatoire de Meudon, France: \\url{http://basebe.obspm.fr}.\n      This research has made use of NASA’s Astrophysics Data System.\n      This research has made use of the SIMBAD database, operated at CDS, Strasbourg, France.\n\\end{acknowledgements}",
+      "comments": ""
+    }
+  ]
+}

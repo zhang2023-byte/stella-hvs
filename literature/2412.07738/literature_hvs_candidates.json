@@ -1,0 +1,81 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T18:15:52",
+  "paper": {
+    "arxiv_id": "2412.07738",
+    "bibcode": "2024BSRSL..93..103C",
+    "title": "Runaway O and Be stars found using Gaia DR3, new stellar bow shocks and search for binaries",
+    "month": "2024-12",
+    "source_note_json": "notes/2024/2024-12/2024-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2412.07738",
+      "pdf": "https://arxiv.org/pdf/2412.07738"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2412.07738",
+    "audit_path": "literature/2412.07738/audit.json",
+    "catalog_review_path": "literature/2412.07738/catalog_review.json",
+    "catalog_extraction_path": "literature/2412.07738/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2412.07738/catalog_tables/table-Tab-Review.ecsv",
+      "literature/2412.07738/catalog_tables/table-Tab-FitsAfterClippingField.ecsv",
+      "literature/2412.07738/catalog_tables/table-Tab-FitsAfterClippingRun.ecsv",
+      "literature/2412.07738/catalog_tables/table-Tab-SpectralType.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T18:15:52",
+    "extractor": "agent",
+    "summary": "This paper identifies runaway O and Be stars using a 2D velocity method based on Gaia DR3 data. The paper classifies 106 GOSC and 69 BeSS stars as runaways, but never discusses any object as possibly unbound from the Milky Way or as a hypervelocity star candidate. All objects are treated as Galactic runaways with velocities of tens of km/s, well below escape velocity."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "gosc-gaia-dr3-runaways",
+      "description": "106 runaway stars identified in the GOSC-Gaia DR3 catalog using a 2D velocity criterion (E > 1).",
+      "decision": "excluded",
+      "reason": "The paper explicitly classifies these objects as runaway stars, not as possibly unbound from the Galaxy. No object is discussed as a hypervelocity star or escaping candidate.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+          "start_line": 174,
+          "end_line": 176,
+          "context": "Runaway classification criterion: stars with E>1 are classified as runaway stars, while stars with E<1 are classified as field stars."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+          "start_line": 266,
+          "end_line": 267,
+          "context": "Result: 106 runaway stars identified in the GOSC-Gaia DR3 catalog, with velocity dispersions of ~40 km/s."
+        }
+      ]
+    },
+    {
+      "group_id": "bess-gaia-dr3-runaways",
+      "description": "69 runaway stars identified in the BeSS-Gaia DR3 catalog using a 2D velocity criterion (E > 1).",
+      "decision": "excluded",
+      "reason": "The paper explicitly classifies these objects as runaway stars, not as possibly unbound from the Galaxy. No object is discussed as a hypervelocity star or escaping candidate.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+          "start_line": 174,
+          "end_line": 176,
+          "context": "Runaway classification criterion: stars with E>1 are classified as runaway stars, while stars with E<1 are classified as field stars."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2412.07738/arxiv_source/M_RIBO.tex",
+          "start_line": 266,
+          "end_line": 267,
+          "context": "Result: 69 runaway stars identified in the BeSS-Gaia DR3 catalog, with velocity dispersions of ~35 km/s."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:31:04",
+  "paper": {
+    "arxiv_id": "2003.12766",
+    "bibcode": "2020A&A...637A..53K",
+    "title": "Hypervelocity Stars in the Gaia era. Revisiting the most extreme stars from the MMT survey",
+    "month": "2020-03",
+    "source_note_json": "notes/2020/2020-03/2020-03.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2003.12766",
+      "pdf": "https://arxiv.org/pdf/2003.12766"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2003.12766",
+    "audit_path": "literature/2003.12766/audit.json",
+    "catalog_review_path": "literature/2003.12766/catalog_review.json",
+    "catalog_extraction_path": "literature/2003.12766/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2003.12766/catalog_tables/table-tab-atmos-results.ecsv",
+      "literature/2003.12766/catalog_tables/table-tab-B1085.ecsv",
+      "literature/2003.12766/catalog_tables/table-tab-hvs5.ecsv",
+      "literature/2003.12766/catalog_tables/table-tab-stellar_params.ecsv",
+      "literature/2003.12766/catalog_tables/table-tab-kinematic-AS.ecsv",
+      "literature/2003.12766/catalog_tables/table-tab-kinematic-TF.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "needs_review",
+    "extracted_at": "2026-06-07T11:34:00",
+    "extractor": "agent",
+    "summary": "本文重新分析了MMT超高速星巡天（MMT HVS survey）中的40颗B型恒星，利用更新的大气模型光谱和Gaia DR2天体测量数据，提供了37颗恒星完整的六维相空间信息。论文包含丰富的数据表：(1) 光谱分析结果表（61行，含Teff/log(g)/v_rad/v sin(i)）；(2-3) 两颗目标星（B1085, HVS5）的详细参数表；(4) 40颗恒星参数总表（质量、年龄、红化、旋转、半径、光度、距离）；(5-6) 两种银河系势模型下的运动学量表（含银河系静止系速度v_Grf、逃逸速度超出量v_Grf-v_esc、束缚概率P_b）。HVS 22的速度达到1530 km/s，是最极端的目标。这些数据表包含明确的HVS候选体运动学信息，需进一步提取候选体列表。注：这些MMT HVS候选体可能在早期文献（1805.04184, 1804.10179等）中已有收录，需确认是否引入新候选体或仅重新表征已有候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文重新分析MMT HVS巡天中的40颗B型超高速星候选体，提供运动学数据包括v_Grf和v_Grf-v_esc。该论文明确涉及超高速星候选体，需进一步提取。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (aa.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: likely has candidates (MMT HVS reanalysis with kinematic data)"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2003.12766/arxiv_source/aa.tex",
+          "start_line": 1,
+          "end_line": 5,
+          "context": "Title: Hypervelocity Stars in the Gaia era. Revisiting the most extreme stars from the MMT survey"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2003.12766/arxiv_source/aa.tex",
+          "start_line": 486,
+          "end_line": 496,
+          "context": "Kinematic tables with v_Grf, v_Grf-v_esc, P_b for two Galactic potential models"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": []
+}

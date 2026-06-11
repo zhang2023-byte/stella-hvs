@@ -1,0 +1,527 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:36:09",
+  "paper": {
+    "arxiv_id": "1912.02129",
+    "title": "Candidate Hypervelocity Red Clump Stars in the Galactic Bulge Found Using the VVV and Gaia Surveys",
+    "month": "2019-12"
+  },
+  "review": {
+    "path": "literature/1912.02129/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083609",
+    "started_at": "2026-06-07T08:36:09",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1912.02129",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-table1",
+      "internal_table_id": "table-tab-table1",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+        "start_line": 262,
+        "end_line": 321,
+        "caption": "Gaia and VVV Photometry of Bulge RC Stars. \\label{tab:table1}",
+        "label": "tab:table1"
+      },
+      "source_path": "literature/1912.02129/arxiv_source/aastex62.tex",
+      "excerpt_path": "literature/1912.02129/catalog_sources/table-tab-table1/excerpt.tex",
+      "sha256": "d326c37f4d39da8ac36bf227f86fc188037461efc9a6dd8260b2f901ba18a459",
+      "line_count": 60,
+      "error": ""
+    },
+    {
+      "id": "table-tab-dist",
+      "internal_table_id": "table-tab-dist",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+        "start_line": 326,
+        "end_line": 383,
+        "caption": "Wessenheit magnitudes and distance estimations for the Bulge RC stars. \\label{tab:dist}",
+        "label": "tab:dist"
+      },
+      "source_path": "literature/1912.02129/arxiv_source/aastex62.tex",
+      "excerpt_path": "literature/1912.02129/catalog_sources/table-tab-dist/excerpt.tex",
+      "sha256": "bcb27de815d7ee48bac1b32c0cecfe266ae9c4e9a1edd708f776735babe061a1",
+      "line_count": 58,
+      "error": ""
+    },
+    {
+      "id": "table-tab-table2",
+      "internal_table_id": "table-tab-table2",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1912.02129/arxiv_source/aastex62.tex",
+        "start_line": 458,
+        "end_line": 493,
+        "caption": "Candidate Hypervelocity Bulge RC Stars. Tangential velocities and ejection times computed from VVV PMs. \\label{tab:table2}",
+        "label": "tab:table2"
+      },
+      "source_path": "literature/1912.02129/arxiv_source/aastex62.tex",
+      "excerpt_path": "literature/1912.02129/catalog_sources/table-tab-table2/excerpt.tex",
+      "sha256": "c2a5dab662bba1ee7f1da408df25539c3158c0e46920eff860ab1ffcabd26614",
+      "line_count": 36,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-table1",
+      "internal_table_id": "table-tab-table1",
+      "status": "success",
+      "ecsv_path": "literature/1912.02129/catalog_tables/table-tab-table1.ecsv",
+      "caption": "Gaia and VVV Photometry of Bulge RC Stars. \\label{tab:table1}",
+      "label": "tab:table1",
+      "row_count": 34,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Source ID a",
+          "RA",
+          "DEC",
+          "Long",
+          "Lat",
+          "J",
+          "Ks",
+          "G_DR1"
+        ],
+        [
+          "ID",
+          "Source ID a",
+          "( \\degree )",
+          "( \\degree )",
+          "( \\degree )",
+          "( \\degree )",
+          "(mag)",
+          "(mag)",
+          "(mag)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID | ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Source ID a | Source ID a",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "RA | ( \\degree )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "DEC | ( \\degree )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "Long | ( \\degree )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "Lat | ( \\degree )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "J | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Ks | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "G_DR1 | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpkbzk98_i/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1912.02129/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpkbzk98_i/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.02129/catalog_sources/table-tab-table1/wrapped.tex",
+            "html": "literature/1912.02129/catalog_sources/table-tab-table1/latexml.html",
+            "stdout": "literature/1912.02129/catalog_sources/table-tab-table1/latexml.stdout.txt",
+            "stderr": "literature/1912.02129/catalog_sources/table-tab-table1/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d326c37f4d39da8ac36bf227f86fc188037461efc9a6dd8260b2f901ba18a459"
+    },
+    {
+      "id": "table-tab-dist",
+      "internal_table_id": "table-tab-dist",
+      "status": "success",
+      "ecsv_path": "literature/1912.02129/catalog_tables/table-tab-dist.ecsv",
+      "caption": "Wessenheit magnitudes and distance estimations for the Bulge RC stars. \\label{tab:dist}",
+      "label": "tab:dist",
+      "row_count": 34,
+      "column_count": 9,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Source ID a",
+          "W_K_S",
+          "W_G_DR1",
+          "M_G_DR1",
+          "M_W_K_S",
+          "d_K_S",
+          "d_G_DR1",
+          ""
+        ],
+        [
+          "ID",
+          "Source ID a",
+          "(mag)",
+          "(mag)",
+          "(mag)",
+          "(mag)",
+          "(pc)",
+          "(pc)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID | ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Source ID a | Source ID a",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "W_K_S | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "W_G_DR1 | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "M_G_DR1 | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "M_W_K_S | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "d_K_S | (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "d_G_DR1 | (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmv5dn4a3/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1912.02129/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmv5dn4a3/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.02129/catalog_sources/table-tab-dist/wrapped.tex",
+            "html": "literature/1912.02129/catalog_sources/table-tab-dist/latexml.html",
+            "stdout": "literature/1912.02129/catalog_sources/table-tab-dist/latexml.stdout.txt",
+            "stderr": "literature/1912.02129/catalog_sources/table-tab-dist/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "bcb27de815d7ee48bac1b32c0cecfe266ae9c4e9a1edd708f776735babe061a1"
+    },
+    {
+      "id": "table-tab-table2",
+      "internal_table_id": "table-tab-table2",
+      "status": "success",
+      "ecsv_path": "literature/1912.02129/catalog_tables/table-tab-table2.ecsv",
+      "caption": "Candidate Hypervelocity Bulge RC Stars. Tangential velocities and ejection times computed from VVV PMs. \\label{tab:table2}",
+      "label": "tab:table2",
+      "row_count": 7,
+      "column_count": 7,
+      "environment": "",
+      "header_rows": [
+        [
+          "ID",
+          "Source ID a",
+          "Distance",
+          "PM^b",
+          "V_T",
+          "T_eject",
+          ""
+        ],
+        [
+          "ID",
+          "Source ID a",
+          "(pc)",
+          "( mas~yr^-1 )",
+          "(km s -1 )",
+          "(yr)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "ID | ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Source ID a | Source ID a",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Distance | (pc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "PM^b | ( mas~yr^-1 )",
+          "unit_text": "( mas~yr^-1 )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "V_T | (km s -1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "T_eject | (yr)",
+          "unit_text": "(yr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpeampq7xh/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1912.02129/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpeampq7xh/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1912.02129/catalog_sources/table-tab-table2/wrapped.tex",
+            "html": "literature/1912.02129/catalog_sources/table-tab-table2/latexml.html",
+            "stdout": "literature/1912.02129/catalog_sources/table-tab-table2/latexml.stdout.txt",
+            "stderr": "literature/1912.02129/catalog_sources/table-tab-table2/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c2a5dab662bba1ee7f1da408df25539c3158c0e46920eff860ab1ffcabd26614"
+    }
+  ]
+}

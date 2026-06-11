@@ -1,0 +1,397 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T08:30:27",
+  "paper": {
+    "arxiv_id": "1801.03949",
+    "title": "The Need for Speed: Escape velocity and dynamical mass measurements of the Andromeda galaxy",
+    "month": "2018-01"
+  },
+  "review": {
+    "path": "literature/1801.03949/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T083027",
+    "started_at": "2026-06-07T08:30:27",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "1801.03949",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 3,
+      "work_count": 3,
+      "table_count": 3,
+      "success_count": 3,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 3,
+      "file_success_count": 3,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-table-pneresult",
+      "internal_table_id": "table-table-pneresult",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1801.03949/arxiv_source/paper.tex",
+        "start_line": 378,
+        "end_line": 401,
+        "caption": "Estimated model parameters from different analysis. When unspecified, the default values for the model parameters are assumed, i.e., v_min=300 km/s, r_s=15 kpc, d_M31=780 kpc, v_M31,h=-301 km/s, sigma_g=1000 km/s and nu_g=1.",
+        "label": "table:pneresult"
+      },
+      "source_path": "literature/1801.03949/arxiv_source/paper.tex",
+      "excerpt_path": "literature/1801.03949/catalog_sources/table-table-pneresult/excerpt.tex",
+      "sha256": "5314d328efd89754b8214c32cbec07fb5220cf2a45a6958c3b93dfb014b25e84",
+      "line_count": 24,
+      "error": ""
+    },
+    {
+      "id": "table-m31-central-properties",
+      "internal_table_id": "table-m31-central-properties",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1801.03949/arxiv_source/paper.tex",
+        "start_line": 119,
+        "end_line": 133,
+        "caption": "M31 central properties table (inline within equation* environment, no formal caption)",
+        "label": ""
+      },
+      "source_path": "literature/1801.03949/arxiv_source/paper.tex",
+      "excerpt_path": "literature/1801.03949/catalog_sources/table-m31-central-properties/excerpt.tex",
+      "sha256": "dc67169a86cb1e516c25acc6a6aa49b0bc5b196c37a4c05de6fa246f08fdd375",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-bulge-disk-parameters",
+      "internal_table_id": "table-bulge-disk-parameters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/1801.03949/arxiv_source/paper.tex",
+        "start_line": 330,
+        "end_line": 339,
+        "caption": "Bulge and disk model parameters table (inline within equation environment, no formal caption)",
+        "label": ""
+      },
+      "source_path": "literature/1801.03949/arxiv_source/paper.tex",
+      "excerpt_path": "literature/1801.03949/catalog_sources/table-bulge-disk-parameters/excerpt.tex",
+      "sha256": "e2c3db64c792c7ad21ecb097fa4056aaca2b2835fada4aa96eed6d7ddadd4243",
+      "line_count": 10,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-table-pneresult",
+      "internal_table_id": "table-table-pneresult",
+      "status": "success",
+      "ecsv_path": "literature/1801.03949/catalog_tables/table-table-pneresult.ecsv",
+      "caption": "Estimated model parameters from different analysis. When unspecified, the default values for the model parameters are assumed, i.e., v_min=300 km/s, r_s=15 kpc, d_M31=780 kpc, v_M31,h=-301 km/s, sigma_g=1000 km/s and nu_g=1.",
+      "label": "table:pneresult",
+      "row_count": 12,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cases",
+          "Number of",
+          "\\vesco",
+          "\\gamma",
+          "\\eta",
+          "k",
+          "\\mvir(M_200)",
+          "\\rvir(r_200)"
+        ],
+        [
+          "",
+          "PNe",
+          "(km s -1 )",
+          "",
+          "",
+          "",
+          "(10^12M_\\odot)",
+          "(\\kpc)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cases",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Number of | PNe",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\vesco | (km s -1 )",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\gamma",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\eta",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "k",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\mvir(M_200) | (10^12M_\\odot)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\rvir(r_200) | (\\kpc)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv2qfbft4/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1801.03949/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpv2qfbft4/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1801.03949/catalog_sources/table-table-pneresult/wrapped.tex",
+            "html": "literature/1801.03949/catalog_sources/table-table-pneresult/latexml.html",
+            "stdout": "literature/1801.03949/catalog_sources/table-table-pneresult/latexml.stdout.txt",
+            "stderr": "literature/1801.03949/catalog_sources/table-table-pneresult/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5314d328efd89754b8214c32cbec07fb5220cf2a45a6958c3b93dfb014b25e84"
+    },
+    {
+      "id": "table-m31-central-properties",
+      "internal_table_id": "table-m31-central-properties",
+      "status": "success",
+      "ecsv_path": "literature/1801.03949/catalog_tables/table-m31-central-properties.ecsv",
+      "caption": "M31 central properties table (inline within equation* environment, no formal caption)",
+      "label": "",
+      "row_count": 1,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcd5fgbxf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1801.03949/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpcd5fgbxf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/1801.03949/catalog_sources/table-m31-central-properties/wrapped.tex",
+            "html": "literature/1801.03949/catalog_sources/table-m31-central-properties/latexml.html",
+            "stdout": "literature/1801.03949/catalog_sources/table-m31-central-properties/latexml.stdout.txt",
+            "stderr": "literature/1801.03949/catalog_sources/table-m31-central-properties/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "dc67169a86cb1e516c25acc6a6aa49b0bc5b196c37a4c05de6fa246f08fdd375"
+    },
+    {
+      "id": "table-bulge-disk-parameters",
+      "internal_table_id": "table-bulge-disk-parameters",
+      "status": "success",
+      "ecsv_path": "literature/1801.03949/catalog_tables/table-bulge-disk-parameters.ecsv",
+      "caption": "Bulge and disk model parameters table (inline within equation environment, no formal caption)",
+      "label": "",
+      "row_count": 4,
+      "column_count": 2,
+      "environment": "tabular",
+      "header_rows": [
+        [
+          "Bulge scale-length (q)",
+          "0.7 \\kpc,"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Bulge scale-length (q)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "0.7 \\kpc,",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\kpc",
+        "unresolved LaTeX macro preserved: \\msun",
+        "unresolved LaTeX macro preserved: \\times"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_1c_xhue/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/1801.03949/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp_1c_xhue/wrapped.tex"
+          ],
+          "error": "no data rows parsed from HTML table",
+          "artifacts": {
+            "wrapped_tex": "literature/1801.03949/catalog_sources/table-bulge-disk-parameters/wrapped.tex",
+            "html": "literature/1801.03949/catalog_sources/table-bulge-disk-parameters/latexml.html",
+            "stdout": "literature/1801.03949/catalog_sources/table-bulge-disk-parameters/latexml.stdout.txt",
+            "stderr": "literature/1801.03949/catalog_sources/table-bulge-disk-parameters/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmk5gvym5/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmk5gvym5/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/1801.03949/catalog_sources/table-bulge-disk-parameters/wrapped.tex",
+            "html": "literature/1801.03949/catalog_sources/table-bulge-disk-parameters/pandoc.html",
+            "stdout": "literature/1801.03949/catalog_sources/table-bulge-disk-parameters/pandoc.stdout.txt",
+            "stderr": "literature/1801.03949/catalog_sources/table-bulge-disk-parameters/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "e2c3db64c792c7ad21ecb097fa4056aaca2b2835fada4aa96eed6d7ddadd4243"
+    }
+  ]
+}

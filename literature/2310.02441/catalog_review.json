@@ -1,0 +1,502 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2310.02441",
+    "title": "Finding the dispersing siblings of young open clusters. Dynamical traceback simulations using Gaia DR3",
+    "month": "2023-10",
+    "source_note_json": "notes/2023/2023-10/2023-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2310.02441",
+      "pdf": "https://arxiv.org/pdf/2310.02441"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2310.02441",
+    "audit_path": "literature/2310.02441/audit.json",
+    "source_dir": "literature/2310.02441/arxiv_source",
+    "tex_root": "literature/2310.02441/arxiv_source/traceback.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:41:32",
+    "reviewer": "agent",
+    "summary": "This paper uses Gaia DR3 radial velocity data (6D phase space) to perform Monte Carlo traceback computations for 10 nearby young open clusters, identifying escaped 'fugitive' stars. Core data products: (1) a table of individual membership/fugitive probabilities for Gaia DR3 sources deposited at CDS; (2) summary statistics (fugitive counts, false positive rates) for 10 clusters; (3) cluster age/metallicity reference table. External dependencies: Gaia DR3, SIMBAD (via astroquery), Gala/MWPotential2014 gravitational potential, PARSEC isochrones. No custom catalog or survey data is produced beyond the CDS table."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-solar_parameters",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "basis_of_computation",
+      "source_refs": [
+        {
+          "path": "literature/2310.02441/arxiv_source/traceback.tex",
+          "start_line": 310,
+          "end_line": 335,
+          "caption": "Adopted parameters of the solar orbit.",
+          "label": "tab:solar_parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Solar orbital parameter name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Symbol",
+          "meaning": "Symbol used in text for the parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Adopted numerical value",
+          "unit_text": "mixed (pc, km/s)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Reference",
+          "meaning": "Literature source for the parameter value",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Parameters consistent with MWPotential2014: z_sun=14pc, solar peculiar velocity, R_sun=8.0kpc, v0=220 km/s.",
+      "comments": "Used to convert heliocentric Gaia coordinates to galactocentric coordinates for traceback."
+    },
+    {
+      "id": "table-tab-galactocentric_selection",
+      "kind": "latex_table",
+      "asset_type": "selection_criteria",
+      "role_in_paper": "data_filtering",
+      "source_refs": [
+        {
+          "path": "literature/2310.02441/arxiv_source/traceback.tex",
+          "start_line": 337,
+          "end_line": 355,
+          "caption": "Limits for the coordinates of the stars included in the initial traceback computation.",
+          "label": "tab:galactocentric_selection"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Phase space coordinate parameter name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Symbol",
+          "meaning": "Symbol used for the coordinate",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Minimum",
+          "meaning": "Lower bound for inclusion",
+          "unit_text": "mixed (pc, deg, km/s, deg/Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Maximum",
+          "meaning": "Upper bound for inclusion",
+          "unit_text": "mixed (pc, deg, km/s, deg/Myr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Spatial/kinematic cuts on Gaia DR3 RV sample. Resulting sample: 4,238,086 sources.",
+      "comments": "Reduces full Gaia DR3 radial velocity sample to a manageable local volume for traceback."
+    },
+    {
+      "id": "table-tab-cluster_parameters",
+      "kind": "latex_table",
+      "asset_type": "reference_data",
+      "role_in_paper": "cluster_characterization",
+      "source_refs": [
+        {
+          "path": "literature/2310.02441/arxiv_source/traceback.tex",
+          "start_line": 436,
+          "end_line": 462,
+          "caption": "Cluster ages and metallicities from Bossini et al. (2019).",
+          "label": "tab:cluster_parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Cluster name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Cluster age | Myr",
+          "meaning": "Age of the cluster with 16th/84th percentiles from Bayesian posterior",
+          "unit_text": "Myr",
+          "source_of_definition": "table header; Bossini+2019",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]",
+          "meaning": "Iron abundance relative to solar, used for isochrone fitting",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H] reference",
+          "meaning": "Literature reference for metallicity value",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "10 clusters with ages from 27 to ~310 Myr. Most at solar metallicity.",
+      "comments": "Cluster ages used as maximum traceback time cutoff. Metallicities used for PARSEC isochrone comparison."
+    },
+    {
+      "id": "table-tab-probabilities",
+      "kind": "latex_table",
+      "asset_type": "catalog",
+      "role_in_paper": "main_result",
+      "source_refs": [
+        {
+          "path": "literature/2310.02441/arxiv_source/traceback.tex",
+          "start_line": 521,
+          "end_line": 537,
+          "caption": "Membership and fugitive probabilities of the Gaia DR3 sources.",
+          "label": "tab:probabilities"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Source ID",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "alpha | deg",
+          "meaning": "Right ascension (ICRS)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "delta | deg",
+          "meaning": "Declination (ICRS)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Membership probability",
+          "meaning": "Fraction of Monte Carlo tracebacks where star starts in cluster neighborhood (p_m)",
+          "unit_text": "",
+          "source_of_definition": "text Sect.2.1",
+          "confidence": 1.0
+        },
+        {
+          "name": "Fugitive probability",
+          "meaning": "Fraction of Monte Carlo tracebacks where star enters cluster neighborhood at any t <= cluster age (p_f)",
+          "unit_text": "",
+          "source_of_definition": "text Sect.2.1",
+          "confidence": 1.0
+        },
+        {
+          "name": "Cluster",
+          "meaning": "Name of the cluster the star is potentially associated with",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Only first 5 rows shown in paper. Full machine-readable table at CDS.",
+      "comments": "Primary data product. Full version deposited at CDS. Each star may appear for multiple clusters."
+    },
+    {
+      "id": "table-tab-cluster_results",
+      "kind": "latex_table",
+      "asset_type": "summary_statistics",
+      "role_in_paper": "result_summary",
+      "source_refs": [
+        {
+          "path": "literature/2310.02441/arxiv_source/traceback.tex",
+          "start_line": 539,
+          "end_line": 563,
+          "caption": "False positive rates (medians with 16th/84th percentiles) across Monte Carlo tracebacks.",
+          "label": "tab:cluster_results"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Cluster name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "No. of fugitives",
+          "meaning": "Number of stars identified as fugitives (p_f > 0.1 >= p_m)",
+          "unit_text": "",
+          "source_of_definition": "text Sect.2.1",
+          "confidence": 1.0
+        },
+        {
+          "name": "No. of members",
+          "meaning": "Number of stars identified as current members (p_f >= p_m > 0.1)",
+          "unit_text": "",
+          "source_of_definition": "text Sect.2.1",
+          "confidence": 1.0
+        },
+        {
+          "name": "False positive rate | %",
+          "meaning": "Median field star contamination rate estimated via reference point method",
+          "unit_text": "%",
+          "source_of_definition": "text Sect.2.4",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Fugitives range: 19 (Blanco 1) to 143 (Alpha Per). Median false positive rate ~6%, max 14%.",
+      "comments": "False positive rates estimated by comparing cluster neighborhood counts to a symmetric reference point."
+    },
+    {
+      "id": "table-tab-alternative_solar_parameters",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "robustness_check",
+      "source_refs": [
+        {
+          "path": "literature/2310.02441/arxiv_source/traceback.tex",
+          "start_line": 940,
+          "end_line": 960,
+          "caption": "Alternative solar orbit parameters, also used by Meingast et al. (2021).",
+          "label": "tab:alternative_solar_parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Solar orbital parameter name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Symbol",
+          "meaning": "Symbol used for the parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Alternative value for the parameter",
+          "unit_text": "mixed (pc, km/s)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Reference",
+          "meaning": "Literature source for the alternative value",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Alternative R_sun=8122pc, z_sun=20.8pc. Used in robustness test showing Pearson coefficients ~1.",
+      "comments": "Demonstrates that fugitive probability results are insensitive to solar orbit parameter choices."
+    },
+    {
+      "id": "table-tab-rough_cluster_coordinates",
+      "kind": "latex_table",
+      "asset_type": "input_data",
+      "role_in_paper": "initial_conditions",
+      "source_refs": [
+        {
+          "path": "literature/2310.02441/arxiv_source/traceback.tex",
+          "start_line": 1570,
+          "end_line": 1592,
+          "caption": "Rough cluster coordinates from SIMBAD used as initial guesses.",
+          "label": "tab:rough_cluster_coordinates"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Cluster name",
+          "meaning": "Cluster name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "alpha",
+          "meaning": "Right ascension",
+          "unit_text": "h:m:s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "delta",
+          "meaning": "Declination",
+          "unit_text": "deg:arcmin:arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "varpi | mas",
+          "meaning": "Parallax",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_alpha* | mas yr^-1",
+          "meaning": "Proper motion in right ascension (cos(delta) corrected)",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_delta | mas yr^-1",
+          "meaning": "Proper motion in declination",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_r | km s^-1",
+          "meaning": "Radial velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "SIMBAD queried coordinates for 10 clusters used as initial guess for iterative refinement.",
+      "comments": "Appendix A. Exact values non-critical -- refined using median of neighborhood stars."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-cds-full-table",
+      "kind": "deposited_catalog",
+      "url": "",
+      "local_path": "",
+      "description": "Full machine-readable version of Table tab:probabilities -- Gaia DR3 source IDs, coordinates, membership probabilities (p_m), fugitive probabilities (p_f), and associated cluster for all stars with p_f > 0.",
+      "source_refs": [
+        {
+          "path": "literature/2310.02441/arxiv_source/traceback.tex",
+          "start_line": 536,
+          "end_line": 536,
+          "context": "The full table is available in machine-readable form at the CDS."
+        },
+        {
+          "path": "literature/2310.02441/arxiv_source/traceback.tex",
+          "start_line": 569,
+          "end_line": 569,
+          "context": "The full table that contains all stars with positive fugitive probabilities is available at the CDS."
+        }
+      ],
+      "evidence": "Explicit statements that the complete probability table is deposited at CDS.",
+      "comments": "Primary data product. Accessible via CDS/VizieR associated with the published A&A article."
+    },
+    {
+      "id": "resource-gaia-dr3",
+      "kind": "external_catalog",
+      "url": "",
+      "local_path": "",
+      "description": "Gaia DR3 radial velocity subsample -- full 6D phase space information for ~34 million sources. Initial sample of 4,238,086 sources after galactocentric cuts.",
+      "source_refs": [
+        {
+          "path": "literature/2310.02441/arxiv_source/traceback.tex",
+          "start_line": 114,
+          "end_line": 117,
+          "context": "Gaia DR3 has published full six-dimensional phase space information"
+        }
+      ],
+      "evidence": "Gaia DR3 is the sole observational data source for stellar kinematics used in traceback.",
+      "comments": "Parallax zero-point offset corrected. Sources with corrected parallax < 1 mas discarded."
+    },
+    {
+      "id": "resource-simbad",
+      "kind": "external_catalog",
+      "url": "",
+      "local_path": "",
+      "description": "SIMBAD astronomical database queried via astroquery for initial cluster coordinates used as initial guesses.",
+      "source_refs": [
+        {
+          "path": "literature/2310.02441/arxiv_source/traceback.tex",
+          "start_line": 368,
+          "end_line": 370,
+          "context": "cluster coordinates were obtained by querying SIMBAD with astroquery"
+        }
+      ],
+      "evidence": "SIMBAD used for initial cluster coordinate guesses, listed in Appendix tab:rough_cluster_coordinates.",
+      "comments": "Exact values not critical -- refined iteratively."
+    },
+    {
+      "id": "resource-gala",
+      "kind": "software_package",
+      "url": "",
+      "local_path": "",
+      "description": "Gala Python package -- leapfrog integrator used for traceback computations in BovyMWPotential2014 gravitational potential.",
+      "source_refs": [
+        {
+          "path": "literature/2310.02441/arxiv_source/traceback.tex",
+          "start_line": 466,
+          "end_line": 470,
+          "context": "Traceback computations using a leapfrog integrator implemented in Gala"
+        }
+      ],
+      "evidence": "Entire traceback computation pipeline relies on Gala and MWPotential2014.",
+      "comments": "Timestep: 0.25 Myr. Maximum traceback time: 100 Myr."
+    },
+    {
+      "id": "resource-parsec-isochrones",
+      "kind": "external_model",
+      "url": "",
+      "local_path": "",
+      "description": "PARSEC stellar evolutionary isochrones used for HR diagram validation of identified members and fugitives.",
+      "source_refs": [
+        {
+          "path": "literature/2310.02441/arxiv_source/traceback.tex",
+          "start_line": 683,
+          "end_line": 684,
+          "context": "PARSEC isochrones (Bressan+2012, Chen+2014, Chen+2015)"
+        }
+      ],
+      "evidence": "PARSEC isochrones used for validation: fugitives match isochrones as well as cluster members.",
+      "comments": "Not a data product of this paper -- used for validation only."
+    },
+    {
+      "id": "resource-astropy",
+      "kind": "software_package",
+      "url": "",
+      "local_path": "",
+      "description": "Astropy core Python package and astroquery used for SIMBAD queries and data processing.",
+      "source_refs": [
+        {
+          "path": "literature/2310.02441/arxiv_source/traceback.tex",
+          "start_line": 1110,
+          "end_line": 1112,
+          "context": "This work made use of astropy: a community-developed core Python package"
+        }
+      ],
+      "evidence": "Acknowledged in acknowledgements section along with matplotlib and numpy.",
+      "comments": "General-purpose astronomy software; astroquery used for SIMBAD queries."
+    }
+  ]
+}

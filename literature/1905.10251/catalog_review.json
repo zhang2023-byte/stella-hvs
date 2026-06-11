@@ -1,0 +1,303 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1905.10251",
+    "title": "Gaia Stellar Kinematics in the Head of the Orion A Cloud: Runaway Stellar Groups and Gravitational Infall",
+    "month": "2019-05",
+    "source_note_json": "notes/2019/2019-05/2019-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1905.10251",
+      "pdf": "https://arxiv.org/pdf/1905.10251"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1905.10251",
+    "audit_path": "literature/1905.10251/audit.json",
+    "source_dir": "literature/1905.10251/arxiv_source",
+    "tex_root": "literature/1905.10251/arxiv_source/ms.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:35:00",
+    "reviewer": "agent",
+    "summary": "该论文为MNRAS文章，利用Gaia DR2自行和视差数据结合APOGEE/Hectochelle径向速度数据，对Orion A分子云头部（OMC-1/2/3/4/5）区域的1487颗年轻恒星进行了三维运动学分析。论文编制了三份星表：(1) Gaia属性表（1487颗星，含位置、视差、自行、G星等、BP/RP流量超出标识）；(2) 其他属性表（1487颗星，含文献星表归属标识、J/H星等、消光、两种年龄估计、IRAC SED斜率、运动学群组成员标识）；(3) 径向速度表（2752颗星，含位置、星表归属标识、APOGEE和Hectochelle径向速度、光谱双星标识、J/H星等、群组成员标识）。论文发现NGC 1977星团和EON区域的两个恒星群具有异常运动学特征（runaway），并识别出Group X及东西两侧的散逸恒星群。三维运动学电影显示OMC-1恒星处于收缩状态，OMC-2/3与OMC-1之间存在全局收缩趋势。所有三份星表均以完整机器可读形式在MNRAS在线期刊中提供。论文无本地机器可读数据文件（仅含.tex源文件和.pdf图片）。外部资源方面，论文提及多个R统计软件包（含lmodel2的CRAN URL，位于LaTeX注释中），以及Gaia DR2、APOGEE、Spitzer等公开巡天数据源（属引用外部数据，不计入结构化数据资产）。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tbl_gaia_props",
+      "kind": "latex_table",
+      "asset_type": "astrometric_catalog_table",
+      "role_in_paper": "该表为论文核心数据表之一，列出1487颗Gaia选源年轻恒星的基本天体测量属性：Gaia DR2 source_id、赤经赤纬、视差、自行、G波段星等，以及BP/RP流量超出标识（FEC），用于划分full和restricted两个分析子样本。",
+      "source_refs": [
+        {
+          "path": "literature/1905.10251/arxiv_source/ms.tex",
+          "start_line": 500,
+          "end_line": 534,
+          "caption": "Gaia-selected catalog of young stars in Orion A; Gaia properties. This table is available in its entirety (1487 stars) in the machine-readable form in the online journal.",
+          "label": "tbl_gaia_props"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Gaia DR2 source_id",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "R.A.",
+          "meaning": "赤经（J2000.0）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Decl.",
+          "meaning": "赤纬（J2000.0）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "omega_bar",
+          "meaning": "Gaia视差",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_alpha_star",
+          "meaning": "赤经方向自行（含cos(delta)因子）",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_delta",
+          "meaning": "赤纬方向自行",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia G波段平均星等",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "FEC",
+          "meaning": "BP/RP流量超出标识：1表示流量超出较小（(I_BP+I_RP)/I_G < 1.35 + 0.06*(G_BP-G_RP)^2），0表示流量超出较大",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "表头明确列出8列数据：ID, R.A., Decl., omega_bar, mu_alpha_star, mu_delta, G, FEC。caption说明该表包含1487颗星，仅含视差统计误差sigma_omega_bar<0.1 mas的星。表中给出前10行示例数据，完整版本以机器可读形式在MNRAS在线期刊中提供。",
+      "comments": "FEC=1的子样本（1221颗星）称为restricted样本，用于更保守的分析。所有1487颗星（含FEC=0和FEC=1）称为full样本。视差测量范围限制在2<omega_bar<3 mas（等效距离约333-500 pc）。"
+    },
+    {
+      "id": "table-tbl_other_props",
+      "kind": "latex_table",
+      "asset_type": "stellar_properties_table",
+      "role_in_paper": "该表为论文核心数据表之二，列出1487颗Gaia选源年轻恒星的文献衍生属性：6位星表归属标识（指示该星在MYStIX/SFiNCs、Furesz2008、Tobin2009、DaRio2012、DaRio2016、Megeath2012等星表中的存在情况）、J和H波段近红外星等、视向消光Av、两种年龄估计（传统HRD年龄Age_D16和X射线/近红外年龄Age_JX）、中红外SED斜率alpha_IRAC，以及运动学群组成员标识（NGC 1977主群/南群、EON北/南、Group X）。",
+      "source_refs": [
+        {
+          "path": "literature/1905.10251/arxiv_source/ms.tex",
+          "start_line": 537,
+          "end_line": 571,
+          "caption": "Gaia-selected catalog of young stars in Orion A; Other Properties. This table is available in its entirety (1487 stars) in the machine-readable form in the online journal.",
+          "label": "tbl_other_props"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Gaia DR2 source_id",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Cat",
+          "meaning": "6位星表标识：第1位=1表示在MYStIX/SFiNCs中；第2-6位=1分别表示在Furesz2008、Tobin2009、DaRio2012、DaRio2016、Megeath2012星表中",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J",
+          "meaning": "J波段星等（来自Meingast 2016）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "H",
+          "meaning": "H波段星等（来自Meingast 2016）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "A_V",
+          "meaning": "视向消光（基于DaRio 2016消光标度）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Age_D16",
+          "meaning": "传统HRD年龄估计（来自DaRio 2016，经Gaia视差校正并置于Siess 2000时标上）",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Age_JX",
+          "meaning": "X射线/近红外光度年龄估计（来自MYStIX/SFiNCs Getman 2014a/2017，经Gaia视差校正并置于Siess 2000时标上）",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "alpha_IRAC",
+          "meaning": "Spitzer-IRAC 3.6-8.0微米波段视中红外SED斜率：alpha_IRAC = d log(lambda*F_lambda)/d log(lambda)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mem",
+          "meaning": "运动学群组成员标识：1=NGC 1977主群，2=NGC 1977南群，3=EON北群，4=EON南群，5=Group X，0=非上述群组成员",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "表头明确列出9列数据：ID, Cat, J, H, A_V, Age_D16, Age_JX, alpha_IRAC, Mem。caption详细解释了每列的含义和数据来源。表中给出前10行示例数据，完整版本以机器可读形式在MNRAS在线期刊中提供。",
+      "comments": "alpha_IRAC > -1.9的星被归类为disky（有盘，470颗），< -1.9为diskless（无盘，978颗），其余39颗未分类。年龄估计Age_JX仅适用于低质量星。Cat列的第6位（Megeath2012 YSO星表）与第8列alpha_IRAC（Megeath2012全部点源星表）数据来源不同。"
+    },
+    {
+      "id": "table-tbl_vrad",
+      "kind": "latex_table",
+      "asset_type": "radial_velocity_catalog_table",
+      "role_in_paper": "该表列出Orion A区域2752颗具有径向速度测量的年轻恒星。速度数据主要来自APOGEE巡天（Kounkel 2018，2326颗亮星）和Hectochelle/MIKE光谱（Tobin 2009，426颗较暗补遗星）。表中给出7位星表归属标识（增加第7位指示Gaia星表成员）、两种径向速度测量值、光谱双星标识、J/H星等和群组成员标识。",
+      "source_refs": [
+        {
+          "path": "literature/1905.10251/arxiv_source/ms.tex",
+          "start_line": 573,
+          "end_line": 607,
+          "caption": "Catalog of young stars with radial velocities in Orion A. Velocity data are taken from Table 1 of Kounkel 2018 and Table 3 of Tobin 2009. This table is available in its entirety (2752 stars) in the machine-readable form in the online journal.",
+          "label": "tbl_vrad"
+        }
+      ],
+      "columns": [
+        {
+          "name": "R.A.",
+          "meaning": "赤经（J2000.0）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Decl.",
+          "meaning": "赤纬（J2000.0）",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Cat",
+          "meaning": "7位星表标识：第1位=1在MYStIX/SFiNCs中；第2-6位=1分别在Furesz2008、Tobin2009、DaRio2012、DaRio2016、Megeath2012中；第7位=1表示在Gaia星表（Table 1&2）中",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_rad_K18_mean",
+          "meaning": "APOGEE平均日心径向速度（来自Kounkel 2018）",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_rad_T09_mean",
+          "meaning": "Hectochelle/MIKE平均日心径向速度（来自Tobin 2009），仅对无Kounkel et al.速度测量的星给出",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mult",
+          "meaning": "光谱双星标识（来自Tobin 2009）：1=非光谱双星",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J",
+          "meaning": "J波段星等（来自Meingast 2016）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "H",
+          "meaning": "H波段星等（来自Meingast 2016）",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mem",
+          "meaning": "运动学群组成员标识：1=NGC 1977主群，2=NGC 1977南群，3=EON北群，4=EON南群，5=Group X，0=非上述群组成员",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "表头明确列出9列数据：R.A., Decl., Cat, V_rad_K18_mean, V_rad_T09_mean, Mult, J, H, Mem。caption说明速度数据来源并详细解释各列含义。表中给出前10行示例数据，完整版本以机器可读形式在MNRAS在线期刊中提供。",
+      "comments": "表中V_rad_T09为原始未校正值；论文中对Tobin et al.速度值应用了线性回归校正（V_rad,K18 = V_rad,T09 * 0.88 + 4.10）以消除与APOGEE数据之间的系统偏差。Mult=1表示非光谱双星，用于筛选可靠运动学样本（entire K18T09和Gaia K18T09子样本）。"
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://CRAN.R-project.org/package=lmodel2",
+      "local_path": "",
+      "description": "R统计软件包lmodel2（Model II Regression），论文使用该包进行对称线性回归分析（如径向速度比较和距离-速度关系拟合）。",
+      "source_refs": [
+        {
+          "path": "literature/1905.10251/arxiv_source/ms.tex",
+          "start_line": 461,
+          "end_line": 461,
+          "context": "Pierre Legendre (2018). lmodel2: Model II Regression. R package version 1.7-3. https://CRAN.R-project.org/package=lmodel2"
+        }
+      ],
+      "evidence": "论文第461行LaTeX注释中给出的lmodel2 R包URL。论文§2.4（Statistical Methods）中提到使用lmodel2包进行对称线性回归。",
+      "comments": "该URL位于LaTeX注释中（以%开头），不在正式发表的论文正文中。但论文statistical methods部分明确引用了该软件包（Legendre 2018）。"
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "MNRAS在线期刊机器可读星表——Table 1（Gaia属性）、Table 2（其他属性）和Table 3（径向速度）的完整版本（分别为1487、1487和2752行），通过MNRAS在线期刊以机器可读格式提供。",
+      "source_refs": [
+        {
+          "path": "literature/1905.10251/arxiv_source/ms.tex",
+          "start_line": 504,
+          "end_line": 504,
+          "context": "This table is available in its entirety (1487 stars) in the machine-readable form in the online journal."
+        }
+      ],
+      "evidence": "三份星表的caption均明确说明完整星表以机器可读形式在MNRAS在线期刊中提供。论文附录§A（Three catalog tables）进一步描述了各表的内容和格式。",
+      "comments": "论文在arXiv源文件中仅提供每张表的前10行示例数据。完整机器可读版本需从MNRAS期刊网站获取。三张表均通过MNRAS标准数据产品渠道分发。"
+    }
+  ]
+}

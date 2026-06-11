@@ -1,0 +1,125 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1811.04302",
+    "title": "The nearest extreme velocity stars among Gaia DR2 high proper motion stars",
+    "month": "2018-11",
+    "source_note_json": "notes/2018/2018-11/2018-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1811.04302",
+      "pdf": "https://arxiv.org/pdf/1811.04302"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1811.04302",
+    "audit_path": "literature/1811.04302/audit.json",
+    "source_dir": "literature/1811.04302/arxiv_source",
+    "tex_root": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:59:00",
+    "reviewer": "agent",
+    "summary": "This RNAAS Research Note searches for extreme tangential velocity stars among ~1.8 million Gaia DR2 high proper motion (HPM) stars with μ>60 mas/yr and moderately significant parallaxes (ϖ>3σ_ϖ). Starting with 109 candidates having Galactic rest-frame tangential velocities v_t,g>700 km/s (well above the local escape velocity of 580±63 km/s), application of Gaia DR2 astrometric quality criteria (unit weight error u, BP/RP photometry, astrometric_gof_al<3, astrometric_excess_noise_sig≤2) reduces the sample to 39. Further requiring highly significant parallaxes (ϖ>5σ_ϖ) yields a final list of 6 high-priority candidates with tangential velocities 730-1617 km/s. The sole internal table (Table 1) presents Gaia DR2 photometric and astrometric data for these 6 stars, including three previously identified by Bromley et al. (2018) and one hypervelocity runaway white dwarf D6-2 from Shen et al. (2018). All data are drawn directly from Gaia DR2; no new observations are presented. The paper identifies Gaia DR2 1540013339194597376 as the best candidate and Gaia DR2 6097052289696317952 as the most extreme (G≈13.5 mag, v_t,g≈1617 km/s). RV measurements are needed to confirm unbound status."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-1",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Primary and only results table: lists the 6 highest-priority extreme tangential velocity star candidates selected from Gaia DR2 HPM stars. Presents Gaia DR2 source ID, photometry (G magnitude, BP-RP color), parallax with error, proper motions in RA and Dec with errors, astrometric quality parameters (unit weight error u, astrometric_excess_noise_sig D, astrometric_gof_al gofAL, visibility_periods_used vpu), and computed Galactic rest-frame tangential velocity v_t,g. Three stars are footnoted: D6-2 (= NLTT 51732, hypervelocity white dwarf from Shen et al. 2018), and two stars previously found by Bromley et al. (2018). Sorted by decreasing parallax.",
+      "source_refs": [
+        {
+          "path": "literature/1811.04302/arxiv_source/rnaas_hv1.tex",
+          "start_line": 127,
+          "end_line": 142,
+          "caption": "Selected Gaia DR2 stars with proper motions μ>60 mas/yr and Galactocentric tangential velocities v_t,g>700 km/s",
+          "label": "tab:1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR2 ID",
+          "meaning": "Gaia DR2 unique source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia G-band mean magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "BP-RP",
+          "meaning": "Gaia BP-RP color index",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "varpi",
+          "meaning": "Gaia DR2 parallax with 1σ uncertainty",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_alpha_cos_delta",
+          "meaning": "Proper motion in Right Ascension (cosδ corrected) with uncertainty",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "mu_delta",
+          "meaning": "Proper motion in Declination with uncertainty",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "u",
+          "meaning": "Astrometric unit weight error (Gaia DR2 quality parameter); values ≤1.13 for all candidates",
+          "unit_text": "",
+          "source_of_definition": "table header + footnote 1",
+          "confidence": 1.0
+        },
+        {
+          "name": "D",
+          "meaning": "astrometric_excess_noise_sig (Gaia DR2 quality parameter); 0.0 for all but D6-2 (1.8)",
+          "unit_text": "",
+          "source_of_definition": "table header + footnote 2",
+          "confidence": 1.0
+        },
+        {
+          "name": "gofAL",
+          "meaning": "astrometric_gof_al (Gaia DR2 goodness-of-fit parameter in AL direction); range -1.2 to 2.7",
+          "unit_text": "",
+          "source_of_definition": "table header + footnote 3",
+          "confidence": 1.0
+        },
+        {
+          "name": "vpu",
+          "meaning": "visibility_periods_used (Gaia DR2 parameter); number of distinct observational visibility periods, range 8-15",
+          "unit_text": "",
+          "source_of_definition": "table header + footnote 4",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_t_g",
+          "meaning": "Galactic rest-frame tangential velocity corrected for solar motion (LSR velocity 235 km/s), with propagated error",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header + Section main text",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 caption: 'Selected Gaia DR2 stars with proper motions μ>60 mas/yr and Galactocentric tangential velocities v_t,g>700 km/s'. Column headers and footnotes define all columns. Text describes the selection: 'Their main photometric and astrometric Gaia DR2 data are listed in Table 1 (sorted by decreasing parallax), including the astrometric unit weight error u and other astrometric quality parameters.' Table footnotes identify D6-2 (= NLTT 51732) and two Bromley et al. (2018) candidates.",
+      "comments": "6 stars total. Parallax range: 0.17-1.05 mas. v_t,g range: 733-1617 km/s. G magnitude range: 13.53-17.02 mag. BP-RP range: 0.40-1.01 mag. D6-2 (= NLTT 51732, Gaia DR2 1798008584396457088) is identified as a hypervelocity white dwarf but flagged as doubtful due to relatively large astrometric quality parameters and zero RV. Gaia DR2 1540013339194597376 rated as the best candidate (small quality parameters, 15 visibility periods). Gaia DR2 6097052289696317952 is the most extreme (brightest, highest v_t,g, smallest parallax) but has low visibility_periods_used=9. All data sourced from Gaia DR2; no new measurements."
+    }
+  ],
+  "external_resources": []
+}

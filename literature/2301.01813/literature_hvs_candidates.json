@@ -1,0 +1,60 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:38:00",
+  "paper": {
+    "arxiv_id": "2301.01813",
+    "bibcode": "2023AJ....165..209R",
+    "title": "The HH 24 Complex: Jets, Multiple Star Formation, and Orphaned Protostars",
+    "month": "2023-01",
+    "source_note_json": "notes/2023/2023-01/2023-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2301.01813",
+      "pdf": "https://arxiv.org/pdf/2301.01813"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2301.01813",
+    "audit_path": "literature/2301.01813/audit.json",
+    "catalog_review_path": "literature/2301.01813/catalog_review.json",
+    "catalog_extraction_path": "literature/2301.01813/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2301.01813/catalog_tables/table-table-overview.ecsv",
+      "literature/2301.01813/catalog_tables/table-table-almamaps.ecsv",
+      "literature/2301.01813/catalog_tables/table-table-coordinates.ecsv",
+      "literature/2301.01813/catalog_tables/table-table-vlt.ecsv",
+      "literature/2301.01813/catalog_tables/table-table-vla-parameters.ecsv",
+      "literature/2301.01813/catalog_tables/table-table-giant-bowshocks.ecsv",
+      "literature/2301.01813/catalog_tables/table-table-images-pm-giant-bowshocks.ecsv",
+      "literature/2301.01813/catalog_tables/table-table-pm-giant-bowshocks.ecsv",
+      "literature/2301.01813/catalog_tables/table-table-gaia.ecsv",
+      "literature/2301.01813/catalog_tables/table-table-cont-fit.ecsv",
+      "literature/2301.01813/catalog_tables/table-table-alma-disk.ecsv",
+      "literature/2301.01813/catalog_tables/table-table-line-fit.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:38:00",
+    "extractor": "agent",
+    "summary": "The paper studies jets, multiple star formation, and orphaned protostars in the HH 24 nebular complex, using multi-wavelength observations from HST, ALMA, VLA, VLT, and Gaia. The only occurrence of 'unbound' appears in the context of discussing whether protostellar companions are gravitationally bound ('dynamically evolve and become unbound'), referring to companions around protostars dissociating from multiple-star systems, entirely unrelated to Galactic gravitational unbinding, hypervelocity stars (HVS), or Galactic escape. The paper's topic is star-forming region observations. No HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2301.01813:group-01",
+      "description": "Gaia stellar list (Table tab:gaia), containing Gaia sources near the HH 24 region. These are position and proper motion measurements of ordinary young stars in the nebula, used to study stellar distribution and kinematics in the nebular region.",
+      "decision": "rejected",
+      "reason": "The paper is a multi-wavelength observational study of the HH 24 star-forming region, focusing on jets, protostars (Class 0/I), and young stellar objects. All listed sources are protostars or ordinary field young stars near HH 24, entirely unrelated to Galactic escape velocity or hypervelocity stars (HVS). The paper does not discuss Galactic gravitational unbinding, HVS, or Galactic escape. No HVS candidates whatsoever.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2301.01813/arxiv_source/hh24-arxiv.tex",
+          "start_line": 320,
+          "end_line": 326,
+          "context": "Discussion: 'This population of distant companions decreases for the more evolved Class I sources, suggesting that the companions dynamically evolve and become unbound.' — 'unbound' here only refers to companions around protostars becoming unbound through dynamical evolution, entirely unrelated to Galactic escape."
+        }
+      ]
+    }
+  ]
+}

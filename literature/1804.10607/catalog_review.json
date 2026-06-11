@@ -1,0 +1,585 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1804.10607",
+    "title": "Gaia DR2 in 6D: Searching for the fastest stars in the Galaxy",
+    "month": "2018-04",
+    "source_note_json": "notes/2018/2018-04/2018-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1804.10607",
+      "pdf": "https://arxiv.org/pdf/1804.10607"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1804.10607",
+    "audit_path": "literature/1804.10607/audit.json",
+    "source_dir": "literature/1804.10607/arxiv_source",
+    "tex_root": "literature/1804.10607/arxiv_source/GaiaDR2_highV.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:00:00",
+    "reviewer": "agent",
+    "summary": "Paper publishes a 49-column distance/velocity catalogue for 7,183,262 Gaia DR2 stars with radial velocities, available at the first author's Leiden page. Contains 9 tables: 1 model parameter table (MilkyWayPotential), 1 catalogue description, 1 primary object table (20 Pub>0.8 candidates), 1 supplementary object table (105 candidates with 0.5<Pub≤0.8 across 3 continuation pages), 1 old draft table (28 candidates, unused), and 2 robustness-test tables (parallax zero-point and inflated errors). External resources: public catalogue webpage and GUMS/GOG simulation catalogues."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-potential",
+      "kind": "latex_table",
+      "asset_type": "model_parameters",
+      "role_in_paper": "Defines the four-component (bulge+nucleus+disk+halo) Galactic gravitational potential used for orbit integration, escape velocity computation, and unbound probability estimation throughout the paper.",
+      "source_refs": [
+        {
+          "path": "literature/1804.10607/arxiv_source/GaiaDR2_highV.tex",
+          "start_line": 244,
+          "end_line": 263,
+          "caption": "Parameters for the \\textsc{Gala} potential \\emph{MilkyWayPotential}.",
+          "label": "tab:potential"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Component",
+          "meaning": "Galactic component: Bulge, Nucleus, Disk, or Halo",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Parameters",
+          "meaning": "Mass and scale parameters for each component (Hernquist bulge/nucleus with M_i and r_i; Miyamoto-Nagai disk with M_d, a_d, b_d; NFW halo with M_h and r_s)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Parameters for the \\textsc{Gala} potential \\emph{MilkyWayPotential}.",
+      "comments": "Same potential as Bovy (2015). Fits the enclosed mass profile of the Milky Way."
+    },
+    {
+      "id": "table-tab-candidates",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Primary results table: observed Gaia DR2 astrometry and derived distances, Galactocentric positions, total velocities, Milky-Way origin probability, and unbound probability for the 20 high-confidence (Pub>80%) unbound star candidates.",
+      "source_refs": [
+        {
+          "path": "literature/1804.10607/arxiv_source/tab_candidates.tex",
+          "start_line": 2,
+          "end_line": 57,
+          "caption": "Observed and derived properties for the $20$ \"clean\" high velocity star candidates with a probability $> 80\\%$ of being unbound from the Galaxy. Stars are sorted by decreasing $P_\\mathrm{ub}$.",
+          "label": "tab:candidates"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\Gaia DR2 ID",
+          "meaning": "Gaia DR2 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(RA, Dec.)",
+          "meaning": "Right Ascension and Declination in degrees",
+          "unit_text": "(°)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\varpi",
+          "meaning": "Gaia DR2 parallax with uncertainty",
+          "unit_text": "(mas)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha*",
+          "meaning": "Proper motion in right ascension (cosδ corrected)",
+          "unit_text": "(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta",
+          "meaning": "Proper motion in declination",
+          "unit_text": "(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_rad",
+          "meaning": "Gaia DR2 radial velocity",
+          "unit_text": "(km s^-1)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia G-band mean magnitude",
+          "unit_text": "(mag)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "Derived heliocentric distance (median, with 16th/84th percentile uncertainties)",
+          "unit_text": "(pc)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_GC",
+          "meaning": "Spherical Galactocentric distance",
+          "unit_text": "(pc)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_GC",
+          "meaning": "Total velocity in the Galactic rest frame",
+          "unit_text": "(km s^-1)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_MW",
+          "meaning": "Probability that the star originates from the Milky Way stellar disk (r_min < 25 kpc)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_ub",
+          "meaning": "Probability of being unbound from the Galaxy (fraction of MC realizations exceeding escape velocity)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Observed and derived properties for the $20$ \"clean\" high velocity star candidates with a probability $> 80\\%$ of being unbound from the Galaxy. Stars are sorted by decreasing $P_\\mathrm{ub}$.",
+      "comments": "Table split into Galactic (7 HRS candidates) and Extragalactic (13 candidates) sections. Uncertainties are 16th/84th percentiles of MC distributions."
+    },
+    {
+      "id": "table-tab-candidates_0.5",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Supplementary catalog of 105 high-velocity star candidates with moderate unbound probability (0.5 < Pub ≤ 0.8), presented across three continuation pages.",
+      "source_refs": [
+        {
+          "path": "literature/1804.10607/arxiv_source/tab_candidates_0.5.tex",
+          "start_line": 1,
+          "end_line": 68,
+          "caption": "Distances and total velocities in the Galactic rest frame for the $105$ ``clean\" high velocity star candidates with $0.5 < P_\\mathrm{ub} \\leq 0.8$. Sources are sorted by decreasing $P_\\mathrm{ub}$.",
+          "label": "tab:candidates_0.5"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\Gaia DR2 ID",
+          "meaning": "Gaia DR2 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "Derived heliocentric distance (median with uncertainties)",
+          "unit_text": "(pc)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_GC",
+          "meaning": "Total velocity in the Galactic rest frame",
+          "unit_text": "(km s^-1)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_ub",
+          "meaning": "Probability of being unbound from the Galaxy",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Distances and total velocities in the Galactic rest frame for the $105$ ``clean\" high velocity star candidates with $0.5 < P_\\mathrm{ub} \\leq 0.8$. Sources are sorted by decreasing $P_\\mathrm{ub}$.",
+      "comments": "First page of 3-part continuation table in Appendix C."
+    },
+    {
+      "id": "table-tab-candidates_0.5-2",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Continuation page 2 of the 105-candidate supplementary catalog (same schema as table-tab-candidates_0.5).",
+      "source_refs": [
+        {
+          "path": "literature/1804.10607/arxiv_source/tab_candidates_0.5_cont.tex",
+          "start_line": 1,
+          "end_line": 69,
+          "caption": "",
+          "label": "tab:candidates_0.5"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\Gaia DR2 ID",
+          "meaning": "Gaia DR2 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "Derived heliocentric distance (median with uncertainties)",
+          "unit_text": "(pc)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_GC",
+          "meaning": "Total velocity in the Galactic rest frame",
+          "unit_text": "(km s^-1)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_ub",
+          "meaning": "Probability of being unbound from the Galaxy",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Continuation of Table tab:candidates_0.5: distances and total velocities for the 105 high velocity star candidates with 0.5 < Pub ≤ 0.8, sorted by decreasing Pub.",
+      "comments": "Continuation page 2 of tab:candidates_0.5."
+    },
+    {
+      "id": "table-tab-candidates_0.5-3",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Continuation page 3 of the 105-candidate supplementary catalog (same schema as table-tab-candidates_0.5).",
+      "source_refs": [
+        {
+          "path": "literature/1804.10607/arxiv_source/tab_candidates_0.5_cont_2.tex",
+          "start_line": 1,
+          "end_line": 42,
+          "caption": "",
+          "label": "tab:candidates_0.5"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\Gaia DR2 ID",
+          "meaning": "Gaia DR2 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "Derived heliocentric distance (median with uncertainties)",
+          "unit_text": "(pc)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_GC",
+          "meaning": "Total velocity in the Galactic rest frame",
+          "unit_text": "(km s^-1)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_ub",
+          "meaning": "Probability of being unbound from the Galaxy",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Continuation of Table tab:candidates_0.5: distances and total velocities for the 105 high velocity star candidates with 0.5 < Pub ≤ 0.8, sorted by decreasing Pub.",
+      "comments": "Continuation page 3 (final) of tab:candidates_0.5."
+    },
+    {
+      "id": "table-tab-candidates_inflated_erros",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Robustness test: distances, velocities, and unbound probabilities for the 20 Pub>0.8 candidates recomputed with parallax uncertainties inflated to include systematic errors (k=1.08, σs=0.043 mas for faint stars).",
+      "source_refs": [
+        {
+          "path": "literature/1804.10607/arxiv_source/tab_candidates_inflated_errors.tex",
+          "start_line": 1,
+          "end_line": 49,
+          "caption": "Distances and total velocities in the Galactic rest frame for the $20$ ``clean\" high velocity star candidates with $P_\\mathrm{ub} > 0.8$ presented in Table \\ref{tab:candidates}. Parallax uncertainties are inflated according to equation \\eqref{eq:inflated_errors}. For comparison, stars are sorted as in Table \\ref{tab:candidates}.",
+          "label": "tab:candidates_inflated_erros"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\Gaia DR2 ID",
+          "meaning": "Gaia DR2 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "Heliocentric distance with inflated parallax errors",
+          "unit_text": "(pc)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_GC",
+          "meaning": "Total velocity in the Galactic rest frame with inflated errors",
+          "unit_text": "(km s^-1)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_ub",
+          "meaning": "Updated probability of being unbound with inflated parallax errors",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Distances and total velocities in the Galactic rest frame for the $20$ ``clean\" high velocity star candidates with $P_\\mathrm{ub} > 0.8$ presented in Table \\ref{tab:candidates}. Parallax uncertainties are inflated according to equation \\eqref{eq:inflated_errors}. For comparison, stars are sorted as in Table \\ref{tab:candidates}.",
+      "comments": "Conservative approach: 9 (5) stars retain Pub>0.5 (Pub>0.8). Authors note σs likely overestimated for this sample."
+    },
+    {
+      "id": "table-tab-candidates-2",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Earlier draft version of the candidates table with 28 stars (Pub>50%). Not cited in the final paper text; superseded by tables tab:candidates (20 stars Pub>80%) and tab:candidates_0.5 (105 stars 0.5<Pub≤0.8).",
+      "source_refs": [
+        {
+          "path": "literature/1804.10607/arxiv_source/tab_candidates_old.tex",
+          "start_line": 2,
+          "end_line": 67,
+          "caption": "Observed and derived properties for the $28$ \"clean\" high velocity star candidates with a probability $> 50\\%$ of being unbound from the Galaxy.",
+          "label": "tab:candidates"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\Gaia DR2 ID",
+          "meaning": "Gaia DR2 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "(RA, Dec.)",
+          "meaning": "Right Ascension and Declination in degrees",
+          "unit_text": "(°)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\varpi",
+          "meaning": "Gaia DR2 parallax with uncertainty",
+          "unit_text": "(mas)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\alpha*",
+          "meaning": "Proper motion in right ascension (cosδ corrected)",
+          "unit_text": "(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_\\delta",
+          "meaning": "Proper motion in declination",
+          "unit_text": "(mas yr^-1)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_rad",
+          "meaning": "Gaia DR2 radial velocity",
+          "unit_text": "(km s^-1)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia G-band mean magnitude",
+          "unit_text": "(mag)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "Derived heliocentric distance (median with uncertainties)",
+          "unit_text": "(pc)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_GC",
+          "meaning": "Spherical Galactocentric distance",
+          "unit_text": "(pc)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_GC",
+          "meaning": "Total velocity in the Galactic rest frame",
+          "unit_text": "(km s^-1)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_MW",
+          "meaning": "Probability of Milky Way origin (r_min < 25 kpc)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_ub",
+          "meaning": "Probability of being unbound from the Galaxy",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Observed and derived properties for the $28$ \"clean\" high velocity star candidates with a probability $> 50\\%$ of being unbound from the Galaxy.",
+      "comments": "NOT cited in final paper text. Superseded draft. Split into HVS candidates and HRS candidates sections. Replaced by Tables tab:candidates (20 Pub>0.8) and tab:candidates_0.5 (105 with 0.5<Pub≤0.8)."
+    },
+    {
+      "id": "table-tab-candidates_zp",
+      "kind": "latex_table",
+      "asset_type": "derived_parameters",
+      "role_in_paper": "Robustness test: distances, velocities, and unbound probabilities for the 20 Pub>0.8 candidates recomputed including the -0.029 mas global parallax zero-point offset.",
+      "source_refs": [
+        {
+          "path": "literature/1804.10607/arxiv_source/tab_candidates_zp.tex",
+          "start_line": 1,
+          "end_line": 49,
+          "caption": "Distances and total velocities in the Galactic rest frame for the $20$ ``clean\" high velocity star candidates with $P_\\mathrm{ub} > 0.8$ presented in Table \\ref{tab:candidates}, including the $-0.029$ mas global parallax offset. For comparison, stars are sorted as in Table \\ref{tab:candidates}.",
+          "label": "tab:candidates_zp"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\Gaia DR2 ID",
+          "meaning": "Gaia DR2 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d",
+          "meaning": "Heliocentric distance including parallax zero-point correction",
+          "unit_text": "(pc)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_GC",
+          "meaning": "Total velocity in the Galactic rest frame with zero-point correction",
+          "unit_text": "(km s^-1)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P_ub",
+          "meaning": "Updated probability of being unbound with zero-point corrected parallaxes",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Distances and total velocities in the Galactic rest frame for the $20$ ``clean\" high velocity star candidates with $P_\\mathrm{ub} > 0.8$ presented in Table \\ref{tab:candidates}, including the $-0.029$ mas global parallax offset. For comparison, stars are sorted as in Table \\ref{tab:candidates}.",
+      "comments": "With zero-point: 14 (4) stars retain Pub>0.5 (Pub>0.8). Authors consider excluding the zero-point a conservative choice."
+    },
+    {
+      "id": "table-tab-catalogue",
+      "kind": "latex_table",
+      "asset_type": "catalogue_description",
+      "role_in_paper": "Documents the 49-column schema of the publicly released distance and velocity catalogue for 7,183,262 Gaia DR2 stars with radial velocities. Includes Gaia DR2 observed quantities (cols 1-12), derived distances and Galactocentric positions (cols 13-30), and derived Galactocentric velocities (cols 31-48), plus unbound probability (col 49).",
+      "source_refs": [
+        {
+          "path": "literature/1804.10607/arxiv_source/tab_catalogue.tex",
+          "start_line": 1,
+          "end_line": 81,
+          "caption": "Catalogue description. Derived distances and velocities correspond to the median of the distribution, and lower and upper uncertainties are derived, respectively, from the $16$th and $84$th percentiles of the distribution function. Entries labelled $^1$ are derived in this paper, while entries labelled $^2$ are taken from the \\Gaia DR2 catalogue \\citep{gaiadr2}.",
+          "label": "tab:catalogue"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Column",
+          "meaning": "Column index (1-49) in the published catalogue",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Units",
+          "meaning": "Physical units of the column value",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Name",
+          "meaning": "Column name as in the published FITS/ASCII catalogue",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Description",
+          "meaning": "Human-readable description of the column content",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Catalogue description. Derived distances and velocities correspond to the median of the distribution, and lower and upper uncertainties are derived, respectively, from the $16$th and $84$th percentiles of the distribution function. Entries labelled $^1$ are derived in this paper, while entries labelled $^2$ are taken from the \\Gaia DR2 catalogue \\citep{gaiadr2}.",
+      "comments": "Catalogue available at http://home.strw.leidenuniv.nl/~marchetti/research.html. Columns 1-12 from Gaia DR2; columns 13-49 derived in this work."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "http://home.strw.leidenuniv.nl/~marchetti/research.html",
+      "local_path": "",
+      "description": "Public webpage hosting the full distance and velocity catalogue for 7,183,262 Gaia DR2 stars with radial velocities. 49-column catalogue described in Appendix B, Table tab:catalogue.",
+      "source_refs": [
+        {
+          "path": "literature/1804.10607/arxiv_source/GaiaDR2_highV.tex",
+          "start_line": 40,
+          "end_line": 40,
+          "context": "We search for the fastest stars in the subset of stars with radial velocity measurements of the second data release (DR2) of the European Space Agency mission \\Gaia. Starting from the observed positions, parallaxes, proper motions, and radial velocities, we construct the distance and total velocity distribution of more than $7$ million stars in our Milky Way, deriving the full 6D phase space information in Galactocentric coordinates. These information are shared in a catalogue, publicly available at \\url{http://home.strw.leidenuniv.nl/~marchetti/research.html}."
+        }
+      ],
+      "evidence": "Abstract and Section 3: catalogue publicly available at http://home.strw.leidenuniv.nl/~marchetti/research.html",
+      "comments": "Primary data product of this paper. Also referenced at line 157 (Section 3) and line 403 (Appendix B)."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://wwwhip.obspm.fr/gaiasimu/",
+      "local_path": "",
+      "description": "GUMS-18 (Gaia Universe Model Snapshot) and GOG-18 (Gaia Object Generator) simulation catalogues, used in Appendix A to calibrate the exponentially decreasing distance prior (scale length L=2600 pc) on a simulated sample of ~352,000 stars with large relative parallax errors.",
+      "source_refs": [
+        {
+          "path": "literature/1804.10607/arxiv_source/GaiaDR2_highV.tex",
+          "start_line": 381,
+          "end_line": 381,
+          "context": "In this appendix we discuss the choice of the prior probability on distances $P(d)$ which gives the most accurate results on the subsample of bright stars in \\Gaia DR2 with a large relative error on parallax (the \\emph{high-f} sample introduced in Section \\ref{sec:dist}). We cross-match the \\Gaia Universe Model Snapshot \\citep[GUMS,][]{robin+12} and the \\Gaia Object Generator \\citep[GOG,][]{luri+14} catalogues based on the value of the source identifier, to get a resulting sample of $7 \\cdot 10^6$ stars with $G_\\mathrm{RVS} < 12.2$. We use the latest versions of these mock catalogues, GUMS-18 and GOG-18\\footnote{\\url{https://wwwhip.obspm.fr/gaiasimu/}}."
+        }
+      ],
+      "evidence": "Appendix A footnote: https://wwwhip.obspm.fr/gaiasimu/",
+      "comments": "External simulation data used to validate distance prior choice. Not produced by this paper."
+    }
+  ]
+}

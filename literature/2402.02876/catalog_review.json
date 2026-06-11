@@ -1,0 +1,361 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2402.02876",
+    "title": "High-speed stars. II. An unbound star, young stars, bulge metal-poor stars, and Aurora candidates",
+    "month": "2024-02",
+    "source_note_json": "notes/2024/2024-02/2024-02.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2402.02876",
+      "pdf": "https://arxiv.org/pdf/2402.02876"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2402.02876",
+    "audit_path": "literature/2402.02876/audit.json",
+    "source_dir": "literature/2402.02876/arxiv_source",
+    "tex_root": "literature/2402.02876/arxiv_source/47865HAL.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T12:43:57",
+    "reviewer": "agent",
+    "summary": "This paper presents a spectroscopic follow-up of high-speed stars selected from Gaia DR3, reporting an unbound star, young stars, bulge metal-poor stars, and Aurora candidates. Internal assets include a parameter table of young-star masses/ages/metallicities, a parameter table of CEMP-star abundances, and a name-to-Gaia-DR3 identifier mapping. External resources include the Gaia archive, CDS online tables (abundances, Aurora data), the Kurucz atomic database, the Baumgardt GC database, and several Python machine-learning libraries (HDBSCAN, scikit-learn GMM, t-SNE). Generic Gaia/DPAC/SIMBAD acknowledgements have been removed."
+  },
+  "internal_tables": [
+    {
+      "id": "table-masses",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Stellar masses, ages, and metallicities for the young high-speed stars in the sample, derived from PARSEC isochrone fitting.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 587,
+          "end_line": 607,
+          "caption": "Masses, ages, and metallicities for the young stars.\\label{masses}",
+          "label": "masses"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Star identifier (GHS number)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Mass | M\\sun",
+          "meaning": "Stellar mass from isochrone fitting",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Age | Ma",
+          "meaning": "Stellar age from isochrone fitting",
+          "unit_text": "Ma",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H] | dex",
+          "meaning": "Iron-to-hydrogen abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Masses, ages, and metallicities for the young stars.\\label{masses}",
+      "comments": ""
+    },
+    {
+      "id": "table-cabun",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Carbon and barium abundances for the three carbon-enhanced metal-poor (CEMP) stars identified in the high-speed sample.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 716,
+          "end_line": 731,
+          "caption": "Carbon enhanced stars.",
+          "label": "cabun"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Star",
+          "meaning": "Star identifier (GHS number)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[C/H]",
+          "meaning": "Carbon-to-hydrogen abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]",
+          "meaning": "Iron-to-hydrogen abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Ba/Fe]_NLTE",
+          "meaning": "Barium-to-iron abundance ratio with NLTE corrections",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Carbon enhanced stars.",
+      "comments": ""
+    },
+    {
+      "id": "table-tablenam",
+      "kind": "latex_table",
+      "asset_type": "schema_description",
+      "role_in_paper": "Mapping between the internal star names (GHS identifiers) used in the paper and their Gaia DR3 source identifiers.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 1661,
+          "end_line": 2027,
+          "caption": "\\label{tablenam} Names and Gaia DR3 identifiers for our target stars",
+          "label": "tablenam"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "Internal star name used in the paper",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia DR3 id",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "\\label{tablenam} Names and Gaia DR3 identifiers for our target stars",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://gea.esac.esa.int/archive/",
+      "local_path": "",
+      "description": "Gaia Science Archive, used to retrieve Gaia DR3 data and the Gaia Universe Model.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 509,
+          "end_line": 509,
+          "context": "Such an outcome can \nbe clearly seen from our analysis of the stars selected from the Gaia Universe Model (GUM, \\citealt{robin03}\\footnote{Available at\n\\url{https://gea.esac.esa.int/archive/}, see also\nthe Gaia DR3 documentation\n\\url{https://gea.esac.esa.int/archive/documentation/GDR3/Data_processing/chap_cu2sim/sec_cu2UM/}. }"
+        }
+      ],
+      "evidence": "Such an outcome can \nbe clearly seen from our analysis of the stars selected from the Gaia Universe Model (GUM, \\citealt{robin03}\\footnote{Available at\n\\url{https://gea.esac.esa.int/archive/}, see also\nthe Gaia DR3 documentation\n\\url{https://gea.esac.esa.int/archive/documentation/GDR3/Data_processing/chap_cu2sim/sec_cu2UM/}. }",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://gea.esac.esa.int/archive/documentation/GDR3/Data_processing/chap_cu2sim/sec_cu2UM/",
+      "local_path": "",
+      "description": "Gaia DR3 documentation page for the Gaia Universe Model (CU2 simulation).",
+      "source_refs": [
+        {
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 511,
+          "end_line": 511,
+          "context": "\\url{https://gea.esac.esa.int/archive/}, see also\nthe Gaia DR3 documentation\n\\url{https://gea.esac.esa.int/archive/documentation/GDR3/Data_processing/chap_cu2sim/sec_cu2UM/}. }\nsee Sec.\\,\\ref{sec:spitef}). \nWe thus decided to perform a clustering analysis among the stars of our small sample, based on the derived integrals of motion only, in order to have some objective"
+        }
+      ],
+      "evidence": "\\url{https://gea.esac.esa.int/archive/}, see also\nthe Gaia DR3 documentation\n\\url{https://gea.esac.esa.int/archive/documentation/GDR3/Data_processing/chap_cu2sim/sec_cu2UM/}. }\nsee Sec.\\,\\ref{sec:spitef}). \nWe thus decided to perform a clustering analysis among the stars of our small sample, based on the derived integrals of motion only, in order to have some objective",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "The paper states that the full abundance table for each star is available in electronic form at the CDS.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 675,
+          "end_line": 675,
+          "context": "abundances of Na, Mg, Ca, Ti, Mn, Fe and Ba.  \nThe results are summarised in Figs.\\,\\ref{fig:mgfe} to \\ref{fig:bafe}.\nThe full table with all abundances for each star is available in electronic form at CDS\nvia anonymous ftp to cdsarc.u-strasbg.fr (130.79.128.5) or via http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/.\nFor star GHS110, that is a variable star, we only provide"
+        }
+      ],
+      "evidence": "abundances of Na, Mg, Ca, Ti, Mn, Fe and Ba.  \nThe results are summarised in Figs.\\,\\ref{fig:mgfe} to \\ref{fig:bafe}.\nThe full table with all abundances for each star is available in electronic form at CDS\nvia anonymous ftp to cdsarc.u-strasbg.fr (130.79.128.5) or via http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/.\nFor star GHS110, that is a variable star, we only provide",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/.",
+      "local_path": "",
+      "description": "CDS VizieR query interface for journal tables (J/A+A/).",
+      "source_refs": [
+        {
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 676,
+          "end_line": 676,
+          "context": "The results are summarised in Figs.\\,\\ref{fig:mgfe} to \\ref{fig:bafe}.\nThe full table with all abundances for each star is available in electronic form at CDS\nvia anonymous ftp to cdsarc.u-strasbg.fr (130.79.128.5) or via http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/.\nFor star GHS110, that is a variable star, we only provide\n\\teff , \\glog , and [Fe/H] but refrain from doing a multi-element"
+        }
+      ],
+      "evidence": "The results are summarised in Figs.\\,\\ref{fig:mgfe} to \\ref{fig:bafe}.\nThe full table with all abundances for each star is available in electronic form at CDS\nvia anonymous ftp to cdsarc.u-strasbg.fr (130.79.128.5) or via http://cdsweb.u-strasbg.fr/cgi-bin/qcat?J/A+A/.\nFor star GHS110, that is a variable star, we only provide\n\\teff , \\glog , and [Fe/H] but refrain from doing a multi-element",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "The paper states that additional abundance data (Fe I/II, Mg I, Ca I, Mn I, Co I, Ni I) are available as an online table at the CDS.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 861,
+          "end_line": 861,
+          "context": "The abundances for \\ion{Fe}{i}, \\ion{Fe}{ii}, \\ion{Mg}{i},\n\\ion{Ca}{i}, \\ion{Mn}{i}, \\ion{Co}{i} and \\ion{Ni}{i} are available\nas an on-line table at CDS. They are unremarkable except perhaps, that\nthe $\\alpha$ elements are slightly low, for this metallicity.\n[Mg/Fe] and [Ca/Fe] are around +0.3\\,dex for both stars."
+        }
+      ],
+      "evidence": "The abundances for \\ion{Fe}{i}, \\ion{Fe}{ii}, \\ion{Mg}{i},\n\\ion{Ca}{i}, \\ion{Mn}{i}, \\ion{Co}{i} and \\ion{Ni}{i} are available\nas an on-line table at CDS. They are unremarkable except perhaps, that\nthe $\\alpha$ elements are slightly low, for this metallicity.\n[Mg/Fe] and [Ca/Fe] are around +0.3\\,dex for both stars.",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "http://kurucz.harvard.edu/atoms/0300/",
+      "local_path": "",
+      "description": "Kurucz atomic database providing hyperfine structure data for the Li doublet used in spectral synthesis.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 870,
+          "end_line": 870,
+          "context": "\\delta W}$), and it is written in the form $\\mathrm{\\delta W \\,\\simeq\\, 1.5\\times (FWHM*\\delta x)^{1/2}\\,/\\,(S/N)}$,  where FWHM is the full-width half maximum of the line, $\\mathrm{\\delta x}$ is the pixel size of the spectrum and S/N is the signal-to-noise in the continuum neighbouring the line.} \\citep{Cayrel1988}. \nWe then computed the curve of growth for the Li doublet by measuring the EW of the Li doublet in synthetic spectra for different values of A(Li).\nThe synthetic spectra were computed with the spectral-synthesis code \\texttt{SYNTHE} \\citep[see][]{2005MSAIS...8...14K,2004MSAIS...5...93S}, starting from \\texttt{ATLAS\\,9} 1D plane-parallel model atmosphere computed using an ODF by \\citet{CastelliKurucz}, and atomic data including the hyperfine structure of the Li doublet from Kurucz's database\\footnote{\\url{http://kurucz.harvard.edu/atoms/0300/}}.\n\n\\subsubsection{GHS69}"
+        }
+      ],
+      "evidence": "\\delta W}$), and it is written in the form $\\mathrm{\\delta W \\,\\simeq\\, 1.5\\times (FWHM*\\delta x)^{1/2}\\,/\\,(S/N)}$,  where FWHM is the full-width half maximum of the line, $\\mathrm{\\delta x}$ is the pixel size of the spectrum and S/N is the signal-to-noise in the continuum neighbouring the line.} \\citep{Cayrel1988}. \nWe then computed the curve of growth for the Li doublet by measuring the EW of the Li doublet in synthetic spectra for different values of A(Li).\nThe synthetic spectra were computed with the spectral-synthesis code \\texttt{SYNTHE} \\citep[see][]{2005MSAIS...8...14K,2004MSAIS...5...93S}, starting from \\texttt{ATLAS\\,9} 1D plane-parallel model atmosphere computed using an ODF by \\citet{CastelliKurucz}, and atomic data including the hyperfine structure of the Li doublet from Kurucz's database\\footnote{\\url{http://kurucz.harvard.edu/atoms/0300/}}.\n\n\\subsubsection{GHS69}",
+      "comments": ""
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "https://people.smp.uq.edu.au/HolgerBaumgardt/globular/",
+      "local_path": "",
+      "description": "Holger Baumgardt globular cluster database, referenced for the CMD of NGC 6584.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 962,
+          "end_line": 962,
+          "context": "The closest encounter occurred with the GC \nNGC\\,6584, $\\sim$1\\, Ma ago at a distance of 2.5\\,kpc.\nThe colour-magnitude diagram of NGC\\,6584 \\citep[][and \\url{https://people.smp.uq.edu.au/HolgerBaumgardt/globular/}]{vasiliev21} shows an extended sequence of \nblue stragglers,\nsome of which could be more massive than twice the mass of the Turn-Off stars."
+        }
+      ],
+      "evidence": "The closest encounter occurred with the GC \nNGC\\,6584, $\\sim$1\\, Ma ago at a distance of 2.5\\,kpc.\nThe colour-magnitude diagram of NGC\\,6584 \\citep[][and \\url{https://people.smp.uq.edu.au/HolgerBaumgardt/globular/}]{vasiliev21} shows an extended sequence of \nblue stragglers,\nsome of which could be more massive than twice the mass of the Turn-Off stars.",
+      "comments": ""
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "The paper states that the full chemical and kinematical data for Aurora candidates is available in a table at the CDS.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 1526,
+          "end_line": 1526,
+          "context": "We stress that our are candidates and higher resolution spectroscopic observations, including Al abundances, \nare encouraged to establish the possible membership to Aurora. \nThe full chemical and kinematical data is available in a Table at CDS, \nthus the researchers interested in performing follow-up observations can pick their targets according to the criteria they consider more appropriate.\nFrom the limited chemical inventory at our disposal we cannot see any significative difference"
+        }
+      ],
+      "evidence": "We stress that our are candidates and higher resolution spectroscopic observations, including Al abundances, \nare encouraged to establish the possible membership to Aurora. \nThe full chemical and kinematical data is available in a Table at CDS, \nthus the researchers interested in performing follow-up observations can pick their targets according to the criteria they consider more appropriate.\nFrom the limited chemical inventory at our disposal we cannot see any significative difference",
+      "comments": ""
+    },
+    {
+      "id": "resource-012",
+      "kind": "external_url",
+      "url": "https://hdbscan.readthedocs.io/en/latest/index.html",
+      "local_path": "",
+      "description": "HDBSCAN Python library used for clustering analysis in kinematic space.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 2150,
+          "end_line": 2150,
+          "context": "The motivation for performing a clustering analysis has been given in Sect.\\,\\ref{kin}. We did so on the stars of our sample using the HDBSCAN\\footnote{\\url{https://hdbscan.readthedocs.io/en/latest/index.html}} \nlibrary and a Gaussian Mixture model\\footnote{\\url{https://scikit-learn.org/stable/modules/mixture. html}}.\nAfter a number of attempts using different input variables, we decided to use E, L$_Z$ and J$_R$ only. The data was scaled using a `RobustScaler' within the scikit learn package."
+        }
+      ],
+      "evidence": "The motivation for performing a clustering analysis has been given in Sect.\\,\\ref{kin}. We did so on the stars of our sample using the HDBSCAN\\footnote{\\url{https://hdbscan.readthedocs.io/en/latest/index.html}} \nlibrary and a Gaussian Mixture model\\footnote{\\url{https://scikit-learn.org/stable/modules/mixture. html}}.\nAfter a number of attempts using different input variables, we decided to use E, L$_Z$ and J$_R$ only. The data was scaled using a `RobustScaler' within the scikit learn package.",
+      "comments": ""
+    },
+    {
+      "id": "resource-013",
+      "kind": "external_url",
+      "url": "https://scikit-learn.org/stable/modules/mixture.",
+      "local_path": "",
+      "description": "scikit-learn Gaussian Mixture model module used for clustering analysis.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 2151,
+          "end_line": 2151,
+          "context": "The motivation for performing a clustering analysis has been given in Sect.\\,\\ref{kin}. We did so on the stars of our sample using the HDBSCAN\\footnote{\\url{https://hdbscan.readthedocs.io/en/latest/index.html}} \nlibrary and a Gaussian Mixture model\\footnote{\\url{https://scikit-learn.org/stable/modules/mixture. html}}.\nAfter a number of attempts using different input variables, we decided to use E, L$_Z$ and J$_R$ only. The data was scaled using a `RobustScaler' within the scikit learn package."
+        }
+      ],
+      "evidence": "The motivation for performing a clustering analysis has been given in Sect.\\,\\ref{kin}. We did so on the stars of our sample using the HDBSCAN\\footnote{\\url{https://hdbscan.readthedocs.io/en/latest/index.html}} \nlibrary and a Gaussian Mixture model\\footnote{\\url{https://scikit-learn.org/stable/modules/mixture. html}}.\nAfter a number of attempts using different input variables, we decided to use E, L$_Z$ and J$_R$ only. The data was scaled using a `RobustScaler' within the scikit learn package.",
+      "comments": ""
+    },
+    {
+      "id": "resource-014",
+      "kind": "external_url",
+      "url": "https://scikit-learn.org/stable/modules/mixture. html",
+      "local_path": "",
+      "description": "scikit-learn mixture module (same as resource-013, duplicate mention).",
+      "source_refs": [
+        {
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 2151,
+          "end_line": 2151,
+          "context": "The motivation for performing a clustering analysis has been given in Sect.\\,\\ref{kin}. We did so on the stars of our sample using the HDBSCAN\\footnote{\\url{https://hdbscan.readthedocs.io/en/latest/index.html}} \nlibrary and a Gaussian Mixture model\\footnote{\\url{https://scikit-learn.org/stable/modules/mixture. html}}.\nAfter a number of attempts using different input variables, we decided to use E, L$_Z$ and J$_R$ only. The data was scaled using a `RobustScaler' within the scikit learn package."
+        }
+      ],
+      "evidence": "The motivation for performing a clustering analysis has been given in Sect.\\,\\ref{kin}. We did so on the stars of our sample using the HDBSCAN\\footnote{\\url{https://hdbscan.readthedocs.io/en/latest/index.html}} \nlibrary and a Gaussian Mixture model\\footnote{\\url{https://scikit-learn.org/stable/modules/mixture. html}}.\nAfter a number of attempts using different input variables, we decided to use E, L$_Z$ and J$_R$ only. The data was scaled using a `RobustScaler' within the scikit learn package.",
+      "comments": ""
+    },
+    {
+      "id": "resource-015",
+      "kind": "external_url",
+      "url": "https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html",
+      "local_path": "",
+      "description": "scikit-learn t-SNE module used for dimensionality reduction before clustering.",
+      "source_refs": [
+        {
+          "path": "literature/2402.02876/arxiv_source/47865HAL.tex",
+          "start_line": 2236,
+          "end_line": 2236,
+          "context": "If we perform a dimensionality reduction using the \nt-SNE\\footnote{\\url{https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html}} \n(T-distributed Stochastic Neighbour Embedding) library first and then apply HDBSCAN on the resulting projection, we end up with 7 clusters. Similarly, the two most prominent clusters, \"6\" and \"4\", with 72 and 62 members each, occupy in the planes of figure \\ref{char1} regions similar to those of GSE and bulge stars but, again with larger scatter when we look at them in the [Mg/Fe]  vs  [Fe/H] plane for bulge stars. Here, however, clusters 5 (19 stars) and perhaps 2 (22 stars) and 0 (33 stars) seems also to present a coherent behaviour in this plane. Figures \\ref{char8} presents the t-SNE projection resulting from the dimensionality reduction process, showing the different clusters identified by HDBSCAN with different colours. \nFigure \\ref{char10} is analogous to figure \\ref{char5}. Figure\\,\\ref{char12} presents each cluster separately in the E  vs  L$_Z$ plane to allow the association of a kinematic structure with the chemical behaviour presented in fig.\\,\\ref{char13}. It may be noticed here that the region defined by \\citet[][]{feuillet21} to select likely GSE candidates is roughly coincident with the stars selected in cluster 6 (bottom-middle panel in Figs.\\,\\ref{char10} and \\ref{char12}), apart for a few stars having higher values of J$_R$ in our case."
+        }
+      ],
+      "evidence": "If we perform a dimensionality reduction using the \nt-SNE\\footnote{\\url{https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html}} \n(T-distributed Stochastic Neighbour Embedding) library first and then apply HDBSCAN on the resulting projection, we end up with 7 clusters. Similarly, the two most prominent clusters, \"6\" and \"4\", with 72 and 62 members each, occupy in the planes of figure \\ref{char1} regions similar to those of GSE and bulge stars but, again with larger scatter when we look at them in the [Mg/Fe]  vs  [Fe/H] plane for bulge stars. Here, however, clusters 5 (19 stars) and perhaps 2 (22 stars) and 0 (33 stars) seems also to present a coherent behaviour in this plane. Figures \\ref{char8} presents the t-SNE projection resulting from the dimensionality reduction process, showing the different clusters identified by HDBSCAN with different colours. \nFigure \\ref{char10} is analogous to figure \\ref{char5}. Figure\\,\\ref{char12} presents each cluster separately in the E  vs  L$_Z$ plane to allow the association of a kinematic structure with the chemical behaviour presented in fig.\\,\\ref{char13}. It may be noticed here that the region defined by \\citet[][]{feuillet21} to select likely GSE candidates is roughly coincident with the stars selected in cluster 6 (bottom-middle panel in Figs.\\,\\ref{char10} and \\ref{char12}), apart for a few stars having higher values of J$_R$ in our case.",
+      "comments": ""
+    }
+  ]
+}

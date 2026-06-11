@@ -1,0 +1,91 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:50:00",
+  "paper": {
+    "arxiv_id": "2101.01694",
+    "bibcode": "2021AJ....161..140Z",
+    "title": "The Young Massive Star Cluster Westerlund 2 Observed with MUSE. III. A Cluster in Motion—The Complex Internal Dynamics",
+    "month": "2021-01",
+    "source_note_json": "notes/2021/2021-01/2021-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2101.01694",
+      "pdf": "https://arxiv.org/pdf/2101.01694"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2101.01694",
+    "audit_path": "literature/2101.01694/audit.json",
+    "catalog_review_path": "literature/2101.01694/catalog_review.json",
+    "catalog_extraction_path": "literature/2101.01694/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:50:00",
+    "extractor": "agent",
+    "summary": "本文利用MUSE积分场光谱和Gaia DR2自行数据，对年轻大质量星团Westerlund 2 (Wd2)的恒星和气体运动学进行了详细分析。论文发现恒星的速度弥散随质量减小而增大，低质量前主序星呈现出五个明显的速度群，这与初始云核塌缩形成Wd2的印记相符。Wd2的动力学质量范围为(7.5±1.9)×10^4至(4.4±1.1)×10^5 Msun，超过光度量至少两倍，但仍不足以保持引力束缚。论文识别了22颗速逃候选体(runaway candidates)，其本动速度(peculiar velocities)在30至546 km/s之间。但这些'速逃候选体'是指相对于星团系统速度的本动速度，属于从星团中被动力学弹射的恒星(cluster escapees/runaways)，而非银河系非束缚超高速星(HVS)。论文研究的是星团内部动力学和星团瓦解过程，与HVS候选体评估无关。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文摘要和内容，评估HVS候选体相关性。论文研究年轻大质量星团Wd2的内部动力学，识别的22个速逃候选体是相对于星团系统速度的本动速度(cluster-relative peculiar velocities)，属于星团逃逸星/速逃星。论文主题是星团形成与演化、恒星运动学，不涉及银河系逃逸速度或HVS评估。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (main.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2101.01694/arxiv_source/main.tex",
+          "start_line": 226,
+          "end_line": 228,
+          "context": "Abstract: stellar and gas kinematics of Wd2, 22 runaway candidates with peculiar velocities 30-546 km/s"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2101.01694/arxiv_source/main.tex",
+          "start_line": 533,
+          "end_line": 539,
+          "context": "Section 5: High velocity runaway candidates - peculiar velocities, relative to Wd2 systemic motion"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "wd2-runaways",
+      "description": "Westerlund 2星团中的22颗速逃候选体(runaway candidates)，基于MUSE视向速度和Gaia DR2自行计算的相对于星团系统速度的本动速度(peculiar velocities)。速度范围30-546 km/s。其中三颗速度超过100 km/s: ID-13587 (123.2 km/s), ID-16306 (245.8 km/s), ID-14542 (546.1 km/s)。",
+      "decision": "excluded",
+      "reason": "论文中的'速逃候选体'(runaway candidates)是指相对于Westerlund 2星团系统速度的本动速度(peculiar velocities relative to the cluster systemic motion)。这些恒星是从星团中被动力学弹射的星团逃逸星(cluster escapees)，论文在此讨论了'恒星从星团逃逸后的命运'。最高本动速度546.1 km/s仍仅是星团相对速度，论文未将其转换为银河系静止系速度或与银河系逃逸速度比较。这些速逃星的识别服务于星团动力学和瓦解过程研究，不涉及HVS认证或银河系非束缚评估。论文核心结论是Wd2动力学质量不足以保持引力束缚，速逃星是星团瓦解过程的自然产物。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2101.01694/arxiv_source/main.tex",
+          "start_line": 533,
+          "end_line": 539,
+          "context": "Section 5 title and introduction: High velocity runaway candidates, peculiar velocities, dynamical interactions and supernova explosions as kick mechanisms"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2101.01694/arxiv_source/main.tex",
+          "start_line": 537,
+          "end_line": 539,
+          "context": "Three fastest: ID-13587 (123.2 km/s), ID-16306 (245.8 km/s), ID-14542 (546.1 km/s) - all peculiar velocities relative to Wd2"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2101.01694/arxiv_source/main.tex",
+          "start_line": 226,
+          "end_line": 228,
+          "context": "Abstract: 22 runaway candidates with peculiar velocities between 30 and 546 km/s"
+        }
+      ]
+    }
+  ]
+}

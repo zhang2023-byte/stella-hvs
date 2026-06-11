@@ -1,0 +1,410 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1810.09501",
+    "title": "SB 796: a high-velocity RRc star",
+    "month": "2018-10",
+    "source_note_json": "notes/2018/2018-10/2018-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1810.09501",
+      "pdf": "https://arxiv.org/pdf/1810.09501"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1810.09501",
+    "audit_path": "literature/1810.09501/audit.json",
+    "source_dir": "literature/1810.09501/arxiv_source",
+    "tex_root": "literature/1810.09501/arxiv_source/SB796.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-07T00:02:38",
+    "reviewer": "agent",
+    "summary": "Single-object study of the RRc variable SB 796. Contains 8 internal tables: basic stellar parameters, WASP photometric fit parameters, spectroscopic template parameters, radial-velocity measurements (SpUpNIC + CORALIE), RV solution parameters, Gaia DR2 parameters, astrometric/Galactic position and velocity, and Milky Way mass model components. 6 external resources: WASP public data, SpUpNIC spectrograph, Gaia archive, PHOENIX stellar library, ASAS survey, and galpy package. No CDS/VizieR data deposit identified."
+  },
+  "internal_tables": [
+    {
+      "id": "table-Sys_Parameters",
+      "kind": "latex_table",
+      "asset_type": "object_properties",
+      "role_in_paper": "Presents basic identifying information for the target star SB 796: equatorial coordinates, spectral type, and B/V magnitudes from the literature.",
+      "source_refs": [
+        {
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 172,
+          "end_line": 186,
+          "caption": "Basic information of SB 796.",
+          "label": "table:Sys_Parameters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Property name for the basic stellar parameters of SB 796",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Value",
+          "meaning": "Value of the corresponding stellar parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        }
+      ],
+      "evidence": "Basic information of SB 796.",
+      "comments": "Small 4-row table with row labels: Coordinates (J2000), Spectral Type, B, V. Data sourced from WASP public data and Slettebak & Brundage (1971)."
+    },
+    {
+      "id": "table-Photometry",
+      "kind": "latex_table",
+      "asset_type": "fit_parameters",
+      "role_in_paper": "Lists the Fourier harmonic fit parameters derived from WASP photometry in V_W and r' bands, including period, amplitudes, amplitude ratios, phase differences, and RMS residuals.",
+      "source_refs": [
+        {
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 246,
+          "end_line": 267,
+          "caption": "Parameters of the photometric analysis of WASP light curve. Note the large Root-Mean-Square (RMS) of residuals in the r' photometry relative to the $V_W$ photometry.",
+          "label": "table:Photometry"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Name of the photometric fit parameter (period, epoch, harmonic amplitudes, amplitude ratios, phase differences, RMS)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_W photometry",
+          "meaning": "Value and uncertainty of the parameter derived from the WASP Visual-WASP broadband (400-700 nm) photometry from seasons 1-4",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r' photometry",
+          "meaning": "Value and uncertainty of the parameter derived from the WASP r'-band photometry from seasons 5-6",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Parameters of the photometric analysis of WASP light curve. Note the large Root-Mean-Square (RMS) of residuals in the r' photometry relative to the $V_W$ photometry.",
+      "comments": "Period is common to both bands. T0 is the time of minimum flux. A_n are harmonic amplitudes; R_n1 and phi_n1 are amplitude ratios and phase differences relative to the first harmonic. 10-row table."
+    },
+    {
+      "id": "table-Template",
+      "kind": "latex_table",
+      "asset_type": "fit_parameters",
+      "role_in_paper": "Lists the atmospheric parameters (Teff, logg, [Fe/H]) of the PHOENIX library template adopted for cross-correlation RV measurements, derived from averaging best-fit templates across six CORALIE spectral orders.",
+      "source_refs": [
+        {
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 314,
+          "end_line": 326,
+          "caption": "Parameters of the adopted template with their uncertainties.",
+          "label": "table:Template"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Stellar atmospheric parameter name (effective temperature, surface gravity, iron abundance)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Adopted value and uncertainty of the atmospheric parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Parameters of the adopted template with their uncertainties.",
+      "comments": "Template from PHOENIX library (Husser et al. 2013). Values averaged from six CORALIE orders. Teff=8200±600 K, logg=3.62±0.25, [Fe/H]=-1.6±0.5 dex — typical of RR Lyrae stars."
+    },
+    {
+      "id": "table-RV_data",
+      "kind": "latex_table",
+      "asset_type": "observations",
+      "role_in_paper": "Lists all radial-velocity measurements of SB 796: 16 SpUpNIC observations (upper part, σ=10 km/s each) and 8 CORALIE observations (lower part, with individual uncertainties).",
+      "source_refs": [
+        {
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 343,
+          "end_line": 381,
+          "caption": "Derived radial-velocities of SpUpNIC (upper part) and CORALIE (lower part).",
+          "label": "table:RV_data"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Time [JD - 2450000]",
+          "meaning": "Barycentric Julian Date of the observation, offset by 2450000 days",
+          "unit_text": "JD - 2450000",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV [km/s]",
+          "meaning": "Measured radial velocity of SB 796",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "σ [km/s]",
+          "meaning": "Uncertainty of the radial-velocity measurement",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Derived radial-velocities of SpUpNIC (upper part) and CORALIE (lower part).",
+      "comments": "24 measurements total. SpUpNIC data from 2017 Dec 6-19 with uniform 10 km/s uncertainty. CORALIE data from 2017 Dec - 2018 Jan with individual uncertainties down to 0.61 km/s. One CORALIE observation excluded due to low S/N."
+    },
+    {
+      "id": "table-RV_sol",
+      "kind": "latex_table",
+      "asset_type": "fit_parameters",
+      "role_in_paper": "Presents the single-harmonic RV solution parameters for SB 796: RV semi-amplitude, systemic velocity (γ), and epoch of maximum RV, fitted to CORALIE data with the photometric period fixed.",
+      "source_refs": [
+        {
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 407,
+          "end_line": 419,
+          "caption": "Parameters of the RV solution of SB 796 with the more accurate photometric period P = 0.2658523 d, where $T_{0}$ is the time of maximum RV.",
+          "label": "table:RV_sol"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Radial-velocity fit parameter name (RV semi-amplitude, systemic velocity, epoch of maximum RV)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Best-fit value and uncertainty of the RV parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Parameters of the RV solution of SB 796 with the more accurate photometric period P = 0.2658523 d, where $T_{0}$ is the time of maximum RV.",
+      "comments": "K_RV=5.64±0.12 km/s, γ=248.707±0.088 km/s, T0=2458100.03535±0.00092 JD. Single harmonic fit to CORALIE data only, with photometric period fixed. Note: CORALIE uncertainties in the table should be divided by 2.7 to obtain normalized uncertainties."
+    },
+    {
+      "id": "table-GAIA",
+      "kind": "latex_table",
+      "asset_type": "object_properties",
+      "role_in_paper": "Summarizes Gaia DR2 data for SB 796: source identification, variability classification, photometric parameters in G, G_BP, G_RP bands, colors, and effective temperature estimates.",
+      "source_refs": [
+        {
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 456,
+          "end_line": 496,
+          "caption": "{\\it Gaia} parameters of SB 796. The color uncertainties were calculated using the average signal uncertainty of each band.",
+          "label": "table:GAIA"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Gaia DR2 parameter name (source ID, variability flags, classification, period, photometric statistics per band, colors, effective temperature)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Gaia DR2 value and uncertainty for the corresponding parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "{\\it Gaia} parameters of SB 796. The color uncertainties were calculated using the average signal uncertainty of each band.",
+      "comments": "Multi-panel table: (1) source ID, variability flag, classification, period; (2) G-band photometry; (3) G_BP-band photometry; (4) G_RP-band photometry; (5) colors and Teff. Gaia DR2 classifies SB 796 as RRc. Source ID: 4958223672295639040. Period from Gaia: 0.265853196±5.9×10⁻⁸ d."
+    },
+    {
+      "id": "table-SB796-loc",
+      "kind": "latex_table",
+      "asset_type": "object_properties",
+      "role_in_paper": "Lists the astrometric and kinematic properties of SB 796: equatorial coordinates, parallax, proper motions, mean radial velocity, and derived Galactic Cartesian position and velocity in the rest frame.",
+      "source_refs": [
+        {
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 524,
+          "end_line": 544,
+          "caption": "Equatorial coordinates, parallax, proper motions, mean radial-velocity and corresponding Galactic position and rest-frame velocity of SB 796.",
+          "label": "table:SB796-loc"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Astrometric or kinematic parameter name (RA, DEC, parallax, proper motions, RV, Galactic position X/Y/Z, Galactic velocity Vx/Vy/Vz)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Value and uncertainty of the parameter. Gaia DR2 values for astrometry; CORALIE γ velocity for RV.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Equatorial coordinates, parallax, proper motions, mean radial-velocity and corresponding Galactic position and rest-frame velocity of SB 796.",
+      "comments": "Parallax: 0.26±0.02 mas (adopted uncertainty, Gaia DR2 gives 0.02013 mas but authors adopt 0.02 mas following Lindegren+2018 offset). Galactic position (X,Y,Z) = (8.242, -1.31, -3.70) kpc — star is ~3.5 kpc below plane. Galactic velocity (Vx,Vy,Vz) = (229, -59, -138.1) km/s."
+    },
+    {
+      "id": "table-Gal-Model",
+      "kind": "latex_table",
+      "asset_type": "model_parameters",
+      "role_in_paper": "Lists the Milky Way gravitational potential model components (bulge, stellar disk, dark halo) and their adopted parameters used for the galpy orbit integration with MWPotential2014.",
+      "source_refs": [
+        {
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 548,
+          "end_line": 572,
+          "caption": "Model components adopted for the Milky-Way.",
+          "label": "table:Gal-Model"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Galactic mass model parameter name (component mass, scale lengths, exponents, local dark matter density)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "Adopted value and uncertainty of the model parameter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Model components adopted for the Milky-Way.",
+      "comments": "Uses MWPotential2014 from Bovy (2015). Bulge: 0.5×10¹⁰ M_⊙, r_cut=1.9 kpc, α=1.8. Stellar disk: 6.8×10¹⁰ M_⊙, h_R=3.0 kpc, h_z=0.28 kpc. Dark halo: ρ_⊙=0.008 M_⊙/pc³, r_s=16 kpc. Relative uncertainties from Bovy & Rix (2013)."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://wasp.cerit-sc.cz/form",
+      "local_path": "",
+      "description": "WASP (Wide Angle Search for Planets) public data archive. The WASP photometric data for SB 796 (49,804 measurements over 2006-2014) were obtained from this archive.",
+      "source_refs": [
+        {
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 141,
+          "end_line": 141,
+          "context": "We report here on a detailed study of one c-type RR Lyrae variable (RRc variable) that was serendipitously discovered in a search for stars with massive companions that display large photometric ellipsoidal variations (Mazeh et al., in preparation). Searching the WASP public data\\footnote{https://wasp.cerit-sc.cz/form} \\citep[][]{pollacco06, butters10} for periodic photometric variables we came across a stellar candidate that displayed a brightness modulation with a period of  $\\sim 0.25$ d."
+        }
+      ],
+      "evidence": "The paper uses WASP public data as the primary photometric dataset. The WASP data are described in Section 2 as spanning 2006-2014 with 49,804 measurements in V_W and r' bands. The URL is given as a footnote in the Introduction.",
+      "comments": "The WASP public data archive provides the photometric light curves used for period determination and harmonic analysis of SB 796."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "http://www.saao.ac.za/science/facilities/instruments/spupnic-spectrograph-upgrade-newly-improved-cassegrain",
+      "local_path": "",
+      "description": "SpUpNIC (Spectrograph Upgrade - Newly Improved Cassegrain) instrument page at SAAO. The SpUpNIC spectrograph on the SAAO 1.9-m telescope was used to obtain 16 RV measurements of SB 796.",
+      "source_refs": [
+        {
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 148,
+          "end_line": 148,
+          "context": "Radial-velocity (RV) follow-up observations, performed with the SpUpNIC spectrograph\\footnote{http://www.saao.ac.za/science/facilities/instruments/spupnic-spectrograph-upgrade-newly-improved-cassegrain} \\citep{crause16} at the South African Astronomical Observatory (SAAO), revealed a small amplitude RV modulation."
+        }
+      ],
+      "evidence": "Section 3 describes the SpUpNIC observations: 16 spectra obtained 2017 Dec 6-19 with the G4 grating on the SAAO 1.9-m telescope, 450 s exposures. The URL is given as a footnote.",
+      "comments": "This is an instrument description page, not a data archive. The actual SpUpNIC RV measurements are contained in Table 4 (table:RV_data) of the paper."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://gea.esac.esa.int/archive",
+      "local_path": "",
+      "description": "Gaia ESA archive. Gaia DR2 time-series photometry for SB 796 (49 G, 46 G_BP, 46 G_RP measurements from 2014-2016) was obtained from this archive.",
+      "source_refs": [
+        {
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 287,
+          "end_line": 287,
+          "context": "{\\it Gaia} DR2 \\citep{clementini18} classifies SB 796 as an RRc variable ({\\it Gaia} parameters are given in Table~\\ref{table:GAIA}) and therefore includes 49, 46 and 46 measurements of the G, $G_{BP}$ and $G_{RP}$ bands, respectively, obtained in 2014--2016\\footnote{https://gea.esac.esa.int/archive}."
+        }
+      ],
+      "evidence": "The paper uses Gaia DR2 data for SB 796 as described in Section 2. Gaia astrometry (parallax, proper motions) and photometry are listed in Tables 6 and 7. The Gaia classification as RRc corroborates the authors' independent classification. The archive URL is given as a footnote.",
+      "comments": "The Gaia archive provides the DR2 astrometric solution and time-series photometry used throughout the paper. The Gaia DR2 source ID for SB 796 is 4958223672295639040."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "http://phoenix.astro.physik.uni-goettingen.de",
+      "local_path": "",
+      "description": "PHOENIX stellar atmosphere library (Husser et al. 2013). Used to find the best-fit template spectrum for cross-correlation RV measurement of SB 796 with the UNICOR software.",
+      "source_refs": [
+        {
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 312,
+          "end_line": 312,
+          "context": "First, we used \\textit{UNICOR} to search the PHOENIX \\citep{husser13} library\\footnote{http://phoenix.astro.physik.uni-goettingen.de} for a template that best fitted the spectra, using six CORALIE orders."
+        }
+      ],
+      "evidence": "Section 3 describes the spectroscopic analysis pipeline: UNICOR searched the PHOENIX library for the best-fitting template spectrum across six CORALIE orders. The averaged template parameters (Teff, logg, [Fe/H]) are given in Table 3.",
+      "comments": "The PHOENIX library provides synthetic stellar spectra used as templates for cross-correlation RV measurements. The adopted template parameters are Teff=8200±600 K, logg=3.62±0.25, [Fe/H]=-1.6±0.5 dex."
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "http://www.astrouw.edu.pl/asas/?page=main",
+      "local_path": "",
+      "description": "All Sky Automated Survey (ASAS) homepage. The paper compares SB 796's visual-light vs. RV amplitude relation with results from Sneden et al. (2017), who studied 12 bright RRc stars from ASAS.",
+      "source_refs": [
+        {
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 499,
+          "end_line": 499,
+          "context": "\\citet{sneden17} studied 12 RRc variables that were chosen from the brightest RRc stars detected by the All Sky Automated Survey\\footnote{available at http://www.astrouw.edu.pl/asas/?page=main} (ASAS) and derived a linear relation between their visual-light and RV amplitudes."
+        }
+      ],
+      "evidence": "Section 4 compares SB 796 to the Sneden et al. (2017) sample of RRc stars from ASAS on the visual-light vs. RV amplitude diagram (Fig. 10). SB 796 lies near the lower end of the relation.",
+      "comments": "The ASAS survey is referenced as the source of the comparison sample, not as a direct data source for SB 796 itself. The comparison is shown in Fig. 10."
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "http://github.com/jobovy/galpy",
+      "local_path": "",
+      "description": "galpy Python package for Galactic dynamics (Bovy 2015). Used to integrate the Galactic orbit of SB 796 forward and backward for 1 Gyr using the MWPotential2014 gravitational potential.",
+      "source_refs": [
+        {
+          "path": "literature/1810.09501/arxiv_source/SB796.tex",
+          "start_line": 521,
+          "end_line": 521,
+          "context": "We then used the \\texttt{galpy} package\\footnote{http://github.com/jobovy/galpy} for Galactic motion calculations \\citep{bovy15} to integrate the stellar orbit for the past and into the future for 1 Gyr, adopting the \\texttt{MWPotential2014} approximation for the Milky-Way gravitational field \\citep{bovy13}."
+        }
+      ],
+      "evidence": "Section 5 describes the Galactic dynamics analysis. The galpy package was used with MWPotential2014 to compute SB 796's orbit. The model parameters are listed in Table 8. Results show SB 796 on a radial orbit with Galactocentric distance 0.5-20 kpc, passing near the Galactic center ~3 times per Gyr.",
+      "comments": "galpy is a software tool, not a data archive. The orbital integration uses the astrometric parameters from Table 7 and the MWPotential2014 model from Table 8. Results are visualized in Fig. 11."
+    }
+  ]
+}

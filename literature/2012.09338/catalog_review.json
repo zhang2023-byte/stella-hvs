@@ -1,0 +1,123 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2012.09338",
+    "title": "Discovery of A candidate Hypervelocity star originated from the Sagittarius Dwarf Spheroidal galaxy",
+    "month": "2020-12",
+    "source_note_json": "notes/2020/2020-12/2020-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2012.09338",
+      "pdf": "https://arxiv.org/pdf/2012.09338"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2012.09338",
+    "audit_path": "literature/2012.09338/audit.json",
+    "source_dir": "literature/2012.09338/arxiv_source",
+    "tex_root": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:36:00",
+    "reviewer": "agent",
+    "summary": "该ApJ Letter报道了一颗候选超高速星（HVS）J1443+1453的发现，其很可能源自人马座矮椭球星系（Sgr dSph）。该星为一颗年老（~14.0 Gyr）、极贫金属（[Fe/H]=-2.23 dex）的低质量主序拐点星，在银河系静止参考系中的总速度为559.01^{+135.07}_{-87.40} km/s，超过其所在位置的逃逸速度。通过反向轨道积分回溯其在银河系势阱中的轨迹，发现该星约37.8 Myr前在Sgr dSph最近一次穿过银河系时与之近距离相遇（距Sgr dSph中心仅2.42 kpc，小于其半光半径2.59 kpc），且其化学丰度与Sgr dSph相关球状星团或Sgr星流成员星一致。论文包含两张表格：Table 1列出J1443+1453的22个实测参数（天体测量、测光、光谱及推导参数）；Table 2列出反向轨道分析中d_min/r_h最小的前三个系统（Sgr dSph、Tucana II、Ursa Major II）。致谢中提及Gaia、SDSS为通用致谢。Data Availability方面：原始数据来自Gaia DR2、SDSS/SEGUE及文献星表，未声明外部数据存储库URL。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-measured-params",
+      "kind": "latex_table",
+      "asset_type": "results_catalog",
+      "role_in_paper": "列出HVS候选星J1443+1453的22个实测参数，包括天体测量（坐标、自行、视差）、测光（Gaia G/BP/RP星等、SDSS g/r星等、色余）、光谱（视向速度、有效温度、表面重力、金属丰度、α元素丰度）以及推导参数（距离、银心距、总速度、年龄、质量）。这是全论文的核心数据表，支撑该星作为HVS候选体的物理特征描述，并为后续轨道积分和起源分析提供输入。",
+      "source_refs": [
+        {
+          "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+          "start_line": 57,
+          "end_line": 87,
+          "caption": "The measured parameters of HVS candidate J1443+1453.",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "被测物理量名称，涵盖天体测量（赤经/赤纬/Gaia DR2 source_id/自行/视差）、测光（Gaia星等和颜色、SDSS星等、色余）、光谱（视向速度、有效温度、表面重力、金属丰度、α元素丰度）及推导量（距离、银心距、总速度、年龄、质量）共22行参数",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Value",
+          "meaning": "各参数的测量值或推导值，包含不对称误差（以上标下标形式表示16%和84%分位数），部分参数来自Gaia DR2直接测量（自行、视差），部分来自SEGUE光谱分析（视向速度、大气参数），部分由贝叶斯方法推导（距离、年龄、质量）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Units",
+          "meaning": "参数单位：mas/yr用于自行，mas用于视差，mag用于星等和色余，km/s用于视向速度和总速度，K用于温度，dex用于表面重力和金属丰度，kpc用于距离和银心距，Gyr用于年龄，M_sun用于质量",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 2详细描述了表1中每个参数的来源和测量方法。天体测量参数（坐标、自行、视差）来自Gaia DR2（Gaia Collaboration et al. 2018; Lindegren et al. 2018）。SEGUE光谱经SSPP流水线处理，给出视向速度194.25±1.97 km/s和大气参数T_eff=6405±130 K, log g=3.64±0.21 dex, [Fe/H]=-2.23±0.11 dex（Lee et al. 2008a,b; 2011）。距离2.90 kpc由贝叶斯方法从Gaia视差推断（考虑了-0.048 mas的视差零点修正，Schönrich et al. 2019）。年龄和质量由贝叶斯方法结合DSEP等年龄线推导。总速度V_GSR=559.01 km/s从3D位置和速度导出。此表为Section 2 'J1443+1453 properties'的核心结果展示。",
+      "comments": "该表使用简单的tabular环境，非传统的数据目录表（每行一个参数而非每行一个天体），属于单一目标星的参数汇总表。表中22个参数来自多种数据源（Gaia DR2、SDSS/SEGUE、DSEP等年龄线），误差为非对称的MC模拟后验PDF分位数。该表在tex源中无label标记。"
+    },
+    {
+      "id": "table-orbit-top3",
+      "kind": "latex_table",
+      "asset_type": "results_catalog",
+      "role_in_paper": "列出反向轨道分析中J1443+1453与150个银河系球状星团和39个矮星系轨迹最接近的前三个系统。按d_min/r_h从小到大排序，Sgr dSph以0.93的最小比值位居第一（最近距离d_min=2.42 kpc < 半光半径r_h=2.59 kpc），表明J1443+1453的轨道与Sgr dSph在其半光半径内相交。此表是论文轨道分析的核心定量结果，直接支持J1443+1453源自Sgr dSph的结论。",
+      "source_refs": [
+        {
+          "path": "literature/2012.09338/arxiv_source/HVS_apjl.tex",
+          "start_line": 172,
+          "end_line": 191,
+          "caption": "Top three systems sorted by the value of d_min/r_h (from small to large) in the backward orbital analysis of J1443+1453.",
+          "label": ""
+        }
+      ],
+      "columns": [
+        {
+          "name": "Name",
+          "meaning": "目标系统名称：Sgr dSph（人马座矮椭球星系）、Tucana II（杜鹃座II矮星系）、Ursa Major II（大熊座II矮星系）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Closest distance (d_min)",
+          "meaning": "J1443+1453反向轨道与目标系统轨道的最接近距离。Sgr dSph为2.42 kpc，小于其半光半径，表明轨道在其内部相交",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Backward time",
+          "meaning": "达到最接近距离所需的反向积分时间。Sgr dSph为37.8 Myr，恰逢其最近一次穿过银河系的近心点时刻",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Half-light radius (r_h)",
+          "meaning": "目标系统的半光半径：Sgr dSph = 2.59 kpc（McConnachie 2012），Tucana II = 0.17 kpc（Koposov et al. 2015），Ursa Major II = 0.15 kpc（McConnachie 2012）",
+          "unit_text": "kpc",
+          "source_of_definition": "table header + tablenotes",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_min/r_h",
+          "meaning": "最接近距离与半光半径的比值，用于排序。仅Sgr dSph的比值（0.93）小于1，表明J1443+1453在其半光半径内通过；Tucana II (96.76) 和 Ursa Major II (228.73) 的比值远大于1，排除了物理关联",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Section 3.1 'Backward orbit analysis': 'Excitingly, our backward orbital analysis shows that the orbit of J1443+1453 intersects with that of Sgr dSph within its half-light radius r_h = 2.59 kpc (McConnachie 2012) 37.8^{+4.6}_{-6.0} Myr ago. The closest encounter occurred at an impact distance 2.42^{+1.80}_{-0.77} kpc from the core of Sgr dSph.' 论文第234-241行详细描述了轨道分析方法和结果。J1443+1453在Sgr dSph最近一次穿过银河系时与之相遇，且相遇发生于Sgr dSph的近心点附近。",
+      "comments": "此表仅3行数据，Sgr dSph显著优于其他两个系统（d_min/r_h相差两个数量级）。Tucana II和Ursa Major II的d_min/r_h比值>96，排除了物理关联。此表使用threeparttable环境以包含表格注释（标注半光半径的文献来源）。"
+    }
+  ],
+  "external_resources": []
+}

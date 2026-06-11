@@ -1,0 +1,94 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2304.14759",
+    "title": "A runaway T-Tauri star leaving an extended trail",
+    "month": "2023-04",
+    "source_note_json": "notes/2023/2023-04/2023-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2304.14759",
+      "pdf": "https://arxiv.org/pdf/2304.14759"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2304.14759",
+    "audit_path": "literature/2304.14759/audit.json",
+    "source_dir": "literature/2304.14759/arxiv_source",
+    "tex_root": "literature/2304.14759/arxiv_source/paper.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:31:23",
+    "reviewer": "agent",
+    "summary": "Paper contains one LaTeX table (Table 1: astrometric observation log) and one external URL (stilism.obspm.fr reddening maps). No other structured data tables, machine-readable files, or explicit data-availability resources found. The astrometric table records positions from 8 epochs (1953-2021) used to derive proper motion."
+  },
+  "internal_tables": [
+    {
+      "id": "table-table-1",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Log of astrometric observations used to derive proper motion of UJT-1. Records ICRS coordinates from 8 epochs spanning 1953-2021 from various telescopes/surveys.",
+      "source_refs": [
+        {
+          "path": "literature/2304.14759/arxiv_source/paper.tex",
+          "start_line": 165,
+          "end_line": 185,
+          "caption": "Log of astrometric observations",
+          "label": "table:1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Source of image",
+          "meaning": "Telescope or survey providing the astrometric image",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Epoch",
+          "meaning": "Observation epoch in decimal years",
+          "unit_text": "year",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Right Ascension",
+          "meaning": "Right Ascension offset in arcseconds from 308°07' (ICRS)",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Declination",
+          "meaning": "Declination offset in arcseconds from 43°57' (ICRS)",
+          "unit_text": "arcsec",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Log of astrometric observations",
+      "comments": "Table footnote notes coordinates are in ICRS with 1-sigma errors. Sources: DSS1, DSS2, INT, Pan-STARRS1, Gaia DR3, UJT, NOT."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://stilism.obspm.fr",
+      "local_path": "",
+      "description": "Tridimensional reddening maps by Capitanio et al. (2017A&A...606A..65C), used to constrain distance to UJT-1 based on color excess",
+      "source_refs": [
+        {
+          "path": "literature/2304.14759/arxiv_source/paper.tex",
+          "start_line": 280,
+          "end_line": 280,
+          "context": "However, according to the tridimensional reddening maps by \\citet{2017A&A...606A..65C}\\footnote{\\url{https://stilism.obspm.fr}}, a distance of 2 kpc or higher is needed to reach the estimated color excess for the UJT-1 line of sight."
+        }
+      ],
+      "evidence": "Footnote URL in paper text referencing reddening maps used for distance estimation",
+      "comments": ""
+    }
+  ]
+}

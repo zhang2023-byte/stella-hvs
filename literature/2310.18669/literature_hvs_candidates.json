@@ -1,0 +1,78 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T23:39:00",
+  "paper": {
+    "arxiv_id": "2310.18669",
+    "bibcode": "2023A&A...680A..99M",
+    "title": "Probing the non-thermal physics of stellar bow shocks using radio observations",
+    "month": "2023-12",
+    "source_note_json": "notes/2023/2023-12/2023-12.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2310.18669",
+      "pdf": "https://arxiv.org/pdf/2310.18669"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2310.18669",
+    "audit_path": "literature/2310.18669/audit.json",
+    "catalog_review_path": "literature/2310.18669/catalog_review.json",
+    "catalog_extraction_path": "literature/2310.18669/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2310.18669/catalog_tables/table-table-parameters.ecsv",
+      "literature/2310.18669/catalog_tables/table-table-systems.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T23:39:00",
+    "extractor": "agent",
+    "summary": "This paper studies the non-thermal radio emission from bow shocks produced by massive runaway stars. The targets include five systems: BD+43\u00b03654, BD+60\u00b02522, G1, G3, and Vela X-1, all 'runaway' stars ejected from their birth clusters/associations. All stars have peculiar velocities in the range of 20-65 km/s \u2014 far below the Galactic escape velocity (~500 km/s). The paper defines 'runaway' as stars ejected from their birth clusters, not as Galactic-unbound objects. The paper never discusses hypervelocity stars (HVS), Galactic escape velocity, or Galactic-unbound status. No HVS candidates."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "2310.18669:group-01",
+      "description": "Five massive runaway star systems with bow shocks: BD+43\u00b03654 (O4If, V_star~50 km/s), BD+60\u00b02522 (O6.5V, V_star~42 km/s), G1 (O7V, V_star~20 km/s), G3 (O5V, V_star~22 km/s), Vela X-1 (B0.5Ia, V_star~65 km/s). All were ejected from their birth clusters or associations.",
+      "decision": "rejected",
+      "reason": "All stars are 'runaway stars' (cluster runaways), ejected from their birth clusters/associations, with peculiar velocities of only 20-65 km/s, far below the Galactic escape velocity. The paper studies the physics of particle acceleration and non-thermal radiation in the bow shocks of these stars, and is completely unrelated to HVS candidate searches, Galactic escape, or gravitational-unbound discussions.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2310.18669/arxiv_source/paper_v1.tex",
+          "start_line": 80,
+          "end_line": 80,
+          "context": "Abstract: 'Massive runaway stars produce bow shocks in the interstellar medium.' — defines the targets as runaway stars, not HVS."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2310.18669/arxiv_source/paper_v1.tex",
+          "start_line": 123,
+          "end_line": 123,
+          "context": "BD+43°3654 (O4If): 'The star was ejected from the Cygnus OB2 association' — peculiar velocity ~50 km/s."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2310.18669/arxiv_source/paper_v1.tex",
+          "start_line": 141,
+          "end_line": 141,
+          "context": "G1: 'ejected from the star-forming region NGC 6357' — V_star ~20 km/s."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2310.18669/arxiv_source/paper_v1.tex",
+          "start_line": 147,
+          "end_line": 147,
+          "context": "G3: 'also ejected from NGC 6357' — V_star ~22 km/s."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2310.18669/arxiv_source/paper_v1.tex",
+          "start_line": 319,
+          "end_line": 319,
+          "context": "Model description: 'runaway stars are ejected from their birth clusters at high velocities and are usually isolated' — 'high velocities' here refers to cluster ejection, not Galactic escape."
+        }
+      ]
+    }
+  ]
+}

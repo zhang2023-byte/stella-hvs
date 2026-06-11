@@ -1,0 +1,107 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:45:00",
+  "paper": {
+    "arxiv_id": "2104.12819",
+    "bibcode": "2021A&A...649L...8K",
+    "title": "Extreme adaptive optics astrometry of R136. Searching for high proper motion stars",
+    "month": "2021-04",
+    "source_note_json": "notes/2021/2021-04/2021-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2104.12819",
+      "pdf": "https://arxiv.org/pdf/2104.12819"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2104.12819",
+    "audit_path": "literature/2104.12819/audit.json",
+    "catalog_review_path": "literature/2104.12819/catalog_review.json",
+    "catalog_extraction_path": "literature/2104.12819/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2104.12819/catalog_tables/table-table-infoRun.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:45:00",
+    "extractor": "agent",
+    "summary": "本文利用VLT/SPHERE/IRDIS对R136星团核心进行两历元（间隔3.06年）高对比度近红外自适应光学天体测量，搜索高自行候选体（HOMAs: High prOper Motion cAndidates）。在339颗可靠源中发现2颗HOMA（HOMA1: 321±52 km/s; HOMA2: 273±26 km/s），位于R136a1和R136c附近。这些高速星位于大麦哲伦云（LMC）中的R136星团，其切向速度约300 km/s。论文讨论的弹射场景包括星团组装期弹射、双星超新星爆炸、三体相互作用和与致密天体相遇，均为星团逃逸星（cluster escapees/runaway stars）的产生机制。论文未宣称这些天体为非束缚HVS，而是将其称为HOMAs（高自行候选体），并强调需要后续观测确认其性质。这些高速运动的天体属于星团动力学逃逸范畴，而非银河系/星系际逃逸HVS。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文在LMC的R136星团中搜索高自行候选体（HOMAs），发现2颗切向速度约300 km/s的恒星。这些是星团尺度的逃逸候选体（cluster escapee candidates），论文讨论的弹射机制均为星团内部动力学过程，未将目标归类为HVS。论文自称搜索'high proper motion stars'，而非hypervelocity stars。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (40668corr.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2104.12819/arxiv_source/40668corr.tex",
+          "start_line": 28,
+          "end_line": 29,
+          "context": "Title: Extreme adaptive optics astrometry of R136. Searching for high proper motion stars"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2104.12819/arxiv_source/40668corr.tex",
+          "start_line": 89,
+          "end_line": 95,
+          "context": "Abstract: HOMAs defined as High prOper Motion cAndidates; 321 and 273 km/s tangential velocities; discuss scenarios for extreme proper motions"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2104.12819/arxiv_source/40668corr.tex",
+          "start_line": 110,
+          "end_line": 116,
+          "context": "Introduction: searching for HOMAs in R136 core; cluster ejection scenarios"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2104.12819/arxiv_source/40668corr.tex",
+          "start_line": 280,
+          "end_line": 293,
+          "context": "Conclusion: four ejection scenarios discussed (cluster assembly, SN binary companion, three-body interactions, compact body encounter); future observations needed to confirm HOMA status; first step towards kinematics of other galaxies"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "homas",
+      "description": "2颗高自行候选体（HOMAs）在R136星团核心被发现：HOMA1（H95 #124/K21 #22）自行1.36±0.22 mas/yr对应切向速度321±52 km/s，位于R136a1附近155 mas处；HOMA2（H95 #107/K21 #51）自行1.15±0.11 mas/yr对应切向速度273±26 km/s，位于R136c附近72 mas处。两者均为亮源（K<15 mag, V<16 mag），自行超过所有可靠源平均值的3倍、邻居平均值的3倍和自身天体测量误差的6倍。",
+      "decision": "excluded",
+      "reason": "这些HOMAs是星团尺度的高自行候选体，位于LMC中的R136星团。虽然切向速度约300 km/s很高，但论文未宣称它们为非束缚HVS。论文讨论的弹射场景（星团组装期弹射、双星超新星爆炸、三体相互作用、与致密天体相遇）均为星团动力学逃逸机制，目标属于cluster escapees/runaway stars范畴。论文在标题和全文中使用'HOMAs'（High prOper Motion cAndidates）而非'HVS'或'hypervelocity stars'，并强调需要后续光谱观测（特别是视向速度）来确认其性质。目前仅有2D自行数据，缺乏视向速度和3D空间速度信息，无法判断是否非束缚于LMC或银河系。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2104.12819/arxiv_source/40668corr.tex",
+          "start_line": 89,
+          "end_line": 95,
+          "context": "Abstract: HOMA PM values, tangential velocities, and four ejection scenarios"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2104.12819/arxiv_source/40668corr.tex",
+          "start_line": 280,
+          "end_line": 293,
+          "context": "Conclusion: four ejection mechanisms, future observations needed"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2104.12819/arxiv_source/40668corr.tex",
+          "start_line": 251,
+          "end_line": 277,
+          "context": "Table 1: HOMA magnitudes and PMs from SPHERE/IRDIS and HST/WFPC2"
+        }
+      ]
+    }
+  ]
+}

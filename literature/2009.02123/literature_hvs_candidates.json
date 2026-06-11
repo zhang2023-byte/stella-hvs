@@ -1,0 +1,84 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:40:00",
+  "paper": {
+    "arxiv_id": "2009.02123",
+    "bibcode": "2020AN....341..908B",
+    "title": "Identification of young nearby runaway stars based on Gaia data and the lithium test",
+    "month": "2020-09",
+    "source_note_json": "notes/2020/2020-09/2020-09.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2009.02123",
+      "pdf": "https://arxiv.org/pdf/2009.02123"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2009.02123",
+    "audit_path": "literature/2009.02123/audit.json",
+    "catalog_review_path": "literature/2009.02123/catalog_review.json",
+    "catalog_extraction_path": "literature/2009.02123/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2009.02123/catalog_tables/table-giants.ecsv",
+      "literature/2009.02123/catalog_tables/table-topnine.ecsv",
+      "literature/2009.02123/catalog_tables/table-tres.ecsv",
+      "literature/2009.02123/catalog_tables/table-abundance.ecsv",
+      "literature/2009.02123/catalog_tables/table-clearname.ecsv",
+      "literature/2009.02123/catalog_tables/table-gj182.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:40:00",
+    "extractor": "agent",
+    "summary": "本文从Tetzlaff (2011)的年轻速逃星候选体星表中选取308颗恒星，利用FLECHAS和TRES光谱仪测量锂6708 Å吸收线，结合Gaia DR2数据（有效温度、半径、距离）重新确定年龄。通过锂丰度测试，确认208颗恒星有显著锂吸收，其中13颗被分类为矮星，5颗年龄可能≤50 Myr，3颗比目前已知最近的速逃星GJ 182（24 pc）更近。这些恒星是逃离其出生星团或星协的年轻速逃星（runaway stars/cluster escapees），速度量级约数十km/s，仍受银河系引力束缚，并非银河系非束缚超高速星（HVS）。论文核心是通过锂测试约束速逃星的年轻年龄，未涉及银河系逃逸速度或非束缚状态判定。因此无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文重新分析Tetzlaff (2011)年轻速逃星候选体星表中的308颗恒星，使用锂测试和Gaia DR2数据确定年龄，筛选出年轻速逃星。这些是星团逃逸星而非银河系非束缚HVS。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (bischoff.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 1,
+          "end_line": 1,
+          "context": "Title: Identification of young nearby runaway stars based on Gaia data and the lithium test"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2009.02123/arxiv_abs.html",
+          "start_line": 1,
+          "end_line": 1,
+          "context": "Abstract: young nearby runaway stars suitable to search for their place of origin; ages from HRD position and lithium test; nearby runaway stars for origin investigation"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "tetzlaff-runaways",
+      "description": "Tetzlaff (2011)星表中的308颗年轻速逃星候选体（Hipparcos样本），经Gaia DR2和锂测试重新筛选。其中208颗有显著锂吸收，13颗确认为矮星，5颗年龄可能≤50 Myr（HIP 23200/GJ 182, HIP 45963, HIP 81063, HIP 82743, HIP 116384）。3颗比GJ 182更近。",
+      "decision": "excluded",
+      "reason": "论文中的'runaway stars'指从出生星团或星协中逃逸的年轻恒星（cluster escapees）。这些恒星虽脱离母星团，但仍位于银河系盘内，受银河系引力束缚。'Runaway star'在此语境下指星团逃逸星，而非逃离银河系的非束缚恒星。论文核心关注锂测试确定恒星年轻年龄的方法学及其对速逃星起源研究的价值，未声称任何恒星为银河系非束缚HVS/hypervelocity star。恒星速度量级为典型的星团逃逸速度（数十km/s），远低于银河系逃逸速度。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2009.02123/arxiv_source/bischoff.tex",
+          "start_line": 1,
+          "end_line": 1,
+          "context": "Abstract: young nearby runaway stars; ages from HRD and lithium; search for origin from dynamical or supernova ejection"
+        }
+      ]
+    }
+  ]
+}

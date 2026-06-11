@@ -1,0 +1,477 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:20",
+  "paper": {
+    "arxiv_id": "2602.16925",
+    "title": "Stellar Paternity Tests: Matching High-Latitude B Stars to the Open Clusters of their Birth",
+    "month": "2026-02"
+  },
+  "review": {
+    "path": "literature/2602.16925/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124020",
+    "started_at": "2026-05-17T12:40:20",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2602.16925",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-clusters",
+      "internal_table_id": "table-tab-clusters",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2602.16925/arxiv_source/main.tex",
+        "start_line": 148,
+        "end_line": 199,
+        "caption": "Calculated properties of each cluster \\label{tab:clusters}",
+        "label": "tab:clusters"
+      },
+      "source_path": "literature/2602.16925/arxiv_source/main.tex",
+      "excerpt_path": "literature/2602.16925/catalog_sources/table-tab-clusters/excerpt.tex",
+      "sha256": "ff2ebd5621a97c735ac4c090b217dfb3a1f2c49231797ac11b68dde61a7652c6",
+      "line_count": 52,
+      "error": ""
+    },
+    {
+      "id": "table-tab-results",
+      "internal_table_id": "table-tab-results",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2602.16925/arxiv_source/main.tex",
+        "start_line": 285,
+        "end_line": 338,
+        "caption": "Ejection probabilities and characteristics \\label{tab:results}",
+        "label": "tab:results"
+      },
+      "source_path": "literature/2602.16925/arxiv_source/main.tex",
+      "excerpt_path": "literature/2602.16925/catalog_sources/table-tab-results/excerpt.tex",
+      "sha256": "21ae74c96e6719f85d0a3df8fb04362fb00c30a8edbd3b06fb5c685e81ce354c",
+      "line_count": 54,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-clusters",
+      "internal_table_id": "table-tab-clusters",
+      "status": "success",
+      "ecsv_path": "literature/2602.16925/catalog_tables/table-tab-clusters.ecsv",
+      "caption": "Calculated properties of each cluster \\label{tab:clusters}",
+      "label": "tab:clusters",
+      "row_count": 14,
+      "column_count": 14,
+      "environment": "",
+      "header_rows": [
+        [
+          "Cluster",
+          "\\alpha",
+          "\\Delta\\alpha",
+          "\\delta",
+          "\\Delta\\delta",
+          "r",
+          "\\Delta r",
+          "R",
+          "\\Delta R",
+          "R_c",
+          "\\Delta R_c",
+          "\\rho_c",
+          "\\Delta\\rho_c",
+          "\\log( Age )"
+        ],
+        [
+          "",
+          "( ∘ )",
+          "( ∘ )",
+          "( ∘ )",
+          "( ∘ )",
+          "(pc)",
+          "(pc)",
+          "(pc)",
+          "(pc)",
+          "(pc)",
+          "(pc)",
+          "(stars pc -2 )",
+          "(stars pc -2 )",
+          "(Myr)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Cluster",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\alpha | ( ∘ )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\Delta\\alpha | ( ∘ )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\delta | ( ∘ )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\Delta\\delta | ( ∘ )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "r | (pc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\Delta r | (pc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "R | (pc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\Delta R | (pc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "R_c | (pc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "\\Delta R_c | (pc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\rho_c | (stars pc -2 )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "\\Delta\\rho_c | (stars pc -2 )",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "\\log( Age ) | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp29yl8zow/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2602.16925/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp29yl8zow/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2602.16925/catalog_sources/table-tab-clusters/wrapped.tex",
+            "html": "literature/2602.16925/catalog_sources/table-tab-clusters/latexml.html",
+            "stdout": "literature/2602.16925/catalog_sources/table-tab-clusters/latexml.stdout.txt",
+            "stderr": "literature/2602.16925/catalog_sources/table-tab-clusters/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "ff2ebd5621a97c735ac4c090b217dfb3a1f2c49231797ac11b68dde61a7652c6"
+    },
+    {
+      "id": "table-tab-results",
+      "internal_table_id": "table-tab-results",
+      "status": "success",
+      "ecsv_path": "literature/2602.16925/catalog_tables/table-tab-results.ecsv",
+      "caption": "Ejection probabilities and characteristics \\label{tab:results}",
+      "label": "tab:results",
+      "row_count": 29,
+      "column_count": 12,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "Cluster",
+          "T",
+          "v_eject",
+          "\\Delta v_eject",
+          "t_eject",
+          "\\Delta t_eject",
+          "Cluster \\log( Age )",
+          "Age",
+          "\\rho_c",
+          "R_c",
+          "Match Comments"
+        ],
+        [
+          "",
+          "",
+          "( % )",
+          "( km s^-1 )",
+          "( km s^-1 )",
+          "( Myr )",
+          "( Myr )",
+          "( Myr )",
+          "Agreement",
+          "( stars pc^-2 )",
+          "( pc )",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Cluster",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "T | ( % )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "v_eject | ( km s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\Delta v_eject | ( km s^-1 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "t_eject | ( Myr )",
+          "unit_text": "( Myr )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\Delta t_eject | ( Myr )",
+          "unit_text": "( Myr )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Cluster \\log( Age ) | ( Myr )",
+          "unit_text": "( Myr )",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Age | Agreement",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\rho_c | ( stars pc^-2 )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "R_c | ( pc )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "Match Comments",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdu_s41em/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2602.16925/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdu_s41em/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2602.16925/catalog_sources/table-tab-results/wrapped.tex",
+            "html": "literature/2602.16925/catalog_sources/table-tab-results/latexml.html",
+            "stdout": "literature/2602.16925/catalog_sources/table-tab-results/latexml.stdout.txt",
+            "stderr": "literature/2602.16925/catalog_sources/table-tab-results/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "21ae74c96e6719f85d0a3df8fb04362fb00c30a8edbd3b06fb5c685e81ce354c"
+    }
+  ]
+}

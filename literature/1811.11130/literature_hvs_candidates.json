@@ -1,0 +1,70 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T10:50:17",
+  "paper": {
+    "arxiv_id": "1811.11130",
+    "bibcode": null,
+    "title": "Search for Extra-Tidal RR Lyrae Stars in Milky Way Globular Clusters From Gaia DR2",
+    "month": "2018-11",
+    "source_note_json": "notes/2018/2018-11/2018-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1811.11130",
+      "pdf": "https://arxiv.org/pdf/1811.11130"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/1811.11130",
+    "audit_path": "literature/1811.11130/audit.json",
+    "catalog_review_path": "literature/1811.11130/catalog_review.json",
+    "catalog_extraction_path": "literature/1811.11130/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T10:50:17",
+    "extractor": "agent",
+    "summary": "本文研究球状星团潮汐外RR Lyrae星，用于研究星团动力学和潮汐瓦解。不涉及银河系高速星或超高速星候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "Quick scan of paper abstract and title for HVS relevance assessment.",
+      "inputs": [
+        "arXiv abstract",
+        "Monthly literature notes"
+      ],
+      "outputs": [
+        "HVS relevance classification"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1811.11130/paper_abstract.txt",
+          "start_line": 5,
+          "end_line": 5,
+          "context": "Paper abstract"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "quick-scan-review",
+      "description": "本文利用Gaia DR2的RR Lyrae星星表和自行数据，研究了56个银河系球状星团的潮汐外RR Lyrae星，发现仅11个星团有潮汐外RR Lyrae星，其中NGC 3201和NGC 5024有足够样本数。论文给出了30颗潮汐外RR Lyrae星的列表。这些数据用于研究星团动力学和潮汐瓦解过程，与HVS候选体无关。论文无内部LaTeX数据表。",
+      "decision": "excluded",
+      "reason": "本文研究球状星团潮汐外RR Lyrae星的分布和动力学。所研究的恒星为球状星团成员星（受引力束缚），不是高速星或超高速星候选体。NGC 3201和NGC 5024的潮汐外RR Lyrae星是星团潮汐瓦解过程的产物，仍在星团引力影响范围内，不满足HVS候选体标准。论文标题和摘要均未提及高速星、超高速星或银河系逃逸天体。",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/1811.11130/paper_abstract.txt",
+          "start_line": 5,
+          "end_line": 5,
+          "context": "Paper abstract"
+        }
+      ]
+    }
+  ]
+}

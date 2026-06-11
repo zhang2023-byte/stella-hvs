@@ -1,0 +1,1393 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-06-07T11:30:29",
+  "paper": {
+    "arxiv_id": "2003.12766",
+    "title": "Hypervelocity Stars in the Gaia era. Revisiting the most extreme stars from the MMT survey",
+    "month": "2020-03"
+  },
+  "review": {
+    "path": "literature/2003.12766/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "needs_review"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260607T113029",
+    "started_at": "2026-06-07T11:30:29",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2003.12766",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 6,
+      "work_count": 6,
+      "table_count": 6,
+      "success_count": 6,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 6,
+      "file_success_count": 6,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-atmos-results",
+      "internal_table_id": "table-tab-atmos-results",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2003.12766/arxiv_source/aa.tex",
+        "start_line": 110,
+        "end_line": 128,
+        "caption": "Results of the spectroscopic analysis.",
+        "label": "tab:atmos-results"
+      },
+      "source_path": "literature/2003.12766/arxiv_source/aa.tex",
+      "excerpt_path": "literature/2003.12766/catalog_sources/table-tab-atmos-results/excerpt.tex",
+      "sha256": "5cac85b4593cd6406270ff5f33bb17da0e2556556e8a97a9eb7eb3f28eb618b4",
+      "line_count": 19,
+      "error": ""
+    },
+    {
+      "id": "table-tab-B1085",
+      "internal_table_id": "table-tab-B1085",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2003.12766/arxiv_source/aa.tex",
+        "start_line": 154,
+        "end_line": 173,
+        "caption": "Atmospheric and derived stellar parameters for B1085 based on two different sets of spectra. \\label{tab:B1085}",
+        "label": "tab:B1085"
+      },
+      "source_path": "literature/2003.12766/arxiv_source/aa.tex",
+      "excerpt_path": "literature/2003.12766/catalog_sources/table-tab-B1085/excerpt.tex",
+      "sha256": "f3613cf2a00d57d50a697371a6659393d2e1018759bfbdc5c745a17eb16572e2",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-tab-hvs5",
+      "internal_table_id": "table-tab-hvs5",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2003.12766/arxiv_source/aa.tex",
+        "start_line": 186,
+        "end_line": 206,
+        "caption": "Atmospheric and derived stellar parameters for HVS\\,5 based on two different sets of spectra. \\label{tab:hvs5}",
+        "label": "tab:hvs5"
+      },
+      "source_path": "literature/2003.12766/arxiv_source/aa.tex",
+      "excerpt_path": "literature/2003.12766/catalog_sources/table-tab-hvs5/excerpt.tex",
+      "sha256": "816098ee0b301db7f58b04de7aada54f9729cb94ab94b5f40954b4f4b123cd63",
+      "line_count": 21,
+      "error": ""
+    },
+    {
+      "id": "table-tab-stellar_params",
+      "internal_table_id": "table-tab-stellar_params",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2003.12766/arxiv_source/aa.tex",
+        "start_line": 239,
+        "end_line": 246,
+        "caption": "\\label{tab:stellar_params}Stellar parameters of the program stars.",
+        "label": "tab:stellar_params"
+      },
+      "source_path": "literature/2003.12766/arxiv_source/aa.tex",
+      "excerpt_path": "literature/2003.12766/catalog_sources/table-tab-stellar_params/excerpt.tex",
+      "sha256": "8c77410ed3c69295a253bdc4f07767ff79da48c163ccd171f1a4cd6e60c2369d",
+      "line_count": 8,
+      "error": ""
+    },
+    {
+      "id": "table-tab-kinematic-AS",
+      "internal_table_id": "table-tab-kinematic-AS",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2003.12766/arxiv_source/aa.tex",
+        "start_line": 486,
+        "end_line": 490,
+        "caption": "Kinematic quantities for the program stars based on Model I.",
+        "label": "tab:kinematic-AS"
+      },
+      "source_path": "literature/2003.12766/arxiv_source/aa.tex",
+      "excerpt_path": "literature/2003.12766/catalog_sources/table-tab-kinematic-AS/excerpt.tex",
+      "sha256": "3b7869f51185f9fc367ecc16b2464beac194727ac5c5c8e402cfdf7edfd5ec07",
+      "line_count": 5,
+      "error": ""
+    },
+    {
+      "id": "table-tab-kinematic-TF",
+      "internal_table_id": "table-tab-kinematic-TF",
+      "kind": "latex_table",
+      "status": "skipped_existing",
+      "source_ref": {
+        "path": "literature/2003.12766/arxiv_source/aa.tex",
+        "start_line": 492,
+        "end_line": 496,
+        "caption": "Kinematic quantities for the program stars based on Model II.",
+        "label": "tab:kinematic-TF"
+      },
+      "source_path": "literature/2003.12766/arxiv_source/aa.tex",
+      "excerpt_path": "literature/2003.12766/catalog_sources/table-tab-kinematic-TF/excerpt.tex",
+      "sha256": "b629cc9702e0bbd7d1137f2c0722a398a3cc7e45224552dff020e3427f032701",
+      "line_count": 5,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-atmos-results",
+      "internal_table_id": "table-tab-atmos-results",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2003.12766/catalog_tables/table-tab-atmos-results.ecsv",
+      "caption": "Results of the spectroscopic analysis.",
+      "label": "tab:atmos-results",
+      "row_count": 61,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "T_eff",
+          "\\log(g)",
+          "\\varv_rad",
+          "\\varv\\sin(i)",
+          "\\chi^2_red",
+          "S/N tot",
+          "N"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "T_eff",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\log(g)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\varv_rad",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\varv\\sin(i)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\chi^2_red",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "S/N tot",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "N",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphi1cmtyf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2003.12766/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmphi1cmtyf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2003.12766/catalog_sources/table-tab-atmos-results/wrapped.tex",
+            "html": "literature/2003.12766/catalog_sources/table-tab-atmos-results/latexml.html",
+            "stdout": "literature/2003.12766/catalog_sources/table-tab-atmos-results/latexml.stdout.txt",
+            "stderr": "literature/2003.12766/catalog_sources/table-tab-atmos-results/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "5cac85b4593cd6406270ff5f33bb17da0e2556556e8a97a9eb7eb3f28eb618b4"
+    },
+    {
+      "id": "table-tab-B1085",
+      "internal_table_id": "table-tab-B1085",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2003.12766/catalog_tables/table-tab-B1085.ecsv",
+      "caption": "Atmospheric and derived stellar parameters for B1085 based on two different sets of spectra. \\label{tab:B1085}",
+      "label": "tab:B1085",
+      "row_count": 7,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "",
+          "MMT",
+          "X-shooter"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "MMT",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "X-shooter",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpen6o0vkl/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2003.12766/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpen6o0vkl/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2003.12766/catalog_sources/table-tab-B1085/wrapped.tex",
+            "html": "literature/2003.12766/catalog_sources/table-tab-B1085/latexml.html",
+            "stdout": "literature/2003.12766/catalog_sources/table-tab-B1085/latexml.stdout.txt",
+            "stderr": "literature/2003.12766/catalog_sources/table-tab-B1085/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f3613cf2a00d57d50a697371a6659393d2e1018759bfbdc5c745a17eb16572e2"
+    },
+    {
+      "id": "table-tab-hvs5",
+      "internal_table_id": "table-tab-hvs5",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2003.12766/catalog_tables/table-tab-hvs5.ecsv",
+      "caption": "Atmospheric and derived stellar parameters for HVS\\,5 based on two different sets of spectra. \\label{tab:hvs5}",
+      "label": "tab:hvs5",
+      "row_count": 8,
+      "column_count": 4,
+      "environment": "",
+      "header_rows": [],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpn1l7dpds/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2003.12766/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpn1l7dpds/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2003.12766/catalog_sources/table-tab-hvs5/wrapped.tex",
+            "html": "literature/2003.12766/catalog_sources/table-tab-hvs5/latexml.html",
+            "stdout": "literature/2003.12766/catalog_sources/table-tab-hvs5/latexml.stdout.txt",
+            "stderr": "literature/2003.12766/catalog_sources/table-tab-hvs5/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "816098ee0b301db7f58b04de7aada54f9729cb94ab94b5f40954b4f4b123cd63"
+    },
+    {
+      "id": "table-tab-stellar_params",
+      "internal_table_id": "table-tab-stellar_params",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2003.12766/catalog_tables/table-tab-stellar_params.ecsv",
+      "caption": "\\label{tab:stellar_params}Stellar parameters of the program stars.",
+      "label": "tab:stellar_params",
+      "row_count": 40,
+      "column_count": 25,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "",
+          "M",
+          "",
+          "",
+          "\\tau",
+          "",
+          "",
+          "E(B-V)",
+          "",
+          "",
+          "\\Omega / \\Omega_crit",
+          "",
+          "",
+          "R",
+          "",
+          "",
+          "\\log(L/L_\\sun )",
+          "",
+          "",
+          "\\log(\\theta)",
+          "",
+          "",
+          "d",
+          ""
+        ],
+        [
+          "",
+          "",
+          "(M _\\sun )",
+          "",
+          "",
+          "(Myr)",
+          "",
+          "",
+          "(mag)",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "(R _\\sun )",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "(kpc)",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "M | (M _\\sun )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\tau | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "E(B-V) | (mag)",
+          "unit_text": "(mag)",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "\\Omega / \\Omega_crit",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "R | (R _\\sun )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "\\log(L/L_\\sun )",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_020",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_021",
+          "original_header": "\\log(\\theta)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_022",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_023",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_024",
+          "original_header": "d | (kpc)",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_025",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjpjj818_/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2003.12766/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpjpjj818_/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2003.12766/catalog_sources/table-tab-stellar_params/wrapped.tex",
+            "html": "literature/2003.12766/catalog_sources/table-tab-stellar_params/latexml.html",
+            "stdout": "literature/2003.12766/catalog_sources/table-tab-stellar_params/latexml.stdout.txt",
+            "stderr": "literature/2003.12766/catalog_sources/table-tab-stellar_params/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "8c77410ed3c69295a253bdc4f07767ff79da48c163ccd171f1a4cd6e60c2369d"
+    },
+    {
+      "id": "table-tab-kinematic-AS",
+      "internal_table_id": "table-tab-kinematic-AS",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2003.12766/catalog_tables/table-tab-kinematic-AS.ecsv",
+      "caption": "Kinematic quantities for the program stars based on Model I.",
+      "label": "tab:kinematic-AS",
+      "row_count": 80,
+      "column_count": 22,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "x",
+          "y",
+          "z",
+          "",
+          "\\varv_x",
+          "\\varv_y",
+          "\\varv_z",
+          "\\varv_Grf",
+          "\\varv_Grf-\\varv_esc",
+          "P_b",
+          "x_p",
+          "y_p",
+          "z_p",
+          "r_p",
+          "",
+          "\\varv_x,p",
+          "\\varv_y,p",
+          "\\varv_z,p",
+          "\\varv_Grf,p",
+          "\\varv_ej,p",
+          "\\tau_flight,p"
+        ],
+        [
+          "",
+          "(kpc)",
+          "",
+          "",
+          "",
+          "(\\mathrmkm s^-1)",
+          "",
+          "",
+          "",
+          "",
+          "(%)",
+          "(kpc)",
+          "",
+          "",
+          "",
+          "",
+          "(\\mathrmkm s^-1)",
+          "",
+          "",
+          "",
+          "",
+          "(Myr)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "x | (kpc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "y",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "z",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\varv_x | (\\mathrmkm s^-1)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\varv_y",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\varv_z",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\varv_Grf",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\varv_Grf-\\varv_esc",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "P_b | (%)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "x_p | (kpc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "y_p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "z_p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "r_p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "\\varv_x,p | (\\mathrmkm s^-1)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "\\varv_y,p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "\\varv_z,p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_020",
+          "original_header": "\\varv_Grf,p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_021",
+          "original_header": "\\varv_ej,p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_022",
+          "original_header": "\\tau_flight,p | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpotr70k3f/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2003.12766/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpotr70k3f/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2003.12766/catalog_sources/table-tab-kinematic-AS/wrapped.tex",
+            "html": "literature/2003.12766/catalog_sources/table-tab-kinematic-AS/latexml.html",
+            "stdout": "literature/2003.12766/catalog_sources/table-tab-kinematic-AS/latexml.stdout.txt",
+            "stderr": "literature/2003.12766/catalog_sources/table-tab-kinematic-AS/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "3b7869f51185f9fc367ecc16b2464beac194727ac5c5c8e402cfdf7edfd5ec07"
+    },
+    {
+      "id": "table-tab-kinematic-TF",
+      "internal_table_id": "table-tab-kinematic-TF",
+      "status": "skipped_existing",
+      "ecsv_path": "literature/2003.12766/catalog_tables/table-tab-kinematic-TF.ecsv",
+      "caption": "Kinematic quantities for the program stars based on Model II.",
+      "label": "tab:kinematic-TF",
+      "row_count": 80,
+      "column_count": 22,
+      "environment": "",
+      "header_rows": [
+        [
+          "Object",
+          "x",
+          "y",
+          "z",
+          "",
+          "\\varv_x",
+          "\\varv_y",
+          "\\varv_z",
+          "\\varv_Grf",
+          "\\varv_Grf-\\varv_esc",
+          "P_b",
+          "x_p",
+          "y_p",
+          "z_p",
+          "r_p",
+          "",
+          "\\varv_x,p",
+          "\\varv_y,p",
+          "\\varv_z,p",
+          "\\varv_Grf,p",
+          "\\varv_ej,p",
+          "\\tau_flight,p"
+        ],
+        [
+          "",
+          "(kpc)",
+          "",
+          "",
+          "",
+          "(\\mathrmkm s^-1)",
+          "",
+          "",
+          "",
+          "",
+          "(%)",
+          "(kpc)",
+          "",
+          "",
+          "",
+          "",
+          "(\\mathrmkm s^-1)",
+          "",
+          "",
+          "",
+          "",
+          "(Myr)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Object",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "x | (kpc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "y",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "z",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\varv_x | (\\mathrmkm s^-1)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\varv_y",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\varv_z",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\varv_Grf",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\varv_Grf-\\varv_esc",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "P_b | (%)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "x_p | (kpc)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_013",
+          "original_header": "y_p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_014",
+          "original_header": "z_p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_015",
+          "original_header": "r_p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_016",
+          "original_header": "",
+          "unit_text": "",
+          "data_type": "",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_017",
+          "original_header": "\\varv_x,p | (\\mathrmkm s^-1)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_018",
+          "original_header": "\\varv_y,p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_019",
+          "original_header": "\\varv_z,p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_020",
+          "original_header": "\\varv_Grf,p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_021",
+          "original_header": "\\varv_ej,p",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_022",
+          "original_header": "\\tau_flight,p | (Myr)",
+          "unit_text": "(Myr)",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmihj0mnk/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella_hvs/literature/2003.12766/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpmihj0mnk/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2003.12766/catalog_sources/table-tab-kinematic-TF/wrapped.tex",
+            "html": "literature/2003.12766/catalog_sources/table-tab-kinematic-TF/latexml.html",
+            "stdout": "literature/2003.12766/catalog_sources/table-tab-kinematic-TF/latexml.stdout.txt",
+            "stderr": "literature/2003.12766/catalog_sources/table-tab-kinematic-TF/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "b629cc9702e0bbd7d1137f2c0722a398a3cc7e45224552dff020e3427f032701"
+    }
+  ]
+}

@@ -1,0 +1,371 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:39:50",
+  "paper": {
+    "arxiv_id": "2507.07558",
+    "title": "The Gaia RVS Benchmark Stars. III . Confirmed and New High Radial Velocity Stars From Gaia DR3",
+    "month": "2025-07"
+  },
+  "review": {
+    "path": "literature/2507.07558/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T123950",
+    "started_at": "2026-05-17T12:39:50",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2507.07558",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 2,
+      "work_count": 2,
+      "table_count": 2,
+      "success_count": 2,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 2,
+      "file_success_count": 2,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-stars",
+      "internal_table_id": "table-tab-stars",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+        "start_line": 474,
+        "end_line": 511,
+        "caption": "Stars.",
+        "label": "tab:stars"
+      },
+      "source_path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+      "excerpt_path": "literature/2507.07558/catalog_sources/table-tab-stars/excerpt.tex",
+      "sha256": "f9adea212e4cf0bbf0c6d8497ed4a55a1e4255340cc32c2afd88f4283cfa189b",
+      "line_count": 38,
+      "error": ""
+    },
+    {
+      "id": "table-coord",
+      "internal_table_id": "table-coord",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+        "start_line": 706,
+        "end_line": 749,
+        "caption": "Coordinates, Gaia DR3 ID and $G$ magnitudes, extinction A0, Gaia\\,DR3 radial velocities with their uncerianties for the program stars.",
+        "label": "coord"
+      },
+      "source_path": "literature/2507.07558/arxiv_source/paper_rvs3_an.tex",
+      "excerpt_path": "literature/2507.07558/catalog_sources/table-coord/excerpt.tex",
+      "sha256": "f1175ffed5b6a7c5de1e2884e3089a112029f07d62d734dd9804fa347ab0cb1d",
+      "line_count": 44,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-stars",
+      "internal_table_id": "table-tab-stars",
+      "status": "success",
+      "ecsv_path": "literature/2507.07558/catalog_tables/table-tab-stars.ecsv",
+      "caption": "Stars.",
+      "label": "tab:stars",
+      "row_count": 26,
+      "column_count": 10,
+      "environment": "",
+      "header_rows": [
+        [
+          "Star",
+          "T_eff",
+          "logg",
+          "\\xi",
+          "[Fe/H]",
+          "S/N",
+          "S/N",
+          "Li",
+          "Ca ii-H and -K",
+          "Note"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "450 nm",
+          "650 nm",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Star",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "T_eff",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "logg",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\xi",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "[Fe/H]",
+          "unit_text": "[Fe/H]",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "S/N | 450 nm",
+          "unit_text": "450 nm",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "S/N | 650 nm",
+          "unit_text": "650 nm",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "Li",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "Ca ii-H and -K",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "Note",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7qo9zpgt/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.07558/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp7qo9zpgt/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.07558/catalog_sources/table-tab-stars/wrapped.tex",
+            "html": "literature/2507.07558/catalog_sources/table-tab-stars/latexml.html",
+            "stdout": "literature/2507.07558/catalog_sources/table-tab-stars/latexml.stdout.txt",
+            "stderr": "literature/2507.07558/catalog_sources/table-tab-stars/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f9adea212e4cf0bbf0c6d8497ed4a55a1e4255340cc32c2afd88f4283cfa189b"
+    },
+    {
+      "id": "table-coord",
+      "internal_table_id": "table-coord",
+      "status": "success",
+      "ecsv_path": "literature/2507.07558/catalog_tables/table-coord.ecsv",
+      "caption": "Coordinates, Gaia DR3 ID and $G$ magnitudes, extinction A0, Gaia\\,DR3 radial velocities with their uncerianties for the program stars.",
+      "label": "coord",
+      "row_count": 26,
+      "column_count": 8,
+      "environment": "",
+      "header_rows": [
+        [
+          "Name",
+          "Gaia DR3 ID",
+          "G",
+          "RA (J2000)",
+          "DEC (J2000)",
+          "A0",
+          "\\rm V_r Gaia",
+          "\\rm\\sigma(V_r)"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Name",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Gaia DR3 ID",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "G",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "RA (J2000)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "DEC (J2000)",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "A0",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\rm V_r Gaia",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\rm\\sigma(V_r)",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpeedcg04z/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2507.07558/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpeedcg04z/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2507.07558/catalog_sources/table-coord/wrapped.tex",
+            "html": "literature/2507.07558/catalog_sources/table-coord/latexml.html",
+            "stdout": "literature/2507.07558/catalog_sources/table-coord/latexml.stdout.txt",
+            "stderr": "literature/2507.07558/catalog_sources/table-coord/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "f1175ffed5b6a7c5de1e2884e3089a112029f07d62d734dd9804fa347ab0cb1d"
+    }
+  ]
+}

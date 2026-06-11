@@ -1,0 +1,336 @@
+{
+    "schema_version": "stella.article_data_assets.review.v1",
+    "paper": {
+        "arxiv_id": "2403.17198",
+        "title": "Runaway OB Stars in the Small Magellanic Cloud III. Updated Kinematics and Insights on Dynamical vs. Supernova Ejections",
+        "month": "2024-03",
+        "source_note_json": "notes/2024/2024-03/2024-03.json",
+        "links": {
+            "abs": "https://arxiv.org/abs/2403.17198",
+            "pdf": "https://arxiv.org/pdf/2403.17198"
+        }
+    },
+    "source": {
+        "paper_dir": "literature/2403.17198",
+        "audit_path": "literature/2403.17198/audit.json",
+        "source_dir": "literature/2403.17198/arxiv_source",
+        "tex_root": "literature/2403.17198/arxiv_source/Phillips24.tex",
+        "source_available": true
+    },
+    "review": {
+        "status": "reviewed",
+        "reviewed_at": "2026-05-17T12:33:56",
+        "reviewer": "agent",
+        "summary": "Auto-filled review: 4 internal table(s), 2 external resource(s)."
+    },
+    "internal_tables": [
+        {
+            "id": "table-tab-Table-1",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Kinematic Data for SMC Field OB and OBe Stars \\label{tab:Table 1}",
+            "source_refs": [
+                {
+                    "path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+                    "start_line": 116,
+                    "end_line": 139,
+                    "caption": "Kinematic Data for SMC Field OB and OBe Stars \\label{tab:Table 1}",
+                    "label": "tab:Table 1"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "\\colheadID\\tablenotemarka",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadClass\\tablenotemarkb",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "SpT",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\alpha (J2016) | (deg)",
+                    "meaning": "Column from table header",
+                    "unit_text": "J2016",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\delta (J2016) | (deg)",
+                    "meaning": "Column from table header",
+                    "unit_text": "J2016",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadTarget v_\\alpha | (\\kms)",
+                    "meaning": "V-band magnitude",
+                    "unit_text": "\\kms",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "err",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Target v_\\delta | (\\kms)",
+                    "meaning": "Object identifier",
+                    "unit_text": "\\kms",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "err",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "N",
+                    "meaning": "Number of objects or count",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadField v_\\alpha | (\\kms)",
+                    "meaning": "V-band magnitude",
+                    "unit_text": "\\kms",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "err",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadField v_\\delta | (\\kms)",
+                    "meaning": "V-band magnitude",
+                    "unit_text": "\\kms",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "err",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "v_\\perp | (\\kms)",
+                    "meaning": "V-band magnitude",
+                    "unit_text": "\\kms",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "err | \\kms",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "v_r \\sin i | \\kms",
+                    "meaning": "Heliocentric radial velocity",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Mass | M_\\odot",
+                    "meaning": "Stellar mass",
+                    "unit_text": "Mass",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Kinematic Data for SMC Field OB and OBe Stars \\label{tab:Table 1}",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-Table-2",
+            "kind": "latex_table",
+            "asset_type": "data_table",
+            "role_in_paper": "Subpopulation kinematics % errors are the standard error of the median \\label{tab:Table 2}",
+            "source_refs": [
+                {
+                    "path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+                    "start_line": 171,
+                    "end_line": 199,
+                    "caption": "Subpopulation kinematics % errors are the standard error of the median \\label{tab:Table 2}",
+                    "label": "tab:Table 2"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "Subgroup",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Sample size",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Median v_\\perp | (km s^-1)",
+                    "meaning": "Column from table header",
+                    "unit_text": "km s^-1",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Subpopulation kinematics % errors are the standard error of the median \\label{tab:Table 2}",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-Table-3",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Numbers and Ratios of Walkaway and Runaway Field OB Stars \\label{tab:Table 3}",
+            "source_refs": [
+                {
+                    "path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+                    "start_line": 278,
+                    "end_line": 297,
+                    "caption": "Numbers and Ratios of Walkaway and Runaway Field OB Stars \\label{tab:Table 3}",
+                    "label": "tab:Table 3"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "col_001",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadNumerator\\tablenotemarka",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Denominator",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Ratio",
+                    "meaning": "Right Ascension",
+                    "unit_text": "deg",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "\\colheadModel\\tablenotemarkb",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Numbers and Ratios of Walkaway and Runaway Field OB Stars \\label{tab:Table 3}",
+            "comments": ""
+        },
+        {
+            "id": "table-tab-Table-4",
+            "kind": "latex_table",
+            "asset_type": "object_catalog",
+            "role_in_paper": "Model Runaway and Walkaway Frequencies\\tablenotemark{a} \\label{tab:Table 4}",
+            "source_refs": [
+                {
+                    "path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+                    "start_line": 299,
+                    "end_line": 327,
+                    "caption": "Model Runaway and Walkaway Frequencies\\tablenotemark{a} \\label{tab:Table 4}",
+                    "label": "tab:Table 4"
+                }
+            ],
+            "columns": [
+                {
+                    "name": "col_001",
+                    "meaning": "Column from table header",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Runaways",
+                    "meaning": "High-velocity or runaway classification flag",
+                    "unit_text": "",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                },
+                {
+                    "name": "Walkaways",
+                    "meaning": "Column from table header",
+                    "unit_text": "K",
+                    "source_of_definition": "table header",
+                    "confidence": 0.6
+                }
+            ],
+            "evidence": "Model Runaway and Walkaway Frequencies\\tablenotemark{a} \\label{tab:Table 4}",
+            "comments": ""
+        }
+    ],
+    "external_resources": [
+        {
+            "id": "resource-001",
+            "kind": "external_resource_mention",
+            "url": "",
+            "local_path": "",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [
+                {
+                    "path": "literature/2403.17198/arxiv_source/Phillips24.tex",
+                    "start_line": 138,
+                    "end_line": 138,
+                    "context": "\\tablenotetext{a}{IDs are from \\cite{Massey02}. Stars with an asterisk (*) next to their ID are RIOTS4 data that were not included in Paper II. Stars with a plus sign (+) next to their ID have spectral types taken from their quiescent phase, but are identified as emission-line stars by \\cite{Lamb16} or SIMBAD.}\n\\tablenotetext{b}{E = Eclipsing binary, S = Double-lined spectroscopic binary, X = High-mass X-ray binary, e = OBe star.}\n\\tablecomments{Table \\ref{tab:Table 1} is published in its entirety in the machine-readable format. A portion is shown here for guidance regarding its form and content.}\n\\end{deluxetable*}\n\\end{rotatetable*}"
+                }
+            ],
+            "evidence": "\\tablenotetext{a}{IDs are from \\cite{Massey02}. Stars with an asterisk (*) next to their ID are RIOTS4 data that were not included in Paper II. Stars with a plus sign (+) next to their ID have spectral types taken from their quiescent phase, but are identified as emission-line stars by \\cite{Lamb16} or SIMBAD.}\n\\tablenotetext{b}{E = Eclipsing binary, S = Double-lined spectroscopic binary, X = High-mass X-ray binary, e = OBe star.}\n\\tablecomments{Table \\ref{tab:Table 1} is published in its entirety in the machine-readable format. A portion is shown here for guidance regarding its form and content.}\n\\end{deluxetable*}\n\\end{rotatetable*}",
+            "comments": ""
+        },
+        {
+            "id": "resource-002",
+            "kind": "local_machine_readable_file",
+            "url": "",
+            "local_path": "literature/2403.17198/arxiv_source/Phillips24Table1.txt",
+            "description": "External resource URL referenced in the paper source.",
+            "source_refs": [],
+            "evidence": "",
+            "comments": "Discovered local machine-readable file with suffix .txt."
+        }
+    ]
+}

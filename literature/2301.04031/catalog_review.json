@@ -1,0 +1,227 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2301.04031",
+    "title": "Catching a Milky Way open cluster in its last breath",
+    "month": "2023-01",
+    "source_note_json": "notes/2023/2023-01/2023-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2301.04031",
+      "pdf": "https://arxiv.org/pdf/2301.04031"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2301.04031",
+    "audit_path": "literature/2301.04031/audit.json",
+    "source_dir": "literature/2301.04031/arxiv_source",
+    "tex_root": "literature/2301.04031/arxiv_source/paper.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:25:28",
+    "reviewer": "agent",
+    "summary": "Single-author paper studying open cluster ASCC-92 (Alessi~31/MWSC 2723) using Gaia DR3 data. Reports first observational evidence of potential escapers predicted by Kupper+2010 N-body simulations. Contains 2 LaTeX tables: Table 1 is a literature summary of cluster parameters with this work's results; Table 2 lists 31 Gaia DR3 source IDs of newly identified members. No machine-readable tables or online data archives provided — data available upon request to the author. External tools mentioned: GALExtin, PARSEC isochrones, Astropy."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab1",
+      "kind": "latex_table",
+      "asset_type": "literature_summary",
+      "role_in_paper": "Table 1 summarizes fundamental parameters of ASCC-92 (Alessi~31) from 8 prior literature sources plus this work (Ref. 9). Serves as comparison of cluster properties (radius, reddening, distance, age, metallicity, proper motions, radial velocity) across different studies. The last row (Ref. 9, this work, bold) reports the authors' newly derived parameters from Gaia DR3 with differential reddening correction.",
+      "source_refs": [
+        {
+          "path": "literature/2301.04031/arxiv_source/paper.tex",
+          "start_line": 197,
+          "end_line": 220,
+          "caption": "Properties of ASCC-92 (Alessi~31).",
+          "label": "tab1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Ref.",
+          "meaning": "Reference number for literature source (1-9, see footnote)",
+          "unit_text": "",
+          "source_of_definition": "table header + footnote",
+          "confidence": 1.0
+        },
+        {
+          "name": "radius",
+          "meaning": "Cluster angular radius",
+          "unit_text": "arcmin",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "E(B-V)",
+          "meaning": "Interstellar reddening / color excess",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "distance",
+          "meaning": "Heliocentric distance to the cluster",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "log(age /yr)",
+          "meaning": "Logarithm of cluster age in years",
+          "unit_text": "log(yr)",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "[Fe/H]",
+          "meaning": "Metallicity relative to solar",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pmra",
+          "meaning": "Proper motion in right ascension",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pmdec",
+          "meaning": "Proper motion in declination",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "Radial velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table 1 compares cluster parameters from 9 references (including this work). The last row in bold gives this paper's derived values: E(B-V)=0.45-0.92 mag, distance=676.0+/-10.0 pc, log(age/yr)=8.85+/-0.05, [Fe/H]=0.00+/-0.10, pmra=-1.153+/-0.128 mas/yr, pmdec=-4.201+/-0.115 mas/yr, RV=0.98+/-9.81 km/s.",
+      "comments": "Literature compilation table. Row 9 (this work) is the only new data row. Earlier rows from Kharchenko+2005,2013; Liu&Pang 2019; Dias+2014; Sampedro+2017; Cantat-Gaudin+2018,2020."
+    },
+    {
+      "id": "table-tab2",
+      "kind": "latex_table",
+      "asset_type": "member_list",
+      "role_in_paper": "Table 2 lists 31 Gaia DR3 source IDs of cluster member stars identified by this work that were not present in the Cantat-Gaudin+2018 sample. This is a supplementary/complementary member catalog. Stars are arranged in 4 columns for compact formatting; all entries are Gaia DR3 source_id values (int64).",
+      "source_refs": [
+        {
+          "path": "literature/2301.04031/arxiv_source/paper.tex",
+          "start_line": 914,
+          "end_line": 929,
+          "caption": "Gaia IDs of stars selected in this work that are absent in the Cantat-Gaudin+2018's sample.",
+          "label": "tab2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR3 source_id (col 1)",
+          "meaning": "Gaia DR3 unique source identifier (column 1 of 4-column layout)",
+          "unit_text": "",
+          "source_of_definition": "table caption + context in Appendix",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia DR3 source_id (col 2)",
+          "meaning": "Gaia DR3 unique source identifier (column 2 of 4-column layout)",
+          "unit_text": "",
+          "source_of_definition": "table caption + context in Appendix",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia DR3 source_id (col 3)",
+          "meaning": "Gaia DR3 unique source identifier (column 3 of 4-column layout)",
+          "unit_text": "",
+          "source_of_definition": "table caption + context in Appendix",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaia DR3 source_id (col 4)",
+          "meaning": "Gaia DR3 unique source identifier (column 4 of 4-column layout)",
+          "unit_text": "",
+          "source_of_definition": "table caption + context in Appendix",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table in Appendix lists 31 Gaia DR3 source IDs of newly identified members across 4 columns (8 rows x 4 cols - 1). Stars selected by HDBSCAN with membership probability P > 70%.",
+      "comments": "31 Gaia DR3 source IDs. These are members found by this work (using HDBSCAN on Gaia DR3 with proper motion constraints) that were missed by Cantat-Gaudin+2018 (UPMASK on Gaia DR2). No associated photometric or astrometric data in table — only IDs."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-galextin",
+      "kind": "external_url",
+      "url": "http://www.galextin.org/",
+      "local_path": "",
+      "description": "GALExtin interface used to retrieve Milky Way reddening map values along the cluster line-of-sight. Multiple reddening maps were queried (Schlegel+1998, Drimmel+2003, Amores+Lepine 2005, Marshall+2006, Planck+2014, Schlafly+2014, Chen+2019).",
+      "source_refs": [
+        {
+          "path": "literature/2301.04031/arxiv_source/paper.tex",
+          "start_line": 286,
+          "end_line": 287,
+          "context": "We used different Milky Way reddening map models through the GALExtin footnote interface (Amores+2021) to obtain the mean interstellar reddening along the line of sight of the cluster."
+        }
+      ],
+      "evidence": "Footnoted URL http://www.galextin.org/ in Section 2 (Data analysis), referenced via \\citep{amoresetal2021}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-parsec",
+      "kind": "external_url",
+      "url": "http://stev.oapd.inaf.it/cgi-bin/cmd",
+      "local_path": "",
+      "description": "PARSEC v1.2S isochrone web interface. Used to compute theoretical isochrones for cluster age and metallicity fitting via ASteCA code.",
+      "source_refs": [
+        {
+          "path": "literature/2301.04031/arxiv_source/paper.tex",
+          "start_line": 305,
+          "end_line": 305,
+          "context": "we fitted theoretical isochrones computed by Bressan+2012 (PARSEC v1.2S footnote) and the Automated Stellar Cluster Analysis code (ASteCA, Perren+2015)"
+        }
+      ],
+      "evidence": "Footnoted URL http://stev.oapd.inaf.it/cgi-bin/cmd in Section 2, citing \\citet{betal12}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-astropy",
+      "kind": "external_url",
+      "url": "http://www.astropy.org",
+      "local_path": "",
+      "description": "Astropy Python package used to compute Galactic coordinates (X,Y,Z) and space velocities (V_X,V_Y,V_Z) from Gaia DR3 astrometry.",
+      "source_refs": [
+        {
+          "path": "literature/2301.04031/arxiv_source/paper.tex",
+          "start_line": 325,
+          "end_line": 325,
+          "context": "we computed Galactic coordinates (X,Y,Z) and space velocities (V_X,V_Y,V_Z) employing the Astropy footnote package (Astropy Collaboration 2013, 2018)"
+        }
+      ],
+      "evidence": "Footnoted URL http://www.astropy.org in Section 2, cited via \\citep{astropy2013,astropy2018}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-data-request",
+      "kind": "data_availability_statement",
+      "url": "",
+      "local_path": "",
+      "description": "Data used in this work are available upon request to the author.",
+      "source_refs": [
+        {
+          "path": "literature/2301.04031/arxiv_source/paper.tex",
+          "start_line": 543,
+          "end_line": 545,
+          "context": "\\section{Data availability} Data used in this work are available upon request to the author."
+        }
+      ],
+      "evidence": "Explicit 'Data availability' section at end of paper: 'Data used in this work are available upon request to the author.'",
+      "comments": "No public data archive or machine-readable table linked. The 171 cluster member stars identified by HDBSCAN (of which 31 new IDs are in Table 2) are available only by contacting the author."
+    }
+  ]
+}

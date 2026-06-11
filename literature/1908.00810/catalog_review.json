@@ -1,0 +1,186 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "1908.00810",
+    "title": "Kinematic study of the association Cyg OB3 with Gaia DR2",
+    "month": "2019-08",
+    "source_note_json": "notes/2019/2019-08/2019-08.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/1908.00810",
+      "pdf": "https://arxiv.org/pdf/1908.00810"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/1908.00810",
+    "audit_path": "literature/1908.00810/audit.json",
+    "source_dir": "literature/1908.00810/arxiv_source",
+    "tex_root": "literature/1908.00810/arxiv_source/ms.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:30:00",
+    "reviewer": "agent",
+    "summary": "本文利用Gaia DR2精确天体测量数据研究Cyg OB3星协中41颗O型和B型星的运学性质和空间分布。样本星集中在日心距离2.0±0.3 kpc处，剔除银河系自转和太阳运动后的平均本动速度约22 km/s，主要指向银心方向。论文确认了已知逃逸星HD 227018的高本动速度（~50 km/s），并发现黑洞X射线双星Cyg X-1与Cyg OB3的位量和速度关系表明Cyg OB3最有可能是其母星协。论文包含2个内部表格：Table tab1列出41颗样本星的Gaia DR2数据（源名称、DR2源ID、坐标、G星等、视差及其分数不确定度、自行），Table table:tab2列出导出运学量（光谱型、指数先验距离、本动速度、相对星协速度和视向速度）。Gaia DR2为ESA公开巡天数据，光谱型来自SIMBAD数据库，视向速度引自Kharchenko+2007（VizieR公开星表）。论文无独立机器可读数据文件，外部URL均为Gaia文档/致谢等基础设施引用。"
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab1",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "列出经Gaia DR2天体测量质量筛选后Cyg OB3区域41颗O/B型样本星的观测数据。包含序号Nr.、源名称Source（来自SIMBAD的HD/BD/TYC命名）、Gaia DR2 Source ID（19位数字标识符）、赤经RA和赤纬Dec（J2000，度）、G波段星等Gmag、视差ϖ（mas，含测量不确定度±）、视差分数不确定度f=σ_ϖ/ϖ、赤经方向自行pmra = μα cos δ（mas/yr，含测量不确定度）和赤纬方向自行pmdec = μδ（mas/yr，含测量不确定度）。该表为本文的核心输入数据，后续所有运学分析（距离估计、本动速度计算、相对星协速度计算）均基于此表中的Gaia测量值和Table tab:tab2中的光谱型及视向速度。表注（a）说明G星等来自Gaia DR2，（b）说明pmra和pmdec为Gaia DR2自行。",
+      "source_refs": [
+        {
+          "path": "literature/1908.00810/arxiv_source/ms.tex",
+          "start_line": 139,
+          "end_line": 193,
+          "caption": "\\textit{Gaia} data for the 41 stars in our sample. (a) $G$ denotes the G-band magnitudes of the stars obtained from \\textit{Gaia} DR2. (b) pmra and pmdec represent the proper motions of the stars in RA and Dec.",
+          "label": "tab1"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Nr.",
+          "meaning": "样本星序号（1–41）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Source",
+          "meaning": "恒星源名称，来自SIMBAD天文数据库（HD编号、BD编号、TYC编号或LS编号）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Source Id",
+          "meaning": "Gaia Data Release 2 源标识号（19位数字）",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA",
+          "meaning": "赤经（J2000历元，度），Gaia DR2测量值",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec.",
+          "meaning": "赤纬（J2000历元，度），Gaia DR2测量值",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "G",
+          "meaning": "Gaia DR2 G波段星等（Gmag），表注(a)说明来自Gaia DR2",
+          "unit_text": "mag",
+          "source_of_definition": "table header + table note a",
+          "confidence": 1.0
+        },
+        {
+          "name": "Parallax",
+          "meaning": "Gaia DR2视差（ϖ，mas），含±测量不确定度",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "f",
+          "meaning": "视差分数不确定度 f = σ_ϖ / ϖ",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "pmra",
+          "meaning": "Gaia DR2赤经方向自行 μα cos δ，含±测量不确定度。表注(b)说明pmra表示赤经方向自行",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header + table note b",
+          "confidence": 1.0
+        },
+        {
+          "name": "pmdec",
+          "meaning": "Gaia DR2赤纬方向自行 μδ，含±测量不确定度。表注(b)说明pmdec表示赤纬方向自行",
+          "unit_text": "mas yr⁻¹",
+          "source_of_definition": "table header + table note b",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table tab1标题为'Gaia data for the 41 stars in our sample'，使用table*环境，10列llcccccccc格式。表头列出Nr.、Source、Source Id(Gaia DR2)、RA α(deg)、Dec. δ(deg)、G^a(Gmag)、Parallax ϖ(mas)、f(σ_ϖ/ϖ)、pmra^b μα cos δ(mas y⁻¹)、pmdec^b μδ(mas y⁻¹)。全部41颗星数据逐行列于LaTeX源码第147-187行。表注(a)说明G为Gaia DR2 G波段星等，(b)说明pmra和pmdec分别为RA和Dec方向自行。ADS元数据显示data字段包含'SIMBAD:43'，确认该星表涉及43个SIMBAD天体记录。该表为完整数据表（所有41行均可见），无'仅部分展示'说明。",
+      "comments": "该表为本文第一个数据表格，从Gaia DR2档案查询中获取5参数天体测量解（astrometric_params_solved=31），经RUWE<1.4和视差质量筛选后保留41颗星。原始LaTeX位于ms.tex第139-193行，使用table*跨页宽表环境。恒星源名称（HD/BD/TYC/LS）来自SIMBAD交叉匹配。Gaia DR2为ESA公开巡天数据，论文引用的是公开数据查询结果，非本文独立产生的数据产品。根据审查边界规则，Gaia DR2公开数据不列为本文外部数据资产。"
+    },
+    {
+      "id": "table-table_tab2",
+      "kind": "latex_table",
+      "asset_type": "object_measurement_table",
+      "role_in_paper": "列出41颗样本星的导出运学参数。包含序号Nr.、源名称Source、光谱型Spectral type（来自SIMBAD）、指数先验日心距离r_exp（kpc，含±不确定度）、本动速度v_pec（km/s，剔除太阳运动和银河系自转后，含±不确定度）、相对星协速度v_rel（km/s，含±不确定度）和视向速度v_r（km/s，来自Kharchenko+2007星表，含±不确定度）。该表为本文的核心科学产出，前四列（光谱型和距离）为输入量，后三列（v_pec、v_rel、v_r）为本文计算得到的运学分析结果。部分恒星因缺乏视向速度数据而标注'--'（如HD 227943等B8型星和若干缺乏Kharchenko+2007视向速度的恒星）。",
+      "source_refs": [
+        {
+          "path": "literature/1908.00810/arxiv_source/ms.tex",
+          "start_line": 196,
+          "end_line": 249,
+          "caption": "Spectral types of the stars mentioned in the third column are obtained from {\\tt SIMBAD}. The distances, $r\\sub{exp}$, in the fourth column are the heliocentric distances to the stars calculated using exponential prior. \\vpec{} mentioned in the fifth column are the peculiar velocities of stars after removing the components of Solar motion and Galactic rotation. \\vrel{} are the relative velocities of individual stars with respect to the association. Radial velocities \\vr{} given in the last column are obtained from \\citet{kharchenko07}.",
+          "label": "table:tab2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Nr.",
+          "meaning": "样本星序号（1–41），与Table tab1对应",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Source",
+          "meaning": "恒星源名称（HD/BD/TYC/LS编号），与Table tab1一致",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral type",
+          "meaning": "光谱型，来自SIMBAD天文数据库获取",
+          "unit_text": "",
+          "source_of_definition": "table caption + table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_exp",
+          "meaning": "使用指数先验（Bailer-Jones 2015方法）计算的日心距离估计值，含±不确定度",
+          "unit_text": "kpc",
+          "source_of_definition": "table caption + table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_pec",
+          "meaning": "本动速度（peculiar velocity），已剔除太阳运动和银河系自转分量后的三维空间速度，含±不确定度。'--'表示因缺乏视向速度而无法计算",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table caption + table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_rel",
+          "meaning": "恒星相对于Cyg OB3星协整体运动的相对速度，含±不确定度。'--'表示因缺乏视向速度而无法计算",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table caption + table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_r",
+          "meaning": "视向速度（radial velocity），引自Kharchenko+2007（VizieR Online Data Catalog, 3254）。'--'表示该星无Kharchenko+2007的视向速度数据",
+          "unit_text": "km s⁻¹",
+          "source_of_definition": "table caption + table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table table:tab2标题为'Spectral types of the stars mentioned in the third column are obtained from SIMBAD...'，使用table*环境，8列cccccccc格式。表头列出Nr.、Source、Spectral type、r_exp(kpc)、v_pec(km s⁻¹)、v_rel(km s⁻¹)、v_r(km s⁻¹)。全部41颗星数据逐行列于LaTeX源码第204-244行，包含23颗有完整运学参数和18颗因缺乏视向速度而标注'--'的恒星。表注说明光谱型来自SIMBAD、距离用指数先验计算、v_pec为剔除太阳运动和银河系自转后的本动速度、v_rel为相对星协速度、v_r来自Kharchenko+2007。该表包含17颗无v_pec/v_rel值的恒星（仅列出了光谱型和距离）。",
+      "comments": "该表为本文第二个数据表格，呈现了本文的核心运学分析结果。v_pec和v_rel为本研究的直接计算产出，距离r_exp使用Bailer-Jones(2015)指数先验方法从Gaia视差导出。光谱型来自SIMBAD公开数据库，视向速度引自Kharchenko+2007的公开VizieR星表。原始LaTeX位于ms.tex第196-249行。值得注意的科学亮点：HD 227018（序号33）具有最高的v_pec=52.2 km/s和v_rel=42.4 km/s，被确认为逃逸星；HD 227757（序号28）具有v_rel=43.8 km/s的相对星协速度异常；Cyg X-1（HD 226868，序号31）的运学参数与星协一致（v_pec=22.2 km/s，v_rel=11.4 km/s），支持其属于Cyg OB3。"
+    }
+  ],
+  "external_resources": []
+}

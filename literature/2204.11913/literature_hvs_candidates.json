@@ -1,0 +1,80 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-23T11:43:12",
+  "paper": {
+    "arxiv_id": "2204.11913",
+    "bibcode": "2022A&A...663A..80M",
+    "title": "And then they were two: detection of non-thermal radio emission from the bow shocks of two runaway stars",
+    "month": "2022-04",
+    "source_note_json": "notes/2022/2022-04/2022-04.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2204.11913",
+      "pdf": "https://arxiv.org/pdf/2204.11913"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2204.11913",
+    "audit_path": "literature/2204.11913/audit.json",
+    "catalog_review_path": "literature/2204.11913/catalog_review.json",
+    "catalog_extraction_path": "literature/2204.11913/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2204.11913/catalog_tables/table-tab-lit_info.ecsv",
+      "literature/2204.11913/catalog_tables/table-tab-five_sig.ecsv",
+      "literature/2204.11913/catalog_tables/table-tab-flux_comb.ecsv",
+      "literature/2204.11913/catalog_tables/table-tab-SYNIC.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-23T11:43:12",
+    "extractor": "agent",
+    "summary": "The paper presents radio observations of two runaway stars, BD+43°3654 and BD+60°2522, and their bow shocks. Throughout the text the authors consistently label these objects as runaway stars ejected from their parent clusters, with space velocities of 69–100 km/s and 29–40 km/s respectively. The paper never discusses either star as possibly unbound from the Milky Way, hypervelocity, or escaping the Galaxy. No escape velocities, bound/unbound probabilities, or Galactic-potential orbit integrations are presented. Both objects are therefore excluded from the HVS candidate list."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "target-runaway-stars",
+      "description": "The two main target stars BD+43°3654 (BSBD43) and BD+60°2522 (BSBD60) and their associated bow shocks, discussed throughout the paper as runaway stars.",
+      "decision": "excluded",
+      "reason": "The paper treats both stars as ordinary runaway stars ejected from their birth clusters, with velocities relative to the local ISM of ~69–100 km/s (BSBD43) and ~29–40 km/s (BSBD60). The authors never present them as possibly unbound from the Milky Way or Galactic potential, nor do they calculate escape velocities, bound/unbound probabilities, or orbit integrations. They are therefore excluded per the Stella HVS candidate rules.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2204.11913/arxiv_source/main.tex",
+          "start_line": 176,
+          "end_line": 177,
+          "context": "Introduction defines runaway stars as ejected from parent clusters with velocities >30 km/s relative to the ISM, with no mention of Galactic escape."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2204.11913/arxiv_source/main.tex",
+          "start_line": 342,
+          "end_line": 343,
+          "context": "BD+43°3654 is described as a 'very massive runaway star' with velocity 69–100 km/s; no claim of Galactic-unbound status is made."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2204.11913/arxiv_source/main.tex",
+          "start_line": 352,
+          "end_line": 355,
+          "context": "BD+60°2522 is described as less massive and moving more slowly; the high peculiar velocity suggests a bow shock, with no claim of unbound status."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2204.11913/arxiv_source/main.tex",
+          "start_line": 367,
+          "end_line": 373,
+          "context": "Space-velocity subsection calculates peculiar velocities v_tr, v_r, and v_star for both stars, but does not compare them to Galactic escape velocity or assess bound/unbound status."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2204.11913/arxiv_source/main.tex",
+          "start_line": 1252,
+          "end_line": 1253,
+          "context": "Conclusions reiterate that the paper reports radio observations of bow shocks from runaway stars, with no mention of Galactic-unbound or hypervelocity status."
+        }
+      ]
+    }
+  ]
+}

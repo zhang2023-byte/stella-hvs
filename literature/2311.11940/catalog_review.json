@@ -1,0 +1,488 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2311.11940",
+    "title": "Characterisation of high velocity stars in the S-PLUS internal fourth data release",
+    "month": "2023-11",
+    "source_note_json": "notes/2023/2023-11/2023-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2311.11940",
+      "pdf": "https://arxiv.org/pdf/2311.11940"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2311.11940",
+    "audit_path": "literature/2311.11940/audit.json",
+    "source_dir": "literature/2311.11940/arxiv_source",
+    "tex_root": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-22T22:55:00",
+    "reviewer": "agent",
+    "summary": "This paper characterizes 64 high-velocity stars (V_GC > 400 km/s) using Gaia DR3 astrometry and S-PLUS iDR4 12-filter photometry. It contains 5 internal tables: (1) S-PLUS filter specifications, (2) astrometric parameters for 64 HiVel stars from Gaia DR3, (3) CNN-derived stellar parameters (Teff, [Fe/H], log g) compared with SPHINX for 64 stars, (4) stellar radii from StarHorse and CNN log g for 64 stars, (5) chemical abundances ([Fe/H], [alpha/Fe], [Mg/Fe]) from GALAH DR3 and LAMOST DR8 for 11 stars. 9 external resources are referenced: survey homepages (S-PLUS, SDSS/APOGEE, Gaia, SEGUE), software repositories (Galpy, AGAMA), data archives (Gaia ESA archive, PARSEC isochrones), and infrastructure (DPAC consortium). No machine-readable data tables are directly provided with the paper; data is available upon reasonable request to the corresponding author."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-jplus_filters",
+      "kind": "latex_table",
+      "asset_type": "reference_table",
+      "role_in_paper": "Documents the 12 S-PLUS photometric filters used in the study, including central wavelengths, bandwidths, and spectral features covered.",
+      "source_refs": [
+        {
+          "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+          "start_line": 101,
+          "end_line": 124,
+          "caption": "S-PLUS photometric bands",
+          "label": "tab:jplus_filters"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Filter",
+          "meaning": "S-PLUS filter name",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Central wavelength",
+          "meaning": "Central wavelength of the filter",
+          "unit_text": "Angstrom",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Delta lambda",
+          "meaning": "Filter bandwidth (FWHM)",
+          "unit_text": "Angstrom",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Spectral features",
+          "meaning": "Key spectral features covered by the filter",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        }
+      ],
+      "evidence": "Table 1 listing the 12 S-PLUS photometric bands: u, J0378, J0395, J0410, J0430, g, J0515, r, J0660, i, J0861, z with their central wavelengths, bandwidths, and associated spectral features.",
+      "comments": "Reference/specification table, not research data."
+    },
+    {
+      "id": "table-tab-astrometric_parameters_splus",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Primary astrometric data for the 64 HiVel sample stars: Gaia DR3 positions, proper motions, parallaxes, and radial velocities from both Gaia and spectroscopic surveys.",
+      "source_refs": [
+        {
+          "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+          "start_line": 140,
+          "end_line": 220,
+          "caption": "Astrometric parameters from the Gaia DR3. The last column reports the radial velocity from other spectroscopic surveys.",
+          "label": "tab:astrometric_parameters_splus"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR3 ID",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "alpha",
+          "meaning": "Right ascension (ICRS)",
+          "unit_text": "deg +/- mas",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "delta",
+          "meaning": "Declination (ICRS)",
+          "unit_text": "deg +/- mas",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "varpi",
+          "meaning": "Parallax",
+          "unit_text": "mas",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "mu_alpha",
+          "meaning": "Proper motion in right ascension",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "mu_delta",
+          "meaning": "Proper motion in declination",
+          "unit_text": "mas/yr",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "v_rad (Gaia)",
+          "meaning": "Radial velocity from Gaia DR3",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "SNR",
+          "meaning": "Gaia radial velocity signal-to-noise ratio (rv_expected_sig_to_noise)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.90
+        },
+        {
+          "name": "v_rad (Spectroscopy)",
+          "meaning": "Radial velocity from spectroscopic surveys (GALAH DR3 a or LAMOST DR8 LR b)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        }
+      ],
+      "evidence": "Table 2 containing astrometric parameters for 64 high-velocity stars. Each row has Gaia DR3 ID, RA, Dec, parallax, proper motions, Gaia radial velocity with SNR, and cross-matched radial velocities from GALAH DR3 (7 stars) and LAMOST DR8 LR (4 stars).",
+      "comments": "Core data table. Contains the full HiVel sample of 64 stars. Data sourced from Gaia DR3 with cross-matches to GALAH DR3 and LAMOST DR8."
+    },
+    {
+      "id": "table-tab-stellar_parameters_splus",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Derived stellar parameters (Teff, [Fe/H], log g) for all 64 HiVel stars from the CNN model, compared with SPHINX-derived Teff and [Fe/H].",
+      "source_refs": [
+        {
+          "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+          "start_line": 321,
+          "end_line": 397,
+          "caption": "Stellar parameters derived with our CNN and with SPHINX",
+          "label": "tab:stellar_parameters_splus"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR3 ID",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Teff (CNN)",
+          "meaning": "Effective temperature from CNN model",
+          "unit_text": "K (uncertainty +/-115 K)",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "[Fe/H] (CNN)",
+          "meaning": "Metallicity from CNN model",
+          "unit_text": "dex (uncertainty +/-0.2 dex)",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "log g (CNN)",
+          "meaning": "Surface gravity from CNN model",
+          "unit_text": "dex (uncertainty +/-0.2 dex)",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Teff (SPHINX)",
+          "meaning": "Effective temperature from SPHINX model",
+          "unit_text": "K",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "[Fe/H] (SPHINX)",
+          "meaning": "Metallicity from SPHINX model",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        }
+      ],
+      "evidence": "Table 3 with 64 rows of derived stellar parameters. CNN columns: Teff, [Fe/H], log g (with systematic uncertainties of +/-115 K, +/-0.2 dex, +/-0.2 dex). SPHINX columns: Teff and [Fe/H] with individual uncertainties. SPHINX does not provide log g.",
+      "comments": "CNN trained on ~55,000 S-PLUS+LAMOST common stars. SPHINX trained on ~7,000 S-PLUS+LAMOST+SEGUE stars. Values are photometrically derived, not spectroscopic."
+    },
+    {
+      "id": "table-tab-mass_logg_rad",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Derived stellar radii for all 64 HiVel stars, computed from StarHorse masses combined with StarHorse log g and CNN log g separately.",
+      "source_refs": [
+        {
+          "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+          "start_line": 429,
+          "end_line": 508,
+          "caption": "Stellar radii of the high velocity stars.",
+          "label": "tab:mass_logg_rad"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR3 ID",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Mass (SH)",
+          "meaning": "Stellar mass from StarHorse catalog",
+          "unit_text": "M_sun",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Log g (SH)",
+          "meaning": "Surface gravity from StarHorse catalog",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Radius (SH)^a",
+          "meaning": "Stellar radius computed using StarHorse mass and StarHorse log g",
+          "unit_text": "R_sun",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Log g (CNN)",
+          "meaning": "Surface gravity from CNN model (this work)",
+          "unit_text": "dex (uncertainty +/-0.2 dex)",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Radius (CNN)^b",
+          "meaning": "Stellar radius computed using StarHorse mass and CNN log g",
+          "unit_text": "R_sun",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        }
+      ],
+      "evidence": "Table 4 with 64 rows. Masses from Gaia EDR3 StarHorse catalog. Radii computed in two ways: using StarHorse log g and using CNN log g. Table notes: a=calculated using log g from StarHorse, b=calculated using log g from CNN, *=sources with sh_outflag != 0 in StarHorse, **=variable star in Gaia DR3.",
+      "comments": "Derived quantities. Authors caution that large uncertainties in log g make these radius estimates unreliable."
+    },
+    {
+      "id": "table-tab-stellar_abundances",
+      "kind": "latex_table",
+      "asset_type": "data_table",
+      "role_in_paper": "Spectroscopic chemical abundances ([Fe/H], [alpha/Fe], [Mg/Fe]) for 11 HiVel stars from GALAH DR3 and LAMOST DR8, used for chemical tagging to constrain stellar origins.",
+      "source_refs": [
+        {
+          "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+          "start_line": 531,
+          "end_line": 553,
+          "caption": "Metallicity, alpha-elements and [Mg/Fe] abundance from spectroscopic surveys.",
+          "label": "tab:stellar_abundances"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia DR3 ID",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "[Fe/H]",
+          "meaning": "Iron abundance from spectroscopic survey",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "[alpha/Fe]",
+          "meaning": "Alpha-element abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "[Mg/Fe]",
+          "meaning": "Magnesium-to-iron abundance ratio",
+          "unit_text": "dex",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        },
+        {
+          "name": "Survey",
+          "meaning": "Source spectroscopic survey (GALAH DR3 or LAMOST DR8 LR)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.95
+        }
+      ],
+      "evidence": "Table 5 with 11 rows (some stars have entries from both surveys). 6 stars from GALAH DR3, 5 from LAMOST DR8 LR. Star 3696393857329932672 appears in both surveys. Columns: [Fe/H], [alpha/Fe], [Mg/Fe] with uncertainties.",
+      "comments": "Spectroscopic data from external surveys, not original to this paper. Used for chemical tagging analysis in Section 5.2."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://www.splus.iag.usp.br/",
+      "local_path": "",
+      "description": "S-PLUS (Southern Photometric Local Universe Survey) project homepage. The survey providing 12-filter photometric data used as input for the CNN stellar parameter determination.",
+      "source_refs": [
+        {
+          "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+          "start_line": 88,
+          "end_line": 88,
+          "context": "footnote URL for S-PLUS survey in Section 1 (Introduction)"
+        }
+      ],
+      "evidence": "Footnote URL in Introduction: https://www.splus.iag.usp.br/",
+      "comments": "Survey website. S-PLUS iDR4 data is the photometric data source for this work."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.sdss4.org/dr17/",
+      "local_path": "",
+      "description": "SDSS DR17 / APOGEE DR17 homepage. APOGEE DR17 data used to train and test the machine learning algorithms for stellar parameter estimation.",
+      "source_refs": [
+        {
+          "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+          "start_line": 97,
+          "end_line": 97,
+          "context": "footnote URL for APOGEE DR17 in Section 2 (Data sources)"
+        }
+      ],
+      "evidence": "Footnote URL in Section 2: https://www.sdss4.org/dr17/",
+      "comments": "APOGEE DR17 provides training labels and test data for the CNN and ANN models."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://gea.esac.esa.int/archive/",
+      "local_path": "",
+      "description": "Gaia ESA archive. Source of Gaia DR3 data including astrometric parameters and the external.gaiaedr3_spurious table used for quality filtering.",
+      "source_refs": [
+        {
+          "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+          "start_line": 132,
+          "end_line": 132,
+          "context": "footnote URL for Gaia archive in Section 3 (High Velocity Stars Selection)"
+        }
+      ],
+      "evidence": "Footnote URL in Section 3: https://gea.esac.esa.int/archive/",
+      "comments": "Gaia DR3 is the primary astrometric data source. The external.gaiaedr3_spurious table (norm_dg flag) is used for quality filtering."
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://docs.galpy.org/en/v1.9.0/",
+      "local_path": "",
+      "description": "Galpy documentation. Python package used for orbit integration and calculation of kinematic/dynamical quantities (actions, energies, angular momenta).",
+      "source_refs": [
+        {
+          "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+          "start_line": 239,
+          "end_line": 239,
+          "context": "footnote URL for Galpy in Section 4.1 (Orbit integration)"
+        }
+      ],
+      "evidence": "Footnote URL in Section 4.1: https://docs.galpy.org/en/v1.9.0/",
+      "comments": "Galpy is used with the McMillan2017 potential for backwards orbit integration over 10 Gyr."
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "https://github.com/GalacticDynamics-Oxford/Agama",
+      "local_path": "",
+      "description": "AGAMA (Action-based Galaxy Modelling Architecture) GitHub repository. Used for orbit integration in a barred potential to investigate the influence of the Galactic bar.",
+      "source_refs": [
+        {
+          "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+          "start_line": 246,
+          "end_line": 246,
+          "context": "footnote URL for AGAMA repository in Section 4.1 (Orbit integration / barred potential)"
+        }
+      ],
+      "evidence": "Footnote URL in Section 4.1: https://github.com/GalacticDynamics-Oxford/Agama",
+      "comments": "AGAMA is used with the Sormani et al. (2022) barred potential with pattern speed 35.5 km/s/kpc and bar inclination 30 degrees."
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://www.sdss4.org/surveys/segue/",
+      "local_path": "",
+      "description": "SEGUE (Sloan Extension for Galactic Understanding and Exploration) DR9 survey page. Training labels for the SPHINX neural network were taken from a combination of LAMOST DR7 and SEGUE DR9.",
+      "source_refs": [
+        {
+          "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+          "start_line": 401,
+          "end_line": 401,
+          "context": "footnote URL for SEGUE in Section 5.3 (Comparison with SPHINX)"
+        }
+      ],
+      "evidence": "Footnote URL in Section 5.3: https://www.sdss4.org/surveys/segue/",
+      "comments": "SEGUE DR9 contributed training data for the SPHINX model alongside LAMOST DR7."
+    },
+    {
+      "id": "resource-007",
+      "kind": "external_url",
+      "url": "http://stev.oapd.inaf.it/cmd/",
+      "local_path": "",
+      "description": "PARSEC (PAdova and TRieste Stellar Evolution Code) web interface. Used to generate theoretical isochrones for metallicities -2.0, -1.5, -1.0, -0.5 dex shown in the H-R diagram.",
+      "source_refs": [
+        {
+          "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+          "start_line": 414,
+          "end_line": 414,
+          "context": "footnote URL for PARSEC in Section 5.4 (The Hertzsprung-Russell diagram)"
+        }
+      ],
+      "evidence": "Footnote URL in Section 5.4: http://stev.oapd.inaf.it/cmd/",
+      "comments": "PARSEC isochrones (Bressan et al. 2012) are used for evolutionary stage identification in the Kiel and CMD diagrams."
+    },
+    {
+      "id": "resource-008",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission homepage. Acknowledged as the source of astrometric data used in this work.",
+      "source_refs": [
+        {
+          "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+          "start_line": 575,
+          "end_line": 575,
+          "context": "Acknowledgments section, acknowledging use of Gaia mission data"
+        }
+      ],
+      "evidence": "URL in Acknowledgments: https://www.cosmos.esa.int/gaia",
+      "comments": "Standard acknowledgment URL for Gaia data usage."
+    },
+    {
+      "id": "resource-009",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "Gaia Data Processing and Analysis Consortium (DPAC) page. Acknowledged for processing the Gaia data used in this work.",
+      "source_refs": [
+        {
+          "path": "literature/2311.11940/arxiv_source/splus_hivel.tex",
+          "start_line": 575,
+          "end_line": 575,
+          "context": "Acknowledgments section, acknowledging DPAC for Gaia data processing"
+        }
+      ],
+      "evidence": "URL in Acknowledgments: https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "comments": "Standard acknowledgment URL for DPAC."
+    }
+  ]
+}

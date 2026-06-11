@@ -1,0 +1,193 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2211.13476",
+    "title": "The VLT-FLAMES Tarantula Survey: Observational evidence for two distinct populations of massive runaway stars in 30 Doradus",
+    "month": "2022-11",
+    "source_note_json": "notes/2022/2022-11/2022-11.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2211.13476",
+      "pdf": "https://arxiv.org/pdf/2211.13476"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2211.13476",
+    "audit_path": "literature/2211.13476/audit.json",
+    "source_dir": "literature/2211.13476/arxiv_source",
+    "tex_root": "literature/2211.13476/arxiv_source/aa.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-23T11:01:43",
+    "reviewer": "agent",
+    "summary": "This A&A Letter identifies and characterizes 23 single and 1 binary O-type runaway stars in the 30 Doradus starburst region using radial-velocity data from the VLT-FLAMES Tarantula Survey (VFTS) and the Tarantula Massive Binary Monitoring (TMBM). The paper contains two internal LaTeX tables: Table 1 (tab: cluster) provides summary statistics of systemic velocities, velocity dispersions, and runaway fractions for different spatial subgroups of the O-star population; Table 2 (tab: RW) is the core observational result listing kinematic (line-of-sight velocity, peculiar velocity), rotational (projected equatorial velocity), spectral, and evolutionary properties (present-day mass and age) for each identified runaway star. The paper also uses Gaia DR3 proper-motion data retrieved from the ARI Heidelberg archive to support the runaway-desert finding. Acknowledgements reference the ESA Gaia mission homepage and the Gaia DPAC consortium website. No data-availability statement or additional external data-archive URLs are provided in the paper."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-cluster",
+      "kind": "latex_table",
+      "asset_type": "summary_statistics",
+      "role_in_paper": "Summarizes the systemic radial velocities and 1-sigma velocity dispersions of presumed single O-type stars in 30 Doradus, comparing sample-statistics and Gaussian-fit methods, and reports the observed runaway-star fraction for each spatial subgroup.",
+      "source_refs": [
+        {
+          "path": "literature/2211.13476/arxiv_source/aa.tex",
+          "start_line": 188,
+          "end_line": 206,
+          "caption": "Systemic velocities and 1\\s\\ radial-velocity dispersions from the two analysis methods (see text) and runaway (RW) fractions of the single O-star populations in 30~Dor.",
+          "label": "tab: cluster"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Population",
+          "meaning": "Spatial subgroup of the presumed single O-type star sample (Overall, NGC 2070, NGC 2060, or Remaining field population)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Sample | size",
+          "meaning": "Number of presumed single O-type stars in the subgroup",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Sample Stat. | (\\kms)",
+          "meaning": "Systemic velocity and 1-sigma dispersion derived from the unweighted sample mean and kappa-sigma clipping",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Gaussian fit | (\\kms)",
+          "meaning": "Systemic velocity and 1-sigma dispersion obtained from Gaussian fit to the generalized radial-velocity histograms",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RW fraction | (%)",
+          "meaning": "Observed runaway-star fraction in the subgroup, computed using binomial statistics",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Systemic velocities and 1\\s\\ radial-velocity dispersions from the two analysis methods (see text) and runaway (RW) fractions of the single O-star populations in 30~Dor.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-RW",
+      "kind": "latex_table",
+      "asset_type": "object_list",
+      "role_in_paper": "Core observational-result table listing the 23 single and 1 binary O-type runaway stars identified in 30 Doradus, providing their kinematic, rotational, spectral-classification, and evolutionary properties.",
+      "source_refs": [
+        {
+          "path": "literature/2211.13476/arxiv_source/aa.tex",
+          "start_line": 243,
+          "end_line": 294,
+          "caption": "Properties of the O-type runaway stars detected in 30~Dor. Quoted uncertainties are 1\\s\\ errorbars for the velocities \\citep{SdKdM13} and 95\\%\\ confidence interval for the present-day evolutionary masses ($M_\\mathrm{act}$) and ages ($\\tau$) \\citep{SSE18}, but for VFTS~661 for which the mass estimates is taken from \\citet{MAS20}.",
+          "label": "tab: RW"
+        }
+      ],
+      "columns": [
+        {
+          "name": "VFTS | ID",
+          "meaning": "VFTS target identifier of the runaway star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Loca- | tion",
+          "meaning": "Spatial location relative to the main OB associations (Out. = outside NGC 2060 and NGC 2070, 2060 = NGC 2060, 2070 = NGC 2070)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_los | (\\kms)",
+          "meaning": "Line-of-sight radial velocity of the star",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\delta v_los | (\\kms)",
+          "meaning": "Peculiar line-of-sight velocity relative to the systemic velocity of the O-star population in 30 Doradus",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\vrot | (\\kms)",
+          "meaning": "Projected equatorial rotational velocity (v_e sin i)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Spectral | Classification",
+          "meaning": "MK spectral classification of the star",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "M_act | (\\msun)",
+          "meaning": "Present-day evolutionary mass with quoted uncertainties (95% confidence interval for most objects)",
+          "unit_text": "solar masses",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\tau | (Myr)",
+          "meaning": "Stellar age with quoted uncertainties (95% confidence interval for most objects)",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Properties of the O-type runaway stars detected in 30~Dor. Quoted uncertainties are 1\\s\\ errorbars for the velocities \\citep{SdKdM13} and 95\\%\\ confidence interval for the present-day evolutionary masses ($M_\\mathrm{act}$) and ages ($\\tau$) \\citep{SSE18}, but for VFTS~661 for which the mass estimates is taken from \\citet{MAS20}.",
+      "comments": "Table continues across a commented-out table break in the LaTeX source (lines 272-274); the complete table ends at line 294."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission homepage, referenced for Gaia DR3 astrometric data used to support the runaway-star analysis.",
+      "source_refs": [
+        {
+          "path": "literature/2211.13476/arxiv_source/aa.tex",
+          "start_line": 400,
+          "end_line": 400,
+          "context": "This work has made use of data from the European Space Agency (ESA) mission Gaia (https://www.cosmos.esa.int/gaia)"
+        }
+      ],
+      "evidence": "Acknowledged in the acknowledgements section: 'This work has made use of data from the European Space Agency (ESA) mission Gaia (https://www.cosmos.esa.int/gaia)'. Also discussed in the appendix where Gaia DR3 proper motions are used to support the runaway-desert finding.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "Gaia Data Processing and Analysis Consortium (DPAC) homepage, referenced as the data-processing entity for Gaia DR3 measurements used in this work.",
+      "source_refs": [
+        {
+          "path": "literature/2211.13476/arxiv_source/aa.tex",
+          "start_line": 400,
+          "end_line": 400,
+          "context": "processed by the Gaia Data Processing and Analysis Consortium (DPAC, https://www.cosmos.esa.int/web/gaia/dpac/consortium)"
+        }
+      ],
+      "evidence": "Acknowledged in the acknowledgements section: 'processed by the Gaia Data Processing and Analysis Consortium (DPAC, https://www.cosmos.esa.int/web/gaia/dpac/consortium)'.",
+      "comments": ""
+    }
+  ]
+}

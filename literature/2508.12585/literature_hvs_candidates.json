@@ -1,0 +1,144 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T19:54:20",
+  "paper": {
+    "arxiv_id": "2508.12585",
+    "bibcode": "2025MNRAS.542.3289C",
+    "title": "The highest mass Kepler red giants -- II. Spectroscopic parameters, the amplitude-activity relation, and unexpected halo orbits",
+    "month": "2025-08",
+    "source_note_json": "notes/2025/2025-08/2025-08.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2508.12585",
+      "pdf": "https://arxiv.org/pdf/2508.12585"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2508.12585",
+    "audit_path": "literature/2508.12585/audit.json",
+    "catalog_review_path": "literature/2508.12585/catalog_review.json",
+    "catalog_extraction_path": "literature/2508.12585/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2508.12585/catalog_tables/table-tab-teff_results_normal.ecsv",
+      "literature/2508.12585/catalog_tables/table-tab-massrad_actamp.ecsv",
+      "literature/2508.12585/catalog_tables/table-tab-kinematics.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T19:54:20",
+    "extractor": "agent",
+    "summary": "The paper discusses two stars (KIC 11518639 and KIC 8378545) on halo-like orbits with high peculiar velocities, but explicitly frames them as being on high-energy bound orbits resulting from dynamical ejection from multiple systems, not as Galactic-unbound or escaping candidates. No objects are presented as possibly unbound from the Milky Way."
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "input_catalog",
+      "summary": "Adopted Gaia DR3 astrometry and radial velocities for the sample of 48 high-mass Kepler red giants.",
+      "inputs": ["Gaia DR3 astrometry", "Gaia DR3 radial velocities"],
+      "outputs": ["sky positions", "parallaxes", "proper motions", "heliocentric radial velocities"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2508.12585/arxiv_source/main.tex",
+          "start_line": 938,
+          "end_line": 938,
+          "context": "we used the Gaia DR3 astrometry and radial velocity data along with photogeometric distances to calculate velocity components"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": ["step-01"],
+      "step_type": "distance_estimation",
+      "summary": "Used photogeometric distances from Bailer-Jones et al. (2021) based on Gaia DR3 parallax.",
+      "inputs": ["Gaia DR3 parallax"],
+      "outputs": ["photogeometric distances"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2508.12585/arxiv_source/main.tex",
+          "start_line": 938,
+          "end_line": 938,
+          "context": "photogeometric distances from Bailer-Jones et al. (2021)"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": ["step-01", "step-02"],
+      "step_type": "velocity_calculation",
+      "summary": "Converted sky position, distance, proper motion and radial velocity into Galactocentric velocity components (U, V, W) using astropy.",
+      "inputs": ["sky positions", "distances", "proper motions", "radial velocities"],
+      "outputs": ["Galactocentric velocity components U, V, W"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2508.12585/arxiv_source/main.tex",
+          "start_line": 938,
+          "end_line": 938,
+          "context": "Used astropy to convert sky position, distance, proper motion and radial velocity into Galactocentric velocity components"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": ["step-03"],
+      "step_type": "orbit_integration",
+      "summary": "Integrated orbits forward and calculated orbital parameters (Lz, Etot, eccentricity, zmax) using galpy with a McMillan (2017) Galactic potential.",
+      "inputs": ["Galactocentric positions and velocities"],
+      "outputs": ["orbital parameters: angular momentum, total energy, eccentricity, zmax"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2508.12585/arxiv_source/main.tex",
+          "start_line": 938,
+          "end_line": 938,
+          "context": "used galpy with a McMillan (2017) Galactic potential to integrate the orbits forward and calculate the orbital parameters"
+        }
+      ]
+    },
+    {
+      "id": "step-05",
+      "depends_on": ["step-04"],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "Assessed kinematic population membership via Toomre diagram and orbital parameters. The paper identifies two stars on halo-like orbits but characterizes them as high-energy bound orbits, not unbound.",
+      "inputs": ["orbital parameters", "Toomre velocities"],
+      "outputs": ["kinematic population classification"],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2508.12585/arxiv_source/main.tex",
+          "start_line": 940,
+          "end_line": 940,
+          "context": "The two most outlying stars, KIC 11518639 and KIC 8378545, are well outside the thick disk region"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2508.12585/arxiv_source/main.tex",
+          "start_line": 946,
+          "end_line": 946,
+          "context": "Three-body interactions are a common source of hypervelocity stars in the Galaxy and can also place stars on high-energy bound orbits"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "halo-orbit-stars",
+      "description": "Two stars in the sample (KIC 11518639 and KIC 8378545) with halo-like kinematics and high peculiar velocities, discussed in the Kinematics and halo orbits section.",
+      "decision": "excluded",
+      "reason": "The paper presents these stars as being on high-energy bound orbits resulting from dynamical ejection from multiple systems, not as possibly unbound from the Galaxy. The text explicitly states that three-body interactions can place stars on high-energy bound orbits, distinguishing them from hypervelocity stars.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2508.12585/arxiv_source/main.tex",
+          "start_line": 972,
+          "end_line": 976,
+          "context": "Summary of kinematics findings: two stars on halo-like orbits, with ejection from multiple systems as the most likely explanation, and no claim of unbound status"
+        }
+      ]
+    }
+  ]
+}

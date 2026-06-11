@@ -1,0 +1,780 @@
+{
+  "schema_version": "stella.article_data_assets.extraction.v2",
+  "generated_at": "2026-05-17T12:40:36",
+  "paper": {
+    "arxiv_id": "2603.11215",
+    "title": "Unveiling Massive Main-Sequence Stars in Sextans A through Panchromatic Photometry",
+    "month": "2026-03"
+  },
+  "review": {
+    "path": "literature/2603.11215/catalog_review.json",
+    "schema_version": "stella.article_data_assets.review.v1",
+    "review_status": "reviewed"
+  },
+  "run": {
+    "run_id": "catalog-extraction-20260517T124036",
+    "started_at": "2026-05-17T12:40:36",
+    "tool": "scripts/extract_catalog_tables.py",
+    "options": {
+      "arxiv_id": "2603.11215",
+      "internal_table_id": null,
+      "dry_run": false,
+      "overwrite": false
+    },
+    "summary": {
+      "internal_table_count": 5,
+      "work_count": 5,
+      "table_count": 5,
+      "success_count": 5,
+      "failed_count": 0,
+      "deferred_count": 0,
+      "file_count": 5,
+      "file_success_count": 5,
+      "file_failed_count": 0
+    },
+    "status": "success"
+  },
+  "files": [
+    {
+      "id": "table-tab-beast",
+      "internal_table_id": "table-tab-beast",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2603.11215/arxiv_source/main.tex",
+        "start_line": 195,
+        "end_line": 214,
+        "caption": "\\label{filtercombo} Filter Combinations",
+        "label": "tab:beast"
+      },
+      "source_path": "literature/2603.11215/arxiv_source/main.tex",
+      "excerpt_path": "literature/2603.11215/catalog_sources/table-tab-beast/excerpt.tex",
+      "sha256": "c21963fa1e08a97b0c1ba2a8b73f4a9495ae6d20a3c40b152d5d991976f9ec49",
+      "line_count": 20,
+      "error": ""
+    },
+    {
+      "id": "table-mostmassive",
+      "internal_table_id": "table-mostmassive",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2603.11215/arxiv_source/main.tex",
+        "start_line": 226,
+        "end_line": 240,
+        "caption": "Summary of massive main-sequence star in Sextans A with log$(g)_{\\rm p50}>3.7$",
+        "label": "mostmassive"
+      },
+      "source_path": "literature/2603.11215/arxiv_source/main.tex",
+      "excerpt_path": "literature/2603.11215/catalog_sources/table-mostmassive/excerpt.tex",
+      "sha256": "187ab82168f5e0fe182398f6282e4af3c3ed223a12139ac5f10bd7f55c96be7d",
+      "line_count": 15,
+      "error": ""
+    },
+    {
+      "id": "table-allstars",
+      "internal_table_id": "table-allstars",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2603.11215/arxiv_source/main.tex",
+        "start_line": 246,
+        "end_line": 270,
+        "caption": "\\beast\\ fit for the massive stars in Sextans A",
+        "label": "allstars"
+      },
+      "source_path": "literature/2603.11215/arxiv_source/main.tex",
+      "excerpt_path": "literature/2603.11215/catalog_sources/table-allstars/excerpt.tex",
+      "sha256": "f43b7b77791556968844d46d080d9a80f75b57a240c171676396c4a5ad04e16e",
+      "line_count": 25,
+      "error": ""
+    },
+    {
+      "id": "table-tab-clust",
+      "internal_table_id": "table-tab-clust",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2603.11215/arxiv_source/main.tex",
+        "start_line": 381,
+        "end_line": 409,
+        "caption": "OB \"Associations\" in Sextans A",
+        "label": "tab:clust"
+      },
+      "source_path": "literature/2603.11215/arxiv_source/main.tex",
+      "excerpt_path": "literature/2603.11215/catalog_sources/table-tab-clust/excerpt.tex",
+      "sha256": "4e6568ff496005fdc532940fc13f703cfbd95fb1412fffca469d239453724667",
+      "line_count": 29,
+      "error": ""
+    },
+    {
+      "id": "table-tab-esfr",
+      "internal_table_id": "table-tab-esfr",
+      "kind": "latex_table",
+      "status": "written",
+      "source_ref": {
+        "path": "literature/2603.11215/arxiv_source/main.tex",
+        "start_line": 524,
+        "end_line": 538,
+        "caption": "Predicted LyC photon ionization rates and the escape fraction",
+        "label": "tab:esfr"
+      },
+      "source_path": "literature/2603.11215/arxiv_source/main.tex",
+      "excerpt_path": "literature/2603.11215/catalog_sources/table-tab-esfr/excerpt.tex",
+      "sha256": "d1003d3e0b5cca8c4e95e4ff80bd2bcd668ced18c2343972b8fc37cd948fecad",
+      "line_count": 15,
+      "error": ""
+    }
+  ],
+  "tables": [
+    {
+      "id": "table-tab-beast",
+      "internal_table_id": "table-tab-beast",
+      "status": "success",
+      "ecsv_path": "literature/2603.11215/catalog_tables/table-tab-beast.ecsv",
+      "caption": "\\label{filtercombo} Filter Combinations",
+      "label": "tab:beast",
+      "row_count": 10,
+      "column_count": 11,
+      "environment": "",
+      "header_rows": [
+        [
+          "# Filters",
+          "F225W",
+          "F275W",
+          "F336W",
+          "F475W",
+          "WFPC2 F555W",
+          "WFC3 F814W",
+          "WFPC2 F814W",
+          "F110W",
+          "F160W",
+          "N Stars"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "# Filters",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "F225W",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "F275W",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "F336W",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "F475W",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "WFPC2 F555W",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "WFC3 F814W",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "WFPC2 F814W",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "F110W",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "F160W",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "N Stars",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpztk4hg3o/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2603.11215/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpztk4hg3o/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2603.11215/catalog_sources/table-tab-beast/wrapped.tex",
+            "html": "literature/2603.11215/catalog_sources/table-tab-beast/latexml.html",
+            "stdout": "literature/2603.11215/catalog_sources/table-tab-beast/latexml.stdout.txt",
+            "stderr": "literature/2603.11215/catalog_sources/table-tab-beast/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "c21963fa1e08a97b0c1ba2a8b73f4a9495ae6d20a3c40b152d5d991976f9ec49"
+    },
+    {
+      "id": "table-mostmassive",
+      "internal_table_id": "table-mostmassive",
+      "status": "success",
+      "ecsv_path": "literature/2603.11215/catalog_tables/table-mostmassive.ecsv",
+      "caption": "Summary of massive main-sequence star in Sextans A with log$(g)_{\\rm p50}>3.7$",
+      "label": "mostmassive",
+      "row_count": 7,
+      "column_count": 3,
+      "environment": "",
+      "header_rows": [
+        [
+          "Mass Range",
+          "Num. of stars",
+          "Num. of stars"
+        ],
+        [
+          "",
+          "\\chi^2<10",
+          "10<\\chi^2<100"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Mass Range",
+          "unit_text": "Mass Range",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "Num. of stars | \\chi^2<10",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "Num. of stars | 10<\\chi^2<100",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp539ju3wa/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2603.11215/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmp539ju3wa/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2603.11215/catalog_sources/table-mostmassive/wrapped.tex",
+            "html": "literature/2603.11215/catalog_sources/table-mostmassive/latexml.html",
+            "stdout": "literature/2603.11215/catalog_sources/table-mostmassive/latexml.stdout.txt",
+            "stderr": "literature/2603.11215/catalog_sources/table-mostmassive/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "187ab82168f5e0fe182398f6282e4af3c3ed223a12139ac5f10bd7f55c96be7d"
+    },
+    {
+      "id": "table-allstars",
+      "internal_table_id": "table-allstars",
+      "status": "success",
+      "ecsv_path": "literature/2603.11215/catalog_tables/table-allstars.ecsv",
+      "caption": "\\beast\\ fit for the massive stars in Sextans A",
+      "label": "allstars",
+      "row_count": 12,
+      "column_count": 12,
+      "environment": "deluxetable*",
+      "header_rows": [
+        [
+          "LUVIT ID",
+          "\\colheadM_\\rm ini, \\rm p50",
+          "\\colheadM_\\rm act, \\rm p50",
+          "\\colhead\\log(L)_\\rm p50",
+          "\\colhead\\log(T)_\\rm p50",
+          "\\colhead\\logg_\\rm p50",
+          "\\colhead\\log(A)_\\rm p50",
+          "\\colheadradius_\\rm p50",
+          "\\colheadA_V, \\rm p50",
+          "\\colhead\\chi^2_min",
+          "Filters",
+          "Literature"
+        ],
+        [
+          "",
+          "\\msun",
+          "\\msun",
+          "\\colheaddex [1/L_\\odot]",
+          "dex [K]",
+          "dex [cgs]",
+          "dex [yr]",
+          "\\colheadR_\\odot",
+          "dex",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "LUVIT ID",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\colheadM_\\rm ini, \\rm p50 | \\msun",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\colheadM_\\rm act, \\rm p50 | \\msun",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "\\colhead\\log(L)_\\rm p50 | \\colheaddex [1/L_\\odot]",
+          "unit_text": "\\colheaddex [1/L_\\odot]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "\\colhead\\log(T)_\\rm p50 | dex [K]",
+          "unit_text": "dex [K]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "\\colhead\\logg_\\rm p50 | dex [cgs]",
+          "unit_text": "dex [cgs]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_007",
+          "original_header": "\\colhead\\log(A)_\\rm p50 | dex [yr]",
+          "unit_text": "dex [yr]",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_008",
+          "original_header": "\\colheadradius_\\rm p50 | \\colheadR_\\odot",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_009",
+          "original_header": "\\colheadA_V, \\rm p50 | dex",
+          "unit_text": "dex",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_010",
+          "original_header": "\\colhead\\chi^2_min",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_011",
+          "original_header": "Filters",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_012",
+          "original_header": "Literature",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [
+        "unresolved LaTeX macro preserved: \\chi",
+        "unresolved LaTeX macro preserved: \\colhead",
+        "unresolved LaTeX macro preserved: \\colheadA",
+        "unresolved LaTeX macro preserved: \\colheadM",
+        "unresolved LaTeX macro preserved: \\colheadR",
+        "unresolved LaTeX macro preserved: \\colheaddex",
+        "unresolved LaTeX macro preserved: \\colheadradius",
+        "unresolved LaTeX macro preserved: \\log",
+        "unresolved LaTeX macro preserved: \\logg",
+        "unresolved LaTeX macro preserved: \\msun",
+        "unresolved LaTeX macro preserved: \\odot",
+        "unresolved LaTeX macro preserved: \\rm"
+      ],
+      "error": "",
+      "extraction_method": "internal",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdxq9q9yd/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2603.11215/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpdxq9q9yd/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2603.11215/catalog_sources/table-allstars/wrapped.tex",
+            "html": "literature/2603.11215/catalog_sources/table-allstars/latexml.html",
+            "stdout": "literature/2603.11215/catalog_sources/table-allstars/latexml.stdout.txt",
+            "stderr": "literature/2603.11215/catalog_sources/table-allstars/latexml.stderr.txt"
+          }
+        },
+        {
+          "method": "pandoc",
+          "status": "failed",
+          "command": [
+            "/opt/homebrew/bin/pandoc",
+            "--from=latex",
+            "--to=html",
+            "--output=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm0sg2rh7/pandoc.html",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpm0sg2rh7/wrapped.tex"
+          ],
+          "error": "no HTML table element found",
+          "artifacts": {
+            "wrapped_tex": "literature/2603.11215/catalog_sources/table-allstars/wrapped.tex",
+            "html": "literature/2603.11215/catalog_sources/table-allstars/pandoc.html",
+            "stdout": "literature/2603.11215/catalog_sources/table-allstars/pandoc.stdout.txt",
+            "stderr": "literature/2603.11215/catalog_sources/table-allstars/pandoc.stderr.txt"
+          }
+        },
+        {
+          "method": "internal",
+          "status": "success",
+          "command": [],
+          "error": "",
+          "artifacts": {}
+        }
+      ],
+      "source_sha256": "f43b7b77791556968844d46d080d9a80f75b57a240c171676396c4a5ad04e16e"
+    },
+    {
+      "id": "table-tab-clust",
+      "internal_table_id": "table-tab-clust",
+      "status": "success",
+      "ecsv_path": "literature/2603.11215/catalog_tables/table-tab-clust.ecsv",
+      "caption": "OB \"Associations\" in Sextans A",
+      "label": "tab:clust",
+      "row_count": 15,
+      "column_count": 2,
+      "environment": "",
+      "header_rows": [
+        [
+          "RA",
+          "DEC"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "RA",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "DEC",
+          "unit_text": "",
+          "data_type": "mixed",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqo3o5twf/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2603.11215/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpqo3o5twf/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2603.11215/catalog_sources/table-tab-clust/wrapped.tex",
+            "html": "literature/2603.11215/catalog_sources/table-tab-clust/latexml.html",
+            "stdout": "literature/2603.11215/catalog_sources/table-tab-clust/latexml.stdout.txt",
+            "stderr": "literature/2603.11215/catalog_sources/table-tab-clust/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "4e6568ff496005fdc532940fc13f703cfbd95fb1412fffca469d239453724667"
+    },
+    {
+      "id": "table-tab-esfr",
+      "internal_table_id": "table-tab-esfr",
+      "status": "success",
+      "ecsv_path": "literature/2603.11215/catalog_tables/table-tab-esfr.ecsv",
+      "caption": "Predicted LyC photon ionization rates and the escape fraction",
+      "label": "tab:esfr",
+      "row_count": 5,
+      "column_count": 6,
+      "environment": "",
+      "header_rows": [
+        [
+          "Region",
+          "\\dotN_int",
+          "\\dotN_gas",
+          "f_\\rm esc",
+          "f_\\rm esc",
+          "f_\\rm esc"
+        ],
+        [
+          "",
+          "phot./s",
+          "phot./s",
+          "f_\\rm cov=0.2",
+          "=0.4",
+          "=0.6"
+        ]
+      ],
+      "columns": [
+        {
+          "name": "col_001",
+          "original_header": "Region",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_002",
+          "original_header": "\\dotN_int | phot./s",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_003",
+          "original_header": "\\dotN_gas | phot./s",
+          "unit_text": "",
+          "data_type": "string",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_004",
+          "original_header": "f_\\rm esc | f_\\rm cov=0.2",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_005",
+          "original_header": "f_\\rm esc | =0.4",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        },
+        {
+          "name": "col_006",
+          "original_header": "f_\\rm esc | =0.6",
+          "unit_text": "",
+          "data_type": "number",
+          "null_values": [
+            "",
+            "..."
+          ]
+        }
+      ],
+      "warnings": [],
+      "error": "",
+      "extraction_method": "latexml",
+      "conversion_attempts": [
+        {
+          "method": "latexml",
+          "status": "success",
+          "command": [
+            "/opt/homebrew/bin/latexmlc",
+            "--format=html5",
+            "--destination=/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpea84nglr/latexml.html",
+            "--timeout=120",
+            "--path=/Users/willzhang/Documents/MyProject/stella/literature/2603.11215/arxiv_source",
+            "/var/folders/5m/6n5s8y812m97pg2fh23s2kz40000gn/T/tmpea84nglr/wrapped.tex"
+          ],
+          "error": "",
+          "artifacts": {
+            "wrapped_tex": "literature/2603.11215/catalog_sources/table-tab-esfr/wrapped.tex",
+            "html": "literature/2603.11215/catalog_sources/table-tab-esfr/latexml.html",
+            "stdout": "literature/2603.11215/catalog_sources/table-tab-esfr/latexml.stdout.txt",
+            "stderr": "literature/2603.11215/catalog_sources/table-tab-esfr/latexml.stderr.txt"
+          }
+        }
+      ],
+      "source_sha256": "d1003d3e0b5cca8c4e95e4ff80bd2bcd668ced18c2343972b8fc37cd948fecad"
+    }
+  ]
+}

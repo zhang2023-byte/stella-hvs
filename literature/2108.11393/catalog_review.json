@@ -1,0 +1,273 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2108.11393",
+    "title": "Central kinematics of the Galactic globular cluster M80",
+    "month": "2021-08",
+    "source_note_json": "notes/2021/2021-08/2021-08.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2108.11393",
+      "pdf": "https://arxiv.org/pdf/2108.11393"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2108.11393",
+    "audit_path": "literature/2108.11393/audit.json",
+    "source_dir": "literature/2108.11393/arxiv_source",
+    "tex_root": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T22:09:16",
+    "reviewer": "agent",
+    "summary": "MUSE integral-field spectroscopy of the Galactic globular cluster M80 (NGC 6093), combining narrow-field mode (NFM) adaptive-optics data with wide-field mode (WFM) observations to study central kinematics. Derives radial velocity measurements for 9720 stars (932 new from NFM) plus 230 external stars from Baumgardt et al. (2018), totaling 9950 stars. Fits axisymmetric Jeans models via MCMC with 11 free parameters including IMBH mass, finding two bimodal solutions for the cluster centre: a northern solution (near photometric centre, no IMBH required, 90% upper limit 3000 Msol) and a southern solution (offset ~2.4 arcsec, IMBH mass 4600^{+1700}_{-1400} Msol). N-body model comparisons support IMBH masses up to 6000 Msol but no-IMBH models better fit the surface brightness profile. Discovers two high-velocity stars with radial velocities above cluster escape velocity. Contains 4 internal LaTeX tables: MUSE observation log, Jeans model MCMC priors, and N-body fit statistics for both centre solutions. Two external data resources: the reduced data at Göttingen Research Online (DOI: 10.25625/VCNHOR) and raw MUSE exposures at the ESO Archive."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-observations",
+      "kind": "latex_table",
+      "asset_type": "observation_log",
+      "role_in_paper": "Lists all MUSE observations used in the study across 5 different pointings (4 WFM + 1 NFM), covering both wide-field mode (WFM, WFM-AO) and narrow-field mode (NFM-AO) with laser tomography adaptive optics. Records observation dates, exposure times, and ESO Program IDs. Provides the complete observational footprint spanning 2015-2020 for the kinematic analysis of M80.",
+      "source_refs": [
+        {
+          "path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+          "start_line": 565,
+          "end_line": 595,
+          "caption": "MUSE observations of \\ngc6093.",
+          "label": "tab:observations"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Pointing",
+          "meaning": "MUSE pointing identifier: 01-04 for wide-field mode (WFM) pointings, 91 for the central narrow-field mode (NFM) pointing",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Obs. date",
+          "meaning": "UTC observation date and time for each exposure set",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Inst. mode",
+          "meaning": "MUSE instrument mode: WFM (wide-field mode, 1x1 arcmin FOV, 0.2 arcsec sampling), WFM-AO (wide-field mode with ground-layer adaptive optics), or NFM-AO (narrow-field mode, 7.5x7.5 arcsec FOV, 0.025 arcsec sampling, with laser tomography adaptive optics)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Exp. time",
+          "meaning": "Total on-source exposure time. WFM observations used 3 exposures of 200 s each except pointing 04 which had one 2x200 s epoch. NFM observations used 4 exposures of 600 s each",
+          "unit_text": "s",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Prog. ID",
+          "meaning": "ESO Program ID under which the observations were taken (095.D-0629, 098.D-0148, 099.D-0019, 0103.D-0204, 0104.D-0257), all part of the GTO programme 'A stellar census in globular clusters with MUSE' (PI: S. Dreizler, S. Kamann)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Table 1 in the paper. Observations span 2015-2020 with 14 WFM epochs across 4 pointings and 2 NFM epochs on the central pointing (91). WFM data include 10 previously used in Kamann et al. (2020) plus 4 new observations. MUSE data reduction pipeline versions 2.6 and 2.8 were used. NFM observations used laser tomography adaptive optics with a natural guide star off-axis (no derotator offsets applied).",
+      "comments": "Pointing 91 is the central NFM pointing covering 7.5x7.5 arcsec. The five ESO Program IDs are: 095.D-0629, 098.D-0148, 099.D-0019, 0103.D-0204, 0104.D-0257."
+    },
+    {
+      "id": "table-tab-priors",
+      "kind": "latex_table",
+      "asset_type": "model_parameters",
+      "role_in_paper": "Defines the 11 free parameters and their prior probability distributions for the axisymmetric Jeans model MCMC sampling (cjam code). Parameters include: IMBH mass with uniform (0, 15000 Msol) prior, cluster centre offsets with Gaussian priors centred on the Goldsbury et al. (2010) photometric centre, a three-parameter mass-to-light ratio profile, intrinsic flattening/inclination, two-component rotation vector, and rotation scaling length. Serves as the complete model configuration reference.",
+      "source_refs": [
+        {
+          "path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+          "start_line": 598,
+          "end_line": 620,
+          "caption": "Priors used in the Jeans model MCMC.",
+          "label": "tab:priors"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Parameter",
+          "meaning": "Symbol and name of the free parameter in the Jeans model. Includes: m_IMBH (IMBH mass), Delta_x, Delta_y (centre coordinate offsets), Upsilon_0 (central mass-to-light ratio), Upsilon_t (M/L at transition radius), Upsilon_infty (M/L at large radii), r_Upsilon (transition radius), q_bar (intrinsic flattening parametrization), kappa_x, kappa_y (rotation vector components), r_kappa (rotation scaling length)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Prior",
+          "meaning": "Prior probability distribution type and parameters. Uses uniform distributions for masses, M/L ratios, and geometric scales; normal (Gaussian) distributions for centre offsets (mu=0, sigma=1 arcsec centred on Goldsbury+2010), asymptotic M/L (mu=3.5, sigma=1), and rotation components (mu=0, sigma=5 km/s)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Unit",
+          "meaning": "Physical unit of the parameter: 10^3 Msol for IMBH mass, arcsec for offsets and radii, Msol/Lsol for mass-to-light ratios, dimensionless for flattening, km/s for rotation components",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "Description",
+          "meaning": "Brief description of the parameter's physical meaning and role in the model. The MGE-related parameters (r_Upsilon, q_bar) have their allowed ranges bounded by the properties of the Multi-Gaussian Expansion components",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Table 2 in the paper. The Jeans model uses cjam (based on jam by Cappellari 2008) with axisymmetry (q=0.9), isotropy (beta=0), and a maximum-likelihood approach working on individual stellar velocities. MCMC sampling uses emcee (Foreman-Mackey et al. 2013) with 192 walkers and 2000 steps after burn-in. IMBH is implemented as an additional Gaussian MGE component with sigma_PSF/3 ~ 25 mas. The rotation field uses Hogg et al. (2018) two-component parametrization.",
+      "comments": "The IMBH mass prior is uniform(0, 15000) Msol. The centre offsets use 2D Gaussian priors centred on Goldsbury et al. (2010) photometric centre. The MGE grid covers centre offsets between -3 and +3 arcsec with 960 profiles computed from HST photometry (Dalessandro+2018) complemented by Gaia data (de Boer+2019)."
+    },
+    {
+      "id": "table-tab-fits_north",
+      "kind": "latex_table",
+      "asset_type": "model_fit_statistics",
+      "role_in_paper": "Presents reduced chi-squared values for N-body model fits around the northern cluster centre solution. Compares 8 different models varying IMBH mass (0 to 15000 Msol) and stellar-mass black hole retention fraction (10% to 100%) against the observed binned velocity dispersion profile, surface brightness profile, and their combination. Used to assess whether the observed kinematics and photometry require an IMBH or can be explained by stellar-mass BH retention.",
+      "source_refs": [
+        {
+          "path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+          "start_line": 623,
+          "end_line": 641,
+          "caption": "Fit statistics for $N$-body models around the northern centre. `RV' refers to fits of the binned radial velocities, `SB' to fits of the surface brightness profile, and `total' to simultaneous fits to both.",
+          "label": "tab:fits_north"
+        }
+      ],
+      "columns": [
+        {
+          "name": "m_IMBH [\\msol]",
+          "meaning": "Mass of the intermediate-mass black hole in the N-body model, ranging from 0 (no IMBH) to 15000 Msol",
+          "unit_text": "Msol",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "SBH retention frac. [%]",
+          "meaning": "Initial retention fraction of stellar-mass black holes in the N-body model, expressed as a percentage. Models use 10%, 30%, 50%, or 100% retention",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "\\chi_r^2 RV",
+          "meaning": "Reduced chi-squared statistic for the fit to the binned radial velocity dispersion profile alone. Lower values indicate better agreement between model predictions and observed velocity dispersions",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "\\chi_r^2 SB",
+          "meaning": "Reduced chi-squared statistic for the fit to the observed surface brightness profile alone. This constraint favours models without an IMBH because IMBH models produce cores larger than observed",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "\\chi_r^2 total",
+          "meaning": "Reduced chi-squared statistic for the simultaneous fit to both the velocity dispersion and surface brightness profiles, combining both observational constraints",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Table 3 in the paper. N-body models are from the grid of Baumgardt et al. (2017, 2019) with N=100,000 or 200,000 stars, run with NBODY6. The no-IMBH, 10%-retention model gives the best total fit (chi_r^2=0.93). The 6000 Msol IMBH model with 10% SBH retention gives chi_r^2=1.09, which is also acceptable. Higher SBH retention fractions (>30%) produce cores larger than observed, giving worse surface brightness fits.",
+      "comments": "The no-IMBH model with 10% SBH retention has the lowest chi_r^2 total (0.93) for the northern centre. However, the IMBH models with masses up to 6000 Msol also provide acceptable fits (chi_r^2 ~1.09-1.66). Models with SBH retention >30% are strongly disfavored by the surface brightness profile."
+    },
+    {
+      "id": "table-tab-fits_south",
+      "kind": "latex_table",
+      "asset_type": "model_fit_statistics",
+      "role_in_paper": "Same structure as Table 3 but presents reduced chi-squared values for N-body model fits around the southern cluster centre solution (offset ~2.4 arcsec from photometric centre). The southern centre corresponds to the IMBH-preferred Jeans model solution, and these fits show that models with IMBH provide better velocity dispersion fits around this centre, though no-IMBH models still fit the surface brightness better.",
+      "source_refs": [
+        {
+          "path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+          "start_line": 643,
+          "end_line": 661,
+          "caption": "Similar to Table~\\ref{tab:fits_south} but for $N$-body models around the southern centre.",
+          "label": "tab:fits_south"
+        }
+      ],
+      "columns": [
+        {
+          "name": "m_IMBH [\\msol]",
+          "meaning": "Mass of the intermediate-mass black hole in the N-body model, ranging from 0 (no IMBH) to 15000 Msol",
+          "unit_text": "Msol",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "SBH retention frac. [%]",
+          "meaning": "Initial retention fraction of stellar-mass black holes in the N-body model, expressed as a percentage. Models use 10%, 30%, 50%, or 100% retention",
+          "unit_text": "%",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "\\chi_r^2 RV",
+          "meaning": "Reduced chi-squared statistic for the fit to the binned radial velocity dispersion profile alone. Around the southern centre, models with IMBH give lower chi_r^2 for the velocity dispersion, with the 6000 Msol model achieving chi_r^2=1.54 vs 2.25 for the no-IMBH model",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "\\chi_r^2 SB",
+          "meaning": "Reduced chi-squared statistic for the fit to the observed surface brightness profile alone. No-IMBH models still tend to fit the SB profile better than IMBH models",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        },
+        {
+          "name": "\\chi_r^2 total",
+          "meaning": "Reduced chi-squared statistic for the simultaneous fit to both the velocity dispersion and surface brightness profiles, combining both constraints",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 0.9
+        }
+      ],
+      "evidence": "Table 4 in the paper. Around the southern centre, the no-IMBH model has chi_r^2(RV)=2.25, while the 6000 Msol IMBH model achieves chi_r^2(RV)=1.54, indicating the IMBH model better reproduces the velocity dispersion around this centre. However, the no-IMBH model still gives chi_r^2(SB)=0.94 vs 1.02 for the 6000 Msol model, showing better surface brightness fit without IMBH. The combined chi_r^2 is 1.16 for 6000 Msol IMBH vs 1.24 for no-IMBH (both with 10% SBH retention).",
+      "comments": "The southern centre corresponds to the IMBH-preferred Jeans solution (4600^{+1700}_{-1400} Msol). The 6000 Msol IMBH model with 10% SBH retention gives the lowest chi_r^2 total (1.16). The 0.5% IMBH model (1500 Msol) has chi_r^2=1.51. Models with SBH retention >30% produce cores too large and give poor surface brightness fits."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "data_repository",
+      "url": "https://doi.org/10.25625/VCNHOR",
+      "local_path": "",
+      "description": "Göttingen Research Online data repository containing the reduced data underlying this article. Includes the radial velocity measurements for ~9950 stars (9720 from MUSE WFM+NFM observations of M80, plus 230 from Baumgardt et al. 2018), stellar parameters from full-spectrum fitting, and the kinematic measurements used in the Jeans model analysis. The dataset covers the central 7.5x7.5 arcsec NFM region plus the wider WFM field out to ~20 arcmin radius.",
+      "source_refs": [
+        {
+          "path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+          "start_line": 506,
+          "end_line": 508,
+          "context": "\\section*{Data availability}\nThe data underlying this article are available in the Göttingen Research Online repository, at \\url{https://doi.org/10.25625/VCNHOR}.\nThe raw exposures used in this article are available under their Program ID (Table~\\ref{tab:observations}) in the ESO Archive, at \\url{https://archive.eso.org}."
+        }
+      ],
+      "evidence": "Explicitly referenced in the Data Availability section of the paper (Section after Conclusions). The repository hosts the reduced radial velocity data for all 9950 stars analyzed in the Jeans models, including the 932 newly extracted NFM stars in the central 7.5x7.5 arcsec region. This is the primary data product of the paper.",
+      "comments": "The DOI redirects to a GRO.data repository entry. The dataset likely includes stellar coordinates, mean radial velocities with uncertainties, S/N ratios, membership probabilities, binary probabilities, and stellar parameters from the full-spectrum fitting pipeline."
+    },
+    {
+      "id": "resource-002",
+      "kind": "data_archive",
+      "url": "https://archive.eso.org",
+      "local_path": "",
+      "description": "ESO Science Archive Facility hosting the raw MUSE exposures for all observations listed in Table 1 (tab:observations). The raw data are available under the ESO Program IDs: 095.D-0629, 098.D-0148, 099.D-0019, 0103.D-0204, and 0104.D-0257. These include both wide-field mode (WFM) and narrow-field mode (NFM) MUSE integral-field spectroscopic datacubes.",
+      "source_refs": [
+        {
+          "path": "literature/2108.11393/arxiv_source/ngc6093_paper.tex",
+          "start_line": 506,
+          "end_line": 508,
+          "context": "\\section*{Data availability}\nThe data underlying this article are available in the Göttingen Research Online repository, at \\url{https://doi.org/10.25625/VCNHOR}.\nThe raw exposures used in this article are available under their Program ID (Table~\\ref{tab:observations}) in the ESO Archive, at \\url{https://archive.eso.org}."
+        }
+      ],
+      "evidence": "Referenced in the Data Availability section. The ESO Archive hosts all raw MUSE exposures taken under the five Program IDs listed in Table 1. Observations include WFM (3x200s per epoch), WFM-AO (3x200s), and NFM-AO (4x600s) exposures spanning 2015-2020.",
+      "comments": "Access requires ESO User Portal registration. The raw exposures must be reduced with the MUSE data reduction pipeline (versions 2.6 or 2.8 used in this work, see Weilbacher et al. 2020) to produce the science-ready datacubes."
+    }
+  ]
+}

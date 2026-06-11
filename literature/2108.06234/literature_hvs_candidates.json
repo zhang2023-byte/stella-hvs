@@ -1,0 +1,61 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:55:00",
+  "paper": {
+    "arxiv_id": "2108.06234",
+    "bibcode": "2021MNRAS.508.1033S",
+    "title": "Canis Major OB1 stellar groups contents revealed by Gaia",
+    "month": "2021-08",
+    "source_note_json": "notes/2021/2021-08/2021-08.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2108.06234",
+      "pdf": "https://arxiv.org/pdf/2108.06234"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2108.06234",
+    "audit_path": "literature/2108.06234/audit.json",
+    "catalog_review_path": "literature/2108.06234/catalog_review.json",
+    "catalog_extraction_path": "literature/2108.06234/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-06-07T11:55:00",
+    "extractor": "agent",
+    "summary": "论文利用Gaia DR2数据通过聚类算法研究大犬座OB1（CMa OB1）星协的恒星群结构，识别出15个物理星群（含5个新疏散星团候选体）。论文提及CMa08可能是速逃星（runaway stars）的母星团，但此处runaway stars指从星团被动力学弹射的经典OB速逃星，速度量级~10-100 km/s（相对于星团），远低于银河系逃逸速度。论文研究对象为CMa OB1星协内~570-1650 pc处的中等质量恒星群，关注的是星团形成历史和恒星形成模式，非超高速星研究。无HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和内容，评估HVS相关性。论文研究CMa OB1星协的恒星群识别与星团形成历史，提及的runaway stars为经典疏散星团逃逸星，非超高速星（HVS）。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper abstract and title"
+      ],
+      "outputs": [
+        "HVS relevance classification: no_candidates"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2108.06234/arxiv_source",
+          "start_line": 0,
+          "end_line": 0,
+          "context": "Title: Canis Major OB1 stellar groups contents revealed by Gaia"
+        }
+      ]
+    }
+  ],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "cma-ob1-stellar-groups",
+      "description": "论文在CMa OB1星协中通过Gaia DR2五维数据（位置、自行、视差）识别出的15个恒星群，包括10个已知星团和5个新候选星团（含CMa08）。论文提及CMa08可能是速逃星（runaway stars）的母星团。论文还提供了星团成员星的运动学参数（距离、自行等）。",
+      "decision": "excluded",
+      "reason": "论文中的'runaway stars'指的是从星团被动力学弹射的经典速逃星（classical OB runaways），弹射速度相对于星团仅~10-100 km/s，远低于银河系逃逸速度（~500-600 km/s at solar circle）。论文研究对象为CMa OB1星协内的疏散星团成员星（距离570-1650 pc），关注星团形成历史（monolithic vs hierarchical star formation），未涉及超高速星（HVS）或银河系非束缚天体的搜寻与分类。论文摘要和正文未声称任何恒星为超高速星或银河系非束缚天体。"
+    }
+  ]
+}

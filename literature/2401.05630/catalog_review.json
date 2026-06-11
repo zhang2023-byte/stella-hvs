@@ -1,0 +1,778 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2401.05630",
+    "title": "New candidate hypervelocity red clump stars in the inner Galactic bulge",
+    "month": "2024-01",
+    "source_note_json": "notes/2024/2024-01/2024-01.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2401.05630",
+      "pdf": "https://arxiv.org/pdf/2401.05630"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2401.05630",
+    "audit_path": "literature/2401.05630/audit.json",
+    "source_dir": "literature/2401.05630/arxiv_source",
+    "tex_root": "literature/2401.05630/arxiv_source/hvs.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-05-15T12:43:57",
+    "reviewer": "agent",
+    "summary": "This paper presents 69 candidate hypervelocity red clump stars in the Galactic bulge, 4 with Gaia DR3 counterparts and 65 VIRAC2-only. The internal assets include one population-correction parameter table, two short candidate tables in the main text (photometry and kinematics for the Gaia cross-match sample), two analogous extract tables for the VIRAC2-only sample, two M-dwarf colour-cut tables, and two long appendix tables with the complete VIRAC2-only sample. External resources include the faststars catalog, the Speedystar simulation code, the GravPot16 orbit tool, and a local readme; the paper also notes that candidate tables will be deposited at CDS."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-pop-corr",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Provides population correction factors for the absolute K_s magnitude of red clump stars as a function of age and metallicity, used to refine distance estimates.",
+      "source_refs": [
+        {
+          "path": "literature/2401.05630/arxiv_source/hvs.tex",
+          "start_line": 397,
+          "end_line": 411,
+          "caption": "Population correction ($\\Delta M_{K_s}^{RC}$) for the $K_s$ absolute magnitude of RC stars. $\\Delta M_{K_s}^{RC}$ is computed with Table 1 of \\citet{SalarisGirardi2002} assuming different ages and metallicities of Galactic bulge stars.",
+          "label": "tab:pop corr"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Age (Gyr)",
+          "meaning": "Stellar age",
+          "unit_text": "Gyr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Z=0.008",
+          "meaning": "Population correction for metallicity Z=0.008",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Z=0.03",
+          "meaning": "Population correction for metallicity Z=0.03",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\Delta M_K_s^RC",
+          "meaning": "Population correction to the RC absolute magnitude in K_s",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Population correction ($\\Delta M_{K_s}^{RC}$) for the $K_s$ absolute magnitude of RC stars. $\\Delta M_{K_s}^{RC}$ is computed with Table 1 of \\citet{SalarisGirardi2002} assuming different ages and metallicities of Galactic bulge stars.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-all",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Lists the equatorial and Galactic coordinates and near-infrared photometry of the four high-velocity stars that have a Gaia DR3 counterpart and VIRAC2 proper motions pointing away from the GC.",
+      "source_refs": [
+        {
+          "path": "literature/2401.05630/arxiv_source/hvs.tex",
+          "start_line": 609,
+          "end_line": 624,
+          "caption": "Location and photometric properties of the stars with \\gaia DR3 counterpart and VIRAC2 proper motions pointing away from $0.5\\deg$ around the GC. The Galactic longitude and latitude have a precision of $0\\farcs5$.",
+          "label": "tab:all"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\gaia DR3 source ID",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA [hms]",
+          "meaning": "Right Ascension (J2000)",
+          "unit_text": "hms",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec [dms]",
+          "meaning": "Declination (J2000)",
+          "unit_text": "dms",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l [deg]",
+          "meaning": "Galactic longitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b [deg]",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K_s [mag]",
+          "meaning": "K_s-band apparent magnitude from VIRAC2",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J-K_s [mag]",
+          "meaning": "J-K_s colour index",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Location and photometric properties of the stars with \\gaia DR3 counterpart and VIRAC2 proper motions pointing away from $0.5\\deg$ around the GC. The Galactic longitude and latitude have a precision of $0\\farcs5$.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-all2",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Derived kinematic and dynamic parameters for the four Gaia DR3 cross-matched high-velocity candidates, including tangential velocity, galactocentric distance, flight time, and escape-velocity exceedance probability.",
+      "source_refs": [
+        {
+          "path": "literature/2401.05630/arxiv_source/hvs.tex",
+          "start_line": 626,
+          "end_line": 642,
+          "caption": "Derived parameters of the stars with \\gaia DR3 counterpart and VIRAC2 proper motions pointing out from $0.5\\deg$ around the GC. The second to last column indicates how close the projected 2D velocity vector approaches the GC. \\rev{The last column indicates the probability of exceeding the escape velocity.}\\\\ \\rev{* According to the classifier of spurious astrometric solution in \\textit{Gaia} DR3 \\citep{2022MNRAS.510.2597R}, these sources have a good astrometric solution. The VIRAC2 proper motions are consistent within $1\\sigma$.}",
+          "label": "tab:all2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\gaia DR3 source ID",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu [mas yr^-1]",
+          "meaning": "Total proper motion from VIRAC2",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d [kpc]",
+          "meaning": "Heliocentric distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_GC [kpc]",
+          "meaning": "Galactocentric distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_tan [\\kms]",
+          "meaning": "Galactocentric tangential velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_f [yr]",
+          "meaning": "Flight time from the GC",
+          "unit_text": "yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Approach [deg]",
+          "meaning": "Angular approach of the projected 2D velocity vector to the GC",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P",
+          "meaning": "Probability of exceeding the local escape velocity (V_tan,16th / V_esc)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Derived parameters of the stars with \\gaia DR3 counterpart and VIRAC2 proper motions pointing out from $0.5\\deg$ around the GC. The second to last column indicates how close the projected 2D velocity vector approaches the GC. \\rev{The last column indicates the probability of exceeding the escape velocity.}\\\\ \\rev{* According to the classifier of spurious astrometric solution in \\textit{Gaia} DR3 \\citep{2022MNRAS.510.2597R}, these sources have a good astrometric solution. The VIRAC2 proper motions are consistent within $1\\sigma$.}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-frmctr_v_extract",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Extract of the photometric and positional properties of high-velocity stars detected only in VIRAC2 (no Gaia DR3 counterpart) with proper motions pointing away from the GC; the full table is in the appendix.",
+      "source_refs": [
+        {
+          "path": "literature/2401.05630/arxiv_source/hvs.tex",
+          "start_line": 734,
+          "end_line": 753,
+          "caption": "Location and photometric properties of the stars with no \\gaia DR3 counterpart and VIRAC2 proper motions pointing away from $0.5\\deg$ around the GC. The Galactic longitude and latitude have a precision of $0\\farcs5$. This is an extract, the complete table can be found in Appendix \\ref{ap:table_virac2notGDR3_frmctr}.",
+          "label": "tab:frmctr_v_extract"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Running identifier in the VIRAC2 sample",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA [hms]",
+          "meaning": "Right Ascension (J2000)",
+          "unit_text": "hms",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec [dms]",
+          "meaning": "Declination (J2000)",
+          "unit_text": "dms",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l [deg]",
+          "meaning": "Galactic longitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b [deg]",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K_s [mag]",
+          "meaning": "K_s-band apparent magnitude from VIRAC2",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J-K_s [mag] ]",
+          "meaning": "J-K_s colour index",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Location and photometric properties of the stars with no \\gaia DR3 counterpart and VIRAC2 proper motions pointing away from $0.5\\deg$ around the GC. The Galactic longitude and latitude have a precision of $0\\farcs5$. This is an extract, the complete table can be found in Appendix \\ref{ap:table_virac2notGDR3_frmctr}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-frmctr_v_extract2",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Extract of the derived kinematic parameters for VIRAC2-only high-velocity candidates; the full table is in the appendix.",
+      "source_refs": [
+        {
+          "path": "literature/2401.05630/arxiv_source/hvs.tex",
+          "start_line": 755,
+          "end_line": 775,
+          "caption": "Derived parameters of the stars with no \\gaia DR3 counterpart and VIRAC2 proper motions pointing out from $0.5\\deg$ around the GC. The second to last column indicates how close the projected 2D velocity vector approaches the GC. \\rev{The last column is the probability of exceeding the escape velocity}. This is an extract, the complete table can be found in Appendix \\ref{ap:table_virac2notGDR3_frmctr}.",
+          "label": "tab:frmctr_v_extract2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Running identifier in the VIRAC2 sample",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu [mas yr^-1]",
+          "meaning": "Total proper motion from VIRAC2",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d [kpc]",
+          "meaning": "Heliocentric distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_GC [kpc]",
+          "meaning": "Galactocentric distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_tan [\\kms]",
+          "meaning": "Galactocentric tangential velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_f [yr]",
+          "meaning": "Flight time from the GC",
+          "unit_text": "yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Approach [deg]",
+          "meaning": "Angular approach of the projected 2D velocity vector to the GC",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P",
+          "meaning": "Probability of exceeding the local escape velocity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Derived parameters of the stars with no \\gaia DR3 counterpart and VIRAC2 proper motions pointing out from $0.5\\deg$ around the GC. The second to last column indicates how close the projected 2D velocity vector approaches the GC. \\rev{The last column is the probability of exceeding the escape velocity}. This is an extract, the complete table can be found in Appendix \\ref{ap:table_virac2notGDR3_frmctr}.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-bds_v2gdr3",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Lists stars in the Gaia DR3--VIRAC2 cross-match that satisfy M-dwarf colour cuts, providing their coordinates, near-IR magnitudes, and VIRAC2 proper motions.",
+      "source_refs": [
+        {
+          "path": "literature/2401.05630/arxiv_source/hvs.tex",
+          "start_line": 873,
+          "end_line": 887,
+          "caption": "Properties of the stars, in the \\gaia DR3 -- VIRAC2 crossmatch, that could be \\rev{M-dwarfs} according to the colour cuts of Eq. \\ref{eq:bds}. The proper motions are from VIRAC2, without the reflex motion correction.",
+          "label": "tab:bds_v2gdr3"
+        }
+      ],
+      "columns": [
+        {
+          "name": "\\gaia DR3 source ID",
+          "meaning": "Gaia DR3 source identifier",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA [hms]",
+          "meaning": "Right Ascension (J2000)",
+          "unit_text": "hms",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec [dms]",
+          "meaning": "Declination (J2000)",
+          "unit_text": "dms",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "H [mag]",
+          "meaning": "H-band apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J [mag]",
+          "meaning": "J-band apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K_s [mag]",
+          "meaning": "K_s-band apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_RA [mas yr^-1]",
+          "meaning": "Proper motion in right ascension from VIRAC2",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_Dec [mas yr^-1]",
+          "meaning": "Proper motion in declination from VIRAC2",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Properties of the stars, in the \\gaia DR3 -- VIRAC2 crossmatch, that could be \\rev{M-dwarfs} according to the colour cuts of Eq. \\ref{eq:bds}. The proper motions are from VIRAC2, without the reflex motion correction.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-bds_v2",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Lists VIRAC2-only stars (no Gaia DR3 counterpart) that satisfy M-dwarf colour cuts, providing their coordinates, near-IR magnitudes, and VIRAC2 proper motions.",
+      "source_refs": [
+        {
+          "path": "literature/2401.05630/arxiv_source/hvs.tex",
+          "start_line": 889,
+          "end_line": 909,
+          "caption": "Properties of the stars, in VIRAC2 without \\gaia DR3 counterpart, that could be \\rev{M-dwarfs} according to the colour cuts of Eq. \\ref{eq:bds}. The proper motions are from VIRAC2, without the reflex motion correction.",
+          "label": "tab:bds_v2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "RA [hms]",
+          "meaning": "Right Ascension (J2000)",
+          "unit_text": "hms",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec [dms]",
+          "meaning": "Declination (J2000)",
+          "unit_text": "dms",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "H [mag]",
+          "meaning": "H-band apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J [mag]",
+          "meaning": "J-band apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K_s [mag]",
+          "meaning": "K_s-band apparent magnitude",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_RA [mas yr^-1]",
+          "meaning": "Proper motion in right ascension from VIRAC2",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu_Dec [mas yr^-1]",
+          "meaning": "Proper motion in declination from VIRAC2",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Properties of the stars, in VIRAC2 without \\gaia DR3 counterpart, that could be \\rev{M-dwarfs} according to the colour cuts of Eq. \\ref{eq:bds}. The proper motions are from VIRAC2, without the reflex motion correction.",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-frmctr_v",
+      "kind": "latex_table",
+      "asset_type": "object_catalog",
+      "role_in_paper": "Appendix table providing the complete list of photometric and positional properties for all 65 VIRAC2-only high-velocity candidates with proper motions pointing away from the GC.",
+      "source_refs": [
+        {
+          "path": "literature/2401.05630/arxiv_source/hvs.tex",
+          "start_line": 919,
+          "end_line": 1010,
+          "caption": "Location and photometric properties of the stars with no \\gaia DR3 counterpart and VIRAC2 proper motions pointing away from $0.5\\deg$ around the GC. The Galactic longitude and latitude have a precision of $0\\farcs5$.\\label{tab:frmctr_v}",
+          "label": "tab:frmctr_v"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Running identifier in the VIRAC2 sample",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RA [hms]",
+          "meaning": "Right Ascension (J2000)",
+          "unit_text": "hms",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Dec [dms]",
+          "meaning": "Declination (J2000)",
+          "unit_text": "dms",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l [deg]",
+          "meaning": "Galactic longitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b [deg]",
+          "meaning": "Galactic latitude",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "K_s [mag]",
+          "meaning": "K_s-band apparent magnitude from VIRAC2",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "J-K_s [mag] ]",
+          "meaning": "J-K_s colour index",
+          "unit_text": "mag",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Location and photometric properties of the stars with no \\gaia DR3 counterpart and VIRAC2 proper motions pointing away from $0.5\\deg$ around the GC. The Galactic longitude and latitude have a precision of $0\\farcs5$.\\label{tab:frmctr_v}",
+      "comments": ""
+    },
+    {
+      "id": "table-tab-frmctr_v2",
+      "kind": "latex_table",
+      "asset_type": "parameter_table",
+      "role_in_paper": "Appendix table providing the complete list of derived kinematic and dynamic parameters for all 65 VIRAC2-only high-velocity candidates.",
+      "source_refs": [
+        {
+          "path": "literature/2401.05630/arxiv_source/hvs.tex",
+          "start_line": 1013,
+          "end_line": 1103,
+          "caption": "Derived parameters of the stars with no \\gaia DR3 counterpart and VIRAC2 proper motions pointing out from $0.5\\deg$ around the GC. The last column indicates how close the projected 2D velocity vector approaches the GC.\\label{tab:frmctr_v2}",
+          "label": "tab:frmctr_v2"
+        }
+      ],
+      "columns": [
+        {
+          "name": "ID",
+          "meaning": "Running identifier in the VIRAC2 sample",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "\\mu [mas yr^-1]",
+          "meaning": "Total proper motion from VIRAC2",
+          "unit_text": "mas yr^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d [kpc]",
+          "meaning": "Heliocentric distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "r_GC [kpc]",
+          "meaning": "Galactocentric distance",
+          "unit_text": "kpc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_tan [\\kms]",
+          "meaning": "Galactocentric tangential velocity",
+          "unit_text": "km s^-1",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_f [yr]",
+          "meaning": "Flight time from the GC",
+          "unit_text": "yr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Approach [deg]",
+          "meaning": "Angular approach of the projected 2D velocity vector to the GC",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "col_008",
+          "meaning": "Probability of exceeding the local escape velocity",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Derived parameters of the stars with no \\gaia DR3 counterpart and VIRAC2 proper motions pointing out from $0.5\\deg$ around the GC. The last column indicates how close the projected 2D velocity vector approaches the GC.\\label{tab:frmctr_v2}",
+      "comments": ""
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_url",
+      "url": "https://faststars.space",
+      "local_path": "",
+      "description": "The faststars.space website listing confirmed and candidate hypervelocity stars.",
+      "source_refs": [
+        {
+          "path": "literature/2401.05630/arxiv_source/hvs.tex",
+          "start_line": 161,
+          "end_line": 161,
+          "context": "Since the first discovery by \\citet{Brown2005}, there are around 20 confirmed HVSs and over 500 candidates \\citep{Boubert2018}.\n% \\footnote{\\href{https://faststars.space}{https://faststars.space}}. \nThe high stellar crowding as well as large and patchy extinction in the central regions of the Milky Way hampered the detection of HVSs close to their origin. They were identified in a more favourable environment, the Milky Way halo, with velocities ranging from 300 up to 1700 \\kms, exceeding the local escape speed \\citep[e.g.][]{Brown2018,Kollmeier2009,Kenyon2014,Palladino2014}. Almost all of them are B-type stars with masses between 2.5 and 4$M_{\\odot}$, except for the fastest star amongst them: HVS-S5 \\citep{Koposov2020}, an A-type star with a velocity of 1700 \\kms. This star is also the only HVS whose travel direction and orbit points to the origin from the GC, favouring the Hills mechanism as responsible for its ejection.\nFor other cases, the Hills mechanism can be ruled out, as the orbits of the stars suggest an origin in the disc, in the Magellanic Clouds \\citep[e.g.][]{Przybilla2008,Lennon2017, Boubert2020,Evans2021}, or the Sagittarius dwarf spheroidal galaxy \\citep{Huang2021, 2022ApJ...933L..13L}."
+        }
+      ],
+      "evidence": "Since the first discovery by \\citet{Brown2005}, there are around 20 confirmed HVSs and over 500 candidates \\citep{Boubert2018}.\n% \\footnote{\\href{https://faststars.space}{https://faststars.space}}. \nThe high stellar crowding as well as large and patchy extinction in the central regions of the Milky Way hampered the detection of HVSs close to their origin. They were identified in a more favourable environment, the Milky Way halo, with velocities ranging from 300 up to 1700 \\kms, exceeding the local escape speed \\citep[e.g.][]{Brown2018,Kollmeier2009,Kenyon2014,Palladino2014}. Almost all of them are B-type stars with masses between 2.5 and 4$M_{\\odot}$, except for the fastest star amongst them: HVS-S5 \\citep{Koposov2020}, an A-type star with a velocity of 1700 \\kms. This star is also the only HVS whose travel direction and orbit points to the origin from the GC, favouring the Hills mechanism as responsible for its ejection.\nFor other cases, the Hills mechanism can be ruled out, as the orbits of the stars suggest an origin in the disc, in the Magellanic Clouds \\citep[e.g.][]{Przybilla2008,Lennon2017, Boubert2020,Evans2021}, or the Sagittarius dwarf spheroidal galaxy \\citep{Huang2021, 2022ApJ...933L..13L}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://github.com/fraserevans/speedystar",
+      "local_path": "",
+      "description": "Speedystar GitHub repository: Python package for simulating HVS ejections from the GC via the Hills mechanism.",
+      "source_refs": [
+        {
+          "path": "literature/2401.05630/arxiv_source/hvs.tex",
+          "start_line": 577,
+          "end_line": 577,
+          "context": "To test whether the HVS candidates radiate from the GC, we project the proper motion vectors, appropriately account for the Solar motion, and search for those that intersect a region within $0.5\\deg$ ($\\sim 75$ pc at the distance of the GC) centred on the GC. \nThis criterion is based on \\texttt{Speedystar}\\footnote{\\href{https://github.com/fraserevans/speedystar}{https://github.com/fraserevans/speedystar}} \\citep{Evans2022}, where we simulate ejections of stars from the GC via the Hills mechanism\n%; we assume a Koupra IMF, a mass ratio of the binary system between 0.1 and 1. \nand analyse the position angle of their proper motions corrected by the reflex motion of the Sun."
+        }
+      ],
+      "evidence": "To test whether the HVS candidates radiate from the GC, we project the proper motion vectors, appropriately account for the Solar motion, and search for those that intersect a region within $0.5\\deg$ ($\\sim 75$ pc at the distance of the GC) centred on the GC. \nThis criterion is based on \\texttt{Speedystar}\\footnote{\\href{https://github.com/fraserevans/speedystar}{https://github.com/fraserevans/speedystar}} \\citep{Evans2022}, where we simulate ejections of stars from the GC via the Hills mechanism\n%; we assume a Koupra IMF, a mass ratio of the binary system between 0.1 and 1. \nand analyse the position angle of their proper motions corrected by the reflex motion of the Sun.",
+      "comments": ""
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://gravpot.utinam.cnrs.fr",
+      "local_path": "",
+      "description": "GravPot16 web interface for computing stellar orbits in the Galactic potential.",
+      "source_refs": [
+        {
+          "path": "literature/2401.05630/arxiv_source/hvs.tex",
+          "start_line": 789,
+          "end_line": 789,
+          "context": "Hence, they would offer the possibility of exploring the production scenarios of such stars through, for example, binary interactions or supernova kicks.\n\nHaving the first detection of HVSs in the Galactic bulge confirmed by future spectroscopy, we will be in a position to constrain the existing models, compare the observed with HVSs mock population \\citep{Marchetti2018} and compute their orbits \\citep[e.g.][GravPot16\\footnote{\\href{https://gravpot.utinam.cnrs.fr}{https://gravpot.utinam.cnrs.fr}}]{FernandezTrincado2020}, and thus probe if they come from the GC or have another origin.\n\nThe Hills mechanism is parameterised by the shape of the stellar initial mass function in the GC, the distribution of binary orbital periods and mass fraction, and the ejection rate. %(Evans et al. 2022, figures 3 and 4)."
+        }
+      ],
+      "evidence": "Hence, they would offer the possibility of exploring the production scenarios of such stars through, for example, binary interactions or supernova kicks.\n\nHaving the first detection of HVSs in the Galactic bulge confirmed by future spectroscopy, we will be in a position to constrain the existing models, compare the observed with HVSs mock population \\citep{Marchetti2018} and compute their orbits \\citep[e.g.][GravPot16\\footnote{\\href{https://gravpot.utinam.cnrs.fr}{https://gravpot.utinam.cnrs.fr}}]{FernandezTrincado2020}, and thus probe if they come from the GC or have another origin.\n\nThe Hills mechanism is parameterised by the shape of the stellar initial mass function in the GC, the distribution of binary orbital periods and mass fraction, and the ejection rate. %(Evans et al. 2022, figures 3 and 4).",
+      "comments": ""
+    },
+    {
+      "id": "resource-004",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/science-performance",
+      "local_path": "",
+      "description": "Gaia science performance documentation page describing expected astrometry precision in future data releases.",
+      "source_refs": [
+        {
+          "path": "literature/2401.05630/arxiv_source/hvs.tex",
+          "start_line": 798,
+          "end_line": 798,
+          "context": "The velocity distribution is compatible with current ejection models, where the high-velocity stars should reside close to the GC, and those ejected with the Hills mechanism will also have an isotropic spatial distribution. A different spatial distribution, or proper motions that do not point back to the GC can be explained by other ejection scenarios, such as a disruption of globular clusters by the SMBH, inspiralling IMBH, dynamic interactions with binary massive BH, or supernova kicks. The high-velocity stars point back to the production origin, being these globular clusters, satellite galaxies such as the Magellanic Clouds, or the Galactic disc, where the runaway scenario is more probable. \n\nThe future \\textit{Gaia} data releases\\footnote{\\href{https://www.cosmos.esa.int/web/gaia/science-performance}{https://www.cosmos.esa.int/web/gaia/science-performance}} will improve the astrometry precision by a factor of $\\sim2.5$, reaching $0.5$ mas yr$^{-1}$ and $0.3$ mas yr$^{-1}$ in DR4 and DR5, respectively, for the faintest stars ($G=20.7$ mag). The accuracy will improve as well, as the baseline of observations will increase to 60 months in DR4 and 120 months in DR5. The radial velocities are limited to sources brighter than $G\\sim15.5$ mag and the spectra at $G\\sim17.5$ mag. Thus, to confirm the nature of the candidate HVSs in the Galactic bulge, a dedicated near-IR spectroscopic follow-up is still necessary. \\textit{Gaia}NIR is a proposed space mission that will map the entire sky in the NIR, extending the capabilities and deepness of \\textit{Gaia}; if accepted, it will be launched in the 2040s, extending the baseline by 20 years, which translates into a $20\\times$ more accurate proper motions.\n%will still be necessary for a dedicated NIR spectroscopic observation.\nThe future ground and space facilities might change that scenario. The ELT will reach $\\mu$as yr$^{-1}$ precision in proper motions \\citep{2010MNRAS.402.1126T, 2021JATIS...7c5005R}, and there are JWST observations focusing on the Galactic bulge. The Wide-Field Instrument on board the Roman telescope will be ideal for NIR surveys with precise photometry (PSF FWHM $<0\\farcs1$ ) and low resolution ($R\\sim600$) multi-object spectroscopy, sufficient for radial velocity measurements. The Rubin observatory will map the southern sky and will reach proper motion precision of $0.2(1)$ mas yr$^{-1}$ for sources with magnitude $r=21(24)$ mag\\footnote{\\href{https://www.lsst.org/sites/default/files/docs/sciencebook/SB_3.pdf}{https://www.lsst.org/sites/default/files/docs/sciencebook/SB\\_3.pdf}}."
+        }
+      ],
+      "evidence": "The velocity distribution is compatible with current ejection models, where the high-velocity stars should reside close to the GC, and those ejected with the Hills mechanism will also have an isotropic spatial distribution. A different spatial distribution, or proper motions that do not point back to the GC can be explained by other ejection scenarios, such as a disruption of globular clusters by the SMBH, inspiralling IMBH, dynamic interactions with binary massive BH, or supernova kicks. The high-velocity stars point back to the production origin, being these globular clusters, satellite galaxies such as the Magellanic Clouds, or the Galactic disc, where the runaway scenario is more probable. \n\nThe future \\textit{Gaia} data releases\\footnote{\\href{https://www.cosmos.esa.int/web/gaia/science-performance}{https://www.cosmos.esa.int/web/gaia/science-performance}} will improve the astrometry precision by a factor of $\\sim2.5$, reaching $0.5$ mas yr$^{-1}$ and $0.3$ mas yr$^{-1}$ in DR4 and DR5, respectively, for the faintest stars ($G=20.7$ mag). The accuracy will improve as well, as the baseline of observations will increase to 60 months in DR4 and 120 months in DR5. The radial velocities are limited to sources brighter than $G\\sim15.5$ mag and the spectra at $G\\sim17.5$ mag. Thus, to confirm the nature of the candidate HVSs in the Galactic bulge, a dedicated near-IR spectroscopic follow-up is still necessary. \\textit{Gaia}NIR is a proposed space mission that will map the entire sky in the NIR, extending the capabilities and deepness of \\textit{Gaia}; if accepted, it will be launched in the 2040s, extending the baseline by 20 years, which translates into a $20\\times$ more accurate proper motions.\n%will still be necessary for a dedicated NIR spectroscopic observation.\nThe future ground and space facilities might change that scenario. The ELT will reach $\\mu$as yr$^{-1}$ precision in proper motions \\citep{2010MNRAS.402.1126T, 2021JATIS...7c5005R}, and there are JWST observations focusing on the Galactic bulge. The Wide-Field Instrument on board the Roman telescope will be ideal for NIR surveys with precise photometry (PSF FWHM $<0\\farcs1$ ) and low resolution ($R\\sim600$) multi-object spectroscopy, sufficient for radial velocity measurements. The Rubin observatory will map the southern sky and will reach proper motion precision of $0.2(1)$ mas yr$^{-1}$ for sources with magnitude $r=21(24)$ mag\\footnote{\\href{https://www.lsst.org/sites/default/files/docs/sciencebook/SB_3.pdf}{https://www.lsst.org/sites/default/files/docs/sciencebook/SB\\_3.pdf}}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-005",
+      "kind": "external_url",
+      "url": "",
+      "local_path": "",
+      "description": "LSST/Rubin Observatory science book (partial URL in source).",
+      "source_refs": [
+        {
+          "path": "literature/2401.05630/arxiv_source/hvs.tex",
+          "start_line": 800,
+          "end_line": 800,
+          "context": "The future \\textit{Gaia} data releases\\footnote{\\href{https://www.cosmos.esa.int/web/gaia/science-performance}{https://www.cosmos.esa.int/web/gaia/science-performance}} will improve the astrometry precision by a factor of $\\sim2.5$, reaching $0.5$ mas yr$^{-1}$ and $0.3$ mas yr$^{-1}$ in DR4 and DR5, respectively, for the faintest stars ($G=20.7$ mag). The accuracy will improve as well, as the baseline of observations will increase to 60 months in DR4 and 120 months in DR5. The radial velocities are limited to sources brighter than $G\\sim15.5$ mag and the spectra at $G\\sim17.5$ mag. Thus, to confirm the nature of the candidate HVSs in the Galactic bulge, a dedicated near-IR spectroscopic follow-up is still necessary. \\textit{Gaia}NIR is a proposed space mission that will map the entire sky in the NIR, extending the capabilities and deepness of \\textit{Gaia}; if accepted, it will be launched in the 2040s, extending the baseline by 20 years, which translates into a $20\\times$ more accurate proper motions.\n%will still be necessary for a dedicated NIR spectroscopic observation.\nThe future ground and space facilities might change that scenario. The ELT will reach $\\mu$as yr$^{-1}$ precision in proper motions \\citep{2010MNRAS.402.1126T, 2021JATIS...7c5005R}, and there are JWST observations focusing on the Galactic bulge. The Wide-Field Instrument on board the Roman telescope will be ideal for NIR surveys with precise photometry (PSF FWHM $<0\\farcs1$ ) and low resolution ($R\\sim600$) multi-object spectroscopy, sufficient for radial velocity measurements. The Rubin observatory will map the southern sky and will reach proper motion precision of $0.2(1)$ mas yr$^{-1}$ for sources with magnitude $r=21(24)$ mag\\footnote{\\href{https://www.lsst.org/sites/default/files/docs/sciencebook/SB_3.pdf}{https://www.lsst.org/sites/default/files/docs/sciencebook/SB\\_3.pdf}}."
+        }
+      ],
+      "evidence": "The future \\textit{Gaia} data releases\\footnote{\\href{https://www.cosmos.esa.int/web/gaia/science-performance}{https://www.cosmos.esa.int/web/gaia/science-performance}} will improve the astrometry precision by a factor of $\\sim2.5$, reaching $0.5$ mas yr$^{-1}$ and $0.3$ mas yr$^{-1}$ in DR4 and DR5, respectively, for the faintest stars ($G=20.7$ mag). The accuracy will improve as well, as the baseline of observations will increase to 60 months in DR4 and 120 months in DR5. The radial velocities are limited to sources brighter than $G\\sim15.5$ mag and the spectra at $G\\sim17.5$ mag. Thus, to confirm the nature of the candidate HVSs in the Galactic bulge, a dedicated near-IR spectroscopic follow-up is still necessary. \\textit{Gaia}NIR is a proposed space mission that will map the entire sky in the NIR, extending the capabilities and deepness of \\textit{Gaia}; if accepted, it will be launched in the 2040s, extending the baseline by 20 years, which translates into a $20\\times$ more accurate proper motions.\n%will still be necessary for a dedicated NIR spectroscopic observation.\nThe future ground and space facilities might change that scenario. The ELT will reach $\\mu$as yr$^{-1}$ precision in proper motions \\citep{2010MNRAS.402.1126T, 2021JATIS...7c5005R}, and there are JWST observations focusing on the Galactic bulge. The Wide-Field Instrument on board the Roman telescope will be ideal for NIR surveys with precise photometry (PSF FWHM $<0\\farcs1$ ) and low resolution ($R\\sim600$) multi-object spectroscopy, sufficient for radial velocity measurements. The Rubin observatory will map the southern sky and will reach proper motion precision of $0.2(1)$ mas yr$^{-1}$ for sources with magnitude $r=21(24)$ mag\\footnote{\\href{https://www.lsst.org/sites/default/files/docs/sciencebook/SB_3.pdf}{https://www.lsst.org/sites/default/files/docs/sciencebook/SB\\_3.pdf}}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-006",
+      "kind": "external_url",
+      "url": "https://www.lsst.org/sites/default/files/docs/sciencebook/SB_3.pdf",
+      "local_path": "",
+      "description": "LSST/Rubin Observatory science book chapter PDF (SB_3.pdf).",
+      "source_refs": [
+        {
+          "path": "literature/2401.05630/arxiv_source/hvs.tex",
+          "start_line": 800,
+          "end_line": 800,
+          "context": "The future \\textit{Gaia} data releases\\footnote{\\href{https://www.cosmos.esa.int/web/gaia/science-performance}{https://www.cosmos.esa.int/web/gaia/science-performance}} will improve the astrometry precision by a factor of $\\sim2.5$, reaching $0.5$ mas yr$^{-1}$ and $0.3$ mas yr$^{-1}$ in DR4 and DR5, respectively, for the faintest stars ($G=20.7$ mag). The accuracy will improve as well, as the baseline of observations will increase to 60 months in DR4 and 120 months in DR5. The radial velocities are limited to sources brighter than $G\\sim15.5$ mag and the spectra at $G\\sim17.5$ mag. Thus, to confirm the nature of the candidate HVSs in the Galactic bulge, a dedicated near-IR spectroscopic follow-up is still necessary. \\textit{Gaia}NIR is a proposed space mission that will map the entire sky in the NIR, extending the capabilities and deepness of \\textit{Gaia}; if accepted, it will be launched in the 2040s, extending the baseline by 20 years, which translates into a $20\\times$ more accurate proper motions.\n%will still be necessary for a dedicated NIR spectroscopic observation.\nThe future ground and space facilities might change that scenario. The ELT will reach $\\mu$as yr$^{-1}$ precision in proper motions \\citep{2010MNRAS.402.1126T, 2021JATIS...7c5005R}, and there are JWST observations focusing on the Galactic bulge. The Wide-Field Instrument on board the Roman telescope will be ideal for NIR surveys with precise photometry (PSF FWHM $<0\\farcs1$ ) and low resolution ($R\\sim600$) multi-object spectroscopy, sufficient for radial velocity measurements. The Rubin observatory will map the southern sky and will reach proper motion precision of $0.2(1)$ mas yr$^{-1}$ for sources with magnitude $r=21(24)$ mag\\footnote{\\href{https://www.lsst.org/sites/default/files/docs/sciencebook/SB_3.pdf}{https://www.lsst.org/sites/default/files/docs/sciencebook/SB\\_3.pdf}}."
+        }
+      ],
+      "evidence": "The future \\textit{Gaia} data releases\\footnote{\\href{https://www.cosmos.esa.int/web/gaia/science-performance}{https://www.cosmos.esa.int/web/gaia/science-performance}} will improve the astrometry precision by a factor of $\\sim2.5$, reaching $0.5$ mas yr$^{-1}$ and $0.3$ mas yr$^{-1}$ in DR4 and DR5, respectively, for the faintest stars ($G=20.7$ mag). The accuracy will improve as well, as the baseline of observations will increase to 60 months in DR4 and 120 months in DR5. The radial velocities are limited to sources brighter than $G\\sim15.5$ mag and the spectra at $G\\sim17.5$ mag. Thus, to confirm the nature of the candidate HVSs in the Galactic bulge, a dedicated near-IR spectroscopic follow-up is still necessary. \\textit{Gaia}NIR is a proposed space mission that will map the entire sky in the NIR, extending the capabilities and deepness of \\textit{Gaia}; if accepted, it will be launched in the 2040s, extending the baseline by 20 years, which translates into a $20\\times$ more accurate proper motions.\n%will still be necessary for a dedicated NIR spectroscopic observation.\nThe future ground and space facilities might change that scenario. The ELT will reach $\\mu$as yr$^{-1}$ precision in proper motions \\citep{2010MNRAS.402.1126T, 2021JATIS...7c5005R}, and there are JWST observations focusing on the Galactic bulge. The Wide-Field Instrument on board the Roman telescope will be ideal for NIR surveys with precise photometry (PSF FWHM $<0\\farcs1$ ) and low resolution ($R\\sim600$) multi-object spectroscopy, sufficient for radial velocity measurements. The Rubin observatory will map the southern sky and will reach proper motion precision of $0.2(1)$ mas yr$^{-1}$ for sources with magnitude $r=21(24)$ mag\\footnote{\\href{https://www.lsst.org/sites/default/files/docs/sciencebook/SB_3.pdf}{https://www.lsst.org/sites/default/files/docs/sciencebook/SB\\_3.pdf}}.",
+      "comments": ""
+    },
+    {
+      "id": "resource-009",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "The paper states that the HVS candidate tables will be made available at the CDS.",
+      "source_refs": [
+        {
+          "path": "literature/2401.05630/arxiv_source/hvs.tex",
+          "start_line": 833,
+          "end_line": 833,
+          "context": "has been provided by national institutions, in particular, the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement.\nFor the HVS candidates, we provide tables in the paper that will be available in CDS.\n%Until the public release of VIRAC2 data, the data can be provided upon reasonable request."
+        }
+      ],
+      "evidence": "has been provided by national institutions, in particular, the institutions\nparticipating in the {\\it Gaia} Multilateral Agreement.\nFor the HVS candidates, we provide tables in the paper that will be available in CDS.\n%Until the public release of VIRAC2 data, the data can be provided upon reasonable request.",
+      "comments": ""
+    },
+    {
+      "id": "resource-010",
+      "kind": "local_machine_readable_file",
+      "url": "",
+      "local_path": "literature/2401.05630/arxiv_source/readme.txt",
+      "description": "Local readme.txt file included in the arXiv source package.",
+      "source_refs": [],
+      "evidence": "",
+      "comments": "Discovered local machine-readable file with suffix .txt."
+    }
+  ]
+}

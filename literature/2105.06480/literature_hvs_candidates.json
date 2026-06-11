@@ -1,0 +1,361 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-06-07T11:47:20",
+  "paper": {
+    "arxiv_id": "2105.06480",
+    "bibcode": "2021ApJ...914L...3H",
+    "title": "8.9-hr Rotation in the Partly Burnt Runaway Stellar Remnant LP 40-365 (GD 492)",
+    "month": "2021-05",
+    "source_note_json": "notes/2021/2021-05/2021-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2105.06480",
+      "pdf": "https://arxiv.org/pdf/2105.06480"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2105.06480",
+    "audit_path": "literature/2105.06480/audit.json",
+    "catalog_review_path": "literature/2105.06480/catalog_review.json",
+    "catalog_extraction_path": "literature/2105.06480/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "candidates_found",
+    "extracted_at": "2026-06-07T11:47:20",
+    "extractor": "agent",
+    "summary": "论文报告了LP 40-365（GD 492）的8.914小时光变周期检测。LP 40-365是部分燃烧速逃星（partly burnt runaway stellar remnant）的原型，由热核超新星事件从双星系统中弹射。论文引言明确声明：'it is rapidly departing the Galaxy, with a rest-frame velocity of v_rf ≃ 852 km/s that makes it unbound to the Milky Way'。该天体被确认为银河系非束缚天体，提取为HVS候选体。"
+  },
+  "method_chain": [
+    {
+      "id": "step-01",
+      "depends_on": [],
+      "step_type": "sample_selection",
+      "summary": "快速扫描论文标题、摘要和引言，评估HVS相关性。论文明确声明LP 40-365为银河系非束缚天体，v_rf ≃ 852 km/s。",
+      "inputs": [
+        "arXiv abstract",
+        "Paper source (ms.tex)"
+      ],
+      "outputs": [
+        "HVS relevance classification: candidates_found"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2105.06480/arxiv_source/ms.tex",
+          "start_line": 48,
+          "end_line": 48,
+          "context": "Abstract: partly burnt runaway stars that have been ejected from a binary due to a thermonuclear supernova event"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2105.06480/arxiv_source/ms.tex",
+          "start_line": 59,
+          "end_line": 59,
+          "context": "Introduction: it is rapidly departing the Galaxy, with a rest-frame velocity of v_rf ≃ 852 km/s that makes it unbound to the Milky Way"
+        }
+      ]
+    },
+    {
+      "id": "step-02",
+      "depends_on": [
+        "step-01"
+      ],
+      "step_type": "escape_or_bound_assessment",
+      "summary": "论文明确评估LP 40-365的束缚状态：引言第59行使用'unbound to the Milky Way'描述，给出v_rf ≃ 852 km/s，确认为银河系非束缚天体。",
+      "inputs": [
+        "Paper source (ms.tex)"
+      ],
+      "outputs": [
+        "LP 40-365: unbound to Milky Way"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2105.06480/arxiv_source/ms.tex",
+          "start_line": 59,
+          "end_line": 59,
+          "context": "it is rapidly departing the Galaxy, with a rest-frame velocity of v_rf ≃ 852 km/s that makes it unbound to the Milky Way"
+        }
+      ]
+    },
+    {
+      "id": "step-03",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "reported_value_adoption",
+      "summary": "采用论文报告的LP 40-365静止参考系速度：v_rf ≃ 852 km/s。",
+      "inputs": [
+        "Paper source (ms.tex)"
+      ],
+      "outputs": [
+        "v_rf = 852 km/s"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2105.06480/arxiv_source/ms.tex",
+          "start_line": 59,
+          "end_line": 59,
+          "context": "rest-frame velocity of v_rf ≃ 852 km/s"
+        }
+      ]
+    },
+    {
+      "id": "step-04",
+      "depends_on": [
+        "step-02"
+      ],
+      "step_type": "stellar_parameter_inference",
+      "summary": "采用论文引用的Raddi et al. (2019)恒星参数：T_eff=9800 K, log g=5.5, L=0.20 L_sun, R=0.16 R_sun, M=0.28 M_sun。",
+      "inputs": [
+        "Paper source (ms.tex)",
+        "Raddi et al. (2019)"
+      ],
+      "outputs": [
+        "stellar parameters"
+      ],
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2105.06480/arxiv_source/ms.tex",
+          "start_line": 139,
+          "end_line": 141,
+          "context": "T_eff=9800 K, log g=5.5, L=0.20 L_sun, R=0.16 R_sun, M=0.28 M_sun"
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "identifiers": {
+        "record_id": "2105.06480:cand-001",
+        "paper_candidate_id": "LP 40-365",
+        "gaia_source_id": "",
+        "all": [
+          {
+            "value": "LP 40-365",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2105.06480/arxiv_source/ms.tex",
+                "start_line": 17,
+                "end_line": 17,
+                "context": "Title: 8.9-hr Rotation in the Partly Burnt Runaway Stellar Remnant LP 40-365 (GD 492)"
+              }
+            ]
+          },
+          {
+            "value": "GD 492",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2105.06480/arxiv_source/ms.tex",
+                "start_line": 17,
+                "end_line": 17,
+                "context": "Title alternative name: GD 492"
+              }
+            ]
+          },
+          {
+            "value": "TIC 198510602",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2105.06480/arxiv_source/ms.tex",
+                "start_line": 76,
+                "end_line": 76,
+                "context": "TESS Input Catalog: TIC 198510602, T=15.5 mag"
+              }
+            ]
+          }
+        ]
+      },
+      "inclusion_assessment": {
+        "summary": "论文引言明确声明LP 40-365正在快速离开银河系，静止参考系速度v_rf ≃ 852 km/s，使其成为银河系非束缚天体（'makes it unbound to the Milky Way'）。该天体是热核超新星（Type Iax）弹射的部分燃烧白矮星遗迹。论文将其与超高速星（HVS）区分，指出它并非来自银河系中心，但明确确认其为银河系非束缚天体。",
+        "paper_labels": [
+          "hvs_candidate",
+          "unbound_star",
+          "escaping_star",
+          "hyper_runaway_candidate"
+        ],
+        "galactic_bound_claim": "unbound",
+        "inclusion_basis": "explicit_unbound_text",
+        "extraction_confidence": "high",
+        "confidence_reason": "论文引言（第59行）明确使用'unbound to the Milky Way'描述LP 40-365，并给出v_rf ≃ 852 km/s的定量速度。非束缚状态由论文直接声明，置信度高。",
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2105.06480/arxiv_source/ms.tex",
+            "start_line": 48,
+            "end_line": 48,
+            "context": "Abstract: partly burnt runaway stars that have been ejected from a binary due to a thermonuclear supernova event"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2105.06480/arxiv_source/ms.tex",
+            "start_line": 59,
+            "end_line": 59,
+            "context": "it is rapidly departing the Galaxy, with a rest-frame velocity of v_rf ≃ 852 km/s that makes it unbound to the Milky Way; unlike hypervelocity stars, LP 40-365 almost certainly did not come from the Galactic center"
+          }
+        ]
+      },
+      "candidate_origin": {
+        "origin_type": "introduced_by_this_paper",
+        "paper_reassesses_unbound_status": true,
+        "source_refs": [
+          {
+            "kind": "text",
+            "path": "literature/2105.06480/arxiv_source/ms.tex",
+            "start_line": 59,
+            "end_line": 59,
+            "context": "LP 40-365 unbound to the Milky Way with v_rf ≃ 852 km/s"
+          },
+          {
+            "kind": "text",
+            "path": "literature/2105.06480/arxiv_source/ms.tex",
+            "start_line": 141,
+            "end_line": 141,
+            "context": "Flight time away from Galactic disk of 5.3 Myr"
+          }
+        ]
+      },
+      "core": {
+        "observed_phase_space": {
+          "radial_velocity": {
+            "raw_value": "852",
+            "value": "852",
+            "unit": "km/s",
+            "kind": "rest_frame_velocity",
+            "description": "Rest-frame velocity (v_rf) of LP 40-365, stated to make it unbound to the Milky Way",
+            "source_refs": [
+              {
+                "kind": "text",
+                "path": "literature/2105.06480/arxiv_source/ms.tex",
+                "start_line": 59,
+                "end_line": 59,
+                "context": "rest-frame velocity of v_rf ≃ 852 km/s"
+              }
+            ],
+            "method_refs": [
+              "step-03"
+            ]
+          }
+        },
+        "derived_kinematics": {},
+        "bound_assessment": {}
+      },
+      "photometry": [],
+      "spectroscopy": [],
+      "stellar_parameters": {
+        "teff": {
+          "raw_value": "9800 +/- 300",
+          "value": "9800",
+          "error": "300",
+          "unit": "K",
+          "kind": "effective_temperature",
+          "description": "Effective temperature from Raddi et al. (2019)",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2105.06480/arxiv_source/ms.tex",
+              "start_line": 139,
+              "end_line": 139,
+              "context": "T_eff = 9800 +/- 300 K"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "log_g": {
+          "raw_value": "5.5 +/- 0.3",
+          "value": "5.5",
+          "error": "0.3",
+          "unit": "",
+          "kind": "log_g",
+          "description": "Surface gravity from Raddi et al. (2019)",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2105.06480/arxiv_source/ms.tex",
+              "start_line": 139,
+              "end_line": 139,
+              "context": "log g = 5.5 +/- 0.3 [cgs]"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "mass": {
+          "raw_value": "0.28 +0.28/-0.14",
+          "value": "0.28",
+          "upper_error": "0.28",
+          "lower_error": "0.14",
+          "unit": "M_sun",
+          "kind": "mass",
+          "description": "Mass from Raddi et al. (2019)",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2105.06480/arxiv_source/ms.tex",
+              "start_line": 139,
+              "end_line": 139,
+              "context": "M = 0.28 +0.28/-0.14 M_sun"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "radius": {
+          "raw_value": "0.16 +/- 0.01",
+          "value": "0.16",
+          "error": "0.01",
+          "unit": "R_sun",
+          "kind": "radius",
+          "description": "Radius from Raddi et al. (2019)",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2105.06480/arxiv_source/ms.tex",
+              "start_line": 139,
+              "end_line": 139,
+              "context": "R = 0.16 +/- 0.01 R_sun"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        },
+        "luminosity": {
+          "raw_value": "0.20 +/- 0.04",
+          "value": "0.20",
+          "error": "0.04",
+          "unit": "L_sun",
+          "kind": "luminosity",
+          "description": "Luminosity from Raddi et al. (2019)",
+          "source_refs": [
+            {
+              "kind": "text",
+              "path": "literature/2105.06480/arxiv_source/ms.tex",
+              "start_line": 139,
+              "end_line": 139,
+              "context": "L = 0.20 +/- 0.04 L_sun"
+            }
+          ],
+          "method_refs": [
+            "step-04"
+          ]
+        }
+      },
+      "abundances": [],
+      "quality_flags": [],
+      "orbit": {},
+      "astrophysical_origin": {},
+      "extra": []
+    }
+  ],
+  "candidate_groups_considered": []
+}

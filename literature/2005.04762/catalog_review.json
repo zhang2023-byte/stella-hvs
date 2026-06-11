@@ -1,0 +1,547 @@
+{
+  "schema_version": "stella.article_data_assets.review.v1",
+  "paper": {
+    "arxiv_id": "2005.04762",
+    "title": "Hunting for Runaways from the Orion Nebula Cluster",
+    "month": "2020-05",
+    "source_note_json": "notes/2020/2020-05/2020-05.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2005.04762",
+      "pdf": "https://arxiv.org/pdf/2005.04762"
+    }
+  },
+  "source": {
+    "paper_dir": "literature/2005.04762",
+    "audit_path": "literature/2005.04762/audit.json",
+    "source_dir": "literature/2005.04762/arxiv_source",
+    "tex_root": "literature/2005.04762/arxiv_source/oncgaia.tex",
+    "source_available": true
+  },
+  "review": {
+    "status": "reviewed",
+    "reviewed_at": "2026-06-06T23:03:24",
+    "reviewer": "agent",
+    "summary": "Paper uses Gaia DR2 astrometry to identify ~17,000 candidate runaway/walkaway stars from the Orion Nebula Cluster (ONC) via 2D traceback within 45° and out to 1 kpc over the last ~10 Myr. Six youth-signature flags (YSO colors, WYSO IR excess, VAR variability, CA closest-approach, PA clean-zone position angle, RV radial velocity) are applied to filter contaminants. Main data products: (1) Table tab:flags — counts of sources passing all combinations of the 6 flags; (2) Table tab:score — the scoring/classification scheme; (3) Table tab:known — catalog of known Orion A members satisfying the traceback selection with transverse velocities >4 km/s; (4) Table tab:bestcandidates — the 25 best new runaway candidates (score a+), of which 13 are in the clean zone; (5) Table tab:rv — sources with measured RVs that pass 3D traceback. Three external URLs acknowledge Gaia and DPAC."
+  },
+  "internal_tables": [
+    {
+      "id": "table-tab-flags",
+      "kind": "latex_table",
+      "asset_type": "statistics_summary",
+      "role_in_paper": "Shows the number of 2D traceback candidate sources that fulfill each combination of the six youth-indicator flags (YSO, WYSO, VAR, CA, PA, RV). Parenthetical values show the subset that also have all information required for full flag testing. Demonstrates how the candidate pool shrinks as more flags are combined.",
+      "source_refs": [
+        {
+          "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+          "start_line": 670,
+          "end_line": 682,
+          "caption": "Number of Sources that fulfill all combination of flags described in the text. Quantities between parenthesis show the number of sources that fulfill the condition and also have all the information required (see text). The table is organized on blocks where, from top to bottom, results show the combination of 1, 2, 3, 4, 5 and 6 flags respectively.",
+          "label": "tab:flags"
+        }
+      ],
+      "columns": [
+        {
+          "name": "YSO",
+          "meaning": "Number of sources passing the YSO (Young Stellar Object) optical color-magnitude flag alone",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "WYSO",
+          "meaning": "Number of sources passing the WYSO (WISE-based YSO probability) IR excess flag alone, with parenthetical subset having full required info",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "VAR",
+          "meaning": "Number of sources passing the optical variability flag alone",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "CA",
+          "meaning": "Number of sources passing the closest-approach distance flag (2D traceback proximity to ONC half-mass radius)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "PA",
+          "meaning": "Number of sources passing the position-angle clean-zone flag (avoiding Galactic streaming contamination)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "RV",
+          "meaning": "Number of sources passing the radial-velocity flag (reasonable required RV magnitude, or measured RV consistent with 3D traceback)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Flag Combinations",
+          "meaning": "Label for the combination of flags being counted in each row, e.g., YSO×WYSO, YSO×WYSO×VAR, etc.",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table caption states: 'Number of Sources that fulfill all combination of flags described in the text ... The table is organized on blocks where, from top to bottom, results show the combination of 1, 2, 3, 4, 5 and 6 flags respectively.' The table body (flagtable.tex) counts 2893 YSO, 420 WYSO (13231 with full info), 676 VAR (2494), etc. Section 4 (Results) uses these counts to discuss the flag filtering pipeline.",
+      "comments": "Table body is in tables/flagtable.tex included via \\input. Column headers are defined in the oncgaia.tex tabular preamble {cccccc|l}. The first data row shows single-flag counts; subsequent rows show intersections of 2, 3, 4, 5, and 6 flags."
+    },
+    {
+      "id": "table-tab-score",
+      "kind": "latex_table",
+      "asset_type": "classification_scheme",
+      "role_in_paper": "Defines the scoring/classification system used to label candidate runaway sources. Score letter (a,b,c,d) indicates how many youth flags a source fails; subclass (I,II,III) indicates how many flags could not be tested. Used throughout the paper to categorize all candidate runaways.",
+      "source_refs": [
+        {
+          "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+          "start_line": 684,
+          "end_line": 707,
+          "caption": "Summary table of score system used to classify and label candidate runaway sources. Score is based in how many signatures of youth a source fails (indicated with -1), while the subclass column is based on how many flags for which the source could not be tested (indicated with 0).",
+          "label": "tab:score"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Score",
+          "meaning": "Letter grade (a,b,c,d) summarizing how many youth indicators the source fails; a=passes all tested, b=fails one, c=fails two, d=fails three (YSO, WYSO, VAR)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Subclass",
+          "meaning": "Roman numeral subclass (I,II,III) indicating how many of the three youth flags could not be tested (0=all tested, increasing = fewer tested)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "YSO",
+          "meaning": "YSO optical color-magnitude flag result: 1=pass, -1=fail, 0=untested",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "WYSO",
+          "meaning": "WISE-based YSO probability flag result: 1=pass, -1=fail, 0=untested; superscript/subscript notation shows alternative possibilities for a given score/subclass",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "VAR",
+          "meaning": "Optical variability flag result: 1=pass, -1=fail, 0=untested",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table caption: 'Score is based in how many signatures of youth a source fails (indicated with -1), while the subclass column is based on how many flags for which the source could not be tested (indicated with 0).' The scoring is explained in Section 3.6 (Scoring system) and used to label all candidates in Tables tab:known, tab:bestcandidates, and tab:rv.",
+      "comments": "Score 'a+' means the source passes all tested flags (fails none). The table only covers YSO, WYSO, VAR flags; CA, PA, and RV flags are applied separately. A trailing '*' on the score label (e.g., aI+*) indicates sources in the Galactic streaming contamination zone."
+    },
+    {
+      "id": "table-tab-known",
+      "kind": "latex_table",
+      "asset_type": "source_catalog",
+      "role_in_paper": "Primary data catalog listing known Orion A complex members (from McBride 2019) that are identified as 2D traceback runaway/walkaway candidates with transverse velocities >4 km/s. Provides Gaia DR2 astrometry, derived kinematic parameters, and results of the six youth-indicator flags for each source.",
+      "source_refs": [
+        {
+          "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+          "start_line": 848,
+          "end_line": 881,
+          "caption": "Traceback candidates that are known members of the Orion A complex from McBride (2019) with transverse velocities above 4 km/s. First column shows the Gaia ID with alternative names for specific sources within parenthesis, such as AE Aur, mu Col. The first section of the table shows candidate runaways reported recently by McBride (2019) with the label letters used by the authors for quick reference. Second column shows the corresponding score and label system used in this work.",
+          "label": "tab:known"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia ID",
+          "meaning": "Gaia DR2 source identifier; boldface indicates known Orion A members from the literature; alternative names in parentheses",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Label",
+          "meaning": "Score-based label from this work's classification system (e.g., aI+4, bII+9); McBride (2019) letters shown for previously reported runaways",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l",
+          "meaning": "Galactic longitude (J2015.5)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b",
+          "meaning": "Galactic latitude (J2015.5)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_ONC",
+          "meaning": "3D distance to the ONC calculated using 1/parallax",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "theta_ONC",
+          "meaning": "Current angular distance to the ONC",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_t'",
+          "meaning": "Transverse velocity in the reference frame of the ONC, corrected using cos(l-l_ONC) and cos(b-b_ONC) factors",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_back",
+          "meaning": "2D traceback time to the ONC",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_r,opt",
+          "meaning": "16th, 50th, and 84th percentiles of the required radial velocity for 3D overlap with the ONC; bold values indicate the RV flag is satisfied",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_r",
+          "meaning": "Gaia DR2 measured radial velocity, when available",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "YSO",
+          "meaning": "Checkmark indicates the source passes the YSO optical color-magnitude flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P(YSO)",
+          "meaning": "WISE-based YSO probability from Marton et al. (2019); asterisk indicates P_R<=0.5 and PL_Y was used instead of PS_Y",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_i",
+          "meaning": "Calculated intrinsic variability index used for the VAR flag; bold values indicate VAR flag satisfied",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D_min",
+          "meaning": "Closest 2D traceback angular distance to the ONC; bold values indicate the CA flag is satisfied",
+          "unit_text": "arcmin",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "theta_PA",
+          "meaning": "Position angle of the source with respect to the ONC; bold values indicate sources in the clean zone (PA flag passed)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Extensive table caption (lines 850-878 of oncgaia.tex) describes all columns and units in detail. The table body (tables/member_candidates.tex) contains ~46 data rows with Gaia DR2 IDs, scores, positions, kinematics, and flag results. Text in Section 4.1 describes this table as listing 2598 known Orion members, of which 237 have v_t>4 km/s and 54 are scored a+.",
+      "comments": "Table uses deluxetable* environment with 15 columns. Table body is in tables/member_candidates.tex. First section lists runaways from McBride (2019) with their original letter labels (a-u). Known bright runaway stars AE Aur and mu Col are included. SIMBAD-resolved alternative names in parentheses."
+    },
+    {
+      "id": "table-tab-bestcandidates",
+      "kind": "latex_table",
+      "asset_type": "source_catalog",
+      "role_in_paper": "Catalog of the best new runaway/walkaway candidates (score a+) that were not previously identified as ONC members. Divided into six sections: aI+, aII+, aIII+ (clean zone) and aI+*, aII+*, aIII+* (contaminated zone). Presents 25 promising ejection candidates, of which 13 are in the clean zone.",
+      "source_refs": [
+        {
+          "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+          "start_line": 972,
+          "end_line": 984,
+          "caption": "Same as Table tab:known, but for sources with score a+. The table is divided in 6 sections grouped by scores aI+, aII+ and aIII+ and the same but for sources in the 'contaminated' zone, i.e., aI+*, aII+* and aIII+*. A version of this table listing all ~17,000 2D traceback candidates will be available in the electronic version of the published paper.",
+          "label": "tab:bestcandidates"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia ID",
+          "meaning": "Gaia DR2 source identifier of the new runaway candidate",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Label",
+          "meaning": "Score-based label (aI+, aII+, aIII+ with optional * for contaminated zone); serial number within each score group",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l",
+          "meaning": "Galactic longitude (J2015.5)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b",
+          "meaning": "Galactic latitude (J2015.5)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_ONC",
+          "meaning": "3D distance to the ONC calculated using 1/parallax",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "theta_ONC",
+          "meaning": "Current angular distance to the ONC",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_t'",
+          "meaning": "Transverse velocity in the reference frame of the ONC",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "t_back",
+          "meaning": "2D traceback time to the ONC",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_r,opt",
+          "meaning": "16th, 50th, and 84th percentiles of the required radial velocity; bold values indicate RV flag satisfied",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_r",
+          "meaning": "Gaia DR2 measured radial velocity, when available",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "YSO",
+          "meaning": "Checkmark indicates the source passes the YSO color-magnitude flag",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "P(YSO)",
+          "meaning": "WISE-based YSO probability; asterisk indicates PL_Y was used; bold values indicate WYSO flag satisfied",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "V_i",
+          "meaning": "Intrinsic variability index; bold values indicate VAR flag satisfied",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D_min",
+          "meaning": "Closest 2D traceback angular distance to the ONC; bold values indicate CA flag satisfied",
+          "unit_text": "arcmin",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "theta_PA",
+          "meaning": "Position angle with respect to the ONC; bold values indicate sources in the clean zone (PA flag); non-bold indicates contaminated zone",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table caption states 'Same as Table tab:known, but for sources with score a+.' Columns mirror tab:known exactly. The table body (tables/best_candidates.tex) lists 25 new candidates: 3 aI+, 2 aII+, 8 aIII+ in the clean zone, and 1 aI+*, 2 aII+*, 9 aIII+* in the contaminated zone. Section 4.2 (New sources) describes these candidates as having the highest-quality youth signatures without previously being known as ONC members. Ten candidates with measured RVs pass the most restrictive 3D traceback condition.",
+      "comments": "Same 15-column deluxetable* format as tab:known. The published paper's electronic version includes a larger table listing all ~17,000 2D traceback candidates. The 6-section division separates clean-zone vs. contaminated-zone sources by score tier."
+    },
+    {
+      "id": "table-tab-rv",
+      "kind": "latex_table",
+      "asset_type": "source_catalog",
+      "role_in_paper": "Subset of sources with score A+ that also have Gaia DR2 measured radial velocities, enabling full 3D traceback analysis. Shows 3D space velocities in the ONC frame, 3D traceback times, and 3D closest approach distances.",
+      "source_refs": [
+        {
+          "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+          "start_line": 1142,
+          "end_line": 1152,
+          "caption": "Sources that fulfill the RV flag with available Gaia DR2 radial velocities with scores A+. Gaia ID in bold indicate sources that are known members of the Orion A complex. v_3D,ONC shows the space velocity in the frame of reference of the ONC. tau_min,3D is the traceback time obtained by 3D traceback and D_min,3d the corresponding 3D closest approach to the ONC.",
+          "label": "tab:rv"
+        }
+      ],
+      "columns": [
+        {
+          "name": "Gaia ID",
+          "meaning": "Gaia DR2 source identifier; boldface indicates known Orion A members",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "Label",
+          "meaning": "Score-based label from this work's classification system (all A+ scores)",
+          "unit_text": "",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "l",
+          "meaning": "Galactic longitude (J2015.5)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "b",
+          "meaning": "Galactic latitude (J2015.5)",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "distance",
+          "meaning": "Distance to the source from Gaia DR2 parallax (with uncertainties)",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "d_ONC",
+          "meaning": "3D distance to the ONC",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "theta_ONC",
+          "meaning": "Current angular distance to the ONC",
+          "unit_text": "deg",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_3D,ONC",
+          "meaning": "Space velocity in the reference frame of the ONC (full 3D velocity including measured radial velocity)",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "v_r",
+          "meaning": "Gaia DR2 measured radial velocity",
+          "unit_text": "km/s",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "tau_min,3d",
+          "meaning": "3D traceback time to closest approach to the ONC",
+          "unit_text": "Myr",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        },
+        {
+          "name": "D_min,3d",
+          "meaning": "3D closest approach distance to the ONC; bold values indicate the source passed the CA criterion in 3D",
+          "unit_text": "pc",
+          "source_of_definition": "table header",
+          "confidence": 1.0
+        }
+      ],
+      "evidence": "Table caption explicitly defines v_3D,ONC, tau_min,3D, and D_min,3d. The table body (tables/rvtable.tex) lists 17 sources with measured RVs that pass the full 3D traceback test. Section 4.3 (3D traceback with RVs) describes that of the ~17,000 candidates, only ~7% have measured RVs, and this table shows those that pass the most restrictive 3D criteria. Ten of these are the new candidates highlighted in the abstract.",
+      "comments": "11-column deluxetable*. The notes column from tab:known and tab:bestcandidates is absent here — this table is focused purely on 3D kinematic results. Sources correspond to entries in tab:bestcandidates and tab:known where RV measurements are available."
+    }
+  ],
+  "external_resources": [
+    {
+      "id": "resource-001",
+      "kind": "external_resource_mention",
+      "url": "",
+      "local_path": "",
+      "description": "VizieR astronomical catalog service, referenced in the context of YSO (Young Stellar Object) photometric and spectroscopic catalogues used as training data by Marton et al. (2019) for their Random Forest WISE-based YSO classifier. The paper itself does not directly use VizieR but cites the catalogues listed there as part of the WYSO flag methodology.",
+      "source_refs": [
+        {
+          "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+          "start_line": 484,
+          "end_line": 484,
+          "context": "stars (E) and Young Stellar Objects (YSO). For the YSO classification, they used as\ntraining sample a collection of photometric and spectroscopic YSO catalogues listed\nby VizieR \\citep[see Appendix A, B and C in][for references]{Marton2019a}, Spitzer\nYSOs and YSO candidates from \\citep{EvansII2003}. Applying a Random Forest\nclassification, they were able to recover 93.9\\% of the training set correctly."
+        }
+      ],
+      "evidence": "Line 484 of oncgaia.tex: 'a collection of photometric and spectroscopic YSO catalogues listed by VizieR' — this is an indirect mention through the Marton et al. (2019) reference rather than a direct use of VizieR by this paper.",
+      "comments": "Indirect reference via cited work. No specific VizieR URL or table ID is given in the paper."
+    },
+    {
+      "id": "resource-002",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/gaia",
+      "local_path": "",
+      "description": "ESA Gaia mission homepage (https://www.cosmos.esa.int/gaia). This paper uses Gaia DR2 astrometry and photometry as its primary data source for the ONC runaway star search.",
+      "source_refs": [
+        {
+          "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+          "start_line": 1525,
+          "end_line": 1525,
+          "context": "JPF and JCT acknowledge support from ERC Advanced Grant MSTAR.\nThis work has made use of data from the European Space Agency (ESA) mission\n\\gaia\\ (\\url{https://www.cosmos.esa.int/gaia}), processed by the \\gaia\\\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC"
+        }
+      ],
+      "evidence": "Acknowledgments section (line 1525): 'This work has made use of data from the European Space Agency (ESA) mission Gaia (https://www.cosmos.esa.int/gaia)'.",
+      "comments": "Standard Gaia mission acknowledgment URL. Gaia DR2 is the sole observational dataset used for the astrometric analysis in this paper."
+    },
+    {
+      "id": "resource-003",
+      "kind": "external_url",
+      "url": "https://www.cosmos.esa.int/web/gaia/dpac/consortium",
+      "local_path": "",
+      "description": "Gaia Data Processing and Analysis Consortium (DPAC) webpage. Acknowledged as the organization that processed the Gaia data used in this paper.",
+      "source_refs": [
+        {
+          "path": "literature/2005.04762/arxiv_source/oncgaia.tex",
+          "start_line": 1527,
+          "end_line": 1527,
+          "context": "\\gaia\\ (\\url{https://www.cosmos.esa.int/gaia}), processed by the \\gaia\\\nData Processing and Analysis Consortium (DPAC,\n\\url{https://www.cosmos.esa.int/web/gaia/dpac/consortium}). Funding for the DPAC\nhas been provided by national institutions, in particular the institutions\nparticipating in the \\gaia\\ Multilateral Agreement."
+        }
+      ],
+      "evidence": "Acknowledgments section (line 1527): 'processed by the Gaia Data Processing and Analysis Consortium (DPAC, https://www.cosmos.esa.int/web/gaia/dpac/consortium)'.",
+      "comments": "Standard DPAC acknowledgment URL. The URL is present verbatim in the cited source line."
+    }
+  ]
+}

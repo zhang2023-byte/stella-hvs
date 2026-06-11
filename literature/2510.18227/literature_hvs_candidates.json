@@ -1,0 +1,61 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T20:06:33",
+  "paper": {
+    "arxiv_id": "2510.18227",
+    "bibcode": "2025ApJ...990..182W",
+    "title": "Milky Way Mass Through Escape Velocity Curve from LAMOST K Giants",
+    "month": "2025-10",
+    "source_note_json": "notes/2025/2025-10/2025-10.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2510.18227",
+      "pdf": "https://arxiv.org/pdf/2510.18227"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2510.18227",
+    "audit_path": "literature/2510.18227/audit.json",
+    "catalog_review_path": "literature/2510.18227/catalog_review.json",
+    "catalog_extraction_path": "literature/2510.18227/catalog_extraction.json",
+    "ecsv_paths": []
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T20:06:33",
+    "extractor": "agent",
+    "summary": "This paper presents a statistical measurement of the Milky Way escape velocity curve using a sample of high-velocity K giants from LAMOST DR8 cross-matched with Gaia DR3. The paper does not identify or discuss any specific objects as possibly unbound from the Milky Way / Galactic potential. It explicitly states that the selected high-velocity K-giant sample is unlikely to contain many unbound stars, and any 'possible unbound stars' are mentioned only as a statistical outlier component within the Leonard & Tremaine (1990) power-law model. No individual HVS, hyper-runaway, or Galactic-unbound candidates are presented."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "lamost-high-velocity-k-giants",
+      "description": "The high-velocity K-giant sample selected from LAMOST DR8 and cross-matched with Gaia DR3, used as the statistical tracer population for escape velocity curve modeling. The sample is selected with radius-dependent total velocity criteria (v_GC > 300 km/s for the solar neighborhood and v_GC > v_min ~ 0.6 x v_esc(r_GC) for the outer region) and halo-star cuts based on v_phi - [Fe/H].",
+      "decision": "excluded",
+      "reason": "The paper does not present any stars in this sample as possibly unbound from the Galaxy. It explicitly states that 'our sample is unlikely to contain many unbound stars' because unbound stars are typically young and ejected from the Galactic center, whereas the selected K giants are old halo stars. The mention of 'possible unbound stars' appears only in the context of a wide Gaussian outlier model used to account for statistical contaminants or mismeasured stars within the velocity distribution fitting method. No individual objects are identified, named, or discussed as HVS, hyper-runaway, or Galactic-unbound candidates.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2510.18227/arxiv_text.txt",
+          "start_line": 241,
+          "end_line": 245,
+          "context": "Paper states that unbound stars are typically young stars ejected from the Galactic center and not old stars in the halo, and that 'our sample is unlikely to contain many unbound stars'"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2510.18227/arxiv_text.txt",
+          "start_line": 248,
+          "end_line": 253,
+          "context": "Paper describes the selected high-velocity K-giant sample as having only a small number of unbound stars, suitable for the Leonard & Tremaine method, and mentions a Gaussian outlier model for possible unbound or mismeasured stars"
+        },
+        {
+          "kind": "text",
+          "path": "literature/2510.18227/arxiv_text.txt",
+          "start_line": 14,
+          "end_line": 28,
+          "context": "Abstract describes the work as a study of the escape velocity curve using a sample of high-velocity K giants; no individual unbound candidates are mentioned"
+        }
+      ]
+    }
+  ]
+}

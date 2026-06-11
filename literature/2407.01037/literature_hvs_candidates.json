@@ -1,0 +1,65 @@
+{
+  "schema_version": "stella.literature_hvs_candidates.v7",
+  "generated_at": "2026-05-22T17:59:18",
+  "paper": {
+    "arxiv_id": "2407.01037",
+    "bibcode": "2024A&A...687L...7W",
+    "title": "Runaway BN supergiant star HD 93840: Progenitor of an imminent core-collapse supernova above the Galactic plane",
+    "month": "2024-07",
+    "source_note_json": "notes/2024/2024-07/2024-07.json",
+    "links": {
+      "abs": "https://arxiv.org/abs/2407.01037",
+      "pdf": "https://arxiv.org/pdf/2407.01037"
+    }
+  },
+  "inputs": {
+    "paper_dir": "literature/2407.01037",
+    "audit_path": "literature/2407.01037/audit.json",
+    "catalog_review_path": "literature/2407.01037/catalog_review.json",
+    "catalog_extraction_path": "literature/2407.01037/catalog_extraction.json",
+    "ecsv_paths": [
+      "literature/2407.01037/catalog_tables/table-tab-parameters.ecsv",
+      "literature/2407.01037/catalog_tables/table-tab-parameters-2.ecsv",
+      "literature/2407.01037/catalog_tables/table-tab-distanceeffects.ecsv"
+    ]
+  },
+  "extraction": {
+    "status": "no_candidates",
+    "extracted_at": "2026-05-22T17:59:18",
+    "extractor": "agent",
+    "summary": "The paper presents a detailed analysis of HD~93840 as a runaway star ejected from the Galactic disk. While it mentions hyper-runaway and hypervelocity stars in the introduction as a broader context, HD~93840 itself is never presented as possibly unbound from the Milky Way. Its kinematics are modelled within the Galactic potential and it is bound to the Galaxy. Therefore, no HVS/unbound candidates are included."
+  },
+  "method_chain": [],
+  "candidates": [],
+  "candidate_groups_considered": [
+    {
+      "group_id": "hd-93840",
+      "description": "The single runaway star HD~93840 (BN1 Ib) studied in this paper.",
+      "decision": "excluded",
+      "reason": "The paper treats HD~93840 as a runaway star ejected from the Galactic disk by a supernova explosion, with its orbit computed within the Galactic potential. It is never presented as possibly unbound from the Milky Way. The introduction explicitly distinguishes runaway stars from hyper-runaway and hypervelocity stars, placing HD~93840 in the runaway category.",
+      "source_refs": [
+        {
+          "kind": "text",
+          "path": "literature/2407.01037/arxiv_source/HD93840.tex",
+          "start_line": 76,
+          "end_line": 76,
+          "context": "Abstract describing HD~93840 as a runaway star ejected by a supernova explosion."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2407.01037/arxiv_source/HD93840.tex",
+          "start_line": 94,
+          "end_line": 94,
+          "context": "Introduction contrasting runaway stars with hyper-runaway and hypervelocity stars."
+        },
+        {
+          "kind": "text",
+          "path": "literature/2407.01037/arxiv_source/HD93840.tex",
+          "start_line": 224,
+          "end_line": 224,
+          "context": "Discussion explicitly stating HD~93840 is a runaway star originating from the Carina-Sagittarius spiral arm, with orbit traced in the Galactic potential."
+        }
+      ]
+    }
+  ]
+}
