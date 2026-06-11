@@ -564,6 +564,7 @@ class DerivedKinematics(StrictModel):
     galactocentric_x: QuantityRecord | None = None
     galactocentric_y: QuantityRecord | None = None
     galactocentric_z: QuantityRecord | None = None
+    galactocentric_radius: QuantityRecord | None = None
     galactocentric_vx: QuantityRecord | None = None
     galactocentric_vy: QuantityRecord | None = None
     galactocentric_vz: QuantityRecord | None = None

@@ -378,6 +378,24 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertTrue(any("stella.literature_hvs_candidates.v0.1" in error for error in errors))
 
+    def test_galactocentric_radius_is_a_typed_core_field(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            candidate = payload["candidates"][0]  # type: ignore[index]
+            candidate["core"]["derived_kinematics"]["galactocentric_radius"] = {
+                "raw_value": "12.3",
+                "value": "12.3",
+                "unit": "kpc",
+                "kind": "r_gc",
+                "source_refs": candidate["inclusion_assessment"]["source_refs"],
+                "method_refs": ["step-02"],
+            }
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertFalse(any("galactocentric_radius" in error for error in errors))
+
     def test_missing_tooling_fails_require_complete(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)

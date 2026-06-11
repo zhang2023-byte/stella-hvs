@@ -968,6 +968,17 @@ Use `schema_version: "stella.literature_hvs_candidates.v0.1"`.
           ],
           "default": null
         },
+        "galactocentric_radius": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/QuantityRecord"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "galactocentric_vx": {
           "anyOf": [
             {
