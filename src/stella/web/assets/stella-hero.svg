@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 420" role="img" aria-label="Deep stellar field">
+  <defs>
+    <radialGradient id="core" cx="48%" cy="44%" r="62%">
+      <stop offset="0%" stop-color="#f7d678"/>
+      <stop offset="20%" stop-color="#e66d2f"/>
+      <stop offset="42%" stop-color="#314f65"/>
+      <stop offset="72%" stop-color="#10161c"/>
+      <stop offset="100%" stop-color="#050607"/>
+    </radialGradient>
+    <linearGradient id="veil" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#54c7b8" stop-opacity=".7"/>
+      <stop offset=".35" stop-color="#e5b25b" stop-opacity=".28"/>
+      <stop offset=".72" stop-color="#c0472d" stop-opacity=".38"/>
+      <stop offset="1" stop-color="#07090b" stop-opacity=".7"/>
+    </linearGradient>
+    <filter id="soft">
+      <feGaussianBlur stdDeviation="20"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="420" fill="url(#core)"/>
+  <path d="M-40 288 C210 120 305 332 548 205 C752 98 836 104 1030 171 C1242 244 1365 110 1640 72 L1640 460 L-40 460 Z" fill="url(#veil)" opacity=".92"/>
+  <path d="M58 52 C298 86 408 42 615 70 C844 102 927 197 1150 166 C1320 143 1450 66 1584 116" fill="none" stroke="#f0c46d" stroke-opacity=".32" stroke-width="14" filter="url(#soft)"/>
+  <g fill="#fff7c7">
+    <circle cx="86" cy="62" r="2.8"/><circle cx="138" cy="240" r="1.8"/><circle cx="219" cy="117" r="2.1"/>
+    <circle cx="305" cy="42" r="1.7"/><circle cx="352" cy="310" r="2.5"/><circle cx="438" cy="88" r="1.5"/>
+    <circle cx="512" cy="262" r="2.2"/><circle cx="606" cy="130" r="1.4"/><circle cx="682" cy="54" r="2.6"/>
+    <circle cx="746" cy="332" r="1.8"/><circle cx="835" cy="88" r="2.4"/><circle cx="912" cy="246" r="1.5"/>
+    <circle cx="1004" cy="38" r="2.1"/><circle cx="1082" cy="297" r="2.7"/><circle cx="1160" cy="104" r="1.7"/>
+    <circle cx="1244" cy="219" r="2.2"/><circle cx="1328" cy="58" r="1.5"/><circle cx="1392" cy="335" r="2.6"/>
+    <circle cx="1498" cy="136" r="1.7"/><circle cx="1544" cy="274" r="2.3"/>
+  </g>
+  <g stroke="#fff7c7" stroke-width="1.5" stroke-linecap="round" opacity=".85">
+    <path d="M682 44v20M672 54h20"/><path d="M1004 29v18M995 38h18"/><path d="M1392 322v26M1379 335h26"/>
+  </g>
+</svg>

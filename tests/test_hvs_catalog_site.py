@@ -17,7 +17,7 @@ def _load_script(name: str):
     spec.loader.exec_module(module)
     return module
 
-from stella.html.catalog_site import (  # noqa: E402
+from stella.web.catalog_site import (  # noqa: E402
     CANDIDATES_DIRNAME,
     build_index_row,
     build_static_html,
@@ -512,7 +512,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
             self.assertFalse(has_external_html_dependencies(html))
 
     def test_home_filters_use_bounded_inputs_not_sliders(self) -> None:
-        js = (ROOT / "src" / "stella" / "html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        js = (ROOT / "src" / "stella" / "web" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
 
         self.assertIn("data-filter-bound", js)
         self.assertIn("filterValidationErrors", js)
@@ -520,7 +520,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertNotIn("data-range-filter", js)
 
     def test_home_filter_input_updates_table_without_rebuilding_home(self) -> None:
-        js = (ROOT / "src" / "stella" / "html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        js = (ROOT / "src" / "stella" / "web" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
         update_body = js.split("function updateFilterBound", 1)[1].split("function route", 1)[0]
 
         self.assertIn("catalog-table-region", js)
@@ -529,7 +529,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertNotIn("renderHome()", update_body)
 
     def test_home_empty_table_cells_are_unboxed(self) -> None:
-        css = (ROOT / "src" / "stella" / "html" / "assets" / "stella.css").read_text(encoding="utf-8")
+        css = (ROOT / "src" / "stella" / "web" / "assets" / "stella.css").read_text(encoding="utf-8")
         empty_inline_rule = css.split(".empty-inline {", 1)[1].split("}", 1)[0]
 
         self.assertIn("background: transparent", empty_inline_rule)
@@ -537,7 +537,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertNotIn(".empty-inline,\n.empty-state", css)
 
     def test_home_sorting_is_limited_to_approved_columns(self) -> None:
-        js = (ROOT / "src" / "stella" / "html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        js = (ROOT / "src" / "stella" / "web" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
         sortable_block = js.split("const SORTABLE_HOME_KEYS", 1)[1].split("]);", 1)[0]
 
         for key in ("discovery", "total_velocity", "p_unbound", "radial_velocity"):
@@ -548,14 +548,14 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertIn("plain-header-label", js)
 
     def test_reported_by_source_mode_can_show_all_sources(self) -> None:
-        js = (ROOT / "src" / "stella" / "html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        js = (ROOT / "src" / "stella" / "web" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
 
         self.assertIn('["all", "all"]', js)
         self.assertIn('modes.reportedBy === "all"', js)
         self.assertIn("sortedPaperEntries", js)
 
     def test_source_mode_change_avoids_full_home_rerender(self) -> None:
-        js = (ROOT / "src" / "stella" / "html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        js = (ROOT / "src" / "stella" / "web" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
         mode_change_body = js.split('if (mode && Object.prototype.hasOwnProperty.call(state.homeConfig.modes, mode)) {', 1)[
             1
         ].split("const visibleColumn", 1)[0]
@@ -565,7 +565,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertNotIn("renderHome()", mode_change_body)
 
     def test_home_cells_use_compact_values_tooltips_and_source_labels(self) -> None:
-        js = (ROOT / "src" / "stella" / "html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        js = (ROOT / "src" / "stella" / "web" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
 
         self.assertIn("renderDisplayQuantityMath", js)
         self.assertIn("formatIntervalNumber", js)
@@ -575,7 +575,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertIn('text: "(" + valid.map((part) => part.text).join(", ") + ")"', js)
 
     def test_method_dag_uses_dark_readable_colors(self) -> None:
-        css = (ROOT / "src" / "stella" / "html" / "assets" / "stella.css").read_text(encoding="utf-8")
+        css = (ROOT / "src" / "stella" / "web" / "assets" / "stella.css").read_text(encoding="utf-8")
         dag_scroll_rule = css.split(".dag-scroll {", 1)[1].split("}", 1)[0]
         dag_node_rect_rule = css.split(".dag-node rect {", 1)[1].split("}", 1)[0]
 
@@ -623,7 +623,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
             self.assertEqual(snapshot["schema_version"], "stella.hvs_catalog_site.snapshot.v0.1")
 
     def test_external_links_pass_through_url_scheme_allowlist(self) -> None:
-        js = (ROOT / "src" / "stella" / "html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        js = (ROOT / "src" / "stella" / "web" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
 
         self.assertIn("function safeUrl", js)
         self.assertIn("escapeHtml(safeUrl(links.abs", js)
@@ -640,7 +640,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
             write_json(catalog / "03_hvs_candidates_index.json", {"summary": {"object_count": 1}, "objects": []})
             write_json(catalog / CANDIDATES_DIRNAME / "Gaia_DR3_123.json", record)
 
-            assets = ROOT / "src" / "stella" / "html" / "assets"
+            assets = ROOT / "src" / "stella" / "web" / "assets"
             html = build_static_html(
                 catalog,
                 assets / "stella.css",
@@ -659,7 +659,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
 
 class ServeCatalogSiteCliTest(unittest.TestCase):
     def test_defaults_bind_localhost_static_mode(self) -> None:
-        serve = _load_script("serve_catalog_site")
+        serve = _load_script("serve_catalog_web")
         args = serve.build_parser().parse_args([])
 
         self.assertEqual(args.host, "127.0.0.1")
@@ -667,7 +667,7 @@ class ServeCatalogSiteCliTest(unittest.TestCase):
         self.assertEqual(args.port, 8080)
 
     def test_host_can_be_overridden_for_explicit_exposure(self) -> None:
-        serve = _load_script("serve_catalog_site")
+        serve = _load_script("serve_catalog_web")
         args = serve.build_parser().parse_args(["--host", "0.0.0.0", "--mode", "live"])
 
         self.assertEqual(args.host, "0.0.0.0")
@@ -675,34 +675,34 @@ class ServeCatalogSiteCliTest(unittest.TestCase):
 
 
 class PreparePagesSiteCliTest(unittest.TestCase):
-    def test_defaults_copy_static_site_to_site_directory(self) -> None:
+    def test_defaults_copy_static_site_to_pages_directory(self) -> None:
         pages = _load_script("prepare_pages_site")
         args = pages.build_parser().parse_args([])
 
-        self.assertEqual(args.source, ROOT / "catalog" / "html" / "static")
-        self.assertEqual(args.site_dir, ROOT / "site")
+        self.assertEqual(args.source, ROOT / "catalog" / "web" / "static")
+        self.assertEqual(args.pages_dir, ROOT / "pages")
 
     def test_prepare_pages_site_copies_bundle_and_cleans_stale_files(self) -> None:
         pages = _load_script("prepare_pages_site")
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             source = root / "static"
-            site = root / "site"
+            pages_dir = root / "pages"
             source.mkdir()
             (source / "index.html").write_text("<!doctype html>\n", encoding="utf-8")
             (source / "catalog-data.js").write_text("window.STELLA_CATALOG_SNAPSHOT = {};", encoding="utf-8")
             (source / ".DS_Store").write_text("local metadata", encoding="utf-8")
-            site.mkdir()
-            (site / "stale.txt").write_text("remove me", encoding="utf-8")
+            pages_dir.mkdir()
+            (pages_dir / "stale.txt").write_text("remove me", encoding="utf-8")
 
-            result = pages.prepare_pages_site(source, site)
+            result = pages.prepare_pages_site(source, pages_dir)
 
-            self.assertEqual(result, site.resolve())
-            self.assertTrue((site / "index.html").exists())
-            self.assertTrue((site / "catalog-data.js").exists())
-            self.assertTrue((site / ".nojekyll").exists())
-            self.assertFalse((site / ".DS_Store").exists())
-            self.assertFalse((site / "stale.txt").exists())
+            self.assertEqual(result, pages_dir.resolve())
+            self.assertTrue((pages_dir / "index.html").exists())
+            self.assertTrue((pages_dir / "catalog-data.js").exists())
+            self.assertTrue((pages_dir / ".nojekyll").exists())
+            self.assertFalse((pages_dir / ".DS_Store").exists())
+            self.assertFalse((pages_dir / "stale.txt").exists())
 
 
 if __name__ == "__main__":

@@ -73,7 +73,7 @@ Markdown, indexes, HTML, and the object catalog are generated views or products.
 ```text
 fetch literature  ->  review data assets  ->  extract internal tables
       ->  extract HVS candidates  ->  merge into object catalog
-      ->  calculate dynamics  ->  build HTML site  ->  prepare Pages site
+      ->  calculate dynamics  ->  build web catalog  ->  prepare Pages snapshot
 ```
 
 Each stage writes machine-readable JSON first; reading views are regenerated

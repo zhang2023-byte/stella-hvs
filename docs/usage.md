@@ -584,20 +584,20 @@ conda run -n stella-env python scripts/calculate_hvs_dynamics.py \
 After object-level `catalog/` exists, build the HTML demo:
 
 ```bash
-conda run -n stella-env python scripts/build_hvs_catalog_html.py \
+conda run -n stella-env python scripts/build_hvs_catalog_web.py \
   --catalog-dir catalog \
-  --html-dir catalog/html
+  --web-dir catalog/web
 ```
 
 Outputs:
 
 ```text
-catalog/html/live/index.html              Entry page that reads catalog/ live
-catalog/html/live/assets/...              Local CSS, JS, and visual assets shared by live/static
-catalog/html/static/index.html            Single-file demo with the current catalog/ snapshot embedded
+catalog/web/live/index.html              Entry page that reads catalog/ live
+catalog/web/live/assets/...              Local CSS, JS, and visual assets shared by live/static
+catalog/web/static/index.html            Single-file demo with the current catalog/ snapshot embedded
 ```
 
-The live page writes `catalog/html/live/assets/paper-metadata.json` from local
+The live page writes `catalog/web/live/assets/paper-metadata.json` from local
 `literature/<arxiv_id>/ads_metadata.json` files and copies the reusable
 `stella-hvs-hero.png` hero asset. This is a local build step only: it does not
 make ADS/API/network calls or refresh enrichment data. Missing ADS metadata
@@ -607,10 +607,10 @@ Preview either version with the helper script:
 
 ```bash
 # Static snapshot (default)
-conda run -n stella-env python scripts/serve_catalog_site.py --port 8080
+conda run -n stella-env python scripts/serve_catalog_web.py --port 8080
 
 # Live data view
-conda run -n stella-env python scripts/serve_catalog_site.py --mode live --port 8081
+conda run -n stella-env python scripts/serve_catalog_web.py --mode live --port 8081
 ```
 
 The helper binds to `127.0.0.1` (localhost only) by default, and `live` mode
@@ -623,16 +623,16 @@ Or start a plain HTTP server manually:
 ```bash
 # Live mode — must serve from the repo root so /catalog/... resolves
 python -m http.server 8765 --bind 127.0.0.1
-# Then open http://127.0.0.1:8765/catalog/html/live/
+# Then open http://127.0.0.1:8765/catalog/web/live/
 
 # Static mode — serve from the static directory
-python -m http.server 8765 --bind 127.0.0.1 --directory catalog/html/static
+python -m http.server 8765 --bind 127.0.0.1 --directory catalog/web/static
 # Then open http://127.0.0.1:8765/
 ```
 
 The static version does not read JSON live. It is a build-time `catalog/`
 snapshot split into a small HTML shell plus sibling CSS/JS/data/image assets,
-and can be opened directly as `catalog/html/static/index.html` (works under
+and can be opened directly as `catalog/web/static/index.html` (works under
 `file://`) or served for demos. The source of truth remains
 `catalog/candidates/*.json`; the web page is only a display layer.
 
@@ -640,32 +640,32 @@ and can be opened directly as `catalog/html/static/index.html` (works under
 
 The repository keeps `catalog/` ignored, so GitHub Actions cannot rebuild the
 site from local catalog data on its own. For GitHub Pages, publish the committed
-static snapshot under `site/`.
+static snapshot under `pages/`.
 
-Build the HTML snapshot, then prepare `site/`:
+Build the HTML snapshot, then prepare `pages/`:
 
 ```bash
-conda run -n stella-env python scripts/build_hvs_catalog_html.py \
+conda run -n stella-env python scripts/build_hvs_catalog_web.py \
   --catalog-dir catalog \
-  --html-dir catalog/html
+  --web-dir catalog/web
 
 python scripts/prepare_pages_site.py \
-  --source catalog/html/static \
-  --site-dir site
+  --source catalog/web/static \
+  --pages-dir pages
 ```
 
 This copies the static bundle into:
 
 ```text
-site/index.html
-site/catalog-data.js
-site/catalog-viewer.js
-site/stella.css
-site/stella-hvs-hero.png
-site/.nojekyll
+pages/index.html
+pages/catalog-data.js
+pages/catalog-viewer.js
+pages/stella.css
+pages/stella-hvs-hero.png
+pages/.nojekyll
 ```
 
-Commit `site/`, the workflow file, and any code/docs changes:
+Commit `pages/`, the workflow file, and any code/docs changes:
 
 ```bash
 git add site .github/workflows/deploy-pages.yml scripts/prepare_pages_site.py \
@@ -677,7 +677,7 @@ git push origin main
 ```
 
 The workflow enables Pages with **GitHub Actions** on its first run, then each
-push that changes `site/` uploads `site/` and publishes it with GitHub Pages.
+push that changes `pages/` uploads `pages/` and publishes it with GitHub Pages.
 If repository settings block automatic enablement, set Pages to use
 **GitHub Actions** manually under GitHub `Settings -> Pages`.
 

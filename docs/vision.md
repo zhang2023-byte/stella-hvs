@@ -92,7 +92,7 @@ Items marked with `*` are exploratory; core capabilities are built first.
    Enable AI-assisted incremental updates to the object database and synchronize
    them to a display layer. The website is only a view; the core remains
    structured data, source records, and validation results. The current
-   implementation generates a local HTML demo under `catalog/html/`. A hosted
+   implementation generates a local HTML demo under `catalog/web/`. A hosted
    front/back-end stack (for example GitHub + Vercel + Supabase) is a possible
    long-term direction, not a current dependency.
 

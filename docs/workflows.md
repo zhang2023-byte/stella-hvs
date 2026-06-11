@@ -17,7 +17,7 @@ catalog are generated views; fix the source JSON or renderer if a view is wrong.
 ```text
 monthly_literature_fetch  ->  catalog_assessment  ->  literature_asset_archive
    ->  catalog_review  ->  catalog_table_extraction  ->  hvs_candidate_extraction
-   ->  object_catalog_merge  ->  hvs_dynamics_calculate  ->  hvs_catalog_html_build
+   ->  object_catalog_merge  ->  hvs_dynamics_calculate  ->  hvs_catalog_web_build
    ->  hvs_catalog_pages_prepare
 ```
 
@@ -143,13 +143,13 @@ from cached external enrichment, writing only the `dynamics` field.
   `object_catalog_merge`, which rebuilds object JSON and clears dynamics.
 - Risk: generated data (no network by default).
 
-## hvs_catalog_html_build
+## hvs_catalog_web_build
 
 Build the local HTML display pages from the object catalog.
 
 - Ask: "Build the HVS catalog HTML demo."
 - Clarifies: whether this means a local build or a deployment outside this repo.
-- Produces: `catalog/html/live/` and `catalog/html/static/index.html`.
+- Produces: `catalog/web/live/` and `catalog/web/static/index.html`.
 - Risk: generated view (no network).
 
 ## hvs_catalog_pages_prepare
@@ -159,7 +159,7 @@ directory.
 
 - Ask: "Prepare the GitHub Pages site."
 - Clarifies: deployment target if it is not GitHub Pages.
-- Produces: `site/`, including `site/index.html`, `catalog-data.js`, CSS, JS,
+- Produces: `pages/`, including `pages/index.html`, `catalog-data.js`, CSS, JS,
   image assets, and `.nojekyll`.
 - Risk: generated view deployment artifact (no network locally; deployment
   happens after pushing to GitHub).
