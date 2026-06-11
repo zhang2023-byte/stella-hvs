@@ -13,6 +13,22 @@ the validated pipeline after the benchmark (see benchmark plan). The
 benchmark sampling manifest must treat them as a separate stratum or
 exclude them from the verification set.
 
+## Unfinished extractions (pilot set for the direct-API pipeline)
+
+Five files carry a non-final extraction status. All five now have archived
+sources and PDFs, so they are completable; two are large catalogs whose
+manual completion would duplicate pipeline work. They are designated the
+pilot papers for the direct-API candidate-extraction pipeline (Phase 2) and
+are excluded from benchmark sampling until completed.
+
+| arXiv ID | status | note |
+|---|---|---|
+| 2101.10878 | needs_review | empty extraction; review also needs_review |
+| 2011.10206 | needs_review | empty extraction |
+| 2003.12766 | needs_review | MMT HVS survey re-analysis, ~40 B stars, 6D phase space tables |
+| 1901.04559 | partial | one APOGEE/Sgr-stream HVS candidate; sources now archived |
+| 2206.13002 | source_missing | status stale: source is now archived; ~60 Sgr dSph candidates |
+
 | arXiv ID | validation errors |
 |---|---|
 | 1907.06348 | 2204 |

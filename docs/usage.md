@@ -255,6 +255,19 @@ literature/01_literature_catalog_index.md
 
 The index uses `literature/*/catalog_review.json` as its entry point. If `catalog_extraction.json` exists in the same directory, it also summarizes current internal table extraction status, ECSV table success/failure counts, and excerpt-file success/failure counts. `01_literature_catalog_index.md` displays review and extraction status separately.
 
+For large backfills there is also a direct-API batch driver that fills
+`catalog_review.json` for every paper in a month window whose
+`catalog_assessment` marks an observational catalog, without an interactive
+agent runtime. It requires `LLM_API_KEY` (or `OPENAI_API_KEY`) in `.env`, calls
+the configured OpenAI-compatible endpoint at temperature 0, supports sharding
+across parallel processes, and appends per-paper JSONL run logs under `logs/`:
+
+```bash
+conda run -n stella-env python scripts/run_catalog_review_batch.py \
+  --from 2023-01 --to 2026-05 \
+  --shard-index 0 --shard-count 4
+```
+
 Review status:
 
 - `reviewed`: data asset review is complete in the available paper/source context.
