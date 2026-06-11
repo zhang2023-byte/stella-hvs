@@ -10,9 +10,9 @@ from .models import MonthWindow, SearchConfig
 from .note_paths import month_json_path, month_markdown_path
 
 
-MONTH_SCHEMA_VERSION = "stella.literature.month.v3"
-INDEX_SCHEMA_VERSION = "stella.literature.index.v4"
-TITLE_TRIAGE_SCHEMA_VERSION = "stella.literature.title_triage.v1"
+MONTH_SCHEMA_VERSION = "stella.literature.month.v0.1"
+INDEX_SCHEMA_VERSION = "stella.literature.index.v0.1"
+TITLE_TRIAGE_SCHEMA_VERSION = "stella.literature.title_triage.v0.1"
 
 
 def as_text(value: Any) -> str:

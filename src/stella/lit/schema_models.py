@@ -93,7 +93,7 @@ class ExternalResource(StrictModel):
 
 
 class CatalogReviewRecord(StrictModel):
-    schema_version: Literal["stella.article_data_assets.review.v1"]
+    schema_version: Literal["stella.article_data_assets.review.v0.1"]
     paper: ReviewPaper
     source: ReviewSource
     review: ReviewMeta
@@ -198,7 +198,7 @@ class ExtractionTableRecord(StrictModel):
 
 
 class CatalogExtractionRecord(StrictModel):
-    schema_version: Literal["stella.article_data_assets.extraction.v2"]
+    schema_version: Literal["stella.article_data_assets.extraction.v0.1"]
     generated_at: str
     paper: ExtractionPaper
     review: ExtractionReviewRef
@@ -231,11 +231,27 @@ class HvsInputs(StrictModel):
     ecsv_paths: list[str]
 
 
+class ToolingMeta(StrictModel):
+    """Instrument provenance for one extraction run.
+
+    `model_id` should be a dated model snapshot identifier and
+    `prompt_version` the git commit or tag of the skill/prompt text, so the
+    run can be reproduced. Files migrated from earlier schema versions carry
+    the explicit value "unknown_legacy".
+    """
+
+    agent_runtime: str = ""
+    model_id: str = ""
+    prompt_version: str = ""
+    request_parameters: dict[str, Any] = Field(default_factory=dict)
+
+
 class HvsExtractionMeta(StrictModel):
     status: Literal["candidates_found", "no_candidates", "partial", "needs_review", "source_missing"]
     extracted_at: str
     extractor: str
     summary: str
+    tooling: ToolingMeta | None = None
 
 
 class TextSourceRef(StrictModel):
@@ -259,6 +275,34 @@ class EcsvCellSourceRef(StrictModel):
 SourceRef = TextSourceRef | EcsvCellSourceRef
 
 
+class MethodParameterRecord(StrictModel):
+    """Structured assumption/parameter carried by a method step.
+
+    Unlike QuantityRecord there is no `method_refs`: the owning step itself
+    is the method context for the parameter.
+    """
+
+    name: Literal[
+        "R0",
+        "z0",
+        "v_circ_sun",
+        "solar_motion_u",
+        "solar_motion_v",
+        "solar_motion_w",
+        "potential_name",
+        "escape_velocity_definition",
+        "other",
+    ]
+    raw_value: str
+    value: str
+    error: str = ""
+    lower_error: str = ""
+    upper_error: str = ""
+    unit: str = ""
+    description: str = ""
+    source_refs: list[SourceRef] = Field(default_factory=list)
+
+
 class MethodStep(StrictModel):
     id: str = Field(pattern=r"^step-\d{2}$")
     depends_on: list[str]
@@ -273,6 +317,7 @@ class MethodStep(StrictModel):
         "stellar_parameter_inference",
         "photometric_or_sed_modeling",
         "velocity_calculation",
+        "solar_position_and_motion",
         "galactic_potential_model",
         "escape_or_bound_assessment",
         "orbit_integration",
@@ -285,6 +330,7 @@ class MethodStep(StrictModel):
     summary: str
     inputs: list[str] = Field(default_factory=list)
     outputs: list[str] = Field(default_factory=list)
+    parameters: list[MethodParameterRecord] = Field(default_factory=list)
     source_refs: list[SourceRef] = Field(default_factory=list)
 
 
@@ -367,6 +413,9 @@ class QuantityRecord(StrictModel):
     unit: str = ""
     kind: str = ""
     description: str = ""
+    limit_kind: Literal["", "lower_limit", "upper_limit", "range"] = ""
+    range_lower: str = ""
+    range_upper: str = ""
     source_refs: list[SourceRef]
     method_refs: list[str]
 
@@ -563,7 +612,7 @@ class CandidateGroupConsidered(StrictModel):
 
 
 class LiteratureHvsCandidatesRecord(StrictModel):
-    schema_version: Literal["stella.literature_hvs_candidates.v7"]
+    schema_version: Literal["stella.literature_hvs_candidates.v0.1"]
     generated_at: str
     paper: HvsPaper
     inputs: HvsInputs

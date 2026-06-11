@@ -153,7 +153,7 @@ def generated_schema_docs() -> dict[Path, str]:
                 "RA/Dec are coordinate records: keep each coordinate component in `raw_value`/`value`, put frame and epoch context in the nested `reference_frame` and `epoch` objects, and use `component_raw_value` when one ECSV cell contains both components.",
                 "`method_chain[]` uses local `step-XX` ids, canonical `step_type` values, and `depends_on[]` to encode upstream method lineage.",
                 "Full quantity provenance is the direct `method_refs` step plus recursive `depends_on[]` ancestors; candidates do not carry paper-level `method_chain_refs`.",
-                "The standard `core` groups are `observed_phase_space`, `derived_kinematics`, and `bound_assessment`; photometry, spectroscopy, stellar parameters, abundances, quality flags, orbit values, and origin metrics use typed v7 groups before `extra[]`.",
+                "The standard `core` groups are `observed_phase_space`, `derived_kinematics`, and `bound_assessment`; photometry, spectroscopy, stellar parameters, abundances, quality flags, orbit values, and origin metrics use typed candidate groups before `extra[]`.",
             ],
         ),
     }

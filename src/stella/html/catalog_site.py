@@ -10,13 +10,8 @@ from pathlib import Path
 from typing import Any
 
 
-OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v6"
-READABLE_OBJECT_SCHEMA_VERSIONS = {
-    OBJECT_SCHEMA_VERSION,
-    "stella.hvs_candidate_catalog.object.v3",
-    "stella.hvs_candidate_catalog.object.v4",
-    "stella.hvs_candidate_catalog.object.v5",
-}
+OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v0.1"
+READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION}
 INDEX_JSON_FILENAME = "03_hvs_candidates_index.json"
 CANDIDATES_DIRNAME = "candidates"
 LEGACY_INDEX_JSON_FILENAMES = ("hvs_candidates_index.json",)
@@ -513,7 +508,7 @@ def load_catalog_snapshot(catalog_dir: Path, *, literature_dir: Path | None = No
         }
 
     return {
-        "schema_version": "stella.hvs_catalog_site.snapshot.v2",
+        "schema_version": "stella.hvs_catalog_site.snapshot.v0.1",
         "summary": summary,
         "index": index_record,
         "rows": rows,

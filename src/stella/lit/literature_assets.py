@@ -22,7 +22,7 @@ from .network_safety import BlockedURL, require_public_http_url
 from .records import has_observational_catalog, paper_url, pdf_url
 
 
-ASSET_AUDIT_SCHEMA_VERSION = "stella.literature.assets_audit.v2"
+ASSET_AUDIT_SCHEMA_VERSION = "stella.literature.assets_audit.v0.1"
 ADS_BASE_URL = "https://ui.adsabs.harvard.edu"
 ADS_API_SEARCH_URL = "https://api.adsabs.harvard.edu/v1/search/query"
 DEFAULT_TIMEOUT = 60

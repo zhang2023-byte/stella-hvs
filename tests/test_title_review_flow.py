@@ -191,7 +191,7 @@ class TitleReviewFlowTest(unittest.TestCase):
             (existing_month_dir / "2024-12.json").write_text(
                 json.dumps(
                     {
-                        "schema_version": "stella.literature.month.v3",
+                        "schema_version": "stella.literature.month.v0.1",
                         "month": "2024-12",
                         "date_from": "2024-12-01",
                         "date_to": "2024-12-31",

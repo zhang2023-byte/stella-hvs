@@ -4,7 +4,7 @@
 
 `literature_hvs_candidates.json` is the Agent-filled paper-level HVS/unbound candidate fact source. Generate a skeleton from code, then fill candidate semantics and provenance.
 
-Use `schema_version: "stella.literature_hvs_candidates.v7"`.
+Use `schema_version: "stella.literature_hvs_candidates.v0.1"`.
 
 ## Required Top-Level Fields
 
@@ -21,7 +21,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
 
 ```json
 {
-  "schema_version": "stella.literature_hvs_candidates.v7",
+  "schema_version": "stella.literature_hvs_candidates.v0.1",
   "generated_at": "",
   "paper": {},
   "inputs": {},
@@ -34,6 +34,8 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
 
 ## Enum Values
 
+- ``
+- `R0`
 - `absolute_magnitude`
 - `ambiguous`
 - `astrometric_calibration`
@@ -51,6 +53,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
 - `ecsv_cell`
 - `equinox`
 - `escape_or_bound_assessment`
+- `escape_velocity_definition`
 - `escaping`
 - `escaping_star`
 - `explicit_candidate_text`
@@ -71,6 +74,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
 - `likely_unbound`
 - `line_measurement`
 - `low`
+- `lower_limit`
 - `magnitude`
 - `medium`
 - `needs_review`
@@ -83,10 +87,12 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
 - `partial`
 - `photometric_or_sed_modeling`
 - `possibly_unbound`
+- `potential_name`
 - `probability`
 - `quality_filter`
 - `radial_velocity_follow_up`
 - `radial_velocity_measurement`
+- `range`
 - `reddening`
 - `reference_epoch`
 - `reported_value_adoption`
@@ -97,14 +103,21 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
 - `sexagesimal_dms`
 - `sexagesimal_hms`
 - `signal_to_noise`
+- `solar_motion_u`
+- `solar_motion_v`
+- `solar_motion_w`
+- `solar_position_and_motion`
 - `source_missing`
 - `spectral_type`
-- `stella.literature_hvs_candidates.v7`
+- `stella.literature_hvs_candidates.v0.1`
 - `stellar_parameter_inference`
 - `text`
 - `unbound`
 - `unbound_star`
+- `upper_limit`
+- `v_circ_sun`
 - `velocity_calculation`
+- `z0`
 
 ## Workflow Notes
 
@@ -118,7 +131,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
 - RA/Dec are coordinate records: keep each coordinate component in `raw_value`/`value`, put frame and epoch context in the nested `reference_frame` and `epoch` objects, and use `component_raw_value` when one ECSV cell contains both components.
 - `method_chain[]` uses local `step-XX` ids, canonical `step_type` values, and `depends_on[]` to encode upstream method lineage.
 - Full quantity provenance is the direct `method_refs` step plus recursive `depends_on[]` ancestors; candidates do not carry paper-level `method_chain_refs`.
-- The standard `core` groups are `observed_phase_space`, `derived_kinematics`, and `bound_assessment`; photometry, spectroscopy, stellar parameters, abundances, quality flags, orbit values, and origin metrics use typed v7 groups before `extra[]`.
+- The standard `core` groups are `observed_phase_space`, `derived_kinematics`, and `bound_assessment`; photometry, spectroscopy, stellar parameters, abundances, quality flags, orbit values, and origin metrics use typed candidate groups before `extra[]`.
 
 ## JSON Schema
 
@@ -164,6 +177,27 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
         "description": {
           "default": "",
           "title": "Description",
+          "type": "string"
+        },
+        "limit_kind": {
+          "default": "",
+          "enum": [
+            "",
+            "lower_limit",
+            "upper_limit",
+            "range"
+          ],
+          "title": "Limit Kind",
+          "type": "string"
+        },
+        "range_lower": {
+          "default": "",
+          "title": "Range Lower",
+          "type": "string"
+        },
+        "range_upper": {
+          "default": "",
+          "title": "Range Upper",
           "type": "string"
         },
         "source_refs": {
@@ -764,6 +798,27 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
           "title": "Description",
           "type": "string"
         },
+        "limit_kind": {
+          "default": "",
+          "enum": [
+            "",
+            "lower_limit",
+            "upper_limit",
+            "range"
+          ],
+          "title": "Limit Kind",
+          "type": "string"
+        },
+        "range_lower": {
+          "default": "",
+          "title": "Range Lower",
+          "type": "string"
+        },
+        "range_upper": {
+          "default": "",
+          "title": "Range Upper",
+          "type": "string"
+        },
         "source_refs": {
           "items": {
             "anyOf": [
@@ -1080,6 +1135,27 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
           "title": "Description",
           "type": "string"
         },
+        "limit_kind": {
+          "default": "",
+          "enum": [
+            "",
+            "lower_limit",
+            "upper_limit",
+            "range"
+          ],
+          "title": "Limit Kind",
+          "type": "string"
+        },
+        "range_lower": {
+          "default": "",
+          "title": "Range Lower",
+          "type": "string"
+        },
+        "range_upper": {
+          "default": "",
+          "title": "Range Upper",
+          "type": "string"
+        },
         "source_refs": {
           "items": {
             "anyOf": [
@@ -1141,6 +1217,17 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
         "summary": {
           "title": "Summary",
           "type": "string"
+        },
+        "tooling": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ToolingMeta"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "required": [
@@ -1273,6 +1360,27 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
         "description": {
           "default": "",
           "title": "Description",
+          "type": "string"
+        },
+        "limit_kind": {
+          "default": "",
+          "enum": [
+            "",
+            "lower_limit",
+            "upper_limit",
+            "range"
+          ],
+          "title": "Limit Kind",
+          "type": "string"
+        },
+        "range_lower": {
+          "default": "",
+          "title": "Range Lower",
+          "type": "string"
+        },
+        "range_upper": {
+          "default": "",
+          "title": "Range Upper",
           "type": "string"
         },
         "source_refs": {
@@ -1455,6 +1563,81 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
       "title": "LinkSet",
       "type": "object"
     },
+    "MethodParameterRecord": {
+      "additionalProperties": false,
+      "description": "Structured assumption/parameter carried by a method step.\n\nUnlike QuantityRecord there is no `method_refs`: the owning step itself\nis the method context for the parameter.",
+      "properties": {
+        "name": {
+          "enum": [
+            "R0",
+            "z0",
+            "v_circ_sun",
+            "solar_motion_u",
+            "solar_motion_v",
+            "solar_motion_w",
+            "potential_name",
+            "escape_velocity_definition",
+            "other"
+          ],
+          "title": "Name",
+          "type": "string"
+        },
+        "raw_value": {
+          "title": "Raw Value",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        },
+        "error": {
+          "default": "",
+          "title": "Error",
+          "type": "string"
+        },
+        "lower_error": {
+          "default": "",
+          "title": "Lower Error",
+          "type": "string"
+        },
+        "upper_error": {
+          "default": "",
+          "title": "Upper Error",
+          "type": "string"
+        },
+        "unit": {
+          "default": "",
+          "title": "Unit",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TextSourceRef"
+              },
+              {
+                "$ref": "#/$defs/EcsvCellSourceRef"
+              }
+            ]
+          },
+          "title": "Source Refs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "raw_value",
+        "value"
+      ],
+      "title": "MethodParameterRecord",
+      "type": "object"
+    },
     "MethodStep": {
       "additionalProperties": false,
       "properties": {
@@ -1482,6 +1665,7 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
             "stellar_parameter_inference",
             "photometric_or_sed_modeling",
             "velocity_calculation",
+            "solar_position_and_motion",
             "galactic_potential_model",
             "escape_or_bound_assessment",
             "orbit_integration",
@@ -1510,6 +1694,13 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
             "type": "string"
           },
           "title": "Outputs",
+          "type": "array"
+        },
+        "parameters": {
+          "items": {
+            "$ref": "#/$defs/MethodParameterRecord"
+          },
+          "title": "Parameters",
           "type": "array"
         },
         "source_refs": {
@@ -1575,6 +1766,27 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
         "description": {
           "default": "",
           "title": "Description",
+          "type": "string"
+        },
+        "limit_kind": {
+          "default": "",
+          "enum": [
+            "",
+            "lower_limit",
+            "upper_limit",
+            "range"
+          ],
+          "title": "Limit Kind",
+          "type": "string"
+        },
+        "range_lower": {
+          "default": "",
+          "title": "Range Lower",
+          "type": "string"
+        },
+        "range_upper": {
+          "default": "",
+          "title": "Range Upper",
           "type": "string"
         },
         "source_refs": {
@@ -1829,6 +2041,27 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
           "title": "Description",
           "type": "string"
         },
+        "limit_kind": {
+          "default": "",
+          "enum": [
+            "",
+            "lower_limit",
+            "upper_limit",
+            "range"
+          ],
+          "title": "Limit Kind",
+          "type": "string"
+        },
+        "range_lower": {
+          "default": "",
+          "title": "Range Lower",
+          "type": "string"
+        },
+        "range_upper": {
+          "default": "",
+          "title": "Range Upper",
+          "type": "string"
+        },
         "source_refs": {
           "items": {
             "anyOf": [
@@ -1931,6 +2164,27 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
           "title": "Description",
           "type": "string"
         },
+        "limit_kind": {
+          "default": "",
+          "enum": [
+            "",
+            "lower_limit",
+            "upper_limit",
+            "range"
+          ],
+          "title": "Limit Kind",
+          "type": "string"
+        },
+        "range_lower": {
+          "default": "",
+          "title": "Range Lower",
+          "type": "string"
+        },
+        "range_upper": {
+          "default": "",
+          "title": "Range Upper",
+          "type": "string"
+        },
         "source_refs": {
           "items": {
             "anyOf": [
@@ -2008,6 +2262,27 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
           "title": "Description",
           "type": "string"
         },
+        "limit_kind": {
+          "default": "",
+          "enum": [
+            "",
+            "lower_limit",
+            "upper_limit",
+            "range"
+          ],
+          "title": "Limit Kind",
+          "type": "string"
+        },
+        "range_lower": {
+          "default": "",
+          "title": "Range Lower",
+          "type": "string"
+        },
+        "range_upper": {
+          "default": "",
+          "title": "Range Upper",
+          "type": "string"
+        },
         "source_refs": {
           "items": {
             "anyOf": [
@@ -2078,6 +2353,27 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
         "description": {
           "default": "",
           "title": "Description",
+          "type": "string"
+        },
+        "limit_kind": {
+          "default": "",
+          "enum": [
+            "",
+            "lower_limit",
+            "upper_limit",
+            "range"
+          ],
+          "title": "Limit Kind",
+          "type": "string"
+        },
+        "range_lower": {
+          "default": "",
+          "title": "Range Lower",
+          "type": "string"
+        },
+        "range_upper": {
+          "default": "",
+          "title": "Range Upper",
           "type": "string"
         },
         "source_refs": {
@@ -2280,12 +2576,40 @@ Use `schema_version: "stella.literature_hvs_candidates.v7"`.
       ],
       "title": "TextSourceRef",
       "type": "object"
+    },
+    "ToolingMeta": {
+      "additionalProperties": false,
+      "description": "Instrument provenance for one extraction run.\n\n`model_id` should be a dated model snapshot identifier and\n`prompt_version` the git commit or tag of the skill/prompt text, so the\nrun can be reproduced. Files migrated from earlier schema versions carry\nthe explicit value \"unknown_legacy\".",
+      "properties": {
+        "agent_runtime": {
+          "default": "",
+          "title": "Agent Runtime",
+          "type": "string"
+        },
+        "model_id": {
+          "default": "",
+          "title": "Model Id",
+          "type": "string"
+        },
+        "prompt_version": {
+          "default": "",
+          "title": "Prompt Version",
+          "type": "string"
+        },
+        "request_parameters": {
+          "additionalProperties": true,
+          "title": "Request Parameters",
+          "type": "object"
+        }
+      },
+      "title": "ToolingMeta",
+      "type": "object"
     }
   },
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "stella.literature_hvs_candidates.v7",
+      "const": "stella.literature_hvs_candidates.v0.1",
       "title": "Schema Version",
       "type": "string"
     },

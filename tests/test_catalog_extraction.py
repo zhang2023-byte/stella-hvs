@@ -65,7 +65,7 @@ HVS2 & 710 \\
     write_json_file(
         paper_dir / "catalog_review.json",
         {
-            "schema_version": "stella.article_data_assets.review.v1",
+            "schema_version": "stella.article_data_assets.review.v0.1",
             "paper": {"arxiv_id": "2603.00001", "title": "Structured data", "month": "2026-03"},
             "source": {"paper_dir": "literature/2603.00001", "source_available": True},
             "review": {"status": "reviewed"},
@@ -240,7 +240,7 @@ HVS1 & 700 \\
             write_json_file(
                 paper_dir / "catalog_review.json",
                 {
-                    "schema_version": "stella.article_data_assets.review.v1",
+                    "schema_version": "stella.article_data_assets.review.v0.1",
                     "paper": {"arxiv_id": "2603.00001", "title": "CSV backed table", "month": "2026-03"},
                     "source": {"paper_dir": "literature/2603.00001", "source_available": True},
                     "review": {"status": "reviewed"},
@@ -294,7 +294,7 @@ HVS1 & 700 \\
             write_json_file(
                 literature_dir / "2603.00003" / "catalog_review.json",
                 {
-                    "schema_version": "stella.article_data_assets.review.v1",
+                    "schema_version": "stella.article_data_assets.review.v0.1",
                     "paper": {"arxiv_id": "2603.00003", "title": "External only", "month": "2026-03"},
                     "review": {"status": "reviewed"},
                     "internal_tables": [],
@@ -304,7 +304,7 @@ HVS1 & 700 \\
             write_json_file(
                 literature_dir / "2603.00002" / "catalog_review.json",
                 {
-                    "schema_version": "stella.article_data_assets.review.v1",
+                    "schema_version": "stella.article_data_assets.review.v0.1",
                     "paper": {"arxiv_id": "2603.00002", "title": "No data", "month": "2026-03"},
                     "review": {"status": "reviewed"},
                     "internal_tables": [],

@@ -76,7 +76,7 @@ class IndexingTest(unittest.TestCase):
 
             index = rebuild_index(notes_dir)
 
-            self.assertEqual(index["schema_version"], "stella.literature.index.v4")
+            self.assertEqual(index["schema_version"], "stella.literature.index.v0.1")
             years = {item["year"]: item for item in index["years"]}
             self.assertEqual(years["2026"]["literature_count"], 2)
             self.assertEqual(years["2026"]["data_related_count"], 1)

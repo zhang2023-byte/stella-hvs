@@ -232,6 +232,12 @@ def valid_payload(workspace: Path, *, status: str = "candidates_found") -> dict[
             "extracted_at": "2026-05-12T12:00:00",
             "extractor": "agent",
             "summary": "Fixture extraction.",
+            "tooling": {
+                "agent_runtime": "fixture-runtime",
+                "model_id": "fixture-model-20260101",
+                "prompt_version": "fixture-prompt-v1",
+                "request_parameters": {"temperature": 0},
+            },
         },
         "method_chain": [
             {
@@ -362,15 +368,171 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             self.assertEqual(errors, [])
 
-    def test_v6_schema_version_is_rejected(self) -> None:
+    def test_old_schema_version_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             workspace = Path(tmp)
             payload = valid_payload(workspace)
-            payload["schema_version"] = "stella.literature_hvs_candidates.v6"
+            payload["schema_version"] = "stella.literature_hvs_candidates.v7"
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertTrue(any("stella.literature_hvs_candidates.v7" in error for error in errors))
+            self.assertTrue(any("stella.literature_hvs_candidates.v0.1" in error for error in errors))
+
+    def test_missing_tooling_fails_require_complete(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            del payload["extraction"]["tooling"]  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace, require_complete=True)
+
+            self.assertTrue(any("$.extraction.tooling" in error for error in errors))
+
+    def test_empty_tooling_model_id_fails_require_complete(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            payload["extraction"]["tooling"]["model_id"] = ""  # type: ignore[index]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace, require_complete=True)
+
+            self.assertTrue(any("$.extraction.tooling.model_id" in error for error in errors))
+
+    def test_lower_limit_quantity_requires_bound_in_value(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            record = payload["candidates"][0]["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            record["limit_kind"] = "lower_limit"
+            record["value"] = ""
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("must put the bound value in value" in error for error in errors))
+
+    def test_range_quantity_requires_bounds_and_empty_value(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            record = payload["candidates"][0]["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            record["limit_kind"] = "range"
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("must leave value empty" in error for error in errors))
+            self.assertTrue(any("must fill both range_lower and range_upper" in error for error in errors))
+
+            record["value"] = ""
+            record["range_lower"] = "650"
+            record["range_upper"] = "750"
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            self.assertFalse(any("range" in error and "$.candidates" in error for error in errors))
+
+    def test_range_fields_without_limit_kind_fail(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            record = payload["candidates"][0]["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            record["range_lower"] = "650"
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any("require limit_kind 'range'" in error for error in errors))
+
+    def test_solar_step_requires_parameters_or_not_reported(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            text_ref = payload["candidates"][0]["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
+            payload["method_chain"].append(  # type: ignore[union-attr]
+                {
+                    "id": "step-04",
+                    "depends_on": [],
+                    "step_type": "solar_position_and_motion",
+                    "summary": "Solar frame assumptions used for the velocity transformation.",
+                    "source_refs": [text_ref],
+                }
+            )
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            self.assertTrue(any("must carry structured parameters[]" in error for error in errors))
+
+            payload["method_chain"][-1]["summary"] = "Solar position and motion are not reported by the paper."  # type: ignore[index]
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            self.assertFalse(any("must carry structured parameters[]" in error for error in errors))
+
+            payload["method_chain"][-1]["parameters"] = [  # type: ignore[index]
+                {
+                    "name": "R0",
+                    "raw_value": "8.34 kpc",
+                    "value": "8.34",
+                    "unit": "kpc",
+                    "source_refs": [text_ref],
+                }
+            ]
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+            self.assertFalse(any("must carry structured parameters[]" in error for error in errors))
+
+    def test_method_parameter_records_validate(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+            text_ref = payload["candidates"][0]["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
+            payload["method_chain"][1]["parameters"] = [  # type: ignore[index]
+                {
+                    "name": "not_a_real_parameter",
+                    "raw_value": "",
+                    "value": "8.34\\pm0.1",
+                    "source_refs": [text_ref],
+                }
+            ]
+
+            errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
+
+            self.assertTrue(any(".parameters[0].name" in error for error in errors))
+            self.assertTrue(any(".parameters[0].raw_value" in error for error in errors))
+            self.assertTrue(any(".parameters[0].value" in error for error in errors))
+
+    def test_solar_lineage_warning_fires_and_resolves(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp)
+            payload = valid_payload(workspace)
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+            self.assertTrue(any("solar_position_and_motion" in warning for warning in report.warnings))
+
+            text_ref = payload["candidates"][0]["inclusion_assessment"]["source_refs"][0]  # type: ignore[index]
+            payload["method_chain"] = [
+                payload["method_chain"][0],  # type: ignore[index]
+                {
+                    "id": "step-02",
+                    "depends_on": [],
+                    "step_type": "solar_position_and_motion",
+                    "summary": "Adopts R0 and solar motion for the Galactocentric transformation.",
+                    "parameters": [
+                        {
+                            "name": "R0",
+                            "raw_value": "8.34 kpc",
+                            "value": "8.34",
+                            "unit": "kpc",
+                            "source_refs": [text_ref],
+                        }
+                    ],
+                    "source_refs": [text_ref],
+                },
+                {
+                    "id": "step-03",
+                    "depends_on": ["step-01", "step-02"],
+                    "step_type": "velocity_calculation",
+                    "summary": "Galactocentric tangential velocity from Gaia DR3 astrometry.",
+                    "source_refs": [text_ref],
+                },
+            ]
+            record = payload["candidates"][0]["core"]["derived_kinematics"]["galactocentric_tangential_velocity"]  # type: ignore[index]
+            record["method_refs"] = ["step-03"]
+
+            report = validate_cli.validate_hvs_candidates_report(payload, workspace=workspace)
+            self.assertFalse(any("solar_position_and_motion" in warning for warning in report.warnings))
 
     def test_valid_cited_candidate_payload_passes(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -1069,7 +1231,7 @@ class HvsCandidatesValidationTest(unittest.TestCase):
 
             errors = validate_cli.validate_hvs_candidates(payload, workspace=workspace)
 
-            self.assertTrue(any("typed v7 group" in error for error in errors))
+            self.assertTrue(any("typed candidate group" in error for error in errors))
 
     def test_origin_probability_metrics_pass_in_astrophysical_origin(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

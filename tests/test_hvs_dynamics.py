@@ -75,7 +75,7 @@ def object_record(
             }
         )
     return {
-        "schema_version": "stella.hvs_candidate_catalog.object.v5",
+        "schema_version": "stella.hvs_candidate_catalog.object.v0.1",
         "generated_at": "2026-05-25T12:00:00",
         "object_id": "Gaia_DR3_123" if gaia_source_id else "HVS_1",
         "canonical_identifier": {"kind": "gaia_source_id", "value": gaia_source_id, "source": "src-001"},

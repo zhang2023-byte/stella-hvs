@@ -6,6 +6,16 @@ This is the data contract reference. For workflow entry points, use
 
 JSON is the canonical output. Markdown is a reading view generated from JSON.
 
+## Schema Versioning
+
+All Stella schema versions use a shared pre-release `v0.x` scheme
+(`stella.<artifact>.v0.1`, ...). During `0.x`, breaking schema changes bump the
+minor number for every artifact together so one repository state corresponds
+to one schema family. At the first official release every schema moves to
+`v1.0`. The mapping from the older per-artifact version numbers (for example
+`literature_hvs_candidates.v7`) to `v0.1` is recorded in
+[refactor-rename-map.md](refactor-rename-map.md) and in git history.
+
 ## Canonical Data
 
 ```text
@@ -179,8 +189,8 @@ ECSV uses stable names such as `col_001` and `col_002` and preserves paper table
 
 - `paper`: arXiv ID, bibcode from `ads_metadata.json` referenced by `audit.json`, title, month, monthly JSON path, abs/pdf links.
 - `inputs`: paper directory, review/extraction JSON, and ECSV paths used for this extraction.
-- `extraction`: candidate extraction status, time, actor, and summary.
-- `method_chain`: paper-level atomic method DAG, including survey inputs, sample selection, quality filtering, distance estimation, RV measurement, velocity calculation, potential model, orbit integration, bound probability, or escape assessment. IDs use local `step-01`, `step-02` order, `step_type` uses the controlled vocabulary, and `depends_on[]` lists only direct upstream steps.
+- `extraction`: candidate extraction status, time, actor, summary, and `tooling` instrument provenance (`agent_runtime`, dated `model_id` snapshot, `prompt_version` git commit/tag, request parameters). `tooling` with a non-empty `model_id` and `prompt_version` is required for complete extractions; files migrated from pre-`v0.1` schemas carry the explicit value `unknown_legacy`.
+- `method_chain`: paper-level atomic method DAG, including survey inputs, sample selection, quality filtering, distance estimation, RV measurement, solar position/motion assumptions, velocity calculation, potential model, orbit integration, bound probability, or escape assessment. IDs use local `step-01`, `step-02` order, `step_type` uses the controlled vocabulary, and `depends_on[]` lists only direct upstream steps. Assumption-type steps (`solar_position_and_motion`, `galactic_potential_model`) carry structured `parameters[]` records (controlled `name` such as `R0`, `v_circ_sun`, `solar_motion_u/v/w`, `potential_name`, plus `raw_value`/`value`/`unit`/`source_refs`); when the paper derives Galactocentric or rest-frame quantities or assesses bound status, a `solar_position_and_motion` step must appear in the lineage, with an explicit not-reported summary when the paper states no values.
 - `candidates`: text-evidence-anchored Galactic-unbound HVS/unbound candidates. Each candidate includes `identifiers`, `inclusion_assessment`, `candidate_origin`, observed 6D phase space, derived kinematics, bound assessment, typed photometry/spectroscopy/stellar/abundance/orbit/origin groups, and `extra[]` only for values that do not fit typed groups.
 - `candidate_groups_considered`: reviewed but excluded candidate groups, tables, or object sets, especially for `no_candidates` results.
 
@@ -192,7 +202,7 @@ Candidate inclusion must come from the paper text itself: the paper must explici
 
 `candidate_origin.origin_type` distinguishes `introduced_by_this_paper` from `cited_from_literature`. "Introduced" means this paper first presents the object as a possible Galactic-unbound/HVS candidate. Known objects that are reanalyzed by the paper are marked `cited_from_literature`, with `paper_reassesses_unbound_status=true` when the paper reassesses the status. Cited candidates must include text citation lines in `citation_context_refs` and `.bib`/`.bbl` entries in `bibliography_refs`; non-empty citation metadata fields must be supported by those bibliography lines.
 
-Every `core`, typed-group, and `extra[]` quantity must include `raw_value`, cleaned `value`, per-value source provenance, and field-level direct-producer `method_refs`. `raw_value` must stay consistent with the ECSV cell or source-text value for traceability. `value`, `error`, `lower_error`, and `upper_error` are machine-readable and cannot keep LaTeX commands, braces, `$`, `_`, `^`, or `+/-`. Numeric core and typed quantitative machine fields should be single plain numbers; ranges, limits, units, footnotes, and explanatory text stay in `raw_value` or `description`. Bound/unbound probabilities live under `core.bound_assessment` as unitless 0-1 values. Origin/model probabilities, p-values, and likelihood ratios live under `astrophysical_origin.hypothesis_metrics[]`.
+Every `core`, typed-group, and `extra[]` quantity must include `raw_value`, cleaned `value`, per-value source provenance, and field-level direct-producer `method_refs`. `raw_value` must stay consistent with the ECSV cell or source-text value for traceability. `value`, `error`, `lower_error`, and `upper_error` are machine-readable and cannot keep LaTeX commands, braces, `$`, `_`, `^`, or `+/-`. Numeric core and typed quantitative machine fields should be single plain numbers; units, footnotes, and explanatory text stay in `raw_value` or `description`. One-sided limits use `limit_kind` (`lower_limit`/`upper_limit`) with the bound number in `value`; closed ranges use `limit_kind: "range"` with empty `value` and plain numbers in `range_lower`/`range_upper`. Bound/unbound probabilities live under `core.bound_assessment` as unitless 0-1 values. Origin/model probabilities, p-values, and likelihood ratios live under `astrophysical_origin.hypothesis_metrics[]`.
 
 RA/Dec may preserve decimal-degree or sexagesimal values from the paper, but `coordinate_format` must state the notation. Frame and epoch belong in the internal `reference_frame` and `epoch` objects under the RA/Dec record, and `unit` stores only the real coordinate unit. ECSV references need exact file path, physical line number, machine column name, column header, and raw cell text. If one cell contains both RA and Dec, the source ref `raw_value` keeps the full cell, the quantity-level `raw_value` keeps only the current component, and `component_raw_value` connects them. Text sources need exact TeX/text paths and line ranges. `method_refs` reference the direct `method_chain[]` `step-XX` ID in the same file; full lineage is recovered recursively from `depends_on[]`.
 
@@ -200,7 +210,7 @@ RA/Dec may preserve decimal-degree or sexagesimal values from the paper, but `co
 
 `catalog/` is the object-level HVS candidates catalog merged from all paper-level `literature_hvs_candidates.json` files. It is generated by `scripts/merge_hvs_candidate_catalog.py` and should not be manually modified.
 
-Each `catalog/candidates/<object_id>.json` uses `schema_version: stella.hvs_candidate_catalog.object.v6` and contains:
+Each `catalog/candidates/<object_id>.json` uses `schema_version: stella.hvs_candidate_catalog.object.v0.1` and contains:
 
 - `object_id`: stable object ID used as the filename. Gaia IDs use a normalized Gaia release-family slug; EDR3 and DR3 source IDs with the same numeric source ID use `Gaia_DR3_<source_id>`. Non-Gaia objects use a strong paper candidate ID when available, preserving ASCII `+` and `-`, otherwise a J2000-style coordinate slug, otherwise a source record slug.
 - `canonical_identifier`: object-level preferred identifier and its source short ID.
@@ -216,7 +226,7 @@ Object-level candidate quantities keep only `value`, non-empty uncertainty field
 
 `external_enrichment` is generated by the default `--enrichment-mode auto` merge behavior. It queries public SIMBAD and Gaia DR3 TAP services through `astroquery`, and it can be disabled with `--enrichment-mode off` or made strict with `--enrichment-mode required`. Enrichment values do not overwrite paper-level quantities. With default `--external-merge-mode auto`, high-confidence external Gaia/SIMBAD identity evidence can also appear in `merge.evidence[]` and affect grouping; use `--external-merge-mode off` for the old Gaia/coordinate-only behavior or `review` to list potential external/alias merges without applying them.
 
-`dynamics` uses `schema_version: stella.hvs_dynamics.v1`. Computed records
+`dynamics` uses `schema_version: stella.hvs_dynamics.v0.1`. Computed records
 include the selected Gaia DR3 source ID, Gaia zero-point correction, corrected
 parallax, selected RV source, posterior velocity summaries, escape velocity
 summaries, raw MC counts/fractions, Boubert-style Beta posterior summaries for

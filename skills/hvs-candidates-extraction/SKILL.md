@@ -32,7 +32,7 @@ resources.
 ## Reference
 
 Use `references/schema.md` before filling the JSON. It defines the required
-`stella.literature_hvs_candidates.v7` shape, provenance rules, and examples.
+`stella.literature_hvs_candidates.v0.1` shape, provenance rules, and examples.
 For routine filling, start with the `Workflow Notes` section and these schema
 anchors: `schema_version`, `method_chain`, `candidate_groups_considered`,
 `SourceRef`, `QuantityRecord`, `ExtraQuantityRecord`,
@@ -117,6 +117,7 @@ that reference, do not guess; set the nested RA/Dec `reference_frame.value` and
    - quality cuts and flags
    - distance estimation
    - radial-velocity measurement
+   - solar position and motion assumptions
    - velocity calculation
    - Galactic potential assumptions
    - orbit integration
@@ -126,7 +127,18 @@ that reference, do not guess; set the nested RA/Dec `reference_frame.value` and
    `step_type` values from the generated schema reference. Each step must have
    `depends_on` listing only its direct upstream steps. Do not combine distance,
    velocity, orbit, and escape/bound assessment in one broad step.
-9. For every candidate, fill standard `core` and typed v7 fields where the
+
+   When the paper derives Galactocentric or Galactic-rest-frame quantities or
+   makes a bound/unbound assessment, add a `solar_position_and_motion` step and
+   list it in the `depends_on` of the velocity/orbit/escape steps that use it.
+   Record the paper's stated values (R0, z0, circular velocity at the Sun,
+   solar peculiar motion U/V/W) as structured `parameters[]` entries with
+   `raw_value`, cleaned `value`, `unit`, and `source_refs`. If the paper does
+   not state them, keep the step and say in `summary` that the solar
+   parameters are not reported; do not guess values. `galactic_potential_model`
+   steps should likewise carry `parameters[]` for the potential name and any
+   stated escape-velocity definition.
+9. For every candidate, fill standard `core` and typed candidate fields where the
    paper provides them, and put field-level
    `method_refs` on every quantity record. `method_refs` must contain exactly
    one direct producer step when complete; full lineage is recovered by
@@ -184,11 +196,15 @@ or `+/-` in `value`, `error`, `lower_error`, or `upper_error`.
 For numeric core fields and quantitative typed records, `value`, `error`,
 `lower_error`, and `upper_error` should each be a single plain number such as
 `742`, `-12.3`, `+3.00`, or `1.3e5`. Do not put ranges, lower/upper-limit
-operators, units, footnote markers, or prose in these machine fields. Keep
-ranges and limits in `raw_value` and explain them in `description` unless a
-future schema provides structured range fields. If a field reports only a range
-or limit and has no single machine value, leave `value` empty rather than
-copying the range or limit into it.
+operators, units, footnote markers, or prose in these machine fields.
+
+Limits and ranges have structured fields. When the paper reports a one-sided
+limit such as `v_tot > 500 km/s`, set `limit_kind` to `lower_limit` or
+`upper_limit`, put the bound number in `value`, and keep the paper-visible
+text (with the operator) in `raw_value`. When the paper reports a closed range
+such as `500-700`, set `limit_kind: "range"`, leave `value` empty, and put the
+plain bound numbers in `range_lower` and `range_upper`. Never leave limit or
+range information only in `raw_value` when these fields can express it.
 
 For `core.bound_assessment.bound_probability` and
 `core.bound_assessment.unbound_probability`, normalize `value` to a unitless
@@ -243,7 +259,7 @@ producer rules:
 
 `core` must use the three schema groups `observed_phase_space`,
 `derived_kinematics`, and `bound_assessment` at the top level. Put standard
-non-core values into typed v7 groups before using `extra[]`.
+non-core values into typed candidate groups before using `extra[]`.
 
 For ECSV values, cite the exact cell:
 

@@ -52,7 +52,7 @@ def quantity(
 
 def object_record() -> dict[str, object]:
     return {
-        "schema_version": "stella.hvs_candidate_catalog.object.v5",
+        "schema_version": "stella.hvs_candidate_catalog.object.v0.1",
         "generated_at": "2026-05-20T10:00:00",
         "object_id": "Gaia_DR3_123",
         "canonical_identifier": {"kind": "gaia_source_id", "value": "Gaia DR3 123", "source": "src-001"},
@@ -244,7 +244,7 @@ def object_record() -> dict[str, object]:
             "warnings": [{"type": "simbad_coordinate_match", "message": "Matched by coordinates."}],
         },
         "dynamics": {
-            "schema_version": "stella.hvs_dynamics.v1",
+            "schema_version": "stella.hvs_dynamics.v0.1",
             "generated_at": "2026-05-20T10:00:00",
             "status": "computed",
             "status_reason": "",
@@ -291,7 +291,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
             write_json(
                 catalog / "03_hvs_candidates_index.json",
                 {
-                    "schema_version": "stella.hvs_candidate_catalog.index.v3",
+                    "schema_version": "stella.hvs_candidate_catalog.index.v0.1",
                     "summary": {
                         "object_count": 1,
                         "source_count": 2,
@@ -307,7 +307,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
 
             snapshot = load_catalog_snapshot(catalog)
 
-            self.assertEqual(snapshot["schema_version"], "stella.hvs_catalog_site.snapshot.v2")
+            self.assertEqual(snapshot["schema_version"], "stella.hvs_catalog_site.snapshot.v0.1")
             self.assertEqual(snapshot["summary"]["object_count"], 1)
             self.assertEqual(len(snapshot["objects"]), 1)
             self.assertEqual(snapshot["rows"][0]["identifier"], "Gaia DR3 123")
@@ -433,7 +433,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
     def test_index_row_extracts_skipped_dynamics_audit(self) -> None:
         record = object_record()
         record["dynamics"] = {
-            "schema_version": "stella.hvs_dynamics.v1",
+            "schema_version": "stella.hvs_dynamics.v0.1",
             "status": "skipped",
             "status_reason": "parallax uncertainty too large",
             "astrometry": {
@@ -620,7 +620,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
             self.assertTrue(data_js.startswith("window.STELLA_CATALOG_SNAPSHOT = "))
             self.assertTrue(data_js.endswith(";"))
             snapshot = json.loads(data_js[len("window.STELLA_CATALOG_SNAPSHOT = "):-1])
-            self.assertEqual(snapshot["schema_version"], "stella.hvs_catalog_site.snapshot.v2")
+            self.assertEqual(snapshot["schema_version"], "stella.hvs_catalog_site.snapshot.v0.1")
 
     def test_external_links_pass_through_url_scheme_allowlist(self) -> None:
         js = (ROOT / "src" / "stella" / "html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")

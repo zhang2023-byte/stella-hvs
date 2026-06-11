@@ -4,7 +4,7 @@
 
 `catalog_review.json` is the Agent-filled data-asset inventory for one archived paper. The template and accepted fields come from the Pydantic model; the Agent fills only paper-grounded semantic blanks such as table roles, column meanings, evidence, and comments.
 
-Use `schema_version: "stella.article_data_assets.review.v1"`.
+Use `schema_version: "stella.article_data_assets.review.v0.1"`.
 
 ## Required Top-Level Fields
 
@@ -19,7 +19,7 @@ Use `schema_version: "stella.article_data_assets.review.v1"`.
 
 ```json
 {
-  "schema_version": "stella.article_data_assets.review.v1",
+  "schema_version": "stella.article_data_assets.review.v0.1",
   "paper": {},
   "source": {},
   "review": {},
@@ -34,7 +34,7 @@ Use `schema_version: "stella.article_data_assets.review.v1"`.
 - `partial`
 - `reviewed`
 - `source_missing`
-- `stella.article_data_assets.review.v1`
+- `stella.article_data_assets.review.v0.1`
 
 ## Workflow Notes
 
@@ -375,7 +375,7 @@ Use `schema_version: "stella.article_data_assets.review.v1"`.
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "stella.article_data_assets.review.v1",
+      "const": "stella.article_data_assets.review.v0.1",
       "title": "Schema Version",
       "type": "string"
     },

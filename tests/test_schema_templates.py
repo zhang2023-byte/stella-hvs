@@ -121,12 +121,12 @@ class SchemaTemplateTest(unittest.TestCase):
             write_json(
                 paper_dir / "catalog_extraction.json",
                 {
-                    "schema_version": "stella.article_data_assets.extraction.v2",
+                    "schema_version": "stella.article_data_assets.extraction.v0.1",
                     "generated_at": "2026-05-12T12:00:00",
                     "paper": {"arxiv_id": "2603.00001", "title": "Schema template paper", "month": "2026-03"},
                     "review": {
                         "path": "literature/2603.00001/catalog_review.json",
-                        "schema_version": "stella.article_data_assets.review.v1",
+                        "schema_version": "stella.article_data_assets.review.v0.1",
                         "review_status": "reviewed",
                     },
                     "run": {

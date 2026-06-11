@@ -38,6 +38,8 @@ from stella.lit.schema_specs import (  # noqa: E402
     LITERATURE_HVS_INCLUSION_BASES,
     LITERATURE_HVS_CANDIDATE_ORIGIN_TYPES,
     LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION,
+    LITERATURE_HVS_LIMIT_KINDS,
+    LITERATURE_HVS_METHOD_PARAMETER_NAMES,
     LITERATURE_HVS_METHOD_STEP_TYPES,
     LITERATURE_HVS_PAPER_LABELS,
 )
@@ -55,6 +57,9 @@ LATEX_STRUCTURE_ONLY_RE = re.compile(
 )
 LATEX_PREAMBLE_ASSIGNMENT_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*\s*=\s*[^,]+,?\s*$")
 SYMMETRIC_UNCERTAINTY_RE = re.compile(r"(\+/-|\u00b1|\\pm)")
+LIMIT_MARKER_RE = re.compile(r"(>|<|\\geq|\\leq|\\gtrsim|\\lesssim|\u2265|\u2264|\u2273|\u2272)")
+SOLAR_LINEAGE_FIELD_RE = re.compile(r"galactocentric|rest_frame", re.IGNORECASE)
+TEXTUAL_METHOD_PARAMETER_NAMES = {"potential_name", "escape_velocity_definition", "other"}
 ASYMMETRIC_UNCERTAINTY_RE = re.compile(
     r"(\^\s*\{?\s*\+[^}_\s]+\}?\s*_\s*\{?\s*-[^}\s]+|"
     r"_\s*\{?\s*-[^}^\s]+\}?\s*\^\s*\{?\s*\+[^}\s]+)"
@@ -554,7 +559,7 @@ def validate_citation_refs_and_fields(
     require_bibliography_refs: bool,
 ) -> None:
     if "source_refs" in citation_obj:
-        ctx.error(f"{location}.source_refs", "legacy citation.source_refs is removed in v7")
+        ctx.error(f"{location}.source_refs", "legacy citation.source_refs is no longer part of the schema")
 
     context_refs = citation_obj.get("citation_context_refs")
     bibliography_refs = citation_obj.get("bibliography_refs")
@@ -769,6 +774,37 @@ def validate_uncertainty_fields(record: dict[str, Any], raw_value: str, location
         ctx.error(f"{location}.error", "symmetric raw_value must include error")
 
 
+def validate_limit_fields(record: dict[str, Any], raw_value: Any, location: str, ctx: ValidationContext) -> None:
+    limit_kind = record.get("limit_kind") or ""
+    if limit_kind not in LITERATURE_HVS_LIMIT_KINDS:
+        ctx.error(f"{location}.limit_kind", f"expected one of {sorted(kind for kind in LITERATURE_HVS_LIMIT_KINDS if kind)}")
+        return
+    range_lower = str(record.get("range_lower") or "")
+    range_upper = str(record.get("range_upper") or "")
+    if limit_kind == "":
+        if range_lower.strip() or range_upper.strip():
+            ctx.error(f"{location}.limit_kind", "range_lower/range_upper require limit_kind 'range'")
+        return
+    if limit_kind in ("lower_limit", "upper_limit"):
+        if range_lower.strip() or range_upper.strip():
+            ctx.error(f"{location}.limit_kind", "range_lower/range_upper are only for limit_kind 'range'")
+        if not str(record.get("value") or "").strip():
+            ctx.error(f"{location}.value", f"{limit_kind} quantity must put the bound value in value")
+        if isinstance(raw_value, str) and raw_value and not LIMIT_MARKER_RE.search(raw_value):
+            ctx.warn(
+                f"{location}.raw_value",
+                f"limit_kind {limit_kind!r} but raw_value shows no limit marker; confirm the paper reports a limit",
+            )
+        return
+    if str(record.get("value") or "").strip():
+        ctx.error(f"{location}.value", "range quantity must leave value empty and use range_lower/range_upper")
+    if not range_lower.strip() or not range_upper.strip():
+        ctx.error(f"{location}.limit_kind", "range quantity must fill both range_lower and range_upper")
+    else:
+        validate_clean_machine_string(range_lower, f"{location}.range_lower", ctx)
+        validate_clean_machine_string(range_upper, f"{location}.range_upper", ctx)
+
+
 def iter_quantity_records(node: Any, location: str):
     if is_dict(node):
         if "value" in node:
@@ -855,6 +891,20 @@ def validate_direct_method_ref(
                 f"{location}.method_refs",
                 f"lineage for {method_ref!r} must include a step_type in {sorted(required_group)}",
             )
+    if quantity_needs_solar_lineage(category, location) and "solar_position_and_motion" not in lineage_types:
+        ctx.warn(
+            f"{location}.method_refs",
+            f"lineage for {method_ref!r} lacks a solar_position_and_motion step; record the paper's "
+            "solar position/motion assumptions, or an explicit not-reported solar step",
+        )
+
+
+def quantity_needs_solar_lineage(category: str | None, location: str) -> bool:
+    if category == "bound_assessment":
+        return True
+    if category != "velocity":
+        return False
+    return bool(SOLAR_LINEAGE_FIELD_RE.search(field_name_from_location(location)))
 
 
 def validate_coordinate_context(
@@ -1069,6 +1119,7 @@ def validate_quantity_records(
             ctx.error(f"{record_location}.raw_value", "quantity record with value must include raw_value")
         else:
             validate_uncertainty_fields(record, raw_value, record_location, ctx)
+        validate_limit_fields(record, raw_value, record_location, ctx)
         for key in ("error", "lower_error", "upper_error"):
             if key in record and record.get(key) not in (None, ""):
                 validate_clean_machine_string(record.get(key), f"{record_location}.{key}", ctx)
@@ -1198,7 +1249,7 @@ def validate_candidate_identifiers(
 
     for key in LEGACY_IDENTIFIER_FIELDS:
         if key in ids_obj:
-            ctx.error(f"{location}.{key}", "legacy identifier field is removed in v7; convert the file to v7 identifiers")
+            ctx.error(f"{location}.{key}", "legacy identifier field is no longer part of the schema; use the identifiers object")
 
     for key in ("record_id", "paper_candidate_id", "gaia_source_id", "all"):
         if key not in ids_obj:
@@ -1340,7 +1391,7 @@ def validate_extra_records(extra_list: list[Any], location: str, ctx: Validation
         if STANDARD_EXTRA_RE.search(searchable):
             ctx.error(
                 f"{location}[{index}]",
-                "standard HVS candidate quantity belongs in a typed v7 group, not extra[]",
+                "standard HVS candidate quantity belongs in a typed candidate group, not extra[]",
             )
 
 
@@ -1381,7 +1432,7 @@ def validate_candidate(
         if key not in candidate_obj:
             ctx.error(f"{location}.{key}", "missing required field")
     if "candidate_assessment" in candidate_obj:
-        ctx.error(f"{location}.candidate_assessment", "candidate_assessment is removed in v7; use inclusion_assessment")
+        ctx.error(f"{location}.candidate_assessment", "candidate_assessment is no longer part of the schema; use inclusion_assessment")
     if "method_chain_refs" in candidate_obj:
         ctx.error(f"{location}.method_chain_refs", "candidate-level method_chain_refs is removed; use quantity method_refs")
     for key in LEGACY_CANDIDATE_FIELDS:
@@ -1570,6 +1621,16 @@ def validate_completion_state(root: dict[str, Any], status: str | None, ctx: Val
         ctx.error("$.extraction.status", "expected a completed status, not 'needs_review'")
     if is_dict(extraction) and status != "source_missing" and not str(extraction.get("summary") or "").strip():
         ctx.error("$.extraction.summary", "expected a non-empty completion summary")
+    tooling = extraction.get("tooling") if is_dict(extraction) else None
+    if not is_dict(tooling):
+        ctx.error(
+            "$.extraction.tooling",
+            "completed extraction must record tooling provenance (agent_runtime, model_id, prompt_version)",
+        )
+    else:
+        for key in ("model_id", "prompt_version"):
+            if not str(tooling.get(key) or "").strip():
+                ctx.error(f"$.extraction.tooling.{key}", "expected a non-empty value for a completed extraction")
 
 
 def validate_method_chain(
@@ -1626,6 +1687,16 @@ def validate_method_chain(
             ctx,
         )
 
+        parameter_count = validate_method_parameters(step, f"$.method_chain[{index}]", ctx)
+        if step_type == "solar_position_and_motion" and parameter_count == 0:
+            summary_text = str(step.get("summary") or "").lower()
+            if "not_reported" not in summary_text and "not reported" not in summary_text:
+                ctx.error(
+                    f"$.method_chain[{index}].parameters",
+                    "solar_position_and_motion step must carry structured parameters[] "
+                    "or state in summary that the paper does not report them",
+                )
+
         if "source_refs" in step:
             validate_source_refs(step["source_refs"], f"$.method_chain[{index}].source_refs", ctx)
         for warning in coarse_step_warnings(step):
@@ -1633,6 +1704,35 @@ def validate_method_chain(
 
     validate_method_dependency_cycles(method_dependencies, ctx)
     return method_ids, method_step_types, method_dependencies
+
+
+def validate_method_parameters(step: dict[str, Any], location: str, ctx: ValidationContext) -> int:
+    parameters = step.get("parameters")
+    if parameters is None:
+        return 0
+    if not is_list(parameters):
+        ctx.error(f"{location}.parameters", "expected a list")
+        return 0
+    count = 0
+    for index, param in enumerate(parameters):
+        param_location = f"{location}.parameters[{index}]"
+        if not is_dict(param):
+            ctx.error(param_location, "expected an object")
+            continue
+        count += 1
+        name = param.get("name")
+        if name not in LITERATURE_HVS_METHOD_PARAMETER_NAMES:
+            ctx.error(f"{param_location}.name", f"expected one of {sorted(LITERATURE_HVS_METHOD_PARAMETER_NAMES)}")
+        if not str(param.get("raw_value") or "").strip():
+            ctx.error(f"{param_location}.raw_value", "expected the paper-visible parameter text")
+        if name not in TEXTUAL_METHOD_PARAMETER_NAMES:
+            validate_clean_machine_string(param.get("value"), f"{param_location}.value", ctx)
+            for key in ("error", "lower_error", "upper_error"):
+                if param.get(key) not in (None, ""):
+                    validate_clean_machine_string(param.get(key), f"{param_location}.{key}", ctx)
+        if param.get("source_refs"):
+            validate_source_refs(param["source_refs"], f"{param_location}.source_refs", ctx)
+    return count
 
 
 def validate_method_step_dependencies(

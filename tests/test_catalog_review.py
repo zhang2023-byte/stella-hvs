@@ -111,7 +111,7 @@ class CatalogReviewTest(unittest.TestCase):
                 workspace=workspace,
             )
 
-            self.assertEqual(inventory["schema_version"], "stella.article_data_assets.inventory.v1")
+            self.assertEqual(inventory["schema_version"], "stella.article_data_assets.inventory.v0.1")
             self.assertEqual(inventory["paper"]["title"], "A paper with structured data assets")
             self.assertEqual([table["environment"] for table in inventory["table_candidates"]], ["table", "longtable"])
             self.assertEqual(inventory["table_candidates"][0]["caption"], "Candidate list")
@@ -182,7 +182,7 @@ B & 710 \\
             write_json_file(
                 paper_dir / "catalog_review.json",
                 {
-                    "schema_version": "stella.article_data_assets.review.v1",
+                    "schema_version": "stella.article_data_assets.review.v0.1",
                     "paper": {"arxiv_id": "2603.00001", "title": "Reviewed assets", "month": "2026-03"},
                     "source": {"source_available": True},
                     "review": {"status": "reviewed", "reviewed_at": "2026-04-24T12:00:00"},
@@ -193,7 +193,7 @@ B & 710 \\
             write_json_file(
                 paper_dir / "catalog_extraction.json",
                 {
-                    "schema_version": "stella.article_data_assets.extraction.v2",
+                    "schema_version": "stella.article_data_assets.extraction.v0.1",
                     "generated_at": "2026-04-25T12:00:00",
                     "paper": {"arxiv_id": "2603.00001", "title": "Reviewed assets", "month": "2026-03"},
                     "run": {"status": "success", "summary": {"success_count": 1, "failed_count": 0}},
@@ -205,7 +205,7 @@ B & 710 \\
             write_json_file(
                 needs_dir / "catalog_review.json",
                 {
-                    "schema_version": "stella.article_data_assets.review.v1",
+                    "schema_version": "stella.article_data_assets.review.v0.1",
                     "paper": {"arxiv_id": "2603.00002", "title": "Needs review", "month": "2026-03"},
                     "review": {"status": "needs_review"},
                     "internal_tables": [],
@@ -216,7 +216,7 @@ B & 710 \\
             write_json_file(
                 external_only_dir / "catalog_review.json",
                 {
-                    "schema_version": "stella.article_data_assets.review.v1",
+                    "schema_version": "stella.article_data_assets.review.v0.1",
                     "paper": {"arxiv_id": "2603.00003", "title": "External only", "month": "2026-03"},
                     "review": {"status": "reviewed", "reviewed_at": "2026-04-24T13:00:00"},
                     "internal_tables": [],
@@ -226,7 +226,7 @@ B & 710 \\
 
             index = rebuild_catalog_index(literature_dir, workspace=workspace)
 
-            self.assertEqual(index["schema_version"], "stella.article_data_assets.index.v1")
+            self.assertEqual(index["schema_version"], "stella.article_data_assets.index.v0.1")
             self.assertEqual(index["summary"]["paper_count"], 3)
             self.assertEqual(index["summary"]["reviewed_count"], 2)
             self.assertEqual(index["summary"]["has_data_asset_count"], 2)

@@ -24,14 +24,9 @@ from stella.lit.hvs_candidates_index import HVS_CANDIDATES_FILENAME, iter_hvs_ca
 from stella.lit.schema_models import LiteratureHvsCandidatesRecord
 
 
-OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v6"
-LEGACY_OBJECT_SCHEMA_VERSIONS = {
-    "stella.hvs_candidate_catalog.object.v3",
-    "stella.hvs_candidate_catalog.object.v4",
-    "stella.hvs_candidate_catalog.object.v5",
-}
-INDEX_SCHEMA_VERSION = "stella.hvs_candidate_catalog.index.v3"
-READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION, *LEGACY_OBJECT_SCHEMA_VERSIONS}
+OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v0.1"
+INDEX_SCHEMA_VERSION = "stella.hvs_candidate_catalog.index.v0.1"
+READABLE_OBJECT_SCHEMA_VERSIONS = {OBJECT_SCHEMA_VERSION}
 INDEX_JSON_FILENAME = "03_hvs_candidates_index.json"
 INDEX_MARKDOWN_FILENAME = "03_hvs_candidates_index.md"
 CANDIDATES_DIRNAME = "candidates"
@@ -268,7 +263,7 @@ def _non_empty(value: Any) -> bool:
 def disabled_hvs_dynamics() -> dict[str, Any]:
     """Return the not-yet-computed object-level dynamics placeholder."""
     return {
-        "schema_version": "stella.hvs_dynamics.v1",
+        "schema_version": "stella.hvs_dynamics.v0.1",
         "status": "not_computed",
         "status_reason": "hvs dynamics not computed after object catalog merge",
         "generated_at": "",

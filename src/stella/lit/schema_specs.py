@@ -5,12 +5,12 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 
-CATALOG_REVIEW_SCHEMA_VERSION = "stella.article_data_assets.review.v1"
-CATALOG_EXTRACTION_SCHEMA_VERSION = "stella.article_data_assets.extraction.v2"
-CATALOG_INVENTORY_SCHEMA_VERSION = "stella.article_data_assets.inventory.v1"
-CATALOG_INDEX_SCHEMA_VERSION = "stella.article_data_assets.index.v1"
-LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION = "stella.literature_hvs_candidates.v7"
-LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION = "stella.literature_hvs_candidates.index.v3"
+CATALOG_REVIEW_SCHEMA_VERSION = "stella.article_data_assets.review.v0.1"
+CATALOG_EXTRACTION_SCHEMA_VERSION = "stella.article_data_assets.extraction.v0.1"
+CATALOG_INVENTORY_SCHEMA_VERSION = "stella.article_data_assets.inventory.v0.1"
+CATALOG_INDEX_SCHEMA_VERSION = "stella.article_data_assets.index.v0.1"
+LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION = "stella.literature_hvs_candidates.v0.1"
+LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION = "stella.literature_hvs_candidates.index.v0.1"
 
 CATALOG_REVIEW_STATUSES = ("reviewed", "partial", "needs_review", "source_missing")
 CATALOG_EXTRACTION_RUN_STATUSES = ("success", "partial", "failed", "skipped")
@@ -66,6 +66,7 @@ LITERATURE_HVS_METHOD_STEP_TYPES = (
     "stellar_parameter_inference",
     "photometric_or_sed_modeling",
     "velocity_calculation",
+    "solar_position_and_motion",
     "galactic_potential_model",
     "escape_or_bound_assessment",
     "orbit_integration",
@@ -74,6 +75,23 @@ LITERATURE_HVS_METHOD_STEP_TYPES = (
     "follow_up_validation",
     "reported_value_adoption",
     "other",
+)
+LITERATURE_HVS_METHOD_PARAMETER_NAMES = (
+    "R0",
+    "z0",
+    "v_circ_sun",
+    "solar_motion_u",
+    "solar_motion_v",
+    "solar_motion_w",
+    "potential_name",
+    "escape_velocity_definition",
+    "other",
+)
+LITERATURE_HVS_LIMIT_KINDS = (
+    "",
+    "lower_limit",
+    "upper_limit",
+    "range",
 )
 
 

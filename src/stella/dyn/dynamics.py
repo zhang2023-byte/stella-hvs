@@ -18,7 +18,7 @@ from stella.lit.catalog_review import read_json, write_json
 from stella.lit.hvs_candidate_catalog import CANDIDATES_DIRNAME, OBJECT_SCHEMA_VERSION
 
 
-DYNAMICS_SCHEMA_VERSION = "stella.hvs_dynamics.v1"
+DYNAMICS_SCHEMA_VERSION = "stella.hvs_dynamics.v0.1"
 DEFAULT_MCMC_SAMPLES = 10000
 DEFAULT_HP_LEVEL = 5
 DEFAULT_PRIOR_PATH = Path(__file__).resolve().parent / "data" / "prior_summary.csv"

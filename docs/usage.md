@@ -397,7 +397,7 @@ conda run -n stella-env python scripts/validate_hvs_candidates.py --all --requir
 
 ### Notes
 
-- `literature_hvs_candidates.json` uses `schema_version: stella.literature_hvs_candidates.v7`; older candidate schemas are rejected by the current validator and skipped by index/merge builders.
+- `literature_hvs_candidates.json` uses `schema_version: stella.literature_hvs_candidates.v0.1`; older candidate schemas are rejected by the current validator and skipped by index/merge builders.
 - Add `--fail-on-skipped` to index and merge builders when a rebuild should fail instead of silently carrying malformed inputs in the generated `skipped[]` summary.
 - Templates, validators, and skill schema references come from the same Pydantic models. Do not add fields outside the template manually.
 - Every paper should have a result file. If no candidate meets the boundary, write `extraction.status=no_candidates` and empty `candidates[]`.
@@ -408,7 +408,7 @@ conda run -n stella-env python scripts/validate_hvs_candidates.py --all --requir
 - `candidate_origin.origin_type` distinguishes `introduced_by_this_paper` from `cited_from_literature`. "Introduced" means the paper first presents the object as a possible Galactic-unbound/HVS candidate. Known objects reanalyzed by the paper are `cited_from_literature`, with `paper_reassesses_unbound_status=true` when the paper reassesses status. Cited candidates must give paper text cite lines in `candidate_origin.citation.citation_context_refs` and `.bib`/`.bbl` entries in `bibliography_refs`; non-empty citation metadata fields must be supported by those bibliography refs.
 - `core.observed_phase_space` standard slots are RA, Dec, distance/parallax, pmRA, pmDec, and RV. Galactocentric coordinates and velocities go under `core.derived_kinematics`. Escape-speed comparisons, bound/unbound probability, escape margin, and bound status metrics go under `core.bound_assessment`.
 - RA/Dec use coordinate-specific records: `raw_value` and `value` store only one coordinate component; `coordinate_format` stores the notation; coordinate unit stores only real units such as `deg` or `hourangle`; frame and epoch live inside the RA/Dec `reference_frame` and `epoch` objects. If paper text, table header, and `hvs-candidates-extraction/references/coordinate_frames.md` cannot determine frame/epoch, write `unknown` with source refs and `inference_basis=not_in_reference` or `not_reported`; the validator treats this as documented uncertainty rather than warning noise.
-- Photometry, spectroscopy, stellar parameters, abundances, quality flags, orbit values, and origin/model metrics use their typed v7 groups. `extra[]` is reserved for genuinely paper-specific values that cannot fit those groups; standard-like values in `extra[]` are validation errors.
+- Photometry, spectroscopy, stellar parameters, abundances, quality flags, orbit values, and origin/model metrics use their typed candidate groups. `extra[]` is reserved for genuinely paper-specific values that cannot fit those groups; standard-like values in `extra[]` are validation errors.
 - Every `core`, typed-group, and `extra[]` parameter must include `raw_value`, cleaned `value`, `source_refs`, and `method_refs`. ECSV sources need `path`, `line`, `column`, `column_header`, and `raw_value`, and the parameter `raw_value`, source ref `raw_value`, and real ECSV cell must agree. If one ECSV cell contains both RA and Dec, source ref `raw_value` keeps the full cell, quantity-level `raw_value` keeps only the current component, and `component_raw_value` connects them. ECSV paths must use `kind: ecsv_cell`; ordinary text refs must not point to `.ecsv`.
 - `value`, `error`, `lower_error`, and `upper_error` cannot keep LaTeX commands, braces, `$`, `_`, `^`, or `+/-`; mechanical uncertainty expressions should be split into error fields. Numeric core and typed quantitative machine fields must be single plain numbers. Ranges, limits, units, footnotes, and explanatory text stay in `raw_value` or `description`; when no single value exists, leave `value` empty. `core.bound_assessment.bound_probability` and `unbound_probability` normalize `value` to a unitless 0-1 fraction and leave `unit` empty; origin/model probabilities, p-values, and likelihood ratios go under `astrophysical_origin.hypothesis_metrics[]` without being reinterpreted as bound probabilities. RA/Dec may keep original decimal-degree or sexagesimal values, but must not mix `J2000.0`, `J2016`, `ICRS`, or similar context into `value`, `raw_value`, `unit`, or `description`.
 - Text sources need `path`, `start_line`, and `end_line`, and must point to substantive paper/source lines rather than page markers, blank/comment lines, isolated LaTeX structure lines, or preamble settings. Candidate inclusion, candidate origin, and `no_candidates` exclusion evidence must cite paper text; metadata JSON, ECSV cells, and `.bib`/`.bbl` entries are not scientific evidence. Bibliography refs are only valid inside `candidate_origin.citation.bibliography_refs` alongside `citation_context_refs`.
@@ -481,7 +481,7 @@ Both modes support `--dry-run True`, which prints generated writes/deletes witho
 - Every merge or blocked/review edge is recorded under `merge.evidence[]`; `merge.warnings[]` remains the review queue for conflicts and sanity-check failures.
 - Object filenames prefer normalized Gaia slugs, then strong paper object IDs, then coordinate slugs, then stable source record slugs. Strong paper ID slugs preserve ASCII `+` and `-`; weak paper IDs such as bare numbers are not used directly as filenames.
 - Object-level JSON `sources[]` stores short source IDs, original `paper` fields, source JSON paths, and paper-level candidate IDs.
-- Object-level JSON uses `schema_version: stella.hvs_candidate_catalog.object.v6`. Version v6 adds the generated `dynamics` field. Rebuild old object-level catalogs rather than migrating v1/v2 files.
+- Object-level JSON uses `schema_version: stella.hvs_candidate_catalog.object.v0.1`. Version v6 adds the generated `dynamics` field. Rebuild old object-level catalogs rather than migrating v1/v2 files.
 - `method_chain[]` and `candidates[]` are grouped by `source` and do not keep `source_refs`; full provenance still lives in the paper-level JSON.
 - `candidates[]` keeps compact `candidate_context`, `core`, and typed quantity groups. Quantities keep only `value`, non-empty uncertainties, `unit`, `method_refs`, and small typed semantic fields such as band, element, flag name, or hypothesis metric type; they do not keep `raw_value`, `description`, `kind`, coordinate frame/epoch, or coordinate format.
 - `external_enrichment` stores official SIMBAD and Gaia DR3 matches, raw non-empty query columns, selected highlights, identifier/coordinate verification, value comparisons, and enrichment warnings. It never overwrites paper-level values; when external merge mode is enabled, the same official identity evidence may be recorded under `merge.evidence[]` and used for grouping.
@@ -542,9 +542,9 @@ conda run -n stella-env python scripts/calculate_hvs_dynamics.py \
 
 ### Notes
 
-- The CLI writes `dynamics.schema_version=stella.hvs_dynamics.v1` into each
+- The CLI writes `dynamics.schema_version=stella.hvs_dynamics.v0.1` into each
   object JSON and updates the object schema version to
-  `stella.hvs_candidate_catalog.object.v6`.
+  `stella.hvs_candidate_catalog.object.v0.1`.
 - Gaia astrometry is read from the official Gaia DR3 raw row already cached by
   object merge at `external_enrichment.providers.gaia_dr3.raw_columns`. The
   command prefers a DR3-family Gaia identifier from the object record, but a

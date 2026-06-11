@@ -28,7 +28,7 @@ SPEC.loader.exec_module(annotate_cli)
 
 def sample_record() -> dict[str, object]:
     return {
-        "schema_version": "stella.literature.month.v3",
+        "schema_version": "stella.literature.month.v0.1",
         "month": "2026-03",
         "date_from": "2026-03-01",
         "date_to": "2026-03-31",
@@ -357,7 +357,7 @@ class CatalogAssessmentTest(unittest.TestCase):
             (notes_dir / "00_literature_notes_index.json").write_text(
                 json.dumps(
                     {
-                        "schema_version": "stella.literature.index.v4",
+                        "schema_version": "stella.literature.index.v0.1",
                         "summary": {"literature_count": 0, "data_related_count": 0},
                         "years": [],
                         "papers": [],

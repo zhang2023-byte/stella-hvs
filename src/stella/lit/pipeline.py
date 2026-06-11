@@ -33,7 +33,7 @@ LEGACY_CATEGORY_LAST_MONTH = (2008, 11)
 TRANSITION_CATEGORY_MONTH = (2008, 12)
 LEGACY_QUERY_LAST_MONTH = (2008, 12)
 LEGACY_EXTRA_QUERIES = ["hyper-velocity star"]
-ARXIV_METADATA_REPORT_SCHEMA_VERSION = "stella.arxiv.metadata.report.v1"
+ARXIV_METADATA_REPORT_SCHEMA_VERSION = "stella.arxiv.metadata.report.v0.1"
 
 
 class PartialRunError(RuntimeError):

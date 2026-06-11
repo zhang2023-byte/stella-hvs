@@ -102,6 +102,7 @@ STEP_TYPE_COARSE_SIGNALS: dict[str, frozenset[str]] = {
     "distance_estimation": frozenset({"distance"}),
     "radial_velocity_measurement": frozenset({"radial_velocity"}),
     "velocity_calculation": frozenset({"velocity"}),
+    "solar_position_and_motion": frozenset(),
     "galactic_potential_model": frozenset(),
     "escape_or_bound_assessment": frozenset({"bound_assessment"}),
     "orbit_integration": frozenset({"orbit"}),

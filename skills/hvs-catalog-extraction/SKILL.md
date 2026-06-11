@@ -24,7 +24,7 @@ or rerun the extractor.
 ## Workflow
 
 1. Confirm `catalog_review.json` exists and uses
-   `stella.article_data_assets.review.v1`, then require the Agent-filled review
+   `stella.article_data_assets.review.v0.1`, then require the Agent-filled review
    to be complete:
 
    ```bash
@@ -58,7 +58,7 @@ or rerun the extractor.
 
 Read `references/schema.md` when interpreting or debugging
 `catalog_extraction.json`. Use
-`schema_version: "stella.article_data_assets.extraction.v2"`.
+`schema_version: "stella.article_data_assets.extraction.v0.1"`.
 
 The top-level sections are:
 
