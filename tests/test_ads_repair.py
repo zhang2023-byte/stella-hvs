@@ -12,9 +12,8 @@ import requests
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
 
-from high_velocity_lit.ads_repair import repair_ads_metadata  # noqa: E402
+from stella.lit.ads_repair import repair_ads_metadata  # noqa: E402
 
 SCRIPT = ROOT / "scripts" / "repair_ads_metadata.py"
 SPEC = importlib.util.spec_from_file_location("repair_ads_metadata_cli", SCRIPT)

@@ -12,16 +12,16 @@ from typing import Any
 import astropy.units as u
 from astropy.coordinates import SkyCoord
 
-from high_velocity_lit.catalog_review import read_json, relative_path, write_json
-from high_velocity_lit.hvs_catalog_enrichment import (
+from stella.lit.catalog_review import read_json, relative_path, write_json
+from stella.lit.hvs_catalog_enrichment import (
     ENRICHMENT_MODES,
     EnrichmentClients,
     QueryRows,
     enrich_object_records,
     disabled_enrichment,
 )
-from high_velocity_lit.hvs_candidates_index import HVS_CANDIDATES_FILENAME, iter_hvs_candidates_paths
-from high_velocity_lit.schema_models import LiteratureHvsCandidatesRecord
+from stella.lit.hvs_candidates_index import HVS_CANDIDATES_FILENAME, iter_hvs_candidates_paths
+from stella.lit.schema_models import LiteratureHvsCandidatesRecord
 
 
 OBJECT_SCHEMA_VERSION = "stella.hvs_candidate_catalog.object.v6"

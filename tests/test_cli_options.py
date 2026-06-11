@@ -11,15 +11,13 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC = ROOT / "src"
-sys.path.insert(0, str(SRC))
 
 fake_deepxiv_sdk = types.ModuleType("deepxiv_sdk")
 fake_deepxiv_sdk.Reader = object
 sys.modules.setdefault("deepxiv_sdk", fake_deepxiv_sdk)
 
-SCRIPT = ROOT / "scripts" / "fetch_high_velocity_lit.py"
-SPEC = importlib.util.spec_from_file_location("fetch_high_velocity_lit", SCRIPT)
+SCRIPT = ROOT / "scripts" / "fetch_literature.py"
+SPEC = importlib.util.spec_from_file_location("fetch_literature", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None
 cli = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(cli)

@@ -1,16 +1,14 @@
 from __future__ import annotations
 
-import sys
 import unittest
 from datetime import date
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
 
-from high_velocity_lit import pipeline  # noqa: E402
-from high_velocity_lit.models import MonthWindow, SearchConfig  # noqa: E402
+from stella.lit import pipeline  # noqa: E402
+from stella.lit.models import MonthWindow, SearchConfig  # noqa: E402
 
 
 class HistoricalCategoryResolutionTest(unittest.TestCase):

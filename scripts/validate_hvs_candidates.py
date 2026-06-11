@@ -17,15 +17,12 @@ from pydantic import ValidationError
 
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-SRC = WORKSPACE / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
 
-from high_velocity_lit.hvs_candidates_index import (  # noqa: E402
+from stella.lit.hvs_candidates_index import (  # noqa: E402
     iter_hvs_candidates_paths,
     write_hvs_candidates_index_outputs,
 )
-from high_velocity_lit.hvs_method_provenance import (  # noqa: E402
+from stella.lit.hvs_method_provenance import (  # noqa: E402
     REPORTED_VALUE_STEP_TYPE,
     allowed_direct_step_types,
     categories_have_compatible_direct_types,
@@ -34,7 +31,7 @@ from high_velocity_lit.hvs_method_provenance import (  # noqa: E402
     lineage_for_step,
     required_lineage_step_type_groups,
 )
-from high_velocity_lit.schema_specs import (  # noqa: E402
+from stella.lit.schema_specs import (  # noqa: E402
     LITERATURE_HVS_EXTRACTION_CONFIDENCE,
     LITERATURE_HVS_EXTRACTION_STATUSES,
     LITERATURE_HVS_GALACTIC_BOUND_CLAIMS,
@@ -44,7 +41,7 @@ from high_velocity_lit.schema_specs import (  # noqa: E402
     LITERATURE_HVS_METHOD_STEP_TYPES,
     LITERATURE_HVS_PAPER_LABELS,
 )
-from high_velocity_lit.schema_models import LiteratureHvsCandidatesRecord  # noqa: E402
+from stella.lit.schema_models import LiteratureHvsCandidatesRecord  # noqa: E402
 
 
 LATEX_RESIDUE_RE = re.compile(r"(\\[A-Za-z]+|[{}$]|[\^_]|\+/-|\u00b1)")

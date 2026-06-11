@@ -8,11 +8,8 @@ import sys
 from pathlib import Path
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-SRC = WORKSPACE / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
 
-from high_velocity_lit.schema_docs import generated_schema_docs  # noqa: E402
+from stella.lit.schema_docs import generated_schema_docs  # noqa: E402
 
 
 def build_parser() -> argparse.ArgumentParser:

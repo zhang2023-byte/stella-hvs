@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -10,10 +9,8 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC = ROOT / "src"
-sys.path.insert(0, str(SRC))
 
-from high_velocity_dyn.dynamics import (  # noqa: E402
+from stella.dyn.dynamics import (  # noqa: E402
     DEFAULT_MCMC_SAMPLES,
     KinematicArrays,
     QueryRows,

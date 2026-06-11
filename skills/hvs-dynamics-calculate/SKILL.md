@@ -1,5 +1,5 @@
 ---
-name: hvs_dynamics_calculate
+name: hvs-dynamics-calculate
 description: Calculate object-level HVS Galactocentric dynamics, Gaia DR3 zero-point-corrected astrometry, total velocity, unbound probability, and graveyard flags for Stella catalog objects.
 ---
 

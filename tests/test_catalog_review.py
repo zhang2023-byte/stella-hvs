@@ -10,9 +10,8 @@ from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
 
-from high_velocity_lit.catalog_review import (  # noqa: E402
+from stella.lit.catalog_review import (  # noqa: E402
     build_catalog_candidate_inventory,
     cleanup_catalog_workflow_outputs,
     rebuild_catalog_index,

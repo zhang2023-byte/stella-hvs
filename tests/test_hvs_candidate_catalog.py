@@ -11,14 +11,13 @@ from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
 SCRIPT = ROOT / "scripts" / "merge_hvs_candidate_catalog.py"
 SPEC = importlib.util.spec_from_file_location("merge_hvs_candidate_catalog", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None
 merge_cli = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(merge_cli)
 
-from high_velocity_lit.hvs_candidate_catalog import (  # noqa: E402
+from stella.lit.hvs_candidate_catalog import (  # noqa: E402
     CANDIDATES_DIRNAME,
     INDEX_JSON_FILENAME,
     INDEX_MARKDOWN_FILENAME,
@@ -29,8 +28,8 @@ from high_velocity_lit.hvs_candidate_catalog import (  # noqa: E402
     write_rebuilt_hvs_candidate_catalog,
     write_updated_hvs_candidate_catalog,
 )
-from high_velocity_lit.hvs_catalog_enrichment import QueryRows  # noqa: E402
-from high_velocity_lit.schema_specs import LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION  # noqa: E402
+from stella.lit.hvs_catalog_enrichment import QueryRows  # noqa: E402
+from stella.lit.schema_specs import LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION  # noqa: E402
 
 
 def write_json(path: Path, payload: dict[str, object]) -> None:

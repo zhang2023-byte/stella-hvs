@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-import json
 import re
 import unittest
 from pathlib import Path
+
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,7 +29,7 @@ REQUIRED_WORKFLOW_FIELDS = {
 class WorkflowManifestTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        cls.manifest = yaml.safe_load(MANIFEST.read_text(encoding="utf-8"))
         cls.workflows = cls.manifest["workflows"]
         cls.workflow_ids = {workflow["id"] for workflow in cls.workflows}
         cls.workflow_by_id = {workflow["id"]: workflow for workflow in cls.workflows}

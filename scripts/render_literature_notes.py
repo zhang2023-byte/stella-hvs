@@ -5,22 +5,18 @@ from __future__ import annotations
 
 import argparse
 import json
-import sys
 from pathlib import Path
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-SRC = WORKSPACE / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
 
-from high_velocity_lit.markdown import render_index, render_month_note  # noqa: E402
-from high_velocity_lit.indexing import (  # noqa: E402
+from stella.lit.markdown import render_index, render_month_note  # noqa: E402
+from stella.lit.indexing import (  # noqa: E402
     LEGACY_NOTES_INDEX_JSON_FILENAMES,
     NOTES_INDEX_JSON_FILENAME,
     NOTES_INDEX_MARKDOWN_FILENAME,
     refresh_index_outputs,
 )
-from high_velocity_lit.note_paths import iter_month_json_paths, resolve_month_json_path  # noqa: E402
+from stella.lit.note_paths import iter_month_json_paths, resolve_month_json_path  # noqa: E402
 
 
 def read_json(path: Path) -> dict[str, object]:

@@ -14,11 +14,8 @@ from astropy.io import ascii
 from pydantic import ValidationError
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-SRC = WORKSPACE / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
 
-from high_velocity_lit.schema_models import CatalogExtractionRecord  # noqa: E402
+from stella.lit.schema_models import CatalogExtractionRecord  # noqa: E402
 
 
 def load_json(path: Path) -> Any:

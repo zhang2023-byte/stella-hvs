@@ -7,25 +7,21 @@ import argparse
 import calendar
 import json
 import re
-import sys
 from datetime import date
 from pathlib import Path
 
 import requests
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-SRC = WORKSPACE / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
 
-from high_velocity_lit.literature_assets import (  # noqa: E402
+from stella.lit.literature_assets import (  # noqa: E402
     DEFAULT_TIMEOUT,
     DEFAULT_USER_AGENT,
     archive_paper,
     load_data_related_papers,
 )
-from high_velocity_lit.env import env_value, load_env_files  # noqa: E402
-from high_velocity_lit.note_paths import resolve_month_json_path  # noqa: E402
+from stella.lit.env import env_value, load_env_files  # noqa: E402
+from stella.lit.note_paths import resolve_month_json_path  # noqa: E402
 
 
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")

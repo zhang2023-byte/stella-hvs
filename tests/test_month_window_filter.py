@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import sys
 import tempfile
 import unittest
 from datetime import date
@@ -10,11 +9,10 @@ from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
 
-from high_velocity_lit import pipeline  # noqa: E402
-from high_velocity_lit.models import SearchConfig  # noqa: E402
-from high_velocity_lit.note_paths import month_json_path, month_markdown_path  # noqa: E402
+from stella.lit import pipeline  # noqa: E402
+from stella.lit.models import SearchConfig  # noqa: E402
+from stella.lit.note_paths import month_json_path, month_markdown_path  # noqa: E402
 
 
 class FakeArxivClient:

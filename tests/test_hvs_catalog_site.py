@@ -2,14 +2,12 @@ from __future__ import annotations
 
 import importlib.util
 import json
-import sys
 import tempfile
 import unittest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
 
 
 def _load_script(name: str):
@@ -19,7 +17,7 @@ def _load_script(name: str):
     spec.loader.exec_module(module)
     return module
 
-from stella_html.catalog_site import (  # noqa: E402
+from stella.html.catalog_site import (  # noqa: E402
     CANDIDATES_DIRNAME,
     build_index_row,
     build_static_html,
@@ -514,7 +512,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
             self.assertFalse(has_external_html_dependencies(html))
 
     def test_home_filters_use_bounded_inputs_not_sliders(self) -> None:
-        js = (ROOT / "src" / "stella_html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        js = (ROOT / "src" / "stella" / "html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
 
         self.assertIn("data-filter-bound", js)
         self.assertIn("filterValidationErrors", js)
@@ -522,7 +520,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertNotIn("data-range-filter", js)
 
     def test_home_filter_input_updates_table_without_rebuilding_home(self) -> None:
-        js = (ROOT / "src" / "stella_html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        js = (ROOT / "src" / "stella" / "html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
         update_body = js.split("function updateFilterBound", 1)[1].split("function route", 1)[0]
 
         self.assertIn("catalog-table-region", js)
@@ -531,7 +529,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertNotIn("renderHome()", update_body)
 
     def test_home_empty_table_cells_are_unboxed(self) -> None:
-        css = (ROOT / "src" / "stella_html" / "assets" / "stella.css").read_text(encoding="utf-8")
+        css = (ROOT / "src" / "stella" / "html" / "assets" / "stella.css").read_text(encoding="utf-8")
         empty_inline_rule = css.split(".empty-inline {", 1)[1].split("}", 1)[0]
 
         self.assertIn("background: transparent", empty_inline_rule)
@@ -539,7 +537,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertNotIn(".empty-inline,\n.empty-state", css)
 
     def test_home_sorting_is_limited_to_approved_columns(self) -> None:
-        js = (ROOT / "src" / "stella_html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        js = (ROOT / "src" / "stella" / "html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
         sortable_block = js.split("const SORTABLE_HOME_KEYS", 1)[1].split("]);", 1)[0]
 
         for key in ("discovery", "total_velocity", "p_unbound", "radial_velocity"):
@@ -550,14 +548,14 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertIn("plain-header-label", js)
 
     def test_reported_by_source_mode_can_show_all_sources(self) -> None:
-        js = (ROOT / "src" / "stella_html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        js = (ROOT / "src" / "stella" / "html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
 
         self.assertIn('["all", "all"]', js)
         self.assertIn('modes.reportedBy === "all"', js)
         self.assertIn("sortedPaperEntries", js)
 
     def test_source_mode_change_avoids_full_home_rerender(self) -> None:
-        js = (ROOT / "src" / "stella_html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        js = (ROOT / "src" / "stella" / "html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
         mode_change_body = js.split('if (mode && Object.prototype.hasOwnProperty.call(state.homeConfig.modes, mode)) {', 1)[
             1
         ].split("const visibleColumn", 1)[0]
@@ -567,7 +565,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertNotIn("renderHome()", mode_change_body)
 
     def test_home_cells_use_compact_values_tooltips_and_source_labels(self) -> None:
-        js = (ROOT / "src" / "stella_html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        js = (ROOT / "src" / "stella" / "html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
 
         self.assertIn("renderDisplayQuantityMath", js)
         self.assertIn("formatIntervalNumber", js)
@@ -577,7 +575,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
         self.assertIn('text: "(" + valid.map((part) => part.text).join(", ") + ")"', js)
 
     def test_method_dag_uses_dark_readable_colors(self) -> None:
-        css = (ROOT / "src" / "stella_html" / "assets" / "stella.css").read_text(encoding="utf-8")
+        css = (ROOT / "src" / "stella" / "html" / "assets" / "stella.css").read_text(encoding="utf-8")
         dag_scroll_rule = css.split(".dag-scroll {", 1)[1].split("}", 1)[0]
         dag_node_rect_rule = css.split(".dag-node rect {", 1)[1].split("}", 1)[0]
 
@@ -625,7 +623,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
             self.assertEqual(snapshot["schema_version"], "stella.hvs_catalog_site.snapshot.v2")
 
     def test_external_links_pass_through_url_scheme_allowlist(self) -> None:
-        js = (ROOT / "src" / "stella_html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
+        js = (ROOT / "src" / "stella" / "html" / "assets" / "catalog-viewer.js").read_text(encoding="utf-8")
 
         self.assertIn("function safeUrl", js)
         self.assertIn("escapeHtml(safeUrl(links.abs", js)
@@ -642,7 +640,7 @@ class HvsCatalogSiteTest(unittest.TestCase):
             write_json(catalog / "03_hvs_candidates_index.json", {"summary": {"object_count": 1}, "objects": []})
             write_json(catalog / CANDIDATES_DIRNAME / "Gaia_DR3_123.json", record)
 
-            assets = ROOT / "src" / "stella_html" / "assets"
+            assets = ROOT / "src" / "stella" / "html" / "assets"
             html = build_static_html(
                 catalog,
                 assets / "stella.css",

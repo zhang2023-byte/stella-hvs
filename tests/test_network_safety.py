@@ -1,14 +1,12 @@
 from __future__ import annotations
 
-import sys
 import unittest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
 
-from high_velocity_lit.network_safety import validate_public_http_url  # noqa: E402
+from stella.lit.network_safety import validate_public_http_url  # noqa: E402
 
 
 class NetworkSafetyTest(unittest.TestCase):

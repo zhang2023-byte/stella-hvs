@@ -12,11 +12,8 @@ from datetime import date
 from pathlib import Path
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-SRC = WORKSPACE / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
 
-from high_velocity_lit.config import (  # noqa: E402
+from stella.lit.config import (  # noqa: E402
     DEFAULT_CATEGORIES,
     DEFAULT_DEEPXIV_LLM_REVIEW_MAX_CANDIDATES,
     DEFAULT_LLM_BASE_URL,
@@ -28,9 +25,9 @@ from high_velocity_lit.config import (  # noqa: E402
     DEFAULT_SEARCH_MODE,
     DEFAULT_SEARCH_SLEEP_SECONDS,
 )
-from high_velocity_lit.env import env_value, load_env_files  # noqa: E402
-from high_velocity_lit.models import SearchConfig  # noqa: E402
-from high_velocity_lit.pipeline import PartialRunError, run_pipeline  # noqa: E402
+from stella.lit.env import env_value, load_env_files  # noqa: E402
+from stella.lit.models import SearchConfig  # noqa: E402
+from stella.lit.pipeline import PartialRunError, run_pipeline  # noqa: E402
 
 load_env_files(WORKSPACE)
 

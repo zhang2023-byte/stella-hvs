@@ -1,14 +1,12 @@
 from __future__ import annotations
 
-import sys
 import unittest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
 
-from high_velocity_lit.arxiv_client import ArxivClient  # noqa: E402
+from stella.lit.arxiv_client import ArxivClient  # noqa: E402
 
 
 EMPTY_FEED = b"""<?xml version="1.0" encoding="UTF-8"?>

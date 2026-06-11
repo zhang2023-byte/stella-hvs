@@ -9,17 +9,14 @@ from pathlib import Path
 
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-SRC = WORKSPACE / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
 
-from high_velocity_lit.hvs_candidate_catalog import (  # noqa: E402
+from stella.lit.hvs_candidate_catalog import (  # noqa: E402
     EXTERNAL_MERGE_MODES,
     HVS_CANDIDATES_FILENAME,
     write_rebuilt_hvs_candidate_catalog,
     write_updated_hvs_candidate_catalog,
 )
-from high_velocity_lit.hvs_catalog_enrichment import ENRICHMENT_MODES, EnrichmentError  # noqa: E402
+from stella.lit.hvs_catalog_enrichment import ENRICHMENT_MODES, EnrichmentError  # noqa: E402
 
 
 def parse_bool(value: str) -> bool:

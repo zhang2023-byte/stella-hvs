@@ -257,7 +257,7 @@ Merge rules:
 
 - `catalog/html/live/`: under a local HTTP server, reads `catalog/03_hvs_candidates_index.json` and each `catalog/candidates/<object_id>.json` live. Refreshing the page reflects catalog updates.
 - `catalog/html/live/assets/paper-metadata.json`: a generated local summary of already archived `literature/<arxiv_id>/ads_metadata.json` fields used for `Author et al. Year` labels and citation-based source selection. It is not fetched from ADS during the HTML build.
-- `catalog/html/live/assets/stella-hvs-hero.png`: the reusable local HVS hero image copied from `src/stella_html/assets/`.
+- `catalog/html/live/assets/stella-hvs-hero.png`: the reusable local HVS hero image copied from `src/stella/html/assets/`.
 - `catalog/html/static/index.html`: a single-file snapshot with catalog data, CSS, JS, local paper metadata, and local visual assets embedded at build time. It has no CDN or remote image dependency and is suitable for quick demos.
 - `site/`: the GitHub Pages deployment snapshot prepared by `scripts/prepare_pages_site.py` from `catalog/html/static/`. It is committable so GitHub Actions can publish it, but it remains generated from the catalog and should be refreshed instead of edited by hand.
 

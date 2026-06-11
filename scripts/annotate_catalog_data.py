@@ -7,22 +7,18 @@ import argparse
 import calendar
 import json
 import re
-import sys
 from datetime import date
 from pathlib import Path
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-SRC = WORKSPACE / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
 
-from high_velocity_lit.catalog_assessment import DeepXivCLIReader, LLMCatalogAssessor, annotate_record  # noqa: E402
-from high_velocity_lit.config import DEFAULT_LLM_BASE_URL, DEFAULT_LLM_BATCH_SIZE, DEFAULT_LLM_MODEL  # noqa: E402
-from high_velocity_lit.env import env_value, load_env_files  # noqa: E402
-from high_velocity_lit.indexing import refresh_index_outputs  # noqa: E402
-from high_velocity_lit.markdown import render_month_note  # noqa: E402
-from high_velocity_lit.note_paths import resolve_month_json_path  # noqa: E402
-from high_velocity_lit.title_classifier import load_llm_api_key  # noqa: E402
+from stella.lit.catalog_assessment import DeepXivCLIReader, LLMCatalogAssessor, annotate_record  # noqa: E402
+from stella.lit.config import DEFAULT_LLM_BASE_URL, DEFAULT_LLM_BATCH_SIZE, DEFAULT_LLM_MODEL  # noqa: E402
+from stella.lit.env import env_value, load_env_files  # noqa: E402
+from stella.lit.indexing import refresh_index_outputs  # noqa: E402
+from stella.lit.markdown import render_month_note  # noqa: E402
+from stella.lit.note_paths import resolve_month_json_path  # noqa: E402
+from stella.lit.title_classifier import load_llm_api_key  # noqa: E402
 
 load_env_files(WORKSPACE)
 

@@ -31,7 +31,7 @@ values.
 ## Workflow
 
 1. Confirm this is the Stella repository by checking for `AGENTS.md`,
-   `scripts/merge_hvs_candidate_catalog.py`, and `src/high_velocity_lit/`.
+   `scripts/merge_hvs_candidate_catalog.py`, and `src/stella/lit/`.
 2. Inspect inputs:
    - For a full rebuild, scan `literature/*/literature_hvs_candidates.json`.
    - For an update, inspect the requested `--arxiv-id` or explicit JSON path

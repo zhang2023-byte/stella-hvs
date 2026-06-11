@@ -453,7 +453,7 @@ def resume_command(config: SearchConfig, failed_month: MonthWindow) -> str:
         "-n",
         "stella-env",
         "python",
-        "scripts/fetch_high_velocity_lit.py",
+        "scripts/fetch_literature.py",
         "--from",
         failed_month.slug,
         "--to",

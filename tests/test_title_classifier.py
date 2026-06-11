@@ -1,16 +1,14 @@
 from __future__ import annotations
 
 import json
-import sys
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
 
-from high_velocity_lit.title_classifier import LLMTitleClassifier, heuristic_title_decision  # noqa: E402
+from stella.lit.title_classifier import LLMTitleClassifier, heuristic_title_decision  # noqa: E402
 
 
 class TitleClassifierRulesTest(unittest.TestCase):

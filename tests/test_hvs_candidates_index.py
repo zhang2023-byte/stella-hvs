@@ -11,15 +11,14 @@ from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
 SCRIPT = ROOT / "scripts" / "build_hvs_candidates_index.py"
 SPEC = importlib.util.spec_from_file_location("build_hvs_candidates_index", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None
 build_index_cli = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(build_index_cli)
 
-from high_velocity_lit.hvs_candidates_index import rebuild_hvs_candidates_index, render_hvs_candidates_index  # noqa: E402
-from high_velocity_lit.schema_specs import LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION  # noqa: E402
+from stella.lit.hvs_candidates_index import rebuild_hvs_candidates_index, render_hvs_candidates_index  # noqa: E402
+from stella.lit.schema_specs import LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION  # noqa: E402
 
 
 def write_json(path: Path, payload: dict[str, object]) -> None:

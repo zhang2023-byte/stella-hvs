@@ -6,19 +6,15 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import sys
 from pathlib import Path
 
 import requests
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-SRC = WORKSPACE / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
 
-from high_velocity_lit.ads_repair import repair_ads_metadata  # noqa: E402
-from high_velocity_lit.env import env_value, load_env_files  # noqa: E402
-from high_velocity_lit.literature_assets import DEFAULT_TIMEOUT, DEFAULT_USER_AGENT  # noqa: E402
+from stella.lit.ads_repair import repair_ads_metadata  # noqa: E402
+from stella.lit.env import env_value, load_env_files  # noqa: E402
+from stella.lit.literature_assets import DEFAULT_TIMEOUT, DEFAULT_USER_AGENT  # noqa: E402
 
 
 ARXIV_ID_RE = re.compile(r"^\d{4}\.\d{4,5}(v\d+)?$")

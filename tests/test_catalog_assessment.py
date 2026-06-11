@@ -11,14 +11,13 @@ from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
 
-from high_velocity_lit.catalog_assessment import (  # noqa: E402
+from stella.lit.catalog_assessment import (  # noqa: E402
     CatalogAssessment,
     LLMCatalogAssessor,
     annotate_record,
 )
-from high_velocity_lit.markdown import render_month_note  # noqa: E402
+from stella.lit.markdown import render_month_note  # noqa: E402
 
 SCRIPT = ROOT / "scripts" / "annotate_catalog_data.py"
 SPEC = importlib.util.spec_from_file_location("annotate_catalog_data", SCRIPT)

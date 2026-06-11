@@ -7,9 +7,9 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from high_velocity_lit.catalog_review import relative_path, write_json, read_json
-from high_velocity_lit.schema_models import LiteratureHvsCandidatesRecord
-from high_velocity_lit.schema_specs import LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION
+from stella.lit.catalog_review import relative_path, write_json, read_json
+from stella.lit.schema_models import LiteratureHvsCandidatesRecord
+from stella.lit.schema_specs import LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION
 
 
 HVS_CANDIDATES_INDEX_SCHEMA_VERSION = LITERATURE_HVS_CANDIDATES_INDEX_SCHEMA_VERSION

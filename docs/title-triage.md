@@ -50,7 +50,7 @@ Joint inference from parallax and proper motions
 ## LLM Review for No-Clear-Title-Evidence Papers
 
 ```bash
-conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
+conda run -n stella-env python scripts/fetch_literature.py \
   --from 2026-03 \
   --llm-review True
 ```

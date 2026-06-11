@@ -14,8 +14,8 @@ from typing import Any, Callable, Protocol
 
 import numpy as np
 
-from high_velocity_lit.catalog_review import read_json, write_json
-from high_velocity_lit.hvs_candidate_catalog import CANDIDATES_DIRNAME, OBJECT_SCHEMA_VERSION
+from stella.lit.catalog_review import read_json, write_json
+from stella.lit.hvs_candidate_catalog import CANDIDATES_DIRNAME, OBJECT_SCHEMA_VERSION
 
 
 DYNAMICS_SCHEMA_VERSION = "stella.hvs_dynamics.v1"

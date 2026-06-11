@@ -1,15 +1,13 @@
 from __future__ import annotations
 
-import sys
 import unittest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
 
-from high_velocity_lit.schema_specs import SKILL_SCHEMA_SPECS  # noqa: E402
-from high_velocity_lit.schema_docs import generated_schema_docs  # noqa: E402
+from stella.lit.schema_specs import SKILL_SCHEMA_SPECS  # noqa: E402
+from stella.lit.schema_docs import generated_schema_docs  # noqa: E402
 
 
 class SkillSchemaDocsTest(unittest.TestCase):

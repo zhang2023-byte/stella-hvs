@@ -5,15 +5,11 @@ from __future__ import annotations
 
 import argparse
 import json
-import sys
 from pathlib import Path
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-SRC = WORKSPACE / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
 
-from high_velocity_lit.catalog_review import cleanup_catalog_workflow_outputs  # noqa: E402
+from stella.lit.catalog_review import cleanup_catalog_workflow_outputs  # noqa: E402
 
 
 def parse_bool(value: str) -> bool:

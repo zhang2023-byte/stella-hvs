@@ -1,249 +1,706 @@
-{
-  "version": 1,
-  "clarification_policy": "Ask only for missing details that change results, trigger real network/API calls, or risk modifying the wrong generated data. Use documented defaults for low-risk optional inputs and report assumptions.",
-  "temporary_artifacts_policy": "Temporary helper scripts, scratch files, probes, and one-off analysis outputs created during workflow execution must be removed before the agent reports completion, unless explicitly kept by the user or promoted into maintained project code with appropriate tests and documentation. Prefer /tmp or ignored scratch locations for temporary files, and do not delete canonical project scripts under scripts/.",
-  "workflows": [
-    {
-      "id": "monthly_literature_fetch",
-      "human_intents": ["fetch HVS literature", "update monthly papers", "process recent HVS papers"],
-      "required_inputs": ["from"],
-      "optional_inputs": ["to", "source", "llm_review", "max_results", "categories"],
-      "clarify_if_missing": ["from", "network_permission_for_new_fetches", "llm_review_when_requested_but_unspecified"],
-      "agent_prompt_template": "Run monthly_literature_fetch for FROM=<from> and optional TO=<to>. Use source=deepxiv, llm_review=False, max_results=20, categories=astro-ph.GA,astro-ph.SR,astro-ph.IM unless the user overrides them. Do not make real DeepXiv calls unless the user explicitly allows new data fetching. Preserve provenance, write monthly JSON/Markdown, and report quota/API partial results with resume guidance.",
-      "prerequisite_checks": ["Confirm environment stella-env is available if executing.", "Confirm the user allowed real network/API fetching.", "Confirm .env has DEEPXIV_TOKEN when source=deepxiv."],
-      "commands": ["conda run -n stella-env python scripts/fetch_high_velocity_lit.py --from <from>"],
-      "outputs": ["notes/YYYY/YYYY-MM/YYYY-MM.json", "notes/YYYY/YYYY-MM/YYYY-MM.md", "notes/YYYY/YYYY-MM/YYYY-MM.title-triage.json", "notes/00_literature_notes_index.json", "notes/00_literature_notes_index.md"],
-      "validators": ["conda run -n stella-env python scripts/render_lit_notes.py --index-only"],
-      "risk_level": "network",
-      "network_policy": "Requires explicit permission for real new DeepXiv/arXiv fetching.",
-      "generated_files_policy": "Do not manually edit generated Markdown or force-add notes outputs.",
-      "referenced_paths": ["scripts/fetch_high_velocity_lit.py", "scripts/render_lit_notes.py", "skills/deepxiv-cli/SKILL.md", "docs/usage.md", "docs/title-triage.md"]
-    },
-    {
-      "id": "catalog_assessment",
-      "human_intents": ["assess data papers", "find papers with observational catalogs", "add catalog_assessment"],
-      "required_inputs": ["months_or_range"],
-      "optional_inputs": ["llm_model", "render", "dry_run"],
-      "clarify_if_missing": ["months_or_range", "network_or_llm_permission"],
-      "agent_prompt_template": "Run catalog_assessment for MONTHS=<months_or_range>. Use existing monthly JSON as input. Use abstract and CLI-gathered context including DeepXiv brief when available. Refresh Markdown and indexes unless render=False is requested. Report token, quota, or API failures explicitly.",
-      "prerequisite_checks": ["Confirm target monthly JSON exists.", "Confirm permission for DeepXiv/LLM calls.", "Confirm .env has required tokens for selected mode."],
-      "commands": ["conda run -n stella-env python scripts/annotate_catalog_data.py --on <months>"],
-      "outputs": ["notes/YYYY/YYYY-MM/YYYY-MM.json", "notes/YYYY/YYYY-MM/YYYY-MM.md", "notes/00_literature_notes_index.json", "notes/00_literature_notes_index.md"],
-      "validators": ["conda run -n stella-env python scripts/render_lit_notes.py --index-only"],
-      "risk_level": "network_llm",
-      "network_policy": "Requires explicit permission for DeepXiv/LLM calls.",
-      "generated_files_policy": "Monthly JSON is source data; Markdown and indexes are generated from it.",
-      "referenced_paths": ["scripts/annotate_catalog_data.py", "scripts/render_lit_notes.py", "skills/deepxiv-cli/SKILL.md", "docs/usage.md", "docs/outputs.md"]
-    },
-    {
-      "id": "literature_asset_archive",
-      "human_intents": ["archive paper assets", "download papers", "pull literature assets"],
-      "required_inputs": ["months_or_arxiv_ids"],
-      "optional_inputs": ["timeout", "dry_run"],
-      "clarify_if_missing": ["months_or_arxiv_ids", "network_download_permission"],
-      "agent_prompt_template": "Run literature_asset_archive for TARGET=<months_or_arxiv_ids>. Archive public arXiv/ADS assets for selected data-related papers or explicit arXiv IDs. Write audit.json for every paper and report each failed asset fetch; do not silently proceed as if missing assets succeeded.",
-      "prerequisite_checks": ["Confirm target notes or arXiv IDs.", "Confirm public network download permission.", "Confirm ADS_API_TOKEN when ADS metadata is expected."],
-      "commands": ["conda run -n stella-env python scripts/pull_literature_assets.py --from <from> --to <to>", "conda run -n stella-env python scripts/pull_literature_assets.py --arxiv-id <ids>"],
-      "outputs": ["literature/<arxiv_id>/audit.json", "literature/<arxiv_id>/arxiv_abs.html", "literature/<arxiv_id>/arxiv.pdf", "literature/<arxiv_id>/arxiv_source/", "literature/<arxiv_id>/ads_metadata.json"],
-      "validators": ["Review literature/<arxiv_id>/audit.json for success and failure records."],
-      "risk_level": "network_download",
-      "network_policy": "Requires explicit permission for public HTTP(S) downloads and ADS API calls.",
-      "generated_files_policy": "literature/ is generated archive data and ignored by Git by default.",
-      "referenced_paths": ["scripts/pull_literature_assets.py", "docs/usage.md", "docs/outputs.md"]
-    },
-    {
-      "id": "ads_metadata_repair",
-      "human_intents": ["repair ADS metadata", "fix bibcodes", "refresh ADS API metadata"],
-      "required_inputs": ["target"],
-      "optional_inputs": ["force", "dry_run"],
-      "clarify_if_missing": ["target", "ads_api_permission"],
-      "agent_prompt_template": "Run ads_metadata_repair for TARGET=<arXiv IDs or all archived papers>. Query the ADS API only, save full ads_metadata.json responses, update audit.json, and fill only paper.bibcode in literature_hvs_candidates.json if present. Do not construct bibcodes and do not scrape ADS HTML.",
-      "prerequisite_checks": ["Confirm target archived papers exist.", "Confirm ADS_API_TOKEN or ADS_TOKEN is available.", "Confirm permission for ADS API calls."],
-      "commands": ["conda run -n stella-env python scripts/repair_ads_metadata.py --arxiv-id <ids>", "conda run -n stella-env python scripts/repair_ads_metadata.py"],
-      "outputs": ["literature/<arxiv_id>/ads_metadata.json", "literature/<arxiv_id>/audit.json", "literature/<arxiv_id>/literature_hvs_candidates.json"],
-      "validators": ["Inspect command summary and audit.json ads_api/ads_metadata status."],
-      "risk_level": "network_api",
-      "network_policy": "Requires explicit permission for ADS API calls.",
-      "generated_files_policy": "Do not edit candidate_origin.citation.bibcode for cited literature.",
-      "referenced_paths": ["scripts/repair_ads_metadata.py", "docs/usage.md", "docs/outputs.md"]
-    },
-    {
-      "id": "catalog_review",
-      "human_intents": ["review paper data assets", "inspect catalog tables", "fill catalog_review"],
-      "required_inputs": ["arxiv_id"],
-      "optional_inputs": ["require_complete"],
-      "clarify_if_missing": ["arxiv_id", "continue_if_archive_assets_missing"],
-      "agent_prompt_template": "Use hvs-catalog-review for one ARXIV_ID=<arxiv_id>. If the target contains multiple papers, route to catalog_review_batch instead. Inspect audit.json and archived source assets first. Generate the schema-backed catalog_review.json template if needed. Inventory internal LaTeX tables and paper-described external resources only. Do not decide HVS relevance and do not download external resources. In worker mode, read and write only this paper's directory and return the worker status contract. Validate with --require-complete and rebuild the catalog workflow index only when not running under a batch parent.",
-      "prerequisite_checks": ["Read literature/<arxiv_id>/audit.json.", "Confirm arXiv source/PDF/ADS metadata status.", "Read hvs-catalog-review skill and schema reference."],
-      "commands": ["conda run -n stella-env python scripts/init_catalog_review.py --arxiv-id <arxiv_id>", "conda run -n stella-env python scripts/validate_catalog_review.py --arxiv-id <arxiv_id> --require-complete", "conda run -n stella-env python scripts/build_catalog_index.py"],
-      "outputs": ["literature/<arxiv_id>/catalog_review.json", "literature/01_literature_catalog_index.json", "literature/01_literature_catalog_index.md"],
-      "validators": ["conda run -n stella-env python scripts/validate_catalog_review.py --arxiv-id <arxiv_id> --require-complete"],
-      "risk_level": "generated_data",
-      "network_policy": "No new external resource downloads in this workflow.",
-      "generated_files_policy": "catalog_review.json is paper-level source data; generated indexes must be rebuilt, not hand-edited.",
-      "referenced_paths": ["scripts/init_catalog_review.py", "scripts/validate_catalog_review.py", "scripts/build_catalog_index.py", "skills/hvs-catalog-review/SKILL.md", "docs/outputs.md"]
-    },
-    {
-      "id": "catalog_review_batch",
-      "human_intents": ["batch review paper data assets", "review multiple paper data assets", "inspect catalog tables for multiple papers", "fill catalog_review for multiple papers"],
-      "required_inputs": ["arxiv_ids"],
-      "optional_inputs": ["max_parallel", "require_complete"],
-      "clarify_if_missing": ["arxiv_ids", "continue_if_archive_assets_missing"],
-      "agent_prompt_template": "Run catalog_review_batch for ARXIV_IDS=<arxiv_ids>. The parent agent must dispatch one fresh subagent per arXiv ID using the catalog_review worker workflow. Do not process multiple papers in the parent context and do not reuse a worker for more than one paper. Use adaptive_probe concurrency: use any tool-exposed concurrency limit when available; otherwise gradually start workers until a concurrency, quota, or rate-limit error reveals the current cap. When a worker finishes, close or clear it before dispatching the next queued paper. Track completed, blocked, failed, and partial worker statuses, then rebuild the catalog workflow index once after all workers finish.",
-      "prerequisite_checks": ["Resolve the target arXiv ID list before dispatch.", "Confirm subagent capability is available; if unavailable, report the limitation instead of processing multiple papers in one context.", "Confirm archive-asset failure policy for the batch."],
-      "commands": ["Dispatch one fresh subagent per <arxiv_id> with the catalog_review workflow prompt.", "conda run -n stella-env python scripts/build_catalog_index.py"],
-      "outputs": ["literature/<arxiv_id>/catalog_review.json", "literature/01_literature_catalog_index.json", "literature/01_literature_catalog_index.md"],
-      "validators": ["conda run -n stella-env python scripts/validate_catalog_review.py --arxiv-id <arxiv_id> --require-complete", "Review all worker status records before rebuilding the catalog workflow index."],
-      "risk_level": "generated_data",
-      "network_policy": "No new external resource downloads in this workflow.",
-      "generated_files_policy": "catalog_review.json is per-paper source data; generated indexes are rebuilt once by the parent after workers complete.",
-      "orchestration": {
-        "unit": "arxiv_id",
-        "worker_workflow": "catalog_review",
-        "worker_reuse_policy": "never",
-        "concurrency_strategy": "adaptive_probe",
-        "parent_role": "dispatch_monitor_summarize",
-        "worker_status_fields": ["arxiv_id", "status", "outputs", "validator_result", "warnings", "blockers", "next_action"],
-        "worker_status_values": ["completed", "blocked", "failed", "partial"]
-      },
-      "referenced_paths": ["scripts/build_catalog_index.py", "skills/hvs-catalog-review/SKILL.md", "docs/outputs.md"]
-    },
-    {
-      "id": "catalog_table_extraction",
-      "human_intents": ["extract reviewed tables", "convert catalog tables", "write ECSV"],
-      "required_inputs": ["arxiv_id_or_all_reviewed"],
-      "optional_inputs": ["internal_table_id", "jobs", "overwrite", "dry_run"],
-      "clarify_if_missing": ["arxiv_id_or_all_reviewed", "overwrite_when_existing_outputs_present"],
-      "agent_prompt_template": "Use hvs-catalog-extraction for TARGET=<arxiv_id_or_all_reviewed>. Process only latex_table entries from catalog_review.json. Write catalog_extraction.json, catalog_sources, and catalog_tables ECSV. Do not add scientific semantics, perform HVS filtering, or process external resources. Validate extraction output.",
-      "prerequisite_checks": ["Confirm catalog_review.json exists and is reviewed.", "Check LaTeXML/Pandoc availability when relevant.", "Confirm overwrite intent before replacing existing extraction assets."],
-      "commands": ["conda run -n stella-env python scripts/extract_catalog_tables.py --arxiv-id <arxiv_id>", "conda run -n stella-env python scripts/validate_catalog_extraction.py --arxiv-id <arxiv_id> --require-reviewed"],
-      "outputs": ["literature/<arxiv_id>/catalog_extraction.json", "literature/<arxiv_id>/catalog_sources/<internal_table_id>/excerpt.tex", "literature/<arxiv_id>/catalog_tables/<internal_table_id>.ecsv"],
-      "validators": ["conda run -n stella-env python scripts/validate_catalog_extraction.py --arxiv-id <arxiv_id> --require-reviewed"],
-      "risk_level": "generated_data",
-      "network_policy": "No external resources are downloaded or parsed.",
-      "generated_files_policy": "Extraction artifacts are generated from catalog_review.json and archived source.",
-      "referenced_paths": ["scripts/extract_catalog_tables.py", "scripts/validate_catalog_extraction.py", "skills/hvs-catalog-extraction/SKILL.md", "docs/outputs.md"]
-    },
-    {
-      "id": "hvs_candidate_extraction",
-      "human_intents": ["extract HVS candidates", "check paper for unbound candidates", "fill literature_hvs_candidates"],
-      "required_inputs": ["arxiv_id"],
-      "optional_inputs": ["rebuild_index", "verbose_warnings"],
-      "clarify_if_missing": ["arxiv_id", "create_missing_review_or_extraction_inputs"],
-      "agent_prompt_template": "Use hvs-candidates-extraction for one ARXIV_ID=<arxiv_id>. If the target contains multiple papers, route to hvs_candidate_extraction_batch instead. Confirm audit.json, ADS metadata, catalog_review.json, catalog_extraction.json, and relevant ECSV files exist. Read paper text first to establish inclusion and candidate_origin. Use tables only after text evidence justifies inclusion. Write literature_hvs_candidates.json with source_refs and method_refs, or status=no_candidates with empty candidates. In worker mode, read and write only this paper's directory and return the worker status contract. Validate with --require-complete and rebuild the HVS candidates index only when requested and not running under a batch parent.",
-      "prerequisite_checks": ["Read audit.json and ADS metadata.", "Read catalog_review.json and catalog_extraction.json.", "Read hvs-candidates-extraction skill, schema reference, and coordinate frame reference."],
-      "commands": ["conda run -n stella-env python scripts/init_hvs_candidates.py --arxiv-id <arxiv_id>", "conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id <arxiv_id> --require-complete", "conda run -n stella-env python scripts/build_hvs_candidates_index.py --fail-on-skipped"],
-      "outputs": ["literature/<arxiv_id>/literature_hvs_candidates.json", "literature/02_literature_hvs_index.json", "literature/02_literature_hvs_index.md"],
-      "validators": ["conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id <arxiv_id> --require-complete"],
-      "risk_level": "scientific_judgment",
-      "network_policy": "No new external downloads; use archived paper sources and generated ECSV.",
-      "generated_files_policy": "Paper-level candidate JSON is source data; global indexes are generated.",
-      "referenced_paths": ["scripts/init_hvs_candidates.py", "scripts/validate_hvs_candidates.py", "scripts/build_hvs_candidates_index.py", "skills/hvs-candidates-extraction/SKILL.md", "docs/outputs.md"]
-    },
-    {
-      "id": "hvs_candidate_extraction_batch",
-      "human_intents": ["batch extract HVS candidates", "extract HVS candidates for multiple papers", "check multiple papers for unbound candidates", "fill literature_hvs_candidates for multiple papers"],
-      "required_inputs": ["arxiv_ids"],
-      "optional_inputs": ["max_parallel", "rebuild_index", "verbose_warnings"],
-      "clarify_if_missing": ["arxiv_ids", "create_missing_review_or_extraction_inputs"],
-      "agent_prompt_template": "Run hvs_candidate_extraction_batch for ARXIV_IDS=<arxiv_ids>. The parent agent must dispatch one fresh subagent per arXiv ID using the hvs_candidate_extraction worker workflow. Do not process multiple papers in the parent context and do not reuse a worker for more than one paper. Use adaptive_probe concurrency: use any tool-exposed concurrency limit when available; otherwise gradually start workers until a concurrency, quota, or rate-limit error reveals the current cap. When a worker finishes, close or clear it before dispatching the next queued paper. Track completed, blocked, failed, and partial worker statuses, then rebuild the HVS candidates index once after all workers finish when requested.",
-      "prerequisite_checks": ["Resolve the target arXiv ID list before dispatch.", "Confirm subagent capability is available; if unavailable, report the limitation instead of processing multiple papers in one context.", "Confirm each paper has required review and extraction inputs or clarify whether to create them first."],
-      "commands": ["Dispatch one fresh subagent per <arxiv_id> with the hvs_candidate_extraction workflow prompt.", "conda run -n stella-env python scripts/validate_hvs_candidates.py --all --require-complete", "conda run -n stella-env python scripts/build_hvs_candidates_index.py --fail-on-skipped"],
-      "outputs": ["literature/<arxiv_id>/literature_hvs_candidates.json", "literature/02_literature_hvs_index.json", "literature/02_literature_hvs_index.md"],
-      "validators": ["conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id <arxiv_id> --require-complete", "Review all worker status records before rebuilding the HVS candidates index."],
-      "risk_level": "scientific_judgment",
-      "network_policy": "No new external downloads; workers use archived paper sources and generated ECSV.",
-      "generated_files_policy": "Paper-level candidate JSON is per-paper source data; global indexes are rebuilt once by the parent after workers complete.",
-      "orchestration": {
-        "unit": "arxiv_id",
-        "worker_workflow": "hvs_candidate_extraction",
-        "worker_reuse_policy": "never",
-        "concurrency_strategy": "adaptive_probe",
-        "parent_role": "dispatch_monitor_summarize",
-        "worker_status_fields": ["arxiv_id", "status", "outputs", "validator_result", "warnings", "blockers", "next_action"],
-        "worker_status_values": ["completed", "blocked", "failed", "partial"]
-      },
-      "referenced_paths": ["scripts/build_hvs_candidates_index.py", "skills/hvs-candidates-extraction/SKILL.md", "docs/outputs.md"]
-    },
-    {
-      "id": "object_catalog_merge",
-      "human_intents": ["merge HVS catalog", "rebuild object catalog", "update catalog"],
-      "required_inputs": ["mode"],
-      "optional_inputs": ["arxiv_id", "path", "dry_run", "enrichment_mode", "external_merge_mode"],
-      "clarify_if_missing": ["mode", "arxiv_id_or_path_when_mode_update"],
-      "agent_prompt_template": "Use hvs-candidates-merge with MODE=<rebuild|update>. For rebuild, merge all valid literature_hvs_candidates.json files into catalog/. For update, merge only ARXIV_ID=<arxiv_id> or PATH=<path>. Validate inputs first, preserve merge evidence and warnings, run default SIMBAD/Gaia DR3 enrichment plus external-assisted merge unless ENRICHMENT_MODE=off or EXTERNAL_MERGE_MODE=off, and do not manually edit generated catalog files.",
-      "prerequisite_checks": ["Confirm paper-level candidate files exist.", "Read hvs-candidates-merge skill and review principles.", "Confirm astroquery is installed for default enrichment/external merge or use --enrichment-mode off --external-merge-mode off.", "Use dry-run if the requested scope is ambiguous."],
-      "commands": ["conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild --literature-dir literature --catalog-dir catalog --enrichment-mode auto --external-merge-mode auto --fail-on-skipped", "conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py update --arxiv-id <arxiv_id> --literature-dir literature --catalog-dir catalog --enrichment-mode auto --external-merge-mode auto --fail-on-skipped"],
-      "outputs": ["catalog/candidates/<object_id>.json", "catalog/03_hvs_candidates_index.json", "catalog/03_hvs_candidates_index.md"],
-      "validators": ["Inspect catalog/03_hvs_candidates_index.md merge warnings, potential merges, enrichment warnings, and skipped inputs.", "Use --fail-on-skipped for rebuild/update runs that should fail on malformed inputs.", "Use --external-merge-mode review when external evidence should be audited without changing grouping.", "Use --enrichment-mode required when enrichment failures must fail the command."],
-      "risk_level": "network_api_generated_data",
-      "network_policy": "Default --enrichment-mode auto and --external-merge-mode auto make public SIMBAD and Gaia DR3 TAP queries through astroquery and may use official identity evidence for grouping; use --enrichment-mode off --external-merge-mode off for a pure offline old-style merge. Auto mode preserves offline outputs and records warnings if enrichment fails.",
-      "generated_files_policy": "catalog/ is generated from paper-level JSON; fix source JSON and rerun merge if warnings reveal errors.",
-      "referenced_paths": ["scripts/merge_hvs_candidate_catalog.py", "skills/hvs-candidates-merge/SKILL.md", "docs/outputs.md"]
-    },
-    {
-      "id": "hvs_dynamics_calculate",
-      "human_intents": ["calculate HVS dynamics", "recompute unbound probabilities", "calculate total velocity and escape probability", "run Bayes kinematics"],
-      "required_inputs": ["catalog_dir"],
-      "optional_inputs": ["object_id", "samples", "seed", "dry_run", "write", "refresh_external"],
-      "clarify_if_missing": ["network_api_permission_when_refresh_external"],
-      "agent_prompt_template": "Use hvs_dynamics_calculate with CATALOG_DIR=<catalog_dir default catalog>. Reuse official Gaia DR3 raw rows cached under external_enrichment by default, apply gaiadr3-zeropoint parallax correction, use literature RV when available, and otherwise ignore SIMBAD RV and use the Boubert-style missing-RV lower-limit convention. Then calculate Galactocentric total velocity and unbound probability with the same MCMC sample set. Write results into each object JSON dynamics field only when WRITE=True; use --dry-run True for review. Query Gaia DR3 only when refresh_external is explicitly requested.",
-      "prerequisite_checks": ["Confirm catalog/candidates exists.", "Confirm object JSON files contain external_enrichment.providers.gaia_dr3.raw_columns from a prior enriched merge, or use --refresh-external with explicit network permission.", "Confirm gaiadr3-zeropoint, galpy, emcee, and scipy are installed in stella-env.", "Read hvs_dynamics_calculate skill."],
-      "commands": ["conda run -n stella-env python scripts/calculate_hvs_dynamics.py --catalog-dir catalog --samples 10000 --write True"],
-      "outputs": ["catalog/candidates/<object_id>.json dynamics field"],
-      "validators": ["Inspect CLI JSON summary for skipped reasons, graveyard count, lower-limit count, and dynamics warnings.", "Run conda run -n stella-env python -m unittest discover tests after code changes."],
-      "risk_level": "generated_data",
-      "network_policy": "Default mode performs no network calls and uses external_enrichment Gaia DR3 cache only. --refresh-external / external-cache-mode=refresh queries public Gaia DR3 TAP through astroquery and requires explicit permission. The workflow must not call SIMBAD, DeepXiv, ADS, LLMs, or download literature assets.",
-      "generated_files_policy": "catalog/ is generated; rerunning object_catalog_merge rebuilds object JSON and removes computed dynamics, so rerun hvs_dynamics_calculate after merge.",
-      "referenced_paths": ["scripts/calculate_hvs_dynamics.py", "skills/hvs_dynamics_calculate/SKILL.md", "docs/outputs.md", "docs/usage.md"]
-    },
-    {
-      "id": "hvs_catalog_html_build",
-      "human_intents": ["build HTML catalog", "refresh website", "build demo site"],
-      "required_inputs": ["catalog_dir"],
-      "optional_inputs": ["html_dir"],
-      "clarify_if_missing": ["deployment_target_if_user_says_deploy_or_publish"],
-      "agent_prompt_template": "Run hvs_catalog_html_build using CATALOG_DIR=<catalog_dir default catalog> and HTML_DIR=<html_dir default catalog/html>. Build live and static pages from generated object-level catalog JSON. Do not treat HTML as source of truth. Verify expected catalog/html/live and catalog/html/static outputs exist.",
-      "prerequisite_checks": ["Confirm catalog/03_hvs_candidates_index.json exists.", "Confirm this is a local HTML build, not deployment."],
-      "commands": ["conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir catalog --html-dir catalog/html"],
-      "outputs": ["catalog/html/live/index.html", "catalog/html/live/assets/", "catalog/html/static/index.html"],
-      "validators": ["Confirm catalog/html/live/index.html and catalog/html/static/index.html exist after build."],
-      "risk_level": "generated_view",
-      "network_policy": "No network access required for local build.",
-      "generated_files_policy": "catalog/html/ is a display layer generated from catalog/.",
-      "referenced_paths": ["scripts/build_hvs_catalog_html.py", "docs/outputs.md"]
-    },
-    {
-      "id": "hvs_catalog_pages_prepare",
-      "human_intents": ["prepare GitHub Pages site", "publish HTML catalog", "deploy website", "prepare website deployment"],
-      "required_inputs": ["source_html_dir"],
-      "optional_inputs": ["site_dir"],
-      "clarify_if_missing": ["deployment_target_if_not_github_pages"],
-      "agent_prompt_template": "Run hvs_catalog_pages_prepare using SOURCE_HTML_DIR=<source_html_dir default catalog/html/static> and SITE_DIR=<site_dir default site>. First build the local static HTML snapshot if needed, then copy it into the committed GitHub Pages publish directory. Do not treat site/ or catalog/html/ as source of truth.",
-      "prerequisite_checks": ["Confirm catalog/html/static/index.html exists or run hvs_catalog_html_build first.", "Confirm GitHub Pages is the deployment target.", "Confirm site/ is intended to be committed as a deployment snapshot."],
-      "commands": ["conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir catalog --html-dir catalog/html", "python scripts/prepare_pages_site.py --source catalog/html/static --site-dir site"],
-      "outputs": ["site/index.html", "site/catalog-data.js", "site/catalog-viewer.js", "site/stella.css", "site/stella-hvs-hero.png", "site/.nojekyll"],
-      "validators": ["Confirm site/index.html and site/catalog-data.js exist after preparation.", "Run conda run -n stella-env python -m unittest tests.test_hvs_catalog_site tests.test_workflow_manifest after code changes."],
-      "risk_level": "generated_view_deployment_artifact",
-      "network_policy": "Local preparation requires no network access. Git push triggers GitHub Pages deployment remotely.",
-      "generated_files_policy": "site/ is a committable deployment snapshot derived from catalog/html/static; catalog JSON remains the source of truth.",
-      "referenced_paths": ["scripts/prepare_pages_site.py", ".github/workflows/deploy-pages.yml", "docs/usage.md", "docs/outputs.md"]
-    },
-    {
-      "id": "index_or_markdown_regeneration",
-      "human_intents": ["regenerate Markdown", "refresh generated views", "rebuild indexes"],
-      "required_inputs": ["target"],
-      "optional_inputs": ["month"],
-      "clarify_if_missing": ["target"],
-      "agent_prompt_template": "Run index_or_markdown_regeneration for TARGET=<monthly_notes|catalog_index|hvs_index|all>. Treat JSON as source of truth. Do not manually edit generated Markdown or index JSON; fix source JSON or rendering logic if generated output is wrong.",
-      "prerequisite_checks": ["Confirm source JSON exists for requested target.", "Confirm whether a single month or all views should be regenerated."],
-      "commands": ["conda run -n stella-env python scripts/render_lit_notes.py", "conda run -n stella-env python scripts/build_catalog_index.py", "conda run -n stella-env python scripts/build_hvs_candidates_index.py"],
-      "outputs": ["notes/YYYY/YYYY-MM/YYYY-MM.md", "notes/00_literature_notes_index.md", "literature/01_literature_catalog_index.md", "literature/02_literature_hvs_index.md"],
-      "validators": ["Inspect command output and generated index summaries."],
-      "risk_level": "generated_view",
-      "network_policy": "No network access required.",
-      "generated_files_policy": "Generated views must be rebuilt from JSON, not hand-edited.",
-      "referenced_paths": ["scripts/render_lit_notes.py", "scripts/build_catalog_index.py", "scripts/build_hvs_candidates_index.py", "docs/outputs.md"]
-    }
-  ]
-}
+version: 1
+clarification_policy: >-
+  Ask only for missing details that change results, trigger real network/API calls, or risk
+  modifying the wrong generated data. Use documented defaults for low-risk optional inputs
+  and report assumptions.
+temporary_artifacts_policy: >-
+  Temporary helper scripts, scratch files, probes, and one-off analysis outputs created during
+  workflow execution must be removed before the agent reports completion, unless explicitly
+  kept by the user or promoted into maintained project code with appropriate tests and documentation.
+  Prefer /tmp or ignored scratch locations for temporary files, and do not delete canonical
+  project scripts under scripts/.
+workflows:
+- id: monthly_literature_fetch
+  human_intents:
+  - fetch HVS literature
+  - update monthly papers
+  - process recent HVS papers
+  required_inputs:
+  - from
+  optional_inputs:
+  - to
+  - source
+  - llm_review
+  - max_results
+  - categories
+  clarify_if_missing:
+  - from
+  - network_permission_for_new_fetches
+  - llm_review_when_requested_but_unspecified
+  agent_prompt_template: >-
+    Run monthly_literature_fetch for FROM=<from> and optional TO=<to>. Use source=deepxiv,
+    llm_review=False, max_results=20, categories=astro-ph.GA,astro-ph.SR,astro-ph.IM unless
+    the user overrides them. Do not make real DeepXiv calls unless the user explicitly allows
+    new data fetching. Preserve provenance, write monthly JSON/Markdown, and report quota/API
+    partial results with resume guidance.
+  prerequisite_checks:
+  - Confirm environment stella-env is available if executing.
+  - Confirm the user allowed real network/API fetching.
+  - Confirm .env has DEEPXIV_TOKEN when source=deepxiv.
+  commands:
+  - conda run -n stella-env python scripts/fetch_literature.py --from <from>
+  outputs:
+  - notes/YYYY/YYYY-MM/YYYY-MM.json
+  - notes/YYYY/YYYY-MM/YYYY-MM.md
+  - notes/YYYY/YYYY-MM/YYYY-MM.title-triage.json
+  - notes/00_literature_notes_index.json
+  - notes/00_literature_notes_index.md
+  validators:
+  - conda run -n stella-env python scripts/render_literature_notes.py --index-only
+  risk_level: network
+  network_policy: Requires explicit permission for real new DeepXiv/arXiv fetching.
+  generated_files_policy: Do not manually edit generated Markdown or force-add notes outputs.
+  referenced_paths:
+  - scripts/fetch_literature.py
+  - scripts/render_literature_notes.py
+  - skills/deepxiv-cli/SKILL.md
+  - docs/usage.md
+  - docs/title-triage.md
+- id: catalog_assessment
+  human_intents:
+  - assess data papers
+  - find papers with observational catalogs
+  - add catalog_assessment
+  required_inputs:
+  - months_or_range
+  optional_inputs:
+  - llm_model
+  - render
+  - dry_run
+  clarify_if_missing:
+  - months_or_range
+  - network_or_llm_permission
+  agent_prompt_template: >-
+    Run catalog_assessment for MONTHS=<months_or_range>. Use existing monthly JSON as input.
+    Use abstract and CLI-gathered context including DeepXiv brief when available. Refresh
+    Markdown and indexes unless render=False is requested. Report token, quota, or API failures
+    explicitly.
+  prerequisite_checks:
+  - Confirm target monthly JSON exists.
+  - Confirm permission for DeepXiv/LLM calls.
+  - Confirm .env has required tokens for selected mode.
+  commands:
+  - conda run -n stella-env python scripts/annotate_catalog_data.py --on <months>
+  outputs:
+  - notes/YYYY/YYYY-MM/YYYY-MM.json
+  - notes/YYYY/YYYY-MM/YYYY-MM.md
+  - notes/00_literature_notes_index.json
+  - notes/00_literature_notes_index.md
+  validators:
+  - conda run -n stella-env python scripts/render_literature_notes.py --index-only
+  risk_level: network_llm
+  network_policy: Requires explicit permission for DeepXiv/LLM calls.
+  generated_files_policy: Monthly JSON is source data; Markdown and indexes are generated
+    from it.
+  referenced_paths:
+  - scripts/annotate_catalog_data.py
+  - scripts/render_literature_notes.py
+  - skills/deepxiv-cli/SKILL.md
+  - docs/usage.md
+  - docs/outputs.md
+- id: literature_asset_archive
+  human_intents:
+  - archive paper assets
+  - download papers
+  - pull literature assets
+  required_inputs:
+  - months_or_arxiv_ids
+  optional_inputs:
+  - timeout
+  - dry_run
+  clarify_if_missing:
+  - months_or_arxiv_ids
+  - network_download_permission
+  agent_prompt_template: >-
+    Run literature_asset_archive for TARGET=<months_or_arxiv_ids>. Archive public arXiv/ADS
+    assets for selected data-related papers or explicit arXiv IDs. Write audit.json for every
+    paper and report each failed asset fetch; do not silently proceed as if missing assets
+    succeeded.
+  prerequisite_checks:
+  - Confirm target notes or arXiv IDs.
+  - Confirm public network download permission.
+  - Confirm ADS_API_TOKEN when ADS metadata is expected.
+  commands:
+  - conda run -n stella-env python scripts/pull_literature_assets.py --from <from> --to <to>
+  - conda run -n stella-env python scripts/pull_literature_assets.py --arxiv-id <ids>
+  outputs:
+  - literature/<arxiv_id>/audit.json
+  - literature/<arxiv_id>/arxiv_abs.html
+  - literature/<arxiv_id>/arxiv.pdf
+  - literature/<arxiv_id>/arxiv_source/
+  - literature/<arxiv_id>/ads_metadata.json
+  validators:
+  - Review literature/<arxiv_id>/audit.json for success and failure records.
+  risk_level: network_download
+  network_policy: Requires explicit permission for public HTTP(S) downloads and ADS API calls.
+  generated_files_policy: literature/ is generated archive data and ignored by Git by default.
+  referenced_paths:
+  - scripts/pull_literature_assets.py
+  - docs/usage.md
+  - docs/outputs.md
+- id: ads_metadata_repair
+  human_intents:
+  - repair ADS metadata
+  - fix bibcodes
+  - refresh ADS API metadata
+  required_inputs:
+  - target
+  optional_inputs:
+  - force
+  - dry_run
+  clarify_if_missing:
+  - target
+  - ads_api_permission
+  agent_prompt_template: >-
+    Run ads_metadata_repair for TARGET=<arXiv IDs or all archived papers>. Query the ADS API
+    only, save full ads_metadata.json responses, update audit.json, and fill only paper.bibcode
+    in literature_hvs_candidates.json if present. Do not construct bibcodes and do not scrape
+    ADS HTML.
+  prerequisite_checks:
+  - Confirm target archived papers exist.
+  - Confirm ADS_API_TOKEN or ADS_TOKEN is available.
+  - Confirm permission for ADS API calls.
+  commands:
+  - conda run -n stella-env python scripts/repair_ads_metadata.py --arxiv-id <ids>
+  - conda run -n stella-env python scripts/repair_ads_metadata.py
+  outputs:
+  - literature/<arxiv_id>/ads_metadata.json
+  - literature/<arxiv_id>/audit.json
+  - literature/<arxiv_id>/literature_hvs_candidates.json
+  validators:
+  - Inspect command summary and audit.json ads_api/ads_metadata status.
+  risk_level: network_api
+  network_policy: Requires explicit permission for ADS API calls.
+  generated_files_policy: Do not edit candidate_origin.citation.bibcode for cited literature.
+  referenced_paths:
+  - scripts/repair_ads_metadata.py
+  - docs/usage.md
+  - docs/outputs.md
+- id: catalog_review
+  human_intents:
+  - review paper data assets
+  - inspect catalog tables
+  - fill catalog_review
+  required_inputs:
+  - arxiv_id
+  optional_inputs:
+  - require_complete
+  clarify_if_missing:
+  - arxiv_id
+  - continue_if_archive_assets_missing
+  agent_prompt_template: >-
+    Use hvs-catalog-review for one ARXIV_ID=<arxiv_id>. If the target contains multiple papers,
+    route to catalog_review_batch instead. Inspect audit.json and archived source assets first.
+    Generate the schema-backed catalog_review.json template if needed. Inventory internal
+    LaTeX tables and paper-described external resources only. Do not decide HVS relevance
+    and do not download external resources. In worker mode, read and write only this paper's
+    directory and return the worker status contract. Validate with --require-complete and
+    rebuild the catalog workflow index only when not running under a batch parent.
+  prerequisite_checks:
+  - Read literature/<arxiv_id>/audit.json.
+  - Confirm arXiv source/PDF/ADS metadata status.
+  - Read hvs-catalog-review skill and schema reference.
+  commands:
+  - conda run -n stella-env python scripts/init_catalog_review.py --arxiv-id <arxiv_id>
+  - >-
+    conda run -n stella-env python scripts/validate_catalog_review.py --arxiv-id <arxiv_id>
+    --require-complete
+  - conda run -n stella-env python scripts/build_catalog_index.py
+  outputs:
+  - literature/<arxiv_id>/catalog_review.json
+  - literature/01_literature_catalog_index.json
+  - literature/01_literature_catalog_index.md
+  validators:
+  - >-
+    conda run -n stella-env python scripts/validate_catalog_review.py --arxiv-id <arxiv_id>
+    --require-complete
+  risk_level: generated_data
+  network_policy: No new external resource downloads in this workflow.
+  generated_files_policy: catalog_review.json is paper-level source data; generated indexes
+    must be rebuilt, not hand-edited.
+  referenced_paths:
+  - scripts/init_catalog_review.py
+  - scripts/validate_catalog_review.py
+  - scripts/build_catalog_index.py
+  - skills/hvs-catalog-review/SKILL.md
+  - docs/outputs.md
+- id: catalog_review_batch
+  human_intents:
+  - batch review paper data assets
+  - review multiple paper data assets
+  - inspect catalog tables for multiple papers
+  - fill catalog_review for multiple papers
+  required_inputs:
+  - arxiv_ids
+  optional_inputs:
+  - max_parallel
+  - require_complete
+  clarify_if_missing:
+  - arxiv_ids
+  - continue_if_archive_assets_missing
+  agent_prompt_template: >-
+    Run catalog_review_batch for ARXIV_IDS=<arxiv_ids>. The parent agent must dispatch one
+    fresh subagent per arXiv ID using the catalog_review worker workflow. Do not process multiple
+    papers in the parent context and do not reuse a worker for more than one paper. Use adaptive_probe
+    concurrency: use any tool-exposed concurrency limit when available; otherwise gradually
+    start workers until a concurrency, quota, or rate-limit error reveals the current cap.
+    When a worker finishes, close or clear it before dispatching the next queued paper. Track
+    completed, blocked, failed, and partial worker statuses, then rebuild the catalog workflow
+    index once after all workers finish.
+  prerequisite_checks:
+  - Resolve the target arXiv ID list before dispatch.
+  - >-
+    Confirm subagent capability is available; if unavailable, report the limitation instead
+    of processing multiple papers in one context.
+  - Confirm archive-asset failure policy for the batch.
+  commands:
+  - Dispatch one fresh subagent per <arxiv_id> with the catalog_review workflow prompt.
+  - conda run -n stella-env python scripts/build_catalog_index.py
+  outputs:
+  - literature/<arxiv_id>/catalog_review.json
+  - literature/01_literature_catalog_index.json
+  - literature/01_literature_catalog_index.md
+  validators:
+  - >-
+    conda run -n stella-env python scripts/validate_catalog_review.py --arxiv-id <arxiv_id>
+    --require-complete
+  - Review all worker status records before rebuilding the catalog workflow index.
+  risk_level: generated_data
+  network_policy: No new external resource downloads in this workflow.
+  generated_files_policy: >-
+    catalog_review.json is per-paper source data; generated indexes are rebuilt once by the
+    parent after workers complete.
+  orchestration:
+    unit: arxiv_id
+    worker_workflow: catalog_review
+    worker_reuse_policy: never
+    concurrency_strategy: adaptive_probe
+    parent_role: dispatch_monitor_summarize
+    worker_status_fields:
+    - arxiv_id
+    - status
+    - outputs
+    - validator_result
+    - warnings
+    - blockers
+    - next_action
+    worker_status_values:
+    - completed
+    - blocked
+    - failed
+    - partial
+  referenced_paths:
+  - scripts/build_catalog_index.py
+  - skills/hvs-catalog-review/SKILL.md
+  - docs/outputs.md
+- id: catalog_table_extraction
+  human_intents:
+  - extract reviewed tables
+  - convert catalog tables
+  - write ECSV
+  required_inputs:
+  - arxiv_id_or_all_reviewed
+  optional_inputs:
+  - internal_table_id
+  - jobs
+  - overwrite
+  - dry_run
+  clarify_if_missing:
+  - arxiv_id_or_all_reviewed
+  - overwrite_when_existing_outputs_present
+  agent_prompt_template: >-
+    Use hvs-catalog-extraction for TARGET=<arxiv_id_or_all_reviewed>. Process only latex_table
+    entries from catalog_review.json. Write catalog_extraction.json, catalog_sources, and
+    catalog_tables ECSV. Do not add scientific semantics, perform HVS filtering, or process
+    external resources. Validate extraction output.
+  prerequisite_checks:
+  - Confirm catalog_review.json exists and is reviewed.
+  - Check LaTeXML/Pandoc availability when relevant.
+  - Confirm overwrite intent before replacing existing extraction assets.
+  commands:
+  - conda run -n stella-env python scripts/extract_catalog_tables.py --arxiv-id <arxiv_id>
+  - >-
+    conda run -n stella-env python scripts/validate_catalog_extraction.py --arxiv-id <arxiv_id>
+    --require-reviewed
+  outputs:
+  - literature/<arxiv_id>/catalog_extraction.json
+  - literature/<arxiv_id>/catalog_sources/<internal_table_id>/excerpt.tex
+  - literature/<arxiv_id>/catalog_tables/<internal_table_id>.ecsv
+  validators:
+  - >-
+    conda run -n stella-env python scripts/validate_catalog_extraction.py --arxiv-id <arxiv_id>
+    --require-reviewed
+  risk_level: generated_data
+  network_policy: No external resources are downloaded or parsed.
+  generated_files_policy: Extraction artifacts are generated from catalog_review.json and
+    archived source.
+  referenced_paths:
+  - scripts/extract_catalog_tables.py
+  - scripts/validate_catalog_extraction.py
+  - skills/hvs-catalog-extraction/SKILL.md
+  - docs/outputs.md
+- id: hvs_candidate_extraction
+  human_intents:
+  - extract HVS candidates
+  - check paper for unbound candidates
+  - fill literature_hvs_candidates
+  required_inputs:
+  - arxiv_id
+  optional_inputs:
+  - rebuild_index
+  - verbose_warnings
+  clarify_if_missing:
+  - arxiv_id
+  - create_missing_review_or_extraction_inputs
+  agent_prompt_template: >-
+    Use hvs-candidates-extraction for one ARXIV_ID=<arxiv_id>. If the target contains multiple
+    papers, route to hvs_candidate_extraction_batch instead. Confirm audit.json, ADS metadata,
+    catalog_review.json, catalog_extraction.json, and relevant ECSV files exist. Read paper
+    text first to establish inclusion and candidate_origin. Use tables only after text evidence
+    justifies inclusion. Write literature_hvs_candidates.json with source_refs and method_refs,
+    or status=no_candidates with empty candidates. In worker mode, read and write only this
+    paper's directory and return the worker status contract. Validate with --require-complete
+    and rebuild the HVS candidates index only when requested and not running under a batch
+    parent.
+  prerequisite_checks:
+  - Read audit.json and ADS metadata.
+  - Read catalog_review.json and catalog_extraction.json.
+  - Read hvs-candidates-extraction skill, schema reference, and coordinate frame reference.
+  commands:
+  - conda run -n stella-env python scripts/init_hvs_candidates.py --arxiv-id <arxiv_id>
+  - >-
+    conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id <arxiv_id>
+    --require-complete
+  - conda run -n stella-env python scripts/build_hvs_candidates_index.py --fail-on-skipped
+  outputs:
+  - literature/<arxiv_id>/literature_hvs_candidates.json
+  - literature/02_literature_hvs_index.json
+  - literature/02_literature_hvs_index.md
+  validators:
+  - >-
+    conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id <arxiv_id>
+    --require-complete
+  risk_level: scientific_judgment
+  network_policy: No new external downloads; use archived paper sources and generated ECSV.
+  generated_files_policy: Paper-level candidate JSON is source data; global indexes are generated.
+  referenced_paths:
+  - scripts/init_hvs_candidates.py
+  - scripts/validate_hvs_candidates.py
+  - scripts/build_hvs_candidates_index.py
+  - skills/hvs-candidates-extraction/SKILL.md
+  - docs/outputs.md
+- id: hvs_candidate_extraction_batch
+  human_intents:
+  - batch extract HVS candidates
+  - extract HVS candidates for multiple papers
+  - check multiple papers for unbound candidates
+  - fill literature_hvs_candidates for multiple papers
+  required_inputs:
+  - arxiv_ids
+  optional_inputs:
+  - max_parallel
+  - rebuild_index
+  - verbose_warnings
+  clarify_if_missing:
+  - arxiv_ids
+  - create_missing_review_or_extraction_inputs
+  agent_prompt_template: >-
+    Run hvs_candidate_extraction_batch for ARXIV_IDS=<arxiv_ids>. The parent agent must dispatch
+    one fresh subagent per arXiv ID using the hvs_candidate_extraction worker workflow. Do
+    not process multiple papers in the parent context and do not reuse a worker for more than
+    one paper. Use adaptive_probe concurrency: use any tool-exposed concurrency limit when
+    available; otherwise gradually start workers until a concurrency, quota, or rate-limit
+    error reveals the current cap. When a worker finishes, close or clear it before dispatching
+    the next queued paper. Track completed, blocked, failed, and partial worker statuses,
+    then rebuild the HVS candidates index once after all workers finish when requested.
+  prerequisite_checks:
+  - Resolve the target arXiv ID list before dispatch.
+  - >-
+    Confirm subagent capability is available; if unavailable, report the limitation instead
+    of processing multiple papers in one context.
+  - >-
+    Confirm each paper has required review and extraction inputs or clarify whether to create
+    them first.
+  commands:
+  - Dispatch one fresh subagent per <arxiv_id> with the hvs_candidate_extraction workflow
+    prompt.
+  - conda run -n stella-env python scripts/validate_hvs_candidates.py --all --require-complete
+  - conda run -n stella-env python scripts/build_hvs_candidates_index.py --fail-on-skipped
+  outputs:
+  - literature/<arxiv_id>/literature_hvs_candidates.json
+  - literature/02_literature_hvs_index.json
+  - literature/02_literature_hvs_index.md
+  validators:
+  - >-
+    conda run -n stella-env python scripts/validate_hvs_candidates.py --arxiv-id <arxiv_id>
+    --require-complete
+  - Review all worker status records before rebuilding the HVS candidates index.
+  risk_level: scientific_judgment
+  network_policy: No new external downloads; workers use archived paper sources and generated
+    ECSV.
+  generated_files_policy: >-
+    Paper-level candidate JSON is per-paper source data; global indexes are rebuilt once by
+    the parent after workers complete.
+  orchestration:
+    unit: arxiv_id
+    worker_workflow: hvs_candidate_extraction
+    worker_reuse_policy: never
+    concurrency_strategy: adaptive_probe
+    parent_role: dispatch_monitor_summarize
+    worker_status_fields:
+    - arxiv_id
+    - status
+    - outputs
+    - validator_result
+    - warnings
+    - blockers
+    - next_action
+    worker_status_values:
+    - completed
+    - blocked
+    - failed
+    - partial
+  referenced_paths:
+  - scripts/build_hvs_candidates_index.py
+  - skills/hvs-candidates-extraction/SKILL.md
+  - docs/outputs.md
+- id: object_catalog_merge
+  human_intents:
+  - merge HVS catalog
+  - rebuild object catalog
+  - update catalog
+  required_inputs:
+  - mode
+  optional_inputs:
+  - arxiv_id
+  - path
+  - dry_run
+  - enrichment_mode
+  - external_merge_mode
+  clarify_if_missing:
+  - mode
+  - arxiv_id_or_path_when_mode_update
+  agent_prompt_template: >-
+    Use hvs-candidates-merge with MODE=<rebuild|update>. For rebuild, merge all valid literature_hvs_candidates.json
+    files into catalog/. For update, merge only ARXIV_ID=<arxiv_id> or PATH=<path>. Validate
+    inputs first, preserve merge evidence and warnings, run default SIMBAD/Gaia DR3 enrichment
+    plus external-assisted merge unless ENRICHMENT_MODE=off or EXTERNAL_MERGE_MODE=off, and
+    do not manually edit generated catalog files.
+  prerequisite_checks:
+  - Confirm paper-level candidate files exist.
+  - Read hvs-candidates-merge skill and review principles.
+  - >-
+    Confirm astroquery is installed for default enrichment/external merge or use --enrichment-mode
+    off --external-merge-mode off.
+  - Use dry-run if the requested scope is ambiguous.
+  commands:
+  - >-
+    conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py rebuild --literature-dir
+    literature --catalog-dir catalog --enrichment-mode auto --external-merge-mode auto --fail-on-skipped
+  - >-
+    conda run -n stella-env python scripts/merge_hvs_candidate_catalog.py update --arxiv-id
+    <arxiv_id> --literature-dir literature --catalog-dir catalog --enrichment-mode auto --external-merge-mode
+    auto --fail-on-skipped
+  outputs:
+  - catalog/candidates/<object_id>.json
+  - catalog/03_hvs_candidates_index.json
+  - catalog/03_hvs_candidates_index.md
+  validators:
+  - >-
+    Inspect catalog/03_hvs_candidates_index.md merge warnings, potential merges, enrichment
+    warnings, and skipped inputs.
+  - Use --fail-on-skipped for rebuild/update runs that should fail on malformed inputs.
+  - Use --external-merge-mode review when external evidence should be audited without changing
+    grouping.
+  - Use --enrichment-mode required when enrichment failures must fail the command.
+  risk_level: network_api_generated_data
+  network_policy: >-
+    Default --enrichment-mode auto and --external-merge-mode auto make public SIMBAD and Gaia
+    DR3 TAP queries through astroquery and may use official identity evidence for grouping;
+    use --enrichment-mode off --external-merge-mode off for a pure offline old-style merge.
+    Auto mode preserves offline outputs and records warnings if enrichment fails.
+  generated_files_policy: >-
+    catalog/ is generated from paper-level JSON; fix source JSON and rerun merge if warnings
+    reveal errors.
+  referenced_paths:
+  - scripts/merge_hvs_candidate_catalog.py
+  - skills/hvs-candidates-merge/SKILL.md
+  - docs/outputs.md
+- id: hvs_dynamics_calculate
+  human_intents:
+  - calculate HVS dynamics
+  - recompute unbound probabilities
+  - calculate total velocity and escape probability
+  - run Bayes kinematics
+  required_inputs:
+  - catalog_dir
+  optional_inputs:
+  - object_id
+  - samples
+  - seed
+  - dry_run
+  - write
+  - refresh_external
+  clarify_if_missing:
+  - network_api_permission_when_refresh_external
+  agent_prompt_template: >-
+    Use hvs_dynamics_calculate with CATALOG_DIR=<catalog_dir default catalog>. Reuse official
+    Gaia DR3 raw rows cached under external_enrichment by default, apply gaiadr3-zeropoint
+    parallax correction, use literature RV when available, and otherwise ignore SIMBAD RV
+    and use the Boubert-style missing-RV lower-limit convention. Then calculate Galactocentric
+    total velocity and unbound probability with the same MCMC sample set. Write results into
+    each object JSON dynamics field only when WRITE=True; use --dry-run True for review. Query
+    Gaia DR3 only when refresh_external is explicitly requested.
+  prerequisite_checks:
+  - Confirm catalog/candidates exists.
+  - >-
+    Confirm object JSON files contain external_enrichment.providers.gaia_dr3.raw_columns from
+    a prior enriched merge, or use --refresh-external with explicit network permission.
+  - Confirm gaiadr3-zeropoint, galpy, emcee, and scipy are installed in stella-env.
+  - Read hvs_dynamics_calculate skill.
+  commands:
+  - >-
+    conda run -n stella-env python scripts/calculate_hvs_dynamics.py --catalog-dir catalog
+    --samples 10000 --write True
+  outputs:
+  - catalog/candidates/<object_id>.json dynamics field
+  validators:
+  - >-
+    Inspect CLI JSON summary for skipped reasons, graveyard count, lower-limit count, and
+    dynamics warnings.
+  - Run conda run -n stella-env python -m unittest discover tests after code changes.
+  risk_level: generated_data
+  network_policy: >-
+    Default mode performs no network calls and uses external_enrichment Gaia DR3 cache only.
+    --refresh-external / external-cache-mode=refresh queries public Gaia DR3 TAP through astroquery
+    and requires explicit permission. The workflow must not call SIMBAD, DeepXiv, ADS, LLMs,
+    or download literature assets.
+  generated_files_policy: >-
+    catalog/ is generated; rerunning object_catalog_merge rebuilds object JSON and removes
+    computed dynamics, so rerun hvs_dynamics_calculate after merge.
+  referenced_paths:
+  - scripts/calculate_hvs_dynamics.py
+  - skills/hvs-dynamics-calculate/SKILL.md
+  - docs/outputs.md
+  - docs/usage.md
+- id: hvs_catalog_html_build
+  human_intents:
+  - build HTML catalog
+  - refresh website
+  - build demo site
+  required_inputs:
+  - catalog_dir
+  optional_inputs:
+  - html_dir
+  clarify_if_missing:
+  - deployment_target_if_user_says_deploy_or_publish
+  agent_prompt_template: >-
+    Run hvs_catalog_html_build using CATALOG_DIR=<catalog_dir default catalog> and HTML_DIR=<html_dir
+    default catalog/html>. Build live and static pages from generated object-level catalog
+    JSON. Do not treat HTML as source of truth. Verify expected catalog/html/live and catalog/html/static
+    outputs exist.
+  prerequisite_checks:
+  - Confirm catalog/03_hvs_candidates_index.json exists.
+  - Confirm this is a local HTML build, not deployment.
+  commands:
+  - >-
+    conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir catalog
+    --html-dir catalog/html
+  outputs:
+  - catalog/html/live/index.html
+  - catalog/html/live/assets/
+  - catalog/html/static/index.html
+  validators:
+  - Confirm catalog/html/live/index.html and catalog/html/static/index.html exist after build.
+  risk_level: generated_view
+  network_policy: No network access required for local build.
+  generated_files_policy: catalog/html/ is a display layer generated from catalog/.
+  referenced_paths:
+  - scripts/build_hvs_catalog_html.py
+  - docs/outputs.md
+- id: hvs_catalog_pages_prepare
+  human_intents:
+  - prepare GitHub Pages site
+  - publish HTML catalog
+  - deploy website
+  - prepare website deployment
+  required_inputs:
+  - source_html_dir
+  optional_inputs:
+  - site_dir
+  clarify_if_missing:
+  - deployment_target_if_not_github_pages
+  agent_prompt_template: >-
+    Run hvs_catalog_pages_prepare using SOURCE_HTML_DIR=<source_html_dir default catalog/html/static>
+    and SITE_DIR=<site_dir default site>. First build the local static HTML snapshot if needed,
+    then copy it into the committed GitHub Pages publish directory. Do not treat site/ or
+    catalog/html/ as source of truth.
+  prerequisite_checks:
+  - Confirm catalog/html/static/index.html exists or run hvs_catalog_html_build first.
+  - Confirm GitHub Pages is the deployment target.
+  - Confirm site/ is intended to be committed as a deployment snapshot.
+  commands:
+  - >-
+    conda run -n stella-env python scripts/build_hvs_catalog_html.py --catalog-dir catalog
+    --html-dir catalog/html
+  - python scripts/prepare_pages_site.py --source catalog/html/static --site-dir site
+  outputs:
+  - site/index.html
+  - site/catalog-data.js
+  - site/catalog-viewer.js
+  - site/stella.css
+  - site/stella-hvs-hero.png
+  - site/.nojekyll
+  validators:
+  - Confirm site/index.html and site/catalog-data.js exist after preparation.
+  - >-
+    Run conda run -n stella-env python -m unittest tests.test_hvs_catalog_site tests.test_workflow_manifest
+    after code changes.
+  risk_level: generated_view_deployment_artifact
+  network_policy: Local preparation requires no network access. Git push triggers GitHub Pages
+    deployment remotely.
+  generated_files_policy: >-
+    site/ is a committable deployment snapshot derived from catalog/html/static; catalog JSON
+    remains the source of truth.
+  referenced_paths:
+  - scripts/prepare_pages_site.py
+  - .github/workflows/deploy-pages.yml
+  - docs/usage.md
+  - docs/outputs.md
+- id: index_or_markdown_regeneration
+  human_intents:
+  - regenerate Markdown
+  - refresh generated views
+  - rebuild indexes
+  required_inputs:
+  - target
+  optional_inputs:
+  - month
+  clarify_if_missing:
+  - target
+  agent_prompt_template: >-
+    Run index_or_markdown_regeneration for TARGET=<monthly_notes|catalog_index|hvs_index|all>.
+    Treat JSON as source of truth. Do not manually edit generated Markdown or index JSON;
+    fix source JSON or rendering logic if generated output is wrong.
+  prerequisite_checks:
+  - Confirm source JSON exists for requested target.
+  - Confirm whether a single month or all views should be regenerated.
+  commands:
+  - conda run -n stella-env python scripts/render_literature_notes.py
+  - conda run -n stella-env python scripts/build_catalog_index.py
+  - conda run -n stella-env python scripts/build_hvs_candidates_index.py
+  outputs:
+  - notes/YYYY/YYYY-MM/YYYY-MM.md
+  - notes/00_literature_notes_index.md
+  - literature/01_literature_catalog_index.md
+  - literature/02_literature_hvs_index.md
+  validators:
+  - Inspect command output and generated index summaries.
+  risk_level: generated_view
+  network_policy: No network access required.
+  generated_files_policy: Generated views must be rebuilt from JSON, not hand-edited.
+  referenced_paths:
+  - scripts/render_literature_notes.py
+  - scripts/build_catalog_index.py
+  - scripts/build_hvs_candidates_index.py
+  - docs/outputs.md

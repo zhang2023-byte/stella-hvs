@@ -9,14 +9,14 @@ with `docs/workflows.md`; agents route those requests through
 Basic run:
 
 ```bash
-conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
+conda run -n stella-env python scripts/fetch_literature.py \
   --from 2026-03
 ```
 
 One month only:
 
 ```bash
-conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
+conda run -n stella-env python scripts/fetch_literature.py \
   --from 2026-03 \
   --to 2026-03
 ```
@@ -67,7 +67,7 @@ conda run -n stella-env python scripts/fetch_high_velocity_lit.py \
 - With `--llm-review True`, only no-clear-title-evidence papers are reviewed by the LLM.
 - With `--source deepxiv --llm-review True`, `no-clear-title-evidence` candidates are sorted by DeepXiv score and only the top `--deepxiv-llm-review-max-candidates` are sent to the LLM. The rest stay in `title-triage.json` with `review.status=skipped`.
 - The final monthly note includes rule-related papers and papers confirmed relevant by LLM review.
-- `fetch_high_velocity_lit.py` no longer calls `DeepXiv brief`.
+- `fetch_literature.py` no longer calls `DeepXiv brief`.
 - Candidate search uses `DeepXiv` by default. If DeepXiv hits quota limits, token/API failures, or other search errors, the remaining searches in that run automatically fall back to the `arXiv API`.
 - arXiv candidate search pushes multiple `--categories` into the query as an OR expression, for example `(cat:astro-ph.GA OR cat:astro-ph.SR OR cat:astro-ph.IM)`. DeepXiv searches categories separately and deduplicates the merged results.
 
@@ -122,19 +122,19 @@ conda run -n stella-env python scripts/annotate_catalog_data.py \
 Regenerate all monthly Markdown:
 
 ```bash
-conda run -n stella-env python scripts/render_lit_notes.py
+conda run -n stella-env python scripts/render_literature_notes.py
 ```
 
 Regenerate one month:
 
 ```bash
-conda run -n stella-env python scripts/render_lit_notes.py --month 2026-03
+conda run -n stella-env python scripts/render_literature_notes.py --month 2026-03
 ```
 
 Rebuild the yearly index:
 
 ```bash
-conda run -n stella-env python scripts/render_lit_notes.py --index-only
+conda run -n stella-env python scripts/render_literature_notes.py --index-only
 ```
 
 ## 4. Pull Local Literature Assets

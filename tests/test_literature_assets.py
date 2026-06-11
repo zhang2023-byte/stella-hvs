@@ -16,9 +16,8 @@ import requests
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
 
-from high_velocity_lit.literature_assets import (  # noqa: E402
+from stella.lit.literature_assets import (  # noqa: E402
     SelectedPaper,
     archive_paper,
     extract_source_archive,

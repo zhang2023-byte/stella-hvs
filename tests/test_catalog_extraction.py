@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import importlib.util
 import json
-import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -10,9 +9,8 @@ from pathlib import Path
 from astropy.io import ascii
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
 
-from high_velocity_lit.catalog_extraction import (  # noqa: E402
+from stella.lit.catalog_extraction import (  # noqa: E402
     auto_catalog_jobs,
     conversion_attempt_record,
     extract_all_reviewed_catalog_tables,

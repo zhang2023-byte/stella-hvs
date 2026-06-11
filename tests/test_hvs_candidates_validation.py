@@ -16,10 +16,9 @@ SPEC = importlib.util.spec_from_file_location("validate_hvs_candidates", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None
 validate_cli = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(validate_cli)
-sys.path.insert(0, str(ROOT / "src"))
 
-from high_velocity_lit.schema_specs import LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION  # noqa: E402
-from high_velocity_lit.hvs_method_provenance import coarse_step_warnings  # noqa: E402
+from stella.lit.schema_specs import LITERATURE_HVS_CANDIDATES_SCHEMA_VERSION  # noqa: E402
+from stella.lit.hvs_method_provenance import coarse_step_warnings  # noqa: E402
 
 
 def write_json_file(path: Path, payload: dict[str, object]) -> None:

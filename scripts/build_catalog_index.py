@@ -4,15 +4,11 @@
 from __future__ import annotations
 
 import argparse
-import sys
 from pathlib import Path
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-SRC = WORKSPACE / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
 
-from high_velocity_lit.catalog_review import write_catalog_index_outputs  # noqa: E402
+from stella.lit.catalog_review import write_catalog_index_outputs  # noqa: E402
 
 
 def build_parser() -> argparse.ArgumentParser:

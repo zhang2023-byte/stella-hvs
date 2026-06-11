@@ -1,18 +1,16 @@
 from __future__ import annotations
 
 import json
-import sys
 import tempfile
 import unittest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
 
-from high_velocity_lit.indexing import rebuild_index  # noqa: E402
-from high_velocity_lit.markdown import render_index  # noqa: E402
-from high_velocity_lit.note_paths import month_dir  # noqa: E402
+from stella.lit.indexing import rebuild_index  # noqa: E402
+from stella.lit.markdown import render_index  # noqa: E402
+from stella.lit.note_paths import month_dir  # noqa: E402
 
 
 class IndexingTest(unittest.TestCase):

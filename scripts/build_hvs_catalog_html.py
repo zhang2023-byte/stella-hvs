@@ -6,16 +6,12 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
-import sys
 from pathlib import Path
 
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-SRC = WORKSPACE / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
 
-from stella_html.catalog_site import (  # noqa: E402
+from stella.html.catalog_site import (  # noqa: E402
     build_static_site,
     load_catalog_snapshot,
     render_live_index_html,
@@ -42,7 +38,7 @@ def build_parser() -> argparse.ArgumentParser:
 def ensure_live_assets(assets_dir: Path) -> None:
     """Populate target live assets from bundled source assets."""
     required = ("stella.css", "catalog-viewer.js", "stella-hero.svg", "stella-hvs-hero.png")
-    source_assets_dir = SRC / "stella_html" / "assets"
+    source_assets_dir = SRC / "stella" / "html" / "assets"
     missing_source = [name for name in required if not (source_assets_dir / name).exists()]
     if missing_source:
         missing = ", ".join(str(source_assets_dir / name) for name in missing_source)

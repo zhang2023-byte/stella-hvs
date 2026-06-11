@@ -5,17 +5,13 @@ from __future__ import annotations
 
 import argparse
 import json
-import sys
 from pathlib import Path
 
 
 WORKSPACE = Path(__file__).resolve().parents[1]
-SRC = WORKSPACE / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
 
-from high_velocity_dyn import DEFAULT_MCMC_SAMPLES, calculate_catalog_dynamics  # noqa: E402
-from high_velocity_dyn.dynamics import EXTERNAL_CACHE_MODES, parse_bool  # noqa: E402
+from stella.dyn import DEFAULT_MCMC_SAMPLES, calculate_catalog_dynamics  # noqa: E402
+from stella.dyn.dynamics import EXTERNAL_CACHE_MODES, parse_bool  # noqa: E402
 
 
 def build_parser() -> argparse.ArgumentParser:
